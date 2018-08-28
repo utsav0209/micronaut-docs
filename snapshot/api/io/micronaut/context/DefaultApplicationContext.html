@@ -232,7 +232,8 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;T&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultApplicationContext.html#findBeanCandidates-java.lang.Class-io.micronaut.inject.BeanDefinition-">findBeanCandidates</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;beanType,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultApplicationContext.html#findBeanCandidates-io.micronaut.context.BeanResolutionContext-java.lang.Class-io.micronaut.inject.BeanDefinition-">findBeanCandidates</a></span>(<a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;beanType,
                   <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;?&gt;&nbsp;filter)</code>
 <div class="block">Find bean candidates for the given type.</div>
 </td>
@@ -767,22 +768,24 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 </dl>
 </li>
 </ul>
-<a name="findBeanCandidates-java.lang.Class-io.micronaut.inject.BeanDefinition-">
+<a name="findBeanCandidates-io.micronaut.context.BeanResolutionContext-java.lang.Class-io.micronaut.inject.BeanDefinition-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>findBeanCandidates</h4>
-<pre>protected&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;T&gt;&gt;&nbsp;findBeanCandidates(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;beanType,
+<pre>protected&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;T&gt;&gt;&nbsp;findBeanCandidates(<a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext,
+                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;beanType,
                                                                <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;?&gt;&nbsp;filter)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#findBeanCandidates-java.lang.Class-io.micronaut.inject.BeanDefinition-">DefaultBeanContext</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#findBeanCandidates-io.micronaut.context.BeanResolutionContext-java.lang.Class-io.micronaut.inject.BeanDefinition-">DefaultBeanContext</a></code></span></div>
 <div class="block">Find bean candidates for the given type.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../io/micronaut/context/DefaultBeanContext.html#findBeanCandidates-java.lang.Class-io.micronaut.inject.BeanDefinition-">findBeanCandidates</a></code>&nbsp;in class&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html" title="class in io.micronaut.context">DefaultBeanContext</a></code></dd>
+<dd><code><a href="../../../io/micronaut/context/DefaultBeanContext.html#findBeanCandidates-io.micronaut.context.BeanResolutionContext-java.lang.Class-io.micronaut.inject.BeanDefinition-">findBeanCandidates</a></code>&nbsp;in class&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html" title="class in io.micronaut.context">DefaultBeanContext</a></code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - The bean generic type</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>resolutionContext</code> - The bean resolution context</dd>
 <dd><code>beanType</code> - The bean type</dd>
 <dd><code>filter</code> - A bean definition to filter out</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
