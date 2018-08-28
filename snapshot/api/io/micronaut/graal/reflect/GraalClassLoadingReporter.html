@@ -164,13 +164,13 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#reportMissing-java.lang.String-">reportMissing</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#onMissing-java.lang.String-">onMissing</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Called when a class is missing.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#reportPresent-java.lang.Class-">reportPresent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#onPresent-java.lang.Class-">onPresent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
 <div class="block">Called when a class is present.</div>
 </td>
 </tr>
@@ -181,6 +181,13 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.reflect.ClassLoadingReporter">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.core.reflect.<a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></h3>
+<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#finish--">finish</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportMissing-java.lang.String-">reportMissing</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportPresent-java.lang.Class-">reportPresent</a></code></li>
 </ul>
 </li>
 </ul>
@@ -214,35 +221,35 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="reportPresent-java.lang.Class-">
+<a name="onPresent-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>reportPresent</h4>
-<pre>public&nbsp;void&nbsp;reportPresent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportPresent-java.lang.Class-">ClassLoadingReporter</a></code></span></div>
+<h4>onPresent</h4>
+<pre>public&nbsp;void&nbsp;onPresent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onPresent-java.lang.Class-">ClassLoadingReporter</a></code></span></div>
 <div class="block">Called when a class is present.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportPresent-java.lang.Class-">reportPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
+<dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onPresent-java.lang.Class-">onPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The type</dd>
 </dl>
 </li>
 </ul>
-<a name="reportMissing-java.lang.String-">
+<a name="onMissing-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>reportMissing</h4>
-<pre>public&nbsp;void&nbsp;reportMissing(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportMissing-java.lang.String-">ClassLoadingReporter</a></code></span></div>
+<h4>onMissing</h4>
+<pre>public&nbsp;void&nbsp;onMissing(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onMissing-java.lang.String-">ClassLoadingReporter</a></code></span></div>
 <div class="block">Called when a class is missing.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportMissing-java.lang.String-">reportMissing</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
+<dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onMissing-java.lang.String-">onMissing</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - The name of the class</dd>
 </dl>
