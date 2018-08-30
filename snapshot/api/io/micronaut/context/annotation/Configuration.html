@@ -95,14 +95,31 @@
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#PACKAGE" title="class or interface in java.lang.annotation">PACKAGE</a>)
 public @interface <span class="memberNameLabel">Configuration</span></pre>
 <div class="block"><p>A configuration is a grouping of bean definitions under a package. A configuration can have requirements applied
- to it with <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation"><code>Requires</code></a> such that the entire configuration only loads of the requirements are met.</p></div>
+ to it with <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation"><code>Requires</code></a> such that the entire configuration only loads of the requirements are met. For example consider the following <code>package-info.java</code> file: </p>
+
+
+ <pre class="code">
+ &#064;Configuration
+ &#064;Requires(classes = Cluster.class)
+ package io.micronaut.configuration.cassandra;
+
+ import com.datastax.driver.core.Cluster;
+ import io.micronaut.context.annotation.Configuration;
+ import io.micronaut.context.annotation.Requires;
+ </pre>
+
+ <p>In the example above the <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation"><code>Requires</code></a> annotation ensures all beans contained within the package are loaded only if the <code>Cluster</code> class is present on the classpath.</p>
+
+ <p>The <a href="../../../../io/micronaut/context/ApplicationContextBuilder.html#include-java.lang.String...-"><code>ApplicationContextBuilder.include(String...)</code></a> and <a href="../../../../io/micronaut/context/ApplicationContextBuilder.html#exclude-java.lang.String...-"><code>ApplicationContextBuilder.exclude(String...)</code></a> methods can also be used to control which configurations are
+ loaded when building the <a href="../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context"><code>ApplicationContext</code></a></p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Graeme Rocher</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation"><code>Requires</code></a></dd>
+<dd><a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation"><code>Requires</code></a>, 
+<a href="../../../../io/micronaut/context/ApplicationContextBuilder.html#exclude-java.lang.String...-"><code>ApplicationContextBuilder.exclude(String...)</code></a></dd>
 </dl>
 </li>
 </ul>
