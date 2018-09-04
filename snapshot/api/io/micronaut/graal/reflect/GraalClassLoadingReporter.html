@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
+<dd><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a>, <a href="../../../../io/micronaut/core/util/Toggleable.html" title="interface in io.micronaut.core.util">Toggleable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
 </dl>
 <hr>
 <br>
@@ -163,12 +163,22 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#close--">close</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#isEnabled--">isEnabled</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#onBeanPresent-java.lang.Class-">onBeanPresent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
+<div class="block">Called when a bean is present.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#onMissing-java.lang.String-">onMissing</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Called when a class is missing.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/graal/reflect/GraalClassLoadingReporter.html#onPresent-java.lang.Class-">onPresent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
 <div class="block">Called when a class is present.</div>
@@ -187,7 +197,7 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.core.reflect.<a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></h3>
-<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#finish--">finish</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportMissing-java.lang.String-">reportMissing</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportPresent-java.lang.Class-">reportPresent</a></code></li>
+<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#finish--">finish</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportBeanPresent-java.lang.Class-">reportBeanPresent</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportMissing-java.lang.String-">reportMissing</a>, <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#reportPresent-java.lang.Class-">reportPresent</a></code></li>
 </ul>
 </li>
 </ul>
@@ -221,6 +231,21 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isEnabled--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEnabled</h4>
+<pre>public&nbsp;boolean&nbsp;isEnabled()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/core/util/Toggleable.html#isEnabled--">isEnabled</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/util/Toggleable.html" title="interface in io.micronaut.core.util">Toggleable</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether the component is enabled</dd>
+</dl>
+</li>
+</ul>
 <a name="onPresent-java.lang.Class-">
 <!--   -->
 </a>
@@ -233,6 +258,23 @@ implements <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.h
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onPresent-java.lang.Class-">onPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - The type</dd>
+</dl>
+</li>
+</ul>
+<a name="onBeanPresent-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onBeanPresent</h4>
+<pre>public&nbsp;void&nbsp;onBeanPresent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onBeanPresent-java.lang.Class-">ClassLoadingReporter</a></code></span></div>
+<div class="block">Called when a bean is present. Essentially the same as <a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onPresent-java.lang.Class-"><code>ClassLoadingReporter.onPresent(Class)</code></a> but listeners may want to treat POJO beans differently.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html#onBeanPresent-java.lang.Class-">onBeanPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/reflect/ClassLoadingReporter.html" title="interface in io.micronaut.core.reflect">ClassLoadingReporter</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The type</dd>
 </dl>

@@ -250,20 +250,32 @@ implements <a href="../../../../io/micronaut/http/client/RxHttpClient.html" titl
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-java.net.URL-">DefaultHttpClient</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-io.micronaut.http.client.LoadBalancer-io.micronaut.http.client.HttpClientConfiguration-java.lang.String-java.util.concurrent.ThreadFactory-io.micronaut.http.client.ssl.NettyClientSslBuilder-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.core.annotation.AnnotationMetadataResolver-java.util.List-">DefaultHttpClient</a></span>(<a href="../../../../io/micronaut/http/client/LoadBalancer.html" title="interface in io.micronaut.http.client">LoadBalancer</a>&nbsp;loadBalancer,
+                 <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;configuration,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;contextPath,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
+                 <a href="../../../../io/micronaut/http/client/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
+                 <a href="../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
+                 <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataResolver.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataResolver</a>&nbsp;annotationMetadataResolver,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpClientFilter.html" title="interface in io.micronaut.http.filter">HttpClientFilter</a>&gt;&nbsp;filters)</code>
+<div class="block">Construct a client for the given arguments.</div>
+</td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-java.net.URL-">DefaultHttpClient</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-java.net.URL-io.micronaut.http.client.HttpClientConfiguration-">DefaultHttpClient</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url,
                  <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;configuration)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-java.net.URL-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.client.ssl.NettyClientSslBuilder-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.filter.HttpClientFilter...-">DefaultHttpClient</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url,
                  <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;configuration,
                  <a href="../../../../io/micronaut/http/client/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
                  <a href="../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
                  <a href="../../../../io/micronaut/http/filter/HttpClientFilter.html" title="interface in io.micronaut.http.filter">HttpClientFilter</a>...&nbsp;filters)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/client/DefaultHttpClient.html#DefaultHttpClient-java.net.URL-io.micronaut.http.client.HttpClientConfiguration-java.lang.String-">DefaultHttpClient</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url,
                  <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;configuration,
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;contextPath)</code>&nbsp;</td>
@@ -650,6 +662,39 @@ implements <a href="../../../../io/micronaut/http/client/RxHttpClient.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>DefaultHttpClient</h4>
+<pre>public&nbsp;DefaultHttpClient(<a href="../../../../io/micronaut/context/annotation/Parameter.html" title="annotation in io.micronaut.context.annotation">@Parameter</a>
+                         <a href="../../../../io/micronaut/http/client/LoadBalancer.html" title="interface in io.micronaut.http.client">LoadBalancer</a>&nbsp;loadBalancer,
+                         <a href="../../../../io/micronaut/context/annotation/Parameter.html" title="annotation in io.micronaut.context.annotation">@Parameter</a>
+                         <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;configuration,
+                         <a href="../../../../io/micronaut/context/annotation/Parameter.html" title="annotation in io.micronaut.context.annotation">@Parameter</a> <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;contextPath,
+                         <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true" title="class or interface in javax.inject">@Named</a>(<a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true#value--" title="class or interface in javax.inject">value</a>="netty") <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
+                         <a href="../../../../io/micronaut/http/client/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
+                         <a href="../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
+                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                         <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataResolver.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataResolver</a>&nbsp;annotationMetadataResolver,
+                         <a href="../../../../io/micronaut/http/filter/HttpClientFilter.html" title="interface in io.micronaut.http.filter">HttpClientFilter</a>...&nbsp;filters)</pre>
+<div class="block">Construct a client for the given arguments.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>loadBalancer</code> - The <a href="../../../../io/micronaut/http/client/LoadBalancer.html" title="interface in io.micronaut.http.client"><code>LoadBalancer</code></a> to use for selecting servers</dd>
+<dd><code>configuration</code> - The <a href="../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client"><code>HttpClientConfiguration</code></a> object</dd>
+<dd><code>contextPath</code> - The base URI to prepend to request uris</dd>
+<dd><code>threadFactory</code> - The thread factory to use for client threads</dd>
+<dd><code>nettyClientSslBuilder</code> - The SSL builder</dd>
+<dd><code>codecRegistry</code> - The <a href="../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec"><code>MediaTypeCodecRegistry</code></a> to use for encoding and decoding objects</dd>
+<dd><code>annotationMetadataResolver</code> - The annotation metadata resolver</dd>
+<dd><code>filters</code> - The filters to use</dd>
+</dl>
+</li>
+</ul>
+<a name="DefaultHttpClient-io.micronaut.http.client.LoadBalancer-io.micronaut.http.client.HttpClientConfiguration-java.lang.String-java.util.concurrent.ThreadFactory-io.micronaut.http.client.ssl.NettyClientSslBuilder-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.core.annotation.AnnotationMetadataResolver-java.util.List-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DefaultHttpClient</h4>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
 public&nbsp;DefaultHttpClient(<a href="../../../../io/micronaut/context/annotation/Parameter.html" title="annotation in io.micronaut.context.annotation">@Parameter</a>
                                  <a href="../../../../io/micronaut/http/client/LoadBalancer.html" title="interface in io.micronaut.http.client">LoadBalancer</a>&nbsp;loadBalancer,
@@ -663,7 +708,7 @@ public&nbsp;DefaultHttpClient(<a href="../../../../io/micronaut/context/annotati
                                  <a href="../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
                                  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
                                  <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataResolver.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataResolver</a>&nbsp;annotationMetadataResolver,
-                                 <a href="../../../../io/micronaut/http/filter/HttpClientFilter.html" title="interface in io.micronaut.http.filter">HttpClientFilter</a>...&nbsp;filters)</pre>
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpClientFilter.html" title="interface in io.micronaut.http.filter">HttpClientFilter</a>&gt;&nbsp;filters)</pre>
 <div class="block">Construct a client for the given arguments.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
