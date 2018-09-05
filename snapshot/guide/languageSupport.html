@@ -142,6 +142,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#graalServices"><strong>13.4.1</strong><span>Microservices as GraalVM native images</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:10px"><a href="#graalFAQ"><strong>13.4.2</strong><span>GraalVM and Micronaut FAQ</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -1085,6 +1088,68 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 <div class="paragraph">
 <p>As you can see the advantage of having a native image is startup completes in milliseconds and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
+</div>
+
+
+<h2 id="graalFAQ">13.4.2 GraalVM and Micronaut FAQ</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/graal/graalFAQ.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect3">
+<h4 id="_how_does_micronaut_manage_to_run_on_graalvm">How does Micronaut manage to run on GraalVM?</h4>
+<div class="paragraph">
+<p>Micronaut features a Dependency Injection and Aspect-Oriented Programming runtime that uses no reflection. This makes it easier for Micronaut applications to run on GraalVM since there are <a href="https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md">limitations</a> particularly around <a href="https://github.com/oracle/graal/blob/master/substratevm/REFLECTION.md">reflection</a> on SubstrateVM.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what_about_third_party_libraries">What about Third-Party Libraries?</h4>
+<div class="paragraph">
+<p>Micronaut cannot guarantee that third-party libraries work on GraalVM SubstrateVM, that is down to each individual library to implement support.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_get_a_class_xxx_is_instantiated_reflectively_exception_what_do_i_do">I Get a "Class XXX is instantiated reflectively&#8230;&#8203;" Exception. What do I do?</h4>
+<div class="paragraph">
+<p>If you get an error such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Class myclass.Foo[] is instantiated reflectively but was never registered. Register the class by using org.graalvm.nativeimage.RuntimeReflection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may need to manually tweak the generated <code>reflect.json</code> file. For regular classes you need to add an entry into the array:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+    {
+        "name" : "myclass.Foo",
+        "allDeclaredConstructors" : true
+    },
+    ...
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For arrays this needs to use the Java JVM internal array representation. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+    {
+        "name" : "[Lmyclass.Foo;",
+        "allDeclaredConstructors" : true
+    },
+    ...
+]</code></pre>
+</div>
+</div>
 </div>
 
 
