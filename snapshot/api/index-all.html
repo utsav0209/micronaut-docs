@@ -157,6 +157,14 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/discovery/consul/client/v1/AbstractConsulClient.html#AbstractConsulClient--">AbstractConsulClient()</a></span> - Constructor for class io.micronaut.discovery.consul.client.v1.<a href="io/micronaut/discovery/consul/client/v1/AbstractConsulClient.html" title="class in io.micronaut.discovery.consul.client.v1">AbstractConsulClient</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html" title="class in io.micronaut.jdbc.metadata"><span class="typeNameLink">AbstractDataSourcePoolMetadata</span></a>&lt;<a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html" title="type parameter in AbstractDataSourcePoolMetadata">T</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&gt; - Class in <a href="io/micronaut/jdbc/metadata/package-summary.html">io.micronaut.jdbc.metadata</a></dt>
+<dd>
+<div class="block">A base <a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> implementation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html#AbstractDataSourcePoolMetadata-T-">AbstractDataSourcePoolMetadata(T)</a></span> - Constructor for class io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html" title="class in io.micronaut.jdbc.metadata">AbstractDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Create an instance with the data source to use.</div>
+</dd>
 <dt><a href="io/micronaut/runtime/event/AbstractEmbeddedApplicationEvent.html" title="class in io.micronaut.runtime.event"><span class="typeNameLink">AbstractEmbeddedApplicationEvent</span></a> - Class in <a href="io/micronaut/runtime/event/package-summary.html">io.micronaut.runtime.event</a></dt>
 <dd>
 <div class="block">An abstract event for events specific to server applications.</div>
@@ -2248,6 +2256,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/kafka/metrics/KafkaProducerMetrics.html#bindTo-io.micrometer.core.instrument.MeterRegistry-">bindTo(MeterRegistry)</a></span> - Method in class io.micronaut.configuration.kafka.metrics.<a href="io/micronaut/configuration/kafka/metrics/KafkaProducerMetrics.html" title="class in io.micronaut.configuration.kafka.metrics">KafkaProducerMetrics</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinder.html#bindTo-io.micrometer.core.instrument.MeterRegistry-">bindTo(MeterRegistry)</a></span> - Method in class io.micronaut.configuration.metrics.binder.datasource.<a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinder.html" title="class in io.micronaut.configuration.metrics.binder.datasource">DataSourcePoolMetricsBinder</a></dt>
+<dd>
+<div class="block">Method for getting metadataProvider object for datasource that will bind the pool metrics.</div>
+</dd>
 <dt><a href="io/micronaut/core/annotation/Blocking.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Blocking</span></a> - Annotation Type in <a href="io/micronaut/core/annotation/package-summary.html">io.micronaut.core.annotation</a></dt>
 <dd>
 <div class="block">A marker annotation for methods that are blocking.</div>
@@ -3133,7 +3145,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/runtime/Micronaut.html#classLoader-java.lang.ClassLoader-">classLoader(ClassLoader)</a></span> - Method in class io.micronaut.runtime.<a href="io/micronaut/runtime/Micronaut.html" title="class in io.micronaut.runtime">Micronaut</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html#classLoaderMetrics--">classLoaderMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html#classLoaderMetrics--">classLoaderMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinderFactory</a></dt>
 <dd>
 <div class="block">JVM Class loader metrics bean.</div>
 </dd>
@@ -4820,7 +4832,9 @@
 <div class="block">Different data centers related to the instances.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#dataSource-io.micronaut.configuration.jdbc.hikari.DatasourceConfiguration-">dataSource(DatasourceConfiguration)</a></span> - Method in class io.micronaut.configuration.jdbc.hikari.<a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Method to wire up all the HikariCP connections based on the <a href="io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari"><code>DatasourceConfiguration</code></a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#dataSource-io.micronaut.configuration.jdbc.tomcat.DatasourceConfiguration-">dataSource(DatasourceConfiguration)</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.<a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.dbcp"><span class="typeNameLink">DatasourceConfiguration</span></a> - Class in <a href="io/micronaut/configuration/jdbc/dbcp/package-summary.html">io.micronaut.configuration.jdbc.dbcp</a></dt>
@@ -4847,18 +4861,55 @@
 <dd>
 <div class="block">Constructor.</div>
 </dd>
+<dt><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.dbcp"><span class="typeNameLink">DatasourceFactory</span></a> - Class in <a href="io/micronaut/configuration/jdbc/dbcp/package-summary.html">io.micronaut.configuration.jdbc.dbcp</a></dt>
+<dd>
+<div class="block">Creates a dbcp data source for each configuration bean.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceFactory.html#DatasourceFactory-io.micronaut.jdbc.DataSourceResolver-">DatasourceFactory(DataSourceResolver)</a></span> - Constructor for class io.micronaut.configuration.jdbc.dbcp.<a href="io/micronaut/configuration/jdbc/dbcp/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.dbcp">DatasourceFactory</a></dt>
+<dd>
+<div class="block">Default constructor.</div>
+</dd>
 <dt><a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.hikari"><span class="typeNameLink">DatasourceFactory</span></a> - Class in <a href="io/micronaut/configuration/jdbc/hikari/package-summary.html">io.micronaut.configuration.jdbc.hikari</a></dt>
 <dd>
 <div class="block">Creates a Hikari data source for each configuration bean.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#DatasourceFactory--">DatasourceFactory()</a></span> - Constructor for class io.micronaut.configuration.jdbc.hikari.<a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceFactory</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#DatasourceFactory-io.micronaut.context.ApplicationContext-">DatasourceFactory(ApplicationContext)</a></span> - Constructor for class io.micronaut.configuration.jdbc.hikari.<a href="io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.tomcat"><span class="typeNameLink">DatasourceFactory</span></a> - Class in <a href="io/micronaut/configuration/jdbc/tomcat/package-summary.html">io.micronaut.configuration.jdbc.tomcat</a></dt>
 <dd>
 <div class="block">Creates a tomcat data source for each configuration bean.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#DatasourceFactory--">DatasourceFactory()</a></span> - Constructor for class io.micronaut.configuration.jdbc.tomcat.<a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceFactory</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#DatasourceFactory-io.micronaut.jdbc.DataSourceResolver-">DatasourceFactory(DataSourceResolver)</a></span> - Constructor for class io.micronaut.configuration.jdbc.tomcat.<a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceFactory</a></dt>
+<dd>
+<div class="block">Default constructor.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinderFactory.html#dataSourceMeterBinder-java.lang.String-io.micronaut.jdbc.metadata.DataSourcePoolMetadata-">dataSourceMeterBinder(String, DataSourcePoolMetadata)</a></span> - Method in class io.micronaut.configuration.metrics.binder.datasource.<a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.datasource">DataSourcePoolMetricsBinderFactory</a></dt>
+<dd>
+<div class="block">Method to wire beans for each type of datasource.</div>
+</dd>
+<dt><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><span class="typeNameLink">DataSourcePoolMetadata</span></a>&lt;<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="type parameter in DataSourcePoolMetadata">T</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&gt; - Interface in <a href="io/micronaut/jdbc/metadata/package-summary.html">io.micronaut.jdbc.metadata</a></dt>
+<dd>
+<div class="block">Provides access meta-data that is commonly available from most pooled
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a> implementations.</div>
+</dd>
+<dt><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadataProvider.html" title="interface in io.micronaut.jdbc.metadata"><span class="typeNameLink">DataSourcePoolMetadataProvider</span></a> - Interface in <a href="io/micronaut/jdbc/metadata/package-summary.html">io.micronaut.jdbc.metadata</a></dt>
+<dd>
+<div class="block">Provide a <a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> based on a <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinder.html" title="class in io.micronaut.configuration.metrics.binder.datasource"><span class="typeNameLink">DataSourcePoolMetricsBinder</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/datasource/package-summary.html">io.micronaut.configuration.metrics.binder.datasource</a></dt>
+<dd>
+<div class="block">A <code>MeterBinder</code> for a <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.datasource"><span class="typeNameLink">DataSourcePoolMetricsBinderFactory</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/datasource/package-summary.html">io.micronaut.configuration.metrics.binder.datasource</a></dt>
+<dd>
+<div class="block">Instruments Micronaut related jdbc pool metrics via Micrometer.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinderFactory.html#DataSourcePoolMetricsBinderFactory--">DataSourcePoolMetricsBinderFactory()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.datasource.<a href="io/micronaut/configuration/metrics/binder/datasource/DataSourcePoolMetricsBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.datasource">DataSourcePoolMetricsBinderFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/jdbc/DataSourceResolver.html" title="interface in io.micronaut.jdbc"><span class="typeNameLink">DataSourceResolver</span></a> - Interface in <a href="io/micronaut/jdbc/package-summary.html">io.micronaut.jdbc</a></dt>
+<dd>
+<div class="block">Resolves the underlying target data source.</div>
+</dd>
 <dt><a href="io/micronaut/spring/tx/datasource/DataSourceTransactionManagerFactory.html" title="class in io.micronaut.spring.tx.datasource"><span class="typeNameLink">DataSourceTransactionManagerFactory</span></a> - Class in <a href="io/micronaut/spring/tx/datasource/package-summary.html">io.micronaut.spring.tx.datasource</a></dt>
 <dd>
 <div class="block">Configures a <code>DataSourceTransactionManager</code> for each configured JDBC <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a>.</div>
@@ -4886,6 +4937,18 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/http/MutableHttpHeaders.html#date-long-">date(long)</a></span> - Method in interface io.micronaut.http.<a href="io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></dt>
 <dd>
 <div class="block">Adds the DATE header for the given <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZonedDateTime.html?is-external=true" title="class or interface in java.time"><code>ZonedDateTime</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceFactory.html#dbcpDataSourcePoolMetadata-javax.sql.DataSource-">dbcpDataSourcePoolMetadata(DataSource)</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.<a href="io/micronaut/configuration/jdbc/dbcp/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.dbcp">DatasourceFactory</a></dt>
+<dd>
+<div class="block">Method to create a metadata object that allows pool value lookup for each datasource object.</div>
+</dd>
+<dt><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata"><span class="typeNameLink">DbcpDataSourcePoolMetadata</span></a> - Class in <a href="io/micronaut/configuration/jdbc/dbcp/metadata/package-summary.html">io.micronaut.configuration.jdbc.dbcp.metadata</a></dt>
+<dd>
+<div class="block"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> for a DBCP <code>BasicDataSource</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#DbcpDataSourcePoolMetadata-org.apache.commons.dbcp2.BasicDataSource-">DbcpDataSourcePoolMetadata(BasicDataSource)</a></span> - Constructor for class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">DBCP typed <a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/function/executor/FunctionApplication.html#DEBUG_OPTIONS">DEBUG_OPTIONS</a></span> - Static variable in class io.micronaut.function.executor.<a href="io/micronaut/function/executor/FunctionApplication.html" title="class in io.micronaut.function.executor">FunctionApplication</a></dt>
 <dd>
@@ -4986,6 +5049,10 @@
 <div class="block">The default conversion context.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/client/exceptions/HttpClientErrorDecoder.html#DEFAULT">DEFAULT</a></span> - Static variable in interface io.micronaut.http.client.exceptions.<a href="io/micronaut/http/client/exceptions/HttpClientErrorDecoder.html" title="interface in io.micronaut.http.client.exceptions">HttpClientErrorDecoder</a></dt>
+<dd>
+<div class="block">The default implementation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/DataSourceResolver.html#DEFAULT">DEFAULT</a></span> - Static variable in interface io.micronaut.jdbc.<a href="io/micronaut/jdbc/DataSourceResolver.html" title="interface in io.micronaut.jdbc">DataSourceResolver</a></dt>
 <dd>
 <div class="block">The default implementation.</div>
 </dd>
@@ -7515,7 +7582,7 @@
 <dd>
 <div class="block">A special type for file handling.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html#fileDescriptorMetrics--">fileDescriptorMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html#fileDescriptorMetrics--">fileDescriptorMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinderFactoryFactory</a></dt>
 <dd>
 <div class="block">Files metrics bean.</div>
 </dd>
@@ -8643,6 +8710,15 @@
 <dd>
 <div class="block">The time to wait to acquire a connection.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getActive--">getActive()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getActive--">getActive()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getActive--">getActive()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the current number of active connections that have been allocated from the
+ data source or <code>null</code> if that information is not available.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/context/BeanDefinitionRegistry.html#getActiveBeanRegistrations-io.micronaut.context.Qualifier-">getActiveBeanRegistrations(Qualifier&lt;?&gt;)</a></span> - Method in interface io.micronaut.context.<a href="io/micronaut/context/BeanDefinitionRegistry.html" title="interface in io.micronaut.context">BeanDefinitionRegistry</a></dt>
 <dd>
 <div class="block">Find active <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject"><code>Singleton</code></a> beans for the given qualifier.</div>
@@ -9314,6 +9390,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/web/router/RouteMatch.html#getBodyArgument--">getBodyArgument()</a></span> - Method in interface io.micronaut.web.router.<a href="io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getBorrowed--">getBorrowed()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the number of connections that have been borrowed from the
+ data source or 0 if that information is not available.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/function/client/aws/AWSLambdaConfiguration.html#getBuilder--">getBuilder()</a></span> - Method in class io.micronaut.function.client.aws.<a href="io/micronaut/function/client/aws/AWSLambdaConfiguration.html" title="class in io.micronaut.function.client.aws">AWSLambdaConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/tracing/brave/AsyncReporterConfiguration.html#getBuilder--">getBuilder()</a></span> - Method in class io.micronaut.tracing.brave.<a href="io/micronaut/tracing/brave/AsyncReporterConfiguration.html" title="class in io.micronaut.tracing.brave">AsyncReporterConfiguration</a></dt>
@@ -9780,6 +9861,19 @@
 <dd>
 <div class="block">A map of service ID to data centers to query.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html#getDataSource--">getDataSource()</a></span> - Method in class io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html" title="class in io.micronaut.jdbc.metadata">AbstractDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Allow implementations to get the datasource for usage in metrics, etc.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getDataSource--">getDataSource()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Allow implementations to get the datasource for usage in metrics, etc.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadataProvider.html#getDataSourcePoolMetadata--">getDataSourcePoolMetadata()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadataProvider.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadataProvider</a></dt>
+<dd>
+<div class="block">Return the <a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> instance able to manage the specified
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a> or <code>null</code> if the given data source could not be handled.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/HttpHeaders.html#getDate-java.lang.CharSequence-">getDate(CharSequence)</a></span> - Method in interface io.micronaut.http.<a href="io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http">HttpHeaders</a></dt>
 <dd>
 <div class="block">Obtain the date header.</div>
@@ -9854,9 +9948,13 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/aop/chain/MethodInterceptorChain.html#getDeclaringType--">getDeclaringType()</a></span> - Method in class io.micronaut.aop.chain.<a href="io/micronaut/aop/chain/MethodInterceptorChain.html" title="class in io.micronaut.aop.chain">MethodInterceptorChain</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/context/AbstractBeanDefinition.html#getDeclaringType--">getDeclaringType()</a></span> - Method in class io.micronaut.context.<a href="io/micronaut/context/AbstractBeanDefinition.html" title="class in io.micronaut.context">AbstractBeanDefinition</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/context/AbstractExecutableMethod.html#getDeclaringType--">getDeclaringType()</a></span> - Method in class io.micronaut.context.<a href="io/micronaut/context/AbstractExecutableMethod.html" title="class in io.micronaut.context">AbstractExecutableMethod</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/context/BeanResolutionContext.Segment.html#getDeclaringType--">getDeclaringType()</a></span> - Method in interface io.micronaut.context.<a href="io/micronaut/context/BeanResolutionContext.Segment.html" title="interface in io.micronaut.context">BeanResolutionContext.Segment</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/inject/BeanDefinition.html#getDeclaringType--">getDeclaringType()</a></span> - Method in interface io.micronaut.inject.<a href="io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/inject/configuration/PropertyMetadata.html#getDeclaringType--">getDeclaringType()</a></span> - Method in class io.micronaut.inject.configuration.<a href="io/micronaut/inject/configuration/PropertyMetadata.html" title="class in io.micronaut.inject.configuration">PropertyMetadata</a></dt>
 <dd>&nbsp;</dd>
@@ -9871,6 +9969,14 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/web/router/RouteMatch.html#getDeclaringType--">getDeclaringType()</a></span> - Method in interface io.micronaut.web.router.<a href="io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a></dt>
 <dd>
 <div class="block">The declaring type of the route.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getDefaultAutoCommit--">getDefaultAutoCommit()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getDefaultAutoCommit--">getDefaultAutoCommit()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getDefaultAutoCommit--">getDefaultAutoCommit()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">The default auto-commit state of connections created by this pool.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/client/HttpClientConfiguration.html#getDefaultCharset--">getDefaultCharset()</a></span> - Method in class io.micronaut.http.client.<a href="io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a></dt>
 <dd>&nbsp;</dd>
@@ -10557,6 +10663,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/security/authentication/UsernamePasswordCredentials.html#getIdentity--">getIdentity()</a></span> - Method in class io.micronaut.security.authentication.<a href="io/micronaut/security/authentication/UsernamePasswordCredentials.html" title="class in io.micronaut.security.authentication">UsernamePasswordCredentials</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getIdle--">getIdle()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getIdle--">getIdle()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getIdle--">getIdle()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the number of idle connections in the pool.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/server/HttpServerConfiguration.html#getIdleTime--">getIdleTime()</a></span> - Method in class io.micronaut.http.server.<a href="io/micronaut/http/server/HttpServerConfiguration.html" title="class in io.micronaut.http.server">HttpServerConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html#getImageId--">getImageId()</a></span> - Method in class io.micronaut.discovery.cloud.aws.<a href="io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html" title="class in io.micronaut.discovery.cloud.aws">AmazonEC2InstanceMetadata</a></dt>
@@ -10968,6 +11082,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/uri/UriTypeMatchTemplate.TypedUriMatchTemplateParser.html#getMatchTemplate--">getMatchTemplate()</a></span> - Method in class io.micronaut.http.uri.<a href="io/micronaut/http/uri/UriTypeMatchTemplate.TypedUriMatchTemplateParser.html" title="class in io.micronaut.http.uri">UriTypeMatchTemplate.TypedUriMatchTemplateParser</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getMax--">getMax()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getMax--">getMax()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getMax--">getMax()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the maximum number of active connections that can be allocated at the same
+ time or <code>-1</code> if there is no limit.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/session/SessionConfiguration.html#getMaxActiveSessions--">getMaxActiveSessions()</a></span> - Method in class io.micronaut.session.<a href="io/micronaut/session/SessionConfiguration.html" title="class in io.micronaut.session">SessionConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/cookie/Cookie.html#getMaxAge--">getMaxAge()</a></span> - Method in interface io.micronaut.http.cookie.<a href="io/micronaut/http/cookie/Cookie.html" title="interface in io.micronaut.http.cookie">Cookie</a></dt>
@@ -11145,6 +11268,15 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html#getMetricDetails-java.lang.String-java.util.List-">getMetricDetails(String, List&lt;String&gt;)</a></span> - Method in class io.micronaut.configuration.metrics.management.endpoint.<a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html" title="class in io.micronaut.configuration.metrics.management.endpoint">MetricsEndpoint</a></dt>
 <dd>
 <div class="block">Method to read individual metric data.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getMin--">getMin()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getMin--">getMin()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getMin--">getMin()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the minimum number of idle connections in the pool or <code>null</code> if that
+ information is not available.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ModelAndView.html#getModel--">getModel()</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a></dt>
 <dd>&nbsp;</dd>
@@ -12118,6 +12250,11 @@
 <dd>
 <div class="block">Returns the registration timestamp.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getReleasedCount--">getReleasedCount()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the number of connections that have been released from the
+ data source or 0 if that information is not available.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/core/cli/CommandLine.html#getRemainingArgs--">getRemainingArgs()</a></span> - Method in interface io.micronaut.core.cli.<a href="io/micronaut/core/cli/CommandLine.html" title="interface in io.micronaut.core.cli">CommandLine</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/core/cli/CommandLine.html#getRemainingArgsString--">getRemainingArgsString()</a></span> - Method in interface io.micronaut.core.cli.<a href="io/micronaut/core/cli/CommandLine.html" title="interface in io.micronaut.core.cli">CommandLine</a></dt>
@@ -13048,6 +13185,13 @@
 <dd>
 <div class="block">The URLs.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html#getUsage--">getUsage()</a></span> - Method in class io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/AbstractDataSourcePoolMetadata.html" title="class in io.micronaut.jdbc.metadata">AbstractDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getUsage--">getUsage()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the usage of the pool as value between 0 and 1 (or -1 if the pool is not
+ limited).</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceConfiguration.html#getUsername--">getUsername()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.<a href="io/micronaut/configuration/jdbc/dbcp/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.dbcp">DatasourceConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html#getUsername--">getUsername()</a></span> - Method in class io.micronaut.configuration.jdbc.hikari.<a href="io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration</a></dt>
@@ -13080,9 +13224,13 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/DatasourceConfiguration.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.<a href="io/micronaut/configuration/jdbc/dbcp/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.dbcp">DatasourceConfiguration</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.configuration.jdbc.dbcp.metadata.<a href="io/micronaut/configuration/jdbc/dbcp/metadata/DbcpDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.dbcp.metadata">DbcpDataSourcePoolMetadata</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.configuration.jdbc.hikari.<a href="io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceConfiguration.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.<a href="io/micronaut/configuration/jdbc/tomcat/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceConfiguration</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/jdbc/BasicJdbcConfiguration.html#getValidationQuery--">getValidationQuery()</a></span> - Method in interface io.micronaut.jdbc.<a href="io/micronaut/jdbc/BasicJdbcConfiguration.html" title="interface in io.micronaut.jdbc">BasicJdbcConfiguration</a></dt>
 <dd>&nbsp;</dd>
@@ -13092,6 +13240,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/jdbc/JdbcDatabaseManager.JdbcDatabase.html#getValidationQuery--">getValidationQuery()</a></span> - Method in class io.micronaut.jdbc.<a href="io/micronaut/jdbc/JdbcDatabaseManager.JdbcDatabase.html" title="class in io.micronaut.jdbc">JdbcDatabaseManager.JdbcDatabase</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html#getValidationQuery--">getValidationQuery()</a></span> - Method in interface io.micronaut.jdbc.metadata.<a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata">DataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Return the query to use to validate that a connection is valid or <code>null</code> if
+ that information is not available.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/archaius1/EnvironmentDeploymentContext.html#getValue-com.netflix.config.DeploymentContext.ContextKey-">getValue(DeploymentContext.ContextKey)</a></span> - Method in class io.micronaut.configuration.archaius1.<a href="io/micronaut/configuration/archaius1/EnvironmentDeploymentContext.html" title="class in io.micronaut.configuration.archaius1">EnvironmentDeploymentContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/configuration/lettuce/cache/RedisCache.html#getValue-io.micronaut.core.type.Argument-io.micronaut.configuration.lettuce.cache.SyncCacheCommands-byte:A-">getValue(Argument&lt;T&gt;, SyncCacheCommands, byte[])</a></span> - Method in class io.micronaut.configuration.lettuce.cache.<a href="io/micronaut/configuration/lettuce/cache/RedisCache.html" title="class in io.micronaut.configuration.lettuce.cache">RedisCache</a></dt>
@@ -15271,6 +15424,8 @@
 <dd>
 <div class="block">Configuration for Apache DBCP data sources.</div>
 </dd>
+<dt><a href="io/micronaut/configuration/jdbc/dbcp/metadata/package-summary.html">io.micronaut.configuration.jdbc.dbcp.metadata</a> - package io.micronaut.configuration.jdbc.dbcp.metadata</dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/configuration/jdbc/hikari/package-summary.html">io.micronaut.configuration.jdbc.hikari</a> - package io.micronaut.configuration.jdbc.hikari</dt>
 <dd>
 <div class="block">Configuration for Hikari data sources.</div>
@@ -15279,6 +15434,8 @@
 <dd>
 <div class="block">Configuration for Tomcat JDBC data sources.</div>
 </dd>
+<dt><a href="io/micronaut/configuration/jdbc/tomcat/metadata/package-summary.html">io.micronaut.configuration.jdbc.tomcat.metadata</a> - package io.micronaut.configuration.jdbc.tomcat.metadata</dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/configuration/kafka/package-summary.html">io.micronaut.configuration.kafka</a> - package io.micronaut.configuration.kafka</dt>
 <dd>
 <div class="block">Contains classes, interfaces and annotations that provide integration with Apache Kafka.</div>
@@ -15374,6 +15531,8 @@
 <div class="block">Annotations specific to metrics configuration.</div>
 </dd>
 <dt><a href="io/micronaut/configuration/metrics/binder/cache/package-summary.html">io.micronaut.configuration.metrics.binder.cache</a> - package io.micronaut.configuration.metrics.binder.cache</dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/configuration/metrics/binder/datasource/package-summary.html">io.micronaut.configuration.metrics.binder.datasource</a> - package io.micronaut.configuration.metrics.binder.datasource</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/configuration/metrics/binder/executor/package-summary.html">io.micronaut.configuration.metrics.binder.executor</a> - package io.micronaut.configuration.metrics.binder.executor</dt>
 <dd>&nbsp;</dd>
@@ -16098,6 +16257,8 @@
 <dd>
 <div class="block">JDBC configuration for Micronaut.</div>
 </dd>
+<dt><a href="io/micronaut/jdbc/metadata/package-summary.html">io.micronaut.jdbc.metadata</a> - package io.micronaut.jdbc.metadata</dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/management/endpoint/package-summary.html">io.micronaut.management.endpoint</a> - package io.micronaut.management.endpoint</dt>
 <dd>
 <div class="block">Micronaut endpoint configuration.</div>
@@ -17603,21 +17764,21 @@
 <dd>
 <div class="block">A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that emits a fixed single value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html#jvmGcMetrics--">jvmGcMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html#jvmGcMetrics--">jvmGcMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinderFactory</a></dt>
 <dd>
 <div class="block">JVM GC metrics bean.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html#jvmMemoryMetrics--">jvmMemoryMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html#jvmMemoryMetrics--">jvmMemoryMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinderFactory</a></dt>
 <dd>
 <div class="block">JVM Memory metrics bean.</div>
 </dd>
-<dt><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm"><span class="typeNameLink">JvmMeterRegistryBinder</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/jvm/package-summary.html">io.micronaut.configuration.metrics.binder.jvm</a></dt>
+<dt><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm"><span class="typeNameLink">JvmMeterRegistryBinderFactory</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/jvm/package-summary.html">io.micronaut.configuration.metrics.binder.jvm</a></dt>
 <dd>
 <div class="block">Binder factory that will create the jvm metrics beans.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html#JvmMeterRegistryBinder--">JvmMeterRegistryBinder()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html#JvmMeterRegistryBinderFactory--">JvmMeterRegistryBinderFactory()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinderFactory</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html#jvmThreadMetrics--">jvmThreadMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html#jvmThreadMetrics--">jvmThreadMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.jvm.<a href="io/micronaut/configuration/metrics/binder/jvm/JvmMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.jvm">JvmMeterRegistryBinderFactory</a></dt>
 <dd>
 <div class="block">JVM Thread metrics bean.</div>
 </dd>
@@ -18158,13 +18319,13 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/management/endpoint/loggers/impl/LogbackLoggingSystem.html#LogbackLoggingSystem--">LogbackLoggingSystem()</a></span> - Constructor for class io.micronaut.management.endpoint.loggers.impl.<a href="io/micronaut/management/endpoint/loggers/impl/LogbackLoggingSystem.html" title="class in io.micronaut.management.endpoint.loggers.impl">LogbackLoggingSystem</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.logging"><span class="typeNameLink">LogbackMeterRegistryBinder</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/logging/package-summary.html">io.micronaut.configuration.metrics.binder.logging</a></dt>
+<dt><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.logging"><span class="typeNameLink">LogbackMeterRegistryBinderFactory</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/logging/package-summary.html">io.micronaut.configuration.metrics.binder.logging</a></dt>
 <dd>
 <div class="block">Binder factory that will create the logback metrics beans.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinder.html#LogbackMeterRegistryBinder--">LogbackMeterRegistryBinder()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.logging.<a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.logging">LogbackMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinderFactory.html#LogbackMeterRegistryBinderFactory--">LogbackMeterRegistryBinderFactory()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.logging.<a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.logging">LogbackMeterRegistryBinderFactory</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinder.html#logbackMetrics--">logbackMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.logging.<a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.logging">LogbackMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinderFactory.html#logbackMetrics--">logbackMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.logging.<a href="io/micronaut/configuration/metrics/binder/logging/LogbackMeterRegistryBinderFactory.html" title="class in io.micronaut.configuration.metrics.binder.logging">LogbackMeterRegistryBinderFactory</a></dt>
 <dd>
 <div class="block">Logback metrics bean.</div>
 </dd>
@@ -18746,7 +18907,7 @@
 <dd>
 <div class="block">Provides a metrics endpoint to visualize metrics.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html#MetricsEndpoint-java.util.Collection-">MetricsEndpoint(Collection&lt;MeterRegistry&gt;)</a></span> - Constructor for class io.micronaut.configuration.metrics.management.endpoint.<a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html" title="class in io.micronaut.configuration.metrics.management.endpoint">MetricsEndpoint</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html#MetricsEndpoint-java.util.Collection-io.micronaut.context.ApplicationContext-">MetricsEndpoint(Collection&lt;MeterRegistry&gt;, ApplicationContext)</a></span> - Constructor for class io.micronaut.configuration.metrics.management.endpoint.<a href="io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html" title="class in io.micronaut.configuration.metrics.management.endpoint">MetricsEndpoint</a></dt>
 <dd>
 <div class="block">Constructor for metrics endpoint.</div>
 </dd>
@@ -21139,7 +21300,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/context/env/AbstractPropertySourceLoader.html#processMap-java.util.Map-java.util.Map-java.lang.String-">processMap(Map&lt;String, Object&gt;, Map, String)</a></span> - Method in class io.micronaut.context.env.<a href="io/micronaut/context/env/AbstractPropertySourceLoader.html" title="class in io.micronaut.context.env">AbstractPropertySourceLoader</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html#processorMetrics--">processorMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html#processorMetrics--">processorMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinderFactoryFactory</a></dt>
 <dd>
 <div class="block">Processor metrics bean.</div>
 </dd>
@@ -22447,6 +22608,12 @@
 <dd>
 <div class="block">Resolve a <a href="io/micronaut/http/client/LoadBalancer.html" title="interface in io.micronaut.http.client"><code>LoadBalancer</code></a> for the given references.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/jdbc/DataSourceResolver.html#resolve-javax.sql.DataSource-">resolve(DataSource)</a></span> - Method in interface io.micronaut.jdbc.<a href="io/micronaut/jdbc/DataSourceResolver.html" title="interface in io.micronaut.jdbc">DataSourceResolver</a></dt>
+<dd>
+<div class="block">Resolves the underlying target data source in the case it has been wrapped by proxying / instrumentation logic.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/tx/datasource/SpringDataSourceResolver.html#resolve-javax.sql.DataSource-">resolve(DataSource)</a></span> - Method in class io.micronaut.spring.tx.datasource.<a href="io/micronaut/spring/tx/datasource/SpringDataSourceResolver.html" title="class in io.micronaut.spring.tx.datasource">SpringDataSourceResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/web/router/resource/StaticResourceResolver.html#resolve-java.lang.String-">resolve(String)</a></span> - Method in class io.micronaut.web.router.resource.<a href="io/micronaut/web/router/resource/StaticResourceResolver.html" title="class in io.micronaut.web.router.resource">StaticResourceResolver</a></dt>
 <dd>
 <div class="block">Resolves a path to a URL.</div>
@@ -25863,6 +26030,12 @@
 <dd>
 <div class="block">Applied to parameters of a method to indicate which parameters should be included in span tags.</div>
 </dd>
+<dt><a href="io/micronaut/spring/tx/datasource/SpringDataSourceResolver.html" title="class in io.micronaut.spring.tx.datasource"><span class="typeNameLink">SpringDataSourceResolver</span></a> - Class in <a href="io/micronaut/spring/tx/datasource/package-summary.html">io.micronaut.spring.tx.datasource</a></dt>
+<dd>
+<div class="block">Unwraps spring data source proxies.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/tx/datasource/SpringDataSourceResolver.html#SpringDataSourceResolver--">SpringDataSourceResolver()</a></span> - Constructor for class io.micronaut.spring.tx.datasource.<a href="io/micronaut/spring/tx/datasource/SpringDataSourceResolver.html" title="class in io.micronaut.spring.tx.datasource">SpringDataSourceResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/cli/io/support/SpringIOUtils.html" title="class in io.micronaut.cli.io.support"><span class="typeNameLink">SpringIOUtils</span></a> - Class in <a href="io/micronaut/cli/io/support/package-summary.html">io.micronaut.cli.io.support</a></dt>
 <dd>
 <div class="block">Simple utility methods for file and stream copying.</div>
@@ -26563,11 +26736,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/http/server/types/files/SystemFileCustomizableResponseType.html#SystemFileCustomizableResponseType-java.io.File-">SystemFileCustomizableResponseType(File)</a></span> - Constructor for class io.micronaut.http.server.types.files.<a href="io/micronaut/http/server/types/files/SystemFileCustomizableResponseType.html" title="class in io.micronaut.http.server.types.files">SystemFileCustomizableResponseType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.system"><span class="typeNameLink">SystemMeterRegistryBinder</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/system/package-summary.html">io.micronaut.configuration.metrics.binder.system</a></dt>
+<dt><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html" title="class in io.micronaut.configuration.metrics.binder.system"><span class="typeNameLink">SystemMeterRegistryBinderFactoryFactory</span></a> - Class in <a href="io/micronaut/configuration/metrics/binder/system/package-summary.html">io.micronaut.configuration.metrics.binder.system</a></dt>
 <dd>
 <div class="block">Binder factory that will create the system metrics beans.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html#SystemMeterRegistryBinder--">SystemMeterRegistryBinder()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html#SystemMeterRegistryBinderFactoryFactory--">SystemMeterRegistryBinderFactoryFactory()</a></span> - Constructor for class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinderFactoryFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/context/env/SystemPropertiesPropertySource.html" title="class in io.micronaut.context.env"><span class="typeNameLink">SystemPropertiesPropertySource</span></a> - Class in <a href="io/micronaut/context/env/package-summary.html">io.micronaut.context.env</a></dt>
 <dd>
@@ -26862,6 +27035,18 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/security/token/TokenAuthenticationFetcher.html#tokenValidators">tokenValidators</a></span> - Variable in class io.micronaut.security.token.<a href="io/micronaut/security/token/TokenAuthenticationFetcher.html" title="class in io.micronaut.security.token">TokenAuthenticationFetcher</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata"><span class="typeNameLink">TomcatDataSourcePoolMetadata</span></a> - Class in <a href="io/micronaut/configuration/jdbc/tomcat/metadata/package-summary.html">io.micronaut.configuration.jdbc.tomcat.metadata</a></dt>
+<dd>
+<div class="block"><a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> for a Tomcat <code>DataSource</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html#TomcatDataSourcePoolMetadata-org.apache.tomcat.jdbc.pool.DataSource-">TomcatDataSourcePoolMetadata(DataSource)</a></span> - Constructor for class io.micronaut.configuration.jdbc.tomcat.metadata.<a href="io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></dt>
+<dd>
+<div class="block">Tomcat typed <a href="io/micronaut/jdbc/metadata/DataSourcePoolMetadata.html" title="interface in io.micronaut.jdbc.metadata"><code>DataSourcePoolMetadata</code></a> object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#tomcatPoolDataSourceMetadataProvider-javax.sql.DataSource-">tomcatPoolDataSourceMetadataProvider(DataSource)</a></span> - Method in class io.micronaut.configuration.jdbc.tomcat.<a href="io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceFactory</a></dt>
+<dd>
+<div class="block">Method to create a metadata object that allows pool value lookup for each datasource object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/core/io/buffer/ByteBuffer.html#toOutputStream--">toOutputStream()</a></span> - Method in interface io.micronaut.core.io.buffer.<a href="io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer">ByteBuffer</a></dt>
 <dd>
 <div class="block">Convert the <a href="io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer"><code>ByteBuffer</code></a> into an output stream.</div>
@@ -27391,7 +27576,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/core/async/subscriber/SingleThreadedBufferingSubscriber.html#upstreamSubscription">upstreamSubscription</a></span> - Variable in class io.micronaut.core.async.subscriber.<a href="io/micronaut/core/async/subscriber/SingleThreadedBufferingSubscriber.html" title="class in io.micronaut.core.async.subscriber">SingleThreadedBufferingSubscriber</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html#uptimeMetrics--">uptimeMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinder.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinder</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html#uptimeMetrics--">uptimeMetrics()</a></span> - Method in class io.micronaut.configuration.metrics.binder.system.<a href="io/micronaut/configuration/metrics/binder/system/SystemMeterRegistryBinderFactoryFactory.html" title="class in io.micronaut.configuration.metrics.binder.system">SystemMeterRegistryBinderFactoryFactory</a></dt>
 <dd>
 <div class="block">Uptime metrics bean.</div>
 </dd>

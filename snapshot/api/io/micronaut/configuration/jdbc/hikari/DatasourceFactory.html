@@ -120,7 +120,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>James Kleeh</dd>
+<dd>James Kleeh, Christian Oestreich</dd>
 </dl>
 </li>
 </ul>
@@ -140,7 +140,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#DatasourceFactory--">DatasourceFactory</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#DatasourceFactory-io.micronaut.context.ApplicationContext-">DatasourceFactory</a></span>(<a href="../../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;applicationContext)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -163,7 +163,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#dataSource-io.micronaut.configuration.jdbc.hikari.DatasourceConfiguration-">dataSource</a></span>(<a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration</a>&nbsp;datasourceConfiguration)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceFactory.html#dataSource-io.micronaut.configuration.jdbc.hikari.DatasourceConfiguration-">dataSource</a></span>(<a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration</a>&nbsp;datasourceConfiguration)</code>
+<div class="block">Method to wire up all the HikariCP connections based on the <a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari"><code>DatasourceConfiguration</code></a>.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -187,13 +189,13 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DatasourceFactory--">
+<a name="DatasourceFactory-io.micronaut.context.ApplicationContext-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DatasourceFactory</h4>
-<pre>public&nbsp;DatasourceFactory()</pre>
+<pre>public&nbsp;DatasourceFactory(<a href="../../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;applicationContext)</pre>
 </li>
 </ul>
 </li>
@@ -212,6 +214,8 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <h4>dataSource</h4>
 <pre><a href="../../../../../io/micronaut/context/annotation/EachBean.html" title="annotation in io.micronaut.context.annotation">@EachBean</a>(<a href="../../../../../io/micronaut/context/annotation/EachBean.html#value--">value</a>=<a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration.class</a>)
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource(<a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari">DatasourceConfiguration</a>&nbsp;datasourceConfiguration)</pre>
+<div class="block">Method to wire up all the HikariCP connections based on the <a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari"><code>DatasourceConfiguration</code></a>.
+ If a <code>MeterRegistry</code> bean exists then the registry will be added to the datasource.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>datasourceConfiguration</code> - A <a href="../../../../../io/micronaut/configuration/jdbc/hikari/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.hikari"><code>DatasourceConfiguration</code></a></dd>

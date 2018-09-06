@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -120,7 +120,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>James Kleeh</dd>
+<dd>James Kleeh, Christian Oestreich</dd>
 </dl>
 </li>
 </ul>
@@ -140,7 +140,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#DatasourceFactory--">DatasourceFactory</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#DatasourceFactory-io.micronaut.jdbc.DataSourceResolver-">DatasourceFactory</a></span>(<a href="../../../../../io/micronaut/jdbc/DataSourceResolver.html" title="interface in io.micronaut.jdbc">DataSourceResolver</a>&nbsp;dataSourceResolver)</code>
+<div class="block">Default constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -165,6 +167,12 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#dataSource-io.micronaut.configuration.jdbc.tomcat.DatasourceConfiguration-">dataSource</a></span>(<a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceConfiguration</a>&nbsp;datasourceConfiguration)</code>&nbsp;</td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceFactory.html#tomcatPoolDataSourceMetadataProvider-javax.sql.DataSource-">tomcatPoolDataSourceMetadataProvider</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>
+<div class="block">Method to create a metadata object that allows pool value lookup for each datasource object.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -187,13 +195,19 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DatasourceFactory--">
+<a name="DatasourceFactory-io.micronaut.jdbc.DataSourceResolver-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DatasourceFactory</h4>
-<pre>public&nbsp;DatasourceFactory()</pre>
+<pre>public&nbsp;DatasourceFactory(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                         <a href="../../../../../io/micronaut/jdbc/DataSourceResolver.html" title="interface in io.micronaut.jdbc">DataSourceResolver</a>&nbsp;dataSourceResolver)</pre>
+<div class="block">Default constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>dataSourceResolver</code> - The data source resolver</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -217,6 +231,24 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSou
 <dd><code>datasourceConfiguration</code> - A <a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.tomcat"><code>DatasourceConfiguration</code></a></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An Apache Tomcat <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="tomcatPoolDataSourceMetadataProvider-javax.sql.DataSource-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tomcatPoolDataSourceMetadataProvider</h4>
+<pre><a href="../../../../../io/micronaut/context/annotation/EachBean.html" title="annotation in io.micronaut.context.annotation">@EachBean</a>(<a href="../../../../../io/micronaut/context/annotation/EachBean.html#value--">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">javax.sql.DataSource.class</a>)
+ <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=<a href="../../../../../io/micronaut/configuration/jdbc/tomcat/DatasourceConfiguration.html" title="class in io.micronaut.configuration.jdbc.tomcat">DatasourceConfiguration.class</a>)
+public&nbsp;<a href="../../../../../io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata">TomcatDataSourcePoolMetadata</a>&nbsp;tomcatPoolDataSourceMetadataProvider(<a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</pre>
+<div class="block">Method to create a metadata object that allows pool value lookup for each datasource object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>dataSource</code> - The datasource</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="../../../../../io/micronaut/configuration/jdbc/tomcat/metadata/TomcatDataSourcePoolMetadata.html" title="class in io.micronaut.configuration.jdbc.tomcat.metadata"><code>TomcatDataSourcePoolMetadata</code></a></dd>
 </dl>
 </li>
 </ul>
