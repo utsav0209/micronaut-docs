@@ -159,11 +159,23 @@ function addJsClass() {
 <div class="title">Computing Class Loading Requirements</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ java -jar build/libs/hello-world-0.1-all.jar</code></pre>
+$ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalClassLoadingAnalyzer</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the application is running you can simply stop the application and a <code>build/reflect.json</code> file will be generated containing the classes that were dynamically loaded by the application when started up. See <a href="https://github.com/oracle/graal/blob/master/substratevm/REFLECTION.md">GraalVM documentation</a> for information on the JSON format.</p>
+<p>The <code>GraalClassLoadingAnalyzer</code> will write out a <code>reflect.json</code> file computing the classloading requirements of the application.</p>
+</div>
+<div class="paragraph">
+<p>The default is to write this file to the <code>build</code> directory for Gradle and the <code>target</code> directory for Maven. You can alter the destination by specifying an argument:</p>
+</div>
+<div class="listingblock">
+<div class="title">Writing <code>reflect.json</code> to a custom location</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalClassLoadingAnalyzer somelocation/myreflect.json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generated <code>reflect.json</code> file contains the classes that were dynamically loaded by the application when started up. See <a href="https://github.com/oracle/graal/blob/master/substratevm/REFLECTION.md">GraalVM documentation</a> for information on the JSON format.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
