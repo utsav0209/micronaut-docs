@@ -192,8 +192,8 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#VARIABLE_MATCH_PATTERN">VARIABLE_MATCH_PATTERN</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#variableList">variableList</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#variableModifiers">variableModifiers</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -218,9 +218,10 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#UriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String...-">UriMatchTemplate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;templateString,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#UriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.util.Map-java.lang.String...-">UriMatchTemplate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;templateString,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/uri/UriTemplate.PathSegment.html" title="interface in io.micronaut.http.uri">UriTemplate.PathSegment</a>&gt;&nbsp;segments,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;matchPattern,
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>...&nbsp;variables)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -270,10 +271,11 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html" title="class in io.micronaut.http.uri">UriMatchTemplate</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#newUriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String:A-">newUriMatchTemplate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;uriTemplate,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html#newUriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String:A-java.util.Map-">newUriMatchTemplate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;uriTemplate,
                    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/uri/UriTemplate.PathSegment.html" title="interface in io.micronaut.http.uri">UriTemplate.PathSegment</a>&gt;&nbsp;newSegments,
                    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;newPattern,
-                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;variables)</code>&nbsp;</td>
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;variables,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../io/micronaut/http/uri/UriTemplate.html" title="class in io.micronaut.http.uri">UriTemplate</a></code></td>
@@ -344,13 +346,13 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 <pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a> pattern</pre>
 </li>
 </ul>
-<a name="variableList">
+<a name="variableModifiers">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>variableList</h4>
-<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; variableList</pre>
+<h4>variableModifiers</h4>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt; variableModifiers</pre>
 </li>
 </ul>
 </li>
@@ -391,7 +393,7 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 </dl>
 </li>
 </ul>
-<a name="UriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String...-">
+<a name="UriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.util.Map-java.lang.String...-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -400,12 +402,14 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 <pre>protected&nbsp;UriMatchTemplate(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;templateString,
                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/uri/UriTemplate.PathSegment.html" title="interface in io.micronaut.http.uri">UriTemplate.PathSegment</a>&gt;&nbsp;segments,
                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;matchPattern,
+                           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers,
                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>...&nbsp;variables)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>templateString</code> - The template</dd>
 <dd><code>segments</code> - The list of segments</dd>
 <dd><code>matchPattern</code> - The match pattern</dd>
+<dd><code>variableModifiers</code> - The modifier char for each variable in route</dd>
 <dd><code>variables</code> - The variables</dd>
 </dl>
 </li>
@@ -418,7 +422,7 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="newUriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String:A-">
+<a name="newUriMatchTemplate-java.lang.CharSequence-java.util.List-java.util.regex.Pattern-java.lang.String:A-java.util.Map-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -427,13 +431,15 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatcher.html" title="in
 <pre>protected&nbsp;<a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html" title="class in io.micronaut.http.uri">UriMatchTemplate</a>&nbsp;newUriMatchTemplate(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;uriTemplate,
                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/uri/UriTemplate.PathSegment.html" title="interface in io.micronaut.http.uri">UriTemplate.PathSegment</a>&gt;&nbsp;newSegments,
                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;newPattern,
-                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;variables)</pre>
+                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;variables,
+                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>uriTemplate</code> - The template</dd>
 <dd><code>newSegments</code> - The list of new segments</dd>
 <dd><code>newPattern</code> - The list of new patters</dd>
 <dd><code>variables</code> - The variables</dd>
+<dd><code>variableModifiers</code> - The modifier char for each variable in route</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An instance of <a href="../../../../io/micronaut/http/uri/UriMatchTemplate.html" title="class in io.micronaut.http.uri"><code>UriMatchTemplate</code></a></dd>
 </dl>

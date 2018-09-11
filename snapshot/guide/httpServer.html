@@ -774,6 +774,28 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 <p>You can customize the name of the variable bound with the <a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a> annotation which accepts a value which is the name of the URI variable or request parameter to bind from.</p>
 </div>
 <div class="paragraph">
+<p>Also, in order to bind all request URI variables or request parameters to a command object, you can define URI route variable as <code>?pojo*</code>. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+
+@Controller("/api")
+public class BookmarkController {
+
+@Get("/bookmarks/list{?paginationCommand*}")
+public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
+    return HttpStatus.OK;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>In addition, there are other annotations within the <a href="../api/io/micronaut/http/annotation/package-summary.html">io.micronaut.http.annotation</a> package to bind from different sources.</p>
 </div>
 <div class="paragraph">

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -139,8 +139,9 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.DefaultUriMatchInfo.html#DefaultUriMatchInfo-java.lang.String-java.util.Map-">DefaultUriMatchInfo</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri,
-                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;variables)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.DefaultUriMatchInfo.html#DefaultUriMatchInfo-java.lang.String-java.util.Map-java.util.Map-">DefaultUriMatchInfo</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;variables,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -174,6 +175,12 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.DefaultUriMatchInfo.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.DefaultUriMatchInfo.html#isExploded-java.lang.String-">isExploded</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variable)</code>
+<div class="block">Checks whether the given variable is exploded (using the * modifier).</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/uri/UriMatchTemplate.DefaultUriMatchInfo.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -199,18 +206,20 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DefaultUriMatchInfo-java.lang.String-java.util.Map-">
+<a name="DefaultUriMatchInfo-java.lang.String-java.util.Map-java.util.Map-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DefaultUriMatchInfo</h4>
 <pre>protected&nbsp;DefaultUriMatchInfo(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri,
-                              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;variables)</pre>
+                              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;variables,
+                              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;variableModifiers)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>uri</code> - The URI</dd>
 <dd><code>variables</code> - The variables</dd>
+<dd><code>variableModifiers</code> - The variable modifiers</dd>
 </dl>
 </li>
 </ul>
@@ -249,6 +258,25 @@ implements <a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="
 <dd><code><a href="../../../../io/micronaut/http/uri/UriMatchInfo.html#getVariables--">getVariables</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="interface in io.micronaut.http.uri">UriMatchInfo</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The variable values following a successful match</dd>
+</dl>
+</li>
+</ul>
+<a name="isExploded-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isExploded</h4>
+<pre>public&nbsp;boolean&nbsp;isExploded(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variable)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/uri/UriMatchInfo.html#isExploded-java.lang.String-">UriMatchInfo</a></code></span></div>
+<div class="block">Checks whether the given variable is exploded (using the * modifier). See https://tools.ietf.org/html/rfc6570#section-3.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/http/uri/UriMatchInfo.html#isExploded-java.lang.String-">isExploded</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/uri/UriMatchInfo.html" title="interface in io.micronaut.http.uri">UriMatchInfo</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>variable</code> - The name of the variable</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if is exploded</dd>
 </dl>
 </li>
 </ul>
