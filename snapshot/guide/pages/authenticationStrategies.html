@@ -154,6 +154,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#render"><strong>15.3.5</strong><span>Token Render</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:10px"><a href="#tokenPropagation"><strong>15.3.6</strong><span>Token Propagation</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -998,6 +1001,70 @@ Pragma: no-cache
         "ROLE_USER"
     ],
 }</code></pre>
+</div>
+</div>
+
+
+<h2 id="tokenPropagation">15.3.3.6 Token Propagation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/tokenPropagation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Imagine you have a Gateway microservice which consumes three other microservices:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../img/tokenpropagation.svg" alt="tokenpropagation">
+</div>
+</div>
+<div class="paragraph">
+<p>If the incoming request <code>localhost:8080/api/books</code> contains a valid JWT token, you may want to propagate
+that token to other requests in your network.</p>
+</div>
+<div class="paragraph">
+<p>You can configure token propagation to achieve that.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    application:
+        name: gateway
+    security:
+        enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: "pleaseChangeThisSecretForANewOne"
+                            jwsAlgorithm: HS256
+            writer:
+                header:
+                    enabled: true
+                    headerName: "Authorization"
+                    prefix: "Bearer "
+            propagation:
+                enabled: true
+                serviceIdRegex: "http://localhost:(8083|8081|8082)"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous configuration, configures a <a href="../apiio/micronaut/security/token/writer/HttpHeaderTokenWriter.html">HttpHeaderTokenWriter</a> and a
+and a propagation filter, <a href="../apiio/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html">TokenPropagationHttpClientFilter</a>, which
+will propagate the security token seamlessly.</p>
+</div>
+<div class="paragraph">
+<p>If you use <a href="#serviceDiscovery">Service Discovery</a> features, you can use the service id in your service id regular expression:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">micronaut.security.token.propagation.serviceIdRegex="catalogue|recommendations|inventory"</code></pre>
 </div>
 </div>
 
