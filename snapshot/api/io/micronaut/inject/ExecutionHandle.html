@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":17};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">io.micronaut.inject</div>
-<h2 title="Interface ExecutionHandle" class="title">Interface ExecutionHandle&lt;R&gt;</h2>
+<h2 title="Interface ExecutionHandle" class="title">Interface ExecutionHandle&lt;T,R&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,6 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The target type</dd>
 <dd><code>R</code> - The result type</dd>
 </dl>
 <dl>
@@ -107,11 +108,11 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../io/micronaut/web/router/MethodBasedRouteMatch.html" title="interface in io.micronaut.web.router">MethodBasedRouteMatch</a>&lt;R&gt;, <a href="../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;R&gt;, <a href="../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;R&gt;</dd>
+<dd><a href="../../../io/micronaut/web/router/MethodBasedRouteMatch.html" title="interface in io.micronaut.web.router">MethodBasedRouteMatch</a>&lt;T,R&gt;, <a href="../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;T,R&gt;, <a href="../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">ExecutionHandle&lt;R&gt;</span>
+<pre>public interface <span class="typeNameLabel">ExecutionHandle&lt;T,R&gt;</span>
 extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegate.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataDelegate</a></pre>
 <div class="block"><p>Represents a handle to an executable object. Differs from <a href="../../../io/micronaut/core/type/Executable.html" title="interface in io.micronaut.core.type"><code>Executable</code></a> in that the
  first argument to <a href="../../../io/micronaut/inject/ExecutionHandle.html#invoke-java.lang.Object...-"><code>invoke(Object...)</code></a> is not the object instead the object is typically held within the
@@ -159,7 +160,7 @@ extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegat
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -173,9 +174,22 @@ extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegat
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/ExecutionHandle.html#getDeclaringType--">getDeclaringType</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../io/micronaut/inject/ExecutionHandle.html" title="type parameter in ExecutionHandle">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/ExecutionHandle.html#getTarget--">getTarget</a></span>()</code>
+<div class="block">The target of the method invocation.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/ExecutionHandle.html" title="type parameter in ExecutionHandle">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/ExecutionHandle.html#invoke-java.lang.Object...-">invoke</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)</code>
 <div class="block">Invokes the method.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static &lt;T2,R2&gt;&nbsp;<a href="../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;T2,R2&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/ExecutionHandle.html#of-T2-io.micronaut.inject.ExecutableMethod-">of</a></span>(T2&nbsp;bean,
+  <a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;T2,R2&gt;&nbsp;method)</code>
+<div class="block">Creates an <a href="../../../io/micronaut/inject/ExecutionHandle.html" title="interface in io.micronaut.inject"><code>ExecutionHandle</code></a> for the give bean and method.</div>
 </td>
 </tr>
 </table>
@@ -207,6 +221,20 @@ extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegat
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getTarget--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTarget</h4>
+<pre><a href="../../../io/micronaut/inject/ExecutionHandle.html" title="type parameter in ExecutionHandle">T</a>&nbsp;getTarget()</pre>
+<div class="block">The target of the method invocation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The target object</dd>
+</dl>
+</li>
+</ul>
 <a name="getDeclaringType--">
 <!--   -->
 </a>
@@ -236,7 +264,7 @@ extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegat
 <a name="invoke-java.lang.Object...-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>invoke</h4>
 <pre><a href="../../../io/micronaut/inject/ExecutionHandle.html" title="type parameter in ExecutionHandle">R</a>&nbsp;invoke(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)</pre>
@@ -246,6 +274,29 @@ extends <a href="../../../io/micronaut/core/annotation/AnnotationMetadataDelegat
 <dd><code>arguments</code> - The arguments</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The result</dd>
+</dl>
+</li>
+</ul>
+<a name="of-java.lang.Object-io.micronaut.inject.ExecutableMethod-">
+<!--   -->
+</a><a name="of-T2-io.micronaut.inject.ExecutableMethod-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>of</h4>
+<pre>static&nbsp;&lt;T2,R2&gt;&nbsp;<a href="../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;T2,R2&gt;&nbsp;of(T2&nbsp;bean,
+                                               <a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;T2,R2&gt;&nbsp;method)</pre>
+<div class="block">Creates an <a href="../../../io/micronaut/inject/ExecutionHandle.html" title="interface in io.micronaut.inject"><code>ExecutionHandle</code></a> for the give bean and method.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T2</code> - The bean type</dd>
+<dd><code>R2</code> - The method return type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bean</code> - The bean</dd>
+<dd><code>method</code> - The method</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The execution handle</dd>
 </dl>
 </li>
 </ul>

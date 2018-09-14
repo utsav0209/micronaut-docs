@@ -238,29 +238,35 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-transfers"><a href="#transfers"><strong>6.16</strong><span>File Transfers</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sse"><a href="#sse"><strong>6.17</strong><span>Server Sent Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-filters"><a href="#filters"><strong>6.17</strong><span>HTTP Filters</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-filters"><a href="#filters"><strong>6.18</strong><span>HTTP Filters</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessions"><a href="#sessions"><strong>6.18</strong><span>HTTP Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessions"><a href="#sessions"><strong>6.19</strong><span>HTTP Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sse"><a href="#sse"><strong>6.19</strong><span>Server Sent Events</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-serverEvents"><a href="#serverEvents"><strong>6.20</strong><span>Server Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-websocket"><a href="#websocket"><strong>6.20</strong><span>WebSocket Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-serverConfiguration"><a href="#serverConfiguration"><strong>6.21</strong><span>Configuring the HTTP Server</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-websocketServer"><a href="#websocketServer"><strong>6.20.1</strong><span>Using @ServerWebSocket</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-threadPools"><a href="#threadPools"><strong>6.21.1</strong><span>Configuring Server Thread Pools</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-websocketClient"><a href="#websocketClient"><strong>6.20.2</strong><span>Using @ClientWebSocket</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-cors"><a href="#cors"><strong>6.21.2</strong><span>Configuring CORS</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-serverEvents"><a href="#serverEvents"><strong>6.21</strong><span>Server Events</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-https"><a href="#https"><strong>6.21.3</strong><span>Securing the Server with HTTPS</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-serverConfiguration"><a href="#serverConfiguration"><strong>6.22</strong><span>Configuring the HTTP Server</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-views"><a href="#views"><strong>6.22</strong><span>Server Side View Rendering</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-threadPools"><a href="#threadPools"><strong>6.22.1</strong><span>Configuring Server Thread Pools</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-thymeleaf"><a href="#thymeleaf"><strong>6.22.1</strong><span>Thymeleaf</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-cors"><a href="#cors"><strong>6.22.2</strong><span>Configuring CORS</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-handlebars"><a href="#handlebars"><strong>6.22.2</strong><span>Handlebars.java</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-https"><a href="#https"><strong>6.22.3</strong><span>Securing the Server with HTTPS</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-velocity"><a href="#velocity"><strong>6.22.3</strong><span>Apache Velocity</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-views"><a href="#views"><strong>6.23</strong><span>Server Side View Rendering</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-thymeleaf"><a href="#thymeleaf"><strong>6.23.1</strong><span>Thymeleaf</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-handlebars"><a href="#handlebars"><strong>6.23.2</strong><span>Handlebars.java</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-velocity"><a href="#velocity"><strong>6.23.3</strong><span>Apache Velocity</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-httpClient"><a href="#httpClient"><strong>7</strong><span>The HTTP Client</span></a></div>
         
@@ -7630,131 +7636,7 @@ The <code>Content-Type</code> header of file responses will be calculated based 
 </div>
 
 
-<h2 id="sse">6.17 Server Sent Events</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/sse.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>The Micronaut HTTP server supports emitting <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server Sent Events (SSE)</a> using the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> API.</p>
-</div>
-<div class="paragraph">
-<p>To emit events from the server you simply return a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
-</div>
-<div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
-</div>
-<div class="paragraph">
-<p>Imagine for an example a event stream of news headlines, you may define a data class as follows:</p>
-</div>
-<div class="listingblock">
-<div class="title">Headline.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Headline {
-    private String title;
-    private String description;
-
-    public Headline() { }
-
-    public Headline(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To emit news headline events you can write a controller that returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
-</div>
-<div class="listingblock">
-<div class="title">Publishing Server Sent Events from a Controller</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
-import io.micronaut.http.sse.Event;
-import io.reactivex.Flowable;
-import org.reactivestreams.Publisher;
-
-@Controller("/headlines")
-public class HeadlineController {
-
-    @Get
-    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <i class="conum" data-value="1"></i><b>(1)</b>
-        String[] versions = new String[]{"1.0", "2.0"}; <i class="conum" data-value="2"></i><b>(2)</b>
-
-        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
-            if (i &lt; versions.length) {
-                emitter.onNext( <i class="conum" data-value="4"></i><b>(4)</b>
-                    Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
-                );
-            } else {
-                emitter.onComplete(); <i class="conum" data-value="5"></i><b>(5)</b>
-            }
-            return ++i;
-        });
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The controller method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>For each version of Micronaut a headline is emitted</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onNext</code> method is used to emit objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>. The <a href="../api/io/micronaut/http/sse/Event.html#of-ET-">Event.of(ET)</a> factory method is used to construct the event.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onComplete</code> method is used to indicate when to finish sending server sent events.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The above example will send back a response of type <code>text/event-stream</code> and for each  <a href="../api/io/micronaut/http/sse/Event.html">Event</a> emitted the <code>Headline</code> type previously will be converted to JSON resulting in responses such as:</p>
-</div>
-<div class="listingblock">
-<div class="title">Server Sent Event Response Output</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json"> data: {"title":"Micronaut 1.0 Released","description":"Come and get it"}
- data: {"title":"Micronaut 2.0 Released","description":"Come and get it"}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can use the methods of the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> interface to customize the Server Sent Event data sent back including associating event ids, comments, retry timeouts etc.</p>
-</div>
-
-
-<h2 id="filters">6.18 HTTP Filters</h2>
+<h2 id="filters">6.17 HTTP Filters</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/filters.adoc"'>
@@ -7940,7 +7822,7 @@ The examples use RxJava, however you can use any reactive framework that support
 </div>
 
 
-<h2 id="sessions">6.19 HTTP Sessions</h2>
+<h2 id="sessions">6.18 HTTP Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/sessions.adoc"'>
@@ -8304,7 +8186,479 @@ The <a href="../api/io/micronaut/configuration/lettuce/session/RedisSessionStore
 </div>
 
 
-<h2 id="serverEvents">6.20 Server Events</h2>
+<h2 id="sse">6.19 Server Sent Events</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/sse.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The Micronaut HTTP server supports emitting <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server Sent Events (SSE)</a> using the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> API.</p>
+</div>
+<div class="paragraph">
+<p>To emit events from the server you simply return a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
+</div>
+<div class="paragraph">
+<p>Imagine for an example a event stream of news headlines, you may define a data class as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">Headline.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Headline {
+    private String title;
+    private String description;
+
+    public Headline() { }
+
+    public Headline(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To emit news headline events you can write a controller that returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="title">Publishing Server Sent Events from a Controller</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+import io.micronaut.http.sse.Event;
+import io.reactivex.Flowable;
+import org.reactivestreams.Publisher;
+
+@Controller("/headlines")
+public class HeadlineController {
+
+    @Get
+    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <i class="conum" data-value="1"></i><b>(1)</b>
+        String[] versions = new String[]{"1.0", "2.0"}; <i class="conum" data-value="2"></i><b>(2)</b>
+
+        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
+            if (i &lt; versions.length) {
+                emitter.onNext( <i class="conum" data-value="4"></i><b>(4)</b>
+                    Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                );
+            } else {
+                emitter.onComplete(); <i class="conum" data-value="5"></i><b>(5)</b>
+            }
+            return ++i;
+        });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The controller method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>For each version of Micronaut a headline is emitted</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onNext</code> method is used to emit objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>. The <a href="../api/io/micronaut/http/sse/Event.html#of-ET-">Event.of(ET)</a> factory method is used to construct the event.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onComplete</code> method is used to indicate when to finish sending server sent events.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example will send back a response of type <code>text/event-stream</code> and for each  <a href="../api/io/micronaut/http/sse/Event.html">Event</a> emitted the <code>Headline</code> type previously will be converted to JSON resulting in responses such as:</p>
+</div>
+<div class="listingblock">
+<div class="title">Server Sent Event Response Output</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json"> data: {"title":"Micronaut 1.0 Released","description":"Come and get it"}
+ data: {"title":"Micronaut 2.0 Released","description":"Come and get it"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use the methods of the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> interface to customize the Server Sent Event data sent back including associating event ids, comments, retry timeouts etc.</p>
+</div>
+
+
+<h2 id="websocket">6.20 WebSocket Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut features dedicated support for creating WebSocket clients and servers. The <a href="../api/io/micronaut/websocket/annotation/package-summary.html">io.micronaut.websocket.annotation</a> package includes a set of annotations for defining both clients and servers.</p>
+</div>
+
+
+<h2 id="websocketServer">6.20.1 Using @ServerWebSocket</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket/websocketServer.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/websocket/annotation/ServerWebSocket.html">@ServerWebSocket</a> annotation can be applied to any class that should map to a WebSocket URI. The following example is a simple chat WebSocket implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.http.server.netty.websocket;
+
+import io.micronaut.websocket.WebSocketSession;
+import io.micronaut.websocket.annotation.*;
+import java.util.function.Predicate;
+
+@ServerWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
+public class ChatServerWebSocket {
+
+    @OnOpen <i class="conum" data-value="2"></i><b>(2)</b>
+    public void onOpen(String topic, String username, WebSocketSession session) {
+        String msg = "[" + username + "] Joined!";
+        session.broadcastSync(msg, isValid(topic, session));
+    }
+
+    @OnMessage <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onMessage(
+            String topic,
+            String username,
+            String message,
+            WebSocketSession session) {
+        String msg = "[" + username + "] " + message;
+        session.broadcastSync(msg, isValid(topic, session)); <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+
+    @OnClose <i class="conum" data-value="5"></i><b>(5)</b>
+    public void onClose(
+            String topic,
+            String username,
+            WebSocketSession session) {
+        String msg = "[" + username + "] Disconnected!";
+        session.broadcastSync(msg, isValid(topic, session));
+    }
+
+    private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
+        return s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/websocket/annotation/ServerWebSocket.html">@ServerWebSocket</a> annotation is used to define the path the WebSocket is mapped under. The URI can be a URI template.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <a href="../api/io/micronaut/websocket/annotation/OnOpen.html">@OnOpen</a> annotation is used to declare a method that is invoked when the WebSocket is opened.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <a href="../api/io/micronaut/websocket/annotation/OnMessage.html">@OnMessage</a> annotation is used to declare a method that is invoked when a message is received.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The passed <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> instance can be used to broadcast messages to other WebSocket clients.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <a href="../api/io/micronaut/websocket/annotation/OnClose.html">@OnClose</a> annotation is used to declare a method that is invoked when the WebSocket is closed.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A working example of WebSockets in action can be found in the <a href="https://github.com/micronaut-projects/micronaut-examples/tree/master/websocket-chat">Micronaut Examples</a> GitHub repository.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In terms of binding the method arguments to each WebSocket method can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A variable from the URI template (in the above example <code>topic</code> and <code>username</code> are variables in the URI template)</p>
+</li>
+<li>
+<p>An instance of <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_onclose_method">The @OnClose Method</h3>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/websocket/annotation/OnClose.html">@OnClose</a> method can also optionally receive a <a href="../api/io/micronaut/websocket/CloseReason.html">CloseReason</a>. The <code>@OnClose</code> method is invoked prior to the session closing.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_onmessage_method">The @OnMessage Method</h3>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/websocket/annotation/OnMessage.html">@OnMessage</a> method can define a parameter that is the message body. The parameter can be one of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Netty <code>WebSocketFrame</code></p>
+</li>
+<li>
+<p>Any Java primitive or simple type (such as <code>String</code>). In fact any type that can be converted from <code>ByteBuf</code> (you can register additional <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> beans if you wish to support a custom type).</p>
+</li>
+<li>
+<p>A <code>byte[]</code>, a <code>ByteBuf</code> or a Java NIO <code>ByteBuffer</code>.</p>
+</li>
+<li>
+<p>A Plain Old Java Object (POJO). In the case of a POJO the POJO will be decoded by default  as JSON using <a href="../api/io/micronaut/jackson/codec/JsonMediaTypeCodec.html">JsonMediaTypeCodec</a>. You can register a custom codec if necessary and define the content type of the handler using the <a href="../api/io/micronaut/http/annotation/Consumes.html">@Consumes</a> annotation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_onerror_method">The @OnError Method</h3>
+<div class="paragraph">
+<p>A method annotated with <a href="../api/io/micronaut/websocket/annotation/OnError.html">@OnError</a> can be added to implement custom error handling. The <code>@OnError</code> method can optionally define a parameter that receives the exception type that is to be handled. If no <code>@OnError</code> handling is present and a unrecoverable exception occurs the WebSocket is automatically closed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_non_blocking_message_handling">Non-Blocking Message Handling</h3>
+<div class="paragraph">
+<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@OnMessage
+public Publisher&lt;Message&gt; onMessage(
+        String topic,
+        String username,
+        Message message,
+        WebSocketSession session) {
+
+    String text = "[" + username + "] " + message.getText();
+    Message newMessage = new Message(text);
+    return session.broadcast(newMessage, isValid(topic, session));
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_serverwebsocket_and_scopes">@ServerWebSocket and Scopes</h3>
+<div class="paragraph">
+<p>By default a unique <code>@ServerWebSocket</code> instance is created for each WebSocket connection. This allows you to retrieve the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> from the <code>@OnOpen</code> handler and assign it to a field of the  <code>@ServerWebSocket</code> instance.</p>
+</div>
+<div class="paragraph">
+<p>If you define the <code>@ServerWebSocket</code> as <code>@Singleton</code> it should be noted that extra care will need to be taken to synchronize local state to avoid thread safety issues.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sharing_sessions_with_the_http_session">Sharing Sessions with the HTTP Session</h3>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> is by default backed by an in-memory map. If you add the the <code>session</code> module you can however share <a href="#sessions">sessions</a> between the HTTP server and the WebSocket server.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When sessions are backed by a persistent store such as Redis then after each message is processed the session is updated to the backing store.
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+<h2 id="websocketClient">6.20.2 Using @ClientWebSocket</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket/websocketClient.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/websocket/annotation/ClientWebSocket.html">@ClientWebSocket</a> annotation can be used in combination with the <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a> interface to define WebSocket clients.</p>
+</div>
+<div class="paragraph">
+<p>You can inject a reference to the a <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a> instance using the <a href="../api/io/micronaut/http/client/Client.html">@Client</a> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject
+@Client("http://localhost:8080")
+RxWebSocketClient webSocketClient;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This allows you to use the same service discovery and load balancing features for WebSocket clients.</p>
+</div>
+<div class="paragraph">
+<p>Once you have a reference to the <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a> interface you can use the <code>connect</code> method to obtain a connected instance of a bean annotated with <a href="../api/io/micronaut/websocket/annotation/ClientWebSocket.html">@ClientWebSocket</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example consider the following implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.websocket.WebSocketSession;
+import io.micronaut.websocket.annotation.*;
+import io.reactivex.Single;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+@ClientWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
+public abstract class ChatClientWebSocket implements AutoCloseable { <i class="conum" data-value="2"></i><b>(2)</b>
+
+    private WebSocketSession session;
+    private String topic;
+    private String username;
+    private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;();
+
+    @OnOpen
+    public void onOpen(String topic, String username, WebSocketSession session) { <i class="conum" data-value="3"></i><b>(3)</b>
+        this.topic = topic;
+        this.username = username;
+        this.session = session;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Collection&lt;String&gt; getReplies() {
+        return replies;
+    }
+
+    public WebSocketSession getSession() {
+        return session;
+    }
+
+    @OnMessage
+    public void onMessage(
+            String message) {
+        replies.add(message); <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The class is abstract (more on that later) and is annotated with <a href="../api/io/micronaut/websocket/annotation/ClientWebSocket.html">@ClientWebSocket</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The client must implement <code>AutoCloseable</code> and you should ensure that the connection is closed at some point.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>You can use the same annotations as on the server, in this case <code>@OnOpen</code> to obtain a reference to the underlying session.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>@OnMessage</code> annotation can be used to define the method that receives responses from the server.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can also define abstract methods that start with either <code>send</code> or <code>broadcast</code> and these methods will be implemented for you at compile time. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Send Methods</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public abstract void send(String message);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Send Methods</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public abstract io.reactivex.Single&lt;String&gt; send(String message);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example defines a send method that returns an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once you have defined a client class you can connect to the client socket and start sending messages:</p>
+</div>
+<div class="listingblock">
+<div class="title">Connecting a Client WebSocket</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClientWebSocket chatClient = webSocketClient.connect(ChatClientWebSocket.class, "/chat/football/fred").blockingFirst();
+chatClient.send("Hello World!");</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For illustration purposes we use <code>blockingFirst()</code> to obtain the client, it is however possible to combine <code>connect</code> (which returns an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>) to perform non-blocking interaction via WebSocket.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="serverEvents">6.21 Server Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverEvents.adoc"'>
@@ -8399,7 +8753,7 @@ public class MyBean {
 </div>
 
 
-<h2 id="serverConfiguration">6.21 Configuring the HTTP Server</h2>
+<h2 id="serverConfiguration">6.22 Configuring the HTTP Server</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration.adoc"'>
@@ -8433,7 +8787,7 @@ public class MyBean {
 </div>
 
 
-<h2 id="threadPools">6.21.1 Configuring Server Thread Pools</h2>
+<h2 id="threadPools">6.22.1 Configuring Server Thread Pools</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/threadPools.adoc"'>
@@ -8488,7 +8842,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 
 
-<h2 id="cors">6.21.2 Configuring CORS</h2>
+<h2 id="cors">6.22.2 Configuring CORS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/cors.adoc"'>
@@ -8682,7 +9036,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 
 
-<h2 id="https">6.21.3 Securing the Server with HTTPS</h2>
+<h2 id="https">6.22.3 Securing the Server with HTTPS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/https.adoc"'>
@@ -8914,7 +9268,7 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 </div>
 
 
-<h2 id="views">6.22 Server Side View Rendering</h2>
+<h2 id="views">6.23 Server Side View Rendering</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views.adoc"'>
@@ -9023,7 +9377,7 @@ class ViewsController {
 </div>
 
 
-<h2 id="thymeleaf">6.22.1 Thymeleaf</h2>
+<h2 id="thymeleaf">6.23.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
@@ -9163,7 +9517,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 
 
-<h2 id="handlebars">6.22.2 Handlebars.java</h2>
+<h2 id="handlebars">6.23.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/handlebars.adoc"'>
@@ -9207,7 +9561,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 </div>
 
 
-<h2 id="velocity">6.22.3 Apache Velocity</h2>
+<h2 id="velocity">6.23.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/velocity.adoc"'>

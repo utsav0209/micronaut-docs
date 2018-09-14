@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">io.micronaut.web.router</div>
-<h2 title="Interface MethodBasedRouteMatch" class="title">Interface MethodBasedRouteMatch&lt;R&gt;</h2>
+<h2 title="Interface MethodBasedRouteMatch" class="title">Interface MethodBasedRouteMatch&lt;T,R&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,20 +99,21 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The target</dd>
 <dd><code>R</code> - The route</dd>
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDelegate.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataDelegate</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/ExecutionHandle.html" title="interface in io.micronaut.inject">ExecutionHandle</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/MethodReference.html" title="interface in io.micronaut.inject">MethodReference</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&gt;, <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;</dd>
+<dd><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDelegate.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataDelegate</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/ExecutionHandle.html" title="interface in io.micronaut.inject">ExecutionHandle</a>&lt;T,R&gt;, <a href="../../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;T,R&gt;, <a href="../../../../io/micronaut/inject/MethodReference.html" title="interface in io.micronaut.inject">MethodReference</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&gt;, <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;R&gt;</dd>
+<dd><a href="../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">MethodBasedRouteMatch&lt;R&gt;</span>
-extends <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;R&gt;</pre>
+<pre>public interface <span class="typeNameLabel">MethodBasedRouteMatch&lt;T,R&gt;</span>
+extends <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;, <a href="../../../../io/micronaut/inject/MethodExecutionHandle.html" title="interface in io.micronaut.inject">MethodExecutionHandle</a>&lt;T,R&gt;</pre>
 <div class="block">Match a route based on a method.</div>
 </li>
 </ul>
@@ -187,7 +188,7 @@ extends <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="int
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.<a href="../../../../io/micronaut/inject/ExecutionHandle.html" title="interface in io.micronaut.inject">ExecutionHandle</a></h3>
-<code><a href="../../../../io/micronaut/inject/ExecutionHandle.html#getArguments--">getArguments</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#getDeclaringType--">getDeclaringType</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#invoke-java.lang.Object...-">invoke</a></code></li>
+<code><a href="../../../../io/micronaut/inject/ExecutionHandle.html#getArguments--">getArguments</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#getDeclaringType--">getDeclaringType</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#getTarget--">getTarget</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#invoke-java.lang.Object...-">invoke</a>, <a href="../../../../io/micronaut/inject/ExecutionHandle.html#of-T2-io.micronaut.inject.ExecutableMethod-">of</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.MethodReference">

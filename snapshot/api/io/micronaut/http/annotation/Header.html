@@ -97,9 +97,29 @@
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Repeatable.html?is-external=true" title="class or interface in java.lang.annotation">@Repeatable</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Repeatable.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="../../../../io/micronaut/http/annotation/Headers.html" title="annotation in io.micronaut.http.annotation">Headers.class</a>)
  <a href="../../../../io/micronaut/core/bind/annotation/Bindable.html" title="annotation in io.micronaut.core.bind.annotation">@Bindable</a>
 public @interface <span class="memberNameLabel">Header</span></pre>
-<div class="block">An annotation that can be applied to method argument to indicate that the method argument is bound from an HTTP header
- This also can be used in conjection with @Headers to list headers on a client class that will always be applied.
- Example on a class:</div>
+<div class="block"><p>An annotation that can be applied to method argument to indicate that the method argument is bound from an HTTP header
+   This also can be used in conjunction with &#064;Headers to list headers on a client class that will always be applied.</p>
+ <p></p>
+ <p>The following example demonstrates usage at the type level to declare default values to pass in the request when using the <code>Client</code> annotation:</p>
+ <p></p>
+
+ <pre class="code">
+ &#064;Header(name="X-Username",value='Freddy'),
+ &#064;Header(name="X-MyParam",value='${foo.bar}')
+ &#064;Client('/users')
+ interface UserClient {
+
+ }
+ </pre>
+
+ <p>When declared as a binding annotation the <code>&#064;Header</code> annotation is declared on each parameter to be bound:</p>
+
+ <pre class="code">
+ &#064;Get('/user')
+ User get(&#064;Header('X-Username') String username, &#064;Header('X-MyParam') String myparam) {
+    return new User(username, myparam);
+ }
+ </pre></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
