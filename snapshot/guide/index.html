@@ -21669,21 +21669,24 @@ access at <a href="../api/io/micronaut/http/annotation/Controller.html">Controll
 @Secured(SecurityRule.IS_AUTHENTICATED) <i class="conum" data-value="1"></i><b>(1)</b>
 public class ExampleController {
 
+    @Produces(MediaType.TEXT_PLAIN)
     @Get("/admin")
-    @Secured(["ROLE_ADMIN", "ROLE_X"]) <i class="conum" data-value="2"></i><b>(2)</b>
+    @Secured({"ROLE_ADMIN", "ROLE_X"}) <i class="conum" data-value="2"></i><b>(2)</b>
     public String withroles() {
         return "You have ROLE_ADMIN or ROLE_X roles";
     }
 
-    @Get('/anonymous')
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/anonymous")
     @Secured(SecurityRule.IS_ANONYMOUS)  <i class="conum" data-value="3"></i><b>(3)</b>
     public String anonymous() {
         return "You are anonymous";
     }
 
+    @Produces(MediaType.TEXT_PLAIN)
     @Get("/authenticated") <i class="conum" data-value="1"></i><b>(1)</b>
     public String authenticated(Authentication authentication) {
-        return "${authentication.name} is authenticated";
+        return authentication.getName() + " is authenticated";
     }
 }</code></pre>
 </div>
@@ -21700,6 +21703,42 @@ public class ExampleController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Anonymous users (authenticated and not authenticated users) can access <code>anonymous</code> Controller&#8217;s action.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Alternatively, you could use <a href="https://jcp.org/en/jsr/detail?id=250">JSR_250</a> annotations (<code>javax.annotation.security.PermitAll</code>, <code>javax.annotation.security.RolesAllowed</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/example")
+public class ExampleController {
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/admin")
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_X"}) <i class="conum" data-value="1"></i><b>(1)</b>
+    public String withroles() {
+        return "You have ROLE_ADMIN or ROLE_X roles";
+    }
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/anonymous")
+    @PermitAll  <i class="conum" data-value="2"></i><b>(2)</b>
+    public String anonymous() {
+        return "You are anonymous";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Users granted role <code>ROLE_ADMIN</code> or <code>ROLE_X</code> roles can access <code>withroles</code> Controller&#8217;s action.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Anonymous users (authenticated and not authenticated users) can access <code>anonymous</code> Controller&#8217;s action.</td>
 </tr>
 </table>
