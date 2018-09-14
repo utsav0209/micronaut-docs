@@ -110,6 +110,7 @@ var activeTableTab = "activeTableTab";
 <pre><a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="micronaut.security.endpoints.login.enabled")
  <a href="../../../../io/micronaut/http/annotation/Controller.html" title="annotation in io.micronaut.http.annotation">@Controller</a>(<a href="../../../../io/micronaut/http/annotation/Controller.html#value--">value</a>="${micronaut.security.endpoints.login.path:/login}")
  <a href="../../../../io/micronaut/security/Secured.html" title="annotation in io.micronaut.security">@Secured</a>(<a href="../../../../io/micronaut/security/Secured.html#value--">value</a>="isAnonymous()")
+ <a href="../../../../io/micronaut/validation/Validated.html" title="annotation in io.micronaut.validation">@Validated</a>
 public class <span class="typeNameLabel">LoginController</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">Handles login requests.</div>
@@ -185,7 +186,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>io.reactivex.Single&lt;<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/security/endpoints/LoginController.html#login-io.micronaut.security.authentication.UsernamePasswordCredentials-io.micronaut.http.HttpRequest-">login</a></span>(<a href="../../../../io/micronaut/security/authentication/UsernamePasswordCredentials.html" title="class in io.micronaut.security.authentication">UsernamePasswordCredentials</a>&nbsp;usernamePasswordCredentials,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/security/endpoints/LoginController.html#login-io.micronaut.security.authentication.UsernamePasswordCredentials-io.micronaut.http.HttpRequest-">login</a></span>(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/Valid.html?is-external=true" title="class or interface in javax.validation">@Valid</a> <a href="../../../../io/micronaut/security/authentication/UsernamePasswordCredentials.html" title="class in io.micronaut.security.authentication">UsernamePasswordCredentials</a>&nbsp;usernamePasswordCredentials,
      <a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
 </tr>
 </table>
@@ -278,8 +279,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>login</h4>
 <pre><a href="../../../../io/micronaut/http/annotation/Consumes.html" title="annotation in io.micronaut.http.annotation">@Consumes</a>(<a href="../../../../io/micronaut/http/annotation/Consumes.html#value--">value</a>={"application/x-www-form-urlencoded","application/json"})
  <a href="../../../../io/micronaut/http/annotation/Post.html" title="annotation in io.micronaut.http.annotation">@Post</a>
-public&nbsp;io.reactivex.Single&lt;<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&gt;&nbsp;login(<a href="../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
-                                                                                                                                <a href="../../../../io/micronaut/security/authentication/UsernamePasswordCredentials.html" title="class in io.micronaut.security.authentication">UsernamePasswordCredentials</a>&nbsp;usernamePasswordCredentials,
+public&nbsp;io.reactivex.Single&lt;<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&gt;&nbsp;login(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/Valid.html?is-external=true" title="class or interface in javax.validation">@Valid</a> <a href="../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
+                                                                                                                                <a href="https://docs.oracle.com/javaee/6/api/javax/validation/Valid.html?is-external=true" title="class or interface in javax.validation">@Valid</a> <a href="../../../../io/micronaut/security/authentication/UsernamePasswordCredentials.html" title="class in io.micronaut.security.authentication">UsernamePasswordCredentials</a>&nbsp;usernamePasswordCredentials,
                                                                                                                                 <a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
