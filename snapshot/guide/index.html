@@ -4766,8 +4766,31 @@ public class BookService {
 <div class="sect1">
 <h2 id="_caching_with_redis">Caching with Redis</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you wish to use Redis to cache results then you need to add the Lettuce configuration to your classpath. Lettuce is a non-blocking, reactive Redis client implementation and Micronaut provides an implementation that allows cached results to be read reactively. To configure the Lettuce configuration add the following dependency to your application:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>redis-lettuce</code> feature to configure Redis/Lettuce in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features redis-lettuce</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you wish to use Redis to cache results then you need to have the Lettuce configuration dependency on your classpath. Lettuce is a non-blocking, reactive Redis client implementation and Micronaut provides an implementation that allows cached results to be read reactively.</p>
+</div>
+<div class="paragraph">
+<p>To enable Lettuce, add the <code>redis-lettuce</code> dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">Lettuce Configuration build.gradle</div>
@@ -5199,6 +5222,21 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:http-server-netty"</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI&#8217;s <code>create-app</code> command, the <code>http-server</code> dependency is included by default.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>A "Hello World" server application written in Java can be seen below:</p>
@@ -9222,6 +9260,21 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, the <code>http-client</code> dependency is included by default.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>A critical component of any Microservice architecture is the client communication between Microservices. With that in mind Micronaut features a built in HTTP client that has both a low-level API and a higher level AOP-driven API.</p>
 </div>
@@ -9232,7 +9285,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish to use the Micronaut HTTP client in your application since it is a feature-rich client implementation
+Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish to use the Micronaut HTTP client in your application since it is a feature-rich client implementation.
 </td>
 </tr>
 </table>
@@ -12664,6 +12717,26 @@ class HelloService {
 <div class="sect1">
 <h2 id="_sending_traces_to_zipkin">Sending Traces to Zipkin</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>tracing-zipkin</code> feature to include Zipkin tracing in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features tracing-zipkin</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To send tracing spans to Zipkin the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
@@ -12818,6 +12891,26 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 <div class="sect1">
 <h2 id="_sending_traces_to_jaeger">Sending Traces to Jaeger</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>tracing-jaeger</code> feature to include Jaeger tracing in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features tracing-jaeger</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To send tracing spans to Jaeger the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
@@ -12916,6 +13009,21 @@ Or alternatively if you have the Micronaut CLI installed you can configure Zipki
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, use the <code>create-function</code> command to include the required dependencies and configuration for a serverless function. See the CLI documentation for <a href="#createProject">Creating a Project</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started writing serverless function you must add the appropriate Micronaut <code>function</code> dependency to your classpath. In certain cases there are FaaS platform specific extension which you may wish to include. The following table includes the dependencies for each individual FaaS platform:</p>
 </div>
@@ -13876,6 +13984,21 @@ Hello, Fred</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:function-client"</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI&#8217;s <code>create-function</code> command, the <code>function-client</code> dependency is included by default.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The developer&#8217;s primary use of this feature will be in defining interfaces that are annotated with <a href="../api/io/micronaut/function/client/FunctionClient.html">FunctionClient</a>. When this annotation is applied, methods on the interface will become invokers of respective methods on the remote (or local) function associated with the interface.</p>
@@ -16978,7 +17101,7 @@ hibernate:
 <p>Micronaut features the ability to automatically configure the native MongoDB Java driver.</p>
 </div>
 <div class="paragraph">
-<p>To enable this you first need to add the <code>mongo-reactive</code> module to your classpath:</p>
+<p>To enable Lettuce, add the following dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -17166,6 +17289,26 @@ For GORM for MongoDB you will need to configure the database name separately as 
 <div class="sect1">
 <h2 id="_configuring_neoj4_bolt">Configuring Neoj4 Bolt</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-bolt</code> feature to configure the Neo4j Bolt driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features neo4j-bolt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To configure the Neo4j Bolt driver you should first add the <code>neo4j-bolt</code> module to your classpath:</p>
 </div>
@@ -17327,8 +17470,28 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="sect1">
 <h2 id="_configuring_the_reactive_postgres_client">Configuring the Reactive Postgres Client</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>To configure the Reactive Postgres you should first add <code>postgres-reactive</code> module to your classpath:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>postgres-reactive</code> feature to configure the Reactive Postgres client in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features postgres-reactive</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To configure the Reactive Postgres client you should first add <code>postgres-reactive</code> module to your classpath:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -17425,6 +17588,26 @@ You can also connect to Postgres using <code>uri</code> instead of the other pro
 <div class="sect1">
 <h2 id="_configuring_lettuce">Configuring Lettuce</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>redis-lettuce</code> feature to configure the Lettuce driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features redis-lettuce</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To configure the Lettuce driver you should first add the <code>redis-lettuce</code> module to your classpath:</p>
 </div>
@@ -17681,6 +17864,26 @@ applicationContext.start()</code></pre>
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>rabbitmq</code> feature to include RabbitMQ support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features rabbitmq</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started with RabbitMQ in Micronaut, add the following dependency:</p>
 </div>
@@ -17774,6 +17977,21 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 </div>
 <div class="sect2">
 <h3 id="_the_javax_annotation_package">The javax.annotation package</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, the <code>javax.annotation</code> dependency will be added to your project automatically if you are using Java 9+.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The <code>javax.annotation</code>, which includes <code>@PostConstruct</code>, <code>@PreDestroy</code> etc. is no longer part of the core JDK but instead a module. If you run under Java 9+ you will need to import the module or add the dependency to your classpath:</p>
 </div>
@@ -18751,6 +18969,26 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:management"</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>management</code> feature to configure the management endpoints in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features management</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 
 
@@ -20876,6 +21114,26 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-jwt</code> or <code>security-session</code> features configure the security support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features security-jwt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s security capabilities you must have the <code>security</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
@@ -21306,6 +21564,26 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <div class="paragraph">
 <p>Micronaut supports Session based authentication.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-session</code> feature to configure session security in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features security-session</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s session based authentication capabilities you must have the <code>security-session</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
@@ -21451,6 +21729,26 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-session/guide/in
 <div class="paragraph">
 <p>Micronaut ships with security capabilities based on <a href="https://jwt.io/">Json Web Token (JWT)</a>.
 JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which defines a secure way to encapsulate arbitrary data that can be sent over unsecure URL’s.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-jwt</code> feature to configure JWT support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; mn create-app my-app --features security-jwt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s JWT based authentication capabilities you must have the <code>security-jwt</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
