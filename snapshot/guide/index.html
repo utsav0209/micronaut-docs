@@ -1038,7 +1038,7 @@ mn&gt;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; mn
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
 | Starting interactive mode...
 | Enter a command name to run. Use TAB for completion:
 mn&gt;</code></pre>
@@ -1060,7 +1060,7 @@ mn&gt;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; git clone https://github.com/micronaut-projects/micronaut-core.git</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ git clone https://github.com/micronaut-projects/micronaut-core.git</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1068,7 +1068,7 @@ mn&gt;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; ./gradlew cli:fatJar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew cli:fatJar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1097,7 +1097,7 @@ export PATH="$PATH:$MICRONAUT_HOME/cli/build/bin"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; mn
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
 | Starting interactive mode...
 | Enter a command name to run. Use TAB for completion:
 mn&gt;</code></pre>
@@ -4785,7 +4785,7 @@ public class BookService {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features redis-lettuce</pre>
+<pre>$ mn create-app my-app --features redis-lettuce</pre>
 </div>
 </div>
 </td>
@@ -5214,21 +5214,6 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 </div>
 
 
-<div class="paragraph">
-<p>Micronaut includes both non-blocking HTTP server and client APIs based on <a href="https://netty.io">Netty</a>.</p>
-</div>
-<div class="paragraph">
-<p>The design of the HTTP server in Micronaut is optimized for interchanging messages between Microservices, typically in JSON, and is not intended as a full server-side MVC framework. For example, there is currently no support for server-side views or features typical of a traditional server-side MVC framework.</p>
-</div>
-<div class="paragraph">
-<p>The goal of the HTTP server is to make it as easy as possible to expose APIs that can be consumed by HTTP clients, whatever language they may be written in. To use the HTTP server you must have the <code>http-server-netty</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:http-server-netty"</code></pre>
-</div>
-</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -5243,6 +5228,21 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Micronaut includes both non-blocking HTTP server and client APIs based on <a href="https://netty.io">Netty</a>.</p>
+</div>
+<div class="paragraph">
+<p>The design of the HTTP server in Micronaut is optimized for interchanging messages between Microservices, typically in JSON, and is not intended as a full server-side MVC framework. For example, there is currently no support for server-side views or features typical of a traditional server-side MVC framework.</p>
+</div>
+<div class="paragraph">
+<p>The goal of the HTTP server is to make it as easy as possible to expose APIs that can be consumed by HTTP clients, whatever language they may be written in. To use the HTTP server you must have the <code>http-server-netty</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:http-server-netty"</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>A "Hello World" server application written in Java can be seen below:</p>
@@ -11322,6 +11322,26 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>netflix-hystrix</code> feature to configure Hystrix in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features netflix-hystrix</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><a href="https://github.com/Netflix/Hystrix">Netflix Hystrix</a> is a fault tolerance library developed by the Netflix team and designed to improve resilience of inter process communication.</p>
 </div>
@@ -11819,6 +11839,26 @@ ConvertibleValues&lt;String&gt; metaData = serverInstance.getMetadata();</code><
 <div class="sect1">
 <h2 id="_enabling_distributed_configuration_with_consul">Enabling Distributed Configuration with Consul</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>config-consul</code> feature to enable Consul&#8217;s distributed configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features config-consul</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To enable distributed configuration, similar to Spring Boot and Grails, you need to create a <code>src/main/resources/bootstrap.yml</code> configuration file and configure Consul as well as enable the configuration client:</p>
 </div>
@@ -12063,6 +12103,26 @@ add and retrieve values and decrypt them with the default key store for your acc
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either of <code>discovery-consul</code> or <code>discovery-eureka</code> features to enable service-discovery in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features discovery-consul</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Service Discovery enables the ability for Microservices to find each other without necessarily knowing the physical location or IP address of associated services.</p>
 </div>
@@ -12072,21 +12132,31 @@ add and retrieve values and decrypt them with the default key store for your acc
 <div class="ulist">
 <ul>
 <li>
-<p>You could manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
+<p>Manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
 </li>
 <li>
-<p>You could use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
+<p>Use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
 </li>
 <li>
-<p>You could delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
+<p>Delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>With that in mind Micronaut tries to flexible to support all of these approaches. As of this writing Micronaut features integrated support for the popular Service Discovery servers Eureka and Consul.</p>
+<p>With that in mind, Micronaut tries to flexible to support all of these approaches. As of this writing, Micronaut features integrated support for the popular Service Discovery servers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Eureka</p>
+</li>
+<li>
+<p>Consul</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application, for example in <code>build.gradle</code>:</p>
+<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -12882,8 +12952,28 @@ You can override this configuration in production by specifying an environment v
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p><a href="https://github.com/Netflix/ribbon">Netflix Ribbon</a> is a inter process communication library used at Netflix that has support for customizable load balancing strategies.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>netflix-ribbon</code> feature to configure Netflix Ribbon in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features netflix-ribbon</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/Netflix/ribbon">Netflix Ribbon</a> is a inter-process communication library used at Netflix that has support for customizable load balancing strategies.</p>
 </div>
 <div class="paragraph">
 <p>If you need more flexibility in how your application performs client-side load balancing then you may wish use Micronaut&#8217;s Netflix Ribbon support.</p>
@@ -13084,7 +13174,7 @@ class HelloService {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features tracing-zipkin</pre>
+<pre>$ mn create-app my-app --features tracing-zipkin</pre>
 </div>
 </div>
 </td>
@@ -13258,7 +13348,7 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features tracing-jaeger</pre>
+<pre>$ mn create-app my-app --features tracing-jaeger</pre>
 </div>
 </div>
 </td>
@@ -14573,7 +14663,7 @@ interface HelloClient {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-kafka-app --features kafka</pre>
+<pre>$ mn create-app my-kafka-app --features kafka</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -14589,7 +14679,7 @@ interface HelloClient {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-kafka-service --profile kafka</pre>
+<pre>$ mn create-app my-kafka-service --profile kafka</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -14600,10 +14690,10 @@ interface HelloClient {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>mn&gt; create-kafka-producer Message
+<pre>$ mn create-kafka-producer Message
 | Rendered template Producer.java to destination src/main/java/my/kafka/app/MessageProducer.java
 
-mn&gt; create-kafka-listener Message
+$ mn create-kafka-listener Message
 | Rendered template Listener.java to destination src/main/java/my/kafka/app/MessageListener.java</pre>
 </div>
 </div>
@@ -16283,6 +16373,26 @@ By default, the details visible above are only shown to authenticated users. See
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>kafka-streams</code> feature to include a simple Kafka Streams configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features kafka-streams</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><a href="https://kafka.apache.org/documentation/streams/">Kafka Streams</a> is a platform for building real time streaming applications.</p>
 </div>
@@ -16587,7 +16697,7 @@ This will add the dependencies for the <code>picocli</code> feature, and set the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-cli-app my-cli-app</pre>
+<pre>$ mn create-cli-app my-cli-app</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16659,7 +16769,7 @@ Running this jar from Java will run the generated <code>MyCliAppCommand</code>.<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; java -jar build/libs/my-cli-app-0.1-all.jar -v</pre>
+<pre>$ java -jar build/libs/my-cli-app-0.1-all.jar -v</pre>
 </div>
 </div>
 </div>
@@ -16670,7 +16780,7 @@ Running this jar from Java will run the generated <code>MyCliAppCommand</code>.<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-picocli-app --features picocli</pre>
+<pre>$ mn create-app my-picocli-app --features picocli</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16689,7 +16799,7 @@ The <code>cli</code> profile provides a command for generating picocli commands 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app example --profile cli</pre>
+<pre>$ mn create-app example --profile cli</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16700,8 +16810,8 @@ The <code>cli</code> profile provides a command for generating picocli commands 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; cd example
-&gt; ../mn
+<pre>$ cd example
+$ ../mn
 mn&gt; create-command example.my-command
 | Rendered template Command.java to destination src/main/java/example/MyCommand.java
 | Rendered template CommandTest.java to destination src/test/java/example/MyCommandTest.java</pre>
@@ -16739,6 +16849,26 @@ The <code>create-cli-app</code> command is more convenient, since it generates a
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>picocli</code> feature to configure Picocli in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features picocli</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To add support for Picocli to an existing project, you should first add the picocli dependency and the Micronaut picocli configuration to your build configuration. For example in Gradle:</p>
 </div>
@@ -16781,7 +16911,7 @@ compile "io.micronaut.configuration:picocli"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-cli-app example.git-star --features http-client</pre>
+<pre>$ mn create-cli-app example.git-star --features http-client</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17070,6 +17200,26 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="sect1">
 <h2 id="_configuring_a_jdbc_datasource">Configuring a JDBC DataSource</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply one of the <code>jdbc-tomcat</code>, <code>jdbc-hikari</code>, or <code>jdbc-dbcp</code> features to preconfigure a simple JDBC connection in your project, along with a default H2 database driver:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features jdbc-tomcat</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started, simply add a dependency to one of the JDBC configurations that corresponds to the implementation you would like to use.</p>
 </div>
@@ -17263,11 +17413,31 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 
 <div class="sect3">
 <h4 id="_setting_up_a_hibernate_jpa_entitymanager">Setting up a Hibernate/JPA EntityManager</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>hibernate-jpa</code> feature to include a Hibernate JPA configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features hibernate-jpa</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Micronaut features built in support for configuring a <a href="http://hibernate.org">Hibernate</a> / JPA <code>EntityManager</code> that builds on the <a href="#sqlSupport">SQL DataSource support</a>.</p>
 </div>
 <div class="paragraph">
-<p>Once you have <a href="#sqlSupport">configured one or many DataSources</a> to use Hibernate you need to add the <code>hibernate-jpa</code> dependency to your build configuration:</p>
+<p>Once you have <a href="#sqlSupport">configured one or many DataSources</a> to use Hibernate, you will need to add the <code>hibernate-jpa</code> dependency to your build configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -17384,11 +17554,31 @@ jpa:
 </div>
 <div class="sect3">
 <h4 id="_using_gorm_for_hibernate">Using GORM for Hibernate</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>For Groovy users and users familiar with Grails framework special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>hibernate-gorm</code> feature to include GORM, a basic connection pool configuration, and a default H2 database driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features hibernate-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Instead you should only define the <code>hibernate-gorm</code> dependency, a connection pool implementation and the necessary JDBC driver. For example:</p>
+<p>For Groovy users and users familiar with the Grails framework, special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
+</div>
+<div class="paragraph">
+<p>Rather, you only need to include the  <code>hibernate-gorm</code> dependency in your project, a connection pool implementation, and the desired JDBC driver. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring GORM for Hibernate</div>
@@ -17401,7 +17591,7 @@ jpa:
 </div>
 </div>
 <div class="paragraph">
-<p>After that you should use the same <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#configuration">configuration properties described in the GORM documentation</a>. For example:</p>
+<p>You can now use the same <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#configuration">configuration properties described in the GORM documentation</a>. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring GORM for Hibernate</div>
@@ -17451,6 +17641,26 @@ hibernate:
 
 <div class="sect3">
 <h4 id="_setting_up_the_native_mongodb_driver">Setting up the Native MongoDB Driver</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>mongo-reactive</code> feature to configure the native MongoDB driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features mongo-reactive</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Micronaut includes a configuration to automatically configure the native MongoDB Java driver. To use this configuration, add the following dependency to your application:</p>
 </div>
@@ -17582,6 +17792,26 @@ import javax.inject.*;
 </div>
 <div class="sect3">
 <h4 id="_using_gorm_for_mongodb">Using GORM for MongoDB</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>mongo-gorm</code> feature to configure GORM for MongoDB in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features mongo-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a>.</p>
 </div>
@@ -17653,7 +17883,7 @@ For GORM for MongoDB you will need to configure the database name separately as 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features neo4j-bolt</pre>
+<pre>$ mn create-app my-app --features neo4j-bolt</pre>
 </div>
 </div>
 </td>
@@ -17774,6 +18004,26 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="sect1">
 <h2 id="_using_gorm_for_neo4j">Using GORM for Neo4j</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-gorm</code> feature to configure GORM for Neo4j in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features neo4j-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a>.</p>
 </div>
@@ -17834,7 +18084,7 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features postgres-reactive</pre>
+<pre>$ mn create-app my-app --features postgres-reactive</pre>
 </div>
 </div>
 </td>
@@ -17952,7 +18202,7 @@ You can also connect to Postgres using <code>uri</code> instead of the other pro
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features redis-lettuce</pre>
+<pre>$ mn create-app my-app --features redis-lettuce</pre>
 </div>
 </div>
 </td>
@@ -18142,8 +18392,28 @@ The Lettuce driver&#8217;s <code>StatefulRedisConnection</code> interface is des
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>Add the following to the <code>build.gradle</code>:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>cassandra</code> feature to include Cassandra configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features cassandra</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To enable the Cassandra configuration, add the following dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -18228,7 +18498,7 @@ applicationContext.start()</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features rabbitmq</pre>
+<pre>$ mn create-app my-app --features rabbitmq</pre>
 </div>
 </div>
 </td>
@@ -19110,7 +19380,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 
 
 <div class="paragraph">
-<p>To get started creating a Microservice that can be compiled into a native image use the <code>graal-native-image</code> feature when creating the application:</p>
+<p>To get started creating a Microservice that can be compiled into a native image, use the <code>graal-native-image</code> feature when creating the application with the CLI:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating a Graal Native Microservice</div>
@@ -19309,18 +19579,6 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 
 
-<div class="paragraph">
-<p>Inspired by Spring Boot and Grails, the Micronaut <code>management</code> dependency adds support for monitoring of your application via <strong>endpoints</strong>: special URIs that return details about the health and state of your application. The <code>management</code> endpoints are also integrated with Micronaut&#8217;s <code>security</code> dependency, allowing for sensitive data to be restricted to authenticated users in your security system (see <a href="#builtInEndpointsAccess">Built-in Endpoints Access</a> in the Security section).</p>
-</div>
-<div class="paragraph">
-<p>To use the <code>management</code> features described in this section, add the dependency on your classpath. For example, in <code>build.gradle</code></p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:management"</code></pre>
-</div>
-</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -19334,12 +19592,24 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features management</pre>
+<pre>$ mn create-app my-app --features management</pre>
 </div>
 </div>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Inspired by Spring Boot and Grails, the Micronaut <code>management</code> dependency adds support for monitoring of your application via <strong>endpoints</strong>: special URIs that return details about the health and state of your application. The <code>management</code> endpoints are also integrated with Micronaut&#8217;s <code>security</code> dependency, allowing for sensitive data to be restricted to authenticated users in your security system (see <a href="#builtInEndpointsAccess">Built-in Endpoints Access</a> in the Security section).</p>
+</div>
+<div class="paragraph">
+<p>To use the <code>management</code> features described in this section, add the dependency on your classpath. For example, in <code>build.gradle</code></p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:management"</code></pre>
+</div>
 </div>
 
 
@@ -20202,11 +20472,28 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>The metrics endpoint returns information about the "metrics" of the application.</p>
+<p>If you are creating your project using the Micronaut CLI, supply one of <code>micrometer-atlas</code>, <code>micrometer-graphite</code>, <code>micrometer-prometheus</code>, or <code>micrometer-statsd</code> features to enable metrics and preconfigure the selected registery in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features micrometer-atlas</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>To execute the metrics endpoint, send a GET request to <code>/metrics</code>.  This will return a list of the metric names registered with the <code>MeterRegistry</code> bean.</p>
+<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>.  This will return a list of the metric names registered with the <code>MeterRegistry</code> bean.</p>
 </div>
 <div class="paragraph">
 <p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.  This would return something like:</p>
@@ -21478,7 +21765,7 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features security-jwt</pre>
+<pre>$ mn create-app my-app --features security-jwt</pre>
 </div>
 </div>
 </td>
@@ -21967,7 +22254,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features security-session</pre>
+<pre>$ mn create-app my-app --features security-session</pre>
 </div>
 </div>
 </td>
@@ -22133,7 +22420,7 @@ JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-app --features security-jwt</pre>
+<pre>$ mn create-app my-app --features security-jwt</pre>
 </div>
 </div>
 </td>
@@ -23667,7 +23954,7 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-app my-groovy-app --features groovy,spock</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-groovy-app --features groovy,spock</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23681,7 +23968,7 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-app my-kotlin-app --features kotlin,spek</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-kotlin-app --features kotlin,spek</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23696,7 +23983,7 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-app my-maven-app --build maven</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-maven-app --build maven</code></pre>
 </div>
 </div>
 </div>
@@ -23809,7 +24096,7 @@ sourceLanguage: java</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-cli-app my-groovy-app --lang=groovy --test=spock</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-cli-app my-groovy-app --lang=groovy --test=spock</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23823,7 +24110,7 @@ sourceLanguage: java</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-cli-app my-kotlin-app --lang=kotlin --test=spek</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-cli-app my-kotlin-app --lang=kotlin --test=spek</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23838,7 +24125,7 @@ sourceLanguage: java</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-cli-app my-maven-app --build maven</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-cli-app my-maven-app --build maven</code></pre>
 </div>
 </div>
 </div>
@@ -24226,7 +24513,7 @@ Provided Features:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; profile-info service
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn profile-info service
 Profile: service
 ------------------
 The service profile
@@ -24518,21 +24805,25 @@ It creates an associated test that will run the application and verify that a co
 <div class="paragraph">
 <p><a href="https://zeroturnaround.com/software/jrebel/">JRebel</a> is a proprietary reloading solution that involves an agent library, as well as sophisticated IDE support. The JRebel documentation includes detailed steps for IDE integration and usage of the tool. In this section, we will simply show how to install and configure the agent for Maven and Gradle projects.</p>
 </div>
-<div class="sect1">
-<h2 id="_cli_feature">CLI Feature</h2>
-<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>You can create a new application with JRebel preconfigured, using the CLI. To do this, use the <code>jrebel</code> feature. Please note that you will still need to install JRebel and configure the path to the agent.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>jrebel</code> feature to preconfigure JRebel reloading in your project. Please note that you will still need to install JRebel and supply the correct path to the agent in the <code>gradle.properties</code> file (for Gradle) or <code>pom.xml</code> (for Maven). The steps necessary are described below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-reloading-app --features jrebel</pre>
+<pre>$ mn create-app my-app --features jrebel</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>This feature will include the appropriate build tool config for Gradle or Maven to load the agent, however you will need to supply the correct path to the agent in the <code>gradle.properties</code> file (for Gradle) or <code>pom.xml</code> (for Maven). The steps necessary are described below.</p>
-</div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect1">
 <h2 id="_install_configure_jrebel_agent">Install/configure JRebel Agent</h2>
@@ -24679,27 +24970,31 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </tr>
 </table>
 </div>
-<div class="sect1">
-<h2 id="_cli_feature">CLI Feature</h2>
-<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>You can create a new application with Spring-Loaded preconfigured, using the CLI (for supported Java versions). To do this, use the <code>springloaded</code> feature.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>springloaded</code> feature to preconfigure Springloaded in your project. This feature will include the Spring-Loaded agent JAR and provide the appropriate build tool config for Gradle or Maven to load the agent.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&gt; mn create-app my-reloading-app --features springloaded</pre>
+<pre>$ mn create-app my-app --features springloaded</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>This feature will include the Spring-Loaded agent JAR in your project, and provide the appropriate build tool config for Gradle or Maven to load the agent.</p>
 </div>
 <div class="paragraph">
 <p>You can start the application with <code>./gradlew run</code> (Gradle) or <code>./mvnw compile exec:exec</code> (Maven).</p>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect1">
-<h2 id="_manual_configuration">Manual Configuration</h2>
+<h2 id="_configuration">Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Configuring Spring-Loaded requires the agent JAR file to be downloaded on your system, and configured to be loaded as a <code>javaagent</code> by the build tool (or IDE).</p>
@@ -24764,13 +25059,13 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 <div class="listingblock">
 <div class="title">Run the app</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; ./gradlew run</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew run</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Run the recompilation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; ./gradlew -t classes</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew -t classes</code></pre>
 </div>
 </div>
 <div class="paragraph">
