@@ -210,6 +210,26 @@ function addJsClass() {
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-jwt</code> or <code>security-session</code> features configure the security support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features security-jwt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s security capabilities you must have the <code>security</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
@@ -391,21 +411,24 @@ access at <a href="../api/io/micronaut/http/annotation/Controller.html">Controll
 @Secured(SecurityRule.IS_AUTHENTICATED) <i class="conum" data-value="1"></i><b>(1)</b>
 public class ExampleController {
 
+    @Produces(MediaType.TEXT_PLAIN)
     @Get("/admin")
-    @Secured(["ROLE_ADMIN", "ROLE_X"]) <i class="conum" data-value="2"></i><b>(2)</b>
+    @Secured({"ROLE_ADMIN", "ROLE_X"}) <i class="conum" data-value="2"></i><b>(2)</b>
     public String withroles() {
         return "You have ROLE_ADMIN or ROLE_X roles";
     }
 
-    @Get('/anonymous')
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/anonymous")
     @Secured(SecurityRule.IS_ANONYMOUS)  <i class="conum" data-value="3"></i><b>(3)</b>
     public String anonymous() {
         return "You are anonymous";
     }
 
+    @Produces(MediaType.TEXT_PLAIN)
     @Get("/authenticated") <i class="conum" data-value="1"></i><b>(1)</b>
     public String authenticated(Authentication authentication) {
-        return "${authentication.name} is authenticated";
+        return authentication.getName() + " is authenticated";
     }
 }</code></pre>
 </div>
@@ -422,6 +445,42 @@ public class ExampleController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Anonymous users (authenticated and not authenticated users) can access <code>anonymous</code> Controller&#8217;s action.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Alternatively, you could use <a href="https://jcp.org/en/jsr/detail?id=250">JSR_250</a> annotations (<code>javax.annotation.security.PermitAll</code>, <code>javax.annotation.security.RolesAllowed</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/example")
+public class ExampleController {
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/admin")
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_X"}) <i class="conum" data-value="1"></i><b>(1)</b>
+    public String withroles() {
+        return "You have ROLE_ADMIN or ROLE_X roles";
+    }
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/anonymous")
+    @PermitAll  <i class="conum" data-value="2"></i><b>(2)</b>
+    public String anonymous() {
+        return "You are anonymous";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Users granted role <code>ROLE_ADMIN</code> or <code>ROLE_X</code> roles can access <code>withroles</code> Controller&#8217;s action.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Anonymous users (authenticated and not authenticated users) can access <code>anonymous</code> Controller&#8217;s action.</td>
 </tr>
 </table>
@@ -640,6 +699,26 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <div class="paragraph">
 <p>Micronaut supports Session based authentication.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-session</code> feature to configure session security in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features security-session</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s session based authentication capabilities you must have the <code>security-session</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
@@ -785,6 +864,26 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-session/guide/in
 <div class="paragraph">
 <p>Micronaut ships with security capabilities based on <a href="https://jwt.io/">Json Web Token (JWT)</a>.
 JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which defines a secure way to encapsulate arbitrary data that can be sent over unsecure URL’s.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either the <code>security-jwt</code> feature to configure JWT support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features security-jwt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s JWT based authentication capabilities you must have the <code>security-jwt</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
@@ -1094,7 +1193,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.generator.access-token-expiration</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Access token expiration. Default value (3600).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access token expiration. Default value ({@value DEFAULT_EXPIRATION}).</p></td>
 </tr>
 </tbody>
 </table>

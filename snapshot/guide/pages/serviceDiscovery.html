@@ -147,6 +147,26 @@ function addJsClass() {
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either of <code>discovery-consul</code> or <code>discovery-eureka</code> features to enable service-discovery in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features discovery-consul</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Service Discovery enables the ability for Microservices to find each other without necessarily knowing the physical location or IP address of associated services.</p>
 </div>
@@ -156,21 +176,31 @@ function addJsClass() {
 <div class="ulist">
 <ul>
 <li>
-<p>You could manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
+<p>Manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
 </li>
 <li>
-<p>You could use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
+<p>Use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
 </li>
 <li>
-<p>You could delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
+<p>Delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>With that in mind Micronaut tries to flexible to support all of these approaches. As of this writing Micronaut features integrated support for the popular Service Discovery servers Eureka and Consul.</p>
+<p>With that in mind, Micronaut tries to flexible to support all of these approaches. As of this writing, Micronaut features integrated support for the popular Service Discovery servers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Eureka</p>
+</li>
+<li>
+<p>Consul</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application, for example in <code>build.gradle</code>:</p>
+<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>

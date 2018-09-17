@@ -286,6 +286,26 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="sect1">
 <h2 id="_configuring_a_jdbc_datasource">Configuring a JDBC DataSource</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply one of the <code>jdbc-tomcat</code>, <code>jdbc-hikari</code>, or <code>jdbc-dbcp</code> features to preconfigure a simple JDBC connection in your project, along with a default H2 database driver:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features jdbc-tomcat</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started, simply add a dependency to one of the JDBC configurations that corresponds to the implementation you would like to use.</p>
 </div>
@@ -479,11 +499,31 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 
 <div class="sect3">
 <h4 id="_setting_up_a_hibernate_jpa_entitymanager">Setting up a Hibernate/JPA EntityManager</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>hibernate-jpa</code> feature to include a Hibernate JPA configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features hibernate-jpa</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Micronaut features built in support for configuring a <a href="http://hibernate.org">Hibernate</a> / JPA <code>EntityManager</code> that builds on the <a href="#sqlSupport">SQL DataSource support</a>.</p>
 </div>
 <div class="paragraph">
-<p>Once you have <a href="#sqlSupport">configured one or many DataSources</a> to use Hibernate you need to add the <code>hibernate-jpa</code> dependency to your build configuration:</p>
+<p>Once you have <a href="#sqlSupport">configured one or many DataSources</a> to use Hibernate, you will need to add the <code>hibernate-jpa</code> dependency to your build configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -600,11 +640,31 @@ jpa:
 </div>
 <div class="sect3">
 <h4 id="_using_gorm_for_hibernate">Using GORM for Hibernate</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>For Groovy users and users familiar with Grails framework special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>hibernate-gorm</code> feature to include GORM, a basic connection pool configuration, and a default H2 database driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features hibernate-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Instead you should only define the <code>hibernate-gorm</code> dependency, a connection pool implementation and the necessary JDBC driver. For example:</p>
+<p>For Groovy users and users familiar with the Grails framework, special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
+</div>
+<div class="paragraph">
+<p>Rather, you only need to include the  <code>hibernate-gorm</code> dependency in your project, a connection pool implementation, and the desired JDBC driver. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring GORM for Hibernate</div>
@@ -617,7 +677,7 @@ jpa:
 </div>
 </div>
 <div class="paragraph">
-<p>After that you should use the same <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#configuration">configuration properties described in the GORM documentation</a>. For example:</p>
+<p>You can now use the same <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#configuration">configuration properties described in the GORM documentation</a>. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring GORM for Hibernate</div>
@@ -667,11 +727,28 @@ hibernate:
 
 <div class="sect3">
 <h4 id="_setting_up_the_native_mongodb_driver">Setting up the Native MongoDB Driver</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>Micronaut features the ability to automatically configure the native MongoDB Java driver.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>mongo-reactive</code> feature to configure the native MongoDB driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features mongo-reactive</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>To enable this you first need to add the <code>mongo-reactive</code> module to your classpath:</p>
+<p>Micronaut includes a configuration to automatically configure the native MongoDB Java driver. To use this configuration, add the following dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -801,6 +878,26 @@ import javax.inject.*;
 </div>
 <div class="sect3">
 <h4 id="_using_gorm_for_mongodb">Using GORM for MongoDB</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>mongo-gorm</code> feature to configure GORM for MongoDB in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features mongo-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a>.</p>
 </div>
@@ -859,6 +956,26 @@ For GORM for MongoDB you will need to configure the database name separately as 
 <div class="sect1">
 <h2 id="_configuring_neoj4_bolt">Configuring Neoj4 Bolt</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-bolt</code> feature to configure the Neo4j Bolt driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features neo4j-bolt</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To configure the Neo4j Bolt driver you should first add the <code>neo4j-bolt</code> module to your classpath:</p>
 </div>
@@ -973,6 +1090,26 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="sect1">
 <h2 id="_using_gorm_for_neo4j">Using GORM for Neo4j</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-gorm</code> feature to configure GORM for Neo4j in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features neo4j-gorm</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a>.</p>
 </div>
@@ -1020,8 +1157,28 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="sect1">
 <h2 id="_configuring_the_reactive_postgres_client">Configuring the Reactive Postgres Client</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>To configure the Reactive Postgres you should first add <code>postgres-reactive</code> module to your classpath:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>postgres-reactive</code> feature to configure the Reactive Postgres client in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features postgres-reactive</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To configure the Reactive Postgres client you should first add <code>postgres-reactive</code> module to your classpath:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -1118,6 +1275,26 @@ You can also connect to Postgres using <code>uri</code> instead of the other pro
 <div class="sect1">
 <h2 id="_configuring_lettuce">Configuring Lettuce</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>redis-lettuce</code> feature to configure the Lettuce driver in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features redis-lettuce</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To configure the Lettuce driver you should first add the <code>redis-lettuce</code> module to your classpath:</p>
 </div>
@@ -1301,8 +1478,28 @@ The Lettuce driver&#8217;s <code>StatefulRedisConnection</code> interface is des
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>Add the following to the <code>build.gradle</code>:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>cassandra</code> feature to include Cassandra configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features cassandra</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To enable the Cassandra configuration, add the following dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -1374,6 +1571,26 @@ applicationContext.start()</code></pre>
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>rabbitmq</code> feature to include RabbitMQ support in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features rabbitmq</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started with RabbitMQ in Micronaut, add the following dependency:</p>
 </div>

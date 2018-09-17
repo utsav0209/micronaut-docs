@@ -454,6 +454,26 @@ ConvertibleValues&lt;String&gt; metaData = serverInstance.getMetadata();</code><
 <div class="sect1">
 <h2 id="_enabling_distributed_configuration_with_consul">Enabling Distributed Configuration with Consul</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>config-consul</code> feature to enable Consul&#8217;s distributed configuration in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features config-consul</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To enable distributed configuration, similar to Spring Boot and Grails, you need to create a <code>src/main/resources/bootstrap.yml</code> configuration file and configure Consul as well as enable the configuration client:</p>
 </div>
@@ -698,6 +718,26 @@ add and retrieve values and decrypt them with the default key store for your acc
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply either of <code>discovery-consul</code> or <code>discovery-eureka</code> features to enable service-discovery in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features discovery-consul</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Service Discovery enables the ability for Microservices to find each other without necessarily knowing the physical location or IP address of associated services.</p>
 </div>
@@ -707,21 +747,31 @@ add and retrieve values and decrypt them with the default key store for your acc
 <div class="ulist">
 <ul>
 <li>
-<p>You could manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
+<p>Manually implement Service Discovery using DNS without requiring a third party tool or component.</p>
 </li>
 <li>
-<p>You could use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
+<p>Use a discovery server such as <a href="https://github.com/Netflix/eureka">Eureka</a>, <a href="https://www.consul.io">Consul</a> or <a href="https://zookeeper.apache.org">ZooKeeper</a>.</p>
 </li>
 <li>
-<p>You could delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
+<p>Delegate the work to a container runtime, such as <a href="https://kubernetes.io">Kubernetes</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>With that in mind Micronaut tries to flexible to support all of these approaches. As of this writing Micronaut features integrated support for the popular Service Discovery servers Eureka and Consul.</p>
+<p>With that in mind, Micronaut tries to flexible to support all of these approaches. As of this writing, Micronaut features integrated support for the popular Service Discovery servers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Eureka</p>
+</li>
+<li>
+<p>Consul</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application, for example in <code>build.gradle</code>:</p>
+<p>To include Service Discovery in your application simply the first step is to add the <code>discovery-client</code> dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -1517,8 +1567,28 @@ You can override this configuration in production by specifying an environment v
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p><a href="https://github.com/Netflix/ribbon">Netflix Ribbon</a> is a inter process communication library used at Netflix that has support for customizable load balancing strategies.</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>netflix-ribbon</code> feature to configure Netflix Ribbon in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features netflix-ribbon</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/Netflix/ribbon">Netflix Ribbon</a> is a inter-process communication library used at Netflix that has support for customizable load balancing strategies.</p>
 </div>
 <div class="paragraph">
 <p>If you need more flexibility in how your application performs client-side load balancing then you may wish use Micronaut&#8217;s Netflix Ribbon support.</p>
@@ -1706,6 +1776,26 @@ class HelloService {
 <div class="sect1">
 <h2 id="_sending_traces_to_zipkin">Sending Traces to Zipkin</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>tracing-zipkin</code> feature to include Zipkin tracing in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features tracing-zipkin</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To send tracing spans to Zipkin the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
@@ -1860,6 +1950,26 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 <div class="sect1">
 <h2 id="_sending_traces_to_jaeger">Sending Traces to Jaeger</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>tracing-jaeger</code> feature to include Jaeger tracing in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features tracing-jaeger</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To send tracing spans to Jaeger the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>

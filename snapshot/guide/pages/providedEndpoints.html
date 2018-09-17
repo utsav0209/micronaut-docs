@@ -607,11 +607,28 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>The metrics endpoint returns information about the "metrics" of the application.</p>
+<p>If you are creating your project using the Micronaut CLI, supply one of <code>micrometer-atlas</code>, <code>micrometer-graphite</code>, <code>micrometer-prometheus</code>, or <code>micrometer-statsd</code> features to enable metrics and preconfigure the selected registery in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features micrometer-atlas</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>To execute the metrics endpoint, send a GET request to <code>/metrics</code>.  This will return a list of the metric names registered with the <code>MeterRegistry</code> bean.</p>
+<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>.  This will return a list of the metric names registered with the <code>MeterRegistry</code> bean.</p>
 </div>
 <div class="paragraph">
 <p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.  This would return something like:</p>

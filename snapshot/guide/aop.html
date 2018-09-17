@@ -768,8 +768,31 @@ public class BookService {
 <div class="sect1">
 <h2 id="_caching_with_redis">Caching with Redis</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you wish to use Redis to cache results then you need to add the Lettuce configuration to your classpath. Lettuce is a non-blocking, reactive Redis client implementation and Micronaut provides an implementation that allows cached results to be read reactively. To configure the Lettuce configuration add the following dependency to your application:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>redis-lettuce</code> feature to configure Redis/Lettuce in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features redis-lettuce</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you wish to use Redis to cache results then you need to have the Lettuce configuration dependency on your classpath. Lettuce is a non-blocking, reactive Redis client implementation and Micronaut provides an implementation that allows cached results to be read reactively.</p>
+</div>
+<div class="paragraph">
+<p>To enable Lettuce, add the <code>redis-lettuce</code> dependency to your application:</p>
 </div>
 <div class="listingblock">
 <div class="title">Lettuce Configuration build.gradle</div>
