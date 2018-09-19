@@ -1098,7 +1098,7 @@ eureka:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_service_registration">Customizing Service Registration</h2>
+<h2 id="_customizing_eureka_service_registration">Customizing Eureka Service Registration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can customize various aspects of registration with Eureka using the <a href="../api/io/micronaut/discovery/eureka/EurekaConfiguration.html">EurekaConfiguration</a>. Notice that <code>EurekaConfiguration</code> extends <a href="../api/io/micronaut/discovery/client/DiscoveryClientConfiguration.html">DiscoveryClientConfiguration</a>  which in turn extends <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a> allowing you to customize the settings for the Eureka client, including read timeout, proxy configuration and so on.</p>
@@ -1116,9 +1116,64 @@ eureka:
          leaseInfo:
             durationInSecs: 60 # The lease information
          metadata: # arbitrary instance metadata
-            foo: bar</code></pre>
+            foo: bar
+         retry-count: 10 # How many times to retry
+         retry-delay: 5s # How long to wait between retries</code></pre>
 </div>
 </div>
+<a id="io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration" href="#io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/eureka/EurekaConfiguration.EurekaRegistrationConfiguration.html">EurekaConfiguration$EurekaRegistrationConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.fail-fast</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.deregister</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-delay</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
