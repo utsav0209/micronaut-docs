@@ -1402,7 +1402,7 @@ class HelloControllerSpec extends Specification {
 <div class="title">src/main/java/hello/world/HelloClient.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Get;
-import io.micronaut.http.client.Client;
+import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @Client("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
@@ -3119,7 +3119,7 @@ like the folowing:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
 import io.micronaut.spring.beans.MicronautBeanProcessor
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 
 beans = {
     httpClientBeanProcessor MicronautBeanProcessor, Client
@@ -3133,7 +3133,7 @@ beans = {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
 import io.micronaut.spring.beans.MicronautBeanProcessor
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 import com.sample.Widget
 
 beans = {
@@ -10091,6 +10091,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.*;
+import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Maybe;
 
 @Get("/hello/{name}")
@@ -10975,7 +10976,7 @@ class PetController implements PetOperations {
 <div class="listingblock">
 <div class="title">PetClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.Client;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @Client("/pets") <i class="conum" data-value="1"></i><b>(1)</b>
@@ -19244,7 +19245,7 @@ Groovy automatically imports <code>groovy.lang.Singleton</code> which can be con
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package hello.world
 
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.HttpStatus
 
@@ -23763,7 +23764,7 @@ See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of t
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.security.Secured;
+import io.micronaut.security.annotation.Secured;
 import javax.annotation.Nullable;
 import java.security.Principal;
 
@@ -23790,11 +23791,10 @@ public class UserController {
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.security.Secured;
+import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.authentication.Authentication;
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.Map;
+import javax.annotation.Nullable
+
 
 @Controller("/user")
 public class UserController {
@@ -26233,6 +26233,29 @@ dependencyManagement {
 </li>
 <li>
 <p>Several APIs surrounding route URI matching and template parsing have changed to allow more information to be retrieved from the parsing process.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following packages have been renamed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.http.server.binding</code> &#8594; <code>io.micronaut.http.bind</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following annotations have been moved to new locations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.http.client.Client</code> &#8594; <code>io.micronaut.http.client.annotation.Client</code></p>
+</li>
+<li>
+<p><code>io.micronaut.security.Secured</code> &#8594; <code>io.micronaut.security.annotation.Secured</code></p>
 </li>
 </ul>
 </div>
