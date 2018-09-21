@@ -109,7 +109,21 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">Environment</span>
 extends <a href="../../../../io/micronaut/core/value/PropertyResolver.html" title="interface in io.micronaut.core.value">PropertyResolver</a>, <a href="../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;<a href="../../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&gt;, <a href="../../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;<a href="../../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&gt;, <a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a></pre>
-<div class="block">The current application environment.</div>
+<div class="block"><p>The current application environment. The environment represents the loaded configuration of the application
+ for a current list of active environment names.</p>
+ <p>
+ <p>The active environment names can be obtained from the <a href="../../../../io/micronaut/context/env/Environment.html#getActiveNames--"><code>getActiveNames()</code></a> method and are established from one
+ of the following sources:
+ </p>
+ <ul>
+     <li>Environment names passed to the <a href="../../../../io/micronaut/context/ApplicationContext.html#run-java.lang.String...-"><code>ApplicationContext.run(String...)</code></a> method</li>
+     <li>The value of the <a href="../../../../io/micronaut/context/env/Environment.html#ENVIRONMENTS_PROPERTY"><code>ENVIRONMENTS_PROPERTY</code></a> system property</li>
+     <li>The value of the <a href="../../../../io/micronaut/context/env/Environment.html#ENVIRONMENTS_ENV"><code>ENVIRONMENTS_ENV</code></a> environment variable</li>
+     <li>The class that started the application</li>
+ </ul>
+
+ <p>When establishing the environment name from the class the started the application Micronaut will inspect the stacktrace. If JUnit or Spock are
+ featured in the stacktrace the <a href="../../../../io/micronaut/context/env/Environment.html#TEST"><code>TEST</code></a> environment is included. When running from Android the <a href="../../../../io/micronaut/context/env/Environment.html#ANDROID"><code>ANDROID</code></a> environment is included.</p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>

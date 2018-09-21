@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a></dd>
+<dd><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/JavaConstructorElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaConstructorElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/JavaParameterElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaParameterElement</a></dd>
 </dl>
 <hr>
 <br>
@@ -206,6 +206,13 @@ implements <a href="../../../../../io/micronaut/inject/visitor/Element.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isStatic--">isStatic</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-">mirrorToClassElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a>&nbsp;returnType,
+                    <a href="../../../../../io/micronaut/annotation/processing/visitor/JavaVisitorContext.html" title="class in io.micronaut.annotation.processing.visitor">JavaVisitorContext</a>&nbsp;visitorContext)</code>
+<div class="block">Obtain the ClassElement for the given mirror.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -216,6 +223,13 @@ implements <a href="../../../../../io/micronaut/inject/visitor/Element.html" tit
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.visitor.Element">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.inject.visitor.<a href="../../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a></h3>
+<code><a href="../../../../../io/micronaut/inject/visitor/Element.html#getDocumentation--">getDocumentation</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.annotation.AnnotationMetadataDelegate">
@@ -381,13 +395,31 @@ implements <a href="../../../../../io/micronaut/inject/visitor/Element.html" tit
 <a name="toString--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>mirrorToClassElement</h4>
+<pre>protected&nbsp;<a href="../../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a>&nbsp;mirrorToClassElement(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a>&nbsp;returnType,
+                                            <a href="../../../../../io/micronaut/annotation/processing/visitor/JavaVisitorContext.html" title="class in io.micronaut.annotation.processing.visitor">JavaVisitorContext</a>&nbsp;visitorContext)</pre>
+<div class="block">Obtain the ClassElement for the given mirror.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>returnType</code> - The return type</dd>
+<dd><code>visitorContext</code> - The visitor context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The class element</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":18,"i2":6};
+var methods = {"i0":18,"i1":18,"i2":18,"i3":18,"i4":18,"i5":18,"i6":6,"i7":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/inject/visitor/ConstructorElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/inject/visitor/ClassElement.html" target="_top">Frames</a></li>
@@ -102,8 +102,12 @@ var activeTableTab = "activeTableTab";
 <dd><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a></dd>
 </dl>
 <dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../io/micronaut/inject/visitor/EnumElement.html" title="interface in io.micronaut.inject.visitor">EnumElement</a></dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a></dd>
+<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaPrimitiveElement.html" title="enum in io.micronaut.annotation.processing.visitor">JavaPrimitiveElement</a></dd>
 </dl>
 <hr>
 <br>
@@ -157,20 +161,44 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#getElements-io.micronaut.inject.visitor.VisitorContext-">getElements</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/PropertyElement.html" title="interface in io.micronaut.inject.visitor">PropertyElement</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#getBeanProperties--">getBeanProperties</a></span>()</code>
+<div class="block">Returns the bean properties (getters and setters) for this class element.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#getElements-io.micronaut.inject.visitor.VisitorContext-">getElements</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#getFirstTypeArgument--">getFirstTypeArgument</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#getTypeArguments--">getTypeArguments</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#isArray--">isArray</a></span>()</code>
+<div class="block">Returns whether the class element is an array.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#isAssignable-java.lang.Class-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
 <div class="block">Tests whether one type is assignable to another.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#isAssignable-java.lang.String-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type)</code>
 <div class="block">Tests whether one type is assignable to another.</div>
 </td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/ClassElement.html#isIterable--">isIterable</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -178,7 +206,7 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.visitor.<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a></h3>
-<code><a href="../../../../io/micronaut/inject/visitor/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isStatic--">isStatic</a></code></li>
+<code><a href="../../../../io/micronaut/inject/visitor/Element.html#getDocumentation--">getDocumentation</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isStatic--">isStatic</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.annotation.AnnotationMetadata">
@@ -224,10 +252,92 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 </dl>
 </li>
 </ul>
-<a name="isAssignable-java.lang.Class-">
+<a name="getElements-io.micronaut.inject.visitor.VisitorContext-">
 <!--   -->
 </a>
 <ul class="blockList">
+<li class="blockList">
+<h4>getElements</h4>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a>&gt;&nbsp;getElements(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>visitorContext</code> - The visitor context.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The elements contained in this class element</dd>
+</dl>
+</li>
+</ul>
+<a name="getBeanProperties--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBeanProperties</h4>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/PropertyElement.html" title="interface in io.micronaut.inject.visitor">PropertyElement</a>&gt;&nbsp;getBeanProperties()</pre>
+<div class="block">Returns the bean properties (getters and setters) for this class element.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The bean properties for this class element</dd>
+</dl>
+</li>
+</ul>
+<a name="isArray--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isArray</h4>
+<pre>default&nbsp;boolean&nbsp;isArray()</pre>
+<div class="block">Returns whether the class element is an array.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if this class element is an array</dd>
+</dl>
+</li>
+</ul>
+<a name="isIterable--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isIterable</h4>
+<pre>default&nbsp;boolean&nbsp;isIterable()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether the type is iterable (either an array or an Iterable)</dd>
+</dl>
+</li>
+</ul>
+<a name="getTypeArguments--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTypeArguments</h4>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a>&gt;&nbsp;getTypeArguments()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The type arguments for this class element</dd>
+</dl>
+</li>
+</ul>
+<a name="getFirstTypeArgument--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFirstTypeArgument</h4>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a>&gt;&nbsp;getFirstTypeArgument()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The first type argument</dd>
+</dl>
+</li>
+</ul>
+<a name="isAssignable-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockListLast">
 <li class="blockList">
 <h4>isAssignable</h4>
 <pre>default&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</pre>
@@ -237,21 +347,6 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <dd><code>type</code> - The type to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if and only if the this type is assignable to the second</dd>
-</dl>
-</li>
-</ul>
-<a name="getElements-io.micronaut.inject.visitor.VisitorContext-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getElements</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a>&gt;&nbsp;getElements(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>visitorContext</code> - The visitor context.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The elements contained in this class element</dd>
 </dl>
 </li>
 </ul>
@@ -283,7 +378,7 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/inject/visitor/ConstructorElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/inject/visitor/ClassElement.html" target="_top">Frames</a></li>

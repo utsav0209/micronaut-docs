@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
+var methods = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/inject/visitor/FieldElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/inject/visitor/TypeElementVisitor.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/inject/visitor/ParameterElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/inject/visitor/MethodElement.html" target="_top">Frames</a></li>
@@ -102,8 +102,12 @@ var activeTableTab = "activeTableTab";
 <dd><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>, <a href="../../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a></dd>
 </dl>
 <dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../io/micronaut/inject/visitor/ConstructorElement.html" title="interface in io.micronaut.inject.visitor">ConstructorElement</a></dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyMethodElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyMethodElement</a></dd>
+<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyConstructorElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyConstructorElement</a>, <a href="../../../../io/micronaut/ast/groovy/visitor/GroovyMethodElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyMethodElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaConstructorElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaConstructorElement</a></dd>
 </dl>
 <hr>
 <br>
@@ -157,6 +161,10 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="../../../../io/micronaut/inject/visitor/ParameterElement.html" title="interface in io.micronaut.inject.visitor">ParameterElement</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/MethodElement.html#getParameters--">getParameters</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/inject/visitor/ClassElement.html" title="interface in io.micronaut.inject.visitor">ClassElement</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/visitor/MethodElement.html#getReturnType--">getReturnType</a></span>()</code>&nbsp;</td>
 </tr>
@@ -166,7 +174,7 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.visitor.<a href="../../../../io/micronaut/inject/visitor/Element.html" title="interface in io.micronaut.inject.visitor">Element</a></h3>
-<code><a href="../../../../io/micronaut/inject/visitor/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isStatic--">isStatic</a></code></li>
+<code><a href="../../../../io/micronaut/inject/visitor/Element.html#getDocumentation--">getDocumentation</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/visitor/Element.html#isStatic--">isStatic</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.annotation.AnnotationMetadata">
@@ -199,7 +207,7 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <a name="getReturnType--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getReturnType</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
@@ -207,6 +215,19 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The return type of the method</dd>
+</dl>
+</li>
+</ul>
+<a name="getParameters--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getParameters</h4>
+<pre><a href="../../../../io/micronaut/inject/visitor/ParameterElement.html" title="interface in io.micronaut.inject.visitor">ParameterElement</a>[]&nbsp;getParameters()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The method parameters</dd>
 </dl>
 </li>
 </ul>
@@ -238,7 +259,7 @@ extends <a href="../../../../io/micronaut/inject/visitor/Element.html" title="in
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/inject/visitor/FieldElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/inject/visitor/TypeElementVisitor.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/inject/visitor/ParameterElement.html" title="interface in io.micronaut.inject.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/inject/visitor/MethodElement.html" target="_top">Frames</a></li>

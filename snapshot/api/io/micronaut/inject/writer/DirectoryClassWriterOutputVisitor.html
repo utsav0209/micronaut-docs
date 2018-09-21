@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -169,8 +169,14 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/writer/GeneratedFile.html" title="interface in io.micronaut.inject.writer">GeneratedFile</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/DirectoryClassWriterOutputVisitor.html#visitGeneratedFile-java.lang.String-">visitGeneratedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
+<div class="block">Visit a file that will be generated within the generated sources directory.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/writer/GeneratedFile.html" title="interface in io.micronaut.inject.writer">GeneratedFile</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/DirectoryClassWriterOutputVisitor.html#visitMetaInfFile-java.lang.String-">visitMetaInfFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
-<div class="block">Visit a file within the META-INF directory.</div>
+<div class="block">Visit a file within the META-INF directory of the classes directory.</div>
 </td>
 </tr>
 </table>
@@ -254,17 +260,34 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 <a name="visitMetaInfFile-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>visitMetaInfFile</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/writer/GeneratedFile.html" title="interface in io.micronaut.inject.writer">GeneratedFile</a>&gt;&nbsp;visitMetaInfFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitMetaInfFile-java.lang.String-">ClassWriterOutputVisitor</a></code></span></div>
-<div class="block">Visit a file within the META-INF directory.</div>
+<div class="block">Visit a file within the META-INF directory of the classes directory.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>path</code> - The path to the file</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An optional file it was possible to create it</dd>
+</dl>
+</li>
+</ul>
+<a name="visitGeneratedFile-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>visitGeneratedFile</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/inject/writer/GeneratedFile.html" title="interface in io.micronaut.inject.writer">GeneratedFile</a>&gt;&nbsp;visitGeneratedFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitGeneratedFile-java.lang.String-">ClassWriterOutputVisitor</a></code></span></div>
+<div class="block">Visit a file that will be generated within the generated sources directory.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - The path</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The file if it was possible to create it</dd>
 </dl>
 </li>
 </ul>

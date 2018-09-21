@@ -30,7 +30,7 @@
 </div>
 
 <div id="main">
-    <div id="navigation">
+    <div id="navigation" class="no-print">
         <div class="navTitle">
             <span id="logo"><a href="http://micronaut.io" title="Go to Micronaut Website"><img src="../img/micronaut-logo-white.svg" alt="Micronaut"/></a></span>
         </div>
@@ -71,9 +71,11 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#security"><strong>15</strong><span>Security</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#cli"><strong>16</strong><span>Micronaut CLI</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#multitenancy"><strong>16</strong><span>Multi-Tenancy</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#appendix"><strong>17</strong><span>Appendices</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#cli"><strong>17</strong><span>Micronaut CLI</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#appendix"><strong>18</strong><span>Appendices</span></a></div>
                                 
                             </div>
                         </div>
@@ -269,6 +271,8 @@
         <div class="toc-item" style="margin-left:20px" id="toc-item-handlebars"><a href="#handlebars"><strong>6.23.2</strong><span>Handlebars.java</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-velocity"><a href="#velocity"><strong>6.23.3</strong><span>Apache Velocity</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-openapi"><a href="#openapi"><strong>6.24</strong><span>OpenAPI / Swagger Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-httpClient"><a href="#httpClient"><strong>7</strong><span>The HTTP Client</span></a></div>
         
@@ -538,37 +542,41 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-extending"><a href="#extending"><strong>15.7.2</strong><span>Extending Default Behavior</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-cli"><a href="#cli"><strong>16</strong><span>Micronaut CLI</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-multitenancy"><a href="#multitenancy"><strong>16</strong><span>Multi-Tenancy</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-createProject"><a href="#createProject"><strong>16.1</strong><span>Creating a Project</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-multitenancyGorm"><a href="#multitenancyGorm"><strong>16.1</strong><span>Multi-Tenancy GORM</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-profiles"><a href="#profiles"><strong>16.2</strong><span>Profiles</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-cli"><a href="#cli"><strong>17</strong><span>Micronaut CLI</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-comparingVersions"><a href="#comparingVersions"><strong>16.2.1</strong><span>Comparing Versions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-createProject"><a href="#createProject"><strong>17.1</strong><span>Creating a Project</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-features"><a href="#features"><strong>16.3</strong><span>Features</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-profiles"><a href="#profiles"><strong>17.2</strong><span>Profiles</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-commands"><a href="#commands"><strong>16.4</strong><span>Commands</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-comparingVersions"><a href="#comparingVersions"><strong>17.2.1</strong><span>Comparing Versions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-reloading"><a href="#reloading"><strong>16.5</strong><span>Reloading</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-features"><a href="#features"><strong>17.3</strong><span>Features</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>16.5.1</strong><span>JRebel</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-commands"><a href="#commands"><strong>17.4</strong><span>Commands</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-springloaded"><a href="#springloaded"><strong>16.5.2</strong><span>Spring-Loaded</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-reloading"><a href="#reloading"><strong>17.5</strong><span>Reloading</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>16.5.3</strong><span>Reloading with Gradle</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.5.1</strong><span>JRebel</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>16.5.4</strong><span>Reloading with an IDE</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-springloaded"><a href="#springloaded"><strong>17.5.2</strong><span>Spring-Loaded</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-appendix"><a href="#appendix"><strong>17</strong><span>Appendices</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.3</strong><span>Reloading with Gradle</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-faq"><a href="#faq"><strong>17.1</strong><span>Frequently Asked Questions (FAQ)</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.4</strong><span>Reloading with an IDE</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-usingsnapshots"><a href="#usingsnapshots"><strong>17.2</strong><span>Using Snapshots</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-appendix"><a href="#appendix"><strong>18</strong><span>Appendices</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-problems"><a href="#problems"><strong>17.3</strong><span>Common Problems</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-faq"><a href="#faq"><strong>18.1</strong><span>Frequently Asked Questions (FAQ)</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-breaks"><a href="#breaks"><strong>17.4</strong><span>Breaking Changes</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-usingsnapshots"><a href="#usingsnapshots"><strong>18.2</strong><span>Using Snapshots</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-problems"><a href="#problems"><strong>18.3</strong><span>Common Problems</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-breaks"><a href="#breaks"><strong>18.4</strong><span>Breaking Changes</span></a></div>
         
         </div>
     </div>
@@ -4208,17 +4216,17 @@ public class DataSourceFactory {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jmx.add-to-factory</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets if the server should be kept in the factory. Default {@value DEFAULT_ADD_FACTORY}.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets if the server should be kept in the factory. Default true.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jmx.ignore-agent-not-found</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets to ignore the exception if the agent is not found. Default {@value DEFAULT_IGNORE_AGENT}.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets to ignore the exception if the agent is not found. Default false.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jmx.register-endpoints</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets if endpoints should be registered. Default {@value DEFAULT_REG_ENDPOINTS}.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets if endpoints should be registered. Default true.</p></td>
 </tr>
 </tbody>
 </table>
@@ -5868,11 +5876,13 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.validation.Validated;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
+@Validated
 public class BookmarkController {
 
 @Get("/bookmarks/list{?paginationCommand*}")
@@ -9686,6 +9696,248 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
     #end
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+</div>
+</div>
+
+
+<h2 id="openapi">6.24 OpenAPI / Swagger Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/openapi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut includes experimental support for producing OpenAPI (Swagger) YAML at compilation time.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started_with_swagger">Getting Started with Swagger</h3>
+<div class="paragraph">
+<p>To enable this support you should add the following dependencies to your build configuration:</p>
+</div>
+<div class="listingblock">
+<div class="title">Adding the Swagger Dependencies</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut.configuration:openapi" <i class="conum" data-value="1"></i><b>(1)</b>
+compile "io.swagger.core.v3:swagger-annotations:2.0.4" <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>openapi</code> configuration gets added into the annotation processor scope</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <a href="https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations">Swagger Annotations</a> are added to the compile classpath</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once these are in place a minimum requirement is to add a <code>@OpenAPIDefinition</code> annotation to your <code>Application</code> class:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example @OpenAPIDefinition usage</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.info.*;
+
+@OpenAPIDefinition(
+    info = @Info(
+            title = "the title",
+            version = "0.0",
+            description = "My API",
+            license = @License(name = "Apache 2.0", url = "http://foo.bar"),
+            contact = @Contact(url = "http://gigantic-server.com", name = "Fred", email = "Fred@gigagantic-server.com")
+    )
+)
+public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that in place you compile your project and a Swagger YAML file will be generated (for example <code>build/generated/source/apt/main/swagger-0.0.yml</code> in the above case)</p>
+</div>
+<div class="paragraph">
+<p>The above configuration will produce YAML like the following:</p>
+</div>
+<div class="listingblock">
+<div class="title">Generated Swagger YAML</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">openapi: 3.0.1
+info:
+  title: the title
+  description: My API
+  contact:
+    name: Fred
+    url: http://gigantic-server.com
+    email: Fred@gigagantic-server.com
+  license:
+    name: Apache 2.0
+    url: http://foo.bar
+  version: "0.0"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controllers_and_swagger_annotations">Controllers and Swagger Annotations</h3>
+<div class="paragraph">
+<p>By default Micronaut will automatically at compile time build out the Swagger YAML definition from your defined controllers and methods. For example given the following class:</p>
+</div>
+<div class="listingblock">
+<div class="title">Hello World Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
+@Validated
+public class HelloController {
+
+    /**
+     * @param name The person's name
+     * @return The greeting
+     */
+    @Get(uri="/hello/{name}", produces=MediaType.TEXT_PLAIN)
+    public Single&lt;String&gt; hello(@NotBlank String name) {
+        return Single.just("Hello " + name + "!");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The resulting output will be:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example Generated Swagger Output</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">paths:
+  /hello/{name}:
+    get:
+      description: ""
+      operationId: hello
+      parameters:
+      - name: name
+        in: path
+        description: The person's name
+        required: true
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: The greeting
+          content:
+            text/plain:
+              schema:
+                type: string</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice how the javadoc comments are used to fill out the description of the API. If this is not desirable then you can take full control by augmenting your definition with Swagger annotations:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Swagger Annotations</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.parameters.*;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.security.*;
+import io.swagger.v3.oas.annotations.tags.*;
+import io.swagger.v3.oas.annotations.media.*;
+import io.swagger.v3.oas.annotations.enums.*;
+
+@Controller("/")
+@Validated
+public class HelloController {
+
+    /**
+     * @param name The person's name
+     * @return The greeting
+     */
+    @Get(uri="/hello/{name}", produces=MediaType.TEXT_PLAIN)
+    @Operation(summary = "Greets a person",
+               description = "A friendly greeting is returned",
+    )
+    @ApiResponse(
+            content = @Content(mediaType = "text/plain",
+            schema = @Schema(type="string"))
+    )
+    @ApiResponse(responseCode = "400", description = "Invalid Name Supplied")
+    @ApiResponse(responseCode = "404", description = "Person not found")
+    @Tag(name = "greeting")
+    public Single&lt;String&gt; hello(@Parameter(description="The name of the person") @NotBlank String name) {
+        return Single.just("Hello " + name + "!");
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_schemas_and_pojos">Schemas and POJOs</h3>
+<div class="paragraph">
+<p>If you return types are not simple strings and primitive types then Micronaut will attempt to generate a Schema definition. You can customize the
+generation of the Schema by using the <code>@Schema</code> annotation on your POJO. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using the @Schema Annotation</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Schema(name="MyPet", description="Pet description") <i class="conum" data-value="1"></i><b>(1)</b>
+class Pet {
+    private PetType type;
+    private int age;
+    private String name;
+
+    public void setAge(int a) {
+        age = a;
+    }
+
+    /**
+     * The age
+     */
+    @Schema(description="Pet age", maximum="20") <i class="conum" data-value="2"></i><b>(2)</b>
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String n) {
+        name = n;
+    }
+
+    @Schema(description="Pet name", maxLength=20)
+    public String getName() {
+        return name;
+    }
+
+    public void setType(PetType t) {
+        type = t;
+    }
+
+    public PetType getType() {
+        return type;
+    }
+}
+
+enum PetType {
+    DOG, CAT;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@Schema</code> annotation is used to customize the name of the schema</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Properties can be customized too.</td>
+</tr>
+</table>
 </div>
 </div>
 
@@ -23750,7 +24002,7 @@ public class UserController {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.ldap.*.search.filter</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the search filter. Default {@value DEFAULT_FILTER}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the search filter. Default "(uid={0})"</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.ldap.*.search.attributes</code></p></td>
@@ -23924,7 +24176,227 @@ public class MyContextBuilder implements ContextBuilder {
 </div>
 
 
-<h1 id="cli">16 Micronaut CLI</h1>
+<h1 id="multitenancy">16 Multi-Tenancy</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/multitenancy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Multi-Tenancy, as it relates to software developments, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenants' data is isolated from the other.</p>
+</div>
+<div class="paragraph">
+<p>A common requirement for supporting Multi-tenancy is the ability to resolve the current tenant. Micronaut ships with the following built-in <a href="../api/io/micronaut/multitenancy/tenantresolver/TenantResolver.html">TenantResolver</a>s:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/CookieTenantResolver.html">CookieTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from an HTTP cookie. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.CookieTenantResolverConfigurationProperties">CookieTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/FixedTenantResolver.html">FixedTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves against a fixed tenant id. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.FixedTenantResolverConfigurationProperties">FixTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/HttpHeaderTenantResolver.html">HttpHeaderTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the request HTTP Header. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.HttpHeaderTenantResolverConfigurationProperties">FixTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/PrincipalTenantResolver.html">PrincipalTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the authenticated username. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.PrincipalTenantResolverConfigurationProperties">PrincipalTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SessionTenantResolver.html">SessionTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the HTTP session. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SessionTenantResolverConfigurationProperties">SessionTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SubdomainTenantResolver.html">SubdomainTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from the subdomain. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SubdomainTenantResolverConfigurationProperties">SubdomainTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SystemPropertyTenantResolver.html">SystemPropertyTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from a system property. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SystemPropertyTenantResolverConfigurationProperties">SystemPropertyTenantResolver Configuration Properties</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Micronaut supports tenant propagation. Imagine the next scenario:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../img/multitenancy.svg" alt="multitenancy"></span></p>
+</div>
+<div class="paragraph">
+<p>You want incoming requests to the <code>gateway</code> microservice to resolve the tenant id via subdomain. However, you want
+your requests to other internal microservices to include the <code>tenant Id</code> as an HTTP Header.</p>
+</div>
+<div class="paragraph">
+<p>Your configuration in the <code>gateway</code> microservice will look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  multitenancy:
+    propagation:
+      enabled: true
+      service-id-regex: 'catalogue'
+    tenantresolver:
+      subdomain:
+        enabled: true
+    tenantwriter:
+      httpheader:
+        enabled: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the <code>catalogue</code> microservice the configuration will look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  multitenancy:
+    tenantresolver:
+      httpheader:
+        enabled: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To propagate the tenant you will need to write the resolved tenant ID to the outgoing requests.</p>
+</div>
+<div class="paragraph">
+<p>Currently, Micronaut ships with two built-in implementations for <a href="../api/io/micronaut/multitenancy/writer/TenantWriter.html">TenantWriter</a>:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/writer/CookieTenantWriter.html">CookieTenantWriter</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes the current tenant to a Cookie in your outgoing requests. See <a href="configurationreference.html#io.micronaut.multitenancy.writer.CookieTenantWriterConfigurationProperties">CookieTenantWriter Configuration Properties</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/writer/HttpHeaderTenantWriter.html">HttpHeaderTenantWriter</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes the current tenant to a HTTP Header. See <a href="configurationreference.html#io.micronaut.multitenancy.writer.HttpHeaderTenantWriterConfigurationProperties">HttpHeaderTenantWriter Configuration Properties</a>.</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="multitenancyGorm">16.1 Multi-Tenancy GORM</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/multitenancy/multitenancyGorm.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><a href="http://gorm.grails.org">GORM</a> supports Multi-tenancy and integrates with Micronaut.</p>
+</div>
+<div class="paragraph">
+<p>GORM is a powerful Groovy-based data access toolkit for the JVM with implementations several data access technologies (Hibernate, Neo4j, MongoDB, GraphQL &#8230;&#8203;).</p>
+</div>
+<div class="paragraph">
+<p>GORM supports the following different multitenancy modes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DATABASE</code> - A separate database with a separate connection pool is used to store each tenants data.</p>
+</li>
+<li>
+<p><code>SCHEMA</code> - The same database, but different schemas are used to store each tenants data.</p>
+</li>
+<li>
+<p><code>DISCRIMINATOR</code> - The same database is used with a discriminator used to partition and isolate data.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to use GORM - Multitenancy you will need to configure the next properties: <code>grails.gorm.multiTenancy.mode</code> and <code>grails.gorm.multiTenancy.tenantResolverClass</code>.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut support for Multi-tenancy integrates with GORM.</p>
+</div>
+<div class="paragraph">
+<p>The following table contains all of the <code>TenantResolver implementations that ship with `multitenancy-gorm</code> module and are usable out of the box.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/CookieTenantResolver.html">CookieTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from an HTTP cookie.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/FixedTenantResolver.html">FixedTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves against a fixed tenant id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/HttpHeaderTenantResolver.html">HttpHeaderTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the request HTTP Header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/PrincipalTenantResolver.html">PrincipalTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the authenticated username.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/SessionTenantResolver.html">SessionTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the HTTP session.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/SubdomainTenantResolver.html">SubdomainTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from the subdomain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/gorm/SystemPropertyTenantResolver.html">SystemPropertyTenantResolver</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from a system property.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You will need to add something like the following snippet to your app configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">grails:
+    gorm:
+        multiTenancy:
+            mode: DISCRIMINATOR
+            tenantResolverClass: 'io.micronaut.multitenancy.gorm.PrincipalTenantResolver'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please, read <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy">GORM Multi-tenancy documentation</a> to learn more.</p>
+</div>
+
+
+<h1 id="cli">17 Micronaut CLI</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli.adoc"'>
@@ -24115,7 +24587,7 @@ create-app [NAME]
 </div>
 
 
-<h2 id="createProject">16.1 Creating a Project</h2>
+<h2 id="createProject">17.1 Creating a Project</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/createProject.adoc"'>
@@ -24814,7 +25286,7 @@ Currently AWS Lambda is the only supported cloud provider for Micronaut function
 </div>
 
 
-<h2 id="profiles">16.2 Profiles</h2>
+<h2 id="profiles">17.2 Profiles</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/profiles.adoc"'>
@@ -24845,7 +25317,7 @@ Currently AWS Lambda is the only supported cloud provider for Micronaut function
 </div>
 
 
-<h2 id="comparingVersions">16.2.1 Comparing Versions</h2>
+<h2 id="comparingVersions">17.2.1 Comparing Versions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/profiles/comparingVersions.adoc"'>
@@ -24876,7 +25348,7 @@ Github Repositories to generate a diff.</p>
 </table>
 
 
-<h2 id="features">16.3 Features</h2>
+<h2 id="features">17.3 Features</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/features.adoc"'>
@@ -24941,7 +25413,7 @@ Provided Features:
 </div>
 
 
-<h2 id="commands">16.4 Commands</h2>
+<h2 id="commands">17.4 Commands</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/commands.adoc"'>
@@ -25215,7 +25687,7 @@ It creates an associated test that will run the application and verify that a co
 </div>
 
 
-<h2 id="reloading">16.5 Reloading</h2>
+<h2 id="reloading">17.5 Reloading</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading.adoc"'>
@@ -25235,7 +25707,7 @@ It creates an associated test that will run the application and verify that a co
 </div>
 
 
-<h2 id="jrebel">16.5.1 JRebel</h2>
+<h2 id="jrebel">17.5.1 JRebel</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/jrebel.adoc"'>
@@ -25388,7 +25860,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 
 
-<h2 id="springloaded">16.5.2 Spring-Loaded</h2>
+<h2 id="springloaded">17.5.2 Spring-Loaded</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/springloaded.adoc"'>
@@ -25486,7 +25958,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 
 
-<h2 id="gradleReload">16.5.3 Reloading with Gradle</h2>
+<h2 id="gradleReload">17.5.3 Reloading with Gradle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/gradleReload.adoc"'>
@@ -25515,7 +25987,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 
 
-<h2 id="ideReload">16.5.4 Reloading with an IDE</h2>
+<h2 id="ideReload">17.5.4 Reloading with an IDE</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/ideReload.adoc"'>
@@ -25541,7 +26013,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 
 
-<h1 id="appendix">17 Appendices</h1>
+<h1 id="appendix">18 Appendices</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix.adoc"'>
@@ -25553,7 +26025,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 
 
 
-<h2 id="faq">17.1 Frequently Asked Questions (FAQ)</h2>
+<h2 id="faq">18.1 Frequently Asked Questions (FAQ)</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/faq.adoc"'>
@@ -25661,7 +26133,7 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 </div>
 
 
-<h2 id="usingsnapshots">17.2 Using Snapshots</h2>
+<h2 id="usingsnapshots">18.2 Using Snapshots</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/usingsnapshots.adoc"'>
@@ -25708,7 +26180,7 @@ dependencyManagement {
 </div>
 
 
-<h2 id="problems">17.3 Common Problems</h2>
+<h2 id="problems">18.3 Common Problems</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/problems.adoc"'>
@@ -25749,7 +26221,7 @@ dependencyManagement {
 </div>
 
 
-<h2 id="breaks">17.4 Breaking Changes</h2>
+<h2 id="breaks">18.4 Breaking Changes</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/breaks.adoc"'>
@@ -25770,6 +26242,9 @@ dependencyManagement {
 </li>
 <li>
 <p>The intercept url map security rule now no longer considers the query part of the request when determining if the request matches. Previously <code>/?value=true</code> would <strong>not</strong> match <code>/</code>.</p>
+</li>
+<li>
+<p>Several APIs surrounding route URI matching and template parsing have changed to allow more information to be retrieved from the parsing process.</p>
 </li>
 </ul>
 </div>

@@ -109,13 +109,34 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">ApplicationContext</span>
 extends <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>, <a href="../../../io/micronaut/core/value/PropertyResolver.html" title="interface in io.micronaut.core.value">PropertyResolver</a>, <a href="../../../io/micronaut/context/env/PropertyPlaceholderResolver.html" title="interface in io.micronaut.context.env">PropertyPlaceholderResolver</a></pre>
-<div class="block">An application context extends a <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context"><code>BeanContext</code></a> and adds the concepts of configuration, environments and
- runtimes.</div>
+<div class="block"><p>An application context extends a <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context"><code>BeanContext</code></a> and adds the concepts of configuration, environments and
+   runtimes.</p>
+ <p>
+ <p>The <a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context"><code>ApplicationContext</code></a> is the main entry point for starting and running Micronaut applications. It
+ can be though of as a container object for all dependency injected objects.</p>
+ <p>
+ <p>The <a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context"><code>ApplicationContext</code></a> can be started via the <a href="../../../io/micronaut/context/ApplicationContext.html#run--"><code>run()</code></a> method. For example:</p>
+
+ <pre class="code">
+     ApplicationContext context = ApplicationContext.run();
+ </pre>
+
+ <p>Alternatively, the <a href="../../../io/micronaut/context/ApplicationContext.html#build--"><code>build()</code></a> method can be used to customize the <code>ApplicationContext</code> using the <a href="../../../io/micronaut/context/ApplicationContextBuilder.html" title="interface in io.micronaut.context"><code>ApplicationContextBuilder</code></a> interface
+ prior to running. For example:</p>
+ <pre class="code">
+     ApplicationContext context = ApplicationContext.build().environments("test").start();
+ </pre>
+
+ <p>The <a href="../../../io/micronaut/context/ApplicationContext.html#getEnvironment--"><code>getEnvironment()</code></a> method can be used to obtain a reference to the application <a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env"><code>Environment</code></a>, which contains the loaded configuration
+ and active environment names.</p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Graeme Rocher</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../io/micronaut/context/ApplicationContextBuilder.html" title="interface in io.micronaut.context"><code>ApplicationContextBuilder</code></a>, 
+<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env"><code>Environment</code></a></dd>
 </dl>
 </li>
 </ul>

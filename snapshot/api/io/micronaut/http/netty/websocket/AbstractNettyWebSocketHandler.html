@@ -212,8 +212,8 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/websocket/AbstractNettyWebSocketHandler.html#webSocketBinder">webSocketBinder</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected io.netty.channel.group.ChannelGroup</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/websocket/AbstractNettyWebSocketHandler.html#webSocketSessions">webSocketSessions</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/websocket/AbstractNettyWebSocketHandler.html#webSocketSessionRepository">webSocketSessionRepository</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected io.netty.handler.codec.http.websocketx.WebSocketVersion</code></td>
@@ -236,14 +236,14 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/websocket/AbstractNettyWebSocketHandler.html#AbstractNettyWebSocketHandler-io.netty.channel.ChannelHandlerContext-io.micronaut.http.bind.RequestBinderRegistry-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.websocket.context.WebSocketBean-io.micronaut.http.HttpRequest-java.util.Map-io.netty.handler.codec.http.websocketx.WebSocketVersion-io.netty.channel.group.ChannelGroup-">AbstractNettyWebSocketHandler</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/websocket/AbstractNettyWebSocketHandler.html#AbstractNettyWebSocketHandler-io.netty.channel.ChannelHandlerContext-io.micronaut.http.bind.RequestBinderRegistry-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.websocket.context.WebSocketBean-io.micronaut.http.HttpRequest-java.util.Map-io.netty.handler.codec.http.websocketx.WebSocketVersion-io.micronaut.http.netty.websocket.WebSocketSessionRepository-">AbstractNettyWebSocketHandler</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
                              <a href="../../../../../io/micronaut/http/bind/RequestBinderRegistry.html" title="interface in io.micronaut.http.bind">RequestBinderRegistry</a>&nbsp;binderRegistry,
                              <a href="../../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;mediaTypeCodecRegistry,
                              <a href="../../../../../io/micronaut/websocket/context/WebSocketBean.html" title="interface in io.micronaut.websocket.context">WebSocketBean</a>&lt;?&gt;&nbsp;webSocketBean,
                              <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
                              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;uriVariables,
                              io.netty.handler.codec.http.websocketx.WebSocketVersion&nbsp;version,
-                             io.netty.channel.group.ChannelGroup&nbsp;webSocketSessions)</code>
+                             <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a>&nbsp;webSocketSessionRepository)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -460,13 +460,13 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
 <pre>protected final&nbsp;io.netty.handler.codec.http.websocketx.WebSocketVersion webSocketVersion</pre>
 </li>
 </ul>
-<a name="webSocketSessions">
+<a name="webSocketSessionRepository">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>webSocketSessions</h4>
-<pre>protected final&nbsp;io.netty.channel.group.ChannelGroup webSocketSessions</pre>
+<h4>webSocketSessionRepository</h4>
+<pre>protected final&nbsp;<a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a> webSocketSessionRepository</pre>
 </li>
 </ul>
 </li>
@@ -477,7 +477,7 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="AbstractNettyWebSocketHandler-io.netty.channel.ChannelHandlerContext-io.micronaut.http.bind.RequestBinderRegistry-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.websocket.context.WebSocketBean-io.micronaut.http.HttpRequest-java.util.Map-io.netty.handler.codec.http.websocketx.WebSocketVersion-io.netty.channel.group.ChannelGroup-">
+<a name="AbstractNettyWebSocketHandler-io.netty.channel.ChannelHandlerContext-io.micronaut.http.bind.RequestBinderRegistry-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.websocket.context.WebSocketBean-io.micronaut.http.HttpRequest-java.util.Map-io.netty.handler.codec.http.websocketx.WebSocketVersion-io.micronaut.http.netty.websocket.WebSocketSessionRepository-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -490,7 +490,7 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
                                         <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;uriVariables,
                                         io.netty.handler.codec.http.websocketx.WebSocketVersion&nbsp;version,
-                                        io.netty.channel.group.ChannelGroup&nbsp;webSocketSessions)</pre>
+                                        <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a>&nbsp;webSocketSessionRepository)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -501,7 +501,7 @@ extends io.netty.channel.SimpleChannelInboundHandler&lt;<a href="https://docs.or
 <dd><code>request</code> - The originating request</dd>
 <dd><code>uriVariables</code> - The URI variables</dd>
 <dd><code>version</code> - The websocket version being used</dd>
-<dd><code>webSocketSessions</code> - The web socket sessions if they are supported (like on the server), null otherwise</dd>
+<dd><code>webSocketSessionRepository</code> - The web socket repository if they are supported (like on the server), null otherwise</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,10 +142,14 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/http/util/OutgoingHttpRequestProcessor.html" title="interface in io.micronaut.http.util">OutgoingHttpRequestProcessor</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#outgoingHttpRequestProcessor">outgoingHttpRequestProcessor</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationConfiguration.html" title="interface in io.micronaut.security.token.propagation">TokenPropagationConfiguration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#tokenPropagationConfiguration">tokenPropagationConfiguration</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../io/micronaut/security/token/writer/TokenWriter.html" title="interface in io.micronaut.security.token.writer">TokenWriter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#tokenWriter">tokenWriter</a></span></code>&nbsp;</td>
 </tr>
@@ -171,8 +175,9 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#TokenPropagationHttpClientFilter-io.micronaut.security.token.writer.TokenWriter-io.micronaut.security.token.propagation.TokenPropagationConfiguration-">TokenPropagationHttpClientFilter</a></span>(<a href="../../../../../io/micronaut/security/token/writer/TokenWriter.html" title="interface in io.micronaut.security.token.writer">TokenWriter</a>&nbsp;tokenWriter,
-                                <a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationConfiguration.html" title="interface in io.micronaut.security.token.propagation">TokenPropagationConfiguration</a>&nbsp;tokenPropagationConfiguration)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#TokenPropagationHttpClientFilter-io.micronaut.security.token.writer.TokenWriter-io.micronaut.security.token.propagation.TokenPropagationConfiguration-io.micronaut.http.util.OutgoingHttpRequestProcessor-">TokenPropagationHttpClientFilter</a></span>(<a href="../../../../../io/micronaut/security/token/writer/TokenWriter.html" title="interface in io.micronaut.security.token.writer">TokenWriter</a>&nbsp;tokenWriter,
+                                <a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationConfiguration.html" title="interface in io.micronaut.security.token.propagation">TokenPropagationConfiguration</a>&nbsp;tokenPropagationConfiguration,
+                                <a href="../../../../../io/micronaut/http/util/OutgoingHttpRequestProcessor.html" title="interface in io.micronaut.http.util">OutgoingHttpRequestProcessor</a>&nbsp;outgoingHttpRequestProcessor)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -202,11 +207,6 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#doFilter-io.micronaut.http.MutableHttpRequest-io.micronaut.http.filter.ClientFilterChain-io.micronaut.http.HttpRequest-">doFilter</a></span>(<a href="../../../../../io/micronaut/http/MutableHttpRequest.html" title="interface in io.micronaut.http">MutableHttpRequest</a>&lt;?&gt;&nbsp;targetRequest,
         <a href="../../../../../io/micronaut/http/filter/ClientFilterChain.html" title="interface in io.micronaut.http.filter">ClientFilterChain</a>&nbsp;chain,
         <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;currentRequest)</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html#shouldProcessRequest-java.util.Optional-java.lang.String-">shouldProcessRequest</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;serviceId,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -256,10 +256,19 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <a name="tokenWriter">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>tokenWriter</h4>
 <pre>protected final&nbsp;<a href="../../../../../io/micronaut/security/token/writer/TokenWriter.html" title="interface in io.micronaut.security.token.writer">TokenWriter</a> tokenWriter</pre>
+</li>
+</ul>
+<a name="outgoingHttpRequestProcessor">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>outgoingHttpRequestProcessor</h4>
+<pre>protected final&nbsp;<a href="../../../../../io/micronaut/http/util/OutgoingHttpRequestProcessor.html" title="interface in io.micronaut.http.util">OutgoingHttpRequestProcessor</a> outgoingHttpRequestProcessor</pre>
 </li>
 </ul>
 </li>
@@ -270,18 +279,20 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="TokenPropagationHttpClientFilter-io.micronaut.security.token.writer.TokenWriter-io.micronaut.security.token.propagation.TokenPropagationConfiguration-">
+<a name="TokenPropagationHttpClientFilter-io.micronaut.security.token.writer.TokenWriter-io.micronaut.security.token.propagation.TokenPropagationConfiguration-io.micronaut.http.util.OutgoingHttpRequestProcessor-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TokenPropagationHttpClientFilter</h4>
 <pre>public&nbsp;TokenPropagationHttpClientFilter(<a href="../../../../../io/micronaut/security/token/writer/TokenWriter.html" title="interface in io.micronaut.security.token.writer">TokenWriter</a>&nbsp;tokenWriter,
-                                        <a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationConfiguration.html" title="interface in io.micronaut.security.token.propagation">TokenPropagationConfiguration</a>&nbsp;tokenPropagationConfiguration)</pre>
+                                        <a href="../../../../../io/micronaut/security/token/propagation/TokenPropagationConfiguration.html" title="interface in io.micronaut.security.token.propagation">TokenPropagationConfiguration</a>&nbsp;tokenPropagationConfiguration,
+                                        <a href="../../../../../io/micronaut/http/util/OutgoingHttpRequestProcessor.html" title="interface in io.micronaut.http.util">OutgoingHttpRequestProcessor</a>&nbsp;outgoingHttpRequestProcessor)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>tokenWriter</code> - bean responsible of writing the token to the target request</dd>
 <dd><code>tokenPropagationConfiguration</code> - JWT Propagation configuration</dd>
+<dd><code>outgoingHttpRequestProcessor</code> - Utility to decide whether to process the request</dd>
 </dl>
 </li>
 </ul>
@@ -293,23 +304,6 @@ implements <a href="../../../../../io/micronaut/http/filter/HttpClientFilter.htm
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="shouldProcessRequest-java.util.Optional-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>shouldProcessRequest</h4>
-<pre>public&nbsp;boolean&nbsp;shouldProcessRequest(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;serviceId,
-                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serviceId</code> - request's service identifier</dd>
-<dd><code>uri</code> - request's uri</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the request should be processed by this filter.</dd>
-</dl>
-</li>
-</ul>
 <a name="doFilter-io.micronaut.http.MutableHttpRequest-io.micronaut.http.filter.ClientFilterChain-">
 <!--   -->
 </a>

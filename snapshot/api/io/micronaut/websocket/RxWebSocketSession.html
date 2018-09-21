@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18,"i2":6,"i3":18,"i4":6,"i5":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
+var methods = {"i0":6,"i1":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../io/micronaut/websocket/RxWebSocketClient.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../io/micronaut/websocket/WebSocketClient.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../io/micronaut/websocket/WebSocketBroadcaster.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?io/micronaut/websocket/RxWebSocketSession.html" target="_top">Frames</a></li>
@@ -144,46 +144,18 @@ extends <a href="../../../io/micronaut/websocket/WebSocketSession.html" title="i
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>default &lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#broadcast-T-">broadcast</a></span>(T&nbsp;message)</code>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>default &lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-">broadcast</a></span>(T&nbsp;message,
-         <a href="../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&nbsp;mediaType)</code>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-java.util.function.Predicate-">broadcast</a></span>(T&nbsp;message,
-         <a href="../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&nbsp;mediaType,
-         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a>&gt;&nbsp;filter)</code>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections that match the given filter.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>default &lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#broadcast-T-java.util.function.Predicate-">broadcast</a></span>(T&nbsp;message,
-         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a>&gt;&nbsp;filter)</code>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections that match the given filter.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="../../../io/micronaut/websocket/RxWebSocketSession.html" title="interface in io.micronaut.websocket">RxWebSocketSession</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#getOpenSessions--">getOpenSessions</a></span>()</code>
 <div class="block">The current open sessions.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/websocket/RxWebSocketSession.html#send-T-io.micronaut.http.MediaType-">send</a></span>(T&nbsp;message,
     <a href="../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&nbsp;mediaType)</code>
@@ -196,7 +168,7 @@ extends <a href="../../../io/micronaut/websocket/WebSocketSession.html" title="i
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.websocket.<a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a></h3>
-<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastAsync-T-">broadcastAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastAsync-T-io.micronaut.http.MediaType-">broadcastAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastAsync-T-io.micronaut.http.MediaType-java.util.function.Predicate-">broadcastAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastAsync-T-java.util.function.Predicate-">broadcastAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastSync-T-">broadcastSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastSync-T-io.micronaut.http.MediaType-">broadcastSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastSync-T-io.micronaut.http.MediaType-java.util.function.Predicate-">broadcastSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcastSync-T-java.util.function.Predicate-">broadcastSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#close--">close</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#close-io.micronaut.websocket.CloseReason-">close</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getAttributes--">getAttributes</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getId--">getId</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getProtocolVersion--">getProtocolVersion</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getRequestParameters--">getRequestParameters</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getRequestURI--">getRequestURI</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getSubprotocol--">getSubprotocol</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getUriVariables--">getUriVariables</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getUserPrincipal--">getUserPrincipal</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#isOpen--">isOpen</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#isSecure--">isSecure</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-">send</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendAsync-T-">sendAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendAsync-T-io.micronaut.http.MediaType-">sendAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendSync-java.lang.Object-">sendSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendSync-java.lang.Object-io.micronaut.http.MediaType-">sendSync</a></code></li>
+<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#close--">close</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#close-io.micronaut.websocket.CloseReason-">close</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getAttributes--">getAttributes</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getId--">getId</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getProtocolVersion--">getProtocolVersion</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getRequestParameters--">getRequestParameters</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getRequestURI--">getRequestURI</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getSubprotocol--">getSubprotocol</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getUriVariables--">getUriVariables</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#getUserPrincipal--">getUserPrincipal</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#isOpen--">isOpen</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#isSecure--">isSecure</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-">send</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendAsync-T-">sendAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendAsync-T-io.micronaut.http.MediaType-">sendAsync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendSync-java.lang.Object-">sendSync</a>, <a href="../../../io/micronaut/websocket/WebSocketSession.html#sendSync-java.lang.Object-io.micronaut.http.MediaType-">sendSync</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.convert.value.MutableConvertibleValues">
@@ -263,7 +235,7 @@ extends <a href="../../../io/micronaut/websocket/WebSocketSession.html" title="i
 </a><a name="send-T-io.micronaut.http.MediaType-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>send</h4>
 <pre>&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;&nbsp;send(T&nbsp;message,
@@ -279,110 +251,6 @@ extends <a href="../../../io/micronaut/websocket/WebSocketSession.html" title="i
 <dd><code>mediaType</code> - The media type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <code>Flowable</code></dd>
-</dl>
-</li>
-</ul>
-<a name="broadcast-java.lang.Object-io.micronaut.http.MediaType-java.util.function.Predicate-">
-<!--   -->
-</a><a name="broadcast-T-io.micronaut.http.MediaType-java.util.function.Predicate-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>broadcast</h4>
-<pre>&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;&nbsp;broadcast(T&nbsp;message,
-                                       <a href="../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&nbsp;mediaType,
-                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a>&gt;&nbsp;filter)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-java.util.function.Predicate-">WebSocketSession</a></code></span></div>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections that match the given filter. When
- used on the client this method behaves the same as <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-"><code>WebSocketSession.send(Object)</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-java.util.function.Predicate-">broadcast</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The message type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - The message</dd>
-<dd><code>mediaType</code> - The media type of the message. Used to lookup an appropriate codec via the <a href="../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec"><code>MediaTypeCodecRegistry</code></a>.</dd>
-<dd><code>filter</code> - The filter to apply</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that either emits an error or emits the message once it has been published successfully.</dd>
-</dl>
-</li>
-</ul>
-<a name="broadcast-java.lang.Object-io.micronaut.http.MediaType-">
-<!--   -->
-</a><a name="broadcast-T-io.micronaut.http.MediaType-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>broadcast</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;&nbsp;broadcast(T&nbsp;message,
-                                               <a href="../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&nbsp;mediaType)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-">WebSocketSession</a></code></span></div>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections. When
- used on the client this method behaves the same as <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-"><code>WebSocketSession.send(Object)</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-io.micronaut.http.MediaType-">broadcast</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The message type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - The message</dd>
-<dd><code>mediaType</code> - The media type of the message. Used to lookup an appropriate codec via the <a href="../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec"><code>MediaTypeCodecRegistry</code></a>.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that either emits an error or emits the message once it has been published successfully.</dd>
-</dl>
-</li>
-</ul>
-<a name="broadcast-java.lang.Object-">
-<!--   -->
-</a><a name="broadcast-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>broadcast</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;&nbsp;broadcast(T&nbsp;message)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-">WebSocketSession</a></code></span></div>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections. When
- used on the client this method behaves the same as <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-"><code>WebSocketSession.send(Object)</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-">broadcast</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The message type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - The message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that either emits an error or emits the message once it has been published successfully.</dd>
-</dl>
-</li>
-</ul>
-<a name="broadcast-java.lang.Object-java.util.function.Predicate-">
-<!--   -->
-</a><a name="broadcast-T-java.util.function.Predicate-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>broadcast</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;io.reactivex.Flowable&lt;T&gt;&nbsp;broadcast(T&nbsp;message,
-                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a>&gt;&nbsp;filter)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-java.util.function.Predicate-">WebSocketSession</a></code></span></div>
-<div class="block">When used on the server this method will broadcast a message to all open WebSocket connections that match the given filter. When
- used on the client this method behaves the same as <a href="../../../io/micronaut/websocket/WebSocketSession.html#send-T-"><code>WebSocketSession.send(Object)</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../io/micronaut/websocket/WebSocketSession.html#broadcast-T-java.util.function.Predicate-">broadcast</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/websocket/WebSocketSession.html" title="interface in io.micronaut.websocket">WebSocketSession</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The message type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - The message</dd>
-<dd><code>filter</code> - The filter to apply</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that either emits an error or emits the message once it has been published successfully.</dd>
 </dl>
 </li>
 </ul>
@@ -414,7 +282,7 @@ extends <a href="../../../io/micronaut/websocket/WebSocketSession.html" title="i
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../io/micronaut/websocket/RxWebSocketClient.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../io/micronaut/websocket/WebSocketClient.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../io/micronaut/websocket/WebSocketBroadcaster.html" title="interface in io.micronaut.websocket"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?io/micronaut/websocket/RxWebSocketSession.html" target="_top">Frames</a></li>

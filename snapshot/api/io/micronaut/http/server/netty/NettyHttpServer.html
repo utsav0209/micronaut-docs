@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,14 +107,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../io/micronaut/context/ApplicationContextLifeCyle.html" title="interface in io.micronaut.context">ApplicationContextLifeCyle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;, <a href="../../../../../io/micronaut/context/ApplicationContextProvider.html" title="interface in io.micronaut.context">ApplicationContextProvider</a>, <a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>, <a href="../../../../../io/micronaut/runtime/EmbeddedApplication.html" title="interface in io.micronaut.runtime">EmbeddedApplication</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;, <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
+<dd><a href="../../../../../io/micronaut/context/ApplicationContextLifeCycle.html" title="interface in io.micronaut.context">ApplicationContextLifeCycle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;, <a href="../../../../../io/micronaut/context/ApplicationContextProvider.html" title="interface in io.micronaut.context">ApplicationContextProvider</a>, <a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>, <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a>, <a href="../../../../../io/micronaut/runtime/EmbeddedApplication.html" title="interface in io.micronaut.runtime">EmbeddedApplication</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;, <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
 </dl>
 <hr>
 <br>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">NettyHttpServer</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></pre>
+implements <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>, <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></pre>
 <div class="block">Implements the bootstrap and configuration logic for the Netty implementation of <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server"><code>EmbeddedServer</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -210,62 +210,84 @@ implements <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.ht
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#addChannel-io.netty.channel.Channel-">addChannel</a></span>(io.netty.channel.Channel&nbsp;channel)</code>
+<div class="block">Adds a channel to the repository.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected io.netty.channel.nio.NioEventLoopGroup</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#createParentEventLoopGroup--">createParentEventLoopGroup</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected io.netty.bootstrap.ServerBootstrap</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#createServerBootstrap--">createServerBootstrap</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected io.netty.channel.nio.NioEventLoopGroup</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#createWorkerEventLoopGroup--">createWorkerEventLoopGroup</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/runtime/ApplicationConfiguration.html" title="class in io.micronaut.runtime">ApplicationConfiguration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getApplicationConfiguration--">getApplicationConfiguration</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getApplicationContext--">getApplicationContext</a></span>()</code>
 <div class="block">Resolves the <a href="../../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context"><code>ApplicationContext</code></a> for this class.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getHost--">getHost</a></span>()</code>&nbsp;</td>
-</tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getPort--">getPort</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>io.netty.channel.group.ChannelGroup</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getChannelGroup--">getChannelGroup</a></span>()</code>
+<div class="block">Returns the <code>ChannelGroup</code> used to store WebSocketSessions.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getScheme--">getScheme</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getHost--">getHost</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getPort--">getPort</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getScheme--">getScheme</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html" title="class in io.micronaut.http.server.netty.configuration">NettyHttpServerConfiguration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getServerConfiguration--">getServerConfiguration</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getURI--">getURI</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getURL--">getURL</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#getWebSocketSessionRepository--">getWebSocketSessionRepository</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#isRunning--">isRunning</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#removeChannel-io.netty.channel.Channel-">removeChannel</a></span>(io.netty.channel.Channel&nbsp;channel)</code>
+<div class="block">Remove a channel from the repository.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#start--">start</a></span>()</code>
 <div class="block">Starts the lifecyle component.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#stop--">stop</a></span>()</code>
 <div class="block">Stops the life cycle component.</div>
@@ -485,7 +507,7 @@ public&nbsp;NettyHttpServer(<a href="../../../../../io/micronaut/http/server/net
 <div class="block">Starts the lifecyle component.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCyle.html#start--">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCyle.html" title="interface in io.micronaut.context">ApplicationContextLifeCyle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;</code></dd>
+<dd><code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCycle.html#start--">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCycle.html" title="interface in io.micronaut.context">ApplicationContextLifeCycle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#start--">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -504,7 +526,7 @@ public&nbsp;NettyHttpServer(<a href="../../../../../io/micronaut/http/server/net
 <div class="block">Stops the life cycle component.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCyle.html#stop--">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCyle.html" title="interface in io.micronaut.context">ApplicationContextLifeCyle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;</code></dd>
+<dd><code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCycle.html#stop--">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/ApplicationContextLifeCycle.html" title="interface in io.micronaut.context">ApplicationContextLifeCycle</a>&lt;<a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#stop--">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -650,13 +672,77 @@ public&nbsp;NettyHttpServer(<a href="../../../../../io/micronaut/http/server/net
 <a name="createServerBootstrap--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>createServerBootstrap</h4>
 <pre>protected&nbsp;io.netty.bootstrap.ServerBootstrap&nbsp;createServerBootstrap()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Netty server bootstrap</dd>
+</dl>
+</li>
+</ul>
+<a name="addChannel-io.netty.channel.Channel-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addChannel</h4>
+<pre>public&nbsp;void&nbsp;addChannel(io.netty.channel.Channel&nbsp;channel)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#addChannel-io.netty.channel.Channel-">WebSocketSessionRepository</a></code></span></div>
+<div class="block">Adds a channel to the repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#addChannel-io.netty.channel.Channel-">addChannel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>channel</code> - The channel</dd>
+</dl>
+</li>
+</ul>
+<a name="removeChannel-io.netty.channel.Channel-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeChannel</h4>
+<pre>public&nbsp;void&nbsp;removeChannel(io.netty.channel.Channel&nbsp;channel)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#removeChannel-io.netty.channel.Channel-">WebSocketSessionRepository</a></code></span></div>
+<div class="block">Remove a channel from the repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#removeChannel-io.netty.channel.Channel-">removeChannel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>channel</code> - The channel</dd>
+</dl>
+</li>
+</ul>
+<a name="getChannelGroup--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getChannelGroup</h4>
+<pre>public&nbsp;io.netty.channel.group.ChannelGroup&nbsp;getChannelGroup()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#getChannelGroup--">WebSocketSessionRepository</a></code></span></div>
+<div class="block">Returns the <code>ChannelGroup</code> used to store WebSocketSessions.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html#getChannelGroup--">getChannelGroup</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A <code>ChannelGroup</code></dd>
+</dl>
+</li>
+</ul>
+<a name="getWebSocketSessionRepository--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getWebSocketSessionRepository</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket">WebSocketSessionRepository</a>&nbsp;getWebSocketSessionRepository()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html" title="class in io.micronaut.http.server.netty"><code>NettyHttpServer</code></a> which implements <a href="../../../../../io/micronaut/http/netty/websocket/WebSocketSessionRepository.html" title="interface in io.micronaut.http.netty.websocket"><code>WebSocketSessionRepository</code></a></dd>
 </dl>
 </li>
 </ul>
