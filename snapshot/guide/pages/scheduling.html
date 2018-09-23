@@ -146,7 +146,7 @@ function addJsClass() {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember that the scope of the bean has an impact on behaviour. a <code>@Singleton</code> bean will share state (the fields of the instance) for each execution, whilst with a <code>@Prototype</code> bean a new instance is created for each execution.
+Remember that the scope of the bean has an impact on behaviour. a <code>@Singleton</code> bean will share state (the fields of the instance) each time the scheduled method is executed, while for a <code>@Prototype</code> bean a new instance is created for each execution.
 </td>
 </tr>
 </table>
@@ -245,7 +245,7 @@ void configuredTask() {
 <p>Tasks executed by <code>@Scheduled</code> are by default run on a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html">ScheduledExecutorService</a> that is configured to have twice the number of threads as available processors.</p>
 </div>
 <div class="paragraph">
-<p>You can re-configure this thread pool as desired using <code>application.yml</code>, for example:</p>
+<p>You can configure this thread pool as desired using <code>application.yml</code>, for example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Scheduled Task Thread Pool</div>
@@ -254,9 +254,57 @@ void configuredTask() {
     executors:
         scheduled:
             type: scheduled
-            core-pool-size: 10</code></pre>
+            core-pool-size: 30</code></pre>
 </div>
 </div>
+<a id="io.micronaut.scheduling.executor.UserExecutorConfiguration" href="#io.micronaut.scheduling.executor.UserExecutorConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html">UserExecutorConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.n-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/scheduling/executor/ExecutorType.html">ExecutorType</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the executor type. Default value (<a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.parallelism</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the parallelism for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#WORK_STEALING">WORK_STEALING</a>. Default value (Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.core-pool-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the core pool size for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.thread-factory-class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the thread factory class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.number-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED">FIXED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

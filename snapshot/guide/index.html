@@ -2699,10 +2699,10 @@ public class DoOnStartup  {
 </div>
 </div>
 <div class="paragraph">
-<p>The event listener will by default run on the <code>scheduled</code> executor. You can re-configure this thread pool as required in <code>application.yml</code>:</p>
+<p>The event listener will by default run on the <code>scheduled</code> executor. You can configure this thread pool as required in <code>application.yml</code>:</p>
 </div>
 <div class="listingblock">
-<div class="title">Configuring the <code>scheduled</code> executor</div>
+<div class="title">Configuring Scheduled Task Thread Pool</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     executors:
@@ -4630,6 +4630,59 @@ public class BookService {
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
+<a id="io.micronaut.cache.CacheConfiguration" href="#io.micronaut.cache.CacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/CacheConfiguration.html">CacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value (false).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -4685,6 +4738,64 @@ public class BookService {
                 expireAfterWrite: "1h" # expire one hour after write</code></pre>
 </div>
 </div>
+<a id="io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration" href="#io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.redis-exec-provider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.slave-of</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.config-file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.setting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.server</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.key-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.value-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -4882,7 +4993,7 @@ public class Neo4jDriverFactory {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember that the scope of the bean has an impact on behaviour. a <code>@Singleton</code> bean will share state (the fields of the instance) for each execution, whilst with a <code>@Prototype</code> bean a new instance is created for each execution.
+Remember that the scope of the bean has an impact on behaviour. a <code>@Singleton</code> bean will share state (the fields of the instance) each time the scheduled method is executed, while for a <code>@Prototype</code> bean a new instance is created for each execution.
 </td>
 </tr>
 </table>
@@ -4981,7 +5092,7 @@ void configuredTask() {
 <p>Tasks executed by <code>@Scheduled</code> are by default run on a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html">ScheduledExecutorService</a> that is configured to have twice the number of threads as available processors.</p>
 </div>
 <div class="paragraph">
-<p>You can re-configure this thread pool as desired using <code>application.yml</code>, for example:</p>
+<p>You can configure this thread pool as desired using <code>application.yml</code>, for example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Scheduled Task Thread Pool</div>
@@ -4990,9 +5101,57 @@ void configuredTask() {
     executors:
         scheduled:
             type: scheduled
-            core-pool-size: 10</code></pre>
+            core-pool-size: 30</code></pre>
 </div>
 </div>
+<a id="io.micronaut.scheduling.executor.UserExecutorConfiguration" href="#io.micronaut.scheduling.executor.UserExecutorConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html">UserExecutorConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.n-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/scheduling/executor/ExecutorType.html">ExecutorType</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the executor type. Default value (<a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.parallelism</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the parallelism for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#WORK_STEALING">WORK_STEALING</a>. Default value (Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.core-pool-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the core pool size for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.thread-factory-class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the thread factory class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.number-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED">FIXED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -6047,7 +6206,7 @@ public class TestController {
 <p>If your controller method returns a non-blocking type such as an RxJava <code>Observable</code> or a <code>CompletableFuture</code> then Micronaut will use the Event loop thread to subscribe to the result.</p>
 </div>
 <div class="paragraph">
-<p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a pre-configured I/O thread pool.</p>
+<p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a preconfigured I/O thread pool.</p>
 </div>
 <div class="paragraph">
 <p>This thread pool by default is a caching, unbound thread pool. However, you may wish to configure the nature of the thread pool. For example the following configuration will configure the I/O thread pool as a fixed thread pool with 75 threads (similar to what a traditional blocking server such as Tomcat uses in the thread per connection model):</p>
@@ -12889,7 +13048,7 @@ $ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io
 <div class="sect3">
 <h4 id="_creating_the_service_dns_records">Creating the Service &amp; DNS Records</h4>
 <div class="paragraph">
-<p>Next step is creating the Service and DNS records.</p>
+<p>The next step is creating the Service and DNS records.</p>
 </div>
 <div class="listingblock">
 <div class="title">Create Service</div>
@@ -15517,7 +15676,7 @@ testCompile 'org.apache.kafka:kafka_2.12:2.0.0:test'</code></pre>
 <p>The quick start section presented a trivial example of what is possible with the <a href="../api/io/micronaut/configuration/kafka/annotation/KafkaListener.html">@KafkaListener</a> annotation.</p>
 </div>
 <div class="paragraph">
-<p>Using the <code>@KafkaListener</code> annotation Micronaut will build a <a href="https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> and start the <code>poll</code> loop by running the <code>KafkaConsumer</code> in a special <code>consumer</code> thread pool. You can re-configure the size of the thread pool based on the number of consumers in your application in <code>application.yml</code> as desired:</p>
+<p>Using the <code>@KafkaListener</code> annotation Micronaut will build a <a href="https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> and start the <code>poll</code> loop by running the <code>KafkaConsumer</code> in a special <code>consumer</code> thread pool. You can configure the size of the thread pool based on the number of consumers in your application in <code>application.yml</code> as desired:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring the <code>consumer</code> thread pool</div>
@@ -22025,7 +22184,7 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
 </div>
 <div class="paragraph">
 <p>Micronaut ships with <a href="../api/io/micronaut/security/authentication/providers/DelegatingAuthenticationProvider.html">DelegatingAuthenticationProvider</a> which can be typically used
-in environments such as the one described in the next diagramm.</p>
+in environments such as the one described in the following diagram.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -22872,7 +23031,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <p>Micronaut relies on <a href="https://connect2id.com/products/nimbus-jose-jwt">Nimbus JOSE + JWT</a> library to provide JWT token signature and encryption.</p>
 </div>
 <div class="paragraph">
-<p>The next configuration options are available:</p>
+<p>The following configuration options are available:</p>
 </div>
 <a id="io.micronaut.security.token.jwt.generator.JwtGeneratorConfigurationProperties" href="#io.micronaut.security.token.jwt.generator.JwtGeneratorConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
@@ -23996,7 +24155,7 @@ public class MyContextBuilder implements ContextBuilder {
 </tbody>
 </table>
 <div class="paragraph">
-<p>Micronaut supports tenant propagation. Imagine the next scenario:</p>
+<p>Micronaut supports tenant propagation. As an example, take the following scenario:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="../img/multitenancy.svg" alt="multitenancy"></span></p>
@@ -24095,7 +24254,7 @@ your requests to other internal microservices to include the <code>tenant Id</co
 </ul>
 </div>
 <div class="paragraph">
-<p>In order to use GORM - Multitenancy you will need to configure the next properties: <code>grails.gorm.multiTenancy.mode</code> and <code>grails.gorm.multiTenancy.tenantResolverClass</code>.</p>
+<p>In order to use GORM - Multitenancy you will need to configure the following properties: <code>grails.gorm.multiTenancy.mode</code> and <code>grails.gorm.multiTenancy.tenantResolverClass</code>.</p>
 </div>
 <div class="paragraph">
 <p>Micronaut support for Multi-tenancy integrates with GORM.</p>
@@ -25467,7 +25626,7 @@ It creates an associated test that will run the application and verify that a co
 <p>However, reloading support is available through the use of third-party JVM agents, along with automatic recompilation on file changes via a supporting build tool (such as Gradle) or IDE (such as Eclipse).</p>
 </div>
 <div class="paragraph">
-<p>The next sections document how to configure agent-reloading.</p>
+<p>The following sections document how to configure agent-reloading.</p>
 </div>
 
 
