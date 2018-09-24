@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -209,6 +209,14 @@ implements <a href="../../../../io/micronaut/context/env/PropertyPlaceholderReso
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/env/DefaultPropertyPlaceholderResolver.html#resolveReplacement-java.lang.StringBuilder-java.lang.String-java.lang.String-">resolveReplacement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expr)</code>
+<div class="block">Resolves a replacement for the given expression.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/env/DefaultPropertyPlaceholderResolver.html#resolveRequiredPlaceholders-java.lang.String-">resolveRequiredPlaceholders</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
 <div class="block">Resolve the placeholders and return an Optional String if it was possible to resolve them.</div>
@@ -337,7 +345,7 @@ implements <a href="../../../../io/micronaut/context/env/PropertyPlaceholderReso
 <a name="resolveRequiredPlaceholders-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>resolveRequiredPlaceholders</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;resolveRequiredPlaceholders(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)
@@ -353,6 +361,26 @@ implements <a href="../../../../io/micronaut/context/env/PropertyPlaceholderReso
 <dd>The optional string or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a> if resolution was not possible</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../io/micronaut/context/exceptions/ConfigurationException.html" title="class in io.micronaut.context.exceptions">ConfigurationException</a></code> - If the placeholders could not be resolved</dd>
+</dl>
+</li>
+</ul>
+<a name="resolveReplacement-java.lang.StringBuilder-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>resolveReplacement</h4>
+<pre>protected&nbsp;boolean&nbsp;resolveReplacement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expr)</pre>
+<div class="block">Resolves a replacement for the given expression. Returning true if the replacement was resolved.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>builder</code> - The builder</dd>
+<dd><code>str</code> - The full string</dd>
+<dd><code>expr</code> - The current expression</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if a placeholder was resolved</dd>
 </dl>
 </li>
 </ul>

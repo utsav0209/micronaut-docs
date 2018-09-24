@@ -4755,6 +4755,31 @@ public class BookService {
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.redis-exec-provider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.slave-of</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.config-file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.setting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -5754,6 +5779,55 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_route_compile_time_validation">Route Compile Time Validation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Micronaut supports validating route arguments at compile time with the validation library. To get started simply add the <code>validation</code> dependency to your build:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:validation" // for Java only
+compile "io.micronaut:validation"</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Java this <code>validation</code> dependency will also need to be added to the <code>annotationProcessor</code> scope and for Kotlin the dependency will need to be added to to <code>kapt</code> scope.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With the correct dependency on your classpath, route arguments will automatically be checked at compile time. The compilation will fail if any of the following conditions are met:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>
+The URI template contains a variable that is optional, but the method parameter is not annotated with <code>@Nullable</code> or is an <code>java.util.Optional</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An optional variable is one that will allow the route to match a URI even if the value is not present. For example <code>/foo{/bar}</code> will match requests to <code>/foo</code> and <code>/foo/abc</code>. The non optional variant would be <code>/foo/{bar}</code>. See the <a href="#_uri_path_variables">URI Path Variables</a> section for more information.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>
+The URI template contains a variable that is missing from the method arguments.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9619,7 +9693,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 <div class="title">Adding the Swagger Dependencies</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut.configuration:openapi" <i class="conum" data-value="1"></i><b>(1)</b>
-compile "io.swagger.core.v3:swagger-annotations:2.0.4" <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+compile "io.swagger.core.v3:swagger-annotations" <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -9634,8 +9708,32 @@ compile "io.swagger.core.v3:swagger-annotations:2.0.4" <i class="conum" data-val
 </tr>
 </table>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Kotlin the <code>openapi</code> dependency should be in the <code>kapt</code> scope and for Groovy in the <code>compileOnly</code> scope.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use the <code>swagger-*</code> feature when creating your app to setup Swagger / OpenAPI correctly: <code>mn create-app my-app --features swagger-java</code>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Once these are in place a minimum requirement is to add a <code>@OpenAPIDefinition</code> annotation to your <code>Application</code> class:</p>
+<p>Once dependencies have been configured a minimum requirement is to add a <code>@OpenAPIDefinition</code> annotation to your <code>Application</code> class:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example @OpenAPIDefinition usage</div>
@@ -9661,10 +9759,50 @@ public class Application {
 </div>
 </div>
 <div class="paragraph">
-<p>With that in place you compile your project and a Swagger YAML file will be generated (for example <code>build/generated/source/apt/main/swagger-0.0.yml</code> in the above case)</p>
+<p>With that in place you compile your project and a Swagger YAML file will be generated. Note that depending on which language and build tool you use the location will differ. The following table summarizes this.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Swagger Generation Location</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Language</th>
+<th class="tableblock halign-left valign-top">Build Tool</th>
+<th class="tableblock halign-left valign-top">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/generated/source/apt/main/swagger-0.0.yml</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maven</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>target/generated-sources/annotations/swagger-0.0.yml</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kotlin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/generated/source/kapt/main/swagger-0.0.yml</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/classes/groovy/generated/swagger-0.0.yml</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Micronaut cannot unfortunately normalize the generation location as each Annotation Processing API for each language and build tool abstract away the concrete location.</p>
 </div>
 <div class="paragraph">
-<p>The above configuration will produce YAML like the following:</p>
+<p>The previously defined annotations will produce YAML like the following:</p>
 </div>
 <div class="listingblock">
 <div class="title">Generated Swagger YAML</div>
@@ -9682,6 +9820,18 @@ info:
     url: http://foo.bar
   version: "0.0"</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you wish to expose the generated YAML as part of your deployed application you can copy the YAML to the <code>src/main/resources/public</code> directory and enable <a href="#staticResources">Static Resources</a> in your router configuration.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
