@@ -10049,6 +10049,34 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
+<h4 id="_client_specific_debugging_tracing">Client Specific Debugging / Tracing</h4>
+<div class="paragraph">
+<p>To enable client-specific logging you could configure the default logger for all HTTP clients. And, you could also configure different loggers for different clients using <a href="#_client_specific_configuration">Client Specific Configuration</a>. For example, in <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">micronaut:
+    http:
+        client:
+            logger-name: mylogger
+        services:
+            otherClient:
+                logger-name: other.client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And, then enable logging in <code>logback.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">logback.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;logger name="mylogger" level="DEBUG"/&gt;
+&lt;logger name="other.client" level="TRACE"/&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_customizing_the_http_request">Customizing the HTTP Request</h4>
 <div class="paragraph">
 <p>The previous example demonstrated using the static methods of the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> interface to construct a <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> instance. Like the name suggests a <code>MutableHttpRequest</code> can be mutated including the ability to add headers, customize the request body and so on. For example:</p>
