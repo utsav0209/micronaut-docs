@@ -792,21 +792,10 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:validation" // for Java only
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:validation" // Java only
+kapt "io.micronaut:validation" // Kotlin only
 compile "io.micronaut:validation"</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-For Java this <code>validation</code> dependency will also need to be added to the <code>annotationProcessor</code> scope and for Kotlin the dependency will need to be added to to <code>kapt</code> scope.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>With the correct dependency on your classpath, route arguments will automatically be checked at compile time. The compilation will fail if any of the following conditions are met:</p>
@@ -829,6 +818,18 @@ The URI template contains a variable that is optional, but the method parameter 
 The URI template contains a variable that is missing from the method arguments.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To disable route compile time validation, set the system property <code>-Dmicronaut.route.validation=false</code>. For Java and Kotlin users using Gradle, the same effect can be achieved by removing the <code>validation</code> dependency from the <code>annotationProcessor</code>/<code>kapt</code> scope.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
