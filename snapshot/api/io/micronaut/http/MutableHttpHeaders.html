@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../io/micronaut/core/convert/value/ConvertibleMultiValues.html" title="interface in io.micronaut.core.convert.value">ConvertibleMultiValues</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;, <a href="../../../io/micronaut/core/convert/value/ConvertibleValues.html" title="interface in io.micronaut.core.convert.value">ConvertibleValues</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;, <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http">HttpHeaders</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;&gt;, <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</dd>
+<dd><a href="../../../io/micronaut/core/convert/value/ConvertibleMultiValues.html" title="interface in io.micronaut.core.convert.value">ConvertibleMultiValues</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;, <a href="../../../io/micronaut/core/convert/value/ConvertibleValues.html" title="interface in io.micronaut.core.convert.value">ConvertibleValues</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;, <a href="../../../io/micronaut/core/type/Headers.html" title="interface in io.micronaut.core.type">Headers</a>, <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http">HttpHeaders</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;&gt;, <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="interface in io.micronaut.core.type">MutableHeaders</a>, <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">MutableHttpHeaders</span>
-extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http">HttpHeaders</a></pre>
+extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="interface in io.micronaut.core.type">MutableHeaders</a>, <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http">HttpHeaders</a></pre>
 <div class="block">Extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface in io.micronaut.http"><code>HttpHeaders</code></a> add methods for mutation of headers.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -263,9 +263,9 @@ extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface i
 </td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code><a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#remove-java.lang.CharSequence-">remove</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;header)</code>
-<div class="block">Removes the header for the given name.</div>
+<div class="block">Removes a header.</div>
 </td>
 </tr>
 </table>
@@ -328,11 +328,32 @@ extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface i
                        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;value)</pre>
 <div class="block">Add a header for the given name and value.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/core/type/MutableHeaders.html#add-java.lang.CharSequence-java.lang.CharSequence-">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/core/type/MutableHeaders.html" title="interface in io.micronaut.core.type">MutableHeaders</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>header</code> - The head name</dd>
 <dd><code>value</code> - The value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This headers object</dd>
+</dl>
+</li>
+</ul>
+<a name="remove-java.lang.CharSequence-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre><a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;remove(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;header)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/core/type/MutableHeaders.html#remove-java.lang.CharSequence-">MutableHeaders</a></code></span></div>
+<div class="block">Removes a header.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/core/type/MutableHeaders.html#remove-java.lang.CharSequence-">remove</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/core/type/MutableHeaders.html" title="interface in io.micronaut.core.type">MutableHeaders</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>header</code> - The header to remove</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>These headers</dd>
 </dl>
 </li>
 </ul>
@@ -583,7 +604,7 @@ extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface i
 <a name="add-java.lang.CharSequence-java.lang.Integer-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>add</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;add(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;header,
@@ -595,20 +616,6 @@ extends <a href="../../../io/micronaut/http/HttpHeaders.html" title="interface i
 <dd><code>value</code> - The value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This headers object</dd>
-</dl>
-</li>
-</ul>
-<a name="remove-java.lang.CharSequence-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>remove</h4>
-<pre>void&nbsp;remove(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;header)</pre>
-<div class="block">Removes the header for the given name.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>header</code> - The header name</dd>
 </dl>
 </li>
 </ul>
