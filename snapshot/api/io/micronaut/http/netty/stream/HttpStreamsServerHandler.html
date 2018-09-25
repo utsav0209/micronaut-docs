@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -251,36 +251,44 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#isValidInMessage-java.lang.Object-">isValidInMessage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;msg)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#isValidOutMessage-java.lang.Object-">isValidOutMessage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;msg)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#receivedInMessage-io.netty.channel.ChannelHandlerContext-">receivedInMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an incoming message is first received.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#receivedOutMessage-io.netty.channel.ChannelHandlerContext-">receivedOutMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an outgoing message is first received.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#sentOutMessage-io.netty.channel.ChannelHandlerContext-">sentOutMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an outgoing message is fully sent.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#subscribeSubscriberToStream-io.micronaut.http.netty.stream.StreamedHttpMessage-org.reactivestreams.Subscriber-">subscribeSubscriberToStream</a></span>(<a href="../../../../../io/micronaut/http/netty/stream/StreamedHttpMessage.html" title="interface in io.micronaut.http.netty.stream">StreamedHttpMessage</a>&nbsp;msg,
                            <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Subscriber.html?is-external=true" title="class or interface in org.reactivestreams">Subscriber</a>&lt;io.netty.handler.codec.http.HttpContent&gt;&nbsp;subscriber)</code>
 <div class="block">Subscribe the given subscriber to the given streamed message.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#unbufferedWrite-io.netty.channel.ChannelHandlerContext-io.micronaut.http.netty.stream.HttpStreamsHandler.Outgoing-">unbufferedWrite</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
                io.micronaut.http.netty.stream.HttpStreamsHandler.Outgoing&nbsp;out)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html#write-io.netty.channel.ChannelHandlerContext-java.lang.Object-io.netty.channel.ChannelPromise-">write</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;msg,
@@ -487,6 +495,21 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 </dl>
 </li>
 </ul>
+<a name="isValidOutMessage-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isValidOutMessage</h4>
+<pre>protected&nbsp;boolean&nbsp;isValidOutMessage(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;msg)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>msg</code> - The message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the handler should write the message</dd>
+</dl>
+</li>
+</ul>
 <a name="consumedInMessage-io.netty.channel.ChannelHandlerContext-">
 <!--   -->
 </a>
@@ -593,7 +616,7 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 <a name="write-io.netty.channel.ChannelHandlerContext-java.lang.Object-io.netty.channel.ChannelPromise-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
 <pre>public&nbsp;void&nbsp;write(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
@@ -607,6 +630,21 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 <dd><code>write</code>&nbsp;in class&nbsp;<code>io.netty.channel.ChannelDuplexHandler</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="isValidInMessage-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isValidInMessage</h4>
+<pre>protected&nbsp;boolean&nbsp;isValidInMessage(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;msg)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>msg</code> - The message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the handler should read the message</dd>
 </dl>
 </li>
 </ul>
