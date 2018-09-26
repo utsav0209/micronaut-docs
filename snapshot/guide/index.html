@@ -2966,7 +2966,7 @@ for(BeanDefinition definition : definitions) {
 <p>The above example will find all <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> annotated with <code>@Controller</code> regardless whether <code>@Controller</code> is used directly or inherited via an annotation stereotype.</p>
 </div>
 <div class="paragraph">
-<p>Note that the <code>getAnnotation</code> method and the variations of the method return a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> type and not a Java annotation. This is by design, and you should generally try to work with this API when reading annotation values.</p>
+<p>Note that the <code>getAnnotation</code> method and the variations of the method return a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> type and not a Java annotation. This is by design, and you should generally try to work with this API when reading annotation values, the reason being that synthesizing a proxy implementation is worse from a performance and memory consumption perspective.</p>
 </div>
 <div class="paragraph">
 <p>If you absolutely require a reference to an annotation instance you can use the <code>synthesize</code> method, which will create a runtime proxy that implements the annotation interface:</p>
@@ -2980,8 +2980,121 @@ for(BeanDefinition definition : definitions) {
 <div class="paragraph">
 <p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need to an instance of the annotation to integrate with a third party library).</p>
 </div>
+<div class="sect2">
+<h3 id="_aliasing_mapping_annotations">Aliasing / Mapping Annotations</h3>
 <div class="paragraph">
-<p>Like Spring, Micronaut also supports an <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation that allows an annotation member to represent the value of another annotation member.</p>
+<p>There are times when you may want to alias the value one of annotation member to the value of annotation annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
+</div>
+<div class="paragraph">
+<p>A common use case is for example when an annotation defines <code>value()</code> member, but also supports other members. For example the <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="title">The @Client Annotation</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public @interface Client {
+
+    /**
+     * @return The URL or service ID of the remote service
+     */
+    @AliasFor(member = "id") <i class="conum" data-value="1"></i><b>(1)</b>
+    String value() default "";
+
+    /**
+     * @return The ID of the client
+     */
+    @AliasFor(member = "value") <i class="conum" data-value="2"></i><b>(2)</b>
+    String id() default "";
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>value</code> member also sets the <code>id</code> member</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>id</code> member also sets the <code>value</code> member</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With these aliases in place, regardless whether you define <code>@Client("foo")</code> or <code>@Client(id="foo")</code> both the <code>value</code> and <code>id</code> members are always set, making it much easier to parse and deal with the annotation.</p>
+</div>
+<div class="paragraph">
+<p>If you do not have control over the annotation then another approach is to use a <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>. To create a <code>AnnotationMapper</code> you must following the following steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement the <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a> interface</p>
+</li>
+<li>
+<p>Define a <code>META-INF/services/io.micronaut.inject.annotation.AnnotationMapper</code> file referencing the implementation class</p>
+</li>
+<li>
+<p>Add the JAR file containing the implementation to the <code>annotationProcessor</code> classpath (<code>kapt</code> for Kotlin)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because <code>AnnotationMapper</code> implementations need to be on the annotation processor classpath they should generally be in a project that includes few external dependencies to avoid polluting the annotation processor classpath.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As an example the the <code>AnnotationMapper</code> that maps the <code>javax.annotation.security.PermitAll</code> standard Java annotation to the internal Micronaut <code>Secured</code> annotation looks like the following:</p>
+</div>
+<div class="listingblock">
+<div class="title">PermitAllAnnotationMapper Mapper Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class PermitAllAnnotationMapper implements AnnotationMapper&lt;PermitAll&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+    @Override
+    public Class&lt;PermitAll&gt; annotationType() {
+        return PermitAll.class;
+    }
+
+    @Override
+    public List&lt;AnnotationValue&lt;?&gt;&gt; map(AnnotationValue&lt;PermitAll&gt; annotation, VisitorContext visitorContext) { <i class="conum" data-value="2"></i><b>(2)</b>
+        List&lt;AnnotationValue&lt;?&gt;&gt; annotationValues = new ArrayList&lt;&gt;(1);
+        annotationValues.add(
+                AnnotationValue.builder(Secured.class) <i class="conum" data-value="3"></i><b>(3)</b>
+                                .value(SecurityRule.IS_ANONYMOUS) <i class="conum" data-value="4"></i><b>(4)</b>
+                                .build()
+        );
+        return annotationValues;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The annotation type to be mapped is specified as a generic type argument.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>map</code> method receives a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> with the values for the annotation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>One or more annotations can be returned, in this case <code>@Secured</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Annotations values can be provided.</td>
+</tr>
+</table>
+</div>
 </div>
 
 
@@ -3409,10 +3522,12 @@ To use custom properties from local files, you can either call your application 
 
 
 <div class="paragraph">
-<p>Like Spring Boot and Grails, you can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">Value</a> annotation.</p>
+<p>You can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
 </div>
+<div class="sect2">
+<h3 id="_using_the_code_value_code_annotation">Using the <code>@Value</code> Annotation</h3>
 <div class="paragraph">
-<p>For example:</p>
+<p>Consider the following example:</p>
 </div>
 <div class="listingblock">
 <div class="title">@Value Example</div>
@@ -3441,7 +3556,7 @@ class EngineImpl implements Engine {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>@Value</code> annotation accepts a string that is the name of a property to be used as the source for the value. A default value can be optionally supplied after the colon.</td>
+<td>The <code>@Value</code> annotation accepts a string that can have embedded placeholder values (the default value can be provided by specifying a value after the colon <code>:</code> character).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -3450,10 +3565,43 @@ class EngineImpl implements Engine {
 </table>
 </div>
 <div class="paragraph">
-<p>Unlike the aforementioned frameworks, Micronaut will use ASM to generate reflection free bytecode to optimize startup time and value injection performance.</p>
+<p>Note that <code>@Value</code> can also be used to inject a static value, for example the following will inject the number 10:</p>
+</div>
+<div class="listingblock">
+<div class="title">Static @Value Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Value("10")
+int number;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Note that there is nothing special about <code>@Value</code> itself regarding the resolution of property value placeholders. Due to Micronaut&#8217;s extensive support for annotation metadata you can in fact use property placeholder expressions on any annotation. For example, to make the path of a <code>@Controller</code> configurable you can do:</p>
+<p>However it is definitely more useful when used to compose injected values combining static content and placeholders. For example to setup a URL:</p>
+</div>
+<div class="listingblock">
+<div class="title">Placeholders with @Value</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Value("http://${my.host}:${my.port}")
+URL url;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example the URL is constructed from 2 placeholder properties that must be present in configuration: <code>my.host</code> and <code>my.port</code>.</p>
+</div>
+<div class="paragraph">
+<p>Remember that to specify a default value in a placeholder expression, you should use the colon <code>:</code> character, however if the default you are trying to specify has a colon then you should escape the value with back ticks. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Placeholders with @Value</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Value("${my.url:`http://foo.com`}")
+URL url;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that there is nothing special about <code>@Value</code> itself regarding the resolution of property value placeholders.</p>
+</div>
+<div class="paragraph">
+<p>Due to Micronaut&#8217;s extensive support for annotation metadata you can in fact use property placeholder expressions on any annotation. For example, to make the path of a <code>@Controller</code> configurable you can do:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3466,17 +3614,89 @@ class HelloController {
 <div class="paragraph">
 <p>In the above case if <code>hello.controller.path</code> is specified in configuration then the controller will be mapped to the path specified otherwise it will be mapped to <code>/hello</code>.</p>
 </div>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>You can also make the target server for <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> configurable (although service discovery approaches are often better), for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("${my.server.url:`http://localhost:8080`}")
+interface HelloClient {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example the property <code>my.server.url</code> can be used to configure the client otherwise the client will fallback to a localhost address.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_code_property_code_annotation">Using the <code>@Property</code> Annotation</h3>
+<div class="paragraph">
+<p>Recall that the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation receives a String value which is a mix of static content and placeholder expressions. This can lead to confusion if you attempt to do the following:</p>
+</div>
+<div class="listingblock">
+<div class="title">Incorrect usage of <code>@Value</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Value("my.url")
+String url;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above case the value <code>my.url</code> will be injected and set to the <code>url</code> field and <strong>not</strong> the value of the <code>my.url</code> property from your application configuration, this is because <code>@Value</code> only resolves placeholders within the value specified to it.</p>
+</div>
+<div class="paragraph">
+<p>If you wish to inject a specific property name then you may be better off using <a href="../api/io/micronaut/context/annotation/Property.html">@Property</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>@Property</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Property(name = "my.url")
+String url;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above will instead inject the value of the <code>my.url</code> property resolved from application configuration. You can also use this feature to resolve sub maps. For example, consider the following configuration:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example <code>application.yml</code> configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources:
+    default:
+        name: 'mydb'
+jpa:
+    default:
+        properties:
+            hibernate:
+                hbm2ddl:
+                    auto: update
+                show_sql: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you wish to resolve a flattened map containing only the properties starting with <code>hibernate</code> then you can do so with <code>@Property</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>@Property</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Property(name = "jpa.default.properties")
+Map&lt;String, String&gt; jpaProperties;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The injected map will contain the keys <code>hibernate.hbm2ddl.auto</code> and <code>hibernate.show_sql</code> and their values.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If the default value contains a colon then you will need to escape the value with back ticks. For example: <code>@Value("${hello.url:`http://hello.com`}")</code>
+The <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat</a> annotation can be used to customize the injected map depending whether you want nested keys, flat keys and it allows customization of the key style via the <a href="../api/io/micronaut/core/naming/conventions/StringConvention.html">StringConvention</a> enum.
 </td>
 </tr>
 </table>
+</div>
 </div>
 
 
@@ -4869,31 +5089,6 @@ public class BookService {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.redis-exec-provider</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.slave-of</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.config-file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.setting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
@@ -24419,7 +24614,7 @@ public class MyContextBuilder implements ContextBuilder {
 
 
 <div class="paragraph">
-<p>Multi-Tenancy, as it relates to software developments, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenants' data is isolated from the other.</p>
+<p>Multi-Tenancy, as it relates to software development, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenants' data is isolated from the other.</p>
 </div>
 <div class="paragraph">
 <p>To use the Micronaut&#8217;s multitenancy capabilities you must have the <code>multitenancy</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
