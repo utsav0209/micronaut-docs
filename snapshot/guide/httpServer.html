@@ -3843,13 +3843,34 @@ public class MyBean {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     server:
         maxRequestSize: 1MB
+        host: localhost <i class="conum" data-value="1"></i><b>(1)</b>
         netty:
-           maxHeaderSize: 500KB # maximum size for headers
+           maxHeaderSize: 500KB <i class="conum" data-value="2"></i><b>(2)</b>
            worker:
-              threads: 8 # number of netty worker threads
+              threads: 8 <i class="conum" data-value="3"></i><b>(3)</b>
            childOptions:
-              autoRead: true # auto read request body</code></pre>
+              autoRead: true <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>By default Micronaut will bind to all the network interfaces. Use <code>localhost</code> to bind only to loopback network interface</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Maximum size for headers</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Number of netty worker threads</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Auto read request body</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>All the available options are described within the javadoc of <a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html">NettyHttpServerConfiguration</a>.</p>

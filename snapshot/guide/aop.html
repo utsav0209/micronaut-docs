@@ -1265,6 +1265,17 @@ void configuredTask() {
 </table>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_handling_exceptions">Handling Exceptions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default Micronaut includes a <a href="../api/io/micronaut/scheduling/DefaultTaskExceptionHandler.html">DefaultTaskExceptionHandler</a> bean that implements the <a href="../api/io/micronaut/scheduling/TaskExceptionHandler.html">TaskExceptionHandler</a> and simply logs the exception if an error occurs invoking a scheduled task.</p>
+</div>
+<div class="paragraph">
+<p>If you have custom requirements you can replace this bean with a custom implementation (for example if you wish to send an email or shutdown context to fail fast). To do so simply write your own <a href="../api/io/micronaut/scheduling/TaskExceptionHandler.html">TaskExceptionHandler</a> and annotated it with <code>@Replaces(DefaultTaskExceptionHandler.class)</code>.</p>
+</div>
+</div>
+</div>
 
 
 <h2 id="springAop">5.8 Bridging Spring AOP</h2>
