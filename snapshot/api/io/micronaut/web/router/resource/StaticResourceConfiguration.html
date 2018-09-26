@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="../../../../../io/micronaut/context/annotation/ConfigurationProperties.html" title="annotation in io.micronaut.context.annotation">@ConfigurationProperties</a>(<a href="../../../../../io/micronaut/context/annotation/ConfigurationProperties.html#value--">value</a>="micronaut.router.static.resources")
+<pre><a href="../../../../../io/micronaut/context/annotation/EachProperty.html" title="annotation in io.micronaut.context.annotation">@EachProperty</a>(<a href="../../../../../io/micronaut/context/annotation/EachProperty.html#value--">value</a>="micronaut.router.static-resources")
 public class <span class="typeNameLabel">StaticResourceConfiguration</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../../io/micronaut/core/util/Toggleable.html" title="interface in io.micronaut.core.util">Toggleable</a></pre>
@@ -207,19 +207,19 @@ implements <a href="../../../../../io/micronaut/core/util/Toggleable.html" title
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#setEnabled-boolean-">setEnabled</a></span>(boolean&nbsp;enabled)</code>
-<div class="block">Sets whether static resources are enabled.</div>
+<div class="block">Sets whether this specific mapping is enabled.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#setMapping-java.lang.String-">setMapping</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;mapping)</code>
-<div class="block">Sets default mapping.</div>
+<div class="block">The path resources should be served from.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#setPaths-java.util.List-">setPaths</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;paths)</code>
-<div class="block">Sets the paths to the static resources.</div>
+<div class="block">A list of paths either starting with `classpath:` or `file:`.</div>
 </td>
 </tr>
 </table>
@@ -364,7 +364,7 @@ implements <a href="../../../../../io/micronaut/core/util/Toggleable.html" title
 <li class="blockList">
 <h4>setEnabled</h4>
 <pre>public&nbsp;void&nbsp;setEnabled(boolean&nbsp;enabled)</pre>
-<div class="block">Sets whether static resources are enabled. Default value (<a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#DEFAULT_ENABLED">false</a>).</div>
+<div class="block">Sets whether this specific mapping is enabled. Default value (<a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#DEFAULT_ENABLED">true</a>).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>enabled</code> - True if they are enabled.</dd>
@@ -378,7 +378,7 @@ implements <a href="../../../../../io/micronaut/core/util/Toggleable.html" title
 <li class="blockList">
 <h4>setPaths</h4>
 <pre>public&nbsp;void&nbsp;setPaths(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;paths)</pre>
-<div class="block">Sets the paths to the static resources.</div>
+<div class="block">A list of paths either starting with `classpath:` or `file:`. You can serve files from anywhere on disk or the classpath. For example to serve static resources from `src/main/resources/public`, you would use `classpath:public` as the path.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>paths</code> - The paths</dd>
@@ -392,7 +392,7 @@ implements <a href="../../../../../io/micronaut/core/util/Toggleable.html" title
 <li class="blockList">
 <h4>setMapping</h4>
 <pre>public&nbsp;void&nbsp;setMapping(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;mapping)</pre>
-<div class="block">Sets default mapping. Default value (<a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#DEFAULT_MAPPING">"/**"</a>).</div>
+<div class="block">The path resources should be served from. Uses ant path matching. Default value (<a href="../../../../../io/micronaut/web/router/resource/StaticResourceConfiguration.html#DEFAULT_MAPPING">"/**"</a>).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>mapping</code> - The mapping</dd>
