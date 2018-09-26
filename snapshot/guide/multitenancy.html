@@ -142,6 +142,15 @@ function addJsClass() {
 <p>Multi-Tenancy, as it relates to software developments, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenants' data is isolated from the other.</p>
 </div>
 <div class="paragraph">
+<p>To use the Micronaut&#8217;s multitenancy capabilities you must have the <code>multitenancy</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:multitenancy"</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>A common requirement for supporting Multi-tenancy is the ability to resolve the current tenant. Micronaut ships with the following built-in <a href="../api/io/micronaut/multitenancy/tenantresolver/TenantResolver.html">TenantResolver</a>s:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -263,6 +272,15 @@ your requests to other internal microservices to include the <code>tenant Id</co
 
 <div class="paragraph">
 <p><a href="http://gorm.grails.org">GORM</a> supports Multi-tenancy and integrates with Micronaut.</p>
+</div>
+<div class="paragraph">
+<p>To use Micronaut and GORM multitenancy capabilities you must have the <code>multitenancy-gorm</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:multitenancy-gorm"</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>GORM is a powerful Groovy-based data access toolkit for the JVM with implementations several data access technologies (Hibernate, Neo4j, MongoDB, GraphQL &#8230;&#8203;).</p>

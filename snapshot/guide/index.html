@@ -678,31 +678,119 @@
 <div class="sect2">
 <h3 id="_support_for_graalvm_native_images">Support for GraalVM Native Images</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Micronaut now includes experimental support for compiling down to <a href="https://www.graalvm.org">GraalVM</a> native images using the <code>nativeimage</code> tool shipped as part of Graal (1.0.0 RC6 and above).</p>
+</div>
+<div class="paragraph">
+<p>This is possible due to to Micronaut&#8217;s reflection-free approach to Dependency Injection and AOP.</p>
+</div>
+<div class="paragraph">
+<p>See the section on <a href="#graal">GraalVM support</a> in the user guide for more information.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_swagger_openapi_documentation_support">Swagger / OpenAPI Documentation Support</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Micronaut now includes the ability to generate Swagger (OpenAPI) YAML at compile time using the language neutral visitor API and the interfaces defined by the <a href="../api/io/micronaut/inject/ast/package-summary.html">io.micronaut.inject.ast</a> package.</p>
+</div>
+<div class="paragraph">
+<p>See the section on <a href="#openapi">OpenAPI / Swagger Support</a> in the user guide for more information.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_native_websocket_support">Native WebSocket Support</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Built-in support for WebSocket for both the client and the server has been added. The following example is a simple server chat implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.http.server.netty.websocket;
+
+import io.micronaut.websocket.WebSocketBroadcaster;
+import io.micronaut.websocket.WebSocketSession;
+import io.micronaut.websocket.annotation.*;
+import java.util.function.Predicate;
+
+@ServerWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
+public class ChatServerWebSocket {
+    private WebSocketBroadcaster broadcaster;
+
+    public ChatServerWebSocket(WebSocketBroadcaster broadcaster) {
+        this.broadcaster = broadcaster;
+    }
+
+    @OnOpen <i class="conum" data-value="2"></i><b>(2)</b>
+    public void onOpen(String topic, String username, WebSocketSession session) {
+        String msg = "[" + username + "] Joined!";
+        broadcaster.broadcastSync(msg, isValid(topic, session));
+    }
+
+    @OnMessage <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onMessage(
+            String topic,
+            String username,
+            String message,
+            WebSocketSession session) {
+        String msg = "[" + username + "] " + message;
+        broadcaster.broadcastSync(msg, isValid(topic, session)); <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+
+    @OnClose <i class="conum" data-value="5"></i><b>(5)</b>
+    public void onClose(
+            String topic,
+            String username,
+            WebSocketSession session) {
+        String msg = "[" + username + "] Disconnected!";
+        broadcaster.broadcastSync(msg, isValid(topic, session));
+    }
+
+    private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
+        return s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See the section on <a href="#websocket">WebSocket Support</a> in the user guide for more information.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_compilation_time_validation">Compilation Time Validation</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>The <code>validation</code> module can now be added to the <code>annotationProcessor</code> classpath and which will result in additional compile time checks, ensuring that users are using the framework correctly. For example, the following route method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/hello/{name}")
+public Single&lt;String&gt; hello(@NotBlank String na) {
+     return Single.just("Hello " + na + "!");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will produce the following error at compile time:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>hello-world-java/src/main/java/example/HelloController.java:34: error: The route declares a uri variable named [name], but no corresponding method argument is present
+    public Single&lt;String&gt; hello(@NotBlank String na) {
+                          ^</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This lessons the need for IDE support designed specifically for Micronaut.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_experimental_jmx_support_for_endpoints">Experimental JMX Support for Endpoints</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Experimental support for exposing <a href="#endpoints">management endpoints</a> over JMX has been added via the <code>jmx</code> module. See the section on <a href="#jmx">JMX Support</a> for more information on how to use this feaure.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_multitenancy_support">Multitenancy support</h3>
+<div class="paragraph">
+<p>Latest release includes <a href="#multitenancy">Multitenancy</a> integration into the framework. Features includes tenant resolution, propagation and integration with <a href="#multitenancyGorm">GORM</a> which supports discriminator, table and schema multitenancy modes.</p>
 </div>
 </div>
 <div class="sect2">
@@ -22294,7 +22382,8 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:security"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
+compile "io.micronaut:security"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22783,7 +22872,8 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:security-session"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
+compile "io.micronaut:security-session"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22949,7 +23039,8 @@ JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:security-jwt"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
+compile "io.micronaut:security-jwt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24306,6 +24397,15 @@ public class MyContextBuilder implements ContextBuilder {
 <p>Multi-Tenancy, as it relates to software developments, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenants' data is isolated from the other.</p>
 </div>
 <div class="paragraph">
+<p>To use the Micronaut&#8217;s multitenancy capabilities you must have the <code>multitenancy</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:multitenancy"</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>A common requirement for supporting Multi-tenancy is the ability to resolve the current tenant. Micronaut ships with the following built-in <a href="../api/io/micronaut/multitenancy/tenantresolver/TenantResolver.html">TenantResolver</a>s:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -24427,6 +24527,15 @@ your requests to other internal microservices to include the <code>tenant Id</co
 
 <div class="paragraph">
 <p><a href="http://gorm.grails.org">GORM</a> supports Multi-tenancy and integrates with Micronaut.</p>
+</div>
+<div class="paragraph">
+<p>To use Micronaut and GORM multitenancy capabilities you must have the <code>multitenancy-gorm</code> dependency on your classpath. For example in <code>build.gradle</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:multitenancy-gorm"</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>GORM is a powerful Groovy-based data access toolkit for the JVM with implementations several data access technologies (Hibernate, Neo4j, MongoDB, GraphQL &#8230;&#8203;).</p>
