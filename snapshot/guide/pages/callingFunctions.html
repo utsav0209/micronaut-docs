@@ -230,6 +230,50 @@ static interface MathClient {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Functions that only return a value are mapped to HTTP <code>GET</code> requests, whilst functions that accept an input require an HTTP <code>POST</code>.</p>
+</div>
+<div class="paragraph">
+<p>For a example, the following function can be accessed using the <code>IsbnValidatorClient</code> interface listed below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.FunctionBean;
+import java.util.function.Function;
+
+@FunctionBean("isbn-validator")
+public class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    @Override
+    public IsbnValidationResponse apply(IsbnValidationRequest request) {
+        return new IsbnValidationResponse();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.client.FunctionClient;
+import io.micronaut.http.annotation.Body;
+import io.reactivex.Single;
+import javax.inject.Named;
+
+@FunctionClient
+public interface IsbnValidatorClient {
+
+    @Named("isbn-validator")
+    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request); <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Please, note the <code>@Body</code> annotation in the method parameter.</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
