@@ -178,34 +178,34 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:20px"><a href="#render"><strong>15.3.3.5</strong><span>Token Render</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:20px"><a href="#tokenPropagation"><strong>15.3.3.6</strong><span>Token Propagation</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#ldap"><strong>15.3.4</strong><span>LDAP Authentication</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#endpoints"><strong>15.4</strong><span>Built-In Security Controllers</span></a>
+                    <div class="toc-item" style="margin-left:20px"><a href="#configuration"><strong>15.3.4.1</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#login"><strong>15.4.1</strong><span>Login Controller</span></a>
+                    <div class="toc-item" style="margin-left:20px"><a href="#extending"><strong>15.3.4.2</strong><span>Extending Default Behavior</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#logout"><strong>15.4.2</strong><span>Logout Controller</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#tokenPropagation"><strong>15.4</strong><span>Token Propagation</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#refresh"><strong>15.4.3</strong><span>Refresh Controller</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#endpoints"><strong>15.5</strong><span>Built-In Security Controllers</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#retrievingAuthenticatedUser"><strong>15.5</strong><span>Retrieve the authenticated user</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#login"><strong>15.5.1</strong><span>Login Controller</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#securityEvents"><strong>15.6</strong><span>Security Events</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#logout"><strong>15.5.2</strong><span>Logout Controller</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#ldap"><strong>15.7</strong><span>LDAP Authentication</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#refresh"><strong>15.5.3</strong><span>Refresh Controller</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#configuration"><strong>15.7.1</strong><span>Configuration</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#retrievingAuthenticatedUser"><strong>15.6</strong><span>Retrieve the authenticated user</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#extending"><strong>15.7.2</strong><span>Extending Default Behavior</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#securityEvents"><strong>15.7</strong><span>Security Events</span></a>
                     </div>
                     
                 </div>
@@ -1531,430 +1531,7 @@ Pragma: no-cache
 </div>
 
 
-<h2 id="tokenPropagation">15.3.3.6 Token Propagation</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/tokenPropagation.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Imagine you have a Gateway microservice which consumes three other microservices:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../img/tokenpropagation.svg" alt="tokenpropagation">
-</div>
-</div>
-<div class="paragraph">
-<p>If the incoming request <code>localhost:8080/api/books</code> contains a valid JWT token, you may want to propagate
-that token to other requests in your network.</p>
-</div>
-<div class="paragraph">
-<p>You can configure token propagation to achieve that.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    application:
-        name: gateway
-    security:
-        enabled: true
-        token:
-            jwt:
-                enabled: true
-                signatures:
-                    secret:
-                        generator:
-                            secret: "pleaseChangeThisSecretForANewOne"
-                            jwsAlgorithm: HS256
-            writer:
-                header:
-                    enabled: true
-                    headerName: "Authorization"
-                    prefix: "Bearer "
-            propagation:
-                enabled: true
-                serviceIdRegex: "http://localhost:(8083|8081|8082)"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The previous configuration, configures a <a href="../apiio/micronaut/security/token/writer/HttpHeaderTokenWriter.html">HttpHeaderTokenWriter</a> and a
-and a propagation filter, <a href="../apiio/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html">TokenPropagationHttpClientFilter</a>, which
-will propagate the security token seamlessly.</p>
-</div>
-<div class="paragraph">
-<p>If you use <a href="#serviceDiscovery">Service Discovery</a> features, you can use the service id in your service id regular expression:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">micronaut.security.token.propagation.serviceIdRegex="catalogue|recommendations|inventory"</code></pre>
-</div>
-</div>
-
-
-<h2 id="endpoints">15.4 Built-In Security Controllers</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-
-
-
-<h2 id="login">15.4.1 Login Controller</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/login.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>You can enable <code>LoginController</code> with configuration property:</p>
-</div>
-<a id="io.micronaut.security.endpoints.LoginControllerConfigurationProperties" href="#io.micronaut.security.endpoints.LoginControllerConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/endpoints/LoginControllerConfigurationProperties.html">LoginControllerConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.login.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/endpoints/LoginController.html">LoginController</a>. Default value false</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.login.path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/endpoints/LoginController.html">LoginController</a>. Default value "/login"</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The response of the Login Endpoint is handled by a bean instance of <a href="../api/io/micronaut/security/handlers/LoginHandler.html">LoginHandler</a>.</p>
-</div>
-<div class="sect1">
-<h2 id="_login_endpoint_invocation_example">Login Endpoint invocation example</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="title">Login Endpoint invocation example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X "POST" "http://localhost:8080/login" \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "username": "euler",
-  "password": "password"
-}'</code></pre>
-</div>
-</div>
-</div>
-</div>
-
-
-<h2 id="logout">15.4.2 Logout Controller</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/logout.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>You can enable <code>LogoutController</code> with configuration property:</p>
-</div>
-<a id="io.micronaut.security.endpoints.LogoutControllerConfigurationProperties" href="#io.micronaut.security.endpoints.LogoutControllerConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/endpoints/LogoutControllerConfigurationProperties.html">LogoutControllerConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.logout.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/endpoints/LogoutController.html">LogoutController</a>. Default value false.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.logout.path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/endpoints/LogoutController.html">LogoutController</a>. Default value "/logout".</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Each bean of type <a href="../api/io/micronaut/security/handlers/LogoutHandler.html">LogoutHandler</a> gets invoked.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you are using JWT authentication, you may not need to invoke the <code>/logout</code> endpoint. Since logging out normally means simply deleting access, refresh JWT tokens at the client side.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect1">
-<h2 id="_logout_endpoint_invocation_example">Logout Endpoint invocation example</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="title">Login Endpoint invocation example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X "POST" "http://localhost:8080/logout"</code></pre>
-</div>
-</div>
-</div>
-</div>
-
-
-<h2 id="refresh">15.4.3 Refresh Controller</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/refresh.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This controller can only be enabled if you are using JWT authentication.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>By default, issued access tokens expire after a period of time, and they are paired with refresh tokens. To
-ease the refresh, you can enable <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a>, with configuration property:</p>
-</div>
-<a id="io.micronaut.security.token.jwt.endpoints.OauthControllerConfigurationProperties" href="#io.micronaut.security.token.jwt.endpoints.OauthControllerConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthControllerConfigurationProperties.html">OauthControllerConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.oauth.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a> is enabled. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.oauth.path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path to map the <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a> to. Default value ("/oauth/access_token").</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The controller exposes an endpoint as defined by <a href="https://tools.ietf.org/html/rfc6749#section-6">section 6 of the OAuth 2.0 spec</a> - Refreshing an Access Token.</p>
-</div>
-<div class="paragraph">
-<p>By default, issued Refresh tokens never expire, and can be used to obtain a new access token by sending a POST request to the <code>/oauth/access_token</code> endpoint:</p>
-</div>
-<div class="listingblock">
-<div class="title">Sample HTTP request to obtain an access token</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">POST /myApp/oauth/access_token HTTP/1.1
-Host: micronaut.example
-Content-Type: application/x-www-form-urlencoded
-
-grant_type=refresh_token&amp;refresh_token=eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ....</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As you can see, is a form request with 2 parameters:</p>
-</div>
-<div class="paragraph">
-<p><code>grant_type</code>: must be <code>refresh_token</code> always.</p>
-</div>
-<div class="paragraph">
-<p><code>refresh_token</code>: the refresh token obtained previously.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-By default refresh tokens never expire, they must be securely stored in your client application.
-See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of the OAuth 2.0 spec</a> for more information.
-</td>
-</tr>
-</table>
-</div>
-
-
-<h2 id="retrievingAuthenticatedUser">15.5 Retrieve the authenticated user</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/retrievingAuthenticatedUser.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Often you may want to retrieve the authenticated user.</p>
-</div>
-<div class="paragraph">
-<p>You can bind <code>java.security.Principal</code> as a method&#8217;s parameter in a controller.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.security.annotation.Secured;
-import javax.annotation.Nullable;
-import java.security.Principal;
-
-@Controller("/user")
-public class UserController {
-
-    @Secured("isAnonymous()")
-    @Get("/myinfo")
-    public Map myinfo(@Nullable Principal principal) {
-        if (principal == null) {
-            return Collections.singletonMap("isLoggedIn", false);
-        }
-        return CollectionUtils.mapOf("isLoggedIn", true, "username", principal.getName());
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you need a greater level of detail, you can bind <a href="../api/io/micronaut/security/authentication/Authentication.html">Authentication</a>  as a method&#8217;s parameter in a controller.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.security.annotation.Secured;
-import io.micronaut.security.authentication.Authentication;
-import javax.annotation.Nullable
-
-
-@Controller("/user")
-public class UserController {
-
-    @Secured("isAnonymous()")
-    @Get("/myinfo")
-    public Map myinfo(@Nullable Authentication authentication) {
-        if (authentication == null) {
-            return Collections.singletonMap("isLoggedIn", false);
-        }
-        return CollectionUtils.mapOf("isLoggedIn", true,
-                "username", authentication.getName(),
-                "roles", authentication.getAttributes().get("roles")
-        );
-    }
-}</code></pre>
-</div>
-</div>
-
-
-<h2 id="securityEvents">15.6 Security Events</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityEvents.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Micronaut security classes generate several <a href="../api/io/micronaut/context/event/ApplicationEvent.html">ApplicationEvent</a>s which you can subscribe to.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Event Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LoginFailedEvent.html">LoginFailedEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when an unsuccessful login takes place.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LoginSuccessfulEvent.html">LoginSuccessfulEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a successful login takes place.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LogoutEvent.html">LogoutEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when the user logs out.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/TokenValidatedEvent.html">TokenValidatedEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a token is validated.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/token/jwt/event/AccessTokenGeneratedEvent.html">AccessTokenGeneratedEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a JWT access token is generated.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/token/jwt/event/RefreshTokenGeneratedEvent.html">RefreshTokenGeneratedEvent</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a JWT refresh token is generated.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>To learn how to listen for events, see the <a href="#contextEvents">Context Events</a> section of the documentation.</p>
-</div>
-
-
-<h2 id="ldap">15.7 LDAP Authentication</h2>
+<h2 id="ldap">15.3.4 LDAP Authentication</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/ldap.adoc"'>
@@ -1974,10 +1551,10 @@ public class UserController {
 </div>
 
 
-<h2 id="configuration">15.7.1 Configuration</h2>
+<h2 id="configuration">15.3.4.1 Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/ldap/configuration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/ldap/configuration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2130,10 +1707,10 @@ public class UserController {
 </table>
 
 
-<h2 id="extending">15.7.2 Extending Default Behavior</h2>
+<h2 id="extending">15.3.4.2 Extending Default Behavior</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/ldap/extending.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/ldap/extending.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2247,6 +1824,441 @@ public class MyContextBuilder implements ContextBuilder {
 }</code></pre>
 </div>
 </div>
+</div>
+
+
+<h2 id="tokenPropagation">15.4 Token Propagation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/tokenPropagation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Imagine you have a Gateway microservice which consumes three other microservices:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../img/tokenpropagation.svg" alt="tokenpropagation">
+</div>
+</div>
+<div class="paragraph">
+<p>If the incoming request <code>localhost:8080/api/books</code> contains a valid JWT token, you may want to propagate
+that token to other requests in your network.</p>
+</div>
+<div class="paragraph">
+<p>You can configure token propagation to achieve that.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    application:
+        name: gateway
+    security:
+        enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: "pleaseChangeThisSecretForANewOne"
+                            jwsAlgorithm: HS256
+            writer:
+                header:
+                    enabled: true
+                    headerName: "Authorization"
+                    prefix: "Bearer "
+            propagation:
+                enabled: true
+                serviceIdRegex: "http://localhost:(8083|8081|8082)"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous configuration, configures a <a href="../apiio/micronaut/security/token/writer/HttpHeaderTokenWriter.html">HttpHeaderTokenWriter</a> and a
+and a propagation filter, <a href="../apiio/micronaut/security/token/propagation/TokenPropagationHttpClientFilter.html">TokenPropagationHttpClientFilter</a>, which
+will propagate the security token seamlessly.</p>
+</div>
+<div class="paragraph">
+<p>If you use <a href="#serviceDiscovery">Service Discovery</a> features, you can use the service id in your service id regular expression:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">micronaut.security.token.propagation.serviceIdRegex="catalogue|recommendations|inventory"</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Read the <a href="http://guides.micronaut.io/micronaut-token-propagation/guide/index.html">Token Propagation tutorial</a> to learn more.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="endpoints">15.5 Built-In Security Controllers</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+
+
+
+<h2 id="login">15.5.1 Login Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/login.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can enable <code>LoginController</code> with configuration property:</p>
+</div>
+<a id="io.micronaut.security.endpoints.LoginControllerConfigurationProperties" href="#io.micronaut.security.endpoints.LoginControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/endpoints/LoginControllerConfigurationProperties.html">LoginControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.login.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/endpoints/LoginController.html">LoginController</a>. Default value false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.login.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/endpoints/LoginController.html">LoginController</a>. Default value "/login"</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The response of the Login Endpoint is handled by a bean instance of <a href="../api/io/micronaut/security/handlers/LoginHandler.html">LoginHandler</a>.</p>
+</div>
+<div class="sect1">
+<h2 id="_login_endpoint_invocation_example">Login Endpoint invocation example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">Login Endpoint invocation example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X "POST" "http://localhost:8080/login" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "username": "euler",
+  "password": "password"
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2 id="logout">15.5.2 Logout Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/logout.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can enable <code>LogoutController</code> with configuration property:</p>
+</div>
+<a id="io.micronaut.security.endpoints.LogoutControllerConfigurationProperties" href="#io.micronaut.security.endpoints.LogoutControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/endpoints/LogoutControllerConfigurationProperties.html">LogoutControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.logout.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/endpoints/LogoutController.html">LogoutController</a>. Default value false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.logout.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/endpoints/LogoutController.html">LogoutController</a>. Default value "/logout".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Each bean of type <a href="../api/io/micronaut/security/handlers/LogoutHandler.html">LogoutHandler</a> gets invoked.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you are using JWT authentication, you may not need to invoke the <code>/logout</code> endpoint. Since logging out normally means simply deleting access, refresh JWT tokens at the client side.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect1">
+<h2 id="_logout_endpoint_invocation_example">Logout Endpoint invocation example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">Login Endpoint invocation example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X "POST" "http://localhost:8080/logout"</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2 id="refresh">15.5.3 Refresh Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/refresh.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This controller can only be enabled if you are using JWT authentication.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>By default, issued access tokens expire after a period of time, and they are paired with refresh tokens. To
+ease the refresh, you can enable <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a>, with configuration property:</p>
+</div>
+<a id="io.micronaut.security.token.jwt.endpoints.OauthControllerConfigurationProperties" href="#io.micronaut.security.token.jwt.endpoints.OauthControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthControllerConfigurationProperties.html">OauthControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.oauth.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a> is enabled. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.oauth.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path to map the <a href="../api/io/micronaut/security/token/jwt/endpoints/OauthController.html">OauthController</a> to. Default value ("/oauth/access_token").</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The controller exposes an endpoint as defined by <a href="https://tools.ietf.org/html/rfc6749#section-6">section 6 of the OAuth 2.0 spec</a> - Refreshing an Access Token.</p>
+</div>
+<div class="paragraph">
+<p>By default, issued Refresh tokens never expire, and can be used to obtain a new access token by sending a POST request to the <code>/oauth/access_token</code> endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample HTTP request to obtain an access token</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">POST /myApp/oauth/access_token HTTP/1.1
+Host: micronaut.example
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&amp;refresh_token=eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, is a form request with 2 parameters:</p>
+</div>
+<div class="paragraph">
+<p><code>grant_type</code>: must be <code>refresh_token</code> always.</p>
+</div>
+<div class="paragraph">
+<p><code>refresh_token</code>: the refresh token obtained previously.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+By default refresh tokens never expire, they must be securely stored in your client application.
+See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of the OAuth 2.0 spec</a> for more information.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="retrievingAuthenticatedUser">15.6 Retrieve the authenticated user</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/retrievingAuthenticatedUser.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Often you may want to retrieve the authenticated user.</p>
+</div>
+<div class="paragraph">
+<p>You can bind <code>java.security.Principal</code> as a method&#8217;s parameter in a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.security.annotation.Secured;
+import javax.annotation.Nullable;
+import java.security.Principal;
+
+@Controller("/user")
+public class UserController {
+
+    @Secured("isAnonymous()")
+    @Get("/myinfo")
+    public Map myinfo(@Nullable Principal principal) {
+        if (principal == null) {
+            return Collections.singletonMap("isLoggedIn", false);
+        }
+        return CollectionUtils.mapOf("isLoggedIn", true, "username", principal.getName());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you need a greater level of detail, you can bind <a href="../api/io/micronaut/security/authentication/Authentication.html">Authentication</a>  as a method&#8217;s parameter in a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.authentication.Authentication;
+import javax.annotation.Nullable
+
+
+@Controller("/user")
+public class UserController {
+
+    @Secured("isAnonymous()")
+    @Get("/myinfo")
+    public Map myinfo(@Nullable Authentication authentication) {
+        if (authentication == null) {
+            return Collections.singletonMap("isLoggedIn", false);
+        }
+        return CollectionUtils.mapOf("isLoggedIn", true,
+                "username", authentication.getName(),
+                "roles", authentication.getAttributes().get("roles")
+        );
+    }
+}</code></pre>
+</div>
+</div>
+
+
+<h2 id="securityEvents">15.7 Security Events</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityEvents.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut security classes generate several <a href="../api/io/micronaut/context/event/ApplicationEvent.html">ApplicationEvent</a>s which you can subscribe to.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LoginFailedEvent.html">LoginFailedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when an unsuccessful login takes place.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LoginSuccessfulEvent.html">LoginSuccessfulEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a successful login takes place.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/LogoutEvent.html">LogoutEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when the user logs out.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/event/TokenValidatedEvent.html">TokenValidatedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a token is validated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/token/jwt/event/AccessTokenGeneratedEvent.html">AccessTokenGeneratedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a JWT access token is generated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/security/token/jwt/event/RefreshTokenGeneratedEvent.html">RefreshTokenGeneratedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triggered when a JWT refresh token is generated.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To learn how to listen for events, see the <a href="#contextEvents">Context Events</a> section of the documentation.</p>
 </div>
 
 
