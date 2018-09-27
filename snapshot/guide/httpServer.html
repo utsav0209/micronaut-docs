@@ -4803,7 +4803,7 @@ import io.swagger.v3.oas.annotations.info.*;
 
 @OpenAPIDefinition(
     info = @Info(
-            title = "the title",
+            title = "Hello World",
             version = "0.0",
             description = "My API",
             license = @License(name = "Apache 2.0", url = "http://foo.bar"),
@@ -4819,47 +4819,7 @@ public class Application {
 </div>
 </div>
 <div class="paragraph">
-<p>With that in place you compile your project and a Swagger YAML file will be generated. Note that depending on which language and build tool you use the location will differ. The following table summarizes this.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Swagger Generation Location</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Language</th>
-<th class="tableblock halign-left valign-top">Build Tool</th>
-<th class="tableblock halign-left valign-top">Location</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/generated/source/apt/main/swagger-0.0.yml</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maven</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>target/generated-sources/annotations/swagger-0.0.yml</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kotlin</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/generated/source/kapt/main/swagger-0.0.yml</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gradle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build/classes/groovy/generated/swagger-0.0.yml</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Micronaut cannot unfortunately normalize the generation location as each Annotation Processing API for each language and build tool abstract away the concrete location.</p>
+<p>With that in place you compile your project and a Swagger YAML file will be generated to the <code>META-INF/swagger</code> directory of your project&#8217;s class output. For example the above configuration for Java will be generated to <code>build/classes/java/main/META-INF/swagger/hello-world-0.0.yml</code>.</p>
 </div>
 <div class="paragraph">
 <p>The previously defined annotations will produce YAML like the following:</p>
@@ -4881,17 +4841,25 @@ info:
   version: "0.0"</code></pre>
 </div>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you wish to expose the generated YAML as part of your deployed application you can copy the YAML to the <code>src/main/resources/public</code> directory and enable <a href="#staticResources">Static Resources</a> in your router configuration.
-</td>
-</tr>
-</table>
+</div>
+<div class="sect2">
+<h3 id="_exposing_swagger_output">Exposing Swagger Output</h3>
+<div class="paragraph">
+<p>If you wish to expose the generated Swagger output from your running application you can simply add the necessary static resource configuration. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Exposing Swagger YAML</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    router:
+        static-resources:
+            swagger:
+                paths: classpath:META-INF/swagger
+                mapping: /swagger/**</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the above configuration in place when you run your application you can access your Swagger documentation at <code><a href="http://localhost:8080/swagger/the-title-0.0.yml" class="bare">http://localhost:8080/swagger/the-title-0.0.yml</a></code>.</p>
 </div>
 </div>
 <div class="sect2">
