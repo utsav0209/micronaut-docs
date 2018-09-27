@@ -179,8 +179,9 @@ implements <a href="../../../../io/micronaut/inject/visitor/TypeElementVisitor.h
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected io.swagger.v3.oas.models.media.Schema</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/openapi/visitor/OpenApiApplicationVisitor.html#bindSchemaForElement-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.swagger.v3.oas.models.media.Schema-">bindSchemaForElement</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/openapi/visitor/OpenApiApplicationVisitor.html#bindSchemaForElement-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.micronaut.inject.ast.ClassElement-io.swagger.v3.oas.models.media.Schema-">bindSchemaForElement</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
                     <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;element,
+                    <a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;elementType,
                     io.swagger.v3.oas.models.media.Schema&nbsp;schemaToBind)</code>
 <div class="block">Binds the schema for the given element.</div>
 </td>
@@ -200,11 +201,12 @@ implements <a href="../../../../io/micronaut/inject/visitor/TypeElementVisitor.h
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/openapi/visitor/OpenApiApplicationVisitor.html#processSchemaProperty-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.swagger.v3.oas.models.media.Schema-io.swagger.v3.oas.models.media.Schema-">processSchemaProperty</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/openapi/visitor/OpenApiApplicationVisitor.html#processSchemaProperty-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.micronaut.inject.ast.ClassElement-io.swagger.v3.oas.models.media.Schema-io.swagger.v3.oas.models.media.Schema-">processSchemaProperty</a></span>(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
                      <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;element,
+                     <a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;elementType,
                      io.swagger.v3.oas.models.media.Schema&nbsp;parentSchema,
                      io.swagger.v3.oas.models.media.Schema&nbsp;propertySchema)</code>
-<div class="block">Processes a schema property</div>
+<div class="block">Processes a schema property.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -405,7 +407,7 @@ protected&nbsp;io.swagger.v3.oas.models.media.Schema&nbsp;resolveSchema(io.swagg
 </dl>
 </li>
 </ul>
-<a name="processSchemaProperty-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.swagger.v3.oas.models.media.Schema-io.swagger.v3.oas.models.media.Schema-">
+<a name="processSchemaProperty-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.micronaut.inject.ast.ClassElement-io.swagger.v3.oas.models.media.Schema-io.swagger.v3.oas.models.media.Schema-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -413,19 +415,21 @@ protected&nbsp;io.swagger.v3.oas.models.media.Schema&nbsp;resolveSchema(io.swagg
 <h4>processSchemaProperty</h4>
 <pre>protected&nbsp;void&nbsp;processSchemaProperty(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
                                      <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;element,
+                                     <a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;elementType,
                                      io.swagger.v3.oas.models.media.Schema&nbsp;parentSchema,
                                      io.swagger.v3.oas.models.media.Schema&nbsp;propertySchema)</pre>
-<div class="block">Processes a schema property</div>
+<div class="block">Processes a schema property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>context</code> - The visitor context</dd>
 <dd><code>element</code> - The element</dd>
+<dd><code>elementType</code> - The elemen type</dd>
 <dd><code>parentSchema</code> - The parent schema</dd>
 <dd><code>propertySchema</code> - The property schema</dd>
 </dl>
 </li>
 </ul>
-<a name="bindSchemaForElement-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.swagger.v3.oas.models.media.Schema-">
+<a name="bindSchemaForElement-io.micronaut.inject.visitor.VisitorContext-io.micronaut.inject.ast.Element-io.micronaut.inject.ast.ClassElement-io.swagger.v3.oas.models.media.Schema-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -433,12 +437,14 @@ protected&nbsp;io.swagger.v3.oas.models.media.Schema&nbsp;resolveSchema(io.swagg
 <h4>bindSchemaForElement</h4>
 <pre>protected&nbsp;io.swagger.v3.oas.models.media.Schema&nbsp;bindSchemaForElement(<a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;context,
                                                                      <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;element,
+                                                                     <a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;elementType,
                                                                      io.swagger.v3.oas.models.media.Schema&nbsp;schemaToBind)</pre>
 <div class="block">Binds the schema for the given element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>context</code> - The context</dd>
 <dd><code>element</code> - The element</dd>
+<dd><code>elementType</code> - The element type</dd>
 <dd><code>schemaToBind</code> - The schema to bind</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The bound schema</dd>
