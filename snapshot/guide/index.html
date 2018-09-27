@@ -753,81 +753,78 @@ public class ChatServerWebSocket {
 <div class="paragraph">
 <p>See the section on <a href="#websocket">WebSocket Support</a> in the user guide for more information.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_compilation_time_validation">Compilation Time Validation</h3>
+<div class="sect3">
+<h4 id="_cli_commands_for_websockets">CLI Commands for WebSockets</h4>
 <div class="paragraph">
-<p>The <code>validation</code> module can now be added to the <code>annotationProcessor</code> classpath and which will result in additional compile time checks, ensuring that users are using the framework correctly. For example, the following route method:</p>
+<p>The Micronaut CLI now includes two new commands for generating WebSocket clients and servers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/hello/{name}")
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-server MyChat
+| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java
+$ mn create-websocket-client MyChat
+| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>=== Compilation Time Validation
+
+The `validation` module can now be added to the `annotationProcessor` classpath and which will result in additional compile time checks, ensuring that users are using the framework correctly. For example, the following route method:
+
+[source,java]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Get("/hello/{name}")
 public Single&lt;String&gt; hello(@NotBlank String na) {
      return Single.just("Hello " + na + "!");
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Will produce the following error at compile time:</p>
+}</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>hello-world-java/src/main/java/example/HelloController.java:34: error: The route declares a uri variable named [name], but no corresponding method argument is present
+<pre>Will produce the following error at compile time:
+
+[source]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>hello-world-java/src/main/java/example/HelloController.java:34: error: The route declares a uri variable named [name], but no corresponding method argument is present
     public Single&lt;String&gt; hello(@NotBlank String na) {
-                          ^</code></pre>
+                          ^</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>This lessons the need for IDE support designed specifically for Micronaut.
+
+=== Experimental JMX Support for Endpoints
+
+Experimental support for exposing &lt;&lt;endpoints, management endpoints&gt;&gt; over JMX has been added via the `jmx` module. See the section on &lt;&lt;jmx, JMX Support&gt;&gt; for more information on how to use this feaure.
+
+=== Multitenancy support
+
+Latest release includes &lt;&lt;multitenancy,Multitenancy&gt;&gt; integration into the framework. Features includes tenant resolution, propagation and integration with &lt;&lt;multitenancyGorm,GORM&gt;&gt; which supports discriminator, table and schema multitenancy modes.
+
+=== Documentation Improvements
+
+The documentation you are reading has been improved with a new configuration reference button at the top that contains a reference produced at compile time of all the available configuration options in Micronaut.
+
+
+=== Dependency Upgrades
+
+The following dependency upgrades occurred in this release:
+
+- Netty `4.1.28` -&gt; `4.1.29`
+- RxJava `2.2.0` -&gt; `2.2.2`
+//- Groovy `2.5.1` -&gt; `2.5.2`
+- Hibernate Core `5.3.4` -&gt; `5.3.6.Final`
+- Jackson `2.9.6` -&gt; `2.9.7`
+//- Lettuce `5.0.4` -&gt; `5.1.0`
+- Reactor `3.1.8` -&gt; `3.2.0`
+- SnakeYAML `1.20` -&gt; `1.23`
+- Jaeger `0.30.4` -&gt; `0.31.0`</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>This lessons the need for IDE support designed specifically for Micronaut.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_experimental_jmx_support_for_endpoints">Experimental JMX Support for Endpoints</h3>
-<div class="paragraph">
-<p>Experimental support for exposing <a href="#endpoints">management endpoints</a> over JMX has been added via the <code>jmx</code> module. See the section on <a href="#jmx">JMX Support</a> for more information on how to use this feaure.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_multitenancy_support">Multitenancy support</h3>
-<div class="paragraph">
-<p>Latest release includes <a href="#multitenancy">Multitenancy</a> integration into the framework. Features includes tenant resolution, propagation and integration with <a href="#multitenancyGorm">GORM</a> which supports discriminator, table and schema multitenancy modes.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_documentation_improvements">Documentation Improvements</h3>
-<div class="paragraph">
-<p>The documentation you are reading has been improved with a new configuration reference button at the top that contains a reference produced at compile time of all the available configuration options in Micronaut.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_dependency_upgrades">Dependency Upgrades</h3>
-<div class="paragraph">
-<p>The following dependency upgrades occurred in this release:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Netty <code>4.1.28</code> &#8594; <code>4.1.29</code></p>
-</li>
-<li>
-<p>RxJava <code>2.2.0</code> &#8594; <code>2.2.2</code></p>
-</li>
-<li>
-<p>Hibernate Core <code>5.3.4</code> &#8594; <code>5.3.6.Final</code></p>
-</li>
-<li>
-<p>Jackson <code>2.9.6</code> &#8594; <code>2.9.7</code></p>
-</li>
-<li>
-<p>Reactor <code>3.1.8</code> &#8594; <code>3.2.0</code></p>
-</li>
-<li>
-<p>SnakeYAML <code>1.20</code> &#8594; <code>1.23</code></p>
-</li>
-<li>
-<p>Jaeger <code>0.30.4</code> &#8594; <code>0.31.0</code></p>
-</li>
-</ul>
 </div>
 </div>
 
@@ -8894,6 +8891,27 @@ When sessions are backed by a persistent store such as Redis then after each mes
 </tr>
 </table>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you have created your project using the Micronaut CLI and the default (<code>service</code>) profile, you can use the <code>create-websocket-server</code> command to create a class with <a href="../api/io/micronaut/websocket/WebSocketServer.html">WebSocketServer</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-websocket-server MyChat
+| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 
 
@@ -9036,6 +9054,27 @@ chatClient.send("Hello World!");</code></pre>
 </td>
 <td class="content">
 For illustration purposes we use <code>blockingFirst()</code> to obtain the client, it is however possible to combine <code>connect</code> (which returns an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>) to perform non-blocking interaction via WebSocket.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you have created your project using the Micronaut CLI and the default (<code>service</code>) profile, you can use the <code>create-websocket-client</code> command to create an abstract class with <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-websocket-client MyChat
+| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
@@ -26358,6 +26397,84 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_create_websocket_server">Create-Websocket-Server</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. Create-Websocket-Server Flags</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-l</code>, <code>--lang</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language used for the server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lang groovy</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-f</code>, <code>--force</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to overwrite existing files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--force</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>create-websocket-server</code> command generates a simple <a href="../api/io/micronaut/websocket/WebSocketServer.html">WebSocketServer</a> class. It follows a <code>*Server</code> convention for generating the class name. It does not create an associated test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-server MyChat
+| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_websocket_client">Create-Websocket-Client</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 6. Create-Websocket-Client Flags</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-l</code>, <code>--lang</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language used for the client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lang groovy</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-f</code>, <code>--force</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to overwrite existing files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--force</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>create-websocket-client</code> command generates a simple <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a> abstract class. It follows a <code>*Client</code> convention for generating the class name. It does not create an associated test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-client MyChat
+| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -26369,7 +26486,7 @@ sourceLanguage: java</code></pre>
 <div class="sect2">
 <h3 id="_create_command">Create-Command</h3>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Create-Command Flags</caption>
+<caption class="title">Table 7. Create-Command Flags</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
