@@ -124,9 +124,25 @@ public @interface <span class="memberNameLabel">Replaces</span></pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#factory--">factory</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#bean--">bean</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#factory--">factory</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#named--">named</a></span></code>
+<div class="block">The name of the qualifiers of the bean that should be replaced.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#qualifier--">qualifier</a></span></code>
+<div class="block">The name of the qualifiers of the bean that should be replaced.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Replaces.html#value--">value</a></span></code>&nbsp;</td>
 </tr>
@@ -151,7 +167,29 @@ public @interface <span class="memberNameLabel">Replaces</span></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;value</pre>
+<pre><a href="../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="bean")
+public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;value</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The bean type that this bean replaces</dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>void.class</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="bean--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bean</h4>
+<pre><a href="../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="value")
+public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;bean</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The bean type that this bean replaces</dd>
@@ -168,7 +206,7 @@ public @interface <span class="memberNameLabel">Replaces</span></pre>
 <li class="blockList"><a name="factory--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>factory</h4>
 <pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;factory</pre>
@@ -179,6 +217,48 @@ public @interface <span class="memberNameLabel">Replaces</span></pre>
 <dl>
 <dt>Default:</dt>
 <dd>void.class</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="qualifier--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>qualifier</h4>
+<pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]&nbsp;qualifier</pre>
+<div class="block">The name of the qualifiers of the bean that should be replaced.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The qualifier</dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>{}</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="named--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>named</h4>
+<pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;named</pre>
+<div class="block">The name of the qualifiers of the bean that should be replaced.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The qualifier</dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>""</dd>
 </dl>
 </li>
 </ul>
