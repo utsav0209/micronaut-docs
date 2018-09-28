@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
+var methods = {"i0":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -102,6 +102,10 @@ var activeTableTab = "activeTableTab";
 <dd><code>T</code> - The annotation type</dd>
 </dl>
 <dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../io/micronaut/inject/annotation/NamedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation">NamedAnnotationMapper</a>, <a href="../../../../io/micronaut/inject/annotation/TypedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation">TypedAnnotationMapper</a>&lt;T&gt;</dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
 <dd><a href="../../../../io/micronaut/security/annotation/DenyAllAnnotationMapper.html" title="class in io.micronaut.security.annotation">DenyAllAnnotationMapper</a>, <a href="../../../../io/micronaut/security/annotation/PermitAllAnnotationMapper.html" title="class in io.micronaut.security.annotation">PermitAllAnnotationMapper</a>, <a href="../../../../io/micronaut/inject/annotation/PersistenceContextAnnotationMapper.html" title="class in io.micronaut.inject.annotation">PersistenceContextAnnotationMapper</a>, <a href="../../../../io/micronaut/security/annotation/RolesAllowedAnnotationMapper.html" title="class in io.micronaut.security.annotation">RolesAllowedAnnotationMapper</a></dd>
 </dl>
@@ -114,12 +118,16 @@ var activeTableTab = "activeTableTab";
 
  <p>For example to support the JPA spec you may wish to map the <code>PersistenceContext</code> annotation to one or many other internal annotations with relying specifically on the JPA specification.</p>
 
- <p>AnnotationMapper instances can be registered with the service loader pattern via <code>META-INF/services</code> and will be picked up at compile time</p></div>
+ <p>AnnotationMapper instances can be registered with the service loader pattern via <code>META-INF/services</code> and will be picked up at compile time and should implement
+ either <a href="../../../../io/micronaut/inject/annotation/NamedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation"><code>NamedAnnotationMapper</code></a> or <a href="../../../../io/micronaut/inject/annotation/TypedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation"><code>TypedAnnotationMapper</code></a></p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>graemerocher</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../io/micronaut/inject/annotation/NamedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation"><code>NamedAnnotationMapper</code></a>, 
+<a href="../../../../io/micronaut/inject/annotation/TypedAnnotationMapper.html" title="interface in io.micronaut.inject.annotation"><code>TypedAnnotationMapper</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -140,16 +148,10 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html" title="type parameter in AnnotationMapper">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html#annotationType--">annotationType</a></span>()</code>
-<div class="block">The annotation type to be mapped.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/core/annotation/AnnotationValue.html" title="class in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html#map-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">map</a></span>(<a href="../../../../io/micronaut/core/annotation/AnnotationValue.html" title="class in io.micronaut.core.annotation">AnnotationValue</a>&lt;<a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html" title="type parameter in AnnotationMapper">T</a>&gt;&nbsp;annotation,
    <a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>
-<div class="block">The map method will be called for each instances of the annotation returned via the <a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html#annotationType--"><code>annotationType()</code></a> method.</div>
+<div class="block">The map method will be called for each instances of the annotation returned via this method.</div>
 </td>
 </tr>
 </table>
@@ -167,20 +169,6 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="annotationType--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>annotationType</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html" title="type parameter in AnnotationMapper">T</a>&gt;&nbsp;annotationType()</pre>
-<div class="block">The annotation type to be mapped.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The annotation type</dd>
-</dl>
-</li>
-</ul>
 <a name="map-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">
 <!--   -->
 </a>
@@ -189,7 +177,7 @@ var activeTableTab = "activeTableTab";
 <h4>map</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/core/annotation/AnnotationValue.html" title="class in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;&nbsp;map(<a href="../../../../io/micronaut/core/annotation/AnnotationValue.html" title="class in io.micronaut.core.annotation">AnnotationValue</a>&lt;<a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html" title="type parameter in AnnotationMapper">T</a>&gt;&nbsp;annotation,
                              <a href="../../../../io/micronaut/inject/visitor/VisitorContext.html" title="interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</pre>
-<div class="block">The map method will be called for each instances of the annotation returned via the <a href="../../../../io/micronaut/inject/annotation/AnnotationMapper.html#annotationType--"><code>annotationType()</code></a> method.</div>
+<div class="block">The map method will be called for each instances of the annotation returned via this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotation</code> - The annotation values</dd>
