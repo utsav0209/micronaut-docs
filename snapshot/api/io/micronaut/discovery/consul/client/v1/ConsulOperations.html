@@ -283,12 +283,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>putValue</h4>
 <pre><a href="../../../../../../io/micronaut/http/annotation/Put.html" title="annotation in io.micronaut.http.annotation">@Put</a>(<a href="../../../../../../io/micronaut/http/annotation/Put.html#value--">value</a>="/kv/{+key}",
-     <a href="../../../../../../io/micronaut/http/annotation/Put.html#consumes--">consumes</a>="text/plain")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#value--">value</a>="text/plain",
-          <a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+     <a href="../../../../../../io/micronaut/http/annotation/Put.html#processes--">processes</a>="text/plain",
+     <a href="../../../../../../io/micronaut/http/annotation/Put.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;putValue(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
-                                                                                                                                       <a href="../../../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
-                                                                                                                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
+                                                                                                    <a href="../../../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
+                                                                                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
 <div class="block">Writes a value for the given key to Consul.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -305,8 +304,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>readValues</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/kv/{+key}?recurse")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/kv/{+key}?recurse",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/discovery/consul/client/v1/KeyValue.html" title="class in io.micronaut.discovery.consul.client.v1">KeyValue</a>&gt;&gt;&nbsp;readValues(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key)</pre>
 <div class="block">Reads a Key from Consul. See https://www.consul.io/api/kv.html.</div>
 <dl>
@@ -323,17 +322,17 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>readValues</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/kv/{+key}?recurse=true{&amp;dc}{&amp;raw}{&amp;seperator}")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/kv/{+key}?recurse=true{&amp;dc}{&amp;raw}{&amp;seperator}",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
  <a href="../../../../../../io/micronaut/retry/annotation/Retryable.html" title="annotation in io.micronaut.retry.annotation">@Retryable</a>(<a href="../../../../../../io/micronaut/retry/annotation/Retryable.html#attempts--">attempts</a>="${consul.client.config.retry-count:3}",
            <a href="../../../../../../io/micronaut/retry/annotation/Retryable.html#delay--">delay</a>="${consul.client.config.retry-delay:1s}")
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/discovery/consul/client/v1/KeyValue.html" title="class in io.micronaut.discovery.consul.client.v1">KeyValue</a>&gt;&gt;&nbsp;readValues(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> <a href="../../../../../../io/micronaut/http/annotation/QueryValue.html" title="annotation in io.micronaut.http.annotation">@QueryValue</a>(<a href="../../../../../../io/micronaut/http/annotation/QueryValue.html#value--">value</a>="dc")
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;datacenter,
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;raw,
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                                                                                                                                                                                                                                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;seperator)</pre>
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> <a href="../../../../../../io/micronaut/http/annotation/QueryValue.html" title="annotation in io.micronaut.http.annotation">@QueryValue</a>(<a href="../../../../../../io/micronaut/http/annotation/QueryValue.html#value--">value</a>="dc")
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;datacenter,
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;raw,
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                                                                                                                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;seperator)</pre>
 <div class="block">Reads a Key from Consul. See https://www.consul.io/api/kv.html.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -412,8 +411,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>status</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/status/leader")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/status/leader",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;status()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -427,10 +426,10 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>register</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Put.html" title="annotation in io.micronaut.http.annotation">@Put</a>(<a href="../../../../../../io/micronaut/http/annotation/Put.html#value--">value</a>="/catalog/register")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Put.html" title="annotation in io.micronaut.http.annotation">@Put</a>(<a href="../../../../../../io/micronaut/http/annotation/Put.html#uri--">uri</a>="/catalog/register",
+     <a href="../../../../../../io/micronaut/http/annotation/Put.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;register(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
-                                                                                    <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&nbsp;entry)</pre>
+                                                                            <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&nbsp;entry)</pre>
 <div class="block">Register a new <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1"><code>CatalogEntry</code></a>. See https://www.consul.io/api/catalog.html.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -446,10 +445,10 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>deregister</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Put.html" title="annotation in io.micronaut.http.annotation">@Put</a>(<a href="../../../../../../io/micronaut/http/annotation/Put.html#value--">value</a>="/catalog/deregister")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Put.html" title="annotation in io.micronaut.http.annotation">@Put</a>(<a href="../../../../../../io/micronaut/http/annotation/Put.html#uri--">uri</a>="/catalog/deregister",
+     <a href="../../../../../../io/micronaut/http/annotation/Put.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;deregister(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/http/annotation/Body.html" title="annotation in io.micronaut.http.annotation">@Body</a>
-                                                                                        <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&nbsp;entry)</pre>
+                                                                                <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&nbsp;entry)</pre>
 <div class="block">Register a new <a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1"><code>CatalogEntry</code></a>. See https://www.consul.io/api/catalog.html.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -505,8 +504,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getServices</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/agent/services")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/agent/services",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../io/micronaut/discovery/consul/client/v1/ServiceEntry.html" title="class in io.micronaut.discovery.consul.client.v1">ServiceEntry</a>&gt;&gt;&nbsp;getServices()</pre>
 <div class="block">Gets all of the registered services.</div>
 <dl>
@@ -521,16 +520,16 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getHealthyServices</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/health/service/{service}{?passing,tag,dc}")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/health/service/{service}{?passing,tag,dc}",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/discovery/consul/client/v1/HealthEntry.html" title="class in io.micronaut.discovery.consul.client.v1">HealthEntry</a>&gt;&gt;&nbsp;getHealthyServices(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a>
-                                                                                                                                 <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;service,
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;passing,
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tag,
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                                                                                                                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;dc)</pre>
+                                                                                                                         <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;service,
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;passing,
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tag,
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;dc)</pre>
 <div class="block">Gets the healthy services that are passing health checks.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -549,8 +548,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getNodes</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/catalog/nodes")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/catalog/nodes",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&gt;&gt;&nbsp;getNodes()</pre>
 <div class="block">Gets all of the registered nodes.</div>
 <dl>
@@ -565,10 +564,10 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getNodes</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/catalog/nodes?dc={datacenter}")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/catalog/nodes?dc={datacenter}",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/discovery/consul/client/v1/CatalogEntry.html" title="class in io.micronaut.discovery.consul.client.v1">CatalogEntry</a>&gt;&gt;&nbsp;getNodes(<a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a>
-                                                                                                            <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;datacenter)</pre>
+                                                                                                    <a href="https://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html?is-external=true" title="class or interface in javax.validation.constraints">@NotNull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;datacenter)</pre>
 <div class="block">Gets all the nodes for the given data center.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -584,8 +583,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getServiceNames</h4>
-<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/catalog/services")
- <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#uri--">uri</a>="/catalog/services",
+     <a href="../../../../../../io/micronaut/http/annotation/Get.html#single--">single</a>=true)
 <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;&gt;&nbsp;getServiceNames()</pre>
 <div class="block">Gets all of the service names and optional tags.</div>
 <dl>
