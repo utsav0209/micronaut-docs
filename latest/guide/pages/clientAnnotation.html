@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.2 Declarative HTTP Clients with @Client 1.0.0.M4</title>
+    <title>7.2 Declarative HTTP Clients with @Client 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.2 Declarative HTTP Clients with @Client</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -248,7 +251,7 @@ class PetController implements PetOperations {
 <div class="listingblock">
 <div class="title">PetClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.Client;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @Client("/pets") <i class="conum" data-value="1"></i><b>(1)</b>
@@ -341,7 +344,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> and optional response body type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Single&lt;HttpResponse&lt;&lt;String&gt;&gt;&gt; hello()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single&lt;HttpResponse&lt;String&gt;&gt; hello()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
@@ -920,6 +923,26 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>netflix-hystrix</code> feature to configure Hystrix in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features netflix-hystrix</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><a href="https://github.com/Netflix/Hystrix">Netflix Hystrix</a> is a fault tolerance library developed by the Netflix team and designed to improve resilience of inter process communication.</p>
 </div>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>10.1.4 Kafka Consumers Using @KafkaListener 1.0.0.M4</title>
+    <title>10.1.4 Kafka Consumers Using @KafkaListener 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>10.1.4 Kafka Consumers Using @KafkaListener</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -154,7 +157,7 @@ function addJsClass() {
 <p>The quick start section presented a trivial example of what is possible with the <a href="../api/io/micronaut/configuration/kafka/annotation/KafkaListener.html">@KafkaListener</a> annotation.</p>
 </div>
 <div class="paragraph">
-<p>Using the <code>@KafkaListener</code> annotation Micronaut will build a <a href="https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> and start the <code>poll</code> loop by running the <code>KafkaConsumer</code> in a special <code>consumer</code> thread pool. You can re-configure the size of the thread pool based on the number of consumers in your application in <code>application.yml</code> as desired:</p>
+<p>Using the <code>@KafkaListener</code> annotation Micronaut will build a <a href="https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> and start the <code>poll</code> loop by running the <code>KafkaConsumer</code> in a special <code>consumer</code> thread pool. You can configure the size of the thread pool based on the number of consumers in your application in <code>application.yml</code> as desired:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring the <code>consumer</code> thread pool</div>
@@ -646,11 +649,11 @@ You can replace the default <a href="../api/io/micronaut/configuration/kafka/ser
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/configuration/kafka/annotation/OffsetStrategy.html#SYNC_PER_RECORD">SYNC_PER_RECORD</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Commits offsets manually after each <code>ConsumeRecord</code> is processed. Sets <code>enable.auto.commit</code> to <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commits offsets manually after each <code>ConsumerRecord</code> is processed. Sets <code>enable.auto.commit</code> to <code>false</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/configuration/kafka/annotation/OffsetStrategy.html#ASYNC_PER_RECORD">ASYNC_PER_RECORD</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Commits offsets asynchronously after each <code>ConsumeRecord</code> is processed. Sets <code>enable.auto.commit</code> to <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commits offsets asynchronously after each <code>ConsumerRecord</code> is processed. Sets <code>enable.auto.commit</code> to <code>false</code></p></td>
 </tr>
 </tbody>
 </table>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.1 Using the Low-Level HTTP Client 1.0.0.M4</title>
+    <title>7.1 Using the Low-Level HTTP Client 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.1 Using the Low-Level HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -246,6 +249,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.*;
+import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Maybe;
 
 @Get("/hello/{name}")
@@ -289,6 +293,34 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 <div class="title">logback.xml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;logger name="io.micronaut.http.client" level="TRACE"/&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_specific_debugging_tracing">Client Specific Debugging / Tracing</h4>
+<div class="paragraph">
+<p>To enable client-specific logging you could configure the default logger for all HTTP clients. And, you could also configure different loggers for different clients using <a href="#_client_specific_configuration">Client Specific Configuration</a>. For example, in <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">micronaut:
+    http:
+        client:
+            logger-name: mylogger
+        services:
+            otherClient:
+                logger-name: other.client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And, then enable logging in <code>logback.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">logback.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;logger name="mylogger" level="DEBUG"/&gt;
+&lt;logger name="other.client" level="TRACE"/&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -938,6 +970,9 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 <td>The read timeout is applied to the <code>foo</code> client.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>WARN: This client configuration can be used in conjunction with the <code>@Client</code> annotation, either by injecting an <code>HttpClient</code> directly or use on a client interface. In any case, all other attributes on the annotation <strong>will be ignored</strong> other than the service id.</p>
 </div>
 <div class="paragraph">
 <p>Then simply inject the named client configuration:</p>

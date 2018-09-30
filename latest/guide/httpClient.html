@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7 The HTTP Client 1.0.0.M4</title>
+    <title>7 The HTTP Client 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7 The HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -180,6 +183,21 @@ function addJsClass() {
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, the <code>http-client</code> dependency is included by default.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>A critical component of any Microservice architecture is the client communication between Microservices. With that in mind Micronaut features a built in HTTP client that has both a low-level API and a higher level AOP-driven API.</p>
 </div>
@@ -190,7 +208,7 @@ function addJsClass() {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish to use the Micronaut HTTP client in your application since it is a feature-rich client implementation
+Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish to use the Micronaut HTTP client in your application since it is a feature-rich client implementation.
 </td>
 </tr>
 </table>
@@ -317,6 +335,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.*;
+import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Maybe;
 
 @Get("/hello/{name}")
@@ -360,6 +379,34 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 <div class="title">logback.xml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;logger name="io.micronaut.http.client" level="TRACE"/&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_specific_debugging_tracing">Client Specific Debugging / Tracing</h4>
+<div class="paragraph">
+<p>To enable client-specific logging you could configure the default logger for all HTTP clients. And, you could also configure different loggers for different clients using <a href="#_client_specific_configuration">Client Specific Configuration</a>. For example, in <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">micronaut:
+    http:
+        client:
+            logger-name: mylogger
+        services:
+            otherClient:
+                logger-name: other.client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And, then enable logging in <code>logback.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">logback.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;logger name="mylogger" level="DEBUG"/&gt;
+&lt;logger name="other.client" level="TRACE"/&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1011,6 +1058,9 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 </table>
 </div>
 <div class="paragraph">
+<p>WARN: This client configuration can be used in conjunction with the <code>@Client</code> annotation, either by injecting an <code>HttpClient</code> directly or use on a client interface. In any case, all other attributes on the annotation <strong>will be ignored</strong> other than the service id.</p>
+</div>
+<div class="paragraph">
 <p>Then simply inject the named client configuration:</p>
 </div>
 <div class="listingblock">
@@ -1198,7 +1248,7 @@ class PetController implements PetOperations {
 <div class="listingblock">
 <div class="title">PetClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.Client;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @Client("/pets") <i class="conum" data-value="1"></i><b>(1)</b>
@@ -1291,7 +1341,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> and optional response body type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Single&lt;HttpResponse&lt;&lt;String&gt;&gt;&gt; hello()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single&lt;HttpResponse&lt;String&gt;&gt; hello()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
@@ -1870,6 +1920,26 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>netflix-hystrix</code> feature to configure Hystrix in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features netflix-hystrix</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><a href="https://github.com/Netflix/Hystrix">Netflix Hystrix</a> is a fault tolerance library developed by the Netflix team and designed to improve resilience of inter process communication.</p>
 </div>

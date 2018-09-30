@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.3 HTTP Routing 1.0.0.M4</title>
+    <title>6.3 HTTP Routing 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.3 HTTP Routing</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -496,6 +499,56 @@ public class MyRoutes extends DefaultRouteBuilder { <i class="conum" data-value=
 </td>
 <td class="content">
 Unfortunately due to type erasure a Java method lambda reference cannot be used with the API. For Groovy there is a <code>GroovyRouteBuilder</code> class which can be subclassed that allows passing Groovy method references.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_route_compile_time_validation">Route Compile Time Validation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Micronaut supports validating route arguments at compile time with the validation library. To get started simply add the <code>validation</code> dependency to your build:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:validation" // Java only
+kapt "io.micronaut:validation" // Kotlin only
+compile "io.micronaut:validation"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the correct dependency on your classpath, route arguments will automatically be checked at compile time. The compilation will fail if any of the following conditions are met:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>
+The URI template contains a variable that is optional, but the method parameter is not annotated with <code>@Nullable</code> or is an <code>java.util.Optional</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An optional variable is one that will allow the route to match a URI even if the value is not present. For example <code>/foo{/bar}</code> will match requests to <code>/foo</code> and <code>/foo/abc</code>. The non optional variant would be <code>/foo/{bar}</code>. See the <a href="#_uri_path_variables">URI Path Variables</a> section for more information.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>
+The URI template contains a variable that is missing from the method arguments.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To disable route compile time validation, set the system property <code>-Dmicronaut.route.validation=false</code>. For Java and Kotlin users using Gradle, the same effect can be achieved by removing the <code>validation</code> dependency from the <code>annotationProcessor</code>/<code>kapt</code> scope.
 </td>
 </tr>
 </table>

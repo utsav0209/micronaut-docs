@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.11 Serving Static Resources 1.0.0.M4</title>
+    <title>6.11 Serving Static Resources 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.11 Serving Static Resources</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -128,61 +131,44 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>Static resource resolution is disabled by default.</p>
+<p>Static resource resolution is disabled by default. Micronaut supports resolving resources from the classpath or the file system.</p>
 </div>
 <div class="paragraph">
-<p>The following configuration options are available through <a href="../api/io/micronaut/web/router/resource/StaticResourceConfiguration.html">StaticResourceConfiguration</a>:</p>
+<p>See the information below for available configuration options:</p>
 </div>
+<a id="io.micronaut.web.router.resource.StaticResourceConfiguration" href="#io.micronaut.web.router.resource.StaticResourceConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/web/router/resource/StaticResourceConfiguration.html">StaticResourceConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
 <col style="width: 33.3334%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether static resources will be resolved at all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether this specific mapping is enabled. Default value (true).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mapping</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The path resources should be served from. Uses ant path matching. Options might be <code>/<strong>*</strong>*</code> or <code>/static/<strong>*</strong>*</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">paths</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List&lt;String&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.paths</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A list of paths either starting with <code>classpath:</code> or <code>file:</code>. You can serve files from anywhere on disk or the classpath. For example to serve static resources from <code>src/main/resources/public</code>, you would use <code>classpath:public</code> as the path.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.mapping</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path resources should be served from. Uses ant path matching. Default value ("/**").</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Here is what an example YAML configuration might look like (note that the <code>router</code> declaration must be at the top-level of the file and not nested under any other items):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    router:
-        static:
-            resources:
-                enabled: true
-                mapping: /static/**
-                paths: classpath:public</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<code>index.html</code> will be resolved by default, <em>but only in the top level directory</em>. In the above example a request to <code>/static</code> will attempt to retrieve <code>src/main/resources/public/index.html</code>. Requests to <code>/static/foo</code> will <strong>not</strong> result in <code>src/main/resources/public/foo/index.html</code> being resolved.
-</td>
-</tr>
-</table>
-</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

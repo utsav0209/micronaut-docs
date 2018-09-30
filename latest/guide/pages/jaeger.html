@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8.4.2 Tracing with Jaeger 1.0.0.M4</title>
+    <title>8.4.2 Tracing with Jaeger 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.4.2 Tracing with Jaeger</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -138,8 +141,8 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker run -d -e \
-  COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker run -d \
+  -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
   -p 5775:5775/udp \
   -p 6831:6831/udp \
   -p 6832:6832/udp \
@@ -147,7 +150,7 @@ function addJsClass() {
   -p 16686:16686 \
   -p 14268:14268 \
   -p 9411:9411 \
-  jaegertracing/all-in-one:latest</code></pre>
+  jaegertracing/all-in-one:1.6</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -161,13 +164,33 @@ function addJsClass() {
 <div class="sect1">
 <h2 id="_sending_traces_to_jaeger">Sending Traces to Jaeger</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, supply the <code>tracing-jaeger</code> feature to include Jaeger tracing in your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features tracing-jaeger</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To send tracing spans to Jaeger the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Adding Jaeger Dependencies</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile 'io.jaegertracing:jaeger-core:0.27.0'</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile 'io.jaegertracing:jaeger-thrift:0.31.0'</code></pre>
 </div>
 </div>
 <div class="paragraph">

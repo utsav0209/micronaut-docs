@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.8 Reactive HTTP Request Processing 1.0.0.M4</title>
+    <title>6.8 Reactive HTTP Request Processing 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.8 Reactive HTTP Request Processing</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -148,7 +151,7 @@ function addJsClass() {
 <p>If your controller method returns a non-blocking type such as an RxJava <code>Observable</code> or a <code>CompletableFuture</code> then Micronaut will use the Event loop thread to subscribe to the result.</p>
 </div>
 <div class="paragraph">
-<p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a pre-configured I/O thread pool.</p>
+<p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a preconfigured I/O thread pool.</p>
 </div>
 <div class="paragraph">
 <p>This thread pool by default is a caching, unbound thread pool. However, you may wish to configure the nature of the thread pool. For example the following configuration will configure the I/O thread pool as a fixed thread pool with 75 threads (similar to what a traditional blocking server such as Tomcat uses in the thread per connection model):</p>

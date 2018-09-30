@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>16.4 Commands 1.0.0.M4</title>
+    <title>17.4 Commands 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -98,27 +101,27 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/security.html">&lt;&lt; <strong>15</strong><span>Security</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/multitenancy.html">&lt;&lt; <strong>16</strong><span>Multi-Tenancy</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>16.4 Commands</h1>
+                    <h1>17.4 Commands</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
 
                 
 
-<h2 id="commands">16.4 Commands</h2>
+<h2 id="commands">17.4 Commands</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/commands.adoc"'>
@@ -132,7 +135,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; profile-info service
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn profile-info service
 Profile: service
 ------------------
 The service profile
@@ -337,6 +340,84 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_create_websocket_server">Create-Websocket-Server</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. Create-Websocket-Server Flags</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-l</code>, <code>--lang</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language used for the server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lang groovy</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-f</code>, <code>--force</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to overwrite existing files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--force</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>create-websocket-server</code> command generates a simple <a href="../api/io/micronaut/websocket/WebSocketServer.html">WebSocketServer</a> class. It follows a <code>*Server</code> convention for generating the class name. It does not create an associated test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-server MyChat
+| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_websocket_client">Create-Websocket-Client</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 6. Create-Websocket-Client Flags</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-l</code>, <code>--lang</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language used for the client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lang groovy</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-f</code>, <code>--force</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to overwrite existing files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--force</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>create-websocket-client</code> command generates a simple <a href="../api/io/micronaut/websocket/WebSocketClient.html">WebSocketClient</a> abstract class. It follows a <code>*Client</code> convention for generating the class name. It does not create an associated test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-client MyChat
+| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -348,7 +429,7 @@ sourceLanguage: java</code></pre>
 <div class="sect2">
 <h3 id="_create_command">Create-Command</h3>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Create-Command Flags</caption>
+<caption class="title">Table 7. Create-Command Flags</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -394,9 +475,9 @@ It creates an associated test that will run the application and verify that a co
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/security.html">&lt;&lt; <strong>15</strong><span>Security</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/multitenancy.html">&lt;&lt; <strong>16</strong><span>Multi-Tenancy</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

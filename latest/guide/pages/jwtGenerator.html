@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>15.3.3.2 JWT Token Generation 1.0.0.M4</title>
+    <title>15.3.3.2 JWT Token Generation 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -104,14 +107,14 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span> >></a></div>
                 
 
 
                 <div class="project">
                     <h1>15.3.3.2 JWT Token Generation</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -141,6 +144,37 @@ function addJsClass() {
 <div class="paragraph">
 <p>Micronaut relies on <a href="https://connect2id.com/products/nimbus-jose-jwt">Nimbus JOSE + JWT</a> library to provide JWT token signature and encryption.</p>
 </div>
+<div class="paragraph">
+<p>The following configuration options are available:</p>
+</div>
+<a id="io.micronaut.security.token.jwt.generator.JwtGeneratorConfigurationProperties" href="#io.micronaut.security.token.jwt.generator.JwtGeneratorConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/generator/JwtGeneratorConfigurationProperties.html">JwtGeneratorConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.generator.refresh-token-expiration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Refresh token expiration. By default refresh tokens, do not expire.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.generator.access-token-expiration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access token expiration. Default value (3600).</p></td>
+</tr>
+</tbody>
+</table>
 
 
 <h2 id="jwtGeneratorSignature">15.3.3.2.1 JWT Signature</h2>
@@ -176,7 +210,7 @@ function addJsClass() {
           secret:
             generator:
               secret: pleaseChangeThisSecretForANewOne <i class="conum" data-value="1"></i><b>(1)</b>
-              jwsAlgorithm: HS256 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+              jws-algorithm: HS256 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -207,7 +241,7 @@ function addJsClass() {
             generator:
               secret: 'cGxlYXNlQ2hhbmdlVGhpc1NlY3JldEZvckFOZXdPbmU=' <i class="conum" data-value="1"></i><b>(1)</b>
               base64: true <i class="conum" data-value="2"></i><b>(2)</b>
-              jwsAlgorithm: HS256</code></pre>
+              jws-algorithm: HS256</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -262,7 +296,7 @@ function addJsClass() {
           secret:
             generator:
               secret: pleaseChangeThisSecretForANewOne <i class="conum" data-value="1"></i><b>(1)</b>
-              jwsAlgorithm: HS256 <i class="conum" data-value="2"></i><b>(2)</b>
+              jws-algorithm: HS256 <i class="conum" data-value="2"></i><b>(2)</b>
 pem:
   path: /home/user/rsa-2048bit-key-pair.pem <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
@@ -387,7 +421,7 @@ class KeyPairProvider {
                 
                     <div class="toc-item prev-left"><a href="../../guide/management.html">&lt;&lt; <strong>14</strong><span>Management &amp; Monitoring</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

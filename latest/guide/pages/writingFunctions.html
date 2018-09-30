@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>9.1 Writing Functions 1.0.0.M4</title>
+    <title>9.1 Writing Functions 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -111,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>9.1 Writing Functions</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -141,6 +144,21 @@ function addJsClass() {
 </div>
 
 
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>If you are creating your project using the Micronaut CLI, use the <code>create-function</code> command to include the required dependencies and configuration for a serverless function. See the CLI documentation for <a href="#createProject">Creating a Project</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To get started writing serverless function you must add the appropriate Micronaut <code>function</code> dependency to your classpath. In certain cases there are FaaS platform specific extension which you may wish to include. The following table includes the dependencies for each individual FaaS platform:</p>
 </div>
@@ -399,6 +417,24 @@ class HelloKotlinFunction : Supplier&lt;String&gt; {
 </table>
 <div class="paragraph">
 <p>In addition, functions have an input and/or an output. The input is represented by the accepted argument and represents the body consumed by the function and the output is represented by the return value of the function. The input and the output should be either a Java primitive or simple type (<code>int</code>, <code>String</code> etc.) or a POJO.</p>
+</div>
+<div class="paragraph">
+<p>Often, you want to accept a POJO and return a POJO. Use <code>java.util.function.Function</code> to accept a single argument and return a single result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.FunctionBean;
+import java.util.function.Function;
+
+@FunctionBean("isbn-validator")
+public class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    @Override
+    public IsbnValidationResponse apply(IsbnValidationRequest request) {
+        return new IsbnValidationResponse();
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>A single project can define multiple functions, however only a single function should be configured for execution by the application. This can be configured using the <code>micronaut.function.name</code> property in <code>application.yml</code>:</p>

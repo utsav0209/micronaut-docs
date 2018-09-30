@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.22 Server Side View Rendering 1.0.0.M4</title>
+    <title>6.23 Server Side View Rendering 1.0.0.RC1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,10 +74,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/security.html"><strong>15</strong><span>Security</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>16</strong><span>Micronaut CLI</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>17</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -109,9 +112,9 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>6.22 Server Side View Rendering</h1>
+                    <h1>6.23 Server Side View Rendering</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.M4</p>
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
                 </div>
 
                 
@@ -132,7 +135,7 @@ function addJsClass() {
 
                 
 
-<h2 id="views">6.22 Server Side View Rendering</h2>
+<h2 id="views">6.23 Server Side View Rendering</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views.adoc"'>
@@ -241,7 +244,7 @@ class ViewsController {
 </div>
 
 
-<h2 id="thymeleaf">6.22.1 Thymeleaf</h2>
+<h2 id="thymeleaf">6.23.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
@@ -263,9 +266,79 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.
-The properties used can be customized by overriding the values of <a href="../api/io/micronaut/views/ThymeleafConfigurationProperties.html">ThymeleafConfigurationProperties</a>.</p>
+<p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.</p>
 </div>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether thymeleaf rendering is enabled. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.character-encoding</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the character encoding to use. Default value ("UTF-8").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.template-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.thymeleaf.templatemode.TemplateMode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the template mode.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.suffix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the suffix to use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-suffix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force the suffix. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-template-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force template mode. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates are cacheable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttlms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache TTL in millis.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.check-existence</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates should be checked for existence.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache TTL as a duration.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Thymeleaf template:</p>
 </div>
@@ -311,7 +384,7 @@ The properties used can be customized by overriding the values of <a href="../ap
 </div>
 
 
-<h2 id="handlebars">6.22.2 Handlebars.java</h2>
+<h2 id="handlebars">6.23.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/handlebars.adoc"'>
@@ -355,7 +428,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 </div>
 
 
-<h2 id="velocity">6.22.3 Apache Velocity</h2>
+<h2 id="velocity">6.23.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/velocity.adoc"'>
