@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,7 +107,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">BeanResolutionContext</span>
+<pre><a href="../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
+public interface <span class="typeNameLabel">BeanResolutionContext</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</pre>
 <div class="block">Represents the resolution context for a current resolve of a given bean.</div>
 <dl>
@@ -169,14 +170,27 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">addInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier,
+               T&nbsp;instance)</code>
+<div class="block">Adds a bean that is created as part of the resolution.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getContext--">getContext</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getInFlightBean-io.micronaut.inject.BeanIdentifier-">getInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</code>
+<div class="block">Obtains an inflight bean for the given identifier</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanResolutionContext.Path.html" title="interface in io.micronaut.context">BeanResolutionContext.Path</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getRootDefinition--">getRootDefinition</a></span>()</code>&nbsp;</td>
 </tr>
@@ -238,13 +252,52 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is
 <a name="getPath--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getPath</h4>
 <pre><a href="../../../io/micronaut/context/BeanResolutionContext.Path.html" title="interface in io.micronaut.context">BeanResolutionContext.Path</a>&nbsp;getPath()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The path that this resolution has taken so far</dd>
+</dl>
+</li>
+</ul>
+<a name="addInFlightBean-io.micronaut.inject.BeanIdentifier-java.lang.Object-">
+<!--   -->
+</a><a name="addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addInFlightBean</h4>
+<pre>&lt;T&gt;&nbsp;void&nbsp;addInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier,
+                         T&nbsp;instance)</pre>
+<div class="block">Adds a bean that is created as part of the resolution. This is used to store references to instances passed to <a href="../../../io/micronaut/context/BeanContext.html#inject-T-"><code>BeanContext.inject(Object)</code></a></div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - THe instance type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanIdentifier</code> - The bean identifier</dd>
+<dd><code>instance</code> - The instance</dd>
+</dl>
+</li>
+</ul>
+<a name="getInFlightBean-io.micronaut.inject.BeanIdentifier-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getInFlightBean</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+&lt;T&gt;&nbsp;T&nbsp;getInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</pre>
+<div class="block">Obtains an inflight bean for the given identifier</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The bean type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanIdentifier</code> - The bean identifier</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The bean</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,21 +205,34 @@ implements <a href="../../../io/micronaut/context/BeanResolutionContext.html" ti
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">addInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier,
+               T&nbsp;instance)</code>
+<div class="block">Adds a bean that is created as part of the resolution.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#get-java.lang.CharSequence-io.micronaut.core.convert.ArgumentConversionContext-">get</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;name,
    <a href="../../../io/micronaut/core/convert/ArgumentConversionContext.html" title="interface in io.micronaut.core.convert">ArgumentConversionContext</a>&lt;T&gt;&nbsp;conversionContext)</code>
 <div class="block">Resolve the given property for the given name.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#getContext--">getContext</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#getInFlightBean-io.micronaut.inject.BeanIdentifier-">getInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</code>
+<div class="block">Obtains an inflight bean for the given identifier</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanResolutionContext.Path.html" title="interface in io.micronaut.context">BeanResolutionContext.Path</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html#getRootDefinition--">getRootDefinition</a></span>()</code>&nbsp;</td>
 </tr>
@@ -346,6 +359,51 @@ public&nbsp;DefaultBeanResolutionContext(<a href="../../../io/micronaut/context/
 <dd><code><a href="../../../io/micronaut/context/BeanResolutionContext.html#getPath--">getPath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The path that this resolution has taken so far</dd>
+</dl>
+</li>
+</ul>
+<a name="addInFlightBean-io.micronaut.inject.BeanIdentifier-java.lang.Object-">
+<!--   -->
+</a><a name="addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addInFlightBean</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;void&nbsp;addInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier,
+                                T&nbsp;instance)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/context/BeanResolutionContext.html#addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">BeanResolutionContext</a></code></span></div>
+<div class="block">Adds a bean that is created as part of the resolution. This is used to store references to instances passed to <a href="../../../io/micronaut/context/BeanContext.html#inject-T-"><code>BeanContext.inject(Object)</code></a></div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/context/BeanResolutionContext.html#addInFlightBean-io.micronaut.inject.BeanIdentifier-T-">addInFlightBean</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a></code></dd>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - THe instance type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanIdentifier</code> - The bean identifier</dd>
+<dd><code>instance</code> - The instance</dd>
+</dl>
+</li>
+</ul>
+<a name="getInFlightBean-io.micronaut.inject.BeanIdentifier-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInFlightBean</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/context/BeanResolutionContext.html#getInFlightBean-io.micronaut.inject.BeanIdentifier-">BeanResolutionContext</a></code></span></div>
+<div class="block">Obtains an inflight bean for the given identifier</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/context/BeanResolutionContext.html#getInFlightBean-io.micronaut.inject.BeanIdentifier-">getInFlightBean</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a></code></dd>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The bean type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanIdentifier</code> - The bean identifier</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The bean</dd>
 </dl>
 </li>
 </ul>
