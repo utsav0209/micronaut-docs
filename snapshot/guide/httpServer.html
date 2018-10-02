@@ -2139,6 +2139,67 @@ If an <code>@Error</code> annotation with the same parameter exists as global an
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_exceptionhandler">ExceptionHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Additionally you can implement a <a href="../api/io/micronaut/http/server/exceptions/ExceptionHandler.html">ExceptionHandler</a>; a generic hook for handling exceptions that occurs during the execution of an HTTP request.</p>
+</div>
+<div class="paragraph">
+<p>Imagine your e-commerce app throws an <code>OutOfStockException</code> when a book is out of stock:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class OutOfStockException extends RuntimeException {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+public class BookController {
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/stock/{isbn}")
+    Integer stock(String isbn) {
+        throw new OutOfStockException();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t handle the exception the server returns a 500 (Internal Server Error) status code.</p>
+</div>
+<div class="paragraph">
+<p>If you want to respond 200 OK with 0 (stock level) as the response body when the <code>OutOfStockException</code> is thrown, you could register a <code>ExceptionHandler</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces
+@Singleton
+@Requires(classes = {OutOfStockException.class, ExceptionHandler.class})
+public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
+
+    @Override
+    public HttpResponse handle(HttpRequest request, OutOfStockException exception) {
+        return HttpResponse.ok(0);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+An <code>@Error</code> annotation capturing an exception has precedence over an implementation of <code>ExceptionHandler</code> capturing the same exception.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 
 
 <h2 id="formData">6.13 Handling Form Data</h2>
