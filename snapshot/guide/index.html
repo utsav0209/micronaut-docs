@@ -1129,11 +1129,12 @@ This is also possible to be configured from an environment variable: <code>MICRO
 <div class="listingblock">
 <div class="title">src/main/java/example/helloworld/HelloController.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.*;
 
 @Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
 public class HelloController {
-    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
     public String index() {
         return "Hello World"; <i class="conum" data-value="3"></i><b>(3)</b>
     }
@@ -5135,31 +5136,6 @@ public class BookService {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.redis-exec-provider</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.slave-of</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.config-file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.setting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -5663,11 +5639,12 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 <div class="listingblock">
 <div class="title">Micronaut Server Hello World</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.*;
 
 @Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
 public class HelloController {
-    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
     public String index() {
         return "Hello World"; <i class="conum" data-value="3"></i><b>(3)</b>
     }
@@ -26992,6 +26969,25 @@ dependencyManagement {
 
 <div class="paragraph">
 <p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc2">1.0.0.RC2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.security.authentication.Authenticator::authenticate</code> method signature has changed from:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(UsernamePasswordCredentials credentials)</code></p>
+</div>
+<div class="paragraph">
+<p>to:</p>
+</div>
+<div class="paragraph">
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(AuthenticationRequest authenticationRequest)</code></p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_1_0_0_rc1">1.0.0.RC1</h4>
