@@ -276,14 +276,15 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path target/hello-world-0.1.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
-			 -H:ReflectionConfigurationFiles=target/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
+			 -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
 			 -H:EnableURLProtocols=http \ <i class="conum" data-value="3"></i><b>(3)</b>
 			 -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="4"></i><b>(4)</b>
 			 -H:Name=hello-world \ <i class="conum" data-value="5"></i><b>(5)</b>
 			 -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
 			 -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
-			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+			 -H:+AllowVMInspection \
+			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder  <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
