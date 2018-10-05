@@ -175,10 +175,10 @@ Use of GraalVM&#8217;s <code>nativeimage</code> tool is only supported in Java o
 <p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc6 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc7 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc6-graal
-$ sdk use java 1.0.0-rc6-graal</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc7-graal
+$ sdk use java 1.0.0-rc7-graal</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -205,7 +205,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=${JAVA_HOME}/jre/lib/svm/builder/svm.jar \
                            -DgroupId=com.oracle.substratevm \
                            -DartifactId=svm \
-                           -Dversion=GraalVM-1.0.0-rc6 \
+                           -Dversion=GraalVM-1.0.0-rc7 \
                            -Dpackaging=jar</code></pre>
 </div>
 </div>
@@ -296,7 +296,8 @@ If you wish you can use this file as a template and copy it to the source tree, 
 			 -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
 			 -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
 			 -H:+AllowVMInspection \
-			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder  <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+			 --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
+			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
