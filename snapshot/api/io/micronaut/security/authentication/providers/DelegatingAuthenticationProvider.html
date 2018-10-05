@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -201,6 +201,14 @@ implements <a href="../../../../../io/micronaut/security/authentication/Authenti
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/security/authentication/AuthenticationResponse.html" title="interface in io.micronaut.security.authentication">AuthenticationResponse</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/authentication/providers/DelegatingAuthenticationProvider.html#createSuccessfulAuthenticationResponse-io.micronaut.security.authentication.AuthenticationRequest-io.micronaut.security.authentication.providers.UserState-java.util.List-">createSuccessfulAuthenticationResponse</a></span>(<a href="../../../../../io/micronaut/security/authentication/AuthenticationRequest.html" title="interface in io.micronaut.security.authentication">AuthenticationRequest</a>&nbsp;authenticationRequest,
+                                      <a href="../../../../../io/micronaut/security/authentication/providers/UserState.html" title="interface in io.micronaut.security.authentication.providers">UserState</a>&nbsp;user,
+                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;authorities)</code>
+<div class="block">Create a successful <a href="../../../../../io/micronaut/security/authentication/AuthenticationResponse.html" title="interface in io.micronaut.security.authentication"><code>AuthenticationResponse</code></a>.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../io/micronaut/security/authentication/providers/UserState.html" title="interface in io.micronaut.security.authentication.providers">UserState</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/security/authentication/providers/DelegatingAuthenticationProvider.html#fetchUserState-io.micronaut.security.authentication.AuthenticationRequest-">fetchUserState</a></span>(<a href="../../../../../io/micronaut/security/authentication/AuthenticationRequest.html" title="interface in io.micronaut.security.authentication">AuthenticationRequest</a>&nbsp;authenticationRequest)</code>&nbsp;</td>
 </tr>
@@ -322,7 +330,7 @@ implements <a href="../../../../../io/micronaut/security/authentication/Authenti
 <a name="createSuccessfulAuthenticationResponse-io.micronaut.security.authentication.AuthenticationRequest-io.micronaut.security.authentication.providers.UserState-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>createSuccessfulAuthenticationResponse</h4>
 <pre>protected&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../io/micronaut/security/authentication/AuthenticationResponse.html" title="interface in io.micronaut.security.authentication">AuthenticationResponse</a>&gt;&nbsp;createSuccessfulAuthenticationResponse(<a href="../../../../../io/micronaut/security/authentication/AuthenticationRequest.html" title="interface in io.micronaut.security.authentication">AuthenticationRequest</a>&nbsp;authenticationRequest,
@@ -332,6 +340,26 @@ implements <a href="../../../../../io/micronaut/security/authentication/Authenti
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>authenticationRequest</code> - The authentication request data</dd>
 <dd><code>user</code> - A representation of the state of a user after authentication.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An AuthenticationResponse object which encapsulates a successful authentication result.</dd>
+</dl>
+</li>
+</ul>
+<a name="createSuccessfulAuthenticationResponse-io.micronaut.security.authentication.AuthenticationRequest-io.micronaut.security.authentication.providers.UserState-java.util.List-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>createSuccessfulAuthenticationResponse</h4>
+<pre>protected&nbsp;<a href="../../../../../io/micronaut/security/authentication/AuthenticationResponse.html" title="interface in io.micronaut.security.authentication">AuthenticationResponse</a>&nbsp;createSuccessfulAuthenticationResponse(<a href="../../../../../io/micronaut/security/authentication/AuthenticationRequest.html" title="interface in io.micronaut.security.authentication">AuthenticationRequest</a>&nbsp;authenticationRequest,
+                                                                        <a href="../../../../../io/micronaut/security/authentication/providers/UserState.html" title="interface in io.micronaut.security.authentication.providers">UserState</a>&nbsp;user,
+                                                                        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;authorities)</pre>
+<div class="block">Create a successful <a href="../../../../../io/micronaut/security/authentication/AuthenticationResponse.html" title="interface in io.micronaut.security.authentication"><code>AuthenticationResponse</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>authenticationRequest</code> - The authentication request data</dd>
+<dd><code>user</code> - A representation of the state of a user after authentication.</dd>
+<dd><code>authorities</code> - A list of authorities granted to authenticated user.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An AuthenticationResponse object which encapsulates a successful authentication result.</dd>
 </dl>
