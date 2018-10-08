@@ -9051,6 +9051,32 @@ When sessions are backed by a persistent store such as Redis then after each mes
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_connection_timeouts">Connection Timeouts</h3>
+<div class="paragraph">
+<p>By default Micronaut will timeout idle connections that have no activity after 5 minutes. Normally this is not a problem as browsers will automatically reconnect WebSocket sessions, however you can control this behaviour by setting the <code>micronaut.server.idle-timeout</code> setting (a negative value will result no timeout):</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting the Connection Timeout for the Server</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    server:
+        idle-timeout: 30m # 30 minutes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Micronaut&#8217;s WebSocket client then you may also wish to set the timeout on the client:</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting the Connection Timeout for the Client</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            read-idle-timeout: 30m # 30 minutes</code></pre>
+</div>
+</div>
+</div>
 
 
 <h2 id="websocketClient">6.20.2 Using @ClientWebSocket</h2>
@@ -11949,22 +11975,22 @@ public void testClientAnnotationStreaming() throws Exception {
 <p>When streaming responses from servers, the underlying HTTP client will not apply the default <code>readTimeout</code> setting (which defaults to 10 seconds) of the <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a> since the delay between reads for streaming responses may differ from normal reads.</p>
 </div>
 <div class="paragraph">
-<p>Instead the <code>readIdleTime</code> setting (which defaults to 60 seconds) is used to dictate when a connection should be closed after becoming idle.</p>
+<p>Instead the <code>read-idle-timeout</code> setting (which defaults to 60 seconds) is used to dictate when a connection should be closed after becoming idle.</p>
 </div>
 <div class="paragraph">
-<p>If you are streaming data from a server that defines a longer delay than 60 seconds between items being sent to the client you should adjust the <code>readIdleTime</code>. The following configuration in <code>application.yml</code> demonstrates how:</p>
+<p>If you are streaming data from a server that defines a longer delay than 60 seconds between items being sent to the client you should adjust the <code>readIdleTimeout</code>. The following configuration in <code>application.yml</code> demonstrates how:</p>
 </div>
 <div class="listingblock">
-<div class="title">Adjusting the readIdleTime</div>
+<div class="title">Adjusting the readIdleTimeout</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     http:
         client:
-            readIdleTime: 5m</code></pre>
+            read-idle-timeout: 5m</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above example sets the <code>readIdleTime</code> to 5 minutes.</p>
+<p>The above example sets the <code>readIdleTimeout</code> to 5 minutes.</p>
 </div>
 </div>
 <div class="sect2">
@@ -20413,6 +20439,8 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 <div class="paragraph">
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>nativeimage</code> tool</a>.</p>
 </div>
+<div class="sect2">
+<h3 id="_experimental_status">Experimental Status</h3>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -20425,6 +20453,12 @@ GraalVM support (like GraalVM itself) is still in the incubating phase. Third-pa
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>So far Micronaut&#8217;s HTTP server, HTTP client, function support and service discovery module have been verified as working on GraalVM 1.0 RC6 or above. Support for other modules is still evolving and will improve over time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">Getting Started</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -20473,6 +20507,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
                            -DartifactId=svm \
                            -Dversion=GraalVM-1.0.0-rc7 \
                            -Dpackaging=jar</code></pre>
+</div>
 </div>
 </div>
 
