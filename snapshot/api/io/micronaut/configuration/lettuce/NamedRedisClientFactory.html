@@ -113,7 +113,6 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="../../../../io/micronaut/context/annotation/Factory.html" title="annotation in io.micronaut.context.annotation">@Factory</a>
- <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">NamedRedisClientFactory</span>
 extends <a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisClientFactory.html" title="class in io.micronaut.configuration.lettuce">AbstractRedisClientFactory</a></pre>
 <div class="block">A factory bean for constructing <code>RedisClient</code> instances from <a href="../../../../io/micronaut/configuration/lettuce/NamedRedisServersConfiguration.html" title="class in io.micronaut.configuration.lettuce"><code>NamedRedisServersConfiguration</code></a> instances.</div>
@@ -223,7 +222,6 @@ extends <a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisCli
 <h4>redisClient</h4>
 <pre><a href="../../../../io/micronaut/context/annotation/Bean.html" title="annotation in io.micronaut.context.annotation">@Bean</a>(<a href="../../../../io/micronaut/context/annotation/Bean.html#preDestroy--">preDestroy</a>="shutdown")
  <a href="../../../../io/micronaut/context/annotation/EachBean.html" title="annotation in io.micronaut.context.annotation">@EachBean</a>(<a href="../../../../io/micronaut/context/annotation/EachBean.html#value--">value</a>=<a href="../../../../io/micronaut/configuration/lettuce/NamedRedisServersConfiguration.html" title="class in io.micronaut.configuration.lettuce">NamedRedisServersConfiguration.class</a>)
- <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public&nbsp;io.lettuce.core.RedisClient&nbsp;redisClient(<a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisConfiguration.html" title="class in io.micronaut.configuration.lettuce">AbstractRedisConfiguration</a>&nbsp;config)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisClientFactory.html#redisClient-io.micronaut.configuration.lettuce.AbstractRedisConfiguration-">AbstractRedisClientFactory</a></code></span></div>
 <div class="block">Creates the <code>RedisClient</code> from the configuration.</div>
@@ -244,7 +242,6 @@ public&nbsp;io.lettuce.core.RedisClient&nbsp;redisClient(<a href="../../../../io
 <li class="blockList">
 <h4>redisConnection</h4>
 <pre><a href="../../../../io/micronaut/context/annotation/Bean.html" title="annotation in io.micronaut.context.annotation">@Bean</a>(<a href="../../../../io/micronaut/context/annotation/Bean.html#preDestroy--">preDestroy</a>="close")
- <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
  <a href="../../../../io/micronaut/context/annotation/EachBean.html" title="annotation in io.micronaut.context.annotation">@EachBean</a>(<a href="../../../../io/micronaut/context/annotation/EachBean.html#value--">value</a>=<a href="../../../../io/micronaut/configuration/lettuce/NamedRedisServersConfiguration.html" title="class in io.micronaut.configuration.lettuce">NamedRedisServersConfiguration.class</a>)
 public&nbsp;io.lettuce.core.api.StatefulRedisConnection&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;redisConnection(io.lettuce.core.RedisClient&nbsp;client)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisClientFactory.html#redisConnection-io.lettuce.core.RedisClient-">AbstractRedisClientFactory</a></code></span></div>
@@ -266,7 +263,6 @@ public&nbsp;io.lettuce.core.api.StatefulRedisConnection&lt;<a href="https://docs
 <li class="blockList">
 <h4>redisPubSubConnection</h4>
 <pre><a href="../../../../io/micronaut/context/annotation/Bean.html" title="annotation in io.micronaut.context.annotation">@Bean</a>(<a href="../../../../io/micronaut/context/annotation/Bean.html#preDestroy--">preDestroy</a>="close")
- <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
  <a href="../../../../io/micronaut/context/annotation/EachBean.html" title="annotation in io.micronaut.context.annotation">@EachBean</a>(<a href="../../../../io/micronaut/context/annotation/EachBean.html#value--">value</a>=<a href="../../../../io/micronaut/configuration/lettuce/NamedRedisServersConfiguration.html" title="class in io.micronaut.configuration.lettuce">NamedRedisServersConfiguration.class</a>)
 public&nbsp;io.lettuce.core.pubsub.StatefulRedisPubSubConnection&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;redisPubSubConnection(io.lettuce.core.RedisClient&nbsp;redisClient)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/configuration/lettuce/AbstractRedisClientFactory.html#redisPubSubConnection-io.lettuce.core.RedisClient-">AbstractRedisClientFactory</a></code></span></div>
