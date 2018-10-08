@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>17 Micronaut CLI 1.0.0.RC1</title>
+    <title>17 Micronaut CLI 1.0.0.RC2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>17 Micronaut CLI</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                    <p><strong>Version:</strong> 1.0.0.RC2</p>
                 </div>
 
                 
@@ -149,6 +149,9 @@ function addJsClass() {
                     </div>
                     
                     <div class="toc-item" style="margin-left:10px"><a href="#ideReload"><strong>17.5.4</strong><span>Reloading with an IDE</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#proxy"><strong>17.6</strong><span>Proxy Configuration</span></a>
                     </div>
                     
                 </div>
@@ -1848,6 +1851,34 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 <div class="paragraph">
 <p>Under the <code>Project</code> menu, check the <code>Build Automatically</code> option. This will trigger a recompilation of the project whenever file changes are saved to disk.</p>
 </div>
+</div>
+
+
+<h2 id="proxy">17.6 Proxy Configuration</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/proxy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To configure the CLI to use an HTTP proxy there are two steps. Configuration options can be passed to the cli through the <code>MN_OPTS</code> environment variable.</p>
+</div>
+<div class="paragraph">
+<p>For example on *nix systems:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export MN_OPTS="-Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=3128 -Dhttp.proxyUser=test -Dhttp.proxyPassword=test"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The profile dependencies are resolved over HTTPS so the proxy port and host are configured with <code>https.</code>, however the user and password are specified with <code>http.</code>.</p>
+</div>
+<div class="paragraph">
+<p>For Windows systems the environment variable can be configured under <code>My Computer/Advanced/Environment Variables</code>.</p>
 </div>
 
 

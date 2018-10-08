@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13 Language Support 1.0.0.RC1</title>
+    <title>13 Language Support 1.0.0.RC2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13 Language Support</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                    <p><strong>Version:</strong> 1.0.0.RC2</p>
                 </div>
 
                 
@@ -931,6 +931,26 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 <div class="paragraph">
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>nativeimage</code> tool</a>.</p>
 </div>
+<div class="sect2">
+<h3 id="_experimental_status">Experimental Status</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+GraalVM support (like GraalVM itself) is still in the incubating phase. Third-party library support is hit and miss and the Micronaut team are still ironing out all of the potential issues. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however and gradually over time the support will become more stable.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>So far Micronaut&#8217;s HTTP server, HTTP client, function support and service discovery module have been verified as working on GraalVM 1.0 RC6 or above. Support for other modules is still evolving and will improve over time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">Getting Started</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -947,10 +967,10 @@ Use of GraalVM&#8217;s <code>nativeimage</code> tool is only supported in Java o
 <p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc6 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc7 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc6-graal
-$ sdk use java 1.0.0-rc6-graal</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc7-graal
+$ sdk use java 1.0.0-rc7-graal</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -977,8 +997,9 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=${JAVA_HOME}/jre/lib/svm/builder/svm.jar \
                            -DgroupId=com.oracle.substratevm \
                            -DartifactId=svm \
-                           -Dversion=GraalVM-1.0.0-rc6 \
+                           -Dversion=GraalVM-1.0.0-rc7 \
                            -Dpackaging=jar</code></pre>
+</div>
 </div>
 </div>
 
@@ -1060,14 +1081,16 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path target/hello-world-0.1.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
-			 -H:ReflectionConfigurationFiles=target/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
+			 -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
 			 -H:EnableURLProtocols=http \ <i class="conum" data-value="3"></i><b>(3)</b>
 			 -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="4"></i><b>(4)</b>
 			 -H:Name=hello-world \ <i class="conum" data-value="5"></i><b>(5)</b>
 			 -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
 			 -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
-			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+			 -H:+AllowVMInspection \
+			 --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
+			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">

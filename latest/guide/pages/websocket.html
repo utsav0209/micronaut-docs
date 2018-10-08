@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.20 WebSocket Support 1.0.0.RC1</title>
+    <title>6.20 WebSocket Support 1.0.0.RC2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.20 WebSocket Support</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                    <p><strong>Version:</strong> 1.0.0.RC2</p>
                 </div>
 
                 
@@ -358,6 +358,32 @@ When sessions are backed by a persistent store such as Redis then after each mes
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connection_timeouts">Connection Timeouts</h3>
+<div class="paragraph">
+<p>By default Micronaut will timeout idle connections that have no activity after 5 minutes. Normally this is not a problem as browsers will automatically reconnect WebSocket sessions, however you can control this behaviour by setting the <code>micronaut.server.idle-timeout</code> setting (a negative value will result no timeout):</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting the Connection Timeout for the Server</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    server:
+        idle-timeout: 30m # 30 minutes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Micronaut&#8217;s WebSocket client then you may also wish to set the timeout on the client:</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting the Connection Timeout for the Client</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            read-idle-timeout: 30m # 30 minutes</code></pre>
+</div>
 </div>
 </div>
 

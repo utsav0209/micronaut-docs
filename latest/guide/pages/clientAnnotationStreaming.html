@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.2.2 Streaming with @Client 1.0.0.RC1</title>
+    <title>7.2.2 Streaming with @Client 1.0.0.RC2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.2.2 Streaming with @Client</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                    <p><strong>Version:</strong> 1.0.0.RC2</p>
                 </div>
 
                 
@@ -238,22 +238,22 @@ public void testClientAnnotationStreaming() throws Exception {
 <p>When streaming responses from servers, the underlying HTTP client will not apply the default <code>readTimeout</code> setting (which defaults to 10 seconds) of the <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a> since the delay between reads for streaming responses may differ from normal reads.</p>
 </div>
 <div class="paragraph">
-<p>Instead the <code>readIdleTime</code> setting (which defaults to 60 seconds) is used to dictate when a connection should be closed after becoming idle.</p>
+<p>Instead the <code>read-idle-timeout</code> setting (which defaults to 60 seconds) is used to dictate when a connection should be closed after becoming idle.</p>
 </div>
 <div class="paragraph">
-<p>If you are streaming data from a server that defines a longer delay than 60 seconds between items being sent to the client you should adjust the <code>readIdleTime</code>. The following configuration in <code>application.yml</code> demonstrates how:</p>
+<p>If you are streaming data from a server that defines a longer delay than 60 seconds between items being sent to the client you should adjust the <code>readIdleTimeout</code>. The following configuration in <code>application.yml</code> demonstrates how:</p>
 </div>
 <div class="listingblock">
-<div class="title">Adjusting the readIdleTime</div>
+<div class="title">Adjusting the readIdleTimeout</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     http:
         client:
-            readIdleTime: 5m</code></pre>
+            read-idle-timeout: 5m</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above example sets the <code>readIdleTime</code> to 5 minutes.</p>
+<p>The above example sets the <code>readIdleTimeout</code> to 5 minutes.</p>
 </div>
 </div>
 <div class="sect2">
