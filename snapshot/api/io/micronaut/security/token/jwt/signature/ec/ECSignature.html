@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -114,11 +114,15 @@ var activeTableTab = "activeTableTab";
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a></dd>
 </dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../../../../io/micronaut/security/token/jwt/signature/ec/ECSignatureGenerator.html" title="class in io.micronaut.security.token.jwt.signature.ec">ECSignatureGenerator</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">ECSignature</span>
 extends <a href="../../../../../../../io/micronaut/security/token/jwt/signature/AbstractSignatureConfiguration.html" title="class in io.micronaut.security.token.jwt.signature">AbstractSignatureConfiguration</a></pre>
-<div class="block">Elliptic curve signature configuration.</div>
+<div class="block">Elliptic curve signature. Adds method to verify signed JWT.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
@@ -178,22 +182,16 @@ extends <a href="../../../../../../../io/micronaut/security/token/jwt/signature/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>com.nimbusds.jwt.SignedJWT</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/security/token/jwt/signature/ec/ECSignature.html#sign-com.nimbusds.jwt.JWTClaimsSet-">sign</a></span>(com.nimbusds.jwt.JWTClaimsSet&nbsp;claims)</code>
-<div class="block">Generate a signed JWT based on claims.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/security/token/jwt/signature/ec/ECSignature.html#supportedAlgorithmsMessage--">supportedAlgorithmsMessage</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/security/token/jwt/signature/ec/ECSignature.html#supports-com.nimbusds.jose.JWSAlgorithm-">supports</a></span>(com.nimbusds.jose.JWSAlgorithm&nbsp;algorithm)</code>
 <div class="block">Whether this signature configuration supports this algorithm.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/security/token/jwt/signature/ec/ECSignature.html#verify-com.nimbusds.jwt.SignedJWT-">verify</a></span>(com.nimbusds.jwt.SignedJWT&nbsp;jwt)</code>
 <div class="block">Verify a signed JWT.</div>
@@ -276,26 +274,6 @@ extends <a href="../../../../../../../io/micronaut/security/token/jwt/signature/
 <dd><code>algorithm</code> - the signature algorithm</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether this signature configuration supports this algorithm</dd>
-</dl>
-</li>
-</ul>
-<a name="sign-com.nimbusds.jwt.JWTClaimsSet-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sign</h4>
-<pre>public&nbsp;com.nimbusds.jwt.SignedJWT&nbsp;sign(com.nimbusds.jwt.JWTClaimsSet&nbsp;claims)
-                                throws com.nimbusds.jose.JOSEException</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html#sign-com.nimbusds.jwt.JWTClaimsSet-">SignatureConfiguration</a></code></span></div>
-<div class="block">Generate a signed JWT based on claims.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>claims</code> - the provided claims</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the signed JWT</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>com.nimbusds.jose.JOSEException</code> - could be thrown while signing the JWT token</dd>
 </dl>
 </li>
 </ul>

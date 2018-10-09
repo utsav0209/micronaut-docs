@@ -132,6 +132,21 @@ function addJsClass() {
 <p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
 </div>
 <div class="sect3">
+<h4 id="_1_0_0_rc3">1.0.0.RC3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Methods for JWT signature generation have been removed from <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>. Those beans should be used in microservices where you need only signature verification and not generation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable a RSA or EC JWT signature generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_1_0_0_rc2">1.0.0.RC2</h4>
 <div class="ulist">
 <ul>
