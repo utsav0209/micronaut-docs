@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":18,"i5":18,"i6":6,"i7":6,"i8":18};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":18,"i5":18,"i6":18,"i7":6,"i8":6,"i9":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>, <a href="../../../../io/micronaut/inject/ast/ConstructorElement.html" title="interface in io.micronaut.inject.ast">ConstructorElement</a>, <a href="../../../../io/micronaut/inject/ast/EnumElement.html" title="interface in io.micronaut.inject.ast">EnumElement</a>, <a href="../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>, <a href="../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a>, <a href="../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>, <a href="../../../../io/micronaut/inject/ast/PropertyElement.html" title="interface in io.micronaut.inject.ast">PropertyElement</a></dd>
+<dd><a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>, <a href="../../../../io/micronaut/inject/ast/ConstructorElement.html" title="interface in io.micronaut.inject.ast">ConstructorElement</a>, <a href="../../../../io/micronaut/inject/ast/EnumElement.html" title="interface in io.micronaut.inject.ast">EnumElement</a>, <a href="../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>, <a href="../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a>, <a href="../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>, <a href="../../../../io/micronaut/inject/ast/PropertyElement.html" title="interface in io.micronaut.inject.ast">PropertyElement</a>, <a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="interface in io.micronaut.inject.ast">TypedElement</a></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -175,26 +175,32 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.htm
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#getSimpleName--">getSimpleName</a></span>()</code>
+<div class="block">The simple name of the element.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/Element.html#isStatic--">isStatic</a></span>()</code>&nbsp;</td>
 </tr>
@@ -278,6 +284,20 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.htm
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The native type</dd>
+</dl>
+</li>
+</ul>
+<a name="getSimpleName--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSimpleName</h4>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getSimpleName()</pre>
+<div class="block">The simple name of the element. For a class this will be the name without the package.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The simple name</dd>
 </dl>
 </li>
 </ul>
