@@ -227,7 +227,7 @@ function addJsClass() {
 </ul>
 </div>
 <div class="paragraph">
-<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
+<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>micronaut-inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Gradle</div>
@@ -238,8 +238,8 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:inject-java:1.0.0.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:inject:1.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.BUILD-SNAPSHOT" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>
@@ -263,7 +263,7 @@ dependencies {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For the Groovy language you should include <code>inject-groovy</code> in the <code>compileOnly</code> scope.
+For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> scope.
 </td>
 </tr>
 </table>
@@ -1986,15 +1986,15 @@ class ByAnnotationTypeConfig {
 <p>To get started you must add the Micronaut annotation processors to the processor classpath using the <code>annotationProcessor</code> dependency configuration.</p>
 </div>
 <div class="paragraph">
-<p>The Micronaut <code>inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
+<p>The Micronaut <code>micronaut-inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example Android build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:inject-java:1.0.0.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:inject-java:1.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>

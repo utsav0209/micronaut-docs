@@ -257,7 +257,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 annotationProcessor "org.projectlombok:lombok:1.16.20"
 ...
 // Micronaut processor define after Lombok
-annotationProcessor "io.micronaut:inject-java"</code></pre>
+annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -274,7 +274,7 @@ annotationProcessor "io.micronaut:inject-java"</code></pre>
   &lt;/path&gt;
   &lt;path&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;inject-java&lt;/artifactId&gt;
+    &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
     &lt;version&gt;${micronaut.version}&lt;/version&gt;
   &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
@@ -383,21 +383,21 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:inject-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-inject-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Includes AST transformations to generate bean definitions. Should be <code>compileOnly</code> on your classpath.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:runtime-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-runtime-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Adds the ability to specify configuration placed in <code>src/main/resources</code> in Groovy format (i.e. <code>application.groovy</code>)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:function-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-function-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Includes AST transforms that make it easier to write <a href="#serverlessFunctions">Functions</a> for AWS Lambda</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The most common module you will need is <code>inject-groovy</code>, which enables DI and AOP for classes written in Groovy.</p>
+<p>The most common module you will need is <code>micronaut-inject-groovy</code>, which enables DI and AOP for classes written in Groovy.</p>
 </div>
 </div>
 </div>
@@ -627,15 +627,15 @@ static class MyRoutes extends GroovyRouteBuilder {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:hibernate-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications. See the <a href="#hibernateSupport">Hibernate Support</a> docs</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:mongo-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications. See the <a href="#mongoSupport">Mongo Support</a> docs.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:neo4j-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications. See the <a href="#neo4jSupport">Neo4j Support</a> docs.</p></td>
 </tr>
 </tbody>
@@ -736,9 +736,9 @@ Learn more about kapt and its features from the <a href="https://kotlinlang.org/
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion" <i class="conum" data-value="1"></i><b>(1)</b>
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    kapt "io.micronaut:inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
+    kapt "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
 
-    kaptTest "io.micronaut:inject-java" <i class="conum" data-value="3"></i><b>(3)</b>
+    kaptTest "io.micronaut:micronaut-inject-java" <i class="conum" data-value="3"></i><b>(3)</b>
     ...
 }</code></pre>
 </div>
@@ -751,11 +751,11 @@ Learn more about kapt and its features from the <a href="https://kotlinlang.org/
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Add the <code>inject-java</code> dependency under the <code>kapt</code> scope, so classes in <code>src/main</code> are processed</td>
+<td>Add the <code>micronaut-inject-java</code> dependency under the <code>kapt</code> scope, so classes in <code>src/main</code> are processed</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Add the <code>inject-java</code> dependency under the <code>kaptTest</code> scope, so classes in <code>src/test</code> are processed.</td>
+<td>Add the <code>micronaut-inject-java</code> dependency under the <code>kaptTest</code> scope, so classes in <code>src/test</code> are processed.</td>
 </tr>
 </table>
 </div>
