@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>18 Appendices 1.0.0.RC2</title>
+    <title>18 Appendices 1.0.0.RC3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,7 +112,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>18 Appendices</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC2</p>
+                    <p><strong>Version:</strong> 1.0.0.RC3</p>
                 </div>
 
                 
@@ -215,7 +215,7 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 <div class="sect3">
 <h4 id="_can_micronaut_be_used_for_purposes_other_than_microservices">Can Micronaut be used for purposes other than Microservices?</h4>
 <div class="paragraph">
-<p>Yes. Micronaut is very modular and you can choose to use just the Dependency Injection and AOP implementation if you want simply by including only the <code>inject-java</code> (or <code>inject-groovy</code> for Groovy) dependency in your application.</p>
+<p>Yes. Micronaut is very modular and you can choose to use just the Dependency Injection and AOP implementation if you want simply by including only the <code>micronaut-inject-java</code> (or <code>micronaut-inject-groovy</code> for Groovy) dependency in your application.</p>
 </div>
 <div class="paragraph">
 <p>In fact Micronaut&#8217;s support for <a href="#serverlessFunctions">Serverless Computing</a> uses this exact approach.</p>
@@ -284,7 +284,7 @@ repositories {
 }
 dependencyManagement {
   imports {
-      mavenBom "io.micronaut:bom:$micronautVersion"
+      mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
   }
 }</code></pre>
 </div>
@@ -355,6 +355,24 @@ dependencyManagement {
 
 <div class="paragraph">
 <p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc3">1.0.0.RC3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to manage dependencies. If you are upgrading rename all references modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
+</li>
+<li>
+<p>Methods for JWT signature generation have been removed from <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>. Those beans should be used in microservices where you need only signature verification and not generation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable a RSA or EC JWT signature generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_1_0_0_rc2">1.0.0.RC2</h4>

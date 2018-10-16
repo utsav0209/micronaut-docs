@@ -172,7 +172,7 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-environments"><a href="#environments"><strong>4.1</strong><span>The Environment</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-propertySource"><a href="#propertySource"><strong>4.2</strong><span>PropertySources</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-propertySource"><a href="#propertySource"><strong>4.2</strong><span>Externalized Configuration with PropertySources</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-valueAnnotation"><a href="#valueAnnotation"><strong>4.3</strong><span>Configuration Injection</span></a></div>
         
@@ -287,6 +287,8 @@
         <div class="toc-item" style="margin-left:20px" id="toc-item-clientStreaming"><a href="#clientStreaming"><strong>7.1.4</strong><span>Streaming JSON over HTTP</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-clientConfiguration"><a href="#clientConfiguration"><strong>7.1.5</strong><span>Configuring HTTP clients</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-bindErrors"><a href="#bindErrors"><strong>7.1.6</strong><span>Bind Errors</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-clientAnnotation"><a href="#clientAnnotation"><strong>7.2</strong><span>Declarative HTTP Clients with @Client</span></a></div>
         
@@ -588,7 +590,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.0.0.RC2</p>
+        <p><strong>Version:</strong> 1.0.0.RC3</p>
     </div>
     
 
@@ -678,22 +680,55 @@
 <p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/6?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features.</p>
 </div>
 <div class="sect2">
-<h3 id="_improvements_from_rc1_to_rc2">Improvements from RC1 to RC2</h3>
+<h3 id="_improvements_from_rc2_to_rc3">Improvements from RC2 to RC3</h3>
 <div class="paragraph">
 <p>The following changes and improvements were added since the last RC:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Eureka Improvements (automatic re-registration)</p>
+<p>Swagger support has been improved to better handle generic types.</p>
 </li>
 <li>
-<p>Ribbon Improvements (use standard Ribbon configuration)</p>
-</li>
-<li>
-<p>Support for GraalVM 1.0 RC7</p>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to find and manage dependencies. If you are upgrading rename all referenced modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the typical changes required to a build:</p>
+</div>
+<div class="listingblock">
+<div class="title">Updating Micronaut Gradle Build for 1.0.0 RC3</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.0.0.RC3' <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
+    compile "io.micronaut:micronaut-inject" <i class="conum" data-value="3"></i><b>(3)</b>
+    // repeat rename for remaining "io.micronaut" dependencies
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Renamed <code>bom</code> &#8594; <code>micronaut-bom</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Renamed <code>inject-java</code> &#8594; <code>micronaut-inject-java</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Renamed <code>inject</code> &#8594; <code>micronaut-inject</code></td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -813,7 +848,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </div>
 </div>
 <div class="paragraph">
-<p>This lessons the need for IDE support designed specifically for Micronaut.</p>
+<p>This lessens the need for IDE support designed specifically for Micronaut.</p>
 </div>
 </div>
 <div class="sect2">
@@ -854,7 +889,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 <div class="ulist">
 <ul>
 <li>
-<p>Netty <code>4.1.28</code> &#8594; <code>4.1.29</code></p>
+<p>Netty <code>4.1.29</code> &#8594; <code>4.1.30</code></p>
 </li>
 <li>
 <p>RxJava <code>2.2.0</code> &#8594; <code>2.2.2</code></p>
@@ -873,6 +908,15 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </li>
 <li>
 <p>Jaeger <code>0.30.4</code> &#8594; <code>0.31.0</code></p>
+</li>
+<li>
+<p>Brave '5.2.0` &#8594; <code>5.4.2</code></p>
+</li>
+<li>
+<p>Zipkin Reporter <code>2.7.7</code> &#8594; <code>2.7.9</code></p>
+</li>
+<li>
+<p>Spring <code>5.0.8</code> &#8594; <code>5.1.0</code></p>
 </li>
 </ul>
 </div>
@@ -949,7 +993,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.0.RC2</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.0.RC3</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1493,7 +1537,7 @@ class HelloClientSpec extends Specification {
 </ul>
 </div>
 <div class="paragraph">
-<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
+<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>micronaut-inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Gradle</div>
@@ -1504,8 +1548,8 @@ class HelloClientSpec extends Specification {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:inject-java:1.0.0.RC2" // <2>
-    compile "io.micronaut:inject:1.0.0.RC2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.0.RC3"
     ...
 }</code></pre>
 </div>
@@ -1529,7 +1573,7 @@ dependencies {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For the Groovy language you should include <code>inject-groovy</code> in the <code>compileOnly</code> scope.
+For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> scope.
 </td>
 </tr>
 </table>
@@ -1783,7 +1827,7 @@ println( vehicle.start() )</code></pre>
 <p>If you have multiple possible implementations for a given interface that you want to inject, you need to use a qualifier.</p>
 </div>
 <div class="paragraph">
-<p>Once again Micronaut leverages JSR-303 and the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> and <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotations to support this use case.</p>
+<p>Once again Micronaut leverages JSR-330 and the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> and <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotations to support this use case.</p>
 </div>
 <div class="sect1">
 <h2 id="_qualifying_by_name">Qualifying By Name</h2>
@@ -3252,15 +3296,15 @@ class ByAnnotationTypeConfig {
 <p>To get started you must add the Micronaut annotation processors to the processor classpath using the <code>annotationProcessor</code> dependency configuration.</p>
 </div>
 <div class="paragraph">
-<p>The Micronaut <code>inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
+<p>The Micronaut <code>micronaut-inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example Android build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:inject-java:1.0.0.RC2"
-    compileOnly "io.micronaut:inject-java:1.0.0.RC2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.0.RC3"
     ...
 }</code></pre>
 </div>
@@ -3439,7 +3483,7 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 </div>
 
 
-<h2 id="propertySource">4.2 PropertySources</h2>
+<h2 id="propertySource">4.2 Externalized Configuration with PropertySources</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/propertySource.adoc"'>
@@ -3477,11 +3521,13 @@ assertEquals(
 <div class="paragraph">
 <p>Alternatively one can register a <a href="../api/io/micronaut/context/env/PropertySourceLoader.html">PropertySourceLoader</a> by creating a <code>META-INF/services/io.micronaut.context.env.PropertySourceLoader</code> containing a reference to the class name of the <code>PropertySourceLoader</code>.</p>
 </div>
+<div class="sect2">
+<h3 id="_included_propertysource_loaders">Included PropertySource Loaders</h3>
 <div class="paragraph">
 <p>Micronaut by default contains <code>PropertySourceLoader</code> implementations that load properties from the given locations and priority:</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Command line arguments</p>
 </li>
@@ -3503,7 +3549,7 @@ assertEquals(
 <li>
 <p>Application-specific properties from <code>application.{extension}</code> (Either <code>.properties</code>, <code>.json</code>, <code>.yml</code> or <code>.groovy</code> property formats supported)</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -3517,8 +3563,118 @@ To use custom properties from local files, you can either call your application 
 </tr>
 </table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_property_value_placeholders">Property Value Placeholders</h3>
 <div class="paragraph">
-<div class="title">Special Properties</div>
+<p>Micronaut includes a property placeholder syntax which can be used to reference configuration properties both within configuration values and with any Micronaut annotation (see <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> and the section on <a href="#valueAnnotation">Configuration Injection</a>).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Programmatic usage is also possible via the <a href="../api/io/micronaut/context/env/PropertyPlaceholderResolver.html">PropertyPlaceholderResolver</a> interface.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The basic syntax is to wrap a reference to a property in <code>${&#8230;&#8203;}</code>. For example in <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Defining Property Placeholders</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">myapp:
+    endpoint: http://${micronaut.server.host}:${micronaut.server.port}/foo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example embeds references to the <code>micronaut.server.host</code> and <code>micronaut.server.port</code> properties.</p>
+</div>
+<div class="paragraph">
+<p>You can specify default values by defining a value after the <code>:</code> character. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Default Values</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">myapp:
+    endpoint: http://${micronaut.server.host:localhost}:${micronaut.server.port:8080}/foo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will default to <code>localhost</code> and port <code>8080</code> if no value is found (rather than throwing an exception). Note that if default value itself contains a <code>:</code> character, you should escape it using back ticks:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Backticks</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">myapp:
+    endpoint: ${server.address:`http://localhost:8080`}/foo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example tries to read a <code>server.address</code> property otherwise fallbacks back to <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>, since the address has a <code>:</code> character we have to escape it with back ticks.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_property_value_binding">Property Value Binding</h3>
+<div class="paragraph">
+<p>Note that these property references should always be in kebab case (lowercase and hyphen-separated) when placing references in code or in placeholder values. In other words you should use for example <code>micronaut.server.default-charset</code> and not <code>micronaut.server.defaultCharset</code>.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut still allows specifying the latter in configuration, but normalizes the properties into kebab case form to optimize memory consumption and reduce complexity when resolving properties. The following table summarizes how properties are normalized from different sources:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Property Value Normalization</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Configuration Value</th>
+<th class="tableblock halign-left valign-top">Resulting Properties</th>
+<th class="tableblock halign-left valign-top">Property Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myApp.myStuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.my-stuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties, YAML etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myApp.myStuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.my-stuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties, YAML etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myApp.my-stuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.my-stuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties, YAML etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MYAPP_MYSTUFF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myapp.mystuff</code>, <code>myapp-mystuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Variable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MY_APP_MY_STUFF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.my-stuff</code>, <code>my.app.my.stuff</code>, <code>my.app.my-stuff</code>, <code>my-app-my-stuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Variable</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Environment variables are given special treatment to allow the definition of environment variables to be more flexible.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_random_properties">Using Random Properties</h3>
+<div class="paragraph">
 <p>You can use <code>random</code> values by using the following properties.  These can be used in configuration files as variables like the following.</p>
 </div>
 <div class="listingblock">
@@ -3531,7 +3687,7 @@ To use custom properties from local files, you can either call your application 
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Random Values</caption>
+<caption class="title">Table 2. Random Values</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3577,6 +3733,7 @@ To use custom properties from local files, you can either call your application 
 </tr>
 </tbody>
 </table>
+</div>
 
 
 <h2 id="valueAnnotation">4.3 Configuration Injection</h2>
@@ -3777,10 +3934,11 @@ The <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat<
 
 
 <div class="paragraph">
-<p>Like Spring Boot and Grails, you can create type safe configuration by creating classes that are annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">ConfigurationProperties</a>.</p>
+<p>You can create type safe configuration by creating classes that are annotated with
+ <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut, however, will produce a reflection free <code>@ConfigurationProperties</code> bean and will also at compile time calculate the property paths to evaluate, greatly improving the speed and efficiency of loading <code>@ConfigurationProperties</code>.</p>
+<p>Micronaut will produce a reflection-free <code>@ConfigurationProperties</code> bean and will also at compile time calculate the property paths to evaluate, greatly improving the speed and efficiency of loading <code>@ConfigurationProperties</code>.</p>
 </div>
 <div class="paragraph">
 <p>An example of a configuration class can be seen below:</p>
@@ -3788,10 +3946,11 @@ The <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat<
 <div class="listingblock">
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import org.hibernate.validator.constraints.NotBlank
-import io.micronaut.context.annotation.ConfigurationProperties
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
 
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
 
 @ConfigurationProperties('my.engine') <i class="conum" data-value="1"></i><b>(1)</b>
 class EngineConfig {
@@ -3896,6 +4055,188 @@ println(vehicle.start())</code></pre>
 </div>
 <div class="paragraph">
 <p>For example creating a subclass of <code>EngineConfig</code> with <code>@ConfigurationProperties('bar')</code> will resolve all properties under the path <code>my.engine.bar</code>.</p>
+</div>
+<div class="sect1">
+<h2 id="_property_type_conversion">Property Type Conversion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When resolving properties Micronaut will use the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> bean to convert properties. You can register additional converters for types not supported by micronaut by defining beans that implement the <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> interface.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut features some built-in conversions that are useful, which are detailed below.</p>
+</div>
+<div class="sect2">
+<h3 id="_duration_conversion">Duration Conversion</h3>
+<div class="paragraph">
+<p>Durations can be specified by appending the unit with a number. Supported units are <code>s</code>, <code>ms</code>, <code>m</code> etc. The following table summarizes examples:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Duration Conversion</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Configuration Value</th>
+<th class="tableblock halign-left valign-top">Resulting Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10ms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 milliseconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10m</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 minutes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10s</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10d</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 days</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10ns</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Duration</code> of 10 nanoseconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PT15M</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Duration of 15 minutes using ISO-8601 format</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example to configure the default HTTP client read timeout:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Duration Values</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            read-timeout: 15s</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_list_array_conversion">List / Array Conversion</h3>
+<div class="paragraph">
+<p>Lists and arrays can be specified in Java properties files as comma-separated values or in YAML using native YAML lists. The generic types are used to convert the values. For example in YAML:</p>
+</div>
+<div class="listingblock">
+<div class="title">Specifying lists or arrays in YAML</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">my:
+    app:
+        integers:
+            - 1
+            - 2
+        urls:
+            - http://foo.com
+            - http://bar.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or in Java properties file format:</p>
+</div>
+<div class="listingblock">
+<div class="title">Specifying lists or arrays in Java properties comma-separated</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.app.integers=1,2
+my.app.urls=http://foo.com,http://bar.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively you can use an index:</p>
+</div>
+<div class="listingblock">
+<div class="title">Specifying lists or arrays in Java properties using index</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.app.integers[0]=1
+my.app.integers[1]=2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the above example configurations you can define properties to bind to with the target type supplied via generics:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Integer&gt; integers;
+List&lt;URL&gt; urls;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_readable_bytes">Readable Bytes</h3>
+<div class="paragraph">
+<p>You can annotate any setter parameter with <a href="../api/io/micronaut/core/convert/format/ReadableBytes.html">@ReadableBytes</a> to allow the value to be set using a shorthand syntax for specifying bytes, kilobytes etc. For example the following is taken from <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>@ReadableBytes</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMaxContentLength(@ReadableBytes int maxContentLength) {
+    this.maxContentLength = maxContentLength;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the above in place you can set <code>micronaut.http.client.max-content-length</code> using the following values:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. @ReadabyeBytes Conversion</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Configuration Value</th>
+<th class="tableblock halign-left valign-top">Resulting Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10mb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 megabytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10kb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 kilobytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10gb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 gigabytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1024</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A raw byte length</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_formatting_dates">Formatting Dates</h3>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/core/convert/format/Format.html">@Format</a> annotation can be used on any setter to allow the date format to be specified when binding <code>javax.time</code> date objects.</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>@Format</code> for Dates</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMyDate(@Format("yy-mm-dd") LocalDate date) {
+    this.myDate = date;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="_configuration_builder">Configuration Builder</h2>
@@ -4359,7 +4700,7 @@ public class DataSourceFactory {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:jmx"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-jmx"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4900,7 +5241,7 @@ with a built-in configuration to use Hibernate Validator.</p>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5121,7 +5462,7 @@ public class BookService {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut.configuration:redis-lettuce"
+    compile "io.micronaut.configuration:micronaut-redis-lettuce"
     ...
 }</code></pre>
 </div>
@@ -5157,42 +5498,42 @@ public class BookService {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.redis-exec-provider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.redis-exec-provider</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.port</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.slave-of</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.slave-of</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.config-file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.config-file</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.setting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.setting</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.server</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.key-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.key-serializer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.<strong>.redis.caches.</strong>.value-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.value-serializer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -5593,7 +5934,7 @@ void configuredTask() {
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:spring"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-spring"</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -5676,7 +6017,7 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:http-server-netty"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-http-server-netty"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6205,9 +6546,9 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:validation" // Java only
-kapt "io.micronaut:validation" // Kotlin only
-compile "io.micronaut:validation"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-validation" // Java only
+kapt "io.micronaut:micronaut-validation" // Kotlin only
+compile "io.micronaut:micronaut-validation"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7145,7 +7486,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8388,7 +8729,7 @@ The examples use RxJava, however you can use any reactive framework that support
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:session"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-session"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8397,8 +8738,8 @@ The examples use RxJava, however you can use any reactive framework that support
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:session"
-compile "io.micronaut.configuration:redis-lettuce"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-session"
+compile "io.micronaut.configuration:micronaut-redis-lettuce"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9976,7 +10317,7 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:views"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-views"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10315,7 +10656,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 <div class="listingblock">
 <div class="title">Adding the Swagger Dependencies</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut.configuration:openapi" <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut.configuration:micronaut-openapi" <i class="conum" data-value="1"></i><b>(1)</b>
 compile "io.swagger.core.v3:swagger-annotations" <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
@@ -10579,6 +10920,48 @@ enum PetType {
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_schemas_and_generics">Schemas and Generics</h3>
+<div class="paragraph">
+<p>If a method return type includes generics then these will included when calculating the schema name. For example the following:</p>
+</div>
+<div class="listingblock">
+<div class="title">Swagger returns types and generics</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Response&lt;T&gt; {
+    private T r;
+    public T getResult() {
+        return r;
+    };
+}
+
+@Controller("/")
+class MyController {
+
+    @Put("/")
+    public Response&lt;Pet&gt; updatePet(Pet pet) {
+        ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will result in a schema called <code>#/components/schemas/Response&lt;Pet&gt;</code> being generated. If you wish to alter the name of the schema you can do so with the <code>@Schema</code> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="title">Changing the name of response schema</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Put("/")
+@Schema(name="ResponseOfPet")
+public Response&lt;Pet&gt; updatePet(Pet pet) {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above case the generated schema will be named <code>#/components/schemas/ResponseOfPet</code>.</p>
+</div>
+</div>
 
 
 <h1 id="httpClient">7 The HTTP Client</h1>
@@ -10626,7 +11009,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:http-client"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-http-client"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11551,6 +11934,77 @@ RxHttpClient httpClient;</code></pre>
 </div>
 
 
+<h2 id="bindErrors">7.1.6 Bind Errors</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/bindErrors.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Often you want to consume an endpoint and bind to a POJO if the request is successful or bind to a different POJO if an error occurs. The following example shows how to invoke <code>exchange</code> with a success and error type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+public class BooksController {
+
+    @Get("/{isbn}")
+    public HttpResponse find(String isbn) {
+        if (isbn.equals("1680502395")) {
+            Map&lt;String, Object&gt; m = new HashMap&lt;&gt;();
+            m.put("status", 401);
+            m.put("error", "Unauthorized");
+            m.put("message", "No message available");
+            m.put("path", "/books/"+isbn);
+            return HttpResponse.status(HttpStatus.UNAUTHORIZED).body(m);
+
+        }
+        return HttpResponse.ok(new Book("1491950358", "Building Microservices"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "after an HttpClientException the response body can be bound to a POJO"() {
+    when:
+    client.toBlocking().exchange(HttpRequest.GET("/books/1680502395"),
+            Argument.of(Book), <i class="conum" data-value="1"></i><b>(1)</b>
+            Argument.of(CustomError)) <i class="conum" data-value="2"></i><b>(2)</b>
+
+    then:
+    def e = thrown(HttpClientException)
+    e.response.status == HttpStatus.UNAUTHORIZED
+
+    when:
+    Optional&lt;CustomError&gt; jsonError = e.response.getBody(CustomError)
+
+    then:
+    jsonError.isPresent()
+    jsonError.get().status == 401
+    jsonError.get().error == 'Unauthorized'
+    jsonError.get().message == 'No message available'
+    jsonError.get().path == '/books/1680502395'
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Success Type</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Error Type</td>
+</tr>
+</table>
+</div>
+
+
 <h2 id="clientAnnotation">7.2 Declarative HTTP Clients with @Client</h2>
 
 <div class='contribute-btn'>
@@ -11622,8 +12076,8 @@ public interface PetOperations {
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:validation"
-compile "io.micronaut.configuration:hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-validation"
+compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -12356,7 +12810,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:netflix-hystrix"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-hystrix"</code></pre>
 </div>
 </div>
 <div class="sect1">
@@ -13044,8 +13498,8 @@ EOF</code></pre>
 <div class="listingblock">
 <div class="title">Example <code>build.gradle</code> for AWS System Manager Parameter Store</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:discovery-client"
-compile "io.micronaut.configuration:aws-common"
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
+compile "io.micronaut.configuration:micronaut-aws-common"
 compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</code></pre>
 </div>
 </div>
@@ -13166,7 +13620,7 @@ add and retrieve values and decrypt them with the default key store for your acc
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:discovery-client"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -13528,6 +13982,291 @@ eureka:
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.protocol</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.Protocol</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-connections</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-prefix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-suffix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.local-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-domain</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-workstation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.non-proxy-hosts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-authentication-methods</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-policy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.retry.RetryPolicy</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-error-retry</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.socket-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.request-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.client-execution-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-reaper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-throttle-retries</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-consecutive-retries-before-throttling</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-gzip</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.signer-override</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.preemptive-basic-proxy-auth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-ttl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-max-idle-millis</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.validate-after-inactivity-millis</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-tcp-keep-alive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.dns-resolver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.DnsResolver</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.cache-response-metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.response-metadata-cache-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-random</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.security.SecureRandom</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-expect-continue</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.instance-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.asg-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.home-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/LeaseInfo.html">LeaseInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.country-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.data-center-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/DataCenterInfo.html">DataCenterInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/InstanceInfo.Status.html">InstanceInfo$Status</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.app-group-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.ip-addr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.registration-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.eviction-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.service-up-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.duration-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-interval-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -13716,8 +14455,8 @@ micronaut:
 <div class="listingblock">
 <div class="title">Sample build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:discovery-client"
-compile "io.micronaut.configuration:aws-common"
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
+compile "io.micronaut.configuration:micronaut-aws-common"
 compile group: 'com.amazonaws', name: 'aws-java-sdk-route53', version: '1.11.297'
 compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.297'
 compile group: 'com.amazonaws', name: 'jmespath-java', version: '1.11.297'
@@ -14044,7 +14783,7 @@ You can override this configuration in production by specifying an environment v
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:netflix-ribbon"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-ribbon"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -14103,7 +14842,7 @@ You can override this configuration in production by specifying an environment v
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:tracing"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-tracing"</code></pre>
 </div>
 </div>
 <div class="sect1">
@@ -14546,7 +15285,7 @@ Or alternatively if you have the Micronaut CLI installed you can configure Zipki
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">AWS Lambda</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:function-aws</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-function-aws</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -14557,7 +15296,7 @@ Or alternatively if you have the Micronaut CLI installed you can configure Zipki
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you are using Groovy, there is a single compile-time dependency to be added: <code>"io.micronaut:function-groovy"</code> Please see <a href="#groovyFunctions">Groovy Functions</a>.
+If you are using Groovy, there is a single compile-time dependency to be added: <code>"io.micronaut:micronaut-function-groovy"</code> Please see <a href="#groovyFunctions">Groovy Functions</a>.
 </td>
 </tr>
 </table>
@@ -14570,7 +15309,7 @@ If you are using Groovy, there is a single compile-time dependency to be added: 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut:function-aws"
+    compile "io.micronaut:micronaut-function-aws"
     ...
 }</code></pre>
 </div>
@@ -14869,7 +15608,7 @@ If you have the Micronaut CLI installed you can quickly create a Groovy function
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut:function-groovy"
+    compile "io.micronaut:micronaut-function-groovy"
     ...
 }</code></pre>
 </div>
@@ -14953,8 +15692,8 @@ String hello(String name) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    runtime "io.micronaut:function-web"
-    runtime "io.micronaut:http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
+    runtime "io.micronaut:micronaut-function-web"
+    runtime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
     ...
 }</code></pre>
 </div>
@@ -15073,8 +15812,8 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    testRuntime "io.micronaut:function-web"
-    testRuntime "io.micronaut:http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
+    testRuntime "io.micronaut:micronaut-function-web"
+    testRuntime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
     ...
 }</code></pre>
 </div>
@@ -15248,7 +15987,7 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut:function-aws"
+    compile "io.micronaut:micronaut-function-aws"
     ...
 }</code></pre>
 </div>
@@ -15261,7 +16000,7 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut:function-groovy"
+    compile "io.micronaut:micronaut-function-groovy"
     ...
 }</code></pre>
 </div>
@@ -15516,7 +16255,7 @@ Hello, Fred</code></pre>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:function-client"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-function-client"</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -15849,7 +16588,7 @@ $ mn create-kafka-listener Message
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:kafka"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-kafka"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17547,7 +18286,7 @@ By default, the details visible above are only shown to authenticated users. See
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:kafka-streams"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-kafka-streams"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17749,7 +18488,7 @@ KStream&lt;String, String&gt; myStream(
 
 
 <div class="paragraph">
-<p>In certain cases you may which to create applications standalone command-line (CLI) applications that interact with your Microservice infrastructure.</p>
+<p>In certain cases you may which to create standalone command-line (CLI) applications that interact with your Microservice infrastructure.</p>
 </div>
 <div class="paragraph">
 <p>Examples of applications like this include scheduled tasks, batch applications and general command line applications.</p>
@@ -18010,7 +18749,7 @@ The <code>create-cli-app</code> command is more convenient, since it generates a
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "info.picocli:picocli"
-compile "io.micronaut.configuration:picocli"</code></pre>
+compile "io.micronaut.configuration:micronaut-picocli"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -18049,11 +18788,11 @@ compile "io.micronaut.configuration:picocli"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will add the <code>io.micronaut:http-client</code> dependency to the build. You can also manually add this to your <code>gradle.build</code>:</p>
+<p>This will add the <code>io.micronaut:micronaut-http-client</code> dependency to the build. You can also manually add this to your <code>gradle.build</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>compile "io.micronaut:http-client"</pre>
+<pre>compile "io.micronaut:micronaut-http-client"</pre>
 </div>
 </div>
 <div class="sect3">
@@ -18241,51 +18980,51 @@ class TopCommand implements Callable&lt;Object&gt; { <i class="conum" data-value
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:jdbc-dbcp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-dbcp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://commons.apache.org/proper/commons-dbcp/">Commons DBCP</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:jdbc-hikari</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-hikari</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://brettwooldridge.github.io/HikariCP/">Hikari Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:jdbc-tomcat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-tomcat</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html">Tomcat Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:hibernate-jpa</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-jpa</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures Hibernate/JPA EntityManagerFactory beans</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:hibernate-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:mongo-reactive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-reactive</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="http://mongodb.github.io/mongo-java-driver-reactivestreams">MongoDB Reactive Driver</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:mongo-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:neo4j-bolt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-bolt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/neo4j/neo4j-java-driver">Bolt Java Driver</a> for <a href="https://neo4j.com">Neo4j</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:neo4j-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:postgres-reactive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-postgres-reactive</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/reactiverse/reactive-pg-client">Reactive Postgres Client</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:redis-lettuce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-redis-lettuce</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://lettuce.io">Lettuce</a> driver for <a href="https://redis.io">Redis</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:cassandra</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-cassandra</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/datastax/java-driver">Datastax Java Driver</a> for <a href="http://cassandra.apache.org">Cassandra</a></p></td>
 </tr>
 </tbody>
@@ -18296,7 +19035,7 @@ class TopCommand implements Callable&lt;Object&gt; { <i class="conum" data-value
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:mongo-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-reactive"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -18362,9 +19101,9 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     // Choose one of the following
-    compile "io.micronaut.configuration:jdbc-tomcat"
-    compile "io.micronaut.configuration:jdbc-hikari"
-    compile "io.micronaut.configuration:jdbc-dbcp"
+    compile "io.micronaut.configuration:micronaut-jdbc-tomcat"
+    compile "io.micronaut.configuration:micronaut-jdbc-hikari"
+    compile "io.micronaut.configuration:micronaut-jdbc-dbcp"
 }</code></pre>
 </div>
 </div>
@@ -18521,7 +19260,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    compile "io.micronaut:spring"
+    compile "io.micronaut:micronaut-spring"
     runtime "org.springframework:spring-jdbc"
 }</code></pre>
 </div>
@@ -18576,7 +19315,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:hibernate-jpa"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-jpa"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -18723,7 +19462,7 @@ jpa:
 <div class="listingblock">
 <div class="title">Configuring GORM for Hibernate</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  compile "io.micronaut.configuration:hibernate-gorm"
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  compile "io.micronaut.configuration:micronaut-hibernate-gorm"
   // Use Tomcat connection pool
   runtime 'org.apache.tomcat:tomcat-jdbc:8.0.44'
   // Use H2 database driver
@@ -18807,7 +19546,7 @@ hibernate:
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:mongo-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-reactive"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -18961,7 +19700,7 @@ import javax.inject.*;
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:mongo-gorm"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-gorm"</code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -19036,7 +19775,7 @@ For GORM for MongoDB you will need to configure the database name separately as 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:neo4j-bolt"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-neo4j-bolt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19173,7 +19912,7 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:neo4j-gorm"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-neo4j-gorm"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19237,7 +19976,7 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:postgres-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-postgres-reactive"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19355,7 +20094,7 @@ You can also connect to Postgres using <code>uri</code> instead of the other pro
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:redis-lettuce"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-redis-lettuce"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19558,7 +20297,7 @@ The Lettuce driver&#8217;s <code>StatefulRedisConnection</code> interface is des
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:cassandra"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-cassandra"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19651,7 +20390,7 @@ applicationContext.start()</code></pre>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:rabbitmq"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-rabbitmq"</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -19784,7 +20523,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 annotationProcessor "org.projectlombok:lombok:1.16.20"
 ...
 // Micronaut processor define after Lombok
-annotationProcessor "io.micronaut:inject-java"</code></pre>
+annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19801,7 +20540,7 @@ annotationProcessor "io.micronaut:inject-java"</code></pre>
   &lt;/path&gt;
   &lt;path&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;inject-java&lt;/artifactId&gt;
+    &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
     &lt;version&gt;${micronaut.version}&lt;/version&gt;
   &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
@@ -19910,21 +20649,21 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:inject-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-inject-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Includes AST transformations to generate bean definitions. Should be <code>compileOnly</code> on your classpath.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:runtime-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-runtime-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Adds the ability to specify configuration placed in <code>src/main/resources</code> in Groovy format (i.e. <code>application.groovy</code>)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:function-groovy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-function-groovy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Includes AST transforms that make it easier to write <a href="#serverlessFunctions">Functions</a> for AWS Lambda</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The most common module you will need is <code>inject-groovy</code>, which enables DI and AOP for classes written in Groovy.</p>
+<p>The most common module you will need is <code>micronaut-inject-groovy</code>, which enables DI and AOP for classes written in Groovy.</p>
 </div>
 </div>
 </div>
@@ -20154,15 +20893,15 @@ static class MyRoutes extends GroovyRouteBuilder {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:hibernate-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications. See the <a href="#hibernateSupport">Hibernate Support</a> docs</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:mongo-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications. See the <a href="#mongoSupport">Mongo Support</a> docs.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:neo4j-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications. See the <a href="#neo4jSupport">Neo4j Support</a> docs.</p></td>
 </tr>
 </tbody>
@@ -20263,9 +21002,9 @@ Learn more about kapt and its features from the <a href="https://kotlinlang.org/
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion" <i class="conum" data-value="1"></i><b>(1)</b>
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    kapt "io.micronaut:inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
+    kapt "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
 
-    kaptTest "io.micronaut:inject-java" <i class="conum" data-value="3"></i><b>(3)</b>
+    kaptTest "io.micronaut:micronaut-inject-java" <i class="conum" data-value="3"></i><b>(3)</b>
     ...
 }</code></pre>
 </div>
@@ -20278,11 +21017,11 @@ Learn more about kapt and its features from the <a href="https://kotlinlang.org/
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Add the <code>inject-java</code> dependency under the <code>kapt</code> scope, so classes in <code>src/main</code> are processed</td>
+<td>Add the <code>micronaut-inject-java</code> dependency under the <code>kapt</code> scope, so classes in <code>src/main</code> are processed</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Add the <code>inject-java</code> dependency under the <code>kaptTest</code> scope, so classes in <code>src/test</code> are processed.</td>
+<td>Add the <code>micronaut-inject-java</code> dependency under the <code>kaptTest</code> scope, so classes in <code>src/test</code> are processed.</td>
 </tr>
 </table>
 </div>
@@ -20771,7 +21510,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:management"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-management"</code></pre>
 </div>
 </div>
 
@@ -21762,11 +22501,11 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    compile "io.micronaut.configuration:micrometer-core"
+    compile "io.micronaut.configuration:micronaut-micrometer-core"
     // micrometer-registry-statsd also pulls in micrometer-core so included above to verbose example
-    compile "io.micronaut.configuration:micrometer-registry-statsd"
+    compile "io.micronaut.configuration:micronaut-micrometer-registry-statsd"
     // Also required to enable endpoint
-    compile "io.micronaut:management"
+    compile "io.micronaut:micronaut-management"
     ...
 }</code></pre>
 </div>
@@ -22256,7 +22995,7 @@ There is a different set of pool metric names for HikariCP and other pool provid
 </table>
 </div>
 <div class="paragraph">
-<p>If you are using <code>io.micronaut.configuration:jdbc-hikari</code> you will get additional pool metrics as HikariCP has built in support for meter registries.</p>
+<p>If you are using <code>io.micronaut.configuration:micronaut-jdbc-hikari</code> you will get additional pool metrics as HikariCP has built in support for meter registries.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 7. HikariCP Metrics Provided</caption>
@@ -22300,7 +23039,7 @@ There is a different set of pool metric names for HikariCP and other pool provid
 </tbody>
 </table>
 <div class="paragraph">
-<p>If you are using <code>io.micronaut.configuration:jdbc-tomcat</code> or <code>io.micronaut.configuration:jdbc-dbcp</code> you will get the following metrics</p>
+<p>If you are using <code>io.micronaut.configuration:micronaut-jdbc-tomcat</code> or <code>io.micronaut.configuration:micronaut-jdbc-dbcp</code> you will get the following metrics</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 8. Generic Pool Metrics provided</caption>
@@ -22382,7 +23121,7 @@ public class IndexController {
 <div class="sect2">
 <h3 id="_statsd_registry">Statsd Registry</h3>
 <div class="paragraph">
-<p>You can include the statsd reporter via <code>io.micronaut.configuration:micrometer-registry-statsd:${micronaut.version}</code></p>
+<p>You can include the statsd reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-statsd:${micronaut.version}</code></p>
 </div>
 <div class="listingblock">
 <div class="title">Maven</div>
@@ -22448,7 +23187,7 @@ public class IndexController {
 <div class="sect2">
 <h3 id="_graphite_registry">Graphite Registry</h3>
 <div class="paragraph">
-<p>You can include the graphite reporter via <code>io.micronaut.configuration:micrometer-registry-graphite:${micronaut.version}</code></p>
+<p>You can include the graphite reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-graphite:${micronaut.version}</code></p>
 </div>
 <div class="listingblock">
 <div class="title">Maven</div>
@@ -22509,7 +23248,7 @@ public class IndexController {
 <div class="sect2">
 <h3 id="_atlas_registry">Atlas Registry</h3>
 <div class="paragraph">
-<p>You can include the atlas reporter via <code>io.micronaut.configuration:micrometer-registry-atlas:${micronaut.version}</code></p>
+<p>You can include the atlas reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-atlas:${micronaut.version}</code></p>
 </div>
 <div class="listingblock">
 <div class="title">Maven</div>
@@ -22565,7 +23304,7 @@ public class IndexController {
 <div class="sect2">
 <h3 id="_prometheus_registry">Prometheus Registry</h3>
 <div class="paragraph">
-<p>You can include the prometheus reporter via <code>io.micronaut.configuration:micrometer-registry-prometheus:${micronaut.version}</code></p>
+<p>You can include the prometheus reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-prometheus:${micronaut.version}</code></p>
 </div>
 <div class="listingblock">
 <div class="title">Maven</div>
@@ -22947,8 +23686,8 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23437,8 +24176,8 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security-session"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security-session"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23604,8 +24343,8 @@ JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security-jwt"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security-jwt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23927,9 +24666,16 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <a href="https://tools.ietf.org/html/rfc7515">JSON Web Signature</a> specification.</p>
 </div>
 <div class="paragraph">
-<p>To enable a JWT signature in token generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a>,
-<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>,
+<p>To enable a JWT signature in token generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>,
 <a href="../api/io/micronaut/security/token/jwt/signature/secret/SecretSignatureConfiguration.html">SecretSignatureConfiguration</a> qualified with name <code>generator</code>.</p>
+</div>
+<div class="paragraph">
+<p>To verify signed JWT tokens, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>, or
+<a href="../api/io/micronaut/security/token/jwt/signature/secret/SecretSignatureConfiguration.html">SecretSignatureConfiguration</a>.</p>
 </div>
 <div class="paragraph">
 <p>You can setup a <code>SecretSignatureConfiguration</code> named <code>generator</code> easily via configuration properties:</p>
@@ -24298,6 +25044,9 @@ Pragma: no-cache
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>If you wish to customize the previous JSON payload, you may want to provide a bean replacement for <a href="../api/io/micronaut/security/token/jwt/render/BearerTokenRenderer.html">BearerTokenRenderer</a>. If that is not enough, check the <a href="../api/io/micronaut/security/token/jwt/bearer/AccessRefreshTokenLoginHandler.html">AccessRefreshTokenLoginHandler</a> to accommodate it to your needs.</p>
+</div>
 
 
 <h2 id="ldap">15.3.4 LDAP Authentication</h2>
@@ -24315,7 +25064,7 @@ Pragma: no-cache
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:security-ldap"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-security-ldap"</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -25061,7 +25810,7 @@ public class UserController {
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:multitenancy"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-multitenancy"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -25193,7 +25942,7 @@ your requests to other internal microservices to include the <code>tenant Id</co
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:multitenancy-gorm"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-multitenancy-gorm"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -27083,7 +27832,7 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 <div class="sect3">
 <h4 id="_can_micronaut_be_used_for_purposes_other_than_microservices">Can Micronaut be used for purposes other than Microservices?</h4>
 <div class="paragraph">
-<p>Yes. Micronaut is very modular and you can choose to use just the Dependency Injection and AOP implementation if you want simply by including only the <code>inject-java</code> (or <code>inject-groovy</code> for Groovy) dependency in your application.</p>
+<p>Yes. Micronaut is very modular and you can choose to use just the Dependency Injection and AOP implementation if you want simply by including only the <code>micronaut-inject-java</code> (or <code>micronaut-inject-groovy</code> for Groovy) dependency in your application.</p>
 </div>
 <div class="paragraph">
 <p>In fact Micronaut&#8217;s support for <a href="#serverlessFunctions">Serverless Computing</a> uses this exact approach.</p>
@@ -27152,7 +27901,7 @@ repositories {
 }
 dependencyManagement {
   imports {
-      mavenBom "io.micronaut:bom:$micronautVersion"
+      mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
   }
 }</code></pre>
 </div>
@@ -27223,6 +27972,24 @@ dependencyManagement {
 
 <div class="paragraph">
 <p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc3">1.0.0.RC3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to manage dependencies. If you are upgrading rename all references modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
+</li>
+<li>
+<p>Methods for JWT signature generation have been removed from <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>. Those beans should be used in microservices where you need only signature verification and not generation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable a RSA or EC JWT signature generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_1_0_0_rc2">1.0.0.RC2</h4>

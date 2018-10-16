@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.0.0.RC2</title>
+    <title>3 Inversion of Control 1.0.0.RC3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC2</p>
+                    <p><strong>Version:</strong> 1.0.0.RC3</p>
                 </div>
 
                 
@@ -227,7 +227,7 @@ function addJsClass() {
 </ul>
 </div>
 <div class="paragraph">
-<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
+<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>micronaut-inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Gradle</div>
@@ -238,8 +238,8 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:inject-java:1.0.0.RC2" // <2>
-    compile "io.micronaut:inject:1.0.0.RC2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.0.RC3"
     ...
 }</code></pre>
 </div>
@@ -263,7 +263,7 @@ dependencies {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For the Groovy language you should include <code>inject-groovy</code> in the <code>compileOnly</code> scope.
+For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> scope.
 </td>
 </tr>
 </table>
@@ -517,7 +517,7 @@ println( vehicle.start() )</code></pre>
 <p>If you have multiple possible implementations for a given interface that you want to inject, you need to use a qualifier.</p>
 </div>
 <div class="paragraph">
-<p>Once again Micronaut leverages JSR-303 and the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> and <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotations to support this use case.</p>
+<p>Once again Micronaut leverages JSR-330 and the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> and <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotations to support this use case.</p>
 </div>
 <div class="sect1">
 <h2 id="_qualifying_by_name">Qualifying By Name</h2>
@@ -1986,15 +1986,15 @@ class ByAnnotationTypeConfig {
 <p>To get started you must add the Micronaut annotation processors to the processor classpath using the <code>annotationProcessor</code> dependency configuration.</p>
 </div>
 <div class="paragraph">
-<p>The Micronaut <code>inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
+<p>The Micronaut <code>micronaut-inject-java</code> dependency should be included in both the <code>annotationProcessor</code> and <code>compileOnly</code> scopes of your Android build configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example Android build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:inject-java:1.0.0.RC2"
-    compileOnly "io.micronaut:inject-java:1.0.0.RC2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.0.RC3"
     ...
 }</code></pre>
 </div>

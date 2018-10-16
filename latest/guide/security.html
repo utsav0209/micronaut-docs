@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>15 Security 1.0.0.RC2</title>
+    <title>15 Security 1.0.0.RC3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>15 Security</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC2</p>
+                    <p><strong>Version:</strong> 1.0.0.RC3</p>
                 </div>
 
                 
@@ -248,8 +248,8 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -738,8 +738,8 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security-session"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security-session"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -905,8 +905,8 @@ JWT is an <a href="https://tools.ietf.org/html/rfc7519">IETF standard</a> which 
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:security"
-compile "io.micronaut:security-jwt"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-security"
+compile "io.micronaut:micronaut-security-jwt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1228,9 +1228,16 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <a href="https://tools.ietf.org/html/rfc7515">JSON Web Signature</a> specification.</p>
 </div>
 <div class="paragraph">
-<p>To enable a JWT signature in token generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a>,
-<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>,
+<p>To enable a JWT signature in token generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>,
 <a href="../api/io/micronaut/security/token/jwt/signature/secret/SecretSignatureConfiguration.html">SecretSignatureConfiguration</a> qualified with name <code>generator</code>.</p>
+</div>
+<div class="paragraph">
+<p>To verify signed JWT tokens, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>,
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>, or
+<a href="../api/io/micronaut/security/token/jwt/signature/secret/SecretSignatureConfiguration.html">SecretSignatureConfiguration</a>.</p>
 </div>
 <div class="paragraph">
 <p>You can setup a <code>SecretSignatureConfiguration</code> named <code>generator</code> easily via configuration properties:</p>
@@ -1599,6 +1606,9 @@ Pragma: no-cache
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>If you wish to customize the previous JSON payload, you may want to provide a bean replacement for <a href="../api/io/micronaut/security/token/jwt/render/BearerTokenRenderer.html">BearerTokenRenderer</a>. If that is not enough, check the <a href="../api/io/micronaut/security/token/jwt/bearer/AccessRefreshTokenLoginHandler.html">AccessRefreshTokenLoginHandler</a> to accommodate it to your needs.</p>
+</div>
 
 
 <h2 id="ldap">15.3.4 LDAP Authentication</h2>
@@ -1616,7 +1626,7 @@ Pragma: no-cache
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:security-ldap"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-security-ldap"</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">

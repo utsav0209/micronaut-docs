@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>1.1 What's New? 1.0.0.RC2</title>
+    <title>1.1 What's New? 1.0.0.RC3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,7 +112,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>1.1 What's New?</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC2</p>
+                    <p><strong>Version:</strong> 1.0.0.RC3</p>
                 </div>
 
                 
@@ -132,22 +132,55 @@ function addJsClass() {
 <p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/6?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features.</p>
 </div>
 <div class="sect2">
-<h3 id="_improvements_from_rc1_to_rc2">Improvements from RC1 to RC2</h3>
+<h3 id="_improvements_from_rc2_to_rc3">Improvements from RC2 to RC3</h3>
 <div class="paragraph">
 <p>The following changes and improvements were added since the last RC:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Eureka Improvements (automatic re-registration)</p>
+<p>Swagger support has been improved to better handle generic types.</p>
 </li>
 <li>
-<p>Ribbon Improvements (use standard Ribbon configuration)</p>
-</li>
-<li>
-<p>Support for GraalVM 1.0 RC7</p>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to find and manage dependencies. If you are upgrading rename all referenced modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the typical changes required to a build:</p>
+</div>
+<div class="listingblock">
+<div class="title">Updating Micronaut Gradle Build for 1.0.0 RC3</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.0.0.RC3' <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
+    compile "io.micronaut:micronaut-inject" <i class="conum" data-value="3"></i><b>(3)</b>
+    // repeat rename for remaining "io.micronaut" dependencies
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Renamed <code>bom</code> &#8594; <code>micronaut-bom</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Renamed <code>inject-java</code> &#8594; <code>micronaut-inject-java</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Renamed <code>inject</code> &#8594; <code>micronaut-inject</code></td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -267,7 +300,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </div>
 </div>
 <div class="paragraph">
-<p>This lessons the need for IDE support designed specifically for Micronaut.</p>
+<p>This lessens the need for IDE support designed specifically for Micronaut.</p>
 </div>
 </div>
 <div class="sect2">
@@ -308,7 +341,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 <div class="ulist">
 <ul>
 <li>
-<p>Netty <code>4.1.28</code> &#8594; <code>4.1.29</code></p>
+<p>Netty <code>4.1.29</code> &#8594; <code>4.1.30</code></p>
 </li>
 <li>
 <p>RxJava <code>2.2.0</code> &#8594; <code>2.2.2</code></p>
@@ -327,6 +360,15 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </li>
 <li>
 <p>Jaeger <code>0.30.4</code> &#8594; <code>0.31.0</code></p>
+</li>
+<li>
+<p>Brave '5.2.0` &#8594; <code>5.4.2</code></p>
+</li>
+<li>
+<p>Zipkin Reporter <code>2.7.7</code> &#8594; <code>2.7.9</code></p>
+</li>
+<li>
+<p>Spring <code>5.0.8</code> &#8594; <code>5.1.0</code></p>
 </li>
 </ul>
 </div>
