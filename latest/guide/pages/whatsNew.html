@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>1.1 What's New? 1.0.0.RC3</title>
+    <title>1.1 What's New? 1.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,7 +112,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>1.1 What's New?</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC3</p>
+                    <p><strong>Version:</strong> 1.0.0</p>
                 </div>
 
                 
@@ -132,55 +132,12 @@ function addJsClass() {
 <p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/6?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features.</p>
 </div>
 <div class="sect2">
-<h3 id="_improvements_from_rc2_to_rc3">Improvements from RC2 to RC3</h3>
+<h3 id="_improvements_from_rc3_to_ga">Improvements from RC3 to GA</h3>
 <div class="paragraph">
-<p>The following changes and improvements were added since the last RC:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Swagger support has been improved to better handle generic types.</p>
-</li>
-<li>
-<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to find and manage dependencies. If you are upgrading rename all referenced modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
-</li>
-</ul>
+<p>GraalVM support has been updated to use Docker instead of a <code>./build-native-image</code> script allowing usage of other platforms.</p>
 </div>
 <div class="paragraph">
-<p>The following example illustrates the typical changes required to a build:</p>
-</div>
-<div class="listingblock">
-<div class="title">Updating Micronaut Gradle Build for 1.0.0 RC3</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">dependencyManagement {
-    imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.0.RC3' <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-}
-
-dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
-    compile "io.micronaut:micronaut-inject" <i class="conum" data-value="3"></i><b>(3)</b>
-    // repeat rename for remaining "io.micronaut" dependencies
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Renamed <code>bom</code> &#8594; <code>micronaut-bom</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Renamed <code>inject-java</code> &#8594; <code>micronaut-inject-java</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Renamed <code>inject</code> &#8594; <code>micronaut-inject</code></td>
-</tr>
-</table>
+<p>The official GraalVM Docker images are used, so to build a native image you can simply execute <code>docker build . -t myimage</code> in the root of your project.</p>
 </div>
 </div>
 <div class="sect2">

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13.4 Micronaut for GraalVM 1.0.0.RC3</title>
+    <title>13.4 Micronaut for GraalVM 1.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13.4 Micronaut for GraalVM</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC3</p>
+                    <p><strong>Version:</strong> 1.0.0</p>
                 </div>
 
                 
@@ -180,17 +180,7 @@ Use of GraalVM&#8217;s <code>nativeimage</code> tool is only supported in Java o
 </table>
 </div>
 <div class="paragraph">
-<p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
-</div>
-<div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc7 with SDKman</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc7-graal
-$ sdk use java 1.0.0-rc7-graal</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note the above commands install the <code>1.0.0-rc6</code> version, and may need to be altered depending on the current release available.</p>
+<p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -205,12 +195,21 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </table>
 </div>
 <div class="paragraph">
-<p>Once you have installed the SDK you should make the <code>svm</code> dependency available via your local Maven cache. The easiest way to do this is via Maven&#8217;s <code>install</code> command:</p>
+<p>To compile Micronaut and Graal applications you need to make the substrate VM dependency available to your application. The easiest way to make it available is via Docker:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Docker to Obtain the SVM Dependency</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run oracle/graalvm-ce:1.0.0-rc7 cat /usr/java/latest/jre/lib/svm/builder/svm.jar &gt; svm.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have obtained the <code>svm.jar</code> from the latest Graal Docker images you can install it into your local Maven cache:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing the SVM Dependency Locally</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=${JAVA_HOME}/jre/lib/svm/builder/svm.jar \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=svm.jar \
                            -DgroupId=com.oracle.substratevm \
                            -DartifactId=svm \
                            -Dversion=GraalVM-1.0.0-rc7 \
@@ -229,6 +228,8 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </div>
 
 
+<div class="sect2">
+<h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
 <div class="paragraph">
 <p>To get started creating a Microservice that can be compiled into a native image, use the <code>graal-native-image</code> feature when creating the application with the CLI:</p>
 </div>
@@ -250,12 +251,27 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
 </li>
 <li>
-<p>A <code>build-native-image.sh</code> bash script which can be used as a template to construct the native image.</p>
+<p>A <code>Dockerfile</code> which can be used to construct the native image.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded. So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. This can be done by simply running your application:</p>
+<p>To build your native image using Docker simply run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world
+$ docker run hello-world</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
+<div class="paragraph">
+<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded.</p>
+</div>
+<div class="paragraph">
+<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> does this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
 </div>
 <div class="listingblock">
 <div class="title">Computing Class Loading Requirements</div>
@@ -286,13 +302,13 @@ $ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalCl
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>build-native-image.sh</code> template to point to the new location.
+If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template to point to the new location.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Once the <code>reflect.json</code> file is ready you can run the <code>build-native-image.sh</code> script. The script runs the following <code>native-image</code> command:</p>
+<p>Once the <code>reflect.json</code> file is ready you can run the <code>native-image</code> command. The script runs the following <code>native-image</code> command:</p>
 </div>
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
@@ -357,6 +373,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 <div class="paragraph">
 <p>As you can see the advantage of having a native image is startup completes in milliseconds and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
+</div>
 </div>
 
 

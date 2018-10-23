@@ -590,7 +590,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.0.0.RC3</p>
+        <p><strong>Version:</strong> 1.0.0</p>
     </div>
     
 
@@ -680,55 +680,12 @@
 <p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/6?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features.</p>
 </div>
 <div class="sect2">
-<h3 id="_improvements_from_rc2_to_rc3">Improvements from RC2 to RC3</h3>
+<h3 id="_improvements_from_rc3_to_ga">Improvements from RC3 to GA</h3>
 <div class="paragraph">
-<p>The following changes and improvements were added since the last RC:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Swagger support has been improved to better handle generic types.</p>
-</li>
-<li>
-<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to find and manage dependencies. If you are upgrading rename all referenced modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
-</li>
-</ul>
+<p>GraalVM support has been updated to use Docker instead of a <code>./build-native-image</code> script allowing usage of other platforms.</p>
 </div>
 <div class="paragraph">
-<p>The following example illustrates the typical changes required to a build:</p>
-</div>
-<div class="listingblock">
-<div class="title">Updating Micronaut Gradle Build for 1.0.0 RC3</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">dependencyManagement {
-    imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.0.RC3' <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-}
-
-dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java" <i class="conum" data-value="2"></i><b>(2)</b>
-    compile "io.micronaut:micronaut-inject" <i class="conum" data-value="3"></i><b>(3)</b>
-    // repeat rename for remaining "io.micronaut" dependencies
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Renamed <code>bom</code> &#8594; <code>micronaut-bom</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Renamed <code>inject-java</code> &#8594; <code>micronaut-inject-java</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Renamed <code>inject</code> &#8594; <code>micronaut-inject</code></td>
-</tr>
-</table>
+<p>The official GraalVM Docker images are used, so to build a native image you can simply execute <code>docker build . -t myimage</code> in the root of your project.</p>
 </div>
 </div>
 <div class="sect2">
@@ -993,7 +950,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.0.RC3</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1167,26 +1124,10 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </div>
 </div>
 <div class="paragraph">
-<p>By default the Micronaut HTTP server is configured to run on a random port, but you can alter that by adding the following configuration to <code>src/main/resources/application.yml</code>:</p>
+<p>By default the Micronaut HTTP server is configured to run on port 8080.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    server:
-        port: 8080</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-This is also possible to be configured from an environment variable: <code>MICRONAUT_SERVER_PORT=8080</code>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>See the section <a href="#runningSpecificPort">Running Server on a Specific Port</a> in the user guide for more options.</p>
 </div>
 <div class="paragraph">
 <p>In order to create a service that responds to "Hello World" you first need a controller. The following is an example of a controller written in Java and located in <code>src/main/java/example/helloworld</code>:</p>
@@ -1548,8 +1489,8 @@ class HelloClientSpec extends Specification {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.0.RC3"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.0"
     ...
 }</code></pre>
 </div>
@@ -3303,8 +3244,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0.RC3"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.0.RC3"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.0"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.0"
     ...
 }</code></pre>
 </div>
@@ -5498,31 +5439,6 @@ public class BookService {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.redis-exec-provider</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.slave-of</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.config-file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.setting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -6140,6 +6056,18 @@ class HelloControllerSpec extends Specification {
   server:
     port: 8086</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This is also possible to be configured from an environment variable: <code>MICRONAUT_SERVER_PORT=8086</code>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To run on a random port:</p>
@@ -13663,7 +13591,7 @@ add and retrieve values and decrypt them with the default key store for your acc
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     caches:
         discovery-client:
-            expireAfterAccess: 60s</code></pre>
+            expire-after-access: 60s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -13981,291 +13909,6 @@ eureka:
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.protocol</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.Protocol</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-connections</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-prefix</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-suffix</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.local-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-username</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-password</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-domain</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-workstation</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.non-proxy-hosts</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-authentication-methods</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-policy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.retry.RetryPolicy</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-error-retry</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.socket-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.request-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.client-execution-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-reaper</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-throttle-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-consecutive-retries-before-throttling</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-gzip</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.signer-override</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.preemptive-basic-proxy-auth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-ttl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-max-idle-millis</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.validate-after-inactivity-millis</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-tcp-keep-alive</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.dns-resolver</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.DnsResolver</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.cache-response-metadata</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.response-metadata-cache-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-random</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.security.SecureRandom</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-expect-continue</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.instance-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.asg-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.home-page-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/LeaseInfo.html">LeaseInfo</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.country-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status-page-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-check-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-health-check-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.data-center-info</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/DataCenterInfo.html">DataCenterInfo</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/InstanceInfo.Status.html">InstanceInfo$Status</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.app-group-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.ip-addr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.vip-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-vip-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.metadata</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.registration-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.eviction-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.service-up-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.duration-in-secs</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-interval-in-secs</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.timeout</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
@@ -14986,9 +14629,9 @@ class HelloService {
 <div class="listingblock">
 <div class="title">Adding Zipkin Dependencies</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime 'io.zipkin.brave:brave-instrumentation-http:4.19.0'
-runtime 'io.zipkin.reporter2:zipkin-reporter:2.5.0'
-compile 'io.opentracing.brave:brave-opentracing:0.30.0'</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime 'io.zipkin.brave:brave-instrumentation-http'
+runtime 'io.zipkin.reporter2:zipkin-reporter'
+compile 'io.opentracing.brave:brave-opentracing'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16599,7 +16242,7 @@ $ mn create-kafka-listener Message
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;kafka&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-kafka&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -18297,7 +17940,7 @@ By default, the details visible above are only shown to authenticated users. See
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;kafka-streams&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-kafka-streams&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -18764,7 +18407,7 @@ compile "io.micronaut.configuration:micronaut-picocli"</code></pre>
 &lt;/dependency&gt;
 &lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;picocli&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-picocli&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -19113,7 +18756,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "com.h2database:h2:1.4.196"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "com.h2database:h2"</code></pre>
 </div>
 </div>
 </div>
@@ -19346,17 +18989,17 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="listingblock">
 <div class="title">Adding the JPA dependency to <code>annotationProcessor</code> in Gradle</div>
 <div class="content">
-<pre>annotationProcessor "javax.persistence:javax.persistence-api:2.2"</pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "javax.persistence:javax.persistence-api:2.2"</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Using <code>@PersistenceContext</code></div>
 <div class="content">
-<pre>@PersistenceContext
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@PersistenceContext
 EntityManager entityManager;
 
 @PersistenceContext(name = "other")
-EntityManager otherManager;</pre>
+EntityManager otherManager;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19464,9 +19107,9 @@ jpa:
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  compile "io.micronaut.configuration:micronaut-hibernate-gorm"
   // Use Tomcat connection pool
-  runtime 'org.apache.tomcat:tomcat-jdbc:8.0.44'
+  runtime 'org.apache.tomcat:tomcat-jdbc'
   // Use H2 database driver
-  runtime  'com.h2database:h2:1.4.196'</code></pre>
+  runtime  'com.h2database:h2'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -20398,7 +20041,7 @@ applicationContext.start()</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;rabbitmq&lt;/artifactId&gt;
+    &lt;artifactId&gt;micronaut-rabbitmq&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -21230,17 +20873,7 @@ Use of GraalVM&#8217;s <code>nativeimage</code> tool is only supported in Java o
 </table>
 </div>
 <div class="paragraph">
-<p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
-</div>
-<div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc7 with SDKman</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc7-graal
-$ sdk use java 1.0.0-rc7-graal</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note the above commands install the <code>1.0.0-rc6</code> version, and may need to be altered depending on the current release available.</p>
+<p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -21255,12 +20888,21 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </table>
 </div>
 <div class="paragraph">
-<p>Once you have installed the SDK you should make the <code>svm</code> dependency available via your local Maven cache. The easiest way to do this is via Maven&#8217;s <code>install</code> command:</p>
+<p>To compile Micronaut and Graal applications you need to make the substrate VM dependency available to your application. The easiest way to make it available is via Docker:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Docker to Obtain the SVM Dependency</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run oracle/graalvm-ce:1.0.0-rc7 cat /usr/java/latest/jre/lib/svm/builder/svm.jar &gt; svm.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have obtained the <code>svm.jar</code> from the latest Graal Docker images you can install it into your local Maven cache:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing the SVM Dependency Locally</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=${JAVA_HOME}/jre/lib/svm/builder/svm.jar \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=svm.jar \
                            -DgroupId=com.oracle.substratevm \
                            -DartifactId=svm \
                            -Dversion=GraalVM-1.0.0-rc7 \
@@ -21279,6 +20921,8 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </div>
 
 
+<div class="sect2">
+<h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
 <div class="paragraph">
 <p>To get started creating a Microservice that can be compiled into a native image, use the <code>graal-native-image</code> feature when creating the application with the CLI:</p>
 </div>
@@ -21300,12 +20944,27 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
 </li>
 <li>
-<p>A <code>build-native-image.sh</code> bash script which can be used as a template to construct the native image.</p>
+<p>A <code>Dockerfile</code> which can be used to construct the native image.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded. So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. This can be done by simply running your application:</p>
+<p>To build your native image using Docker simply run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world
+$ docker run hello-world</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
+<div class="paragraph">
+<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded.</p>
+</div>
+<div class="paragraph">
+<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> does this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
 </div>
 <div class="listingblock">
 <div class="title">Computing Class Loading Requirements</div>
@@ -21336,13 +20995,13 @@ $ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalCl
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>build-native-image.sh</code> template to point to the new location.
+If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template to point to the new location.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Once the <code>reflect.json</code> file is ready you can run the <code>build-native-image.sh</code> script. The script runs the following <code>native-image</code> command:</p>
+<p>Once the <code>reflect.json</code> file is ready you can run the <code>native-image</code> command. The script runs the following <code>native-image</code> command:</p>
 </div>
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
@@ -21407,6 +21066,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 <div class="paragraph">
 <p>As you can see the advantage of having a native image is startup completes in milliseconds and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
+</div>
 </div>
 
 
@@ -22515,19 +22175,19 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-core&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-core&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;!-- micrometer-registry-statsd also pulls in micrometer-core so included above to verbose example --&gt;
 &lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-statsd&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-registry-statsd&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;!-- Also required to enable endpoint --&gt;
 &lt;dependency&gt;
   &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-  &lt;artifactId&gt;management&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-management&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -23128,7 +22788,7 @@ public class IndexController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-statsd&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-registry-statsd&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -23194,7 +22854,7 @@ public class IndexController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-graphite&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-registry-graphite&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -23255,7 +22915,7 @@ public class IndexController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-atlas&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-registry-atlas&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -23311,7 +22971,7 @@ public class IndexController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-prometheus&lt;/artifactId&gt;
+  &lt;artifactId&gt;micronaut-micrometer-registry-prometheus&lt;/artifactId&gt;
   &lt;version&gt;${micronaut.version}&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>

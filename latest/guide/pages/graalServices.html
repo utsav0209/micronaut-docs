@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13.4.1 Microservices as GraalVM native images 1.0.0.RC3</title>
+    <title>13.4.1 Microservices as GraalVM native images 1.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13.4.1 Microservices as GraalVM native images</h1>
 
-                    <p><strong>Version:</strong> 1.0.0.RC3</p>
+                    <p><strong>Version:</strong> 1.0.0</p>
                 </div>
 
                 
@@ -130,6 +130,8 @@ function addJsClass() {
 </div>
 
 
+<div class="sect2">
+<h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
 <div class="paragraph">
 <p>To get started creating a Microservice that can be compiled into a native image, use the <code>graal-native-image</code> feature when creating the application with the CLI:</p>
 </div>
@@ -151,12 +153,27 @@ function addJsClass() {
 <p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
 </li>
 <li>
-<p>A <code>build-native-image.sh</code> bash script which can be used as a template to construct the native image.</p>
+<p>A <code>Dockerfile</code> which can be used to construct the native image.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded. So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. This can be done by simply running your application:</p>
+<p>To build your native image using Docker simply run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world
+$ docker run hello-world</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
+<div class="paragraph">
+<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded.</p>
+</div>
+<div class="paragraph">
+<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> does this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
 </div>
 <div class="listingblock">
 <div class="title">Computing Class Loading Requirements</div>
@@ -187,13 +204,13 @@ $ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalCl
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>build-native-image.sh</code> template to point to the new location.
+If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template to point to the new location.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Once the <code>reflect.json</code> file is ready you can run the <code>build-native-image.sh</code> script. The script runs the following <code>native-image</code> command:</p>
+<p>Once the <code>reflect.json</code> file is ready you can run the <code>native-image</code> command. The script runs the following <code>native-image</code> command:</p>
 </div>
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
@@ -258,6 +275,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </div>
 <div class="paragraph">
 <p>As you can see the advantage of having a native image is startup completes in milliseconds and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
+</div>
 </div>
 
 
