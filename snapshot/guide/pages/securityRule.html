@@ -174,7 +174,7 @@ you can implement your own <a href="../api/io/micronaut/security/rules/SecurityR
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
   security:
     enabled: true
-    ip-patterns:
+    ipPatterns:
       - 127.0.0.1
       - 192.168.1.*</code></pre>
 </div>
@@ -297,10 +297,10 @@ public class ExampleController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
   security:
     enabled: true
-    intercept-url-map:
+    interceptUrlMap:
       -
         pattern: /images/*
-        http-method: GET
+        httpMethod: GET
         access:
           - isAnonymous() <i class="conum" data-value="1"></i><b>(1)</b>
       -
@@ -309,7 +309,7 @@ public class ExampleController {
           - isAuthenticated() <i class="conum" data-value="2"></i><b>(2)</b>
       -
         pattern: /books/grails
-        http-method: GET
+        httpMethod: GET
         access:
           - ROLE_GRAILS <i class="conum" data-value="3"></i><b>(3)</b>
           - ROLE_GROOVY</code></pre>
