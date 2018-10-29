@@ -360,6 +360,94 @@ KStream&lt;String, String&gt; myStream(
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_kafka_streams_state_store">Kafka Streams State Store</h3>
+<div class="paragraph">
+<p>You can use a state store in your stream and leverage the concept of a <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-67%3A+Queryable+state+for+Kafka+Streams">state store</a>.  Micronaut provides a bean of type <code>QueryableStoreRegistry</code> to allow you to query a state store.</p>
+</div>
+<div class="paragraph">
+<div class="title">Create Materialized Store For Stream</div>
+<p>To query the store you will first need to tell your stream to use a materialized store.</p>
+</div>
+<div class="listingblock">
+<div class="title">Kafka Streams Word Count w/Store</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">KTable&lt;String, Long&gt; counts = source
+        .flatMapValues(value -&gt; Arrays.asList(value.toLowerCase(Locale.getDefault()).split(" ")))
+        .groupBy((key, value) -&gt; value)
+        .count(Materialized.as("queryable-store-name")); <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Output the count to a state store</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Query State Store</div>
+<p>You can query your store by using the <code>QueryableStoreRegistry</code> bean.  This contrived helper class illustrates how to inject the <code>QueryableStoreRegistry</code> bean, get a read only key value store and a value from the store.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>getQueryableStoreType</code> method can produce a null so make sure to check that a store was returned before invoking get operation.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.configuration.kafka.streams.registry;
+
+import org.apache.kafka.streams.state.QueryableStoreTypes;
+import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
+
+import javax.inject.Singleton;
+
+@Singleton
+public class QueryableStoreRegistryExample {
+
+    private final QueryableStoreRegistry queryableStoreRegistry;
+
+    public QueryableStoreRegistryExample(QueryableStoreRegistry queryableStoreRegistry) { <i class="conum" data-value="1"></i><b>(1)</b>
+        this.queryableStoreRegistry = queryableStoreRegistry;
+    }
+
+    public &lt;K, V&gt; ReadOnlyKeyValueStore&lt;K, V&gt; getStore(String storeName) { <i class="conum" data-value="2"></i><b>(2)</b>
+        return queryableStoreRegistry.getQueryableStoreType(storeName, QueryableStoreTypes.keyValueStore());
+    }
+
+    public &lt;K, V&gt; V getValue(String storeName, K key) { <i class="conum" data-value="3"></i><b>(3)</b>
+        ReadOnlyKeyValueStore&lt;K, V&gt; readOnlyKeyValueStore = getStore(storeName);
+        return readOnlyKeyValueStore != null ? readOnlyKeyValueStore.get(key) : null;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Inject the <code>QueryableStoreRegistry</code> bean</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Method to get a ReadOnlyKeyValueStore</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Get the store and lookup value</td>
+</tr>
+</table>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
