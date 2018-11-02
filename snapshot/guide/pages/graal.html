@@ -135,7 +135,7 @@ function addJsClass() {
 <h2 id="graal">13.4 Micronaut for GraalVM</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/graal.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/languageSupport/graal.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -200,7 +200,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <div class="listingblock">
 <div class="title">Using Docker to Obtain the SVM Dependency</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run oracle/graalvm-ce:1.0.0-rc7 cat /usr/java/latest/jre/lib/svm/builder/svm.jar &gt; svm.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run oracle/graalvm-ce:1.0.0-rc8 cat /usr/java/latest/jre/lib/svm/builder/svm.jar &gt; svm.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -212,7 +212,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mvn install:install-file -Dfile=svm.jar \
                            -DgroupId=com.oracle.substratevm \
                            -DartifactId=svm \
-                           -Dversion=GraalVM-1.0.0-rc7 \
+                           -Dversion=GraalVM-1.0.0-rc8 \
                            -Dpackaging=jar</code></pre>
 </div>
 </div>
@@ -222,7 +222,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <h2 id="graalServices">13.4.1 Microservices as GraalVM native images</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/graal/graalServices.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/languageSupport/graal/graalServices.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -240,7 +240,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>graal-native-image</code> feature adds 3 important items:</p>
+<p>The <code>graal-native-image</code> feature adds four important items:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -251,17 +251,58 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
 </li>
 <li>
-<p>A <code>Dockerfile</code> which can be used to construct the native image.</p>
+<p>A <code>Dockerfile</code> which can be used to construct the native image using Docker and a script <code>docker-build.sh</code> to run it.</p>
+</li>
+<li>
+<p>A <code>build-native-image.sh</code> script to build the native image without using Docker.</p>
 </li>
 </ol>
 </div>
+<div class="sect3">
+<h4 id="_build_native_image_using_docker">Build native image using Docker</h4>
 <div class="paragraph">
 <p>To build your native image using Docker simply run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world
-$ docker run hello-world</code></pre>
+$ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Start the Docker container with <code>--network=host</code> makes the application uses the same network as the host so all ports are exposed automatically without needing to map them manually</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Or use the provided script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./docker-build.sh</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_build_native_image_without_using_docker">Build native image without using Docker</h4>
+<div class="paragraph">
+<p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
+</div>
+<div class="listingblock">
+<div class="title">Installing GraalVM 1.0.0-rc8 with SDKman</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc8-graal
+$ sdk use java 1.0.0-rc8-graal</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Creating native image</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./build-native-image.sh</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -314,15 +355,16 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
-			 -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
-			 -H:EnableURLProtocols=http \ <i class="conum" data-value="3"></i><b>(3)</b>
-			 -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="4"></i><b>(4)</b>
-			 -H:Name=hello-world \ <i class="conum" data-value="5"></i><b>(5)</b>
-			 -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
-			 -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
-			 -H:+AllowVMInspection \
-			 --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
-			 --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+             -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
+             -H:EnableURLProtocols=http \ <i class="conum" data-value="3"></i><b>(3)</b>
+             -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="4"></i><b>(4)</b>
+             -H:Name=hello-world \ <i class="conum" data-value="5"></i><b>(5)</b>
+             -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
+             -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
+             -H:+AllowVMInspection \
+             -H:-UseServiceLoaderFeature \
+             --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
+             --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -357,7 +399,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The <code>--delay-class-initialization-to-runtime</code> specifies which classes static initializers should be delayed until runtime. GraalVM by default runs static initializers at build time. That is undesirable is certain cases (particularly with Netty).</td>
+<td>The <code>--delay-class-initialization-to-runtime</code> specifies which classes static initializers should be delayed until runtime. GraalVM by default runs static initializers at build time. That is undesirable in certain cases (particularly with Netty).</td>
 </tr>
 </table>
 </div>
@@ -380,7 +422,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <h2 id="graalFAQ">13.4.2 GraalVM and Micronaut FAQ</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/graal/graalFAQ.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/languageSupport/graal/graalFAQ.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

@@ -241,11 +241,11 @@ extends io.lettuce.core.dynamic.Commands</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>saveSessionData</h4>
-<pre>@Command(value="HMSET :sessionId :value")
+<pre>@Command(value="HMSET :sessionId :attributes")
 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;saveSessionData(@Param(value="sessionId")
-                                                                                  byte[]&nbsp;sessionId,
-                                                                                  @Param(value="value")
-                                                                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;byte[],byte[]&gt;&nbsp;attributes)</pre>
+                                                                                       byte[]&nbsp;sessionId,
+                                                                                       @Param(value="value")
+                                                                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;byte[],byte[]&gt;&nbsp;attributes)</pre>
 <div class="block">Set multiple hash fields to multiple values.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -380,7 +380,7 @@ extends io.lettuce.core.dynamic.Commands</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent">CompletableFuture</a>&lt;byte[]&gt;&nbsp;get(@Param(value="keys")
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent">CompletableFuture</a>&lt;byte[]&gt;&nbsp;get(@Param(value="key")
                               byte[]&nbsp;key)</pre>
 <div class="block">Touch one or more keys. Touch sets the last accessed time for a key. Non-exsitent keys wont get created.</div>
 <dl>
