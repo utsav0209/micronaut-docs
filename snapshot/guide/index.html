@@ -530,19 +530,21 @@
         
         <div class="toc-item" style="margin-left:30px" id="toc-item-extending"><a href="#extending"><strong>15.3.4.2</strong><span>Extending Default Behavior</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-tokenPropagation"><a href="#tokenPropagation"><strong>15.4</strong><span>Token Propagation</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-rejection"><a href="#rejection"><strong>15.4</strong><span>Rejection Handling</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-endpoints"><a href="#endpoints"><strong>15.5</strong><span>Built-In Security Controllers</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-tokenPropagation"><a href="#tokenPropagation"><strong>15.5</strong><span>Token Propagation</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-login"><a href="#login"><strong>15.5.1</strong><span>Login Controller</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-endpoints"><a href="#endpoints"><strong>15.6</strong><span>Built-In Security Controllers</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-logout"><a href="#logout"><strong>15.5.2</strong><span>Logout Controller</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-login"><a href="#login"><strong>15.6.1</strong><span>Login Controller</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-refresh"><a href="#refresh"><strong>15.5.3</strong><span>Refresh Controller</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-logout"><a href="#logout"><strong>15.6.2</strong><span>Logout Controller</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-retrievingAuthenticatedUser"><a href="#retrievingAuthenticatedUser"><strong>15.6</strong><span>Retrieve the authenticated user</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-refresh"><a href="#refresh"><strong>15.6.3</strong><span>Refresh Controller</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-securityEvents"><a href="#securityEvents"><strong>15.7</strong><span>Security Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-retrievingAuthenticatedUser"><a href="#retrievingAuthenticatedUser"><strong>15.7</strong><span>Retrieve the authenticated user</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-securityEvents"><a href="#securityEvents"><strong>15.8</strong><span>Security Events</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-multitenancy"><a href="#multitenancy"><strong>16</strong><span>Multi-Tenancy</span></a></div>
         
@@ -590,7 +592,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.0.1.BUILD-SNAPSHOT</p>
+        <p><strong>Version:</strong> 1.1.0.BUILD-SNAPSHOT</p>
     </div>
     
 
@@ -950,7 +952,7 @@ public Single&lt;String&gt; hello(@NotBlank String na) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.1.BUILD-SNAPSHOT</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.0.BUILD-SNAPSHOT</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1521,8 +1523,8 @@ class HelloClientSpec extends Specification {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.1.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.0.BUILD-SNAPSHOT" // <2>
+    compile "io.micronaut:micronaut-inject:1.1.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>
@@ -3276,8 +3278,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.1.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.0.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:1.1.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>
@@ -25184,7 +25186,46 @@ public class MyContextBuilder implements ContextBuilder {
 </div>
 
 
-<h2 id="tokenPropagation">15.4 Token Propagation</h2>
+<h2 id="rejection">15.4 Rejection Handling</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/rejection.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut allows the customization of the response that is sent when a request is not authorized to access a resource, or is not authenticated and the resource requires authentication.</p>
+</div>
+<div class="paragraph">
+<p>To control this response, it is necessary to register a <a href="../api/io/micronaut/security/handlers/RejectionHandler.html">RejectionHandler</a> and ensure your bean replaces the default implementation.</p>
+</div>
+<div class="paragraph">
+<p>For those using session based security, replace <a href="../api/io/micronaut/security/session/SessionSecurityfilterRejectionHandler.html">SessionSecurityfilterRejectionHandler</a>. For those using JWT based security, replace <a href="../api/io/micronaut/security/handlers/HttpStatusCodeRejectionHandler.html">HttpStatusCodeRejectionHandler</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+@Replaces(HttpStatusCodeRejectionHandler.class)
+public class MyRejectionHandler extends HttpStatusCodeRejectionHandler {
+
+    @Override
+    public Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; reject(HttpRequest&lt;?&gt; request, boolean forbidden) {
+        //Let the HttpStatusCodeRejectionHandler create the initial request
+        //then add a header
+        return Flowable.fromPublisher(super.reject(request, forbidden))
+                .map(response -&gt; response.header("X-Reason", "Example Header"));
+    }
+}</code></pre>
+</div>
+</div>
+
+
+<h2 id="tokenPropagation">15.5 Token Propagation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/tokenPropagation.adoc"'>
@@ -25260,7 +25301,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-token-propagation/guide/i
 </div>
 
 
-<h2 id="endpoints">15.5 Built-In Security Controllers</h2>
+<h2 id="endpoints">15.6 Built-In Security Controllers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/endpoints.adoc"'>
@@ -25272,7 +25313,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-token-propagation/guide/i
 
 
 
-<h2 id="login">15.5.1 Login Controller</h2>
+<h2 id="login">15.6.1 Login Controller</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/endpoints/login.adoc"'>
@@ -25333,7 +25374,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-token-propagation/guide/i
 </div>
 
 
-<h2 id="logout">15.5.2 Logout Controller</h2>
+<h2 id="logout">15.6.2 Logout Controller</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/endpoints/logout.adoc"'>
@@ -25401,7 +25442,7 @@ If you are using JWT authentication, you may not need to invoke the <code>/logou
 </div>
 
 
-<h2 id="refresh">15.5.3 Refresh Controller</h2>
+<h2 id="refresh">15.6.3 Refresh Controller</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/endpoints/refresh.adoc"'>
@@ -25494,7 +25535,7 @@ See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of t
 </div>
 
 
-<h2 id="retrievingAuthenticatedUser">15.6 Retrieve the authenticated user</h2>
+<h2 id="retrievingAuthenticatedUser">15.7 Retrieve the authenticated user</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/retrievingAuthenticatedUser.adoc"'>
@@ -25566,7 +25607,7 @@ public class UserController {
 </div>
 
 
-<h2 id="securityEvents">15.7 Security Events</h2>
+<h2 id="securityEvents">15.8 Security Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityEvents.adoc"'>
