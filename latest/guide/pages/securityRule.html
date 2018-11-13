@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>15.2 Security Rules 1.0.0</title>
+    <title>15.2 Security Rules 1.0.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>15.2 Security Rules</h1>
 
-                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Version:</strong> 1.0.1</p>
                 </div>
 
                 
@@ -141,7 +141,7 @@ function addJsClass() {
 <h2 id="securityRule">15.2 Security Rules</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityRule.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityRule.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -157,7 +157,7 @@ you can implement your own <a href="../api/io/micronaut/security/rules/SecurityR
 <h2 id="ipPattern">15.2.1 IP Pattern Rule</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityRule/ipPattern.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityRule/ipPattern.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -174,7 +174,7 @@ you can implement your own <a href="../api/io/micronaut/security/rules/SecurityR
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
   security:
     enabled: true
-    ipPatterns:
+    ip-patterns:
       - 127.0.0.1
       - 192.168.1.*</code></pre>
 </div>
@@ -188,7 +188,7 @@ either <code>127.0.0.1</code> or <code>192.168.1.*</code> range.</p>
 <h2 id="secured">15.2.2 Secured Annotation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityRule/secured.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityRule/secured.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -283,7 +283,7 @@ public class ExampleController {
 <h2 id="interceptUrlMap">15.2.3 Intercept URL Map</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityRule/interceptUrlMap.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityRule/interceptUrlMap.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -297,10 +297,10 @@ public class ExampleController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
   security:
     enabled: true
-    interceptUrlMap:
+    intercept-url-map:
       -
         pattern: /images/*
-        httpMethod: GET
+        http-method: GET
         access:
           - isAnonymous() <i class="conum" data-value="1"></i><b>(1)</b>
       -
@@ -309,7 +309,7 @@ public class ExampleController {
           - isAuthenticated() <i class="conum" data-value="2"></i><b>(2)</b>
       -
         pattern: /books/grails
-        httpMethod: GET
+        http-method: GET
         access:
           - ROLE_GRAILS <i class="conum" data-value="3"></i><b>(3)</b>
           - ROLE_GROOVY</code></pre>
@@ -340,7 +340,7 @@ and an optional HTTP Method</p>
 <h2 id="builtInEndpointsAccess">15.2.4 Built-In Endpoints Security</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/securityRule/builtInEndpointsAccess.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/securityRule/builtInEndpointsAccess.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

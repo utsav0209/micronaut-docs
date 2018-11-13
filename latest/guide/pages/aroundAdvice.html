@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.1 Around Advice 1.0.0</title>
+    <title>5.1 Around Advice 1.0.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5.1 Around Advice</h1>
 
-                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Version:</strong> 1.0.1</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="aroundAdvice">5.1 Around Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/aroundAdvice.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/aroundAdvice.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -313,6 +313,70 @@ Since Micronaut is compile time, generally the advice should be packaged in a de
 <p><code>lazy</code> (defaults to <code>false</code>) - By default Micronaut will eagerly intialize the proxy target when the proxy is created. If set to <code>true</code> the proxy target will instead be resolved lazily for each method call.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aop_advice_on_factory_beans">AOP Advice on @Factory Beans</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The semantics of AOP advice when applied to <a href="#factories">Bean Factories</a> differs to regular beans, with the following rules applying:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>AOP advice applied at the class level of a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean will apply the advice to the factory itself and not to any beans defined with the <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> annotation.</p>
+</li>
+<li>
+<p>AOP advice applied on a method annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> will apply the AOP advice to the bean that the factory produces.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Consider the following two examples:</p>
+</div>
+<div class="listingblock">
+<div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Cacheable("my-cache")
+@Factory
+class MyFactory {
+
+    @Bean
+    MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will cache creation of <code>MyBean</code> bean, according to the semantics defined by the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> cache configuration.</p>
+</div>
+<div class="paragraph">
+<p>Now consider this example:</p>
+</div>
+<div class="listingblock">
+<div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+class MyFactory {
+
+    @Bean
+    @Cacheable("my-cache")
+    MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will cache all of the public methods of the <code>MyBean</code> bean, but not the bean creation.</p>
+</div>
+<div class="paragraph">
+<p>The rationale for this behaviour is that you may at times wish to apply advice to a factory and at other times apply advice to the bean produced by the factory.</p>
+</div>
+<div class="paragraph">
+<p>Note that there is currently no way to apply advice at the method level to a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean and all advice for factories must be applied at the type level. You can control which methods have advice applied by defining methods as non-public (non-public methods do not have advice applied).</p>
 </div>
 </div>
 </div>
