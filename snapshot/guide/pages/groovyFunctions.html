@@ -146,17 +146,23 @@ If you have the Micronaut CLI installed you can quickly create a Groovy function
 </table>
 </div>
 <div class="paragraph">
-<p>To begin, add the <code>function-groovy</code> dependency (instead of the provider-specific dependency) which provides additional AST transformations that make writing functions simpler. For example, in <code>build.gradle</code>:</p>
+<p>To begin, add the <code>function-groovy</code> dependency (instead of the provider-specific dependency) which provides additional AST transformations that make writing functions simpler.</p>
 </div>
-<div class="listingblock">
-<div class="title">Example build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    compile "io.micronaut:micronaut-function-groovy"
-    ...
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-groovy'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-groovy&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>You can now create your function as a Groovy script, under <code>src/main/groovy</code>. You will set your project&#8217;s <strong>main</strong> class property to this function (instead of <code>FunctionApplication</code> as in Java/Kotlin). For example:</p>
