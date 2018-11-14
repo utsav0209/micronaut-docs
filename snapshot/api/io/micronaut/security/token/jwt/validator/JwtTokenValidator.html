@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,8 +47,8 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/AuthenticationJWTClaimsSetAdapter.html" title="class in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/SubjectNotNullJwtClaimsValidator.html" title="class in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/security/token/jwt/validator/JwtTokenValidator.html" target="_top">Frames</a></li>
@@ -146,6 +146,10 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#encryptionConfigurations">encryptionConfigurations</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#jwtClaimsValidators">jwtClaimsValidators</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#signatureConfigurations">signatureConfigurations</a></span></code>&nbsp;</td>
 </tr>
@@ -172,7 +176,18 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#JwtTokenValidator-java.util.Collection-java.util.Collection-">JwtTokenValidator</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;&nbsp;signatureConfigurations,
-                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations)</code>&nbsp;</td>
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#JwtTokenValidator-java.util.Collection-java.util.Collection-java.util.Collection-"><code>JwtTokenValidator(Collection, Collection, Collection)</code></a> instead.</span></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#JwtTokenValidator-java.util.Collection-java.util.Collection-java.util.Collection-">JwtTokenValidator</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;&nbsp;signatureConfigurations,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a>&gt;&nbsp;jwtClaimsValidators)</code>
+<div class="block">Constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -190,10 +205,35 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>protected <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#createAuthentication-com.nimbusds.jwt.JWT-">createAuthentication</a></span>(com.nimbusds.jwt.JWT&nbsp;jwt)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#validateEncryptedJWT-com.nimbusds.jwt.EncryptedJWT-java.lang.String-">validateEncryptedJWT</a></span>(com.nimbusds.jwt.EncryptedJWT&nbsp;encryptedJWT,
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;token)</code>
+<div class="block">Validates a encrypted JWT.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>protected <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#validatePlainJWT-com.nimbusds.jwt.JWT-">validatePlainJWT</a></span>(com.nimbusds.jwt.JWT&nbsp;jwt)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#validateSignedJWT-com.nimbusds.jwt.SignedJWT-">validateSignedJWT</a></span>(com.nimbusds.jwt.SignedJWT&nbsp;signedJWT)</code>
+<div class="block">Validates a Signed JWT.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#validateToken-java.lang.String-">validateToken</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;token)</code>
 <div class="block">Validates the provided token and returns the authentication state.</div>
 </td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#verifyClaims-com.nimbusds.jwt.JWTClaimsSet-">verifyClaims</a></span>(com.nimbusds.jwt.JWTClaimsSet&nbsp;jwtClaimsSet)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -236,10 +276,19 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <a name="encryptionConfigurations">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>encryptionConfigurations</h4>
 <pre>protected final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt; encryptionConfigurations</pre>
+</li>
+</ul>
+<a name="jwtClaimsValidators">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>jwtClaimsValidators</h4>
+<pre>protected final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a>&gt; jwtClaimsValidators</pre>
 </li>
 </ul>
 </li>
@@ -250,14 +299,36 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="JwtTokenValidator-java.util.Collection-java.util.Collection-java.util.Collection-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JwtTokenValidator</h4>
+<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
+public&nbsp;JwtTokenValidator(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;&nbsp;signatureConfigurations,
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations,
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a>&gt;&nbsp;jwtClaimsValidators)</pre>
+<div class="block">Constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>signatureConfigurations</code> - List of Signature configurations which are used to attempt validation.</dd>
+<dd><code>encryptionConfigurations</code> - List of Encryption configurations which are used to attempt validation.</dd>
+<dd><code>jwtClaimsValidators</code> - JWT Claims validators.</dd>
+</dl>
+</li>
+</ul>
 <a name="JwtTokenValidator-java.util.Collection-java.util.Collection-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>JwtTokenValidator</h4>
-<pre>public&nbsp;JwtTokenValidator(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;&nbsp;signatureConfigurations,
-                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;JwtTokenValidator(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/signature/SignatureConfiguration.html" title="interface in io.micronaut.security.token.jwt.signature">SignatureConfiguration</a>&gt;&nbsp;signatureConfigurations,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/security/token/jwt/encryption/EncryptionConfiguration.html" title="interface in io.micronaut.security.token.jwt.encryption">EncryptionConfiguration</a>&gt;&nbsp;encryptionConfigurations)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtTokenValidator.html#JwtTokenValidator-java.util.Collection-java.util.Collection-java.util.Collection-"><code>JwtTokenValidator(Collection, Collection, Collection)</code></a> instead.</span></div>
+<div class="block">Deprecated Constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>signatureConfigurations</code> - List of Signature configurations which are used to attempt validation.</dd>
@@ -273,10 +344,83 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="validatePlainJWT-com.nimbusds.jwt.JWT-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validatePlainJWT</h4>
+<pre>protected&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;&nbsp;validatePlainJWT(com.nimbusds.jwt.JWT&nbsp;jwt)
+                                              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jwt</code> - a JWT Token</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an Authentication if validation was successful or empty if not.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></code> - it may throw a ParseException while retrieving the JWT claims</dd>
+</dl>
+</li>
+</ul>
+<a name="validateSignedJWT-com.nimbusds.jwt.SignedJWT-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validateSignedJWT</h4>
+<pre>protected&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;&nbsp;validateSignedJWT(com.nimbusds.jwt.SignedJWT&nbsp;signedJWT)
+                                               throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
+<div class="block">Validates a Signed JWT.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>signedJWT</code> - a Signed JWT Token</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an Authentication if validation was successful or empty if not.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></code> - it may throw a ParseException while retrieving the JWT claims</dd>
+</dl>
+</li>
+</ul>
+<a name="verifyClaims-com.nimbusds.jwt.JWTClaimsSet-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>verifyClaims</h4>
+<pre>protected&nbsp;boolean&nbsp;verifyClaims(com.nimbusds.jwt.JWTClaimsSet&nbsp;jwtClaimsSet)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jwtClaimsSet</code> - JWT Claims.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether the JWT claims pass every validation.</dd>
+</dl>
+</li>
+</ul>
+<a name="validateEncryptedJWT-com.nimbusds.jwt.EncryptedJWT-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validateEncryptedJWT</h4>
+<pre>protected&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;&nbsp;validateEncryptedJWT(com.nimbusds.jwt.EncryptedJWT&nbsp;encryptedJWT,
+                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;token)
+                                                  throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
+<div class="block">Validates a encrypted JWT.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>encryptedJWT</code> - a encrytped JWT Token</dd>
+<dd><code>token</code> - the JWT token as String</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an Authentication if validation was successful or empty if not.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></code> - it may throw a ParseException while retrieving the JWT claims</dd>
+</dl>
+</li>
+</ul>
 <a name="validateToken-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>validateToken</h4>
 <pre>public&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;&nbsp;validateToken(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;token)</pre>
@@ -286,9 +430,27 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../io/micronaut/security/token/validator/TokenValidator.html#validateToken-java.lang.String-">validateToken</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/security/token/validator/TokenValidator.html" title="interface in io.micronaut.security.token.validator">TokenValidator</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>token</code> - The token string</dd>
+<dd><code>token</code> - The token string.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The authentication or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a> if the validation fails</dd>
+<dd>The authentication or empty if the validation fails.</dd>
+</dl>
+</li>
+</ul>
+<a name="createAuthentication-com.nimbusds.jwt.JWT-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>createAuthentication</h4>
+<pre>protected&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication">Authentication</a>&gt;&nbsp;createAuthentication(com.nimbusds.jwt.JWT&nbsp;jwt)
+                                                  throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jwt</code> - a JWT token</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Publishes a <a href="../../../../../../io/micronaut/security/authentication/Authentication.html" title="interface in io.micronaut.security.authentication"><code>Authentication</code></a> based on the JWT.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></code> - it may throw a ParseException while retrieving the JWT claims</dd>
 </dl>
 </li>
 </ul>
@@ -319,8 +481,8 @@ implements <a href="../../../../../../io/micronaut/security/token/validator/Toke
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/AuthenticationJWTClaimsSetAdapter.html" title="class in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../../io/micronaut/security/token/jwt/validator/SubjectNotNullJwtClaimsValidator.html" title="class in io.micronaut.security.token.jwt.validator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/security/token/jwt/validator/JwtTokenValidator.html" target="_top">Frames</a></li>
