@@ -153,15 +153,15 @@ public class Application {
 <div class="title">Micronaut Spock Test</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
 import spock.lang.*
-
 class HelloControllerSpec extends Specification {
 
     @Shared @AutoCleanup EmbeddedServer embeddedServer =
-            ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
+ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
 
     @Shared @AutoCleanup HttpClient client = HttpClient.create(embeddedServer.URL) <i class="conum" data-value="2"></i><b>(2)</b>
 

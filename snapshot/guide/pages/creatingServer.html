@@ -175,17 +175,54 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 <div class="paragraph">
 <p>In order to create a service that responds to "Hello World" you first need a controller. The following is an example of a controller written in Java and located in <code>src/main/java/example/helloworld</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">src/main/java/example/helloworld/HelloController.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
 @Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
 public class HelloController {
     @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
     public String index() {
         return "Hello World"; <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Produces
+
+
+@Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+class HelloController {
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    fun index(): String {
+        return "Hello World" <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller('/hello') <i class="conum" data-value="1"></i><b>(1)</b>
+class HelloController {
+    @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
+    String index() {
+        'Hello World' <i class="conum" data-value="3"></i><b>(3)</b>
     }
 }</code></pre>
 </div>

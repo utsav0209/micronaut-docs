@@ -129,211 +129,66 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/6?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features.</p>
+<p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/9?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features and improvements.</p>
 </div>
 <div class="sect2">
-<h3 id="_improvements_from_rc3_to_ga">Improvements from RC3 to GA</h3>
+<h3 id="_micronaut_for_spring">Micronaut for Spring</h3>
 <div class="paragraph">
-<p>GraalVM support has been updated to use Docker instead of a <code>./build-native-image</code> script allowing usage of other platforms.</p>
-</div>
-<div class="paragraph">
-<p>The official GraalVM Docker images are used, so to build a native image you can simply execute <code>docker build . -t myimage</code> in the root of your project.</p>
+<p>It is now possible using Ahead of Time compilation to use the Spring annotation based programming model to build Micronaut applications. See the documentation for <a href="https://github.com/micronaut-projects/micronaut-spring">Micronaut for Spring</a> for details.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_support_for_graalvm_native_images">Support for GraalVM Native Images</h3>
+<h3 id="_improved_graalvm_docker_files">Improved GraalVM Docker Files</h3>
 <div class="paragraph">
-<p>Micronaut now includes experimental support for compiling down to <a href="https://www.graalvm.org">GraalVM</a> native images using the <code>nativeimage</code> tool shipped as part of Graal (1.0.0 RC6 and above).</p>
-</div>
-<div class="paragraph">
-<p>This is possible due to to Micronaut&#8217;s reflection-free approach to Dependency Injection and AOP.</p>
-</div>
-<div class="paragraph">
-<p>See the section on <a href="#graal">GraalVM support</a> in the user guide for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_swagger_openapi_documentation_support">Swagger / OpenAPI Documentation Support</h3>
-<div class="paragraph">
-<p>Micronaut now includes the ability to generate Swagger (OpenAPI) YAML at compile time using the language neutral visitor API and the interfaces defined by the <a href="../api/io/micronaut/inject/ast/package-summary.html">io.micronaut.inject.ast</a> package.</p>
-</div>
-<div class="paragraph">
-<p>See the section on <a href="#openapi">OpenAPI / Swagger Support</a> in the user guide for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_native_websocket_support">Native WebSocket Support</h3>
-<div class="paragraph">
-<p>Built-in support for WebSocket for both the client and the server has been added. The following example is a simple server chat implementation:</p>
+<p>The Dockerfiles for GraalVM have been improved including a new all-in-one docker file that will build a slimmed down image including only your application using:</p>
 </div>
 <div class="listingblock">
-<div class="title">WebSocket Chat Example</div>
+<div class="title">Using <code>DockerAllInOne</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.http.server.netty.websocket;
-
-import io.micronaut.websocket.WebSocketBroadcaster;
-import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
-import java.util.function.Predicate;
-
-@ServerWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
-public class ChatServerWebSocket {
-    private WebSocketBroadcaster broadcaster;
-
-    public ChatServerWebSocket(WebSocketBroadcaster broadcaster) {
-        this.broadcaster = broadcaster;
-    }
-
-    @OnOpen <i class="conum" data-value="2"></i><b>(2)</b>
-    public void onOpen(String topic, String username, WebSocketSession session) {
-        String msg = "[" + username + "] Joined!";
-        broadcaster.broadcastSync(msg, isValid(topic, session));
-    }
-
-    @OnMessage <i class="conum" data-value="3"></i><b>(3)</b>
-    public void onMessage(
-            String topic,
-            String username,
-            String message,
-            WebSocketSession session) {
-        String msg = "[" + username + "] " + message;
-        broadcaster.broadcastSync(msg, isValid(topic, session)); <i class="conum" data-value="4"></i><b>(4)</b>
-    }
-
-    @OnClose <i class="conum" data-value="5"></i><b>(5)</b>
-    public void onClose(
-            String topic,
-            String username,
-            WebSocketSession session) {
-        String msg = "[" + username + "] Disconnected!";
-        broadcaster.broadcastSync(msg, isValid(topic, session));
-    }
-
-    private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
-        return s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null));
-    }
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -f DockerfileAllInOne -t hello-world</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_inheritance_support_for_swagger">Inheritance support for Swagger</h3>
 <div class="paragraph">
-<p>See the section on <a href="#websocket">WebSocket Support</a> in the user guide for more information.</p>
+<p>Compile-time support for Swagger has been improved to support inheritance when building the Swagger models.</p>
 </div>
-<div class="sect3">
-<h4 id="_cli_commands_for_websockets">CLI Commands for WebSockets</h4>
+</div>
+<div class="sect2">
+<h3 id="_improvements_for_jdk_11">Improvements for JDK 11</h3>
 <div class="paragraph">
-<p>The Micronaut CLI now includes two new commands for generating WebSocket clients and servers.</p>
+<p>Various improvements have been made to improve the Micronaut experience on JDK 11.</p>
 </div>
-<div class="listingblock">
+</div>
+<div class="sect2">
+<h3 id="_improved_support_for_openfaas">Improved support for OpenFaaS</h3>
+<div class="paragraph">
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+- Netty <code>4.1.29</code> &#8594; <code>4.1.30</code>
+- RxJava <code>2.2.0</code> &#8594; <code>2.2.2</code>
+- Hibernate Core <code>5.3.4</code> &#8594; <code>5.3.6.Final</code>
+- Jackson <code>2.9.6</code> &#8594; <code>2.9.7</code>
+- Reactor <code>3.1.8</code> &#8594; <code>3.2.0</code>
+- SnakeYAML <code>1.20</code> &#8594; <code>1.23</code>
+- Jaeger <code>0.30.4</code> &#8594; <code>0.31.0</code>
+- Brave <code>5.2.0</code> &#8594; <code>5.4.2</code>
+- Zipkin Reporter <code>2.7.7</code> &#8594; <code>2.7.9</code>
+- Spring <code>5.0.8</code> &#8594; <code>5.1.0</code></p>
+</div>
+<div class="exampleblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-websocket-server MyChat
-| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java
-$ mn create-websocket-client MyChat
-| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_compilation_time_validation">Compilation Time Validation</h3>
 <div class="paragraph">
-<p>The <code>validation</code> module can now be added to the <code>annotationProcessor</code> classpath and which will result in additional compile time checks, ensuring that users are using the framework correctly. For example, the following route method:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/hello/{name}")
-public Single&lt;String&gt; hello(@NotBlank String na) {
-     return Single.just("Hello " + na + "!");
-}</code></pre>
-</div>
+<p>The OpenFaaS feature of the CLI now generates an appropriate <code>function.yml</code> file so you can use the OpenFaaS CLI to deploy functions implemented in Micronaut.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.0.x</p>
 </div>
 <div class="paragraph">
-<p>Will produce the following error at compile time:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>hello-world-java/src/main/java/example/HelloController.java:34: error: The route declares a uri variable named [name], but no corresponding method argument is present
-    public Single&lt;String&gt; hello(@NotBlank String na) {
-                          ^</code></pre>
-</div>
+<p>=== AOP Advice on Factory Beans</p>
 </div>
 <div class="paragraph">
-<p>This lessens the need for IDE support designed specifically for Micronaut.</p>
+<p>It is now possible to apply AOP advice like <code>@Retryable</code> at the class level for <code>@Factory</code> beans allowing for the container to be dynamic (for example to retry bean creation if it fails in a cloud environment).</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_experimental_jmx_support_for_endpoints">Experimental JMX Support for Endpoints</h3>
-<div class="paragraph">
-<p>Experimental support for exposing <a href="#endpoints">management endpoints</a> over JMX has been added via the <code>jmx</code> module. See the section on <a href="#jmx">JMX Support</a> for more information on how to use this feaure.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_multitenancy_support">Multitenancy support</h3>
-<div class="paragraph">
-<p>Latest release includes <a href="#multitenancy">Multitenancy</a> integration into the framework. Features includes tenant resolution, propagation and integration with <a href="#multitenancyGorm">GORM</a> which supports discriminator, table and schema multitenancy modes.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_token_propagation">Token Propagation</h3>
-<div class="paragraph">
-<p>Latest release includes <a href="#tokenPropagation">Token Propagation</a> capabilities into the security module of the the framework. It enables the propagation of valid tokens to outgoing requests triggered by the original request in a transparent way.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ldap_authentication">Ldap Authentication</h3>
-<div class="paragraph">
-<p>Latest release supports <a href="#ldap">authentication with LDAP</a> out of the box. Moreover, the LDAP authentication in Micronaut supports configuration of one or more LDAP servers to authenticate with.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_documentation_improvements">Documentation Improvements</h3>
-<div class="paragraph">
-<p>The documentation you are reading has been improved with a new configuration reference button at the top that contains a reference produced at compile time of all the available configuration options in Micronaut.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_dependency_upgrades">Dependency Upgrades</h3>
-<div class="paragraph">
-<p>The following dependency upgrades occurred in this release:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Netty <code>4.1.29</code> &#8594; <code>4.1.30</code></p>
-</li>
-<li>
-<p>RxJava <code>2.2.0</code> &#8594; <code>2.2.2</code></p>
-</li>
-<li>
-<p>Hibernate Core <code>5.3.4</code> &#8594; <code>5.3.6.Final</code></p>
-</li>
-<li>
-<p>Jackson <code>2.9.6</code> &#8594; <code>2.9.7</code></p>
-</li>
-<li>
-<p>Reactor <code>3.1.8</code> &#8594; <code>3.2.0</code></p>
-</li>
-<li>
-<p>SnakeYAML <code>1.20</code> &#8594; <code>1.23</code></p>
-</li>
-<li>
-<p>Jaeger <code>0.30.4</code> &#8594; <code>0.31.0</code></p>
-</li>
-<li>
-<p>Brave <code>5.2.0</code> &#8594; <code>5.4.2</code></p>
-</li>
-<li>
-<p>Zipkin Reporter <code>2.7.7</code> &#8594; <code>2.7.9</code></p>
-</li>
-<li>
-<p>Spring <code>5.0.8</code> &#8594; <code>5.1.0</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_amazon_route_53_service_discovery_and_aws_systems_manager_parameter_store_support">Amazon Route 53 Service Discovery and AWS Systems Manager Parameter Store Support</h3>
-<div class="paragraph">
-<p>Use Amazon Route 53 Service Discovery directly for service discovery instead of running an instance of tools like Consul. You can also use AWS Systems Manager Parameter Store for shared configuration between nodes.</p>
 </div>
 </div>
 

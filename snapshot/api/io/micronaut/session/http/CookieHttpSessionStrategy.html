@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/session/http/CookieHttpSessionIdGenerator.html" title="class in io.micronaut.session.http"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/session/http/HeadersHttpSessionIdStrategy.html" title="class in io.micronaut.session.http"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -146,6 +146,12 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 <div class="block">Constructor.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/session/http/CookieHttpSessionStrategy.html#CookieHttpSessionStrategy-io.micronaut.session.http.HttpSessionConfiguration-io.micronaut.session.http.CookieHttpSessionIdGenerator-">CookieHttpSessionStrategy</a></span>(<a href="../../../../io/micronaut/session/http/HttpSessionConfiguration.html" title="class in io.micronaut.session.http">HttpSessionConfiguration</a>&nbsp;configuration,
+                         <a href="../../../../io/micronaut/session/http/CookieHttpSessionIdGenerator.html" title="class in io.micronaut.session.http">CookieHttpSessionIdGenerator</a>&nbsp;cookieHttpSessionIdGenerator)</code>
+<div class="block">Constructor.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -170,6 +176,10 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../../io/micronaut/session/http/HttpSessionConfiguration.html" title="class in io.micronaut.session.http">HttpSessionConfiguration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/session/http/CookieHttpSessionStrategy.html#getConfiguration--">getConfiguration</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/session/http/CookieHttpSessionStrategy.html#resolveIds-io.micronaut.http.HttpRequest-">resolveIds</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;message)</code>
 <div class="block">Resolve the Session ID from the given HTTP message.</div>
@@ -200,7 +210,7 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 <a name="CookieHttpSessionStrategy-io.micronaut.session.http.HttpSessionConfiguration-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>CookieHttpSessionStrategy</h4>
 <pre>public&nbsp;CookieHttpSessionStrategy(<a href="../../../../io/micronaut/session/http/HttpSessionConfiguration.html" title="class in io.micronaut.session.http">HttpSessionConfiguration</a>&nbsp;configuration)</pre>
@@ -208,6 +218,22 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>configuration</code> - The HTTP session configuration</dd>
+</dl>
+</li>
+</ul>
+<a name="CookieHttpSessionStrategy-io.micronaut.session.http.HttpSessionConfiguration-io.micronaut.session.http.CookieHttpSessionIdGenerator-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>CookieHttpSessionStrategy</h4>
+<pre>public&nbsp;CookieHttpSessionStrategy(<a href="../../../../io/micronaut/session/http/HttpSessionConfiguration.html" title="class in io.micronaut.session.http">HttpSessionConfiguration</a>&nbsp;configuration,
+                                 <a href="../../../../io/micronaut/session/http/CookieHttpSessionIdGenerator.html" title="class in io.micronaut.session.http">CookieHttpSessionIdGenerator</a>&nbsp;cookieHttpSessionIdGenerator)</pre>
+<div class="block">Constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>configuration</code> - The HTTP session configuration</dd>
+<dd><code>cookieHttpSessionIdGenerator</code> - Cookie HTTP Session Id generator</dd>
 </dl>
 </li>
 </ul>
@@ -241,7 +267,7 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 <a name="encodeId-io.micronaut.http.HttpRequest-io.micronaut.http.MutableHttpResponse-io.micronaut.session.Session-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>encodeId</h4>
 <pre>public&nbsp;void&nbsp;encodeId(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
@@ -257,6 +283,19 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 <dd><code>request</code> - The request</dd>
 <dd><code>response</code> - The response</dd>
 <dd><code>session</code> - The session</dd>
+</dl>
+</li>
+</ul>
+<a name="getConfiguration--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getConfiguration</h4>
+<pre>public&nbsp;<a href="../../../../io/micronaut/session/http/HttpSessionConfiguration.html" title="class in io.micronaut.session.http">HttpSessionConfiguration</a>&nbsp;getConfiguration()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The HTTP session configuration</dd>
 </dl>
 </li>
 </ul>
@@ -287,7 +326,7 @@ implements <a href="../../../../io/micronaut/session/http/HttpSessionIdStrategy.
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/session/http/CookieHttpSessionIdGenerator.html" title="class in io.micronaut.session.http"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/session/http/HeadersHttpSessionIdStrategy.html" title="class in io.micronaut.session.http"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

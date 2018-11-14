@@ -140,16 +140,15 @@ function addJsClass() {
 <div class="title">Testing Hello World</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
 import spock.lang.*
-
 class HelloControllerSpec extends Specification {
 
     @Shared @AutoCleanup EmbeddedServer embeddedServer =
-            ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
-
+ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
     @Shared @AutoCleanup HttpClient client = HttpClient.create(embeddedServer.URL) <i class="conum" data-value="2"></i><b>(2)</b>
 
     void "test hello world response"() {
@@ -181,7 +180,7 @@ class HelloControllerSpec extends Specification {
 </table>
 </div>
 <div class="paragraph">
-<p>In addition to a low-level client, Micronaut features a <a href="#clientAnnotation">declarative, compile-time HTTP client</a>, powered by the <a href="../api/io/micronaut/http/client/Client.html">Client</a> annotation.</p>
+<p>In addition to a low-level client, Micronaut features a <a href="#clientAnnotation">declarative, compile-time HTTP client</a>, powered by the <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation.</p>
 </div>
 <div class="paragraph">
 <p>To create a client, simply create an interface annotated with <code>@Client</code>. For example:</p>
@@ -189,16 +188,9 @@ class HelloControllerSpec extends Specification {
 <div class="listingblock">
 <div class="title">src/main/java/hello/world/HelloClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Get;
-import io.micronaut.http.client.annotation.Client;
-import io.reactivex.Single;
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=imports, indent=0]
 
-@Client("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
-public interface HelloClient {
-
-    @Get <i class="conum" data-value="2"></i><b>(2)</b>
-    Single&lt;String&gt; hello(); <i class="conum" data-value="3"></i><b>(3)</b>
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=class, indent=0]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -223,12 +215,10 @@ public interface HelloClient {
 <div class="listingblock">
 <div class="title">Testing HelloClient</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.*
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">class HelloClientSpec extends Specification {
 
-class HelloClientSpec extends Specification {
-    @Shared @AutoCleanup EmbeddedServer embeddedServer =
-            ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
+@Shared @AutoCleanup EmbeddedServer embeddedServer =
+    ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
 
     @Shared HelloClient client = embeddedServer
                                         .applicationContext
@@ -260,10 +250,10 @@ class HelloClientSpec extends Specification {
 </table>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/http/client/Client.html">Client</a> annotation produces an implementation automatically for you at compile time without the need to use proxies or runtime reflection.</p>
+<p>The <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation produces an implementation automatically for you at compile time without the need to use proxies or runtime reflection.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/http/client/Client.html">Client</a> annotation is very flexible. See the section on the <a href="#httpClient">Micronaut HTTP Client</a> for more information.</p>
+<p>The <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation is very flexible. See the section on the <a href="#httpClient">Micronaut HTTP Client</a> for more information.</p>
 </div>
 
 

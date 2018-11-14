@@ -161,7 +161,7 @@ function addJsClass() {
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_build_native_image_using_docker">Build native image using Docker</h4>
+<h4 id="_building_a_native_image_using_docker">Building a Native Image Using Docker</h4>
 <div class="paragraph">
 <p>To build your native image using Docker simply run:</p>
 </div>
@@ -187,9 +187,46 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./docker-build.sh</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Also you can use the multi-stage dockerfile 'DockerfileAllInOne` which builds the project in three steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A Gradle or Maven image will build the project</p>
+</li>
+<li>
+<p>A GraalVM official image will build the native image</p>
+</li>
+<li>
+<p>A typical dockerfile structure will build the final image which in smaller due to layering</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world -f DockerfileAllInOne <i class="conum" data-value="1"></i><b>(1)</b>
+$ docker run --rm --name hello-world --network=host hello-world <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>-f</code> sets the file to use in the build process</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Starting the Docker container with <code>--network=host</code> makes the application use the same network as the host so all ports are exposed automatically without needing to map them manually. Also <code>--rm</code> remove the container named <code>hello-world</code> once finished</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With this approach you need to have installed only Docker as it downloads the required images, if necessary.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_build_native_image_without_using_docker">Build native image without using Docker</h4>
+<h4 id="_building_a_native_image_without_using_docker">Building a Native Image Without Using Docker</h4>
 <div class="paragraph">
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
@@ -277,7 +314,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>-H:ReflectionConfigurationFiles</code> points GraalVM to the <code>reflect.json</code> file needed to run the application</td>
+<td>The <code>-H:ReflectionConfigurationFiles</code> option points GraalVM to the <code>reflect.json</code> file (or files) needed to run the application. Multiple comma-separated files can be specified.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
