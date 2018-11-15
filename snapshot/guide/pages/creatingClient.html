@@ -188,9 +188,16 @@ ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1
 <div class="listingblock">
 <div class="title">src/main/java/hello/world/HelloClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=imports, indent=0]
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Single;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=class, indent=0]</code></pre>
+@Client("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+public interface HelloClient {
+
+    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    Single&lt;String&gt; hello(); <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">

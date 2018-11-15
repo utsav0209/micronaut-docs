@@ -394,64 +394,56 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 <p>See the section <a href="#runningSpecificPort">Running Server on a Specific Port</a> in the user guide for more options.</p>
 </div>
 <div class="paragraph">
-<p>In order to create a service that responds to "Hello World" you first need a controller. The following is an example of a controller written in Java and located in <code>src/main/java/example/helloworld</code>:</p>
+<p>In order to create a service that responds to "Hello World" you first need a controller. The following is an example of a controller:</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-@Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+@Controller("/hello") <b class="conum">(1)</b>
 public class HelloController {
-    @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     public String index() {
-        return "Hello World"; <i class="conum" data-value="3"></i><b>(3)</b>
+        return "Hello World"; <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Kotlin</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller('/hello') <b class="conum">(1)</b>
+class HelloController {
+    @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
+    String index() {
+        'Hello World' <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
 
-
-@Controller("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+@Controller("/hello") <b class="conum">(1)</b>
 class HelloController {
 
     @Produces(MediaType.TEXT_PLAIN)
-    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get <b class="conum">(2)</b>
     fun index(): String {
-        return "Hello World" <i class="conum" data-value="3"></i><b>(3)</b>
+        return "Hello World" <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title">Groovy</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-
-@Controller('/hello') <i class="conum" data-value="1"></i><b>(1)</b>
-class HelloController {
-    @Get(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="2"></i><b>(2)</b>
-    String index() {
-        'Hello World' <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here is another example:</p>
-</div>
-
 <div class="colist arabic">
 <table>
 <tr>
@@ -467,6 +459,11 @@ class HelloController {
 <td>A String "Hello World" is returned as the result</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>If you are using Java, place the previous file in <code>src/main/java/hello/world</code>.
+If you are using Groovy, place the previous file in <code>src/main/groovy/hello/world</code>.
+If you are using Kotlin, place the previous file in <code>src/main/kotlin/hello/world</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you start the application and send a request to the <code>/hello</code> URI then the text "Hello World" is returned:</p>
@@ -667,9 +664,16 @@ ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1
 <div class="listingblock">
 <div class="title">src/main/java/hello/world/HelloClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=imports, indent=0]
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Single;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloClient.java[tags=class, indent=0]</code></pre>
+@Client("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+public interface HelloClient {
+
+    @Get <i class="conum" data-value="2"></i><b>(2)</b>
+    Single&lt;String&gt; hello(); <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
