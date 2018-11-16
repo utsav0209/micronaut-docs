@@ -13253,6 +13253,11 @@ Read the HTTP Client Guide (<a href="http://guides.micronaut.io/micronaut-http-c
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.ibm.com/cloud/">IBM Cloud</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.IBM)</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#DIGITAL_OCEAN">DIGITAL_OCEAN</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.digitalocean.com/">Digital Ocean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.DIGITAL_OCEAN)</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -13277,7 +13282,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <h2 id="_using_cloud_instance_metadata">Using Cloud Instance Metadata</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When Micronaut detects it is running on Google Compute or AWS EC2, upon startup Micronaut will populate the interface <a href="../api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html">ComputeInstanceMetadata</a>.</p>
+<p>When Micronaut detects it is running on any of the cloud platforms listed above, such as Google Compute or AWS EC2, upon startup Micronaut will populate the interface <a href="../api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html">ComputeInstanceMetadata</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -13286,7 +13291,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a> with metadata found from Google or Amazon&#8217;s metadata services.
+Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a>, <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a> or api:io.micronaut.discovery.cloud.digitalocean.DigitalOceanInstanceMetadata with metadata found from the cloud provider metadata services.
 </td>
 </tr>
 </table>
