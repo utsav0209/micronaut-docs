@@ -159,15 +159,17 @@ function addJsClass() {
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Micronaut Environment Detection</caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Constant</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Requires Example</th>
+<th class="tableblock halign-left valign-top">Environment name</th>
 </tr>
 </thead>
 <tbody>
@@ -175,56 +177,67 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#ANDROID">ANDROID</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running as an Android application</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.ANDROID)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>android</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#TEST">TEST</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running within a JUnit or Spock test</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.TEST)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>test</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#CLOUD">CLOUD</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running in a Cloud environment (present for all other cloud platform types)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.CLOUD)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#AMAZON_EC2">AMAZON_EC2</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://aws.amazon.com/ec2">Amazon EC2</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.AMAZON_EC2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ec2</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#GOOGLE_COMPUTE">GOOGLE_COMPUTE</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://cloud.google.com/compute/">Google Compute</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.GOOGLE_COMPUTE)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gcp</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#KUBERNETES">KUBERNETES</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.kubernetes.io">Kubernetes</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.KUBERNETES)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k8s</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#HEROKU">HEROKU</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://heroku.com">Heroku</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.HEROKU)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heroku</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#CLOUD_FOUNDRY">CLOUD_FOUNDRY</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.cloudfoundry.org">Cloud Foundry</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.CLOUD_FOUNDRY)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pcf</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#AZURE">AZURE</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://azure.microsoft.com">Microsoft Azure</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.AZURE)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>azure</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#IBM">IBM</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.ibm.com/cloud/">IBM Cloud</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.IBM)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ibm</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#DIGITAL_OCEAN">DIGITAL_OCEAN</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.digitalocean.com/">Digital Ocean</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.DIGITAL_OCEAN)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>digitalocean</code></p></td>
 </tr>
 </tbody>
 </table>
