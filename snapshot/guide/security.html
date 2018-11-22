@@ -802,6 +802,11 @@ compile "io.micronaut:micronaut-security-session"</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the session config is enabled. Default value (false).</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.session.legacy-rejection-handler</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decides whether the deprecated {@link SessionSecurityFilterOrderProvider} is loaded, instead of the new <a href="../api/io/micronaut/security/handlers/RedirectRejectionHandler.html">RedirectRejectionHandler</a>. Defaults to (#DEFAULT_LEGACYREJECTIONHANDLER).</p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect1">
@@ -1943,7 +1948,14 @@ public class MyContextBuilder implements ContextBuilder {
 <p>To control this response, it is necessary to register a <a href="../api/io/micronaut/security/handlers/RejectionHandler.html">RejectionHandler</a> and ensure your bean replaces the default implementation.</p>
 </div>
 <div class="paragraph">
-<p>For those using session based security, replace <a href="../api/io/micronaut/security/session/SessionSecurityfilterRejectionHandler.html">SessionSecurityfilterRejectionHandler</a>. For those using JWT based security, replace <a href="../api/io/micronaut/security/handlers/HttpStatusCodeRejectionHandler.html">HttpStatusCodeRejectionHandler</a>.</p>
+<p>If both beans (<a href="../api/io/micronaut/security/handlers/UnauthorizedRejectionUriProvider.html">UnauthorizedRejectionUriProvider</a>, <a href="../api/io/micronaut/security/handlers/ForbiddenRejectionUriProvider.html">ForbiddenRejectionUriProvider</a>) exists, then <a href="../api/io/micronaut/security/handlers/RedirectRejectionHandler.html">RedirectRejectionHandler</a>,
+               a generic redirect handler, is registered as a <code>RedirectHandler</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can create your own <code>RejectionHandler</code>. You will need to replace the current <code>RejectionHandler</code>.</p>
+</div>
+<div class="paragraph">
+<p>For those using JWT based security, replace <a href="../api/io/micronaut/security/handlers/HttpStatusCodeRejectionHandler.html">HttpStatusCodeRejectionHandler</a>.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -1963,6 +1975,21 @@ public class MyRejectionHandler extends HttpStatusCodeRejectionHandler {
     }
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>For those using session based security, replace <a href="../api/io/micronaut/security/session/SessionSecurityfilterRejectionHandler.html">SessionSecurityfilterRejectionHandler</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you are using session based security to use the <code>RedirectRejectionHandler</code> you will need to disable <code>SessionSecurityfilterRejectionHandler</code> with <code>micronaut.security.session.legacy-redirect-handler: false</code>.
+</td>
+</tr>
+</table>
 </div>
 
 
