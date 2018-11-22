@@ -4133,6 +4133,13 @@ class EngineConfig {
 
     @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <i class="conum" data-value="3"></i><b>(3)</b>
     CrankShaft.Builder crankShaft = CrankShaft.builder()
+
+    SparkPlug.Builder sparkPlug = SparkPlug.builder()
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug")
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug
+    }
 }</code></pre>
 </div>
 </div>
@@ -4181,7 +4188,7 @@ class EngineFactory {
     @Bean
     @Singleton
     EngineImpl buildEngine(EngineConfig engineConfig) {
-        engineConfig.builder.build(engineConfig.crankShaft)
+        engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
     }
 }</code></pre>
 </div>
@@ -4197,8 +4204,12 @@ class EngineFactory {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
         ['my.engine.cylinders':'4',
-         'my.engine.manufacturer': 'Subaru',
-         'my.engine.crank-shaft.rod-length': 4],
+         'my.engine.manufacturer'          : 'Subaru',
+         'my.engine.crank-shaft.rod-length': 4,
+         'my.engine.spark-plug.name'       : '6619 LFR6AIX',
+         'my.engine.spark-plug.type'       : 'Iridium',
+         'my.engine.spark-plug.companyName': 'NGK'
+        ],
         "test"
 )
 
@@ -5434,6 +5445,31 @@ public class BookService {
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.redis-exec-provider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.slave-of</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.config-file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.setting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
@@ -22200,7 +22236,7 @@ class MessageEndpoint {
 
     String message
 
-    @Write(consumes = MediaType.APPLICATION_JSON)
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
     String updateMessage(String newMessage) {  <i class="conum" data-value="1"></i><b>(1)</b>
         message = newMessage
 
@@ -22214,7 +22250,7 @@ class MessageEndpoint {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/json' -d $'{"newMessage": "A new message"}'
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/x-www-form-urlencoded' -d $'newMessage=A new message'
 
 Message updated</code></pre>
 </div>

@@ -497,7 +497,7 @@ class MessageEndpoint {
 
     String message
 
-    @Write(consumes = MediaType.APPLICATION_JSON)
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
     String updateMessage(String newMessage) {  <i class="conum" data-value="1"></i><b>(1)</b>
         message = newMessage
 
@@ -511,7 +511,7 @@ class MessageEndpoint {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/json' -d $'{"newMessage": "A new message"}'
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/x-www-form-urlencoded' -d $'newMessage=A new message'
 
 Message updated</code></pre>
 </div>

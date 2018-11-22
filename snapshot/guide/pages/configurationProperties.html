@@ -467,6 +467,13 @@ class EngineConfig {
 
     @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <i class="conum" data-value="3"></i><b>(3)</b>
     CrankShaft.Builder crankShaft = CrankShaft.builder()
+
+    SparkPlug.Builder sparkPlug = SparkPlug.builder()
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug")
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug
+    }
 }</code></pre>
 </div>
 </div>
@@ -515,7 +522,7 @@ class EngineFactory {
     @Bean
     @Singleton
     EngineImpl buildEngine(EngineConfig engineConfig) {
-        engineConfig.builder.build(engineConfig.crankShaft)
+        engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
     }
 }</code></pre>
 </div>
@@ -531,8 +538,12 @@ class EngineFactory {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
         ['my.engine.cylinders':'4',
-         'my.engine.manufacturer': 'Subaru',
-         'my.engine.crank-shaft.rod-length': 4],
+         'my.engine.manufacturer'          : 'Subaru',
+         'my.engine.crank-shaft.rod-length': 4,
+         'my.engine.spark-plug.name'       : '6619 LFR6AIX',
+         'my.engine.spark-plug.type'       : 'Iridium',
+         'my.engine.spark-plug.companyName': 'NGK'
+        ],
         "test"
 )
 
