@@ -436,6 +436,10 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-cassandraSupport"><a href="#cassandraSupport"><strong>12.1.7</strong><span>Configuring Cassandra</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-liquibaseSupport"><a href="#liquibaseSupport"><strong>12.1.8</strong><span>Configuring Liquibase</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-flywaySupport"><a href="#flywaySupport"><strong>12.1.9</strong><span>Configuring Flyway</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-otherConfigurations"><a href="#otherConfigurations"><strong>12.2</strong><span>Other Configurations</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-rabbitmq"><a href="#rabbitmq"><strong>12.2.1</strong><span>RabbitMQ</span></a></div>
@@ -725,6 +729,14 @@
 <h3 id="_aop_advice_on_factory_beans">AOP Advice on Factory Beans</h3>
 <div class="paragraph">
 <p>It is now possible to apply AOP advice like <code>@Retryable</code> at the class level for <code>@Factory</code> beans allowing for the container to be dynamic (for example to retry bean creation if it fails in a cloud environment).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_added_support_for_flyway_and_liquibase">Added support for Flyway and Liquibase</h3>
+<div class="paragraph">
+<p>It is now possible to use <a href="https://flywaydb.org/">Flyway</a> and <a href="http://www.liquibase.org/">Liquibase</a> to manage database migrations.
+See <a href="https://github.com/micronaut-projects/micronaut-configuration-flyway">Micronaut Flyway</a> and
+<a href="https://github.com/micronaut-projects/micronaut-configuration-liquibase">Micronaut Liquibase</a> documentation for details.</p>
 </div>
 </div>
 
@@ -5422,31 +5434,6 @@ public class BookService {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.redis-exec-provider</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.slave-of</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.config-file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.setting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
@@ -20637,6 +20624,36 @@ applicationContext.environment.addPropertySource(MapPropertySource.of(
 ))
 applicationContext.start()</code></pre>
 </div>
+</div>
+
+
+<h2 id="liquibaseSupport">12.1.8 Configuring Liquibase</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/liquibaseSupport.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To configure Micronaut integration with <a href="http://www.liquibase.org">Liquibase</a>, please follow
+<a href="https://micronaut-projects.github.io/micronaut-configuration-liquibase/latest/guide/index.html">these instructions</a>.</p>
+</div>
+
+
+<h2 id="flywaySupport">12.1.9 Configuring Flyway</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/flywaySupport.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To configure Micronaut integration with <a href="https://flywaydb.org/">Flyway</a>, please follow
+<a href="https://micronaut-projects.github.io/micronaut-configuration-flyway/latest/guide/index.html">these instructions</a></p>
 </div>
 
 
