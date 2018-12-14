@@ -517,7 +517,7 @@ You can make the consumer group configurable using a placeholder: <code>@KafkaLi
         default:
             session:
                 timeout:
-                    ms: 5000</code></pre>
+                    ms: 30000</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -534,7 +534,7 @@ You can make the consumer group configurable using a placeholder: <code>@KafkaLi
         myGroup:
             session:
                 timeout:
-                    ms: 5000</code></pre>
+                    ms: 30000</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -554,7 +554,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 @KafkaListener(
     groupId = "products",
     pollTimeout = "500ms",
-    properties = @Property(name = ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, value = "5000")
+    properties = @Property(name = ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, value = "10000")
 )
 public class ProductListener {
     ...
