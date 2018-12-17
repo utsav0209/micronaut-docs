@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,6 +156,18 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <div class="block">The default max file size.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#DEFAULT_MIXED">DEFAULT_MIXED</a></span></code>
+<div class="block">The default mixed value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#DEFAULT_THRESHOLD">DEFAULT_THRESHOLD</a></span></code>
+<div class="block">The default threshold value.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -197,35 +209,57 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#getMaxFileSize--">getMaxFileSize</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#isDisk--">isDisk</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#getThreshold--">getThreshold</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#isEnabled--">isEnabled</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#isDisk--">isDisk</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#isEnabled--">isEnabled</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#isMixed--">isMixed</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setDisk-boolean-">setDisk</a></span>(boolean&nbsp;disk)</code>
 <div class="block">Sets whether to buffer data to disk or not.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setEnabled-boolean-">setEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Sets whether multipart processing is enabled.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setLocation-java.io.File-">setLocation</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;location)</code>
 <div class="block">Sets the location to store files.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setMaxFileSize-long-">setMaxFileSize</a></span>(long&nbsp;maxFileSize)</code>
 <div class="block">Sets the max file size.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setMixed-boolean-">setMixed</a></span>(boolean&nbsp;mixed)</code>
+<div class="block">Sets whether to buffer data to disk if the size is greater than the
+ threshold.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#setThreshold-long-">setThreshold</a></span>(long&nbsp;threshold)</code>
+<div class="block">Sets the amount of data that should be received that will trigger
+ the data to be stored to disk.</div>
 </td>
 </tr>
 </table>
@@ -281,7 +315,7 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <a name="DEFAULT_DISK">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>DEFAULT_DISK</h4>
 <pre>public static final&nbsp;boolean DEFAULT_DISK</pre>
@@ -289,6 +323,34 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../constant-values.html#io.micronaut.http.server.HttpServerConfiguration.MultipartConfiguration.DEFAULT_DISK">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_MIXED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_MIXED</h4>
+<pre>public static final&nbsp;boolean DEFAULT_MIXED</pre>
+<div class="block">The default mixed value.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.http.server.HttpServerConfiguration.MultipartConfiguration.DEFAULT_MIXED">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_THRESHOLD">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT_THRESHOLD</h4>
+<pre>public static final&nbsp;long DEFAULT_THRESHOLD</pre>
+<div class="block">The default threshold value.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.http.server.HttpServerConfiguration.MultipartConfiguration.DEFAULT_THRESHOLD">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -371,6 +433,32 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 </dl>
 </li>
 </ul>
+<a name="isMixed--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isMixed</h4>
+<pre>public&nbsp;boolean&nbsp;isMixed()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether to use a mixed upload</dd>
+</dl>
+</li>
+</ul>
+<a name="getThreshold--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getThreshold</h4>
+<pre>public&nbsp;long&nbsp;getThreshold()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The threshold to trigger storage to disk</dd>
+</dl>
+</li>
+</ul>
 <a name="setLocation-java.io.File-">
 <!--   -->
 </a>
@@ -417,7 +505,7 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <a name="setDisk-boolean-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setDisk</h4>
 <pre>public&nbsp;void&nbsp;setDisk(boolean&nbsp;disk)</pre>
@@ -425,6 +513,37 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>disk</code> - True if data should be written to disk</dd>
+</dl>
+</li>
+</ul>
+<a name="setMixed-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMixed</h4>
+<pre>public&nbsp;void&nbsp;setMixed(boolean&nbsp;mixed)</pre>
+<div class="block">Sets whether to buffer data to disk if the size is greater than the
+ threshold. Default value (<a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#DEFAULT_MIXED">false</a>).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mixed</code> - True if data should be written to disk after a threshold.</dd>
+</dl>
+</li>
+</ul>
+<a name="setThreshold-long-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setThreshold</h4>
+<pre>public&nbsp;void&nbsp;setThreshold(<a href="../../../../io/micronaut/core/convert/format/ReadableBytes.html" title="annotation in io.micronaut.core.convert.format">@ReadableBytes</a>
+                         long&nbsp;threshold)</pre>
+<div class="block">Sets the amount of data that should be received that will trigger
+ the data to be stored to disk. Default value (<a href="../../../../io/micronaut/http/server/HttpServerConfiguration.MultipartConfiguration.html#DEFAULT_THRESHOLD">10485760L</a>).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>threshold</code> - The threshold</dd>
 </dl>
 </li>
 </ul>
