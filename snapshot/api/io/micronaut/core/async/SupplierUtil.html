@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9};
+var methods = {"i0":9,"i1":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -157,6 +157,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="block">Caches the result of supplier in a thread safe manner.</div>
 </td>
 </tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/core/async/SupplierUtil.html#memoizedNonEmpty-java.util.function.Supplier-">memoizedNonEmpty</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;actual)</code>
+<div class="block">Caches the result of supplier in a thread safe manner.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -199,11 +205,30 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <a name="memoized-java.util.function.Supplier-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>memoized</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;memoized(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;actual)</pre>
 <div class="block">Caches the result of supplier in a thread safe manner.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The type of result</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>actual</code> - The supplier providing the result</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A new supplier that will cache the result</dd>
+</dl>
+</li>
+</ul>
+<a name="memoizedNonEmpty-java.util.function.Supplier-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>memoizedNonEmpty</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;memoizedNonEmpty(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;actual)</pre>
+<div class="block">Caches the result of supplier in a thread safe manner. The result
+ is only cached if it is non null or non empty if an optional.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - The type of result</dd>
