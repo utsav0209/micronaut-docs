@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>14 Management &amp; Monitoring 1.0.1</title>
+    <title>14 Management &amp; Monitoring 1.0.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>14 Management &amp; Monitoring</h1>
 
-                    <p><strong>Version:</strong> 1.0.1</p>
+                    <p><strong>Version:</strong> 1.0.2</p>
                 </div>
 
                 
@@ -487,7 +487,7 @@ class MessageEndpoint {
 
     String message
 
-    @Write(consumes = MediaType.APPLICATION_JSON)
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
     String updateMessage(String newMessage) {  <i class="conum" data-value="1"></i><b>(1)</b>
         message = newMessage
 
@@ -501,7 +501,7 @@ class MessageEndpoint {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/json' -d $'{"newMessage": "A new message"}'
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/x-www-form-urlencoded' -d $'newMessage=A new message'
 
 Message updated</code></pre>
 </div>
@@ -586,12 +586,8 @@ class FooEndpoint {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     &lt;any endpoint id&gt;:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>If the endpoint <code>id</code> is set through configuration, the URL where the endpoint is accessible also changes to reflect the value. For example if the <code>foo</code> endpoint id was changed to <code>bar</code>, the foo endpoint would be executed through <code><a href="http://localhost:&lt;port&gt;/bar" class="bare">http://localhost:&lt;port&gt;/bar</a></code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -744,8 +740,7 @@ this should be used with care because private and sensitive information will be 
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     beans:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -790,8 +785,7 @@ this should be used with care because private and sensitive information will be 
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     info:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -919,7 +913,6 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
     health:
         enabled: Boolean
         sensitive: Boolean
-        id: String
         details-visible: String <i class="conum" data-value="1"></i><b>(1)</b>
         status:
             http-mapping: Map&lt;String, HttpStatus&gt;</code></pre>
@@ -1245,10 +1238,9 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="title">Metrics Endpoint Configuration Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
-  metrics:
-    enabled: Boolean
-    sensitive: Boolean
-    id: String</code></pre>
+    metrics:
+        enabled: Boolean
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -2107,8 +2099,7 @@ public class IndexController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     refresh:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -2142,8 +2133,7 @@ public class IndexController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     routes:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -2255,8 +2245,7 @@ $ curl http://localhost:8080/loggers/ROOT
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     loggers:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -2337,8 +2326,7 @@ public class CustomLoggingSystem implements LoggingSystem {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     stop:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">

@@ -594,7 +594,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.0.1</p>
+        <p><strong>Version:</strong> 1.0.2</p>
     </div>
     
 
@@ -681,48 +681,25 @@
 
 
 <div class="paragraph">
-<p>Apart from <a href="https://github.com/micronaut-projects/micronaut-core/milestone/9?closed=1">issues resolved and minor enhancements</a> since the last release of Micronaut, this section covers significant new features and improvements.</p>
+<p>Micronaut 1.0.2 includes the following changes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+bug%22">Issues Resolved</a></p>
+</li>
+<li>
+<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?utf8=✓&amp;q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+improvement%22+">Improvements</a></p>
+</li>
+<li>
+<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?utf8=✓&amp;q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+enhancement%22+">Enhancements</a></p>
+</li>
+</ul>
 </div>
 <div class="sect2">
-<h3 id="_micronaut_for_spring">Micronaut for Spring</h3>
+<h3 id="_liquibase_and_flyway">Liquibase and Flyway</h3>
 <div class="paragraph">
-<p>It is now possible using Ahead of Time compilation to use the Spring annotation based programming model to build Micronaut applications. See the documentation for <a href="https://github.com/micronaut-projects/micronaut-spring">Micronaut for Spring</a> for details.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_improved_graalvm_docker_files">Improved GraalVM Docker Files</h3>
-<div class="paragraph">
-<p>The Dockerfiles for GraalVM have been improved including a new all-in-one docker file that will build a slimmed down image including only your application using:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using <code>DockerAllInOne</code></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -f DockerfileAllInOne -t hello-world</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_inheritance_support_for_swagger">Inheritance support for Swagger</h3>
-<div class="paragraph">
-<p>Compile-time support for Swagger has been improved to support inheritance when building the Swagger models.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_improvements_for_jdk_11">Improvements for JDK 11</h3>
-<div class="paragraph">
-<p>Various improvements have been made to improve the Micronaut experience on JDK 11.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_improved_support_for_openfaas">Improved support for OpenFaaS</h3>
-<div class="paragraph">
-<p>The OpenFaaS feature of the CLI now generates an appropriate <code>function.yml</code> file so you can use the OpenFaaS CLI to deploy functions implemented in Micronaut.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aop_advice_on_factory_beans">AOP Advice on Factory Beans</h3>
-<div class="paragraph">
-<p>It is now possible to apply AOP advice like <code>@Retryable</code> at the class level for <code>@Factory</code> beans allowing for the container to be dynamic (for example to retry bean creation if it fails in a cloud environment).</p>
+<p>New configurations have been added to support <a href="https://micronaut-projects.github.io/micronaut-configuration-flyway/latest/guide/index.html">Flyway</a> and <a href="https://micronaut-projects.github.io/micronaut-configuration-liquibase/latest/guide/index.html">Liquibase</a> database migrations.</p>
 </div>
 </div>
 
@@ -791,7 +768,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.2</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -858,7 +835,7 @@ mn&gt;</code></pre>
 
 
 <div class="paragraph">
-<p>Clone the repository:</p>
+<p>Clone the repository as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -874,7 +851,7 @@ mn&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will create the farJar for CLI.</p>
+<p>This created the fatJar for use in the CLI.</p>
 </div>
 <div class="paragraph">
 <p>In your shell profile (<code>~/.bash_profile</code> if you are using the Bash shell), export the <code>MICRONAUT_HOME</code> directory and add the CLI path to your <code>PATH</code>:</p>
@@ -895,7 +872,7 @@ export PATH="$PATH:$MICRONAUT_HOME/cli/build/bin"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You should now be able to run the Micronaut CLI.</p>
+<p>You are now be able to run the Micronaut CLI.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1320,13 +1297,13 @@ class HelloClientSpec extends Specification {
 <p>When most developers think of Inversion of Control (also known as Dependency Injection and referred to as such from this point onwards) the Spring Framework comes to mind.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut takes heavy inspiration from Spring, and in fact, the core developers of Micronaut are former SpringSource/Pivotal engineers now working for <a href="https://objectcomputing.com">OCI</a>.</p>
+<p>Micronaut takes inspiration from Spring, and in fact, the core developers of Micronaut are former SpringSource/Pivotal engineers now working for <a href="https://objectcomputing.com">OCI</a>.</p>
 </div>
 <div class="paragraph">
-<p>Unlike Spring which relies exclusively on runtime reflection and proxies, Micronaut, on the other hand, uses compile time data to implement dependency injection.</p>
+<p>Unlike Spring which relies exclusively on runtime reflection and proxies, Micronaut uses compile time data to implement dependency injection.</p>
 </div>
 <div class="paragraph">
-<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as Spring does but without using reflection or caching excessive amounts of reflection metadata.</p>
+<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as Spring but without using reflection or caching excessive amounts of reflection metadata.</p>
 </div>
 <div class="paragraph">
 <p>The goals of the Micronaut IoC container are summarized as:</p>
@@ -1362,8 +1339,8 @@ class HelloClientSpec extends Specification {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.2"
     ...
 }</code></pre>
 </div>
@@ -2890,15 +2867,15 @@ for(BeanDefinition definition : definitions) {
 </div>
 </div>
 <div class="paragraph">
-<p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need to an instance of the annotation to integrate with a third party library).</p>
+<p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need an instance of the annotation to integrate with a third party library).</p>
 </div>
 <div class="sect2">
 <h3 id="_aliasing_mapping_annotations">Aliasing / Mapping Annotations</h3>
 <div class="paragraph">
-<p>There are times when you may want to alias the value one of annotation member to the value of annotation annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
+<p>There are times when you may want to alias the value of an annotation member to the value of another annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
 </div>
 <div class="paragraph">
-<p>A common use case is for example when an annotation defines <code>value()</code> member, but also supports other members. For example the <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> annotation:</p>
+<p>A common use case is for example when an annotation defines the <code>value()</code> member, but also supports other members. For example the <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> annotation:</p>
 </div>
 <div class="listingblock">
 <div class="title">The @Client Annotation</div>
@@ -3117,8 +3094,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.2"
     ...
 }</code></pre>
 </div>
@@ -4084,6 +4061,13 @@ class EngineConfig {
 
     @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <i class="conum" data-value="3"></i><b>(3)</b>
     CrankShaft.Builder crankShaft = CrankShaft.builder()
+
+    SparkPlug.Builder sparkPlug = SparkPlug.builder()
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug")
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug
+    }
 }</code></pre>
 </div>
 </div>
@@ -4132,7 +4116,7 @@ class EngineFactory {
     @Bean
     @Singleton
     EngineImpl buildEngine(EngineConfig engineConfig) {
-        engineConfig.builder.build(engineConfig.crankShaft)
+        engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
     }
 }</code></pre>
 </div>
@@ -4148,8 +4132,12 @@ class EngineFactory {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
         ['my.engine.cylinders':'4',
-         'my.engine.manufacturer': 'Subaru',
-         'my.engine.crank-shaft.rod-length': 4],
+         'my.engine.manufacturer'          : 'Subaru',
+         'my.engine.crank-shaft.rod-length': 4,
+         'my.engine.spark-plug.name'       : '6619 LFR6AIX',
+         'my.engine.spark-plug.type'       : 'Iridium',
+         'my.engine.spark-plug.companyName': 'NGK'
+        ],
         "test"
 )
 
@@ -4617,7 +4605,7 @@ public class DataSourceFactory {
 
 
 <div class="paragraph">
-<p>The most common type of advice you may want to apply is "Around" advice, which essentially allows you decorate a methods behaviour.</p>
+<p>The most common type of advice you may want to apply is "Around" advice, which essentially allows you to decorate a methods behaviour.</p>
 </div>
 <div class="sect1">
 <h2 id="_writing_around_advice">Writing Around Advice</h2>
@@ -4744,7 +4732,7 @@ public class NotNullExample {
 </div>
 </div>
 <div class="paragraph">
-<p>Whenever the type <code>NotNullExample</code> is injected into any class a compile time generated proxy will instead by injected that decorates the appropriate method calls with the <code>@NotNull</code> advice defined earlier. You can verify that the advice works by writing a test. The following test uses a JUnit <code>ExpectedException</code> rule to verify the appropriate exception is thrown when an argument is <code>null</code>:</p>
+<p>Whenever the type <code>NotNullExample</code> is injected into any class, a compile time generated proxy will instead be injected that decorates the appropriate method calls with the <code>@NotNull</code> advice defined earlier. You can verify that the advice works by writing a test. The following test uses a JUnit <code>ExpectedException</code> rule to verify the appropriate exception is thrown when an argument is <code>null</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Around Advice Test</div>
@@ -4771,7 +4759,7 @@ public void testNotNull() {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Since Micronaut is compile time, generally the advice should be packaged in a dependent JAR file that is on the classpath when the above test is compiled and should not be in the same codebase since you don&#8217;t want the test compiling before the advice itself is compiled.
+Since Micronaut injection is done at compile time, generally the advice should be packaged in a dependent JAR file that is on the classpath when the above test is compiled and should not be in the same codebase since you don&#8217;t want the test to be compiled before the advice itself is compiled.
 </td>
 </tr>
 </table>
@@ -5223,7 +5211,7 @@ public class BookService {
 <p>By using one of the annotations the <a href="../api/io/micronaut/cache/interceptor/CacheInterceptor.html">CacheInterceptor</a> is activated which in the case of <code>@Cacheable</code> will cache the return result of the method.</p>
 </div>
 <div class="paragraph">
-<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">org.reactivestreams.Publisher</a>) the emitted result will be cached.</p>
+<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emitted result will be cached.</p>
 </div>
 <div class="paragraph">
 <p>In addition if the underlying Cache implementation supports non-blocking cache operations then cache values will be read from the cache without blocking, resulting in the ability to implement completely non-blocking cache operations.</p>
@@ -5241,69 +5229,34 @@ public class BookService {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     caches:
-        myCache:
+        my-cache:
             maximumSize: 20</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will configure a cache called "myCache" with a maximum size of 20.</p>
+<p>The above example will configure a cache called "my-cache" with a maximum size of 20.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Naming Caches</div>
+<div class="paragraph">
+<p>Names of caches under <code>micronaut.caches</code> should be defined in kebab case (lowercase and hyphen seperated), if camel case is used the names are normalized to kebab case. So for example specifing <code>myCache</code> will become <code>my-cache</code>. The kebab case form should be used when referencing caches in the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> annotation.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<a id="io.micronaut.cache.CacheConfiguration" href="#io.micronaut.cache.CacheConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/CacheConfiguration.html">CacheConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value (false).</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.CacheConfiguration.adoc[]</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -5351,17 +5304,17 @@ public class BookService {
 <div class="listingblock">
 <div class="title">Cache Configuration Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    redis:
-        uri: redis://localhost
-        caches:
-            myCache:
-                expireAfterWrite: "1h" # expire one hour after write</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redis:
+    uri: redis://localhost
+    caches:
+        my-cache:
+            # expire one hour after write
+            expire-after-write: 1h</code></pre>
 </div>
 </div>
 <a id="io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration" href="#io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5376,18 +5329,53 @@ public class BookService {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.server</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.key-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.key-serializer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.redis.caches.*.value-serializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.value-serializer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -9724,6 +9712,11 @@ public class MyBean {
 <td class="tableblock halign-left valign-top"><p class="tableblock">io.netty.handler.logging.LogLevel</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the Netty log level.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-threshold</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the minimum size of a request body must be in order to be compressed. Default value (1024).</p></td>
+</tr>
 </tbody>
 </table>
 
@@ -13895,288 +13888,13 @@ eureka:
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.protocol</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.Protocol</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-connections</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-prefix</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.user-agent-suffix</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.local-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-username</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-password</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-domain</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-workstation</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.non-proxy-hosts</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.proxy-authentication-methods</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-policy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.retry.RetryPolicy</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-error-retry</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.socket-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.request-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.client-execution-timeout</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-reaper</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-throttle-retries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.max-consecutive-retries-before-throttling</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-gzip</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.signer-override</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.preemptive-basic-proxy-auth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-ttl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.connection-max-idle-millis</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.validate-after-inactivity-millis</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-tcp-keep-alive</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.dns-resolver</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">com.amazonaws.DnsResolver</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.cache-response-metadata</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.response-metadata-cache-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-random</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.security.SecureRandom</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.use-expect-continue</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.instance-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.asg-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.home-page-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/LeaseInfo.html">LeaseInfo</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.country-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status-page-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-check-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-health-check-url</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.data-center-info</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/DataCenterInfo.html">DataCenterInfo</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/InstanceInfo.Status.html">InstanceInfo$Status</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.app-group-name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.ip-addr</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.vip-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-vip-address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.metadata</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.registration-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.eviction-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.service-up-timestamp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.duration-in-secs</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-interval-in-secs</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.prefer-ip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -17506,7 +17224,7 @@ You can make the consumer group configurable using a placeholder: <code>@KafkaLi
         default:
             session:
                 timeout:
-                    ms: 5000</code></pre>
+                    ms: 30000</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17523,7 +17241,7 @@ You can make the consumer group configurable using a placeholder: <code>@KafkaLi
         myGroup:
             session:
                 timeout:
-                    ms: 5000</code></pre>
+                    ms: 30000</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17543,7 +17261,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 @KafkaListener(
     groupId = "products",
     pollTimeout = "500ms",
-    properties = @Property(name = ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, value = "5000")
+    properties = @Property(name = ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, value = "10000")
 )
 public class ProductListener {
     ...
@@ -21787,7 +21505,7 @@ class MessageEndpoint {
 
     String message
 
-    @Write(consumes = MediaType.APPLICATION_JSON)
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
     String updateMessage(String newMessage) {  <i class="conum" data-value="1"></i><b>(1)</b>
         message = newMessage
 
@@ -21801,7 +21519,7 @@ class MessageEndpoint {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/json' -d $'{"newMessage": "A new message"}'
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X POST http://localhost:65013/message -H 'Content-Type: application/x-www-form-urlencoded' -d $'newMessage=A new message'
 
 Message updated</code></pre>
 </div>
@@ -21886,12 +21604,8 @@ class FooEndpoint {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     &lt;any endpoint id&gt;:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>If the endpoint <code>id</code> is set through configuration, the URL where the endpoint is accessible also changes to reflect the value. For example if the <code>foo</code> endpoint id was changed to <code>bar</code>, the foo endpoint would be executed through <code><a href="http://localhost:&lt;port&gt;/bar" class="bare">http://localhost:&lt;port&gt;/bar</a></code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22044,8 +21758,7 @@ this should be used with care because private and sensitive information will be 
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     beans:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -22090,8 +21803,7 @@ this should be used with care because private and sensitive information will be 
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     info:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -22219,7 +21931,6 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
     health:
         enabled: Boolean
         sensitive: Boolean
-        id: String
         details-visible: String <i class="conum" data-value="1"></i><b>(1)</b>
         status:
             http-mapping: Map&lt;String, HttpStatus&gt;</code></pre>
@@ -22545,10 +22256,9 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="title">Metrics Endpoint Configuration Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
-  metrics:
-    enabled: Boolean
-    sensitive: Boolean
-    id: String</code></pre>
+    metrics:
+        enabled: Boolean
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -23407,8 +23117,7 @@ public class IndexController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     refresh:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -23442,8 +23151,7 @@ public class IndexController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     routes:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -23555,8 +23263,7 @@ $ curl http://localhost:8080/loggers/ROOT
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     loggers:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 </div>
@@ -23637,8 +23344,7 @@ public class CustomLoggingSystem implements LoggingSystem {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
     stop:
         enabled: Boolean
-        sensitive: Boolean
-        id: String</code></pre>
+        sensitive: Boolean</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">

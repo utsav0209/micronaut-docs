@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.0.1</title>
+    <title>3 Inversion of Control 1.0.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.0.1</p>
+                    <p><strong>Version:</strong> 1.0.2</p>
                 </div>
 
                 
@@ -196,13 +196,13 @@ function addJsClass() {
 <p>When most developers think of Inversion of Control (also known as Dependency Injection and referred to as such from this point onwards) the Spring Framework comes to mind.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut takes heavy inspiration from Spring, and in fact, the core developers of Micronaut are former SpringSource/Pivotal engineers now working for <a href="https://objectcomputing.com">OCI</a>.</p>
+<p>Micronaut takes inspiration from Spring, and in fact, the core developers of Micronaut are former SpringSource/Pivotal engineers now working for <a href="https://objectcomputing.com">OCI</a>.</p>
 </div>
 <div class="paragraph">
-<p>Unlike Spring which relies exclusively on runtime reflection and proxies, Micronaut, on the other hand, uses compile time data to implement dependency injection.</p>
+<p>Unlike Spring which relies exclusively on runtime reflection and proxies, Micronaut uses compile time data to implement dependency injection.</p>
 </div>
 <div class="paragraph">
-<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as Spring does but without using reflection or caching excessive amounts of reflection metadata.</p>
+<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as Spring but without using reflection or caching excessive amounts of reflection metadata.</p>
 </div>
 <div class="paragraph">
 <p>The goals of the Micronaut IoC container are summarized as:</p>
@@ -238,8 +238,8 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.2"
     ...
 }</code></pre>
 </div>
@@ -1766,15 +1766,15 @@ for(BeanDefinition definition : definitions) {
 </div>
 </div>
 <div class="paragraph">
-<p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need to an instance of the annotation to integrate with a third party library).</p>
+<p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need an instance of the annotation to integrate with a third party library).</p>
 </div>
 <div class="sect2">
 <h3 id="_aliasing_mapping_annotations">Aliasing / Mapping Annotations</h3>
 <div class="paragraph">
-<p>There are times when you may want to alias the value one of annotation member to the value of annotation annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
+<p>There are times when you may want to alias the value of an annotation member to the value of another annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
 </div>
 <div class="paragraph">
-<p>A common use case is for example when an annotation defines <code>value()</code> member, but also supports other members. For example the <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> annotation:</p>
+<p>A common use case is for example when an annotation defines the <code>value()</code> member, but also supports other members. For example the <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> annotation:</p>
 </div>
 <div class="listingblock">
 <div class="title">The @Client Annotation</div>
@@ -1993,8 +1993,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.2"
     ...
 }</code></pre>
 </div>
