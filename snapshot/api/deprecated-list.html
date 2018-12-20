@@ -89,14 +89,28 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/AttachedFile.html" title="class in io.micronaut.http.server.types.files">io.micronaut.http.server.types.files.AttachedFile</a>
+<div class="block"><span class="deprecationComment">Use <a href="io/micronaut/http/server/types/files/SystemFile.html" title="class in io.micronaut.http.server.types.files"><code>instead</code></a>. This class conflates the source of the data with the type of
+ response being sent. This assumes the file should be sent as an attachment while <a href="io/micronaut/http/server/types/files/StreamedFile.html" title="class in io.micronaut.http.server.types.files"><code>StreamedFile</code></a> does not.
+ The <a href="io/micronaut/http/server/types/files/SystemFile.html" title="class in io.micronaut.http.server.types.files"><code>SystemFile</code></a> class now behaves the same as <a href="io/micronaut/http/server/types/files/StreamedFile.html" title="class in io.micronaut.http.server.types.files"><code>StreamedFile</code></a> by defaulting to inline with a method
+ to call to set it to be attached.
+
+ <code>new AttachedFile(file, name) -> new SystemFile(file).attach(name)</code>
+ <code>new AttachedFile(file) -> new SystemFile(file).attach(file.getName())</code></span></div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="io/micronaut/configuration/kafka/bind/KafkaBodyBinder.html" title="class in io.micronaut.configuration.kafka.bind">io.micronaut.configuration.kafka.bind.KafkaBodyBinder</a>
 <div class="block"><span class="deprecationComment">Use <a href="io/micronaut/configuration/kafka/bind/KafkaMessagingBodyBinder.html" title="class in io.micronaut.configuration.kafka.bind"><code>KafkaMessagingBodyBinder</code></a> instead</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="io/micronaut/security/session/SessionSecurityfilterRejectionHandler.html" title="class in io.micronaut.security.session">io.micronaut.security.session.SessionSecurityfilterRejectionHandler</a>
 <div class="block"><span class="deprecationComment">use <a href="io/micronaut/security/handlers/RedirectRejectionHandler.html" title="class in io.micronaut.security.handlers"><code>RedirectRejectionHandler</code></a> instead</span></div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/SystemFileCustomizableResponseType.html" title="class in io.micronaut.http.server.types.files">io.micronaut.http.server.types.files.SystemFileCustomizableResponseType</a></td>
 </tr>
 </tbody>
 </table>
@@ -141,6 +155,26 @@
 <th class="colOne" scope="col">Method and Description</th>
 </tr>
 <tbody>
+<tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/netty/types/files/FileTypeHandler.html#getMediaType-java.lang.String-">io.micronaut.http.server.netty.types.files.FileTypeHandler.getMediaType(String)</a>
+<div class="block"><span class="deprecationComment">The media type now comes from the file types.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/SystemFileCustomizableResponseType.html#getName--">io.micronaut.http.server.types.files.SystemFileCustomizableResponseType.getName()</a></td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/SystemFile.html#getName--">io.micronaut.http.server.types.files.SystemFile.getName()</a></td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/StreamedFile.html#getName--">io.micronaut.http.server.types.files.StreamedFile.getName()</a></td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/FileCustomizableResponseType.html#getName--">io.micronaut.http.server.types.files.FileCustomizableResponseType.getName()</a></td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="io/micronaut/http/server/netty/types/files/NettySystemFileCustomizableResponseType.html#getName--">io.micronaut.http.server.netty.types.files.NettySystemFileCustomizableResponseType.getName()</a></td>
+</tr>
 <tr class="altColor">
 <td class="colOne"><a href="io/micronaut/configuration/ribbon/AbstractRibbonClientConfig.html#getProperty-com.netflix.client.config.IClientConfigKey-">io.micronaut.configuration.ribbon.AbstractRibbonClientConfig.getProperty(IClientConfigKey)</a></td>
 </tr>
@@ -203,6 +237,27 @@
 <td class="colOne"><a href="io/micronaut/security/endpoints/LogoutController.html#LogoutController-io.micronaut.security.handlers.LogoutHandler-io.micronaut.context.event.ApplicationEventPublisher-">io.micronaut.security.endpoints.LogoutController(LogoutHandler, ApplicationEventPublisher)</a></td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-java.lang.String-">io.micronaut.http.server.types.files.StreamedFile(InputStream, String)</a>
+<div class="block"><span class="deprecationComment">use <a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-io.micronaut.http.MediaType-"><code>StreamedFile.StreamedFile(InputStream, MediaType)</code></a> instead. See
+ <a href="io/micronaut/http/MediaType.html#forFilename-java.lang.String-"><code>MediaType.forFilename(String)</code></a> for converting existing names if the
+ type is unknown.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-java.lang.String-long-">io.micronaut.http.server.types.files.StreamedFile(InputStream, String, long)</a>
+<div class="block"><span class="deprecationComment">use <a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-io.micronaut.http.MediaType-long-"><code>StreamedFile.StreamedFile(InputStream, MediaType, long)</code></a> instead. See
+ <a href="io/micronaut/http/MediaType.html#forFilename-java.lang.String-"><code>MediaType.forFilename(String)</code></a> for converting existing names if the
+ type is unknown.</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-java.lang.String-long-long-">io.micronaut.http.server.types.files.StreamedFile(InputStream, String, long, long)</a>
+<div class="block"><span class="deprecationComment">use <a href="io/micronaut/http/server/types/files/StreamedFile.html#StreamedFile-java.io.InputStream-io.micronaut.http.MediaType-long-long-"><code>StreamedFile.StreamedFile(InputStream, MediaType, long, long)</code></a> instead. See
+ <a href="io/micronaut/http/MediaType.html#forFilename-java.lang.String-"><code>MediaType.forFilename(String)</code></a> for converting existing names if the
+ type is unknown.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="io/micronaut/security/token/TokenAuthenticationFetcher.html#TokenAuthenticationFetcher-java.util.Collection-java.util.Collection-io.micronaut.context.event.ApplicationEventPublisher-">io.micronaut.security.token.TokenAuthenticationFetcher(Collection&lt;TokenValidator&gt;, Collection&lt;TokenReader&gt;, ApplicationEventPublisher)</a>
 <div class="block"><span class="deprecationComment">Use <a href="io/micronaut/security/token/TokenAuthenticationFetcher.html#TokenAuthenticationFetcher-java.util.Collection-io.micronaut.security.token.reader.TokenResolver-io.micronaut.context.event.ApplicationEventPublisher-"><code>TokenAuthenticationFetcher.TokenAuthenticationFetcher(Collection, TokenResolver, ApplicationEventPublisher)</code></a> instead.
  A <a href="io/micronaut/security/token/reader/TokenResolver.html" title="interface in io.micronaut.security.token.reader"><code>TokenResolver</code></a> can be created using <a href="io/micronaut/security/token/reader/DefaultTokenResolver.html#DefaultTokenResolver-java.util.Collection-"><code>DefaultTokenResolver.DefaultTokenResolver(Collection)</code></a>.</span></div>
