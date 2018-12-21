@@ -5329,9 +5329,59 @@ public class BookService {
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.CacheConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value ({@value #DEFAULT_TESTMODE}).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -5389,7 +5439,7 @@ public class BookService {
 </div>
 <a id="io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration" href="#io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -10495,13 +10545,13 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:thymeleaf:3.0.9.RELEASE'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.thymeleaf:thymeleaf:3.0.9.RELEASE'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;
     &lt;artifactId&gt;thymeleaf&lt;/artifactId&gt;
     &lt;version&gt;3.0.9.RELEASE&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
@@ -10898,13 +10948,13 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:handlebars:4.1.0'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'com.github.jknack:handlebars:4.1.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;groupId&gt;com.github.jknack&lt;/groupId&gt;
     &lt;artifactId&gt;handlebars&lt;/artifactId&gt;
     &lt;version&gt;4.1.0&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
@@ -10955,13 +11005,13 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:velocity-engine-core:2.0'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.apache.velocity:velocity-engine-core:2.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;groupId&gt;org.apache.velocity&lt;/groupId&gt;
     &lt;artifactId&gt;velocity-engine-core&lt;/artifactId&gt;
     &lt;version&gt;2.0&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
