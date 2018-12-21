@@ -225,6 +225,29 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_support_for_jcache_caching">Support for JCache Caching</h3>
+<div class="paragraph">
+<p>Support has been added for the JCache specification. If you define a <code>javax.cache.CacheManager</code> bean it will be used for caching. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using JCache Caching</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+class CacheFactory {
+
+    @Singleton
+    @Bean
+    CacheManager cacheManager() {
+        CacheManager cacheManager = Caching.getCachingProvider()
+                                           .getCacheManager();
+        cacheManager.createCache('my-cache', new MutableConfiguration());
+        return cacheManager;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_liquibase_and_flyway">Liquibase and Flyway</h3>
 <div class="paragraph">
 <p>New configurations have been added to support <a href="https://micronaut-projects.github.io/micronaut-configuration-flyway/latest/guide/index.html">Flyway</a> and <a href="https://micronaut-projects.github.io/micronaut-configuration-liquibase/latest/guide/index.html">Liquibase</a> database migrations.</p>
