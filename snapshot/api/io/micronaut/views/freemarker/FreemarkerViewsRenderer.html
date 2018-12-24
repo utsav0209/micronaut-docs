@@ -188,7 +188,7 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/core/io/Writable.html" title="interface in io.micronaut.core.io">Writable</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRenderer.html#render-java.lang.String-java.lang.Object-">render</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRenderer.html#render-java.lang.String-java.lang.Object-">render</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;viewName,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</code>&nbsp;</td>
 </tr>
 </table>
@@ -198,6 +198,13 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.views.ViewsRenderer">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.views.<a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></h3>
+<code><a href="../../../../io/micronaut/views/ViewsRenderer.html#modelOf-java.lang.Object-">modelOf</a>, <a href="../../../../io/micronaut/views/ViewsRenderer.html#normalizeFile-java.lang.String-java.lang.String-">normalizeFile</a>, <a href="../../../../io/micronaut/views/ViewsRenderer.html#normalizeFolder-java.lang.String-">normalizeFolder</a></code></li>
 </ul>
 </li>
 </ul>
@@ -263,14 +270,16 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <ul class="blockList">
 <li class="blockList">
 <h4>render</h4>
-<pre>public&nbsp;<a href="../../../../io/micronaut/core/io/Writable.html" title="interface in io.micronaut.core.io">Writable</a>&nbsp;render(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view,
-                       <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;<a href="../../../../io/micronaut/core/io/Writable.html" title="interface in io.micronaut.core.io">Writable</a>&nbsp;render(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;viewName,
+                                <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#render-java.lang.String-java.lang.Object-">render</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>view</code> - view name to be render</dd>
+<dd><code>viewName</code> - view name to be render</dd>
 <dd><code>data</code> - response body to render it with a view</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A writable where the view will be written to.</dd>
@@ -283,7 +292,8 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <ul class="blockListLast">
 <li class="blockList">
 <h4>exists</h4>
-<pre>public&nbsp;boolean&nbsp;exists(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view)</pre>
+<pre>public&nbsp;boolean&nbsp;exists(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#exists-java.lang.String-">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></code></dd>
