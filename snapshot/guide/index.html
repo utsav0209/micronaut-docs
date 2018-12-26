@@ -574,13 +574,15 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-reloading"><a href="#reloading"><strong>17.5</strong><span>Reloading</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.5.1</strong><span>JRebel</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-automaticRestart"><a href="#automaticRestart"><strong>17.5.1</strong><span>Automatic Restart</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-springloaded"><a href="#springloaded"><strong>17.5.2</strong><span>Spring-Loaded</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.5.2</strong><span>JRebel</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.3</strong><span>Reloading with Gradle</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-springloaded"><a href="#springloaded"><strong>17.5.3</strong><span>Spring-Loaded</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.4</strong><span>Reloading with an IDE</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.4</strong><span>Reloading with Gradle</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.5</strong><span>Reloading with an IDE</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-proxy"><a href="#proxy"><strong>17.6</strong><span>Proxy Configuration</span></a></div>
         
@@ -692,9 +694,15 @@
 <p>Micronaut 1.1.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
+<h3 id="_file_watch_and_server_restart">File Watch and Server Restart</h3>
+<div class="paragraph">
+<p>A new <a href="#automaticRestart">Automatic Restart</a> feature is included that allows the server to restart if a change occurs to a file. This feature can be used both in production and at development time to achieve automatic application restarts when changing source code.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_refactoring_of_file_responses">Refactoring of File Responses</h3>
 <div class="paragraph">
-<p>In an effort to make a more consistent and understandable API, some methods and classes related to sending file responses have been deprecated. SystemFile is the replacement for AttachedFile and the constructors of StreamedFile have been deprecated in favor of new constructors that better convey the intended functionality.</p>
+<p>In an effort to make a more consistent and understandable API, some methods and classes related to sending file responses have been deprecated. <a href="../api/io/micronaut/http/server/types/files/SystemFile.html">SystemFile</a> is the replacement for <a href="../api/io/micronaut/http/server/types/files/AttachedFile.html">AttachedFile</a> and the constructors of <a href="../api/io/micronaut/http/server/types/files/StreamedFile.html">StreamedFile</a> have been deprecated in favor of new constructors that better convey the intended functionality.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5453,31 +5461,6 @@ public class BookService {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.redis-exec-provider</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">redis.embedded.RedisExecProvider</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.slave-of</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.InetSocketAddress</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.config-file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.setting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.charset</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
@@ -28040,17 +28023,184 @@ It creates an associated test that will run the application and verify that a co
 
 
 <div class="paragraph">
-<p>Reloading (or "hot-loading") refers to the framework reinitializing classes (and parts of the application) when changes to the source files are detected. Micronaut does not include specific support for reloading of changed classes at runtime. Since Micronaut prioritizes startup time and most Micronaut apps can start up within a couple seconds, a productive workflow can often be had by restarting the application as changes are made; for example, by running a test class within an IDE.</p>
+<p>Reloading (or "hot-loading") refers to the framework reinitializing classes (and parts of the application) when changes to the source files are detected.</p>
 </div>
 <div class="paragraph">
-<p>However, reloading support is available through the use of third-party JVM agents, along with automatic recompilation on file changes via a supporting build tool (such as Gradle) or IDE (such as Eclipse).</p>
+<p>Since Micronaut prioritizes startup time and most Micronaut apps can start up within seconds, a productive workflow can often be had by restarting the application as changes are made; for example, by running a test class within an IDE.</p>
 </div>
 <div class="paragraph">
-<p>The following sections document how to configure agent-reloading.</p>
+<p>However, if you wish to have your changes automatically reloaded Micronaut does support automatic restart or the use of third-party reloading agents.</p>
 </div>
 
 
-<h2 id="jrebel">17.5.1 JRebel</h2>
+<h2 id="automaticRestart">17.5.1 Automatic Restart</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/automaticRestart.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>There are various ways to achieve reloading of classes on the JVM, all have their advantages and disadvantages. The following are possible ways to achieve reloading without restarting the JVM:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JVM Agents</strong> - A JVM agent like JRebel can be used, however these can produce unusual errors, may not support all JDK versions and can result in cached / stale classes.</p>
+</li>
+<li>
+<p><strong>ClassLoader Reloading</strong> - Class Loader based reloading is a popular solution used by most JVM frameworks, however it once again can lead to cached / stale classes, memory leaks and weird errors if the incorrect classloader is used at any moment.</p>
+</li>
+<li>
+<p><strong>Debugger HotSwap</strong> - The Java debugger supports hotswapping of changes at runtime, but only supports a few use cases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given the problems with existing solutions and a lack of a way built into the JVM to reload changes, the safest and best solution to reloading, and the one recommended by the Micronaut team, is to use automatic application restart via third-party tool.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut&#8217;s startup time is fast and automatic restart leads to a clean slate without potential hard to debug problems cropping up or memory leaks.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuring_file_watch">Configuring File Watch</h3>
+<div class="paragraph">
+<p>The following demonstrates how to configure Micronaut to automatically stop the application if a change occurs to an external file:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring File Watch</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    io:
+        watch:
+            paths: src/main
+            restart: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By setting <code>micronaut.io.watch.paths</code> what happens is that Micronaut will fire a <a href="../api/io/micronaut/scheduling/io/watch/event/FileChangedEvent.html">FileChangedEvent</a> if any file is changed. Setting <code>micronaut.io.watch.restart</code> tells Micronaut to stop the server if a file is changed.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <code>micronaut.io.watch.paths</code> setting can be used for more than just automatic restart, you can use this setting to monitor for file changes within your production application.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_file_watch_and_mac_os_x">File Watch and Mac OS X</h3>
+<div class="paragraph">
+<p>The native JVM implementation of the <code>WatchService</code> interface for Mac OS X using polling which is slow. To improve file watch performance add the following dependencies to your build if you are using OS X:</p>
+</div>
+<div class="listingblock">
+<div class="title">Gradle - Configuring Native File Watch on Mac OS X</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">configurations {
+    developmentOnly
+}
+dependencies {
+    ...
+    developmentOnly "net.java.dev.jna:jna"
+    developmentOnly "io.methvin:directory-watcher"
+
+}
+run.classpath += configurations.developmentOnly</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A custom <code>developmentOnly</code> configuration is used to ensure the dependencies don&#8217;t go into the production JAR.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Or with Maven:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+  &lt;groupId&gt;io.methvin&lt;/groupId&gt;
+  &lt;artifactId&gt;directory-watcher&lt;/artifactId&gt;
+  &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;net.java.dev.jna&lt;/groupId&gt;
+  &lt;artifactId&gt;jna&lt;/artifactId&gt;
+  &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>provided</code> scope is used to ensure the dependencies don&#8217;t go into the production JAR.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restarting_the_server">Restarting the Server</h3>
+<div class="paragraph">
+<p>Once set to <code>true</code> the <code>micronaut.io.watch.restart</code> setting will stop  the server when a file changes, it is then up to an external process to restart the server. For example, with Gradle this can be achieved with a continuous build:</p>
+</div>
+<div class="listingblock">
+<div class="title">Automatic Restart with Gradle Continuous Build</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gradle run --continuous</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can also use a Kubernetes replication controller to restart the application if this feature is used in production
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Maven does not have an equivalent feature, however you can achieve a similar effect with a bash script:</p>
+</div>
+<div class="listingblock">
+<div class="title">Automatic Restart with Maven and Bash</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">#!/usr/bin/env sh
+
+while true; do
+	./mvn compile exec:exec
+	sleep 1s
+done</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If automatic restart is for some reason not your preferred approach then you can use most JVM agents with Micronaut. See the following sections for a description on how to setup JVM agents.</p>
+</div>
+</div>
+
+
+<h2 id="jrebel">17.5.2 JRebel</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/jrebel.adoc"'>
@@ -28203,7 +28353,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 
 
-<h2 id="springloaded">17.5.2 Spring-Loaded</h2>
+<h2 id="springloaded">17.5.3 Spring-Loaded</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/springloaded.adoc"'>
@@ -28301,7 +28451,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 
 
-<h2 id="gradleReload">17.5.3 Reloading with Gradle</h2>
+<h2 id="gradleReload">17.5.4 Reloading with Gradle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/gradleReload.adoc"'>
@@ -28330,7 +28480,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 
 
-<h2 id="ideReload">17.5.4 Reloading with an IDE</h2>
+<h2 id="ideReload">17.5.5 Reloading with an IDE</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/ideReload.adoc"'>

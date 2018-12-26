@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -117,7 +117,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="../../../../../io/micronaut/context/annotation/Replaces.html" title="annotation in io.micronaut.context.annotation">@Replaces</a>(<a href="../../../../../io/micronaut/context/annotation/Replaces.html#value--">value</a>=<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread.class</a>)
- <a href="../../../../../io/micronaut/context/annotation/Context.html" title="annotation in io.micronaut.context.annotation">@Context</a>
+ <a href="../../../../../io/micronaut/context/annotation/Parallel.html" title="annotation in io.micronaut.context.annotation">@Parallel</a>
  <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="micronaut.io.watch.enabled",<a href="../../../../../io/micronaut/context/annotation/Requires.html#value--">value</a>="true",<a href="../../../../../io/micronaut/context/annotation/Requires.html#defaultValue--">defaultValue</a>="true") <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="micronaut.io.watch.paths") <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#classes--">classes</a>={io.methvin.watchservice.MacOSXListeningWatchService.class,com.sun.jna.Library.class})
 public class <span class="typeNameLabel">MacOsWatchThread</span>
 extends <a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a></pre>
@@ -168,6 +168,12 @@ extends <a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThr
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/MacOsWatchThread.html#closeWatchService--">closeWatchService</a></span>()</code>
+<div class="block">Closes the watch service.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/WatchKey.html?is-external=true" title="class or interface in java.nio.file">WatchKey</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/MacOsWatchThread.html#registerPath-java.nio.file.Path-">registerPath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;dir)</code>
 <div class="block">Registers a patch to watch.</div>
@@ -238,7 +244,7 @@ extends <a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThr
 <a name="registerPath-java.nio.file.Path-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>registerPath</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
@@ -255,6 +261,21 @@ protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/
 <dd>The watch key</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an error occurs.</dd>
+</dl>
+</li>
+</ul>
+<a name="closeWatchService--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>closeWatchService</h4>
+<pre>protected&nbsp;void&nbsp;closeWatchService()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#closeWatchService--">DefaultWatchThread</a></code></span></div>
+<div class="block">Closes the watch service.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#closeWatchService--">closeWatchService</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a></code></dd>
 </dl>
 </li>
 </ul>
