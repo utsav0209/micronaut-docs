@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?io/micronaut/web/router/filter/FilteredRouter.html" target="_top">Frames</a></li>
@@ -116,17 +116,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 implements <a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a></pre>
 <div class="block">Allows decorating an existing <a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router"><code>Router</code></a> with filtering capabilities.
 
- <p>Filters themselves should be supplied via the <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchesFilter</code></a> interface.</p>
+ <p>Filters themselves should be supplied via the <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a> interface.</p>
 
  <p>A filtered router can be enabled by implementing a <a href="../../../../../io/micronaut/context/event/BeanCreatedEventListener.html" title="interface in io.micronaut.context.event"><code>BeanCreatedEventListener</code></a> for
- the existing <a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router"><code>Router</code></a> and decorating appropriately. See for example <a href="../../../../../io/micronaut/web/router/version/VersionedRouterDecoratorConfiguration.html" title="class in io.micronaut.web.router.version"><code>VersionedRouterDecoratorConfiguration</code></a></p></div>
+ the existing <a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router"><code>Router</code></a> and decorating appropriately. See for example <a href="../../../../../io/micronaut/web/router/version/VersionAwareRouterListener.html" title="class in io.micronaut.web.router.version"><code>VersionAwareRouterListener</code></a></p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Bogdan Oros, graemerocher</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchesFilter</code></a></dd>
+<dd><a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -146,9 +146,9 @@ implements <a href="../../../../../io/micronaut/web/router/Router.html" title="i
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/filter/FilteredRouter.html#FilteredRouter-io.micronaut.web.router.Router-io.micronaut.web.router.filter.RouteMatchesFilter-">FilteredRouter</a></span>(<a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a>&nbsp;router,
-              <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter">RouteMatchesFilter</a>&nbsp;routeFilter)</code>
-<div class="block">Creates a decorated router for an existing router and <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchesFilter</code></a>.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/filter/FilteredRouter.html#FilteredRouter-io.micronaut.web.router.Router-io.micronaut.web.router.filter.RouteMatchFilter-">FilteredRouter</a></span>(<a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a>&nbsp;router,
+              <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter">RouteMatchFilter</a>&nbsp;routeFilter)</code>
+<div class="block">Creates a decorated router for an existing router and <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a>.</div>
 </td>
 </tr>
 </table>
@@ -301,19 +301,19 @@ implements <a href="../../../../../io/micronaut/web/router/Router.html" title="i
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FilteredRouter-io.micronaut.web.router.Router-io.micronaut.web.router.filter.RouteMatchesFilter-">
+<a name="FilteredRouter-io.micronaut.web.router.Router-io.micronaut.web.router.filter.RouteMatchFilter-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FilteredRouter</h4>
 <pre>public&nbsp;FilteredRouter(<a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a>&nbsp;router,
-                      <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter">RouteMatchesFilter</a>&nbsp;routeFilter)</pre>
-<div class="block">Creates a decorated router for an existing router and <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchesFilter</code></a>.</div>
+                      <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter">RouteMatchFilter</a>&nbsp;routeFilter)</pre>
+<div class="block">Creates a decorated router for an existing router and <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>router</code> - A <a href="../../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router"><code>Router</code></a> to delegate to</dd>
-<dd><code>routeFilter</code> - A <a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchesFilter</code></a> to filter non matching routes</dd>
+<dd><code>routeFilter</code> - A <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a> to filter non matching routes</dd>
 </dl>
 </li>
 </ul>
@@ -747,7 +747,7 @@ implements <a href="../../../../../io/micronaut/web/router/Router.html" title="i
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../../io/micronaut/web/router/filter/RouteMatchesFilter.html" title="interface in io.micronaut.web.router.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?io/micronaut/web/router/filter/FilteredRouter.html" target="_top">Frames</a></li>
