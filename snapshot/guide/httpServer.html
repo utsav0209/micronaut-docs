@@ -5534,6 +5534,29 @@ enum PetType {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_schemas_and_meta_annotations">Schemas and Meta Annotations</h3>
+<div class="paragraph">
+<p>If you don&#8217;t have control of the source code and don&#8217;t want to have to annotation each parameter with <code>@Schema</code> then it can be convenient to instead use a meta annotation.</p>
+</div>
+<div class="paragraph">
+<p>For example if the aforementioned <code>Pet</code> class cannot be annotated with <code>@Schema</code> you can define a meta annotation:</p>
+</div>
+<div class="listingblock">
+<div class="title">Swagger Meta Annotation</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Documented
+@Retention(RUNTIME)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Schema(name="MyPet", description="Pet description")
+@interface MyAnn {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then whenever <code>Pet</code> is used as a parameter you can annotate the parameter with <code>@MyAnn</code>.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_schemas_and_generics">Schemas and Generics</h3>
 <div class="paragraph">
 <p>If a method return type includes generics then these will included when calculating the schema name. For example the following:</p>
