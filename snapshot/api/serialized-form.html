@@ -508,6 +508,106 @@
 </ul>
 </li>
 <li class="blockList">
+<h2 title="Package">Package&nbsp;io.micronaut.core.util.clhm</h2>
+<ul class="blockList">
+<li class="blockList"><a name="io.micronaut.core.util.clhm.ConcurrentLinkedHashMap">
+<!--   -->
+</a>
+<h3>Class <a href="io/micronaut/core/util/clhm/ConcurrentLinkedHashMap.html" title="class in io.micronaut.core.util.clhm">io.micronaut.core.util.clhm.ConcurrentLinkedHashMap</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="io/micronaut/core/util/clhm/ConcurrentLinkedHashMap.html" title="type parameter in ConcurrentLinkedHashMap">K</a>,<a href="io/micronaut/core/util/clhm/ConcurrentLinkedHashMap.html" title="type parameter in ConcurrentLinkedHashMap">V</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialization Methods</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>readObject</h4>
+<pre>private&nbsp;void&nbsp;readObject(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;stream)
+                 throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InvalidObjectException.html?is-external=true" title="class or interface in java.io">InvalidObjectException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/InvalidObjectException.html?is-external=true" title="class or interface in java.io">InvalidObjectException</a></code></dd>
+</dl>
+</li>
+<li class="blockListLast">
+<h4>writeReplace</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;writeReplace()</pre>
+<div class="block">Here for serialization.</div>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>data</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">K</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">V</a>&gt; data</pre>
+</li>
+<li class="blockList">
+<h4>concurrencyLevel</h4>
+<pre>int concurrencyLevel</pre>
+</li>
+<li class="blockList">
+<h4>readBufferReadCount</h4>
+<pre>long[] readBufferReadCount</pre>
+</li>
+<li class="blockList">
+<h4>evictionDeque</h4>
+<pre>io.micronaut.core.util.clhm.LinkedDeque&lt;E extends io.micronaut.core.util.clhm.Linked&lt;E&gt;&gt; evictionDeque</pre>
+</li>
+<li class="blockList">
+<h4>weightedSize</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicLong</a> weightedSize</pre>
+</li>
+<li class="blockList">
+<h4>capacity</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicLong</a> capacity</pre>
+</li>
+<li class="blockList">
+<h4>evictionLock</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a> evictionLock</pre>
+</li>
+<li class="blockList">
+<h4>writeBuffer</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">E</a>&gt; writeBuffer</pre>
+</li>
+<li class="blockList">
+<h4>readBufferWriteCount</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicLong</a>[] readBufferWriteCount</pre>
+</li>
+<li class="blockList">
+<h4>readBufferDrainAtWriteCount</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicLong</a>[] readBufferDrainAtWriteCount</pre>
+</li>
+<li class="blockList">
+<h4>readBuffers</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicReference</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic">V</a>&gt;[][] readBuffers</pre>
+</li>
+<li class="blockList">
+<h4>drainStatus</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic">AtomicReference</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic">V</a>&gt; drainStatus</pre>
+</li>
+<li class="blockList">
+<h4>weigher</h4>
+<pre><a href="io/micronaut/core/util/clhm/EntryWeigher.html" title="interface in io.micronaut.core.util.clhm">EntryWeigher</a>&lt;<a href="io/micronaut/core/util/clhm/EntryWeigher.html" title="type parameter in EntryWeigher">K</a>,<a href="io/micronaut/core/util/clhm/EntryWeigher.html" title="type parameter in EntryWeigher">V</a>&gt; weigher</pre>
+</li>
+<li class="blockList">
+<h4>pendingNotifications</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">E</a>&gt; pendingNotifications</pre>
+</li>
+<li class="blockListLast">
+<h4>listener</h4>
+<pre><a href="io/micronaut/core/util/clhm/EvictionListener.html" title="interface in io.micronaut.core.util.clhm">EvictionListener</a>&lt;<a href="io/micronaut/core/util/clhm/EvictionListener.html" title="type parameter in EvictionListener">K</a>,<a href="io/micronaut/core/util/clhm/EvictionListener.html" title="type parameter in EvictionListener">V</a>&gt; listener</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList">
 <h2 title="Package">Package&nbsp;io.micronaut.core.value</h2>
 <ul class="blockList">
 <li class="blockList"><a name="io.micronaut.core.value.PropertyNotFoundException">
