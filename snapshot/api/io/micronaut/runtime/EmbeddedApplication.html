@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":18,"i3":18};
+var methods = {"i0":6,"i1":6,"i2":18,"i3":18,"i4":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,6 +166,12 @@ extends <a href="../../../io/micronaut/context/ApplicationContextLifeCycle.html"
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/runtime/EmbeddedApplication.html#isForceExit--">isForceExit</a></span>()</code>
+<div class="block">Most servers shutdown cleanly, however some integrations make require a forced exist.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/runtime/EmbeddedApplication.html#isServer--">isServer</a></span>()</code>
 <div class="block">This method returns whether the application is a server application or not.</div>
 </td>
@@ -245,7 +251,7 @@ extends <a href="../../../io/micronaut/context/ApplicationContextLifeCycle.html"
 <a name="isServer--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isServer</h4>
 <pre>default&nbsp;boolean&nbsp;isServer()</pre>
@@ -254,6 +260,21 @@ extends <a href="../../../io/micronaut/context/ApplicationContextLifeCycle.html"
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>True if the application is a server</dd>
+</dl>
+</li>
+</ul>
+<a name="isForceExit--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isForceExit</h4>
+<pre>default&nbsp;boolean&nbsp;isForceExit()</pre>
+<div class="block">Most servers shutdown cleanly, however some integrations make require a forced exist. If
+ true is returned Micronaut will explicitly invoke System.exit(..).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether exiting the server should be forced.</dd>
 </dl>
 </li>
 </ul>
