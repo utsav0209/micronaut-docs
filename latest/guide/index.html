@@ -594,7 +594,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.0.2</p>
+        <p><strong>Version:</strong> 1.0.3</p>
     </div>
     
 
@@ -681,18 +681,15 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.0.2 includes the following changes:</p>
+<p>Micronaut 1.0.3 includes the following changes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+bug%22">Issues Resolved</a></p>
+<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?q=is%3Aissue+milestone%3A1.0.3+is%3Aclosed+label%3A%22type%3A+bug%22">Issues Resolved</a></p>
 </li>
 <li>
-<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?utf8=✓&amp;q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+improvement%22+">Improvements</a></p>
-</li>
-<li>
-<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?utf8=✓&amp;q=is%3Aissue+milestone%3A1.0.2+is%3Aclosed+label%3A%22type%3A+enhancement%22+">Enhancements</a></p>
+<p><a href="https://github.com/micronaut-projects/micronaut-core/issues?utf8=✓&amp;q=is%3Aissue+milestone%3A1.0.3+is%3Aclosed+label%3A%22type%3A+improvement%22+">Improvements</a></p>
 </li>
 </ul>
 </div>
@@ -768,7 +765,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.2</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.0.3</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1339,8 +1336,8 @@ class HelloClientSpec extends Specification {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.3" // <2>
+    compile "io.micronaut:micronaut-inject:1.0.3"
     ...
 }</code></pre>
 </div>
@@ -3094,8 +3091,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.2"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.3"
+    compileOnly "io.micronaut:micronaut-inject-java:1.0.3"
     ...
 }</code></pre>
 </div>
@@ -10329,7 +10326,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "org.thymeleaf:thymeleaf:3.0.9.RELEASE"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10824,6 +10821,29 @@ enum PetType {
 <td>Properties can be customized too.</td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_schemas_and_meta_annotations">Schemas and Meta Annotations</h3>
+<div class="paragraph">
+<p>If you don&#8217;t have control of the source code and don&#8217;t want to have to annotation each parameter with <code>@Schema</code> then it can be convenient to instead use a meta annotation.</p>
+</div>
+<div class="paragraph">
+<p>For example if the aforementioned <code>Pet</code> class cannot be annotated with <code>@Schema</code> you can define a meta annotation:</p>
+</div>
+<div class="listingblock">
+<div class="title">Swagger Meta Annotation</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Documented
+@Retention(RUNTIME)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Schema(name="MyPet", description="Pet description")
+@interface MyAnn {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then whenever <code>Pet</code> is used as a parameter you can annotate the parameter with <code>@MyAnn</code>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -13868,7 +13888,12 @@ eureka:
          metadata: # arbitrary instance metadata
             foo: bar
          retry-count: 10 # How many times to retry
-         retry-delay: 5s # How long to wait between retries</code></pre>
+         retry-delay: 5s # How long to wait between retries
+
+         appname: some-app-name     # optional, eureka instance application name, defaults to ${micronaut.application.name}
+         hostname: foo.example.com  # optional, exposed eureka instance hostname, useful in docker bridged network environments
+         ip-addr: 1.2.3.4           # optional, exposed eureka instance ip address, useful in docker bridged network environments
+         port: 9090                 # optional, exposed eureka instance port, useful in docker bridged network environments</code></pre>
 </div>
 </div>
 <a id="io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration" href="#io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration">&#128279;</a>
@@ -13888,8 +13913,118 @@ eureka:
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.instance-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.asg-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.home-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/LeaseInfo.html">LeaseInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.country-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.data-center-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/DataCenterInfo.html">DataCenterInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/InstanceInfo.Status.html">InstanceInfo$Status</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.app-group-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.ip-addr</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.registration-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.eviction-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.service-up-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.duration-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-interval-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
