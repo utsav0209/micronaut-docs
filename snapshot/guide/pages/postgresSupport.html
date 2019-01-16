@@ -166,74 +166,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="paragraph">
-<p>You should then configure the URI or <a href="https://reactiverse.io/reactive-pg-client/apidocs/index.html"><code>PoolOptions</code></a> of the Postgres server you wish to communicate with in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">postgres:
-	reactive:
-	    client:
-            port: 5432
-            host: the-host
-            database: the-db
-            user: test
-            password: test
-            maxSize: 5</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can also connect to Postgres using <code>uri</code> instead of the other properties.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once you have the above configuration in place then you can inject the <code>io.reactiverse.reactivex.pgclient.PgPool</code> bean. The following is the simplest way to connect:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">result = client.rxQuery('SELECT * FROM pg_stat_database').map({ PgRowSet pgRowSet -&gt; <i class="conum" data-value="1"></i><b>(1)</b>
-    int size = 0
-    PgIterator iterator = pgRowSet.iterator()
-    while (iterator.hasNext()) {
-        iterator.next()
-        size++
-    }
-    return "Size: ${size}"
-}).blockingGet()</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>client</code> is an instance of the <code>io.reactiverse.reactivex.pgclient.PgPool</code> bean.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For more information on running queries on Postgres using the reactive client please read the "Running queries" section in the documentation of <a href="https://reactiverse.io/reactive-pg-client/guide/groovy/index.html">reactive-pg-client</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_postgres_health_checks">Postgres Health Checks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the <code>postgres-reactive</code> module is activated a <a href="../api/io/micronaut/configuration/postgres/reactive/health/PgPoolHealthIndicator.html">PgPoolHealthIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the Postgres connection.</p>
-</div>
-<div class="paragraph">
-<p>The only configuration option supported is to enable or disable the indicator by the <code>endpoints.health.postgres.reactive.enabled</code> key.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
+<p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#pgclient">Configuring Reactive Postgres</a> section of the <a href="https://github.com/micronaut-projects/micronaut-sql">Micronaut SQL libraries</a> project.</p>
 </div>
 </div>
 </div>

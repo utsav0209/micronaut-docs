@@ -17456,18 +17456,58 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 </table>
 </div>
 <div class="paragraph">
-<p>To get started, simply add a dependency to one of the JDBC configurations that corresponds to the implementation you would like to use.</p>
+<p>To get started, simply add a dependency to one of the JDBC configurations that corresponds to the implementation you would like to use. Choose one of the following:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    // Choose one of the following
-    compile "io.micronaut.configuration:micronaut-jdbc-tomcat"
-    compile "io.micronaut.configuration:micronaut-jdbc-hikari"
-    compile "io.micronaut.configuration:micronaut-jdbc-dbcp"
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut.configuration:micronaut-jdbc-tomcat'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-tomcat&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut.configuration:micronaut-jdbc-hikari'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-hikari&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut.configuration:micronaut-jdbc-dbcp'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-dbcp&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>You also need to add a JDBC driver dependency to your classpath. For example to add the <a href="http://www.h2database.com">H2 In-Memory Database</a>:</p>
@@ -17489,160 +17529,8 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 </div>
 </p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_jdbc_connection_pools">Configuring JDBC Connection Pools</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>All of the implementation specific parameters can be configured. Effort was made to allow basic configuration to be consistent across the implementations.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Hikari: The URL is able to be configured through <code>url</code> in addition to <code>jdbcUrl</code>. The JNDI name can be configured through <code>jndiName</code> in addition to <code>dataSourceJNDI</code>.</p>
-</li>
-<li>
-<p>Tomcat: The JNDI name can be configured through <code>jndiName</code> in addition to <code>dataSourceJNDI</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Several configuration options will be calculated if they are not provided.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">URL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The classpath will be searched for an embedded database driver. If found, the URL will be set to the default value for that driver.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Driver Class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the URL is configured, the driver class will be derived from the URL, otherwise the classpath will be searched for an embedded database driver. If found, the default class name for that driver will be used.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the configured database driver is embedded, the username will be set to "sa"</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the configured database driver is embedded, the password will be set to an empty string.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yaml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources.default: {}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above configuration will result in a single <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> bean being registered with the named qualifier of <code>default</code>.</p>
-</div>
-<div class="paragraph">
-<p>If for example, the H2 driver is on the classpath, it is equivalent to the following:</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yaml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources:
-    default:
-        url: jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-        username: sa
-        password: ""
-        driverClassName: org.h2.Driver</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For a list of other properties able to be configured, simply refer to the implementation that is being used. All setter methods are candidates for configuration.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tomcat</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://tomcat.apache.org/tomcat-9.0-doc/api/org/apache/tomcat/jdbc/pool/PoolProperties.html">PoolProperties</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hikari</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://static.javadoc.io/com.zaxxer/HikariCP/2.7.1/com/zaxxer/hikari/HikariConfig.html">HikariConfig</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache DBCP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://commons.apache.org/proper/commons-dbcp/api-2.1.1/org/apache/commons/dbcp2/BasicDataSource.html">BasicDataSource</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_multiple_data_sources">Configuring Multiple Data Sources</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To register more than one data source, simply configure them under different names.</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yaml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources:
-    default:
-        ...
-    warehouse:
-        ...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When injecting <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> beans, the one with the name "default" will be injected unless the injection is qualified with the configured name. If no configuration is named "default", none of the beans will be primary and thus all injections must be qualified. For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject DataSource dataSource // "default" will be injected
-@Inject @Named("warehouse") DataSource dataSource // "warehouse" will be injected</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_jdbc_health_checks">JDBC Health Checks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Once you have configured a JDBC <code>DataSource</code> the <a href="../api/io/micronaut/management/health/indicator/jdbc/JdbcIndicator.html">JdbcIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the JDBC connection.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_using_spring_transaction_management">Using Spring Transaction Management</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If you wish to use Spring-based transaction management you can add the following dependencies to your application:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    compile "io.micronaut:micronaut-spring"
-    runtime "org.springframework:spring-jdbc"
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Micronaut will automatically configure a <code>DataSourceTransactionManager</code> and wrap the <code>DataSource</code> in a <code>TransactionAwareDataSourceProxy</code> for each configured <code>DataSource</code>.</p>
-</div>
-<div class="paragraph">
-<p>You should then use Micronaut&#8217;s <a href="../api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a> annotation to ensure low-overhead, compile-time transaction management is applied to your classes.</p>
+<p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">Configuring JDBC</a> section of the <a href="https://github.com/micronaut-projects/micronaut-sql">Micronaut SQL libraries</a> project.</p>
 </div>
 </div>
 </div>
@@ -17685,127 +17573,31 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="paragraph">
 <p>Once you have <a href="#sqlSupport">configured one or many DataSources</a> to use Hibernate, you will need to add the <code>hibernate-jpa</code> dependency to your build configuration:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-jpa"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-jpa'</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>And that is it. For each registered SQL <code>DataSource</code>, Micronaut will configure the following beans using <a href="../api/io/micronaut/configuration/hibernate/jpa/EntityManagerFactoryBean.html">EntityManagerFactoryBean</a>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/boot/registry/StandardServiceRegistry.html">StandardServiceRegistry</a> - The Hibernate <code>StandardServiceRegistry</code></p>
-</li>
-<li>
-<p><a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/boot/MetadataSources.html">MetadataSources</a> - The Hibernate <code>MetadataSources</code></p>
-</li>
-<li>
-<p><a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/boot/SessionFactoryBuilder.html">SessionFactoryBuilder</a> - The Hibernate <code>SessionFactoryBuilder</code></p>
-</li>
-<li>
-<p><a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/SessionFactory.html">SessionFactory</a> - The Hibernate <code>SessionFactory</code> bean which also implements the JPA <code>EntityManagerFactory</code> interface.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_injecting_an_entitymanager_or_hibernate_session">Injecting an EntityManager or Hibernate Session</h4>
-<div class="paragraph">
-<p>You can use the <code>javax.persistence.PersistenceContext</code> annotation to inject an <code>EntityManager</code> (or Hibernate <code>Session</code>). To do so you need to make sure the JPA annotations are on the <code>annotationProcessor</code> path in your build:</p>
-</div>
-<div class="listingblock">
-<div class="title">Adding the JPA dependency to <code>annotationProcessor</code> in Gradle</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "javax.persistence:javax.persistence-api:2.2"</code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-hibernate-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">Using <code>@PersistenceContext</code></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@PersistenceContext
-EntityManager entityManager;
-
-@PersistenceContext(name = "other")
-EntityManager otherManager;</code></pre>
-</div>
+</p>
 </div>
 <div class="paragraph">
-<p>Micronaut will inject a compile time scoped proxy that retrieves the <code>EntityManager</code> associated with the current transaction when using <a href="../api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a> (see "Using Spring Transaction Management" below).</p>
-</div>
-<div class="paragraph">
-<p>Note the examples above use field injection, since the <code>@PersistenceContext</code> annotation does not support declaration on a parameter of a constructor or method argument. Therefore if you wish to instead use constructor or method injection you must use the <a href="../api/io/micronaut/configuration/hibernate/jpa/scope/CurrentSession.html">@CurrentSession</a> instead:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using <code>@CurrentSession</code> for constructor injection</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public MyService(@CurrentSession EntityManager entityManager) {
-     this.entityManager = entityManager;
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_customizing_hibernate_jpa_configuration">Customizing Hibernate / JPA Configuration</h4>
-<div class="paragraph">
-<p>There are several different ways you can customize and configure how the <code>SessionFactory</code> is built. The easiest way is via configuration in <code>application.yml</code>. The following configuration demonstrates an example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Hibernate Properties</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">datasources:
-    default:
-        name: 'mydb'
-jpa:
-    default:
-        packages-to-scan:
-            - 'foo.bar'
-            - 'foo.baz'
-        properties:
-            hibernate:
-                hbm2ddl:
-                    auto: update
-                show_sql: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above example configures the packages to be scanned and sets properties to be passed to Hibernate. As you can see these are done on a per <code>DataSource</code> basis. Refer to the <a href="../api/io/micronaut/configuration/hibernate/jpa/JpaConfiguration.html">JpaConfiguration</a> configuration class for the possible options.</p>
-</div>
-<div class="paragraph">
-<p>If you need even further control over how the <code>SessionFactory</code> is built then you can register <a href="../api/io/micronaut/context/event/BeanCreatedEventListener.html">BeanCreatedEventListener</a> beans that listen for the creation of the <a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/boot/SessionFactoryBuilder.html">SessionFactoryBuilder</a>, <a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/boot/MetadataSources.html">MetadataSources</a> etc. and apply your custom configuration in the listener.</p>
-</div>
-<div class="paragraph">
-<p>You may also optionally create beans of type <a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/integrator/spi/Integrator.html">Integrator</a> and <a href="http://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/Interceptor.html">Interceptor</a> and these will be picked up and injected automatically.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_spring_transaction_management">Using Spring Transaction Management</h4>
-<div class="paragraph">
-<p>Micronaut&#8217;s Hibernate integration will also automatically provide a Spring <code>HibernateTransactionManager</code> bean so you can use Spring-based transaction management.</p>
-</div>
-<div class="paragraph">
-<p>You should use Micronaut&#8217;s <a href="../api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a> annotation to ensure low-overhead, compile-time transaction management is applied to your classes.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_understanding_lazyinitializationexception">Understanding LazyInitializationException</h4>
-<div class="paragraph">
-<p>Micronaut is built on Netty which is based on a non-blocking, event loop model. JDBC and Hibernate are blocking APIs and hence when they are used in a Micronaut application the work is shifted to a blocking I/O thread pool.</p>
-</div>
-<div class="paragraph">
-<p>When using <a href="../api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a> the Hibernate <code>Session</code> will only be open for the duration of this method execution and then will automatically be closed. This ensures that the blocking operation is kept as short as possible.</p>
-</div>
-<div class="paragraph">
-<p>There is no notion of OpenSessionInView (OSIV) in Micronaut and never will be, since it is <a href="https://vladmihalcea.com/the-open-session-in-view-anti-pattern/">sub-optimal and not recommended</a>. You should optimize the queries that you write to return all the necessary data Micronaut will need to encode your objects into JSON either by using the appropriate join queries or using a <a href="https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/">data transfer object (DTO)</a>.</p>
-</div>
-<div class="paragraph">
-<p>If you encounter a <code>LazyInitializationException</code> when returning a Hibernate entity from a method it is an indication that your query is suboptimal and you should perform a join.</p>
+<p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#hibernate">Configuring Hibernate</a> section of the <a href="https://github.com/micronaut-projects/micronaut-sql">Micronaut SQL libraries</a> project.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_using_gorm_for_hibernate">Using GORM for Hibernate</h4>
+<div class="paragraph">
+<p>For Groovy users and users familiar with the Grails framework, special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -17827,57 +17619,7 @@ jpa:
 </table>
 </div>
 <div class="paragraph">
-<p>For Groovy users and users familiar with the Grails framework, special support for <a href="http://gorm.grails.org">GORM for Hibernate</a> is available. To use GORM for Hibernate you <strong>should not</strong> include Micronaut&#8217;s built in <a href="#sqlSupport">SQL Support</a> or the <code>hibernate-jpa</code> dependency since GORM itself takes responsibility for creating the <code>DataSource</code>, <code>SessionFactory</code> etc.</p>
-</div>
-<div class="paragraph">
-<p>Rather, you only need to include the  <code>hibernate-gorm</code> dependency in your project, a connection pool implementation, and the desired JDBC driver. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring GORM for Hibernate</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  compile "io.micronaut.configuration:micronaut-hibernate-gorm"
-  // Use Tomcat connection pool
-  runtime 'org.apache.tomcat:tomcat-jdbc'
-  // Use H2 database driver
-  runtime  'com.h2database:h2'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can now use the same <a href="http://gorm.grails.org/latest/hibernate/manual/index.html#configuration">configuration properties described in the GORM documentation</a>. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring GORM for Hibernate</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">dataSource:
-    pooled: true
-    dbCreate: create-drop
-    url: jdbc:h2:mem:devDb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-hibernate:
-    cache:
-        queries: false
-        use_second_level_cache: true
-        use_query_cache: false
-        region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following should be noted regarding using GORM for Hibernate in Micronaut:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Each class you wish to be a GORM entity should be annotated with the <code>grails.gorm.annotation.Entity</code> annotation.</p>
-</li>
-<li>
-<p>Each method that interacts with GORM should be annotated with GORM&#8217;s <code>grails.gorm.transactions.Transactional</code> to ensure a session is present. You can also add the <code>@Transactional</code> annotation to the class.</p>
-</li>
-<li>
-<p>By default Micronaut will scan for entities relative to your <code>Application</code> class. If you wish to customize this specify additional packages via the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> when starting your application.</p>
-</li>
-</ul>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-groovy/latest/guide/#gorm">GORM Modules</a> section of the <a href="https://github.com/micronaut-projects/micronaut-groovy">Micronaut for Groovy </a> user guide.</p>
 </div>
 </div>
 
@@ -18353,74 +18095,7 @@ You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEven
 </div>
 </div>
 <div class="paragraph">
-<p>You should then configure the URI or <a href="https://reactiverse.io/reactive-pg-client/apidocs/index.html"><code>PoolOptions</code></a> of the Postgres server you wish to communicate with in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">postgres:
-	reactive:
-	    client:
-            port: 5432
-            host: the-host
-            database: the-db
-            user: test
-            password: test
-            maxSize: 5</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can also connect to Postgres using <code>uri</code> instead of the other properties.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once you have the above configuration in place then you can inject the <code>io.reactiverse.reactivex.pgclient.PgPool</code> bean. The following is the simplest way to connect:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">result = client.rxQuery('SELECT * FROM pg_stat_database').map({ PgRowSet pgRowSet -&gt; <i class="conum" data-value="1"></i><b>(1)</b>
-    int size = 0
-    PgIterator iterator = pgRowSet.iterator()
-    while (iterator.hasNext()) {
-        iterator.next()
-        size++
-    }
-    return "Size: ${size}"
-}).blockingGet()</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>client</code> is an instance of the <code>io.reactiverse.reactivex.pgclient.PgPool</code> bean.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For more information on running queries on Postgres using the reactive client please read the "Running queries" section in the documentation of <a href="https://reactiverse.io/reactive-pg-client/guide/groovy/index.html">reactive-pg-client</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_postgres_health_checks">Postgres Health Checks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the <code>postgres-reactive</code> module is activated a <a href="../api/io/micronaut/configuration/postgres/reactive/health/PgPoolHealthIndicator.html">PgPoolHealthIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the Postgres connection.</p>
-</div>
-<div class="paragraph">
-<p>The only configuration option supported is to enable or disable the indicator by the <code>endpoints.health.postgres.reactive.enabled</code> key.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
+<p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#pgclient">Configuring Reactive Postgres</a> section of the <a href="https://github.com/micronaut-projects/micronaut-sql">Micronaut SQL libraries</a> project.</p>
 </div>
 </div>
 </div>
@@ -20879,6 +20554,9 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 
 
+<div class="paragraph">
+<p>Micronaut includes the ability to expose Metrics via integration with <a href="http://micrometer.io">Micrometer</a>.</p>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -20900,825 +20578,13 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>.  This will return a list of the metric names registered with the <code>MeterRegistry</code> bean.</p>
+<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>. This will return a list of availble metric names.</p>
 </div>
 <div class="paragraph">
-<p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.  This would return something like:</p>
-</div>
-<div class="listingblock">
-<div class="title">Sample Metric Detail Json</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "name": "jvm.memory.used",
-  "measurements": [
-    {
-      "statistic": "VALUE",
-      "value": 1.45397552E8
-    }
-  ],
-  "availableTags": [
-    {
-      "tag": "area",
-      "values": [
-        "heap",
-        "nonheap"
-      ]
-    },
-    {
-      "tag": "id",
-      "values": [
-        "Compressed Class Space",
-        "PS Survivor Space",
-        "PS Old Gen",
-        "Metaspace",
-        "PS Eden Space",
-        "Code Cache"
-      ]
-    }
-  ]
-}</code></pre>
-</div>
+<p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.</p>
 </div>
 <div class="paragraph">
-<p>You can further limit the metric by using a tag like <code>/metrics/jvm.memory.used?tag=id:PS%20Old%20Gen</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Sample Metric Detail Json</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "name": "jvm.memory.used",
-  "measurements": [
-    {
-      "statistic": "VALUE",
-      "value": 1.1434488E7
-    }
-  ],
-  "availableTags": [
-    {
-      "tag": "area",
-      "values": [
-        "heap"
-      ]
-    }
-  ]
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You may even use multiple/nested tags like <code>/metrics/jvm.memory.used?tag=id:PS%20Old%20Gen&amp;tag=area:heap</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Sample Metric Detail Json</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "name": "jvm.memory.used",
-  "measurements": [
-    {
-      "statistic": "VALUE",
-      "value": 1.1434488E7
-    }
-  ]
-}</code></pre>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration">Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Currently the metrics endpoint will only be enabled if you include the <code>micrometer-core</code> (or one of the typed registries such as <code>micrometer-registry-statsd</code> or <code>micrometer-registry-graphite</code>) AND the <code>management</code> dependencies.  You will also need to have the global metrics flag enabled (true by default).</p>
-</div>
-<div class="listingblock">
-<div class="title">Property</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-  metrics:
-    enabled: true</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    compile "io.micronaut.configuration:micronaut-micrometer-core"
-    // micrometer-registry-statsd also pulls in micrometer-core so included above to verbose example
-    compile "io.micronaut.configuration:micronaut-micrometer-registry-statsd"
-    // Also required to enable endpoint
-    compile "io.micronaut:micronaut-management"
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Maven</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-core&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!-- micrometer-registry-statsd also pulls in micrometer-core so included above to verbose example --&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-registry-statsd&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!-- Also required to enable endpoint --&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-management&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To configure the metrics endpoint, supply configuration through <code>endpoints.metrics</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Metrics Endpoint Configuration Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
-    metrics:
-        enabled: Boolean
-        sensitive: Boolean</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_metric_concepts">Metric Concepts</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Key <code>Micrometer.io</code> <a href="http://micrometer.io/docs/concepts">concepts</a> include
-a <a href="http://micrometer.io/docs/concepts#_registry">MeterRegistry</a> to register and use
-meters. A <a href="http://micrometer.io/docs/concepts#_meters">Meter</a> is something that produces metrics.</p>
-</div>
-<div class="paragraph">
-<p>A MeterRegistry can have some customizations automatically applied.</p>
-</div>
-<div class="sect2">
-<h3 id="_meter_registry_configurer">Meter Registry Configurer</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Any bean that implements <code>MeterRegistryConfigurer</code> gets applied to every <em>applicable</em> MeterRegistry bean on creation</p>
-</li>
-<li>
-<p>The implementation of the MeterRegistryConfigurer <code>supports()</code> method determines if the configurer is applied to a particular registry</p>
-<div class="ulist">
-<ul>
-<li>
-<p>If you want all registries to get the customization, simply return return <code>true</code></p>
-</li>
-<li>
-<p>Otherwise, you can evaluate the registry for its class type, its class hierarchy, or other criteria.</p>
-</li>
-<li>
-<p>Remember you only get one shot for autoconfiguration; i.e. when the bean context is started.</p>
-</li>
-<li>
-<p>However, in code, you can apply additional customizations to the registry config</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="title">MeterRegistryConfigurer Interface</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::configurations/micrometer-core/src/main/java/io/micronaut/configuration/metrics/aggregator/MeterRegistryConfigurer.java[]</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::configurations/micrometer-core/src/test/groovy/io/micronaut/docs/SimpleMeterRegistryConfigurer.java[]</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_meter_filter">Meter Filter</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>A meter filter can be used to determine if a Meter is to be added to the registry. See <a href="http://micrometer.io/docs/concepts#_meter_filters">Meter Filters</a></p>
-</li>
-<li>
-<p>Any bean that implements MeterFilter will be applied to all registries when the registry is first created</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You can create custom filters similar to the following inside your application.  Micrometer&#8217;s <code>MeterFilter</code> class provides several convenience methods to help with the creation of these filters.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::configurations/micrometer-core/src/test/groovy/io/micronaut/docs/MeterFilterFactory.java[]</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_meter_binder">Meter Binder</h3>
-<div class="paragraph">
-<p>Meter Binders get applied to Meter Registry to <em>mix in</em> metrics producers. Micrometer.io defines several of these for cross-cutting metrics related to JVM metrics, caches, classloaders, etc. These all extend a simple interface MeterBinder, but these are not auto wired as beans and manual wiring is required given how micrometer is currently implemented.</p>
-</div>
-<div class="sect3">
-<h4 id="_provided_binders">Provided Binders</h4>
-<div class="paragraph">
-<p>The following metrics currently have binders and are enabled by default.  The settings listed below can disable the specific metric binders if you do not with to collect or report the specific metrics.</p>
-</div>
-<div class="sect4">
-<h5 id="_jvm_metrics">Jvm Metrics</h5>
-<div class="paragraph">
-<p>The JVM metrics bindings will provide several jvm metrics.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.jvm.enabled</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.buffer.count</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.buffer.memory.used</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.buffer.total.capacity</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.classes.loaded</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.classes.unloaded</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.gc.live.data.size</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.gc.max.data.size</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.gc.memory.allocated</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.gc.memory.promoted</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.memory.committed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.memory.max</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.memory.used</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.threads.daemon</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.threads.live</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jvm.threads.peak</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_web_metrics">Web Metrics</h5>
-<div class="paragraph">
-<p>There is a default web filter provided for web metrics.  All routes, status codes, methods and exceptions will be timed and counted.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.web.enabled</code></p>
-</div>
-<div class="paragraph">
-<div class="title">Filter Path</div>
-<p>If enabled, be default the path <code>/**</code> will be intercepted.  If you wish to change which paths are run through the filter set the following property.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.http.path</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.server.requests</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http.client.requests</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_system_metrics">System Metrics</h5>
-<div class="paragraph">
-<p>There are multiple metrics that can be separately toggled.</p>
-</div>
-<div class="sect5">
-<h6 id="_uptime_metrics">Uptime Metrics</h6>
-<div class="paragraph">
-<p>The uptime metrics bindings will provide system uptime metrics.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.uptime.enabled</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process.uptime</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process.start.time</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_processor_metrics">Processor Metrics</h5>
-<div class="paragraph">
-<p>The processor metrics bindings will provide system processor metrics.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.processor.enabled</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">system.load.average.1m</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">system.cpu.usage</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">system.cpu.count</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process.cpu.usage</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_file_descriptor_metrics">File Descriptor Metrics</h5>
-<div class="paragraph">
-<p>The file descriptor metrics bindings will provide system file descriptor metrics.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.files.enabled</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process.files.open</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process.files.max</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_logback_metrics">Logback Metrics</h5>
-<div class="paragraph">
-<p>The logging metrics bindings will provide logging metrics if using Logback.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.logback.enabled</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">logback.events</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_hibernate_metrics">Hibernate Metrics</h5>
-<div class="paragraph">
-<p>You can enable metrics for Hibernate by setting the <code>hibernate.generate_statistics</code> property to <code>true</code> in configuration. For example for the default entity manager:</p>
-</div>
-<div class="paragraph">
-<p>Enabling Hibernate Metrics</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">jpa:
-    default:
-        properties:
-            hibernate:
-                generate_statistics: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Micrometer will automatically expose Hibernate statistics. See the source code for <a href="https://github.com/micrometer-metrics/micrometer/blob/8b5a2cfd0c8fcc121cb936bb40a04f45571ce073/micrometer-core/src/main/java/io/micrometer/core/instrument/binder/jpa/HibernateMetrics.java#L79">HibernateMetrics</a> for the available metrics.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_datasource_metrics">DataSource Metrics</h5>
-<div class="paragraph">
-<p>The data source metrics bindings will provide data source pool metrics.</p>
-</div>
-<div class="paragraph">
-<p><strong>Control Property</strong>: <code>micronaut.metrics.binders.jdbc.enabled</code></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-There is a different set of pool metric names for HikariCP and other pool providers.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If you are using <code>io.micronaut.configuration:micronaut-jdbc-hikari</code> you will get additional pool metrics as HikariCP has built in support for meter registries.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. HikariCP Metrics Provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.idle</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.pending</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.active</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.creation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.max</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.min</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.usage</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.timeout</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hikaricp.connections.acquire</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>If you are using <code>io.micronaut.configuration:micronaut-jdbc-tomcat</code> or <code>io.micronaut.configuration:micronaut-jdbc-dbcp</code> you will get the following metrics</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. Generic Pool Metrics provided</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jdbc.connections.usage</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jdbc.connections.active</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jdbc.connections.max</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jdbc.connections.min</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_adding_custom_metrics">Adding Custom Metrics</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To add metrics to your application you can inject a MeterRegistry bean to your class and use the provided methods to access counters, timers, etc.</p>
-</div>
-<div class="paragraph">
-<p>See the Micrometer.io docs at <a href="https://micrometer.io/docs" class="bare">https://micrometer.io/docs</a> for more information.</p>
-</div>
-<div class="listingblock">
-<div class="title">Custom Metrics Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::configurations/micrometer-core/src/test/groovy/io/micronaut/docs/IndexController.java[]</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_metrics_registries_reporters">Metrics Registries &amp; Reporters</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By default there a metrics endpoint wired up and metrics are provided to it for viewing or retrieving via http.  If you want to register a specific type of reporter you will need to include a typed registry configuration.  The following are the currently supported libraries for reporting metrics.</p>
-</div>
-<div class="sect2">
-<h3 id="_statsd_registry">Statsd Registry</h3>
-<div class="paragraph">
-<p>You can include the statsd reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-statsd:${micronaut.version}</code></p>
-</div>
-<div class="listingblock">
-<div class="title">Maven</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-registry-statsd&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can configure this reporter using <code>micronaut.metrics.export.statsd</code>.  The most commonly changed configuration properties are listed below, but see <a href="https://github.com/micrometer-metrics/micrometer/blob/master/implementations/micrometer-registry-statsd/src/main/java/io/micrometer/statsd/StatsdConfig.java">StatdsConfig</a> for more options</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the reporter. Could disable to local dev for example. Default: <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">flavor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of metric to use (datadog, etsy or telegraf). Default: <code>datadog</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How frequently to report metrics. Default: <code>PT1M</code> (1 min).  See <code>java.time.Duration#parse(CharSequence)</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host to communicate to statsd on. Default: <code>localhost</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port to communicate to statsd on. Default: <code>8125</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="title">Example Statsd Config</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">micronaut:
-  metrics:
-    enabled: true
-    export:
-      statsd:
-        enabled: true
-        flavor: datadog
-        step: PT1M
-        host: localhost
-        port: 8125</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graphite_registry">Graphite Registry</h3>
-<div class="paragraph">
-<p>You can include the graphite reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-graphite:${micronaut.version}</code></p>
-</div>
-<div class="listingblock">
-<div class="title">Maven</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-registry-graphite&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can configure this reporter using <code>micronaut.metrics.export.graphite</code>.  The most commonly changed configuration properties are listed below, but see <a href="https://github.com/micrometer-metrics/micrometer/blob/master/implementations/micrometer-registry-graphite/src/main/java/io/micrometer/graphite/GraphiteConfig.java">GraphiteConfig</a> for more options</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the reporter. Could disable to local dev for example. Default: <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How frequently to report metrics. Default: <code>PT1M</code> (1 min).  See <code>java.time.Duration#parse(CharSequence)</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host to communicate with graphite. Default: <code>localhost</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port to communicate with graphite. Default: <code>2004</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="title">Example Graphite Config</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">micronaut:
-  metrics:
-    enabled: true
-    export:
-      graphite:
-        enabled: true
-        step: PT1M
-        host: localhost
-        port: 2004</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_atlas_registry">Atlas Registry</h3>
-<div class="paragraph">
-<p>You can include the atlas reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-atlas:${micronaut.version}</code></p>
-</div>
-<div class="listingblock">
-<div class="title">Maven</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-registry-atlas&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can configure this reporter using <code>micronaut.metrics.export.atlas</code>.  The most commonly changed configuration properties are listed below, but see <a href="https://github.com/Netflix/spectator/blob/master/spectator-reg-atlas/src/main/java/com/netflix/spectator/atlas/AtlasConfig.java">AtlasConfig</a> for more options</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the reporter. Could disable to local dev for example. Default: <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How frequently to report metrics. Default: <code>PT1M</code> (1 min).  See <code>java.time.Duration#parse(CharSequence)</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The uri for the atlas backend. Default: <code><a href="http://localhost:7101/api/v1/publish" class="bare">http://localhost:7101/api/v1/publish</a></code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="title">Example Atlas Config</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">micronaut:
-  metrics:
-    enabled: true
-    export:
-      atlas:
-        enabled: true
-        uri: http://localhost:7101/api/v1/publish
-        step: PT1M</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_prometheus_registry">Prometheus Registry</h3>
-<div class="paragraph">
-<p>You can include the prometheus reporter via <code>io.micronaut.configuration:micronaut-micrometer-registry-prometheus:${micronaut.version}</code></p>
-</div>
-<div class="listingblock">
-<div class="title">Maven</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-  &lt;artifactId&gt;micronaut-micrometer-registry-prometheus&lt;/artifactId&gt;
-  &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can configure this reporter using <code>micronaut.metrics.export.prometheus</code>.  The most commonly changed configuration properties are listed below, but see <a href="https://github.com/micrometer-metrics/micrometer/blob/master/implementations/micrometer-registry-prometheus/src/main/java/io/micrometer/prometheus/PrometheusConfig.java">PrometheusConfig</a> for more options</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the reporter. Could disable to local dev for example. Default: <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How frequently to report metrics. Default: <code>PT1M</code> (1 min).  See <code>java.time.Duration#parse(CharSequence)</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">descriptions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean if meter descriptions should be sent to Prometheus. Turn this off to minimize the amount of data sent on each scrape. Default: <code>true</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="title">Example Prometheus Config</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">micronaut:
-  metrics:
-    enabled: true
-    export:
-      prometheus:
-        enabled: true
-        step: PT1M
-        descriptions: true</code></pre>
-</div>
-</div>
-</div>
-</div>
+<p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-micrometer/latest/guide/">Micronaut Micrometer</a> for information on how to configure, expose and customize metrics output.</p>
 </div>
 
 
