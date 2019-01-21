@@ -993,6 +993,21 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+@Controller("/hello") <b class="conum">(1)</b>
+public class HelloController {
+    @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
+    public String index() {
+        return "Hello World"; <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -5404,103 +5419,8 @@ public class BookService {
 </table>
 </div>
 <div class="paragraph">
-<p>If you wish to use Redis to cache results then you need to have the Lettuce configuration dependency on your classpath. Lettuce is a non-blocking, reactive Redis client implementation and Micronaut provides an implementation that allows cached results to be read reactively.</p>
+<p>If you wish to use Redis to cache results the <a href="https://micronaut-projects.github.io/micronaut-redis/snapshot/guide/#cache">Micronaut Redis</a> module provides a <a href="../api/io/micronaut/cache/CacheManager.html">CacheManager</a> implementation that allows using Redis as a backing cache.</p>
 </div>
-<div class="paragraph">
-<p>To enable Lettuce, add the <code>redis-lettuce</code> dependency to your application:</p>
-</div>
-<div class="listingblock">
-<div class="title">Lettuce Configuration build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    compile "io.micronaut.configuration:micronaut-redis-lettuce"
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then within your application configuration configure the Redis URL and Redis caches:</p>
-</div>
-<div class="listingblock">
-<div class="title">Cache Configuration Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redis:
-    uri: redis://localhost
-    caches:
-        my-cache:
-            # expire one hour after write
-            expire-after-write: 1h</code></pre>
-</div>
-</div>
-<a id="io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration" href="#io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/configuration/lettuce/cache/RedisCacheConfiguration.html">RedisCacheConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.charset</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.server</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.key-serializer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.value-serializer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.initial-capacity</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.maximum-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.maximum-weight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.expire-after-write</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.expire-after-access</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redis.caches.*.test-mode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -6007,6 +5927,21 @@ Micronaut&#8217;s version of <a href="../api/io/micronaut/spring/tx/annotation/T
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+@Controller("/hello") <b class="conum">(1)</b>
+public class HelloController {
+    @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
+    public String index() {
+        return "Hello World"; <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -6071,14 +6006,9 @@ class HelloController {
 <div class="listingblock">
 <div class="title">Micronaut Application Class</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.Micronaut;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=imports, indent=0]
 
-public class Application {
-
-    public static void main(String[] args) {
-        Micronaut.run(Application.class);
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=class, indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8134,6 +8064,157 @@ class VersionedController {
 <div class="paragraph">
 <p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/strategy/VersionExtractingStrategy.html">VersionExtractingStrategy</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
 </div>
+<div class="sect2">
+<h3 id="_versioning_client_requests">Versioning Client Requests</h3>
+<div class="paragraph">
+<p>Micronaut&#8217;s <a href="#clientAnnotation">Declarative HTTP client</a> also supports automatic versioning of outgoing requests via the <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>By default if you annotate a client interface with <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> the value supplied to the annotation will be included using the <code>X-API-VERSION</code> header.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.version.annotation.Version;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Single;
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+public interface HelloClient {
+
+    @Get("/greeting/{name}")
+    String sayHello(String name);
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    Single&lt;String&gt; sayHelloTwo(String name); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get("/greeting/{name}")
+    String sayHello(String name)
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    Single&lt;String&gt; sayHelloTwo(String name) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get("/greeting/{name}")
+    fun sayHello(name : String) : String
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    fun sayHelloTwo(name : String) : Single&lt;String&gt;  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> can be used as the type level to specify the version to use for all methods</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>When defined at the method level it is used only for that method</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The default behaviour for how the version is sent for each call can be configured with <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a>:</p>
+</div>
+<a id="io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration" href="#io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request header names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.parameters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request query parameter names.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example to use <code>Accept-Version</code> as the header name:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Client Versioning</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            versioning:
+                default:
+                    headers:
+                        - 'Accept-Version'
+                        - 'X-API-VERSION'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>default</code> key is used to refer to the default configuration. You can specify client specific configuration by using the value passed to <code>@Client</code> (typically the service ID). For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Versioning</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            versioning:
+                greeting-service:
+                    headers:
+                        - 'Accept-Version'
+                        - 'X-API-VERSION'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above uses a key called <code>greeting-service</code> which can be used to configure a client annotated with <code>@Client('greeting-service')</code>.</p>
+</div>
+</div>
 
 
 <h2 id="formData">6.15 Handling Form Data</h2>
@@ -9198,55 +9279,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 <h2 id="_redis_sessions">Redis Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Storing <a href="../api/io/micronaut/session/Session.html">Session</a> instances is Redis requires special considerations.</p>
-</div>
-<div class="paragraph">
-<p>You can configure how sessions are stored in Redis using <a href="../api/io/micronaut/configuration/lettuce/session/RedisHttpSessionConfiguration.html">RedisHttpSessionConfiguration</a>.</p>
-</div>
-<div class="paragraph">
-<p>The following represents an example configuration in <code>application.yml</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Redis Sessions</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    session:
-        http:
-            redis:
-                enabled: true
-                # The Redis namespace to write sessions to
-                namespace: 'myapp:sessions'
-                # Write session changes in the background
-                write-mode: BACKGROUND
-                # Disable programatic activation of keyspace events
-                enable-keyspace-events: false</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The <a href="../api/io/micronaut/configuration/lettuce/session/RedisSessionStore.html">RedisSessionStore</a> implementation uses <a href="https://redis.io/topics/notifications">keyspace events</a> to cleanup active sessions and fire <a href="../api/io/micronaut/session/event/SessionExpiredEvent.html">SessionExpiredEvent</a> and requires they are active.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>By default sessions values are serialized using Java serialization and stored in Redis hashes. You can configure serialization to instead use Jackson to serialize to JSON if desired:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using Jackson Serialization</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    session:
-        http:
-            redis:
-                enabled: true
-                valueSerializer: io.micronaut.jackson.serialize.JacksonObjectSerializer</code></pre>
-</div>
+<p>If you wish to store <a href="../api/io/micronaut/session/Session.html">Session</a> instances in Redis you can do so with the <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide/#sessions">Micronaut Redis</a> module which includes instructions on how to do so.</p>
 </div>
 </div>
 </div>
@@ -13838,7 +13871,7 @@ EOF</code></pre>
 <p>You can setup a Git repository that contains files like <code>application.yml</code>, <code>hello-world-test.json</code> etc. and the contents of these files are cloned to Consul.</p>
 </div>
 <div class="paragraph">
-<p>In this case each key in consul represents a file with an extension. For example <code>/config/application.yml</code> and you must configure the <code>FILES</code> format:</p>
+<p>In this case each key in consul represents a file with an extension. For example <code>/config/application.yml</code> and you must configure the <code>FILE</code> format:</p>
 </div>
 <div class="listingblock">
 <div class="title">application.yml</div>
@@ -13846,7 +13879,7 @@ EOF</code></pre>
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">consul:
     client:
         config:
-            format: FILES</code></pre>
+            format: FILE</code></pre>
 </div>
 </div>
 </div>
@@ -15994,14 +16027,9 @@ String hello(String name) {
 <div class="listingblock">
 <div class="title">Example Application class</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.Micronaut;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=imports, indent=0]
 
-public class Application {
-
-    public static void main(String[] args) {
-        Micronaut.run(Application.class);
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=class, indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -17658,11 +17686,21 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="paragraph">
 <p>Micronaut includes a configuration to automatically configure the native MongoDB Java driver. To use this configuration, add the following dependency to your application:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-mongo-reactive'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-mongo-reactive&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then configure the URI of the MongoDB server in <code>application.yml</code>:</p>
@@ -17700,151 +17738,8 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <div class="paragraph">
 <p>Then the blocking <a href="http://mongodb.github.io/mongo-java-driver/3.7/javadoc/com/mongodb/MongoClient.html">MongoClient</a> will be available for injection.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_configuring_the_mongodb_driver">Configuring the MongoDB Driver</h4>
 <div class="paragraph">
-<p>The configuration options for the blocking client and the non-blocking client differ at the driver level.</p>
-</div>
-<div class="paragraph">
-<p>To configure the blocking client options you can use the <code>mongodb.options</code> setting which allows you to configure any property of the <code>MongoClientOptions.Builder</code> class. For example in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Blocking Driver Options</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mongodb:
-    ...
-    options:
-        maxConnectionIdleTime: 10000
-        readConcern: majority</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>See the API for <a href="../api/io/micronaut/configuration/mongo/reactive/DefaultMongoConfiguration.html">DefaultMongoConfiguration</a> for more information on the available configuration options.</p>
-</div>
-<div class="paragraph">
-<p>For the Reactive driver, the <a href="../api/io/micronaut/configuration/mongo/reactive/ReactiveMongoConfiguration.html">ReactiveMongoConfiguration</a> exposes options to configure the Reactive Streams driver. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring the Reactive Streams Driver</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mongodb:
-    ...
-    cluster:
-        maxWaitQueueSize: 5
-    connectionPool:
-        maxSize: 20</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_embedded_mongodb_for_testing">Using Embedded MongoDB for Testing</h4>
-<div class="paragraph">
-<p>For testing you can add a dependency on <a href="https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo">Embedded MongoDB</a> and if the MongoDB server is not available on the configured port for the test environment an embedded MongoDB will be bootstrapped and made available for testing:</p>
-</div>
-<div class="listingblock">
-<div class="title">Add Embedded MongoDB</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_multiple_mongodb_drivers">Multiple MongoDB Drivers</h4>
-<div class="paragraph">
-<p>You can create multiple MongoDB connections using the <code>mongodb.servers</code> setting. For example in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Multiple MongoDB Drivers</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mongodb:
-    servers:
-        another:
-            uri: mongodb://localhost:27018</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>With the above configuration in place you can inject a <code>MongoClient</code> using the name <code>another</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import com.mongodb.reactivestreams.client.*;
-import javax.inject.*;
-...
-@Inject @Named("another") MongoClient mongoClient;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_mongodb_health_checks">MongoDB Health Checks</h4>
-<div class="paragraph">
-<p>When the <code>mongo-reactive</code> module is activated a <a href="../api/io/micronaut/configuration/mongo/reactive/health/MongoHealthIndicator.html">MongoHealthIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the MongoDB connection.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_gorm_for_mongodb">Using GORM for MongoDB</h4>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>mongo-gorm</code> feature to configure GORM for MongoDB in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features mongo-gorm</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a>.</p>
-</div>
-<div class="paragraph">
-<p>To add support for GORM for MongoDB, first configure the MongoDB connection as per instructions earlier in the guide, then add the following dependency to your application:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-gorm"</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-For GORM for MongoDB you will need to configure the database name separately as the <code>grails.mongodb.datataseName</code> property in <code>application.yml</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following should be noted regarding using GORM for MongoDB in Micronaut:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Each class you wish to be a GORM entity should be annotated with the <code>grails.gorm.annotation.Entity</code> annotation.</p>
-</li>
-<li>
-<p>Each method that interacts with GORM should be annotated with GORM&#8217;s <code>grails.gorm.transactions.Transactional</code> to ensure a session is present. You can also add the <code>@Transactional</code> annotation to the class.</p>
-</li>
-<li>
-<p>By default Micronaut will scan for entities relative to your <code>Application</code> class. If you wish to customize this specify additional packages via the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> when starting your application.</p>
-</li>
-</ul>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/">Micronaut MongoDB</a> documentation for further information on configuring and using MongoDB within Micronaut.</p>
 </div>
 </div>
 
@@ -18170,141 +18065,8 @@ The <code>redis.uri</code> setting should be in the format as described in the <
 <div class="paragraph">
 <p>You can also specify multiple Redis URIs using <code>redis.uris</code> in which case a <code>RedisClusterClient</code> is created instead.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_available_lettuce_beans">Available Lettuce Beans</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Once you have the above configuration in place you can inject one of the following beans:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>io.lettuce.core.RedisClient</code> - The main client interface</p>
-</li>
-<li>
-<p><code>io.lettuce.core.api.StatefulRedisConnection</code> - A connection interface that features synchronous, reactive (based on Reactor) and async APIs that operate on <code>String</code> values</p>
-</li>
-<li>
-<p><code>io.lettuce.core.pubsub.StatefulRedisPubSubConnection</code> - A connection interface for dealing with Redis Pub/Sub</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The following example demonstrates the use of the <code>StatefulRedisConnection</code> interface&#8217;s synchronous API:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using StatefulRedisConnection</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Inject StatefulRedisConnection&lt;String, String&gt; connection
-...
-RedisCommands&lt;String, String&gt; commands = connection.sync()
-commands.set("foo", "bar")
-commands.get("foo") == "bar"</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The Lettuce driver&#8217;s <code>StatefulRedisConnection</code> interface is designed to be long-lived and there is no need to close the connection. It will be closed automatically when the application shuts down.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_customizing_the_redis_configuration">Customizing The Redis Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can customize the Redis configuration using any properties exposed by the <a href="../api/io/micronaut/configuration/lettuce/DefaultRedisConfiguration.html">DefaultRedisConfiguration</a> class. For example, in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Customizing Redis Configuration</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redis:
-    uri: redis://localhost
-    ssl: true
-    timeout: 30s</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_multiple_redis_connections">Multiple Redis Connections</h3>
-<div class="paragraph">
-<p>You can configure multiple Redis connections using the <code>redis.servers</code> setting. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Customizing Redis Configuration</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redis:
-    servers:
-        foo:
-            uri: redis://foo
-        bar:
-            uri: redis://bar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In which case the same beans will be created for each entry under <code>redis.servers</code> but exposed as <code>@Named</code> beans.</p>
-</div>
-<div class="listingblock">
-<div class="title">Using StatefulRedisConnection</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Inject @Named("foo") StatefulRedisConnection&lt;String, String&gt; connection;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above example will inject the connection named <code>foo</code>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_embedding_redis_for_testing">Embedding Redis for Testing</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can run an embedded version of Redis for testing and CI scenarios by adding a dependency on the Embedded Redis project:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">testCompile "com.github.kstyrc:embedded-redis:0.6"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If Redis is unavailable for the configured Redis URI an embedded instance of Redis will be automatically be started and then shutdown at the end of the test (when <code>stop</code> is called on the <code>ApplicationContext</code>).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_redis_health_checks">Redis Health Checks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the <code>redis-lettuce</code> module is activated a <a href="../api/io/micronaut/configuration/lettuce/health/RedisHealthIndicator.html">RedisHealthIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the Redis connection or connections.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_using_redis_as_a_cache">Using Redis as a Cache</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can use Redis as a cache implementation, see the section on <a href="#caching">Cache Advice</a> for how to configure Redis backed caches.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_using_redis_for_http_sessions">Using Redis for HTTP Sessions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can use Redis as a backing implementation for storing HTTP sessions. See the section on <a href="#sessions">HTTP Sessions</a> for more information on how to configure Redis backed sessions.</p>
+<p>For more information and further documentation see the <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide">Micronaut Redis</a> documentation.</p>
 </div>
 </div>
 </div>

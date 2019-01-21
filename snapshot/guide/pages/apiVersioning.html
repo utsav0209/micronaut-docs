@@ -225,6 +225,157 @@ class VersionedController {
 <div class="paragraph">
 <p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/strategy/VersionExtractingStrategy.html">VersionExtractingStrategy</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
 </div>
+<div class="sect2">
+<h3 id="_versioning_client_requests">Versioning Client Requests</h3>
+<div class="paragraph">
+<p>Micronaut&#8217;s <a href="#clientAnnotation">Declarative HTTP client</a> also supports automatic versioning of outgoing requests via the <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>By default if you annotate a client interface with <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> the value supplied to the annotation will be included using the <code>X-API-VERSION</code> header.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.version.annotation.Version;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Single;
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+public interface HelloClient {
+
+    @Get("/greeting/{name}")
+    String sayHello(String name);
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    Single&lt;String&gt; sayHelloTwo(String name); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get("/greeting/{name}")
+    String sayHello(String name)
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    Single&lt;String&gt; sayHelloTwo(String name) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+@Client("/hello")
+@Version("1") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get("/greeting/{name}")
+    fun sayHello(name : String) : String
+
+    @Version("2")
+    @Get("/greeting/{name}")
+    fun sayHelloTwo(name : String) : Single&lt;String&gt;  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> can be used as the type level to specify the version to use for all methods</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>When defined at the method level it is used only for that method</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The default behaviour for how the version is sent for each call can be configured with <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a>:</p>
+</div>
+<a id="io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration" href="#io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request header names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.parameters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request query parameter names.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example to use <code>Accept-Version</code> as the header name:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Client Versioning</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            versioning:
+                default:
+                    headers:
+                        - 'Accept-Version'
+                        - 'X-API-VERSION'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>default</code> key is used to refer to the default configuration. You can specify client specific configuration by using the value passed to <code>@Client</code> (typically the service ID). For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Versioning</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            versioning:
+                greeting-service:
+                    headers:
+                        - 'Accept-Version'
+                        - 'X-API-VERSION'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above uses a key called <code>greeting-service</code> which can be used to configure a client annotated with <code>@Client('greeting-service')</code>.</p>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
