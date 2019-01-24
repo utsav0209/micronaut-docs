@@ -189,7 +189,12 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">Using retrieve</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String result = client.toBlocking().retrieve("/hello/John");
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String uri = UriBuilder.of("/hello/{name}")
+                       .expand(Collections.singletonMap("name", "John"))
+                       .toString();
+assertEquals("/hello/John", uri);
+
+String result = client.toBlocking().retrieve(uri);
 
 assertEquals(
         "Hello John",

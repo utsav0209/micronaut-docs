@@ -188,38 +188,20 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 </div>
 </div>
 <div class="paragraph">
-<p>Also you can use the multi-stage dockerfile 'DockerfileAllInOne` which builds the project in three steps:</p>
+<p>The provided <code>Dockerfile</code> is a multi-stage dockerfile which builds the project in three steps:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>A Gradle or Maven image will build the project</p>
+<p>A Gradle or Maven image will build the project.</p>
 </li>
 <li>
-<p>A GraalVM official image will build the native image</p>
+<p>A GraalVM official image will build the native image.</p>
 </li>
 <li>
-<p>A typical dockerfile structure will build the final image which in smaller due to layering</p>
+<p>A typical dockerfile structure will build the final image which in smaller due to layering.</p>
 </li>
 </ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world -f DockerfileAllInOne <i class="conum" data-value="1"></i><b>(1)</b>
-$ docker run --rm --name hello-world --network=host hello-world <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>-f</code> sets the file to use in the build process</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Starting the Docker container with <code>--network=host</code> makes the application use the same network as the host so all ports are exposed automatically without needing to map them manually. Also <code>--rm</code> remove the container named <code>hello-world</code> once finished</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>With this approach you need to have installed only Docker as it downloads the required images, if necessary.</p>
@@ -231,10 +213,10 @@ $ docker run --rm --name hello-world --network=host hello-world <i class="conum"
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc8 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc11 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc8-graal
-$ sdk use java 1.0.0-rc8-graal</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-11-grl
+$ sdk use java 1.0.0-rc-11-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -251,7 +233,7 @@ $ sdk use java 1.0.0-rc8-graal</code></pre>
 <p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded.</p>
 </div>
 <div class="paragraph">
-<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> does this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
+<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> and the <code>build-native-image.sh</code> do this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
 </div>
 <div class="listingblock">
 <div class="title">Computing Class Loading Requirements</div>
@@ -282,7 +264,7 @@ $ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalCl
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template to point to the new location.
+If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template or the <code>build-native-image.sh</code> script to point to the new location.
 </td>
 </tr>
 </table>
@@ -293,51 +275,57 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="1"></i><b>(1)</b>
-             -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="2"></i><b>(2)</b>
-             -H:EnableURLProtocols=http \ <i class="conum" data-value="3"></i><b>(3)</b>
-             -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="4"></i><b>(4)</b>
-             -H:Name=hello-world \ <i class="conum" data-value="5"></i><b>(5)</b>
-             -H:Class=hello.world.Application \ <i class="conum" data-value="6"></i><b>(6)</b>
-             -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="7"></i><b>(7)</b>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server \ <i class="conum" data-value="1"></i><b>(1)</b>
+             --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="2"></i><b>(2)</b>
+             -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="3"></i><b>(3)</b>
+             -H:EnableURLProtocols=http \ <i class="conum" data-value="4"></i><b>(4)</b>
+             -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="5"></i><b>(5)</b>
+             -H:Name=hello-world \ <i class="conum" data-value="6"></i><b>(6)</b>
+             -H:Class=hello.world.Application \ <i class="conum" data-value="7"></i><b>(7)</b>
+             -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="8"></i><b>(8)</b>
              -H:+AllowVMInspection \
              -H:-UseServiceLoaderFeature \
+             --allow-incomplete-classpath \
              --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
-             --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+             --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient <i class="conum" data-value="9"></i><b>(9)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>class-path</code> argument is used to refer to the Micronaut shaded JAR</td>
+<td>Do not start a background server to generate the native image</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>-H:ReflectionConfigurationFiles</code> option points GraalVM to the <code>reflect.json</code> file (or files) needed to run the application. Multiple comma-separated files can be specified.</td>
+<td>The <code>class-path</code> argument is used to refer to the Micronaut shaded JAR</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Micronaut uses the JVM&#8217;s default URL connection classes. The <code>-H:EnableURLProtocols</code> allows using them in GraalVM <code>nativeimage</code>.</td>
+<td>The <code>-H:ReflectionConfigurationFiles</code> option points GraalVM to the <code>reflect.json</code> file (or files) needed to run the application. Multiple comma-separated files can be specified.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <code>-H:IncludeResources</code> argument specifies a regex to dictate which static resources should be included in the image.</td>
+<td>Micronaut uses the JVM&#8217;s default URL connection classes. The <code>-H:EnableURLProtocols</code> allows using them in GraalVM <code>nativeimage</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The <code>-H:Name</code> argument specifies the name of the native image to be built</td>
+<td>The <code>-H:IncludeResources</code> argument specifies a regex to dictate which static resources should be included in the image.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>The <code>-H:Class</code> argument specifies the Java main class that is the entry point of the application.</td>
+<td>The <code>-H:Name</code> argument specifies the name of the native image to be built</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The <code>-H:+ReportUnsupportedElementsAtRuntime</code> tells GraalVM to report any <code>ClassNotFoundException</code> errors at runtime instead of at build time.</td>
+<td>The <code>-H:Class</code> argument specifies the Java main class that is the entry point of the application.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The <code>-H:+ReportUnsupportedElementsAtRuntime</code> tells GraalVM to report any <code>ClassNotFoundException</code> errors at runtime instead of at build time.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
 <td>The <code>--delay-class-initialization-to-runtime</code> specifies which classes static initializers should be delayed until runtime. GraalVM by default runs static initializers at build time. That is undesirable in certain cases (particularly with Netty).</td>
 </tr>
 </table>
