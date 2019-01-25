@@ -565,9 +565,6 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <div class="paragraph">
 <p>Micronaut features dedicated support for automatically configuring the <a href="https://neo4j.com/docs/developer-manual/current/drivers/">Neo4j Bolt Driver</a> for the popular <a href="https://neo4j.com/">Neo4j</a> Graph Database.</p>
 </div>
-<div class="sect1">
-<h2 id="_configuring_neo4j_bolt">Configuring Neo4j Bolt</h2>
-<div class="sectionbody">
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -591,11 +588,21 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <div class="paragraph">
 <p>To configure the Neo4j Bolt driver you should first add the <code>neo4j-bolt</code> module to your classpath:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-neo4j-bolt"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-:micronaut-neo4j-bolt'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-:micronaut-neo4j-bolt&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>You should then configure the URI of the Neo4j server you wish to communicate with in <code>application.yml</code>:</p>
@@ -622,135 +629,8 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <div class="paragraph">
 <p>Once you have the above configuration in place you can inject an instance of the <code>org.neo4j.driver.v1.Driver</code> bean, which features both a synchronous blocking API and a non-blocking API based on <code>CompletableFuture</code>.</p>
 </div>
-<div class="sect2">
-<h3 id="_customizing_neo4j_configuration">Customizing Neo4j Configuration</h3>
 <div class="paragraph">
-<p>The configuration can be further customized with all the options available using the <a href="../api/io/micronaut/configuration/neo4j/bolt/Neo4jBoltConfiguration.html">Neo4jBoltConfiguration</a> class.</p>
-</div>
-<div class="paragraph">
-<p>The <code>Neo4jBoltConfiguration</code> also exposes all the options for the <code>org.neo4j.driver.v1.Config.ConfigBuilder</code> class.</p>
-</div>
-<div class="paragraph">
-<p>Below represents an example configuration:</p>
-</div>
-<div class="listingblock">
-<div class="title">Customizing the Bolt Configuration</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">neo4j:
-    uri: bolt://localhost
-    maxConnectionPoolSize: 50
-    connectionAcquisitionTimeout: 30s</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can also create a <a href="../api/io/micronaut/context/event/BeanCreatedEventListener.html">BeanCreatedEventListener</a> bean and listen for the creation of the <a href="../api/io/micronaut/configuration/neo4j/bolt/Neo4jBoltConfiguration.html">Neo4jBoltConfiguration</a> to further programmatically customize configuration
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_embedding_neo4j_for_testing">Embedding Neo4j for Testing</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can embed Neo4j for testing by including a dependency on the Neo4j test harness:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">testRuntime "org.neo4j.test:neo4j-harness:3.3.3"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If the Neo4j server is not already running on the configured port an embedded version will be started.</p>
-</div>
-<div class="paragraph">
-<p>You can configure the options for the embedded Neo4j server using the <code>neo4j.embedded</code> settings exposed by <a href="../api/io/micronaut/configuration/neo4j/bolt/Neo4jBoltConfiguration.html">Neo4jBoltConfiguration</a>.</p>
-</div>
-<div class="paragraph">
-<p>One useful option is <code>ephemeral</code> which ensures the data is cleaned up between test runs. For example in <code>application-test.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using ephemeral</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">neo4j:
-    embedded:
-        ephemeral: true</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_neo4j_health_checks">Neo4j Health Checks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the <code>neo4j-bolt</code> module is activated a <a href="../api/io/micronaut/configuration/neo4j/bolt/health/Neo4jHealthIndicator.html">Neo4jHealthIndicator</a> is activated resulting in the <code>/health</code> endpoint and <a href="../api/io/micronaut/health/CurrentHealthStatus.html">CurrentHealthStatus</a> interface resolving the health of the Neo4j connection.</p>
-</div>
-<div class="paragraph">
-<p>See the section on the <a href="#healthEndpoint">Health Endpoint</a> for more information.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_using_gorm_for_neo4j">Using GORM for Neo4j</h2>
-<div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-gorm</code> feature to configure GORM for Neo4j in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features neo4j-gorm</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For Groovy users and users familiar with Grails, special support has been added to Micronaut for using <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a>.</p>
-</div>
-<div class="paragraph">
-<p>To add support for GORM for Neo4j, first configure the Neo4j connection as per instructions earlier in the guide, then add the following dependency to your application:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-neo4j-gorm"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following should be noted regarding using GORM for Neo4j in Micronaut:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Each class you wish to be a GORM entity should be annotated with the <code>grails.gorm.annotation.Entity</code> annotation.</p>
-</li>
-<li>
-<p>Each method that interacts with GORM should be annotated with GORM&#8217;s <code>grails.gorm.transactions.Transactional</code> to ensure a session is present. You can also add the <code>@Transactional</code> annotation to the class.</p>
-</li>
-<li>
-<p>By default Micronaut will scan for entities relative to your <code>Application</code> class. If you wish to customize this specify additional packages via the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> when starting your application.</p>
-</li>
-</ul>
-</div>
-</div>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/">Micronaut Neo4j</a> documentation for further information on configuring and using Neo4j within Micronaut.</p>
 </div>
 
 

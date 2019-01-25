@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>12.1.4 Configuring Neo4j 1.1.0.BUILD-SNAPSHOT</title>
+    <title>15.7.1 User outside of a controller 1.1.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -101,18 +101,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/commandLineApps.html">&lt;&lt; <strong>11</strong><span>Standalone Command Line Applications</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/management.html">&lt;&lt; <strong>14</strong><span>Management &amp; Monitoring</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/languageSupport.html"><strong>13</strong><span>Language Support</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>12.1.4 Configuring Neo4j</h1>
+                    <h1>15.7.1 User outside of a controller</h1>
 
                     <p><strong>Version:</strong> 1.1.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -121,92 +121,25 @@ function addJsClass() {
 
                 
 
-<h2 id="neo4jSupport">12.1.4 Configuring Neo4j</h2>
+<h2 id="securityService">15.7.1 User outside of a controller</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/neo4jSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/retrievingAuthenticatedUser/securityService.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Micronaut features dedicated support for automatically configuring the <a href="https://neo4j.com/docs/developer-manual/current/drivers/">Neo4j Bolt Driver</a> for the popular <a href="https://neo4j.com/">Neo4j</a> Graph Database.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>neo4j-bolt</code> feature to configure the Neo4j Bolt driver in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features neo4j-bolt</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To configure the Neo4j Bolt driver you should first add the <code>neo4j-bolt</code> module to your classpath:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-:micronaut-neo4j-bolt'</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-:micronaut-neo4j-bolt&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>You should then configure the URI of the Neo4j server you wish to communicate with in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring <code>neo4j.uri</code></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">neo4j:
-    uri: bolt://localhost</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The <code>neo4j.uri</code> setting should be in the format as described in the <a href="https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-connection-uris">Connection URIs</a> section of the Neo4j documentation
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once you have the above configuration in place you can inject an instance of the <code>org.neo4j.driver.v1.Driver</code> bean, which features both a synchronous blocking API and a non-blocking API based on <code>CompletableFuture</code>.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/">Micronaut Neo4j</a> documentation for further information on configuring and using Neo4j within Micronaut.</p>
+<p>If you need to access the currently authenticated user outside of a controller, you can inject <a href="../api/io/micronaut/security/utils/SecurityService.html">SecurityService</a> bean, which provides a set of convenient methods related to authentication and authorization.</p>
 </div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/commandLineApps.html">&lt;&lt; <strong>11</strong><span>Standalone Command Line Applications</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/management.html">&lt;&lt; <strong>14</strong><span>Management &amp; Monitoring</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/languageSupport.html"><strong>13</strong><span>Language Support</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/multitenancy.html"><strong>16</strong><span>Multi-Tenancy</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
