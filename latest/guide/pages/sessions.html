@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.19 HTTP Sessions 1.0.3</title>
+    <title>6.19 HTTP Sessions 1.0.4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.19 HTTP Sessions</h1>
 
-                    <p><strong>Version:</strong> 1.0.3</p>
+                    <p><strong>Version:</strong> 1.0.4</p>
                 </div>
 
                 
@@ -431,55 +431,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 <h2 id="_redis_sessions">Redis Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Storing <a href="../api/io/micronaut/session/Session.html">Session</a> instances is Redis requires special considerations.</p>
-</div>
-<div class="paragraph">
-<p>You can configure how sessions are stored in Redis using <a href="../api/io/micronaut/configuration/lettuce/session/RedisHttpSessionConfiguration.html">RedisHttpSessionConfiguration</a>.</p>
-</div>
-<div class="paragraph">
-<p>The following represents an example configuration in <code>application.yml</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Redis Sessions</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    session:
-        http:
-            redis:
-                enabled: true
-                # The Redis namespace to write sessions to
-                namespace: 'myapp:sessions'
-                # Write session changes in the background
-                write-mode: BACKGROUND
-                # Disable programatic activation of keyspace events
-                enable-keyspace-events: false</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The <a href="../api/io/micronaut/configuration/lettuce/session/RedisSessionStore.html">RedisSessionStore</a> implementation uses <a href="https://redis.io/topics/notifications">keyspace events</a> to cleanup active sessions and fire <a href="../api/io/micronaut/session/event/SessionExpiredEvent.html">SessionExpiredEvent</a> and requires they are active.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>By default sessions values are serialized using Java serialization and stored in Redis hashes. You can configure serialization to instead use Jackson to serialize to JSON if desired:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using Jackson Serialization</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    session:
-        http:
-            redis:
-                enabled: true
-                valueSerializer: io.micronaut.jackson.serialize.JacksonObjectSerializer</code></pre>
-</div>
+<p>If you wish to store <a href="../api/io/micronaut/session/Session.html">Session</a> instances in Redis you can do so with the <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide/#sessions">Micronaut Redis</a> module which includes instructions on how to do so.</p>
 </div>
 </div>
 </div>
