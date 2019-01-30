@@ -21880,7 +21880,7 @@ class KeyPairProvider {
         // Parse the EC key pair
         PEMParser pemParser
         try {
-            pemParser = new PEMParser(new InputStreamReader(new FileInputStream(pemPath)))
+            pemParser = new PEMParser(new InputStreamReader(Files.newInputStream(Paths.get(pemPath))))
             PEMKeyPair pemKeyPair = (PEMKeyPair) pemParser.readObject()
 
             // Convert to Java (JCA) format
