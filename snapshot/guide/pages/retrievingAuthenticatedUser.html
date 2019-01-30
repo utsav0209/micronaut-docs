@@ -124,6 +124,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#securityService"><strong>15.1</strong><span>User outside of a controller</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#accessSecurityInViews"><strong>15.2</strong><span>User in a view</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -212,6 +215,102 @@ public class UserController {
 
 <div class="paragraph">
 <p>If you need to access the currently authenticated user outside of a controller, you can inject <a href="../api/io/micronaut/security/utils/SecurityService.html">SecurityService</a> bean, which provides a set of convenient methods related to authentication and authorization.</p>
+</div>
+
+
+<h2 id="accessSecurityInViews">15.7.2 User in a view</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/retrievingAuthenticatedUser/accessSecurityInViews.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessor.html">SecurityViewModelProcessor</a> is enabled by default and injects the current username in the view. The following properties allow you to customize the injection:</p>
+</div>
+<a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link SecurityViewModelProcessor}. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model key name. Default value ("security").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.principal-name-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s name property. Default value ("name").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.attributes-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s attributes property. Default value ("attributes").</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In a controller, you can return a model without specifying in the model the authenticated user:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/BooksController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
+public class BooksController {
+
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    @View("securitydecorator")
+    @Get
+    public Map&lt;String, Object&gt; index() {
+        Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();
+        model.put("books", Arrays.asList("Developing Microservices"));
+        return model;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and still access the authenticated user in the view (for example a velocity template):</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/books.vm</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;User Books&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    #if( $security )
+      &lt;h1&gt;User: ${security['name']}&lt;/h1&gt;
+    #end
+
+    #foreach($book in $books)
+      $book
+    #end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
 

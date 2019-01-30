@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -173,6 +173,15 @@ implements <a href="../../../io/micronaut/http/filter/HttpServerFilter.html" tit
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-">ViewsFilter</a></span>(<a href="../../../io/micronaut/context/BeanLocator.html" title="interface in io.micronaut.context">BeanLocator</a>&nbsp;beanLocator,
            <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-"><code>ViewsFilter(BeanLocator, ViewsFilterOrderProvider, Collection)</code></a> instead.</span></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-">ViewsFilter</a></span>(<a href="../../../io/micronaut/context/BeanLocator.html" title="interface in io.micronaut.context">BeanLocator</a>&nbsp;beanLocator,
+           <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider,
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model">ViewModelProcessor</a>&gt;&nbsp;viewModelProcessors)</code>
 <div class="block">Constructor.</div>
 </td>
 </tr>
@@ -204,12 +213,26 @@ implements <a href="../../../io/micronaut/http/filter/HttpServerFilter.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#getOrder--">getOrder</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#populateModel-io.micronaut.http.HttpRequest-io.micronaut.views.ViewsRenderer-java.lang.Object-">populateModel</a></span>(<a href="../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
+             <a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&nbsp;viewsRenderer,
+             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;responseBody)</code>
+<div class="block">Resolves the model for the given response body and enhances the model with instances of <a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model"><code>ViewModelProcessor</code></a>.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#processModelAndView-io.micronaut.http.HttpRequest-java.lang.String-java.util.Map-">processModelAndView</a></span>(<a href="../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;model)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#resolveModel-java.lang.Object-">resolveModel</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;responseBody)</code>
 <div class="block">Resolves the model for the given response body.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#resolveView-io.micronaut.core.annotation.AnnotationMetadata-java.lang.Object-">resolveView</a></span>(<a href="../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;route,
            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;responseBody)</code>
@@ -271,15 +294,36 @@ implements <a href="../../../io/micronaut/http/filter/HttpServerFilter.html" tit
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ViewsFilter</h4>
+<pre>public&nbsp;ViewsFilter(<a href="../../../io/micronaut/context/BeanLocator.html" title="interface in io.micronaut.context">BeanLocator</a>&nbsp;beanLocator,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                   <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model">ViewModelProcessor</a>&gt;&nbsp;viewModelProcessors)</pre>
+<div class="block">Constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanLocator</code> - The bean locator</dd>
+<dd><code>viewsFilterOrderProvider</code> - The order provider</dd>
+<dd><code>viewModelProcessors</code> - Collection of views model decorator beans</dd>
+</dl>
+</li>
+</ul>
 <a name="ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ViewsFilter</h4>
-<pre>public&nbsp;ViewsFilter(<a href="../../../io/micronaut/context/BeanLocator.html" title="interface in io.micronaut.context">BeanLocator</a>&nbsp;beanLocator,
-                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-                   <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;ViewsFilter(<a href="../../../io/micronaut/context/BeanLocator.html" title="interface in io.micronaut.context">BeanLocator</a>&nbsp;beanLocator,
+                               <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                               <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-"><code>ViewsFilter(BeanLocator, ViewsFilterOrderProvider, Collection)</code></a> instead.</span></div>
 <div class="block">Constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -332,6 +376,45 @@ implements <a href="../../../io/micronaut/http/filter/HttpServerFilter.html" tit
 <dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that emits a <a href="../../../io/micronaut/http/MutableHttpResponse.html" title="interface in io.micronaut.http"><code>MutableHttpResponse</code></a></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../io/micronaut/http/filter/HttpServerFilter.html#doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.FilterChain-"><code>HttpServerFilter.doFilter(HttpRequest, FilterChain)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="processModelAndView-io.micronaut.http.HttpRequest-java.lang.String-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processModelAndView</h4>
+<pre>protected&nbsp;<a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;processModelAndView(<a href="../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
+                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;view,
+                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;model)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The HTTP Request being processed</dd>
+<dd><code>view</code> - The resolved View.</dd>
+<dd><code>model</code> - The Model returned</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A <a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views"><code>ModelAndView</code></a> after being processed by the available <a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model"><code>ViewModelProcessor</code></a>s.</dd>
+</dl>
+</li>
+</ul>
+<a name="populateModel-io.micronaut.http.HttpRequest-io.micronaut.views.ViewsRenderer-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>populateModel</h4>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;populateModel(<a href="../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
+                                           <a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&nbsp;viewsRenderer,
+                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;responseBody)</pre>
+<div class="block">Resolves the model for the given response body and enhances the model with instances of <a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model"><code>ViewModelProcessor</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - <a href="../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http"><code>HttpRequest</code></a> being processed</dd>
+<dd><code>viewsRenderer</code> - The Views rendered being used to render the view</dd>
+<dd><code>responseBody</code> - Response Body</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A model with the controllers response and enhanced with the decorators.</dd>
 </dl>
 </li>
 </ul>
