@@ -734,6 +734,12 @@ class CacheFactory {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_aws_api_gateway_proxy_support">AWS API Gateway Proxy Support</h3>
+<div class="paragraph">
+<p>Support for AWS API Gateway Proxy has been added allowing AWS Lambda&#8217;s to be defined as regular controllers. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Gateway Proxy Support</a> for more information and links to examples.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_micrometer_1_1_and_timed_support">Micrometer 1.1 and @Timed Support</h3>
 <div class="paragraph">
 <p>Micrometer has been upgraded to 1.1 and support for <a href="https://micrometer.io/docs/concepts#_the_code_timed_code_annotation">@Timed</a> AOP advice added.</p>
@@ -1098,16 +1104,39 @@ Hello World</code></pre>
 <div class="paragraph">
 <p>The application created in the previous section contains a "main class" located in <code>src/main/java</code> that looks like the following:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package hello.world;
-
-import io.micronaut.runtime.Micronaut;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
 
 public class Application {
 
     public static void main(String[] args) {
         Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
+
+class Application {
+
+    static void main(String... args) {
+        Micronaut.run Application.class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
+
+object Application {
+
+    @JvmStatic
+    fun main(args: Array&lt;String&gt;) {
+        Micronaut.run(Application.javaClass)
     }
 }</code></pre>
 </div>
@@ -15723,41 +15752,79 @@ Or alternatively if you have the Micronaut CLI installed you can configure Zipki
 </table>
 </div>
 <div class="paragraph">
-<p>To get started writing serverless function you must add the appropriate Micronaut <code>function</code> dependency to your classpath. In certain cases there are FaaS platform specific extension which you may wish to include. The following table includes the dependencies for each individual FaaS platform:</p>
+<p>There are a few approaches to building functions depending on the target Function-as-a-Service (FaaS) system.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Function Providers</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Provider</th>
-<th class="tableblock halign-left valign-top">Dependency</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Lambda</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-function-aws</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you are using Groovy, there is a single compile-time dependency to be added: <code>"io.micronaut:micronaut-function-groovy"</code> Please see <a href="#groovyFunctions">Groovy Functions</a>.
-</td>
-</tr>
-</table>
+<div class="sect2">
+<h3 id="_functions_with_standard_in_out_streams">Functions with Standard In/Out Streams</h3>
+<div class="paragraph">
+<p>One common approach and supported by many FaaS systems is to read from standard in and write to standard out to control function input and outputs.</p>
 </div>
 <div class="paragraph">
-<p>Add the appropriate dependency to your project:</p>
+<p>When creating a function with the <code>create-function</code> command Micronaut will setup an application that does exactly this by default. For example the following steps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-function hello-world
+$ ./gradlew assemble
+$ java -jar build/libs/hello-world-0.1.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Result in the following output being printed to standard out:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>hello-world</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output is produced by <code>hello-world/src/main/java/hello/world/HelloWorldFunction.java</code> which is a supplier that returns a value of <code>hello-world</code>.</p>
+</div>
+<div class="paragraph">
+<p>Typically in this arrangement to test your function locally you would have the <code>micronaut-http-server-netty</code> and <code>micronaut-function-web</code> dependencies in place as <code>provided</code> scope dependencies. This would allow you to run the function as a local web server and access it via the <code>/hello-world</code> URI.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">developmentOnly <span class="hljs-string">'io.micronaut:micronaut-http-server-netty'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">developmentOnly <span class="hljs-string">'io.micronaut:micronaut-function-web'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>FaaS systems that support the standard in/out approach include <a href="https://docs.openfaas.com">OpenFaas</a>, <a href="https://fnproject.io/">Project.Fn</a> and <a href="https://projectriff.io/">Riff</a> (amongst others).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_functions_by_implementing_sdk_interface">Functions by Implementing SDK Interface</h3>
+<div class="paragraph">
+<p>Other FaaS systems require that you implement custom interfaces for a particular SDK rather than read from standard in/out. For example to deploy the above function to AWS Lambda you need the <code>micronaut-function-aws</code> dependency in place:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -15774,6 +15841,49 @@ If you are using Groovy, there is a single compile-time dependency to be added: 
 </div>
 </div>
 </p>
+</div>
+<div class="paragraph">
+<p>In this arrangement you would set your Lambda handler to <code>io.micronaut.function.aws.MicronautRequestStreamHandler</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+See the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#requestHandlers">Micronaut Request Handlers</a> documentation for an explanation on how this approach works.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When using this approach the FaaS system (in this case AWS Lambda) will directly invoke the <code>MicronautRequestStreamHandler</code> class and pass the input as stream rather than requiring the function to read from standard in.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lambda_functions_using_aws_api_gateway_proxy">Lambda Functions Using AWS API Gateway Proxy</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>You can create a AWS API Gateway service using <code>mn create-app myapp --features aws-api-proxy</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Another approach to FaaS is to build a regular REST application and then deploy the application using tools offered by the FaaS system such as <a href="https://aws.amazon.com/api-gateway/">AWS API Gateway</a>.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Proxy Support</a> documentation for an explanation on how this approach works.</p>
+</div>
 </div>
 
 
@@ -15816,6 +15926,15 @@ This section applies to Java &amp; Kotlin functions - for functions written in G
     &lt;/properties&gt;
 &lt;/project&gt;</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/function/executor/FunctionApplication.html">FunctionApplication</a> will lookup the function to execute from the property <code>micronaut.function.name</code>.</p>
+</div>
+<div class="paragraph">
+<p>By default <code>micronaut.function.name</code> is configured in <code>application.yml</code> and set to a single function. You can however control which function to execute by setting the environment variable equivalent <code>MICRONAUT_FUNCTION_NAME</code>.</p>
+</div>
+<div class="paragraph">
+<p>This approach allows you to package multiple functions into a single application unit (JAR file) and control which function is executed by passing either <code>-Dmicronaut.function.name=myfunction</code> or setting the environment variable.</p>
 </div>
 
 
@@ -16154,16 +16273,37 @@ String hello(String name) {
 <div class="paragraph">
 <p>To run your function as a web application as described in this section, you will need the <code>function-web</code> dependency on your classpath. For example, in <code>build.gradle</code></p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    runtime "io.micronaut:micronaut-function-web"
-    runtime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
-    ...
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-http-server-netty'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-web'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -16176,12 +16316,41 @@ String hello(String name) {
 <div class="paragraph">
 <p>Once the dependencies have been added to the project, you can run the function via an <code>Application</code> class.</p>
 </div>
-<div class="listingblock">
-<div class="title">Example Application class</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=imports, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=class, indent=0]</code></pre>
+public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
+
+class Application {
+
+    static void main(String... args) {
+        Micronaut.run Application.class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
+
+object Application {
+
+    @JvmStatic
+    fun main(args: Array&lt;String&gt;) {
+        Micronaut.run(Application.javaClass)
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16269,16 +16438,39 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 <div class="paragraph">
 <p>Functions can also be run as part of the Micronaut application context for ease of testing. Similarly to the example above, this approach requires the <code>function-web</code> and an HTTP server dependency on the classpath for tests. For example, in <code>build.gradle</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    testRuntime "io.micronaut:micronaut-function-web"
-    testRuntime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
-    ...
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">testCompile <span class="hljs-string">'io.micronaut:micronaut-http-server-netty'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">testCompile <span class="hljs-string">'io.micronaut:micronaut-function-web'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -17934,14 +18126,14 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-:micronaut-neo4j-bolt'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">':micronaut-neo4j-bolt'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-:micronaut-neo4j-bolt&lt;/artifactId&gt;
+    &lt;groupId&gt;&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-neo4j-bolt&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>

@@ -488,16 +488,39 @@ Hello World</code></pre>
 <div class="paragraph">
 <p>The application created in the previous section contains a "main class" located in <code>src/main/java</code> that looks like the following:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package hello.world;
-
-import io.micronaut.runtime.Micronaut;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
 
 public class Application {
 
     public static void main(String[] args) {
         Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
+
+class Application {
+
+    static void main(String... args) {
+        Micronaut.run Application.class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
+
+object Application {
+
+    @JvmStatic
+    fun main(args: Array&lt;String&gt;) {
+        Micronaut.run(Application.javaClass)
     }
 }</code></pre>
 </div>
