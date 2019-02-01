@@ -245,8 +245,8 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 Environment environment = applicationContext.getEnvironment();
 
 assertEquals(
-        environment.getProperty("micronaut.server.host", String.class).orElse("localhost"),
-        "foo"
+        "foo",
+        environment.getProperty("micronaut.server.host", String.class).orElse("localhost")
 );</code></pre>
 </div>
 </div>
@@ -1345,7 +1345,7 @@ public class DataSourceConfiguration {
 <div class="title">Evaluating Beans Built by @EachProperty</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
-assertEquals(beansOfType.size(), 2); <i class="conum" data-value="1"></i><b>(1)</b>
+assertEquals(2, beansOfType.size()); <i class="conum" data-value="1"></i><b>(1)</b>
 
 DataSourceConfiguration firstConfig = applicationContext.getBean(
         DataSourceConfiguration.class,
@@ -1353,8 +1353,8 @@ DataSourceConfiguration firstConfig = applicationContext.getBean(
 );
 
 assertEquals(
-        firstConfig.getUrl(),
-        new URI("jdbc:mysql://localhost/one")
+        new URI("jdbc:mysql://localhost/one"),
+        firstConfig.getUrl()
 );</code></pre>
 </div>
 </div>
