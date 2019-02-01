@@ -922,13 +922,13 @@ add and retrieve values and decrypt them with the default key store for your acc
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Starting Consul with Docker</p>
+<p>Starting Consul with Docker. Currently only v1.2.x is supported.</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker run -p 8500:8500 consul</pre>
+<pre>docker run -p 8500:8500 consul:1.2.4</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1110,6 +1110,48 @@ RxHttpClient httpClient;</code></pre>
 </div>
 <div class="paragraph">
 <p>With this configuration option in place Consul will assume responsibility of invoking the Micronaut applications <a href="#healthEndpoint">Health Endpoint</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controlling_ip_host_registration">Controlling IP/Host Registration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Occasionally, depending on the deployment environment you may wish to expose the IP address and not the host name, since by default Micronaut will register with Consul with either the value of the <code>HOST</code> environment variable or the value configured via <code>micronaut.server.host</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can use the <code>consul.client.registration.prefer-ip-address</code> setting to indicate you would prefer to register with the IP address.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut will by default perform an IP lookup to try and figure out the IP address, however you can use the <code>consul.client.registration.ip-addr</code> setting to specify the IP address of the service directly.</p>
+</div>
+<div class="listingblock">
+<div class="title">Consul HTTP Check Configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">consul:
+  client:
+    registration:
+        ip-addr: &lt;your base container ip&gt;
+        prefer-ip-address: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will tell Consul to register the IP that other instances can use to access your service and not the NAT IP it is running under (or 127.0.0.1).</p>
+</div>
+<div class="paragraph">
+<p>If you use HTTP health checks (see the previous section) then Consul will use the configured IP address to check the Micronaut <code>/health</code> endpoint.</p>
+</div>
+<div class="listingblock">
+<div class="title">Consul HTTP Check Configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">consul:
+  client:
+    registration:
+        ip-addr: &lt;your base container ip&gt;
+        prefer-ip-address: true
+        check:
+            http: true</code></pre>
+</div>
 </div>
 </div>
 </div>
