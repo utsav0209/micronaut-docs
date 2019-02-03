@@ -93,7 +93,7 @@
 <br>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE" title="class or interface in java.lang.annotation">TYPE</a>)
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE" title="class or interface in java.lang.annotation">TYPE</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>})
 public @interface <span class="memberNameLabel">Headers</span></pre>
 <div class="block">This lets you declare several headers for a client class and have them always included.
  Example usage:
@@ -130,9 +130,7 @@ public @interface <span class="memberNameLabel">Headers</span></pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/messaging/annotation/Header.html" title="annotation in io.micronaut.messaging.annotation">Header</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/messaging/annotation/Headers.html#value--">value</a></span></code>
-<div class="block">This allows you to have multiple @Header's set at the class level with Java and Groovy.</div>
-</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/messaging/annotation/Headers.html#value--">value</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -156,14 +154,6 @@ public @interface <span class="memberNameLabel">Headers</span></pre>
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="../../../../io/micronaut/messaging/annotation/Header.html" title="annotation in io.micronaut.messaging.annotation">Header</a>[]&nbsp;value</pre>
-<div class="block">This allows you to have multiple @Header's set at the class level with Java and Groovy.
- Example usage:
- <pre><code>
- @Headers({
-      @Header(name="Content-type",value="application/octet-stream"),
-      @Header(name="Content-length",value="2048")
- })
- </code></pre></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The headers</dd>
