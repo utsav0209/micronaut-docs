@@ -699,6 +699,9 @@
 <li>
 <p><a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html">Micronaut AWS</a></p>
 </li>
+<li>
+<p><a href="https://micronaut-projects.github.io/micronaut-grpc/latest/guide/index.html">Micronaut GRPC</a></p>
+</li>
 </ul>
 </div>
 </div>
@@ -706,6 +709,92 @@
 <h3 id="_file_watch_and_server_restart">File Watch and Server Restart</h3>
 <div class="paragraph">
 <p>A new <a href="#automaticRestart">Automatic Restart</a> feature is included that allows the server to restart if a change occurs to a file. This feature can be used both in production and at development time to achieve automatic application restarts when changing source code (when combined with a third party tool such as Gradle or Kubernetes in production).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features file-watch</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aws_api_gateway_proxy_support">AWS API Gateway Proxy Support</h3>
+<div class="paragraph">
+<p>Support for AWS API Gateway Proxy has been added allowing AWS Lambda&#8217;s to be defined as regular controllers. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Gateway Proxy Support</a> for more information and links to examples.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features aws-api-gateway</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aws_lambda_custom_runtime_graalvm_support">AWS Lambda Custom Runtime + GraalVM Support</h3>
+<div class="paragraph">
+<p>Support for creating AWS API Gateway applications (see above) that are compiled into GraalVM native images and run using an AWS Lambda Custom Runtime has been added. This reduces cold starts on Lambda to 100-200ms.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features aws-api-gateway-graal</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micrometer_1_1_and_timed_support">Micrometer 1.1 and @Timed Support</h3>
+<div class="paragraph">
+<p>Micrometer has been upgraded to 1.1 and support for <a href="https://micrometer.io/docs/concepts#_the_code_timed_code_annotation">@Timed</a> AOP advice added.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features micrometer</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -744,7 +833,7 @@
 <div class="sect2">
 <h3 id="_constraint_bean_support">Constraint Bean Support</h3>
 <div class="paragraph">
-<p>For those using the <code>hibernate-validator</code> configuration, constraints will now be attempted to be retrieved from the bean context. This means you can now use dependency injection in your custom constraints.</p>
+<p>For those using the <code>micronaut-hibernate-validator</code> configuration, constraints will now be attempted to be retrieved from the bean context. This means you can now use dependency injection in your custom constraints.</p>
 </div>
 </div>
 <div class="sect2">
@@ -768,18 +857,6 @@ class CacheFactory {
     }
 }</code></pre>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aws_api_gateway_proxy_support">AWS API Gateway Proxy Support</h3>
-<div class="paragraph">
-<p>Support for AWS API Gateway Proxy has been added allowing AWS Lambda&#8217;s to be defined as regular controllers. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Gateway Proxy Support</a> for more information and links to examples.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micrometer_1_1_and_timed_support">Micrometer 1.1 and @Timed Support</h3>
-<div class="paragraph">
-<p>Micrometer has been upgraded to 1.1 and support for <a href="https://micrometer.io/docs/concepts#_the_code_timed_code_annotation">@Timed</a> AOP advice added.</p>
 </div>
 </div>
 <div class="sect2">
