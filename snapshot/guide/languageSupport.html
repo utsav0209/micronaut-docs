@@ -1073,10 +1073,10 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc11 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc12 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-11-grl
-$ sdk use java 1.0.0-rc-11-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc12-grl
+$ sdk use java 1.0.0-rc12-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1139,15 +1139,14 @@ If you wish you can use this file as a template and copy it to the source tree, 
              --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="2"></i><b>(2)</b>
              -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="3"></i><b>(3)</b>
              -H:EnableURLProtocols=http \ <i class="conum" data-value="4"></i><b>(4)</b>
-             -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \ <i class="conum" data-value="5"></i><b>(5)</b>
+             -H:IncludeResources="logback.xml|application.yml" \ <i class="conum" data-value="5"></i><b>(5)</b>
              -H:Name=hello-world \ <i class="conum" data-value="6"></i><b>(6)</b>
              -H:Class=hello.world.Application \ <i class="conum" data-value="7"></i><b>(7)</b>
              -H:+ReportUnsupportedElementsAtRuntime \ <i class="conum" data-value="8"></i><b>(8)</b>
              -H:+AllowVMInspection \
-             -H:-UseServiceLoaderFeature \
-             --allow-incomplete-classpath \
+             --allow-incomplete-classpath \ <i class="conum" data-value="9"></i><b>(9)</b>
              --rerun-class-initialization-at-runtime='sun.security.jca.JCAUtil$CachedSecureRandomHolder,javax.net.ssl.SSLContext' \
-             --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient <i class="conum" data-value="9"></i><b>(9)</b></code></pre>
+             --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1186,6 +1185,10 @@ If you wish you can use this file as a template and copy it to the source tree, 
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>The <code>--allow-incomplete-classpath</code> tells GraalVM to report missing classes only at runtime instead of at native image generation time.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
 <td>The <code>--delay-class-initialization-to-runtime</code> specifies which classes static initializers should be delayed until runtime. GraalVM by default runs static initializers at build time. That is undesirable in certain cases (particularly with Netty).</td>
 </tr>
 </table>
