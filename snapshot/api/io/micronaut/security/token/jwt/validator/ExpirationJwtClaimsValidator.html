@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,6 +176,10 @@ implements <a href="../../../../../../io/micronaut/security/token/jwt/validator/
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/ExpirationJwtClaimsValidator.html#validate-io.micronaut.security.token.jwt.generator.claims.JwtClaims-">validate</a></span>(<a href="../../../../../../io/micronaut/security/token/jwt/generator/claims/JwtClaims.html" title="interface in io.micronaut.security.token.jwt.generator.claims">JwtClaims</a>&nbsp;claims)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/security/token/jwt/validator/ExpirationJwtClaimsValidator.html#validate-com.nimbusds.jwt.JWTClaimsSet-">validate</a></span>(com.nimbusds.jwt.JWTClaimsSet&nbsp;claimsSet)</code>&nbsp;</td>
 </tr>
 </table>
@@ -220,15 +224,31 @@ implements <a href="../../../../../../io/micronaut/security/token/jwt/validator/
 <a name="validate-com.nimbusds.jwt.JWTClaimsSet-">
 <!--   -->
 </a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validate</h4>
+<pre>protected&nbsp;boolean&nbsp;validate(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                           com.nimbusds.jwt.JWTClaimsSet&nbsp;claimsSet)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>claimsSet</code> - The JWT Claims</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the expiration claim denotes a date after now.</dd>
+</dl>
+</li>
+</ul>
+<a name="validate-io.micronaut.security.token.jwt.generator.claims.JwtClaims-">
+<!--   -->
+</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>validate</h4>
-<pre>public&nbsp;boolean&nbsp;validate(com.nimbusds.jwt.JWTClaimsSet&nbsp;claimsSet)</pre>
+<pre>public&nbsp;boolean&nbsp;validate(<a href="../../../../../../io/micronaut/security/token/jwt/generator/claims/JwtClaims.html" title="interface in io.micronaut.security.token.jwt.generator.claims">JwtClaims</a>&nbsp;claims)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html#validate-com.nimbusds.jwt.JWTClaimsSet-">validate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html#validate-io.micronaut.security.token.jwt.generator.claims.JwtClaims-">validate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/security/token/jwt/validator/JwtClaimsValidator.html" title="interface in io.micronaut.security.token.jwt.validator">JwtClaimsValidator</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>claimsSet</code> - JWT Claims</dd>
+<dd><code>claims</code> - JWT Claims</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether the JWT claims pass validation.</dd>
 </dl>
