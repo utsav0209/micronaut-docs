@@ -169,7 +169,8 @@ implements <a href="../../../../io/micronaut/security/handlers/RejectionHandler.
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/security/handlers/RedirectRejectionHandler.html#getRedirectUri-boolean-">getRedirectUri</a></span>(boolean&nbsp;forbidden)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/security/handlers/RedirectRejectionHandler.html#getRedirectUri-io.micronaut.http.HttpRequest-boolean-">getRedirectUri</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+              boolean&nbsp;forbidden)</code>
 <div class="block">Returns the redirection uri.</div>
 </td>
 </tr>
@@ -311,16 +312,18 @@ implements <a href="../../../../io/micronaut/security/handlers/RejectionHandler.
 </dl>
 </li>
 </ul>
-<a name="getRedirectUri-boolean-">
+<a name="getRedirectUri-io.micronaut.http.HttpRequest-boolean-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getRedirectUri</h4>
-<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getRedirectUri(boolean&nbsp;forbidden)</pre>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getRedirectUri(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                                          boolean&nbsp;forbidden)</pre>
 <div class="block">Returns the redirection uri.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - <a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http"><code>HttpRequest</code></a> being processed</dd>
 <dd><code>forbidden</code> - if true indicates that although the user was authenticated he did not had the necessary access privileges.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the uri to redirect to</dd>
