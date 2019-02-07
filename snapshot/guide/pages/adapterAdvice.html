@@ -158,6 +158,8 @@ void onStartup(StartupEvent event) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.Adapter;
 import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.core.annotation.Indexed;
+
 import java.lang.annotation.*;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -166,6 +168,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Adapter(ApplicationEventListener.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Indexed(ApplicationEventListener.class)
 public @interface EventListener {
 }</code></pre>
 </div>
