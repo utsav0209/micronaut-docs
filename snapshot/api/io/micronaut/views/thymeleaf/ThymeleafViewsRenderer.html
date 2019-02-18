@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafFactory.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -112,7 +112,6 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../io/micronaut/http/annotation/Produces.html#value--">value</a>="text/html")
- <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="micronaut.views.thymeleaf.enabled",<a href="../../../../io/micronaut/context/annotation/Requires.html#notEquals--">notEquals</a>="false") <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../io/micronaut/context/annotation/Requires.html#classes--">classes</a>=org.thymeleaf.TemplateEngine.class)
  <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">ThymeleafViewsRenderer</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
@@ -153,7 +152,7 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#resourceLoader">resourceLoader</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected org.thymeleaf.templateresolver.ClassLoaderTemplateResolver</code></td>
+<td class="colFirst"><code>protected org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#templateResolver">templateResolver</a></span></code>&nbsp;</td>
 </tr>
 </table>
@@ -178,9 +177,16 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#ThymeleafViewsRenderer-org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver-org.thymeleaf.TemplateEngine-io.micronaut.core.io.scan.ClassPathResourceLoader-">ThymeleafViewsRenderer</a></span>(org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver&nbsp;templateResolver,
+                      org.thymeleaf.TemplateEngine&nbsp;templateEngine,
+                      <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#ThymeleafViewsRenderer-io.micronaut.views.ViewsConfiguration-io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfiguration-io.micronaut.core.io.scan.ClassPathResourceLoader-">ThymeleafViewsRenderer</a></span>(<a href="../../../../io/micronaut/views/ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
                       <a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfiguration</a>&nbsp;thConfiguration,
-                      <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</code>&nbsp;</td>
+                      <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 </table>
 </li>
@@ -241,7 +247,7 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <ul class="blockList">
 <li class="blockList">
 <h4>templateResolver</h4>
-<pre>protected final&nbsp;org.thymeleaf.templateresolver.ClassLoaderTemplateResolver templateResolver</pre>
+<pre>protected final&nbsp;org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver templateResolver</pre>
 </li>
 </ul>
 <a name="engine">
@@ -273,16 +279,36 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <a name="ThymeleafViewsRenderer-io.micronaut.views.ViewsConfiguration-io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfiguration-io.micronaut.core.io.scan.ClassPathResourceLoader-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>ThymeleafViewsRenderer</h4>
-<pre>public&nbsp;ThymeleafViewsRenderer(<a href="../../../../io/micronaut/views/ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
-                              <a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfiguration</a>&nbsp;thConfiguration,
-                              <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;ThymeleafViewsRenderer(<a href="../../../../io/micronaut/views/ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
+                                          <a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfiguration</a>&nbsp;thConfiguration,
+                                          <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>viewsConfiguration</code> - Views Configuration</dd>
 <dd><code>thConfiguration</code> - Thymeleaf template renderer configuration</dd>
+<dd><code>resourceLoader</code> - The resource loader</dd>
+</dl>
+</li>
+</ul>
+<a name="ThymeleafViewsRenderer-org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver-org.thymeleaf.TemplateEngine-io.micronaut.core.io.scan.ClassPathResourceLoader-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ThymeleafViewsRenderer</h4>
+<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
+public&nbsp;ThymeleafViewsRenderer(org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver&nbsp;templateResolver,
+                                      org.thymeleaf.TemplateEngine&nbsp;templateEngine,
+                                      <a href="../../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>templateResolver</code> - The template resolver</dd>
+<dd><code>templateEngine</code> - The template engine</dd>
 <dd><code>resourceLoader</code> - The resource loader</dd>
 </dl>
 </li>
@@ -362,7 +388,7 @@ public&nbsp;<a href="../../../../io/micronaut/core/io/Writable.html" title="inte
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafFactory.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

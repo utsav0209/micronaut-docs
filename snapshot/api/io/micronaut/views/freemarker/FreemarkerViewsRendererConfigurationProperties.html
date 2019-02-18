@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfiguration.html" title="interface in io.micronaut.views.freemarker"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/views/freemarker/VersionTypeConverter.html" title="class in io.micronaut.views.freemarker"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html" target="_top">Frames</a></li>
@@ -204,12 +204,12 @@ implements <a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRen
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>freemarker.template.Configuration</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html#getConfiguration--">getConfiguration</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html#getDefaultExtension--">getDefaultExtension</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>freemarker.template.Version</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html#getIncompatibleImprovements--">getIncompatibleImprovements</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -225,6 +225,13 @@ implements <a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRen
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html#setEnabled-boolean-">setEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Whether freemarker views are enabled.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html#setIncompatibleImprovements-freemarker.template.Version-">setIncompatibleImprovements</a></span>(freemarker.template.Version&nbsp;incompatibleImprovements)</code>
+<div class="block">the FreeMarker version number where the not 100% backward compatible bug fixes
+ and improvements that you want to enable were already implemented.</div>
 </td>
 </tr>
 </table>
@@ -355,20 +362,6 @@ implements <a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRen
 </dl>
 </li>
 </ul>
-<a name="getConfiguration--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getConfiguration</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;freemarker.template.Configuration&nbsp;getConfiguration()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The freemarker configuration</dd>
-</dl>
-</li>
-</ul>
 <a name="getDefaultExtension--">
 <!--   -->
 </a>
@@ -388,7 +381,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
 <a name="setDefaultExtension-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setDefaultExtension</h4>
 <pre>public&nbsp;void&nbsp;setDefaultExtension(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultExtension)</pre>
@@ -396,6 +389,37 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>defaultExtension</code> - The default extension</dd>
+</dl>
+</li>
+</ul>
+<a name="getIncompatibleImprovements--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIncompatibleImprovements</h4>
+<pre>public&nbsp;freemarker.template.Version&nbsp;getIncompatibleImprovements()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfiguration.html#getIncompatibleImprovements--">getIncompatibleImprovements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfiguration.html" title="interface in io.micronaut.views.freemarker">FreemarkerViewsRendererConfiguration</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An optional version number</dd>
+</dl>
+</li>
+</ul>
+<a name="setIncompatibleImprovements-freemarker.template.Version-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setIncompatibleImprovements</h4>
+<pre>public&nbsp;void&nbsp;setIncompatibleImprovements(freemarker.template.Version&nbsp;incompatibleImprovements)</pre>
+<div class="block">the FreeMarker version number where the not 100% backward compatible bug fixes
+ and improvements that you want to enable were already implemented. Defaults to
+ <code>Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>incompatibleImprovements</code> - The version number</dd>
 </dl>
 </li>
 </ul>
@@ -427,7 +451,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/views/freemarker/FreemarkerViewsRendererConfiguration.html" title="interface in io.micronaut.views.freemarker"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/views/freemarker/VersionTypeConverter.html" title="class in io.micronaut.views.freemarker"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html" target="_top">Frames</a></li>
