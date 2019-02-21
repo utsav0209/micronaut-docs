@@ -668,7 +668,7 @@
 <div class="sect2">
 <h3 id="_modularization">Modularization</h3>
 <div class="paragraph">
-<p>Micronaut is now modular with parts of Micronaut being shifted into subprojects. See the following links for new subprojects that now have indepent release cycles outside of Micronaut core:</p>
+<p>Micronaut is now modular with parts of Micronaut being shifted into sub-projects. See the following links for new sub-projects that now have independent release cycles outside of Micronaut core:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -965,7 +965,7 @@ $ ./gradlew run --continuous</pre>
 <div class="sect2">
 <h3 id="_support_for_freemarker_views">Support for Freemarker Views</h3>
 <div class="paragraph">
-<p>Support for rendering <a href="#freemarker">Freemaker Views</a> has been added. Thanks to <a href="https://github.com/jerolba">Jeronimo López</a> for contributing this feature.</p>
+<p>Support for rendering <a href="#freemarker">Freemarker Views</a> has been added. Thanks to <a href="https://github.com/jerolba">Jeronimo López</a> for contributing this feature.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1030,6 +1030,15 @@ class CacheFactory {
 <p>Two new configuration options are available to support mixed uploads: <code>micronaut.server.multipart.mixed</code> and <code>micronaut.server.multipart.threshold</code>. When data needs to be buffered, mixed uploads will initially store data in memory. Once the threshold is reached, the data will be erased from memory and moved entirely onto disk.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_to_disable_environment_detection">Option to Disable Environment Detection</h3>
+<div class="paragraph">
+<p>Environment detection can be disabled through a method on the application context builder, system property, or evnironment variable.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="#environments">Environment</a> documentation for more information.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3827,6 +3836,38 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 </div>
 <div class="paragraph">
 <p>Finally, the Cloud environment names are also detected. See the section on <a href="#cloudConfiguration">Cloud Configuration</a> for more information.</p>
+</div>
+<div class="sect1">
+<h2 id="_disabling_environment_detection">Disabling Environment Detection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The automatic detection of environments can be disabled setting the <code>micronaut.env.deduction</code> system property or the <code>MICRONAUT_ENV_DEDUCTION</code> environment variable to <code>false</code>. This will prevent Micronaut from detecting current environments, while still using any environments that are specifically provided as shown above.</p>
+</div>
+<div class="listingblock">
+<div class="title">Disabling environment detection via system property</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$  java -Dmicronaut.env.deduction=false -jar myapp.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can disable environment deduction using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a>'s <code>deduceEnvironment</code> method when setting up your application.</p>
+</div>
+<div class="listingblock">
+<div class="title">Using ApplicationContextBuilder to disable environment deduction</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">void "test disable environment deduction via builder"() {
+    when:
+    ApplicationContext ctx = ApplicationContext.build().deduceEnvironment(false).start()
+
+    then:
+    !ctx.environment.activeNames.contains(Environment.TEST)
+
+    cleanup:
+    ctx.close()
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -22960,8 +23001,9 @@ Read the <a href="http://guides.micronaut.io/micronaut-database-authentication-p
 <div class="paragraph">
 <p>This section will outline some common requirements that will require custom code to implement and describe what to do in those cases.</p>
 </div>
-<div class="sect2">
-<h3 id="_authentication_data">Authentication Data</h3>
+<div class="sect1">
+<h2 id="_authentication_data">Authentication Data</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The authentication object returned from a successful authentication request is by default an instance of UserDetails, which only contains the username and any roles associated with the user. To store additional data in the authentication, extend <a href="../api/io/micronaut/security/authentication/UserDetails.html">UserDetails</a> with your own implementation that has fields for the additional data you wish to store.</p>
 </div>
@@ -22991,8 +23033,10 @@ public class MyContextAuthenticationMapper implements ContextAuthenticationMappe
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_groups">Groups</h3>
+</div>
+<div class="sect1">
+<h2 id="_groups">Groups</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>By default the groups found in LDAP, if enabled, will be returned as is without any processing. No additional groups from any other sources will be added to the list. It is a common requirement to retrieve additional groups from other sources, or to normalize the names of the groups in a specific format.</p>
 </div>
@@ -23034,8 +23078,10 @@ public class MyLdapGroupProcessor extends DefaultLdapGroupProcessor {
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_search_logic">Search Logic</h3>
+</div>
+<div class="sect1">
+<h2 id="_search_logic">Search Logic</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how LDAP searches are done, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/LdapSearchService.html">LdapSearchService</a>.</p>
 </div>
@@ -23050,8 +23096,10 @@ public class MyLdapSearchService implements LdapSearchService {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_context_building">Context Building</h3>
+</div>
+<div class="sect1">
+<h2 id="_context_building">Context Building</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how the LDAP context is built, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/ContextBuilder.html">ContextBuilder</a>.</p>
 </div>
@@ -23063,6 +23111,7 @@ public class MyLdapSearchService implements LdapSearchService {
 public class MyContextBuilder implements ContextBuilder {
 
 }</code></pre>
+</div>
 </div>
 </div>
 </div>

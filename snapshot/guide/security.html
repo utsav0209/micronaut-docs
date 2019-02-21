@@ -1850,8 +1850,9 @@ Read the <a href="http://guides.micronaut.io/micronaut-database-authentication-p
 <div class="paragraph">
 <p>This section will outline some common requirements that will require custom code to implement and describe what to do in those cases.</p>
 </div>
-<div class="sect2">
-<h3 id="_authentication_data">Authentication Data</h3>
+<div class="sect1">
+<h2 id="_authentication_data">Authentication Data</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The authentication object returned from a successful authentication request is by default an instance of UserDetails, which only contains the username and any roles associated with the user. To store additional data in the authentication, extend <a href="../api/io/micronaut/security/authentication/UserDetails.html">UserDetails</a> with your own implementation that has fields for the additional data you wish to store.</p>
 </div>
@@ -1881,8 +1882,10 @@ public class MyContextAuthenticationMapper implements ContextAuthenticationMappe
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_groups">Groups</h3>
+</div>
+<div class="sect1">
+<h2 id="_groups">Groups</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>By default the groups found in LDAP, if enabled, will be returned as is without any processing. No additional groups from any other sources will be added to the list. It is a common requirement to retrieve additional groups from other sources, or to normalize the names of the groups in a specific format.</p>
 </div>
@@ -1924,8 +1927,10 @@ public class MyLdapGroupProcessor extends DefaultLdapGroupProcessor {
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_search_logic">Search Logic</h3>
+</div>
+<div class="sect1">
+<h2 id="_search_logic">Search Logic</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how LDAP searches are done, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/LdapSearchService.html">LdapSearchService</a>.</p>
 </div>
@@ -1940,8 +1945,10 @@ public class MyLdapSearchService implements LdapSearchService {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_context_building">Context Building</h3>
+</div>
+<div class="sect1">
+<h2 id="_context_building">Context Building</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how the LDAP context is built, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/ContextBuilder.html">ContextBuilder</a>.</p>
 </div>
@@ -1953,6 +1960,7 @@ public class MyLdapSearchService implements LdapSearchService {
 public class MyContextBuilder implements ContextBuilder {
 
 }</code></pre>
+</div>
 </div>
 </div>
 </div>
