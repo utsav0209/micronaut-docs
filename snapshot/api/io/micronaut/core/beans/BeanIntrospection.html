@@ -113,12 +113,22 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">BeanIntrospection&lt;T&gt;</span>
 extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDelegate.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataDelegate</a></pre>
-<div class="block">A <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> is the result of compile time computation of a beans properties and annotation metadata.</div>
+<div class="block">A <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> is the result of compile time computation of a beans properties and annotation metadata.
+
+ <p>This interface allows you to instantiate and read and write to bean properties without using reflection or caching reflective metadata, which is
+ expensive from a memory consumption perspective.</p>
+
+ <p><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> instances can be obtained either via <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIntrospection-java.lang.Class-"><code>getIntrospection(Class)</code></a> or via the <a href="../../../../io/micronaut/core/beans/BeanIntrospector.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospector</code></a>.</p>
+
+ <p>A <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> is only computed at compilation time if the class is annotated with <a href="../../../../io/micronaut/core/annotation/Introspected.html" title="annotation in io.micronaut.core.annotation"><code>Introspected</code></a>. </p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>graemerocher</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../io/micronaut/core/beans/BeanIntrospector.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospector</code></a>, 
+<a href="../../../../io/micronaut/core/annotation/Introspected.html" title="annotation in io.micronaut.core.annotation"><code>Introspected</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -269,7 +279,8 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDele
 <li class="blockList">
 <h4>getBeanProperties</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getBeanProperties(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType)</pre>
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getBeanProperties(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType)</pre>
 <div class="block">Get all the bean properties annotated for the given type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -293,7 +304,7 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDele
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An instance</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></code> - If the bean cannot be insantiated.</dd>
+<dd><code><a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></code> - If the bean cannot be insantiated or the arguments are not satisfied.</dd>
 </dl>
 </li>
 </ul>

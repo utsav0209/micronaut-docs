@@ -114,7 +114,11 @@ var activeTableTab = "activeTableTab";
 <pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
 public interface <span class="typeNameLabel">BeanIntrospectionReference&lt;T&gt;</span>
 extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../../io/micronaut/core/naming/Named.html" title="interface in io.micronaut.core.naming">Named</a></pre>
-<div class="block">A reference to a <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> that may or may not be present on the classpath.</div>
+<div class="block">A reference to a <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> that may or may not be present on the classpath.
+
+ <p>This interface allows soft loading a <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans"><code>BeanIntrospection</code></a> without knowing if the class is present on the classpath or not. It also ensures that less memory is occupied as only a reference to the annotation metadata is retained and the full bean can be loaded via the <a href="../../../../io/micronaut/core/beans/BeanIntrospectionReference.html#load--"><code>load()</code></a> method.</p>
+
+ <p>In general results of the <a href="../../../../io/micronaut/core/beans/BeanIntrospectionReference.html#load--"><code>load()</code></a> do not need to be cached as object creation is cheap and no runtime analysis is performed so it is extremely fast.</p></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1</dd>
@@ -242,7 +246,8 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProv
 <ul class="blockListLast">
 <li class="blockList">
 <h4>load</h4>
-<pre><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans">BeanIntrospection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanIntrospectionReference.html" title="type parameter in BeanIntrospectionReference">T</a>&gt;&nbsp;load()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="interface in io.micronaut.core.beans">BeanIntrospection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanIntrospectionReference.html" title="type parameter in BeanIntrospectionReference">T</a>&gt;&nbsp;load()</pre>
 <div class="block">Loads the introspection.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
