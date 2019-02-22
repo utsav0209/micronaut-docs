@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":18,"i1":18,"i2":6,"i3":18};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -98,19 +98,23 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../io/micronaut/context/BeanContextConfiguration.html" title="interface in io.micronaut.context">BeanContextConfiguration</a></dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
 <dd><a href="../../../io/micronaut/context/DefaultApplicationContextBuilder.html" title="class in io.micronaut.context">DefaultApplicationContextBuilder</a>, <a href="../../../io/micronaut/runtime/Micronaut.html" title="class in io.micronaut.runtime">Micronaut</a></dd>
 </dl>
 <hr>
 <br>
-<pre><a href="../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
-public interface <span class="typeNameLabel">ApplicationContextConfiguration</span></pre>
+<pre>public interface <span class="typeNameLabel">ApplicationContextConfiguration</span>
+extends <a href="../../../io/micronaut/context/BeanContextConfiguration.html" title="interface in io.micronaut.context">BeanContextConfiguration</a></pre>
 <div class="block">An interface for configuring an application context.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>Zachary Klein</dd>
+<dd>Zachary Klein, graemerocher</dd>
 </dl>
 </li>
 </ul>
@@ -125,20 +129,39 @@ public interface <span class="typeNameLabel">ApplicationContextConfiguration</sp
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/ApplicationContextConfiguration.html#getDeduceEnvironments--">getDeduceEnvironments</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/ApplicationContextConfiguration.html#getConversionService--">getConversionService</a></span>()</code>
+<div class="block">The default conversion service to use.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/ApplicationContextConfiguration.html#getDeduceEnvironments--">getDeduceEnvironments</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/ApplicationContextConfiguration.html#getEnvironments--">getEnvironments</a></span>()</code>&nbsp;</td>
 </tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/ApplicationContextConfiguration.html#getResourceLoader--">getResourceLoader</a></span>()</code>
+<div class="block">The class path resource loader to use.</div>
+</td>
+</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.context.BeanContextConfiguration">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.context.<a href="../../../io/micronaut/context/BeanContextConfiguration.html" title="interface in io.micronaut.context">BeanContextConfiguration</a></h3>
+<code><a href="../../../io/micronaut/context/BeanContextConfiguration.html#getClassLoader--">getClassLoader</a></code></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -153,30 +176,60 @@ public interface <span class="typeNameLabel">ApplicationContextConfiguration</sp
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getEnvironments--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEnvironments</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getEnvironments()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The environment names</dd>
+</dl>
+</li>
+</ul>
 <a name="getDeduceEnvironments--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDeduceEnvironments</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;getDeduceEnvironments()</pre>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;getDeduceEnvironments()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>True if the environments should be deduced</dd>
 </dl>
 </li>
 </ul>
-<a name="getEnvironments--">
+<a name="getConversionService--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getConversionService</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;&nbsp;getConversionService()</pre>
+<div class="block">The default conversion service to use.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The conversion service</dd>
+</dl>
+</li>
+</ul>
+<a name="getResourceLoader--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getEnvironments</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getEnvironments()</pre>
+<h4>getResourceLoader</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;<a href="../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;getResourceLoader()</pre>
+<div class="block">The class path resource loader to use.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The environment names</dd>
+<dd>The classpath resource loader</dd>
 </dl>
 </li>
 </ul>
