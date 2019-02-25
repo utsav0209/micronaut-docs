@@ -42,7 +42,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/core/annotation/NonBlocking.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/core/annotation/Introspected.html" target="_top">Frames</a></li>
@@ -178,9 +178,9 @@ public @interface <span class="memberNameLabel">Introspected</span></pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]</code></td>
+<td class="colFirst"><code><a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html" title="annotation in io.micronaut.core.annotation">Introspected.IndexedAnnotation</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/core/annotation/Introspected.html#indexed--">indexed</a></span></code>
-<div class="block">The annotation types that should be indexed for lookup via <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getBeanProperties-java.lang.Class-"><code>BeanIntrospection.getBeanProperties(Class)</code></a>.</div>
+<div class="block">The annotation types that should be indexed for lookup via <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperties-java.lang.Class-"><code>BeanIntrospection.getIndexedProperties(Class)</code></a> or <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperty-java.lang.Class-java.lang.String-"><code>BeanIntrospection.getIndexedProperty(Class, String)</code></a> if <a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html#member--"><code>Introspected.IndexedAnnotation.member()</code></a> is specified.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -337,31 +337,10 @@ public @interface <span class="memberNameLabel">Introspected</span></pre>
 </li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="indexed--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>indexed</h4>
-<pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]&nbsp;indexed</pre>
-<div class="block">The annotation types that should be indexed for lookup via <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getBeanProperties-java.lang.Class-"><code>BeanIntrospection.getBeanProperties(Class)</code></a>.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The indexed annotation types</dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>{}</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a name="annotationMetadata--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>annotationMetadata</h4>
 <pre>public abstract&nbsp;boolean&nbsp;annotationMetadata</pre>
@@ -373,6 +352,43 @@ public @interface <span class="memberNameLabel">Introspected</span></pre>
 <dl>
 <dt>Default:</dt>
 <dd>true</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="indexed--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>indexed</h4>
+<pre>public abstract&nbsp;<a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html" title="annotation in io.micronaut.core.annotation">Introspected.IndexedAnnotation</a>[]&nbsp;indexed</pre>
+<div class="block">The annotation types that should be indexed for lookup via <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperties-java.lang.Class-"><code>BeanIntrospection.getIndexedProperties(Class)</code></a> or <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperty-java.lang.Class-java.lang.String-"><code>BeanIntrospection.getIndexedProperty(Class, String)</code></a> if <a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html#member--"><code>Introspected.IndexedAnnotation.member()</code></a> is specified.
+
+ <p>Property lookup indexing allows building indexes at compilation time for performing reverse property lookups. Consider for example a property with an annotation such as <code>@Column(name="foo_bar"</code>. To lookup the property by "foo_bar" you can specify:</p>
+
+ <pre class="code">
+ &#064;Introspected(
+   indexed = &#064;IndexedAnnotation(annotation=Column.class, member="name")
+ )
+ public class MyBean {
+      ...
+ }</pre>
+
+ <p>With the above in place a reverse lookup on the column can be done using <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperty-java.lang.Class-java.lang.String-"><code>BeanIntrospection.getIndexedProperty(Class, String)</code></a>:</p>
+
+ <pre class="code">
+ BeanProperty property = introspection.getIndexedProperty(Column.class, "foo_bar").orElse(null);
+ </pre></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The indexed annotation types</dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>{}</dd>
 </dl>
 </li>
 </ul>
@@ -404,7 +420,7 @@ public @interface <span class="memberNameLabel">Introspected</span></pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/core/annotation/NonBlocking.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/core/annotation/Introspected.IndexedAnnotation.html" title="annotation in io.micronaut.core.annotation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/core/annotation/Introspected.html" target="_top">Frames</a></li>
