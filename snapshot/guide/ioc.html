@@ -1830,7 +1830,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <p>Since Micronaut 1.1, a compilation time replacement for the JDK&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html">Introspector</a> class has been included.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/core/beans/BeanIntrospector.html">BeanIntrospector</a> and <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> interfaces allow looking up bean introspections that allow you to instantiate and read/write bean properties without using reflection or caching reflective metadata which is consumes excessive memory for large beans.</p>
+<p>The <a href="../api/io/micronaut/core/beans/BeanIntrospector.html">BeanIntrospector</a> and <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> interfaces allow looking up bean introspections that allow you to instantiate and read/write bean properties without using reflection or caching reflective metadata which consumes excessive memory for large beans.</p>
 </div>
 <div class="sect2">
 <h3 id="_making_a_bean_available_for_introspection">Making a Bean Available for Introspection</h3>
@@ -1840,7 +1840,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.0.BUILD-SNAPSHOT'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1849,25 +1849,9 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
+        &lt;version&gt;1.1.0.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core'</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;scope&gt;runtime&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </p>
@@ -1883,6 +1867,24 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.0.BUILD-SNAPSHOT'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
+    &lt;version&gt;1.1.0.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Once your build is configured you have a few ways to generate introspection data.</p>
@@ -2046,6 +2048,27 @@ class PersonConfiguration</code></pre>
 </td>
 <td class="content">
 You can also use the <code>packages</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> which will package scan at compilation time and generate introspections for all classes within a package. Note however this feature is currently regarded as experimental.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_write_a_code_annotationmapper_code_to_introspect_existing_annotations">Write a <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
+<div class="paragraph">
+<p>If there is an existing annotation that you wish to introspect by default you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>.</p>
+</div>
+<div class="paragraph">
+<p>An example of this is <a href="https://github.com/micronaut-projects/micronaut-core/blob/master/inject/src/main/java/io/micronaut/inject/beans/visitor/EntityIntrospectedAnnotationMapper.java">EntityIntrospectedAnnotationMapper</a> which ensures all beans annotated with <code>javax.persistence.Entity</code> are introspectable by default.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>AnnotationMapper</code> should be on the annotation processor classpath.
 </td>
 </tr>
 </table>
