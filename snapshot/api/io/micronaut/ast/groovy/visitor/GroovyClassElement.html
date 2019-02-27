@@ -184,8 +184,8 @@ implements <a href="../../../../../io/micronaut/inject/ast/ClassElement.html" ti
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../io/micronaut/inject/ast/ConstructorElement.html" title="interface in io.micronaut.inject.ast">ConstructorElement</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html#getPublicConstructor--">getPublicConstructor</a></span>()</code>
-<div class="block">Find and return a single public constructor.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html#getPrimaryConstructor--">getPrimaryConstructor</a></span>()</code>
+<div class="block">Find and return a single primary constructor.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -335,21 +335,22 @@ implements <a href="../../../../../io/micronaut/inject/ast/ClassElement.html" ti
 </dl>
 </li>
 </ul>
-<a name="getPublicConstructor--">
+<a name="getPrimaryConstructor--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getPublicConstructor</h4>
+<h4>getPrimaryConstructor</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../io/micronaut/inject/ast/ConstructorElement.html" title="interface in io.micronaut.inject.ast">ConstructorElement</a>&gt;&nbsp;getPublicConstructor()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPublicConstructor--">ClassElement</a></code></span></div>
-<div class="block">Find and return a single public constructor. If more than one or no public constructor exists, then return empty.</div>
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../io/micronaut/inject/ast/ConstructorElement.html" title="interface in io.micronaut.inject.ast">ConstructorElement</a>&gt;&nbsp;getPrimaryConstructor()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPrimaryConstructor--">ClassElement</a></code></span></div>
+<div class="block">Find and return a single primary constructor. If more than constructor candidate exists, then return empty unless a
+ constructor is found that is annotated with either <a href="../../../../../io/micronaut/core/annotation/Creator.html" title="annotation in io.micronaut.core.annotation"><code>Creator</code></a> or <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject"><code>Inject</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPublicConstructor--">getPublicConstructor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPrimaryConstructor--">getPrimaryConstructor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The public constructor if one is present</dd>
+<dd>The primary constructor if one is present</dd>
 </dl>
 </li>
 </ul>
