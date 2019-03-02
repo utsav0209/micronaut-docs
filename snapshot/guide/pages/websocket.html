@@ -420,7 +420,8 @@ RxWebSocketClient webSocketClient;</code></pre>
 <div class="listingblock">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.websocket.WebSocketSession;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+import io.micronaut.websocket.WebSocketSession;
 import io.micronaut.websocket.annotation.*;
 import io.reactivex.Single;
 import java.util.Collection;
@@ -430,15 +431,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public abstract class ChatClientWebSocket implements AutoCloseable { <i class="conum" data-value="2"></i><b>(2)</b>
 
     private WebSocketSession session;
+    private HttpRequest request;
     private String topic;
     private String username;
     private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;();
 
     @OnOpen
-    public void onOpen(String topic, String username, WebSocketSession session) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <i class="conum" data-value="3"></i><b>(3)</b>
         this.topic = topic;
         this.username = username;
         this.session = session;
+        this.request = request;
     }
 
     public String getTopic() {
@@ -455,6 +458,10 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
 
     public WebSocketSession getSession() {
         return session;
+    }
+
+    public HttpRequest getRequest() {
+        return request;
     }
 
     @OnMessage
