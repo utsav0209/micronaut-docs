@@ -384,6 +384,8 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-kafka"><a href="#kafka"><strong>10.1</strong><span>Kafka Support</span></a></div>
         
+        <div class="toc-item" style="margin-left:10px" id="toc-item-rabbitmq"><a href="#rabbitmq"><strong>10.2</strong><span>RabbitMQ Support</span></a></div>
+        
         <div class="toc-item" style="margin-left:0px" id="toc-item-commandLineApps"><a href="#commandLineApps"><strong>11</strong><span>Standalone Command Line Applications</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-picocli"><a href="#picocli"><strong>11.1</strong><span>Picocli Support</span></a></div>
@@ -413,10 +415,6 @@
         <div class="toc-item" style="margin-left:20px" id="toc-item-liquibaseSupport"><a href="#liquibaseSupport"><strong>12.1.8</strong><span>Configuring Liquibase</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-flywaySupport"><a href="#flywaySupport"><strong>12.1.9</strong><span>Configuring Flyway</span></a></div>
-        
-        <div class="toc-item" style="margin-left:10px" id="toc-item-otherConfigurations"><a href="#otherConfigurations"><strong>12.2</strong><span>Other Configurations</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-rabbitmq"><a href="#rabbitmq"><strong>12.2.1</strong><span>RabbitMQ</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-languageSupport"><a href="#languageSupport"><strong>13</strong><span>Language Support</span></a></div>
         
@@ -18157,6 +18155,29 @@ interface HelloClient {
 </div>
 
 
+<h2 id="rabbitmq">10.2 RabbitMQ Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/messaging/rabbitmq.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><a href="https://www.rabbitmq.com">RabbitMQ</a> is the most widely deployed open source message broker.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut features dedicated support for defining both RabbitMQ publishers and consumers. Micronaut applications built with RabbitMQ can be deployed with or without the presence of an HTTP server.</p>
+</div>
+<div class="paragraph">
+<p>With Micronaut&#8217;s efficient compile-time AOP, using RabbitMQ has never been easier. Support has been added for publisher confirms and RPC through reactive streams.</p>
+</div>
+<div class="paragraph">
+<p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-rabbitmq/latest/guide">Micronaut RabbitMQ</a> for more information on how to build RabbitMQ applications with Micronaut.</p>
+</div>
+
+
 <h1 id="commandLineApps">11 Standalone Command Line Applications</h1>
 
 <div class='contribute-btn'>
@@ -19358,84 +19379,6 @@ applicationContext.start()</code></pre>
 <div class="paragraph">
 <p>To configure Micronaut integration with <a href="https://flywaydb.org/">Flyway</a>, please follow
 <a href="https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html">these instructions</a></p>
-</div>
-
-
-<h2 id="otherConfigurations">12.2 Other Configurations</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/otherConfigurations.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>This section covers other configurations available for use in Micronaut applications.</p>
-</div>
-
-
-<h2 id="rabbitmq">12.2.1 RabbitMQ</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/otherConfigurations/rabbitmq.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>rabbitmq</code> feature to include RabbitMQ support in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features rabbitmq</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To get started with RabbitMQ in Micronaut, add the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-rabbitmq"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-rabbitmq&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A RabbitMQ connection factory bean will be provided based on the configuration values supplied under the <code>rabbitmq</code> configuration key. All setter methods on <a href="https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConnectionFactory.html">ConnectionFactory</a> are available to be configured.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">rabbitmq:
-    uri: amqp://user:pass@host:10000/vhost
-    requestedFrameMax: 10
-    requestedChannelMax: 10
-    connectionTimeout: 5000</code></pre>
-</div>
 </div>
 
 

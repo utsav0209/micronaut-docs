@@ -151,12 +151,6 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#flywaySupport"><strong>12.1.9</strong><span>Configuring Flyway</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#otherConfigurations"><strong>12.2</strong><span>Other Configurations</span></a>
-                    </div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#rabbitmq"><strong>12.2.1</strong><span>RabbitMQ</span></a>
-                    </div>
-                    
                 </div>
                 
 
@@ -890,84 +884,6 @@ applicationContext.start()</code></pre>
 <div class="paragraph">
 <p>To configure Micronaut integration with <a href="https://flywaydb.org/">Flyway</a>, please follow
 <a href="https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html">these instructions</a></p>
-</div>
-
-
-<h2 id="otherConfigurations">12.2 Other Configurations</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/otherConfigurations.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>This section covers other configurations available for use in Micronaut applications.</p>
-</div>
-
-
-<h2 id="rabbitmq">12.2.1 RabbitMQ</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/otherConfigurations/rabbitmq.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>rabbitmq</code> feature to include RabbitMQ support in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features rabbitmq</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To get started with RabbitMQ in Micronaut, add the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-rabbitmq"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-rabbitmq&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A RabbitMQ connection factory bean will be provided based on the configuration values supplied under the <code>rabbitmq</code> configuration key. All setter methods on <a href="https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConnectionFactory.html">ConnectionFactory</a> are available to be configured.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">rabbitmq:
-    uri: amqp://user:pass@host:10000/vhost
-    requestedFrameMax: 10
-    requestedChannelMax: 10
-    connectionTimeout: 5000</code></pre>
-</div>
 </div>
 
 
