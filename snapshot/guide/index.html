@@ -9019,12 +9019,13 @@ class VersionedController {
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     router:
         versioning:
+            enabled: true <i class="conum" data-value="1"></i><b>(1)</b>
             parameter:
-                enabled: false <i class="conum" data-value="1"></i><b>(1)</b>
-                names: 'v,api-version' <i class="conum" data-value="2"></i><b>(2)</b>
+                enabled: false <i class="conum" data-value="2"></i><b>(2)</b>
+                names: 'v,api-version' <i class="conum" data-value="3"></i><b>(3)</b>
             header:
-                enabled: true <i class="conum" data-value="3"></i><b>(3)</b>
-                names: <i class="conum" data-value="4"></i><b>(4)</b>
+                enabled: true <i class="conum" data-value="4"></i><b>(4)</b>
+                names: <i class="conum" data-value="5"></i><b>(5)</b>
                     - 'X-API-VERSION'
                     - 'Accept-Version'</code></pre>
 </div>
@@ -9033,24 +9034,28 @@ class VersionedController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Enables or disables parameter based versioning</td>
+<td>Enables versioning</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Specify the parameter names as a comma separated list</td>
+<td>Enables or disables parameter based versioning</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Enables or disables header based versioning</td>
+<td>Specify the parameter names as a comma separated list</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Enables or disables header based versioning</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>Specify the header names as a YAML list</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/strategy/VersionExtractingStrategy.html">VersionExtractingStrategy</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
+<p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/resolution/RequestVersionResolver.html">RequestVersionResolver</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
 </div>
 <div class="sect2">
 <h3 id="_versioning_client_requests">Versioning Client Requests</h3>
