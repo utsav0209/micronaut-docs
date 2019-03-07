@@ -535,19 +535,72 @@ $ ./gradlew run --continuous</pre>
 <div class="paragraph">
 <p>Support has been added for the JCache specification. If you define a <code>javax.cache.CacheManager</code> bean it will be used for caching. For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">Using JCache Caching</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Factory;
+
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.configuration.MutableConfiguration;
+import javax.inject.Singleton;
+
+@Factory
 class CacheFactory {
 
     @Singleton
     @Bean
     CacheManager cacheManager() {
         CacheManager cacheManager = Caching.getCachingProvider()
-                                           .getCacheManager();
-        cacheManager.createCache('my-cache', new MutableConfiguration());
+                .getCacheManager();
+        cacheManager.createCache("my-cache", new MutableConfiguration());
         return cacheManager;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import javax.cache.CacheManager
+import javax.cache.Caching
+import javax.cache.configuration.MutableConfiguration
+import javax.inject.Singleton
+
+@Factory
+class CacheFactory {
+
+    @Singleton
+    @Bean
+    CacheManager cacheManager() {
+        CacheManager cacheManager = Caching.cachingProvider.cacheManager
+        cacheManager.createCache("my-cache", new MutableConfiguration())
+        cacheManager
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import javax.cache.CacheManager
+import javax.cache.Caching
+import javax.cache.configuration.MutableConfiguration
+import javax.inject.Singleton
+
+@Factory
+class CacheFactory {
+
+    @Singleton
+    @Bean
+    fun cacheManager(): CacheManager {
+        val cacheManager = Caching.getCachingProvider().cacheManager
+        cacheManager.createCache("my-cache", MutableConfiguration&lt;Any, Any&gt;())
+        return cacheManager
     }
 }</code></pre>
 </div>
@@ -666,6 +719,18 @@ class CacheFactory {
 </li>
 <li>
 <p>Redis Lettuce Driver <code>5.0.4.RELEASE</code> &#8594; <code>5.1.3.RELEASE</code></p>
+</li>
+<li>
+<p>Jaeger <code>0.31.0</code> &#8594; <code>0.33.1</code></p>
+</li>
+<li>
+<p>Zipkin Reporter <code>2.7.9</code> &#8594; <code>2.8.0</code></p>
+</li>
+<li>
+<p>Brave Instrumentation HTTP <code>5.4.2</code> &#8594; <code>5.6.1</code></p>
+</li>
+<li>
+<p>Brave Opentracing &#8594; <code>0.33.3</code> &#8594; <code>0.33.10</code></p>
 </li>
 </ul>
 </div>

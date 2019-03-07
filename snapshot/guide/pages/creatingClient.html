@@ -133,37 +133,110 @@ function addJsClass() {
 <div class="paragraph">
 <p>As mentioned previously, Micronaut includes both an <a href="#httpServer">HTTP server</a> and an <a href="#httpClient">HTTP client</a>. A <a href="#lowLevelHttpClient">low-level HTTP client</a> is provided out of the box which you can use to test the <code>HelloController</code> created in the previous section.</p>
 </div>
-<div class="paragraph">
-<p>For example, the following test is written using <a href="http://spockframework.org">Spock Framework</a>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Testing Hello World</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.ApplicationContext
-import io.micronaut.context.env.Environment
-import io.micronaut.http.HttpRequest
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.env.Environment;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.client.HttpClient;
+import io.micronaut.runtime.server.EmbeddedServer;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+
+
+public class HelloControllerSpec {
+    private static EmbeddedServer server;
+    private static HttpClient client;
+
+    @BeforeClass
+    public static void setupServer() {
+
+server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+
+        client = server
+                .getApplicationContext()
+                .createBean(HttpClient.class, server.getURL());<b class="conum">(2)</b>
+    }
+
+    @AfterClass
+    public static void stopServer() {
+        if (server != null) {
+            server.stop();
+        }
+        if (client != null) {
+            client.stop();
+        }
+    }
+
+    @Test
+    public void testHelloWorldResponse() {
+        String response = client.toBlocking() <b class="conum">(3)</b>
+                .retrieve(HttpRequest.GET("/hello"));
+        assertEquals("Hello World", response); //) <b class="conum">(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.*
+import spock.lang.AutoCleanup
+import spock.lang.Shared
+import spock.lang.Specification
+
+
 class HelloControllerSpec extends Specification {
 
-    @Shared @AutoCleanup EmbeddedServer embeddedServer =
-ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
-    @Shared @AutoCleanup HttpClient client = HttpClient.create(embeddedServer.URL) <i class="conum" data-value="2"></i><b>(2)</b>
+@Shared
+@AutoCleanup
+EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+
+    @Shared
+    @AutoCleanup
+    HttpClient client = HttpClient.create(embeddedServer.URL) <b class="conum">(2)</b>
 
     void "test hello world response"() {
         expect:
-        client.toBlocking() <i class="conum" data-value="3"></i><b>(3)</b>
-              .retrieve(HttpRequest.GET('/hello')) == "Hello World" <i class="conum" data-value="4"></i><b>(4)</b>
+            client.toBlocking() <b class="conum">(3)</b>
+                    .retrieve(HttpRequest.GET('/hello')) == "Hello World" <b class="conum">(4)</b>
     }
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment
+import io.micronaut.http.client.HttpClient
+import io.micronaut.runtime.server.EmbeddedServer
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+
+class HelloControllerSpec() {
+    lateinit var server: EmbeddedServer
+    lateinit var client: HttpClient
+
+    @BeforeTest
+    fun setup() {
+
+server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/runtime/server/EmbeddedServer.html">EmbeddedServer</a> is configured as a shared and automatically cleaned up test field</td>
+<td>The <a href="../api/io/micronaut/runtime/server/EmbeddedServer.html">EmbeddedServer</a> is configured as a shared test field</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
