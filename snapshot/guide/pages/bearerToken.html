@@ -131,13 +131,7 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>Micronaut supports <a href="https://tools.ietf.org/html/rfc6750">RFC 6750 Bearer Token</a> specification out-of-the-box.</p>
-</div>
-<div class="paragraph">
-<p>It is enabled by default but requires JWT Authentication to be enabled.</p>
-</div>
-<div class="paragraph">
-<p>The following sequence illustrates the authentication flow:</p>
+<p>Micronaut supports the <a href="https://tools.ietf.org/html/rfc6750">RFC 6750 Bearer Token</a> specification for transmitting JWT tokens. The following sequence illustrates the RFC 6750 authentication flow:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -145,7 +139,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="paragraph">
-<p>The following configuration properties are available to customize Bearer Token read:</p>
+<p>The following configuration properties are available to customize how the Bearer Token will be read:</p>
 </div>
 <a id="io.micronaut.security.token.jwt.bearer.BearerTokenConfigurationProperties" href="#io.micronaut.security.token.jwt.bearer.BearerTokenConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
@@ -184,13 +178,21 @@ function addJsClass() {
 <h2 id="_sending_tokens_in_the_request">Sending tokens in the request</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following code snippet illustrates how to send a JWT token in the <code>Authorization</code> request header:</p>
+<p>The code snippet below illustrates how to send a JWT token in the <code>Authorization</code> request header, using the <code>bearerAuth</code> method from <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> method:</p>
 </div>
 <div class="listingblock">
-<div class="title">Accessing a protected resource using Authorization request header</div>
+<div class="title">Accessing a protected resource using an Authorization request header</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String accessToken = rsp.body().accessToken
+List&lt;Book&gt; books = gatewayClient.toBlocking().retrieve(HttpRequest.GET("/api/gateway")
+        .bearerAuth(accessToken), Argument.listOf(Book))</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example of HTTP GET request using Authorization request header</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">GET /protectedResource HTTP/1.1
-Host: micronaut.example
+Host: micronaut.example`
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjI5OTU5MjIsInN1YiI6ImppbWkiLCJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sImlhdCI6MTQyMjk5MjMyMn0.rA7A2Gwt14LaYMpxNRtrCdO24RGrfHtZXY9fIjV8x8o</code></pre>
 </div>
 </div>
@@ -201,7 +203,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjI5OTU5MjIsInN1YiI6Imppb
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Read the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.html">Micronaut JWT Authentication</a> to learn more.
+Check out the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.html">Micronaut JWT Authentication guide</a> for a tutorial on Micronaut&#8217;s JWT support.
 </td>
 </tr>
 </table>
