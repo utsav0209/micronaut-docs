@@ -139,16 +139,39 @@ function addJsClass() {
 <div class="paragraph">
 <p>The return types of methods annotated with <code>@Bean</code> are the bean types. This is best illustrated by an example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.*
-import javax.inject.*
-
-
-@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private final CrankShaft crankShaft;
 
+    public V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    public String start() {
+        return "Starting V8";
+    }
+}
+@Factory
+class EngineFactory {
+
+    @Bean
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        return new V8Engine(crankShaft);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class CrankShaft {
+}
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -161,7 +184,6 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Factory
 class EngineFactory {
 
@@ -169,6 +191,28 @@ class EngineFactory {
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         new V8Engine(crankShaft)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+internal class CrankShaft
+internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
+    private val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Factory
+internal class EngineFactory {
+
+    @Bean
+    @Singleton
+    fun v8Engine(crankShaft: CrankShaft): Engine {
+        return V8Engine(crankShaft)
     }
 }</code></pre>
 </div>

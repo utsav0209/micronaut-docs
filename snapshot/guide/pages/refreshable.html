@@ -146,19 +146,53 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following example, illustrates the <code>@Refreshable</code> scope behavior.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Refreshable <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Refreshable <b class="conum">(1)</b>
+public static class WeatherService {
+    private String forecast;
+
+    @PostConstruct
+    public void init() {
+        forecast = "Scattered Clouds " + new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date());<b class="conum">(2)</b>
+    }
+
+    public String latestForecast() {
+        return forecast;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Refreshable <b class="conum">(1)</b>
 static class WeatherService {
 
     String forecast
 
     @PostConstruct
     void init() {
-        forecast = "Scattered Clouds ${new Date().format('dd/MMM/yy HH:ss.SSS')}" <i class="conum" data-value="2"></i><b>(2)</b>
+        forecast = "Scattered Clouds ${new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date())}" <b class="conum">(2)</b>
     }
 
     String latestForecast() {
+        return forecast
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Refreshable <b class="conum">(1)</b>
+open class WeatherService {
+    private var forecast: String? = null
+
+    @PostConstruct
+    fun init() {
+        forecast = "Scattered Clouds " + SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(Date())<b class="conum">(2)</b>
+    }
+
+    open fun latestForecast(): String? {
         return forecast
     }
 }</code></pre>
@@ -182,9 +216,19 @@ static class WeatherService {
 <div class="paragraph">
 <p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published then the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">applicationContext.publishEvent(new RefreshEvent());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">applicationContext.publishEvent(RefreshEvent())</code></pre>
 </div>
 </div>
 

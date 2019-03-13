@@ -1711,7 +1711,7 @@ public class HelloControllerSpec {
     @BeforeClass
     public static void setupServer() {
 
-server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+        server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
 
         client = server
                 .getApplicationContext()
@@ -1749,9 +1749,9 @@ import spock.lang.Specification
 
 class HelloControllerSpec extends Specification {
 
-@Shared
-@AutoCleanup
-EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+    @Shared
+    @AutoCleanup
+    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
 
     @Shared
     @AutoCleanup
@@ -1784,7 +1784,26 @@ class HelloControllerSpec() {
     @BeforeTest
     fun setup() {
 
-server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b></code></pre>
+        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
+
+        client = server
+                .getApplicationContext()
+                .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
+    }
+
+    @AfterTest
+    fun teardown() {
+        server?.close()
+        client?.close()
+    }
+
+    @Test
+    fun testHelloWorldResponse() {
+        val rsp: String = client.toBlocking() <b class="conum">(3)</b>
+                .retrieve("/hello")
+        assertEquals("Hello World", rsp) <b class="conum">(4)</b>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1813,18 +1832,46 @@ server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)
 <div class="paragraph">
 <p>To create a client, simply create an interface annotated with <code>@Client</code>. For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">src/main/java/hello/world/HelloClient.java</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Get;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
-@Client("/hello") <i class="conum" data-value="1"></i><b>(1)</b>
+@Client("/hello") <b class="conum">(1)</b>
 public interface HelloClient {
 
-    @Get <i class="conum" data-value="2"></i><b>(2)</b>
-    Single&lt;String&gt; hello(); <i class="conum" data-value="3"></i><b>(3)</b>
+    @Get <b class="conum">(2)</b>
+    Single&lt;String&gt; hello(); <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+@Client("/hello") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get <b class="conum">(2)</b>
+    Single&lt;String&gt; hello() <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+
+@Client("/hello") <b class="conum">(1)</b>
+interface HelloClient {
+
+    @Get <b class="conum">(2)</b>
+    fun hello(): Single&lt;String&gt;  <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -1847,24 +1894,81 @@ public interface HelloClient {
 <div class="paragraph">
 <p>To test the <code>HelloClient</code> simply retrieve it from the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> associated with the server:</p>
 </div>
-<div class="listingblock">
-<div class="title">Testing HelloClient</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">class HelloClientSpec extends Specification {
+<pre class="highlight"><code class="language-java" data-lang="java">public class HelloClientSpec  {
 
-@Shared @AutoCleanup EmbeddedServer embeddedServer =
-    ApplicationContext.run(EmbeddedServer) <i class="conum" data-value="1"></i><b>(1)</b>
+    private static EmbeddedServer server;
+    private static HelloClient client;
+
+    @BeforeClass
+    public static void setupServer() {
+
+        server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+
+        client = server
+                .getApplicationContext()
+                .getBean(HelloClient.class);<b class="conum">(2)</b>
+    }
+    @AfterClass
+    public static void stopServer() {
+        if (server != null) {
+            server.stop();
+        }
+    }
+
+    public void testHelloWorldResponse(){
+        assertEquals("Hello World", client.hello().blockingGet());<b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class HelloClientSpec extends Specification {
+
+    @Shared @AutoCleanup EmbeddedServer embeddedServer =
+        ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
 
     @Shared HelloClient client = embeddedServer
                                         .applicationContext
-                                        .getBean(HelloClient) <i class="conum" data-value="2"></i><b>(2)</b>
+                                        .getBean(HelloClient) <b class="conum">(2)</b>
 
 
     void "test hello world response"() {
         expect:
-        client.hello().blockingGet() == "Hello World" <i class="conum" data-value="3"></i><b>(3)</b>
+        client.hello().blockingGet() == "Hello World" <b class="conum">(3)</b>
     }
 
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec {
+
+    lateinit var server: EmbeddedServer
+    lateinit var client: HelloClient
+
+    @BeforeTest
+    fun setup() {
+
+        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
+
+        client = server!!
+                .applicationContext
+                .getBean(HelloClient::class.java)<b class="conum">(2)</b>
+    }
+
+    @AfterTest
+    fun teardown() {
+        server?.close()
+    }
+
+    @Test
+    fun testHelloWorldResponse() {
+        assertEquals("Hello World", client.hello().blockingGet())<b class="conum">(3)</b>
+    }
 }</code></pre>
 </div>
 </div>
@@ -2055,16 +2159,49 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 <div class="paragraph">
 <p>The following is a simple example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {<b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton<b class="conum">(2)</b>
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    private int cylinders = 8;
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    public Vehicle(Engine engine) {<b class="conum">(3)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
 
@@ -2072,17 +2209,42 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    Vehicle(Engine engine) { <i class="conum" data-value="3"></i><b>(3)</b>
+    Vehicle(Engine engine) { <b class="conum">(3)</b>
         this.engine = engine
     }
 
     String start() {
         engine.start()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
+    <b class="conum">(1)</b>
+    val cylinders: Int
+
+    fun start(): String
+}
+@Singleton<b class="conum">(2)</b>
+class V8Engine : Engine {
+
+    override var cylinders = 8
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Singleton
+class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
+{
+
+    fun start(): String {
+        return engine.start()
     }
 }</code></pre>
 </div>
@@ -2106,13 +2268,23 @@ class Vehicle {
 <div class="paragraph">
 <p>To perform dependency injection simply run the  <a href="../api/io/micronaut/context/BeanContext.html">BeanContext</a> using the <code>run()</code> method and lookup a bean using <code>getBean(Class)</code>, as per the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.*
-...
-Vehicle vehicle = BeanContext.run()
+<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+System.out.println(vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
                              .getBean(Vehicle)
 println( vehicle.start() )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2259,43 +2431,116 @@ println( vehicle.start() )</code></pre>
 <div class="paragraph">
 <p>To qualify by name you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation. For example, consider the following classes:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine { <b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton
+public class V6Engine implements Engine {  <b class="conum">(2)</b>
+    public String start() {
+        return "Starting V6";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return 6;
+    }
+}
+@Singleton
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
+
+    public int getCylinders() {
+        return 8;
+    }
+
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    @Inject
+    public Vehicle(@Named("v8") Engine engine) {<b class="conum">(4)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();<b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
 @Singleton
-class V6Engine implements Engine { <i class="conum" data-value="2"></i><b>(2)</b>
+class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
 
     String start() {
         "Starting V6"
     }
 }
-
 @Singleton
-class V8Engine implements Engine { <i class="conum" data-value="3"></i><b>(3)</b>
+class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
 
     String start() {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    @Inject Vehicle(@Named('v8') Engine engine) { <i class="conum" data-value="4"></i><b>(4)</b>
+    @Inject Vehicle(@Named('v8') Engine engine) { <b class="conum">(4)</b>
         this.engine = engine
     }
 
     String start() {
-        engine.start() <i class="conum" data-value="5"></i><b>(5)</b>
+        engine.start() <b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine { <b class="conum">(1)</b>
+    val cylinders: Int
+    fun start(): String
+}
+@Singleton
+class V6Engine : Engine {  <b class="conum">(2)</b>
+
+    override var cylinders: Int = 6
+
+    override fun start(): String {
+        return "Starting V6"
+    }
+}
+@Singleton
+class V8Engine : Engine {
+
+    override var cylinders: Int = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+
+}
+@Singleton
+class Vehicle @Inject
+constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
+{
+
+    fun start(): String {
+        return engine.start()<b class="conum">(5)</b>
     }
 }</code></pre>
 </div>
@@ -2568,19 +2813,53 @@ If your bean fails to initialize in parallel then the application will be automa
 <div class="paragraph">
 <p>The following example, illustrates the <code>@Refreshable</code> scope behavior.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Refreshable <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Refreshable <b class="conum">(1)</b>
+public static class WeatherService {
+    private String forecast;
+
+    @PostConstruct
+    public void init() {
+        forecast = "Scattered Clouds " + new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date());<b class="conum">(2)</b>
+    }
+
+    public String latestForecast() {
+        return forecast;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Refreshable <b class="conum">(1)</b>
 static class WeatherService {
 
     String forecast
 
     @PostConstruct
     void init() {
-        forecast = "Scattered Clouds ${new Date().format('dd/MMM/yy HH:ss.SSS')}" <i class="conum" data-value="2"></i><b>(2)</b>
+        forecast = "Scattered Clouds ${new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date())}" <b class="conum">(2)</b>
     }
 
     String latestForecast() {
+        return forecast
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Refreshable <b class="conum">(1)</b>
+open class WeatherService {
+    private var forecast: String? = null
+
+    @PostConstruct
+    fun init() {
+        forecast = "Scattered Clouds " + SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(Date())<b class="conum">(2)</b>
+    }
+
+    open fun latestForecast(): String? {
         return forecast
     }
 }</code></pre>
@@ -2604,9 +2883,19 @@ static class WeatherService {
 <div class="paragraph">
 <p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published then the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">applicationContext.publishEvent(new RefreshEvent());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">applicationContext.publishEvent(RefreshEvent())</code></pre>
 </div>
 </div>
 
@@ -2623,10 +2912,9 @@ static class WeatherService {
 <div class="paragraph">
 <p>Scopes can be defined on Meta annotations that you can then apply to your classes. Consider the following example meta annotation:</p>
 </div>
-<div class="listingblock">
-<div class="title">Driver.java Annotation</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
+<pre class="highlight"><code class="language-java" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import io.micronaut.context.annotation.Requires;
 
@@ -2634,12 +2922,46 @@ import javax.inject.Singleton;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 
-@Requires(classes = Car.class ) <i class="conum" data-value="1"></i><b>(1)</b>
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
 @Documented
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+
+import javax.inject.Singleton
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy.RUNTIME
+import javax.inject.Singleton
+
+
+@Requires(classes = [Car::class]) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2671,7 +2993,7 @@ class Foo {}</code></pre>
 <div class="paragraph">
 <p>If you wish for the scope to be overridable you should instead using the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @DefaultScope</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(classes = Car.class )
@@ -2680,6 +3002,25 @@ class Foo {}</code></pre>
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Requires(classes = Car.class )
+@DefaultScope(Singleton.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Requires(classes = [Car::class])
+@DefaultScope(Singleton::class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2710,16 +3051,39 @@ public @interface Driver {
 <div class="paragraph">
 <p>The return types of methods annotated with <code>@Bean</code> are the bean types. This is best illustrated by an example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.*
-import javax.inject.*
-
-
-@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private final CrankShaft crankShaft;
 
+    public V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    public String start() {
+        return "Starting V8";
+    }
+}
+@Factory
+class EngineFactory {
+
+    @Bean
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        return new V8Engine(crankShaft);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class CrankShaft {
+}
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -2732,7 +3096,6 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Factory
 class EngineFactory {
 
@@ -2740,6 +3103,28 @@ class EngineFactory {
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         new V8Engine(crankShaft)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+internal class CrankShaft
+internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
+    private val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Factory
+internal class EngineFactory {
+
+    @Bean
+    @Singleton
+    fun v8Engine(crankShaft: CrankShaft): Engine {
+        return V8Engine(crankShaft)
     }
 }</code></pre>
 </div>
@@ -3690,38 +4075,38 @@ data class Person(var name : String) {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">final BeanIntrospection&lt;Person&gt; introspection = BeanIntrospection.getIntrospection(Person.class); <b class="conum">(1)</b>
-Person person = introspection.instantiate("John"); <b class="conum">(2)</b>
-System.out.println("Hello " + person.getName());
+<pre class="highlight"><code class="language-java" data-lang="java">        final BeanIntrospection&lt;Person&gt; introspection = BeanIntrospection.getIntrospection(Person.class); <b class="conum">(1)</b>
+        Person person = introspection.instantiate("John"); <b class="conum">(2)</b>
+        System.out.println("Hello " + person.getName());
 
-final BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String.class); <b class="conum">(3)</b>
-property.set(person, "Fred"); <b class="conum">(4)</b>
-String name = property.get(person); <b class="conum">(5)</b>
-System.out.println("Hello " + person.getName());</code></pre>
+        final BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String.class); <b class="conum">(3)</b>
+        property.set(person, "Fred"); <b class="conum">(4)</b>
+        String name = property.get(person); <b class="conum">(5)</b>
+        System.out.println("Hello " + person.getName());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">def introspection = BeanIntrospection.getIntrospection(Person) <b class="conum">(1)</b>
-Person person = introspection.instantiate("John") <b class="conum">(2)</b>
-println("Hello ${person.name}")
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        def introspection = BeanIntrospection.getIntrospection(Person) <b class="conum">(1)</b>
+        Person person = introspection.instantiate("John") <b class="conum">(2)</b>
+        println("Hello ${person.name}")
 
-BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String) <b class="conum">(3)</b>
-property.set(person, "Fred") <b class="conum">(4)</b>
-String name = property.get(person) <b class="conum">(5)</b>
-println("Hello ${person.name}")</code></pre>
+        BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String) <b class="conum">(3)</b>
+        property.set(person, "Fred") <b class="conum">(4)</b>
+        String name = property.get(person) <b class="conum">(5)</b>
+        println("Hello ${person.name}")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val introspection = BeanIntrospection.getIntrospection(Person::class.java) <b class="conum">(1)</b>
-val person : Person = introspection.instantiate("John") <b class="conum">(2)</b>
-print("Hello ${person.name}")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val introspection = BeanIntrospection.getIntrospection(Person::class.java) <b class="conum">(1)</b>
+        val person : Person = introspection.instantiate("John") <b class="conum">(2)</b>
+        print("Hello ${person.name}")
 
-val property : BeanProperty&lt;Person, String&gt; = introspection.getRequiredProperty("name", String::class.java) <b class="conum">(3)</b>
-property.set(person, "Fred") <b class="conum">(4)</b>
-val name = property.get(person) <b class="conum">(5)</b>
-print("Hello ${person.name}")</code></pre>
+        val property : BeanProperty&lt;Person, String&gt; = introspection.getRequiredProperty("name", String::class.java) <b class="conum">(3)</b>
+        property.set(person, "Fred") <b class="conum">(4)</b>
+        val name = property.get(person) <b class="conum">(5)</b>
+        print("Hello ${person.name}")</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3831,32 +4216,32 @@ The <code>AnnotationMapper</code> should be on the annotation processor classpat
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")); <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">        final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")); <b class="conum">(1)</b>
 
-wrapper.setProperty("age", "20"); <b class="conum">(2)</b>
-int newAge = wrapper.getRequiredProperty("age", int.class); <b class="conum">(3)</b>
+        wrapper.setProperty("age", "20"); <b class="conum">(2)</b>
+        int newAge = wrapper.getRequiredProperty("age", int.class); <b class="conum">(3)</b>
 
-System.out.println("Person's age now " + newAge);</code></pre>
+        System.out.println("Person's age now " + newAge);</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")) <b class="conum">(1)</b>
 
-wrapper.setProperty("age", "20") <b class="conum">(2)</b>
-int newAge = wrapper.getRequiredProperty("age", Integer) <b class="conum">(3)</b>
+        wrapper.setProperty("age", "20") <b class="conum">(2)</b>
+        int newAge = wrapper.getRequiredProperty("age", Integer) <b class="conum">(3)</b>
 
-println("Person's age now $newAge")</code></pre>
+        println("Person's age now $newAge")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val wrapper = BeanWrapper.getWrapper(Person("Fred")) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val wrapper = BeanWrapper.getWrapper(Person("Fred")) <b class="conum">(1)</b>
 
-wrapper.setProperty("age", "20") <b class="conum">(2)</b>
-val newAge = wrapper.getRequiredProperty("age", Int::class.java) <b class="conum">(3)</b>
+        wrapper.setProperty("age", "20") <b class="conum">(2)</b>
+        val newAge = wrapper.getRequiredProperty("age", Int::class.java) <b class="conum">(3)</b>
 
-println("Person's age now $newAge")</code></pre>
+        println("Person's age now $newAge")</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -11199,7 +11584,7 @@ public class MyBean {
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.netty:netty-transport-native-kqueue'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.netty:netty-transport-native-kqueue:osx-x86_64'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -11208,6 +11593,7 @@ public class MyBean {
     &lt;groupId&gt;io.netty&lt;/groupId&gt;
     &lt;artifactId&gt;netty-transport-native-kqueue&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;classifier&gt;osx-x86_64&lt;/classifier&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -11219,7 +11605,7 @@ public class MyBean {
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.netty:netty-transport-native-epoll'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.netty:netty-transport-native-epoll:linux-x86_64'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -11228,6 +11614,7 @@ public class MyBean {
     &lt;groupId&gt;io.netty&lt;/groupId&gt;
     &lt;artifactId&gt;netty-transport-native-epoll&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;classifier&gt;linux-x86_64&lt;/classifier&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>

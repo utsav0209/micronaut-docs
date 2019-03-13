@@ -136,16 +136,49 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following is a simple example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {<b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton<b class="conum">(2)</b>
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    private int cylinders = 8;
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    public Vehicle(Engine engine) {<b class="conum">(3)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
 
@@ -153,17 +186,42 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    Vehicle(Engine engine) { <i class="conum" data-value="3"></i><b>(3)</b>
+    Vehicle(Engine engine) { <b class="conum">(3)</b>
         this.engine = engine
     }
 
     String start() {
         engine.start()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
+    <b class="conum">(1)</b>
+    val cylinders: Int
+
+    fun start(): String
+}
+@Singleton<b class="conum">(2)</b>
+class V8Engine : Engine {
+
+    override var cylinders = 8
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Singleton
+class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
+{
+
+    fun start(): String {
+        return engine.start()
     }
 }</code></pre>
 </div>
@@ -187,13 +245,23 @@ class Vehicle {
 <div class="paragraph">
 <p>To perform dependency injection simply run the  <a href="../api/io/micronaut/context/BeanContext.html">BeanContext</a> using the <code>run()</code> method and lookup a bean using <code>getBean(Class)</code>, as per the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.*
-...
-Vehicle vehicle = BeanContext.run()
+<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+System.out.println(vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
                              .getBean(Vehicle)
 println( vehicle.start() )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">

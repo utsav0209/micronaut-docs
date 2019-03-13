@@ -133,10 +133,9 @@ function addJsClass() {
 <div class="paragraph">
 <p>Scopes can be defined on Meta annotations that you can then apply to your classes. Consider the following example meta annotation:</p>
 </div>
-<div class="listingblock">
-<div class="title">Driver.java Annotation</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
+<pre class="highlight"><code class="language-java" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import io.micronaut.context.annotation.Requires;
 
@@ -144,12 +143,46 @@ import javax.inject.Singleton;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 
-@Requires(classes = Car.class ) <i class="conum" data-value="1"></i><b>(1)</b>
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
 @Documented
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+
+import javax.inject.Singleton
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy.RUNTIME
+import javax.inject.Singleton
+
+
+@Requires(classes = [Car::class]) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -181,7 +214,7 @@ class Foo {}</code></pre>
 <div class="paragraph">
 <p>If you wish for the scope to be overridable you should instead using the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @DefaultScope</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(classes = Car.class )
@@ -190,6 +223,25 @@ class Foo {}</code></pre>
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Requires(classes = Car.class )
+@DefaultScope(Singleton.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Requires(classes = [Car::class])
+@DefaultScope(Singleton::class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
