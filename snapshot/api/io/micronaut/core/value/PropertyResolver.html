@@ -248,7 +248,8 @@ extends <a href="../../../../io/micronaut/core/value/ValueResolver.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>containsProperty</h4>
-<pre>boolean&nbsp;containsProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre>boolean&nbsp;containsProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
 <div class="block"><p>Whether the given property is contained within this resolver.</p>
  <p>
  <p>Note that this method will return false for nested properties. In other words given a key of <tt>foo.bar</tt> this method will
@@ -269,7 +270,8 @@ extends <a href="../../../../io/micronaut/core/value/ValueResolver.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>containsProperties</h4>
-<pre>boolean&nbsp;containsProperties(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre>boolean&nbsp;containsProperties(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
 <div class="block">Whether the given property or any nested properties exist for the key given key within this resolver.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -285,8 +287,11 @@ extends <a href="../../../../io/micronaut/core/value/ValueResolver.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                            <a href="../../../../io/micronaut/core/convert/ArgumentConversionContext.html" title="interface in io.micronaut.core.convert">ArgumentConversionContext</a>&lt;T&gt;&nbsp;conversionContext)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                     <a href="../../../../io/micronaut/core/convert/ArgumentConversionContext.html" title="interface in io.micronaut.core.convert">ArgumentConversionContext</a>&lt;T&gt;&nbsp;conversionContext)</pre>
 <div class="block"><p>Resolve the given property for the given name, type and generic type arguments.</p>
  <p>
  <p>Implementers can choose to implement more intelligent type conversion by analyzing the typeArgument.</p></div>
@@ -307,8 +312,11 @@ extends <a href="../../../../io/micronaut/core/value/ValueResolver.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                                    <a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;argument)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;argument)</pre>
 <div class="block"><p>Resolve the given property for the given name, type and generic type arguments.</p>
  <p>
  <p>Implementers can choose to implement more intelligent type conversion by analyzing the typeArgument.</p></div>
@@ -330,7 +338,8 @@ extends <a href="../../../../io/micronaut/core/value/ValueResolver.html" title="
 <li class="blockList">
 <h4>getProperties</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getProperties(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getProperties(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
 <div class="block">Return all the properties under the given key.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -367,9 +376,13 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType,
-                                    <a href="../../../../io/micronaut/core/convert/ConversionContext.html" title="interface in io.micronaut.core.convert">ConversionContext</a>&nbsp;context)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType,
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="../../../../io/micronaut/core/convert/ConversionContext.html" title="interface in io.micronaut.core.convert">ConversionContext</a>&nbsp;context)</pre>
 <div class="block"><p>Resolve the given property for the given name, type and generic type arguments.</p>
  <p>
  <p>Implementers can choose to implement more intelligent type conversion by analyzing the typeArgument.</p></div>
@@ -391,8 +404,11 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;get(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                            <a href="../../../../io/micronaut/core/convert/ArgumentConversionContext.html" title="interface in io.micronaut.core.convert">ArgumentConversionContext</a>&lt;T&gt;&nbsp;conversionContext)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;get(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                     <a href="../../../../io/micronaut/core/convert/ArgumentConversionContext.html" title="interface in io.micronaut.core.convert">ArgumentConversionContext</a>&lt;T&gt;&nbsp;conversionContext)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/value/ValueResolver.html#get-K-io.micronaut.core.convert.ArgumentConversionContext-">ValueResolver</a></code></span></div>
 <div class="block">Resolve the given property for the given name.</div>
 <dl>
@@ -414,8 +430,11 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</pre>
 <div class="block">Resolve the given property for the given name.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -436,9 +455,13 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;T&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType,
-                          T&nbsp;defaultValue)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+default&nbsp;&lt;T&gt;&nbsp;T&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                    <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType,
+                                    <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                    T&nbsp;defaultValue)</pre>
 <div class="block">Resolve the given property for the given name.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -458,9 +481,12 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>getRequiredProperty</h4>
-<pre>default&nbsp;&lt;T&gt;&nbsp;T&nbsp;getRequiredProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)
-                           throws <a href="../../../../io/micronaut/core/value/PropertyNotFoundException.html" title="class in io.micronaut.core.value">PropertyNotFoundException</a></pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;T&nbsp;getRequiredProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                           <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)
+                                    throws <a href="../../../../io/micronaut/core/value/PropertyNotFoundException.html" title="class in io.micronaut.core.value">PropertyNotFoundException</a></pre>
 <div class="block">Resolve the given property for the given name.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>

@@ -520,10 +520,14 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>registerSingleton</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;registerSingleton(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type,
-                                                T&nbsp;singleton,
-                                                <a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;T&gt;&nbsp;qualifier,
-                                                boolean&nbsp;inject)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;registerSingleton(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type,
+                                                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                         T&nbsp;singleton,
+                                                         <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                         <a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;T&gt;&nbsp;qualifier,
+                                                         boolean&nbsp;inject)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/context/BeanDefinitionRegistry.html#registerSingleton-java.lang.Class-T-io.micronaut.context.Qualifier-boolean-">BeanDefinitionRegistry</a></code></span></div>
 <div class="block"><p>Registers a new singleton bean at runtime. This method expects that the bean definition data will have been
  compiled ahead of time.</p>
@@ -559,7 +563,8 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveBeanConfigurations</h4>
-<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../io/micronaut/inject/BeanConfiguration.html" title="interface in io.micronaut.inject">BeanConfiguration</a>&gt;&nbsp;resolveBeanConfigurations()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../io/micronaut/inject/BeanConfiguration.html" title="interface in io.micronaut.inject">BeanConfiguration</a>&gt;&nbsp;resolveBeanConfigurations()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#resolveBeanConfigurations--">DefaultBeanContext</a></code></span></div>
 <div class="block">Resolves the <a href="../../../io/micronaut/inject/BeanConfiguration.html" title="interface in io.micronaut.inject"><code>BeanConfiguration</code></a> class instances. Default implementation uses ServiceLoader pattern.</div>
 <dl>
@@ -576,7 +581,8 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveBeanDefinitionReferences</h4>
-<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;resolveBeanDefinitionReferences()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;resolveBeanDefinitionReferences()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#resolveBeanDefinitionReferences--">DefaultBeanContext</a></code></span></div>
 <div class="block">Resolves the <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject"><code>BeanDefinitionReference</code></a> class instances. Default implementation uses ServiceLoader pattern.</div>
 <dl>
@@ -594,7 +600,9 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <li class="blockList">
 <h4>createEnvironment</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.html" title="class in io.micronaut.context.env">DefaultEnvironment</a>&nbsp;createEnvironment(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>...&nbsp;environmentNames)</pre>
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.html" title="class in io.micronaut.context.env">DefaultEnvironment</a>&nbsp;createEnvironment(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>...&nbsp;environmentNames)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../io/micronaut/context/DefaultApplicationContext.html#createEnvironment-io.micronaut.context.ApplicationContextConfiguration-"><code>createEnvironment(ApplicationContextConfiguration)</code></a> instead</span></div>
 <div class="block">Creates the default environment for the given environment name.</div>
 <dl>
@@ -611,7 +619,9 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>createEnvironment</h4>
-<pre>protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.html" title="class in io.micronaut.context.env">DefaultEnvironment</a>&nbsp;createEnvironment(<a href="../../../io/micronaut/context/ApplicationContextConfiguration.html" title="interface in io.micronaut.context">ApplicationContextConfiguration</a>&nbsp;configuration)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.html" title="class in io.micronaut.context.env">DefaultEnvironment</a>&nbsp;createEnvironment(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                        <a href="../../../io/micronaut/context/ApplicationContextConfiguration.html" title="interface in io.micronaut.context">ApplicationContextConfiguration</a>&nbsp;configuration)</pre>
 <div class="block">Creates the default environment for the given environment name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -627,7 +637,8 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>createConversionService</h4>
-<pre>protected&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&nbsp;createConversionService()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&nbsp;createConversionService()</pre>
 <div class="block">Creates the default conversion service.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -641,7 +652,8 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getConversionService</h4>
-<pre>public&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;&nbsp;getConversionService()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;&nbsp;getConversionService()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../io/micronaut/context/ApplicationContext.html#getConversionService--">getConversionService</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a></code></dd>
@@ -656,7 +668,8 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getEnvironment</h4>
-<pre>public&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&nbsp;getEnvironment()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&nbsp;getEnvironment()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../io/micronaut/context/ApplicationContext.html#getEnvironment--">getEnvironment</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a></code></dd>
@@ -671,7 +684,8 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>start</h4>
-<pre>public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;start()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;start()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#start--">DefaultBeanContext</a></code></span></div>
 <div class="block">The start method will read all bean definition classes found on the classpath and initialize any pre-required
  state.</div>
@@ -693,7 +707,8 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/DefaultEnvironment.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>stop</h4>
-<pre>public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;stop()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;stop()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#stop--">DefaultBeanContext</a></code></span></div>
 <div class="block">The close method will shut down the context calling <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/PreDestroy.html?is-external=true" title="class or interface in javax.annotation"><code>PreDestroy</code></a> hooks on loaded
  singletons.</div>
