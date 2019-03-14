@@ -862,17 +862,15 @@ $ ./gradlew run --continuous</pre>
 <div class="paragraph">
 <p>Support for GraalVM Substrate (<code>nativeimage</code>) has been improved in a number of different ways.</p>
 </div>
-<div class="sect3">
-<h4 id="_framework_improvements">Framework Improvements</h4>
-<div class="paragraph">
-<p>Framework level dynamic classloading and reflection has been completely removed thus making it easier to get applications running on GraalVM native image and reducing the number of customizations necessary.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_build_time_reflection_data">Build Time Reflection Data</h4>
-<div class="paragraph">
-<p>The older <code>GraalClassLoadingAnalyzer</code> runtime step has been remove and replaced by build time generation of <code>reflect.json</code> for classes that do require it (typically third party libraries).</p>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Framework Improvements</strong> - Framework level dynamic classloading and reflection has been completely removed thus making it easier to get applications running on GraalVM <code>nativeimage</code> and reducing the number of customizations necessary.</p>
+</li>
+<li>
+<p><strong>Build Time Reflection Data</strong> - Thanks to the aforementioned feature, the older <code>GraalClassLoadingAnalyzer</code> runtime step has been removed and replaced by build time generation of <code>reflect.json</code> for classes that do require it (typically third party libraries).</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -20854,9 +20852,6 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>A <code>MicronautSubstitutions.java</code> file needed to recompute Netty and Caffeine&#8217;s use of <code>Unsafe</code>.</p>
-</li>
-<li>
 <p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
 </li>
 <li>
@@ -20937,32 +20932,31 @@ $ sdk use java 1.0.0-rc-13-grl</code></pre>
 <div class="sect2">
 <h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
 <div class="paragraph">
-<p>Although Micronaut Dependency Injection does not use reflection, Micronaut does heavily rely on dynamic class loading. GraalVM needs to know ahead of time all the classes that are to be dynamically loaded.</p>
+<p>Micronaut itself does not rely on reflection or dynamic classloading so works automatically with GraalVM native, however certain third party libraries used by Micronaut may require additional input about uses of reflection.</p>
 </div>
 <div class="paragraph">
-<p>So before you can build a native image Micronaut needs to compute your application&#8217;s classloading requirements. The <code>Dockerfile</code> and the <code>build-native-image.sh</code> do this automatically for you, but you can also run the logic to generate Graal&#8217;s <code>reflect.json</code> file manually:</p>
+<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflect.json</code> metadata:</p>
 </div>
-<div class="listingblock">
-<div class="title">Computing Class Loading Requirements</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalClassLoadingAnalyzer</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-graal'</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <code>GraalClassLoadingAnalyzer</code> will write out a <code>reflect.json</code> file computing the classloading requirements of the application.</p>
-</div>
-<div class="paragraph">
-<p>The default is to write this file to the <code>build</code> directory for Gradle and the <code>target</code> directory for Maven. You can alter the destination by specifying an argument:</p>
-</div>
-<div class="listingblock">
-<div class="title">Writing <code>reflect.json</code> to a custom location</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalClassLoadingAnalyzer somelocation/myreflect.json</code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-graal&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
+</div>
+</p>
 </div>
 <div class="paragraph">
-<p>The generated <code>reflect.json</code> file contains the classes that were dynamically loaded by the application when started up. See <a href="https://github.com/oracle/graal/blob/master/substratevm/REFLECTION.md">GraalVM documentation</a> for information on the JSON format.</p>
+<p>This processor will generate a <code>reflect.json</code> file to a file called <code>META-INF/reflect.json</code> in your build classes directory (<code>target/classes</code> with Maven and typically <code>build/classes/java/main</code> with Gradle).</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -20971,11 +20965,36 @@ $ java -cp build/libs/hello-world-0.1-all.jar io.micronaut.graal.reflect.GraalCl
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish you can use this file as a template and copy it to the source tree, making modifications as necessary and then altering the <code>Dockerfile</code> template or the <code>build-native-image.sh</code> script to point to the new location.
+If you wish to provide your own <code>reflect.json</code> you can add one to <code>src/main/graal/reflect.json</code>.
 </td>
 </tr>
 </table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_adding_additional_classes_for_reflective_access">Adding Additional Classes for Reflective Access</h3>
+<div class="paragraph">
+<p>To inform Micronaut of additional classes that should be included in the generated <code>reflect.json</code> file at compilation time you can either annotate a class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
+</div>
+<div class="paragraph">
+<p>The former will generate a compile time introspection as well as allowing reflective access and the latter will only allow reflective access and is typically used on a module or <code>Application</code> class to include classes that are needed reflectively. For example, the following is taken from Micronaut&#8217;s Jackson module:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@TypeHint(
+        value = {
+                PropertyNamingStrategy.UpperCamelCaseStrategy.class,
+                ArrayList.class,
+                LinkedHashMap.class,
+                HashSet.class
+        },
+        accessType = TypeHint.AccessType.CLASS_LOADING
+)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generating_native_images">Generating Native Images</h3>
 <div class="paragraph">
 <p>Once the <code>reflect.json</code> file is ready you can run the <code>native-image</code> command. The script runs the following <code>native-image</code> command:</p>
 </div>
@@ -20984,7 +21003,7 @@ If you wish you can use this file as a template and copy it to the source tree, 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server \ <i class="conum" data-value="1"></i><b>(1)</b>
              --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="2"></i><b>(2)</b>
-             -H:ReflectionConfigurationFiles=build/reflect.json \ <i class="conum" data-value="3"></i><b>(3)</b>
+             -H:ReflectionConfigurationFiles=build/classes/java/main/META-INF/reflect.json \ <i class="conum" data-value="3"></i><b>(3)</b>
              -H:EnableURLProtocols=http \ <i class="conum" data-value="4"></i><b>(4)</b>
              -H:IncludeResources="logback.xml|application.yml" \ <i class="conum" data-value="5"></i><b>(5)</b>
              -H:Name=hello-world \ <i class="conum" data-value="6"></i><b>(6)</b>
