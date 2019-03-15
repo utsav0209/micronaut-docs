@@ -330,7 +330,10 @@ $ ./gradlew run --continuous</pre>
 <p><strong>Framework Improvements</strong> - Framework level dynamic classloading and reflection has been completely removed thus making it easier to get applications running on GraalVM <code>nativeimage</code> and reducing the number of customizations necessary.</p>
 </li>
 <li>
-<p><strong>Build Time Reflection Data</strong> - Thanks to the aforementioned feature, the older <code>GraalClassLoadingAnalyzer</code> runtime step has been removed and replaced by build time generation of <code>reflect.json</code> for classes that do require it (typically third party libraries).</p>
+<p><strong>Build Time Reflection Data</strong> - Thanks to the aforementioned feature, the older <code>GraalClassLoadingAnalyzer</code> runtime step has been removed and replaced by build time generation of <code>reflection-config.json</code> for classes that do require it (typically third party libraries).</p>
+</li>
+<li>
+<p><strong>Simplified Image Generation</strong> - You can now generate a native image with just <code>native-image --class-path myjar.jar</code> without any additional flags. Since Micronaut now computes the appropriate GraalVM configuration at compilation time.</p>
 </li>
 </ul>
 </div>
