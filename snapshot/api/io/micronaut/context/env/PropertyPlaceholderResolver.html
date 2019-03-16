@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/context/env/PropertiesPropertySourceLoader.html" title="class in io.micronaut.context.env"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.Placeholder.html" title="interface in io.micronaut.context.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/context/env/PropertySource.html" title="interface in io.micronaut.context.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/context/env/PropertyPlaceholderResolver.html" target="_top">Frames</a></li>
@@ -72,7 +72,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -121,27 +121,6 @@ var activeTableTab = "activeTableTab";
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.Placeholder.html" title="interface in io.micronaut.context.env">PropertyPlaceholderResolver.Placeholder</a></span></code>
-<div class="block">A place holder definition.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -165,9 +144,10 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.Placeholder.html" title="interface in io.micronaut.context.env">PropertyPlaceholderResolver.Placeholder</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.html#resolvePropertyNames-java.lang.String-">resolvePropertyNames</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
-<div class="block">Resolves all the property names defined in the given place holder string.</div>
+<td class="colFirst"><code>default &lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.html#resolveRequiredPlaceholder-java.lang.String-java.lang.Class-">resolveRequiredPlaceholder</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>
+<div class="block">Resolves the value of a single placeholder.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -241,19 +221,28 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String
 </dl>
 </li>
 </ul>
-<a name="resolvePropertyNames-java.lang.String-">
+<a name="resolveRequiredPlaceholder-java.lang.String-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>resolvePropertyNames</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.Placeholder.html" title="interface in io.micronaut.context.env">PropertyPlaceholderResolver.Placeholder</a>&gt;&nbsp;resolvePropertyNames(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</pre>
-<div class="block">Resolves all the property names defined in the given place holder string.</div>
+<h4>resolveRequiredPlaceholder</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;T&nbsp;resolveRequiredPlaceholder(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+                                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)
+                                           throws <a href="../../../../io/micronaut/context/exceptions/ConfigurationException.html" title="class in io.micronaut.context.exceptions">ConfigurationException</a></pre>
+<div class="block">Resolves the value of a single placeholder.</div>
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The type the value should be converted to</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>str</code> - The string</dd>
+<dd><code>str</code> - The string containing the placeholder</dd>
+<dd><code>type</code> - The class of the type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a list of property names</dd>
+<dd>The resolved value</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../io/micronaut/context/exceptions/ConfigurationException.html" title="class in io.micronaut.context.exceptions">ConfigurationException</a></code> - If multiple placeholders are found or
+ if the placeholder could not be converted to the requested type</dd>
 </dl>
 </li>
 </ul>
@@ -285,7 +274,7 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/context/env/PropertiesPropertySourceLoader.html" title="class in io.micronaut.context.env"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/context/env/PropertyPlaceholderResolver.Placeholder.html" title="interface in io.micronaut.context.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/context/env/PropertySource.html" title="interface in io.micronaut.context.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/context/env/PropertyPlaceholderResolver.html" target="_top">Frames</a></li>
@@ -309,7 +298,7 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
