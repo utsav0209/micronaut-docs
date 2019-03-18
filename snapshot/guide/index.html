@@ -466,7 +466,9 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-loggersEndpoint"><a href="#loggersEndpoint"><strong>14.2.7</strong><span>The Loggers Endpoint</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-stopEndpoint"><a href="#stopEndpoint"><strong>14.2.8</strong><span>The Server Stop Endpoint</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-cachesEndpoint"><a href="#cachesEndpoint"><strong>14.2.8</strong><span>The Caches Endpoint</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-stopEndpoint"><a href="#stopEndpoint"><strong>14.2.9</strong><span>The Server Stop Endpoint</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-security"><a href="#security"><strong>15</strong><span>Security</span></a></div>
         
@@ -20904,9 +20906,6 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <p>A <code>Dockerfile</code> which can be used to construct the native image using Docker and a script <code>docker-build.sh</code> to run it.</p>
 </li>
 <li>
-<p>A <code>build-native-image.sh</code> script to build the native image without using Docker.</p>
-</li>
-<li>
 <p>A <code>native-image.properties</code> configuration file to <code>src/main/resources/META-INF/native-image</code> simplify building the image.</p>
 </li>
 </ol>
@@ -20997,9 +20996,17 @@ $ sdk use java 1.0.0-rc-13-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Creating native image</div>
+<div class="title">Creating native image with Gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./build-native-image.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
+$ native-image -cp build/libs/hello-world-0.1-all.jar</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Creating native image with Maven</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package
+$ native-image -cp target/hello-world-0.1.jar</code></pre>
 </div>
 </div>
 </div>
@@ -21010,7 +21017,7 @@ $ sdk use java 1.0.0-rc-13-grl</code></pre>
 <p>Micronaut itself does not rely on reflection or dynamic classloading so works automatically with GraalVM native, however certain third party libraries used by Micronaut may require additional input about uses of reflection.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflection-config.json</code> metadata that is automatically picked up by the <code>nativeimage</code> tool:</p>
+<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflection-config.json</code> metadata that is automatically picked up by the <code>native-image</code> tool:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -21032,6 +21039,26 @@ $ sdk use java 1.0.0-rc-13-grl</code></pre>
 </div>
 <div class="paragraph">
 <p>This processor will generate a <code>reflection-config.json</code> file to a file to the <code>META-INF/native-image</code> directory in your build classes directory (<code>target/classes</code> with Maven and typically <code>build/classes/java/main</code> with Gradle) and a <code>native-image.properties</code> file to read this configuration for all classes annotated with either <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example the following class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
+import io.micronaut.core.annotation.*;
+
+@Introspected
+class Test {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will result in the public methods and declared constructors of <code>example.Test</code> being included in <code>reflection-config.json</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you have more advanced requirements and only wish to include certain fields or methods, you can use <a href="../api/io/micronaut/core/annotation/ReflectiveAccess.html">@ReflectiveAccess</a> instead which can be present on any constructor, field or method to include only the specific field, constructor or method.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -21063,7 +21090,7 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
                 LinkedHashMap.class,
                 HashSet.class
         },
-        accessType = TypeHint.AccessType.CLASS_LOADING <i class="conum" data-value="2"></i><b>(2)</b>
+        accessType = TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS <i class="conum" data-value="2"></i><b>(2)</b>
 )</code></pre>
 </div>
 </div>
@@ -21674,14 +21701,24 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the loaded bean definitions in the application (see <a href="#beansEndpoint">BeansEndpoint</a>)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/info/InfoEndpoint.html">InfoEndpoint</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/info</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns static information from the state of the application (see <a href="#infoEndpoint">InfoEndpoint</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/caches/CachesEndpoint.html">CachesEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/caches</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the caches and permits invalidating them (see <a href="#cachesEndpoint">CachesEndpoint</a>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/health/HealthEndpoint.html">HealthEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/health</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the "health" of the application (see <a href="#healthEndpoint">HealthEndpoint</a>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/info/InfoEndpoint.html">InfoEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns static information from the state of the application (see <a href="#infoEndpoint">InfoEndpoint</a>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/loggers/LoggersEndpoint.html">LoggersEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/loggers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about available loggers and permits changing the configured log level (see <a href="#loggersEndpoint">LoggersEndpoint</a>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html">MetricsEndpoint</a></p></td>
@@ -21697,11 +21734,6 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/routes/RoutesEndpoint.html">RoutesEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/routes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about URIs available to be called for your application (see <a href="#routesEndpoint">RoutesEndpoint</a>)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/loggers/LoggersEndpoint.html">LoggersEndpoint</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/loggers</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about available loggers and permits changing the configured log level (see <a href="#loggersEndpoint">LoggersEndpoint</a>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -22391,7 +22423,91 @@ public class CustomLoggingSystem implements LoggingSystem {
 </div>
 
 
-<h2 id="stopEndpoint">14.2.8 The Server Stop Endpoint</h2>
+<h2 id="cachesEndpoint">14.2.8 The Caches Endpoint</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/cachesEndpoint.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The caches endpoint returns information about the caches in the application and
+permits invalidating them.</p>
+</div>
+<div class="paragraph">
+<p>To get a collection of all caches by name with their configuration, send a GET request to /caches.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl http://localhost:8080/caches</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To get the configuration of a particular cache, include the cache name in your GET request. For
+example, to access the configuration of the cache 'book-cache':</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl http://localhost:8080/caches/book-cache</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To invalidate all cached values within a single cache, send a DELETE request to the named cache URL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X DELETE http://localhost:8080/caches/book-cache</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To invalidate all caches, send a DELETE request to /caches.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X DELETE http://localhost:8080/caches</code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To configure the caches endpoint, supply configuration through <code>endpoints.caches</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Caches Endpoint Configuration Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
+    caches:
+        enabled: Boolean
+        sensitive: Boolean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customization">Customization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The caches endpoint is composed of a cache data collector and a cache data implementation.
+The cache data collector (<a href="../api/io/micronaut/management/endpoint/caches/CacheDataCollector.html">CacheDataCollector</a>)
+is responsible for returning a publisher that will return the data used in the response.
+The cache data (<a href="../api/io/micronaut/management/endpoint/caches/CacheData.html">CacheData</a>) is responsible for returning
+data about an individual cache.</p>
+</div>
+<div class="paragraph">
+<p>To override the default behavior for either of the helper classes, either extend the default implementations
+(<a href="../api/io/micronaut/management/endpoint/caches/impl/RxJavaCacheDataCollector.html">RxJavaRouteDataCollector</a>, <a href="../api/io/micronaut/management/endpoint/caches/impl/DefaultCacheData.html">DefaultRouteData</a>),
+or implement the relevant interface directly.
+To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a>
+annotation to your class with the value being the default implementation.</p>
+</div>
+</div>
+</div>
+
+
+<h2 id="stopEndpoint">14.2.9 The Server Stop Endpoint</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/stopEndpoint.adoc"'>
