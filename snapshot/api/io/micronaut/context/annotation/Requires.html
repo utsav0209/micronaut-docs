@@ -218,18 +218,24 @@ public @interface <span class="memberNameLabel">Requires</span></pre>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Requires.html#resources--">resources</a></span></code>
+<div class="block">Expresses the given resources should exist for the bean configuration to load.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/context/annotation/Requires.Sdk.html" title="enum in io.micronaut.context.annotation">Requires.Sdk</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Requires.html#sdk--">sdk</a></span></code>
 <div class="block">Used to express an SDK requirement.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Requires.html#value--">value</a></span></code>
 <div class="block">Used in combination with <a href="../../../../io/micronaut/context/annotation/Requires.html#property--"><code>property()</code></a> to express the required value of the property.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/context/annotation/Requires.html#version--">version</a></span></code>
 <div class="block">Used in combination with <a href="../../../../io/micronaut/context/annotation/Requires.html#sdk--"><code>sdk()</code></a>, <a href="../../../../io/micronaut/context/annotation/Requires.html#configuration--"><code>configuration()</code></a>, <a href="../../../../io/micronaut/context/annotation/Requires.html#classes--"><code>classes()</code></a> or <a href="../../../../io/micronaut/context/annotation/Requires.html#beans--"><code>beans()</code></a> to
@@ -640,7 +646,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <li class="blockList"><a name="missingProperty--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>missingProperty</h4>
 <pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;missingProperty</pre>
@@ -652,6 +658,32 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <dl>
 <dt>Default:</dt>
 <dd>""</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="resources--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>resources</h4>
+<pre>public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;resources</pre>
+<div class="block">Expresses the given resources should exist for the bean configuration to load.
+ Resources can be anything that <a href="../../../../io/micronaut/core/io/ResourceResolver.html" title="class in io.micronaut.core.io"><code>ResourceResolver</code></a> can read, eg:
+ <pre>
+  file:/path/to/file.txt
+  classpath:com/mycompany/file.txt
+ </pre></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The file paths</dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>{}</dd>
 </dl>
 </li>
 </ul>
