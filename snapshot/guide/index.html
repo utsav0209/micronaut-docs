@@ -20895,7 +20895,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>graal-native-image</code> feature adds four important items:</p>
+<p>The <code>graal-native-image</code> feature adds three important items:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -20989,24 +20989,24 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc13 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc14 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-13-grl
-$ sdk use java 1.0.0-rc-13-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-14-grl
+$ sdk use java 1.0.0-rc-14-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image -cp build/libs/hello-world-0.1-all.jar</code></pre>
+$ native-image --no-server -cp build/libs/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Maven</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package
-$ native-image -cp target/hello-world-0.1.jar</code></pre>
+$ native-image --no-server -cp target/hello-world-0.1.jar</code></pre>
 </div>
 </div>
 </div>
