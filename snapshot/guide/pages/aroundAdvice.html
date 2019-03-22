@@ -328,7 +328,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <p>AOP advice applied at the class level of a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean will apply the advice to the factory itself and not to any beans defined with the <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> annotation.</p>
 </li>
 <li>
-<p>AOP advice applied on a method annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> will apply the AOP advice to the bean that the factory produces.</p>
+<p>AOP advice applied on a method annotated with a bean scope will apply the AOP advice to the bean that the factory produces.</p>
 </li>
 </ol>
 </div>
@@ -342,7 +342,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 @Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     MyBean myBean() {
         return new MyBean();
     }
@@ -361,7 +361,7 @@ class MyFactory {
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     @Cacheable("my-cache")
     MyBean myBean() {
         return new MyBean();

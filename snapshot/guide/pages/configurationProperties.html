@@ -511,15 +511,13 @@ By default, only builder methods that take a single argument are supported. To s
 <div class="listingblock">
 <div class="title">Factory Bean</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
 
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     EngineImpl buildEngine(EngineConfig engineConfig) {
         engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)

@@ -1047,7 +1047,6 @@ import javax.inject.Singleton;
 class CacheFactory {
 
     @Singleton
-    @Bean
     CacheManager cacheManager() {
         CacheManager cacheManager = Caching.getCachingProvider()
                 .getCacheManager();
@@ -1071,7 +1070,6 @@ import javax.inject.Singleton
 class CacheFactory {
 
     @Singleton
-    @Bean
     CacheManager cacheManager() {
         CacheManager cacheManager = Caching.cachingProvider.cacheManager
         cacheManager.createCache("my-cache", new MutableConfiguration())
@@ -1094,7 +1092,6 @@ import javax.inject.Singleton
 class CacheFactory {
 
     @Singleton
-    @Bean
     fun cacheManager(): CacheManager {
         val cacheManager = Caching.getCachingProvider().cacheManager
         cacheManager.createCache("my-cache", MutableConfiguration&lt;Any, Any&gt;())
@@ -2832,6 +2829,18 @@ public class TestController {
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</a> annotation is a synonym for <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> because the default scope is prototype.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Additional scopes can be added by defining a <code>@Singleton</code> bean that implements the <a href="../api/io/micronaut/context/scope/CustomScope.html">CustomScope</a> interface.</p>
 </div>
@@ -3116,10 +3125,10 @@ annotation class Driver</code></pre>
 <p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a>.</p>
 </div>
 <div class="paragraph">
-<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation.</p>
+<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with a bean scope annotation. Which annotation you use depends on what scope you want the bean to be in. See the section on <a href="#scopes">bean scopes</a> for more information.</p>
 </div>
 <div class="paragraph">
-<p>The return types of methods annotated with <code>@Bean</code> are the bean types. This is best illustrated by an example:</p>
+<p>The return types of methods annotated with a bean scope annotation are the bean types. This is best illustrated by an example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -3141,7 +3150,6 @@ class V8Engine implements Engine {
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         return new V8Engine(crankShaft);
@@ -3169,7 +3177,6 @@ class V8Engine implements Engine {
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         new V8Engine(crankShaft)
@@ -3191,7 +3198,6 @@ internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
 @Factory
 internal class EngineFactory {
 
-    @Bean
     @Singleton
     fun v8Engine(crankShaft: CrankShaft): Engine {
         return V8Engine(crankShaft)
@@ -3200,10 +3206,10 @@ internal class EngineFactory {
 </div>
 </div>
 <div class="paragraph">
-<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans.</p>
+<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans. The resulting <code>V8Engine</code> bean will be a singleton.</p>
 </div>
 <div class="paragraph">
-<p>A factory can also have multiple methods annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> each one returning a distinct bean type.</p>
+<p>A factory can have multiple methods annotated with bean scope annotations, each one returning a distinct bean type.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3212,7 +3218,19 @@ internal class EngineFactory {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you take this approach, then you should not invoke other methods annotated with <code>@Bean</code> internally within the class. Instead, inject the types via parameters.
+If you take this approach, then you should not invoke other bean methods internally within the class. Instead, inject the types via parameters.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To allow the resulting bean to participate in the application context shutdown process, annotate the method with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> and set the <code>preDestroy</code> argument to the name of the method that should be called to close the bean.
 </td>
 </tr>
 </table>
@@ -3964,7 +3982,6 @@ class EngineFactory {
         engine = new V8Engine(rodLength: rodLength) <i class="conum" data-value="2"></i><b>(2)</b>
     }
 
-    @Bean
     @Singleton
     Engine v8Engine() {
         return engine <i class="conum" data-value="3"></i><b>(3)</b>
@@ -5722,15 +5739,13 @@ By default, only builder methods that take a single argument are supported. To s
 <div class="listingblock">
 <div class="title">Factory Bean</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
 
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     EngineImpl buildEngine(EngineConfig engineConfig) {
         engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
@@ -6419,7 +6434,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <p>AOP advice applied at the class level of a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean will apply the advice to the factory itself and not to any beans defined with the <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> annotation.</p>
 </li>
 <li>
-<p>AOP advice applied on a method annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> will apply the AOP advice to the bean that the factory produces.</p>
+<p>AOP advice applied on a method annotated with a bean scope will apply the AOP advice to the bean that the factory produces.</p>
 </li>
 </ol>
 </div>
@@ -6433,7 +6448,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 @Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     MyBean myBean() {
         return new MyBean();
     }
@@ -6452,7 +6467,7 @@ class MyFactory {
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     @Cacheable("my-cache")
     MyBean myBean() {
         return new MyBean();
