@@ -1527,6 +1527,7 @@ import io.micronaut.http.annotation.Get;
 
 @Controller("/hello") <b class="conum">(1)</b>
 public class HelloController {
+
     @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     public String index() {
         return "Hello World"; <b class="conum">(3)</b>
@@ -1542,6 +1543,7 @@ import io.micronaut.http.annotation.Get
 
 @Controller('/hello') <b class="conum">(1)</b>
 class HelloController {
+
     @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     String index() {
         'Hello World' <b class="conum">(3)</b>
@@ -1559,8 +1561,7 @@ import io.micronaut.http.annotation.Produces
 @Controller("/hello") <b class="conum">(1)</b>
 class HelloController {
 
-    @Produces(MediaType.TEXT_PLAIN)
-    @Get <b class="conum">(2)</b>
+    @Get(produces = [MediaType.TEXT_PLAIN]) <b class="conum">(2)</b>
     fun index(): String {
         return "Hello World" <b class="conum">(3)</b>
     }
@@ -1778,7 +1779,7 @@ public class HelloControllerSpec {
     @BeforeClass
     public static void setupServer() {
 
-        server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
 
         client = server
                 .getApplicationContext()
@@ -1787,11 +1788,11 @@ public class HelloControllerSpec {
 
     @AfterClass
     public static void stopServer() {
-        if (server != null) {
-            server.stop();
-        }
         if (client != null) {
             client.stop();
+        }
+        if (server != null) {
+            server.stop();
         }
     }
 
@@ -1860,8 +1861,8 @@ class HelloControllerSpec() {
 
     @AfterTest
     fun teardown() {
-        server?.close()
         client?.close()
+        server?.close()
     }
 
     @Test
@@ -1933,7 +1934,6 @@ interface HelloClient {
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Single
 
-
 @Client("/hello") <b class="conum">(1)</b>
 interface HelloClient {
 
@@ -1971,12 +1971,13 @@ interface HelloClient {
     @BeforeClass
     public static void setupServer() {
 
-        server = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
 
         client = server
                 .getApplicationContext()
                 .getBean(HelloClient.class);<b class="conum">(2)</b>
     }
+
     @AfterClass
     public static void stopServer() {
         if (server != null) {
@@ -7497,6 +7498,7 @@ import io.micronaut.http.annotation.Get;
 
 @Controller("/hello") <b class="conum">(1)</b>
 public class HelloController {
+
     @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     public String index() {
         return "Hello World"; <b class="conum">(3)</b>
@@ -7512,6 +7514,7 @@ import io.micronaut.http.annotation.Get
 
 @Controller('/hello') <b class="conum">(1)</b>
 class HelloController {
+
     @Get(produces = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     String index() {
         'Hello World' <b class="conum">(3)</b>
@@ -7529,8 +7532,7 @@ import io.micronaut.http.annotation.Produces
 @Controller("/hello") <b class="conum">(1)</b>
 class HelloController {
 
-    @Produces(MediaType.TEXT_PLAIN)
-    @Get <b class="conum">(2)</b>
+    @Get(produces = [MediaType.TEXT_PLAIN]) <b class="conum">(2)</b>
     fun index(): String {
         return "Hello World" <b class="conum">(3)</b>
     }
