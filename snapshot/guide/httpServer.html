@@ -374,25 +374,162 @@ class HelloController {
 <div class="paragraph">
 <p>To run the server simply create an <code>Application</code> class with a <code>static void main</code> method. For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">Micronaut Application Class</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=imports, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/Application.java[tags=class, indent=0]</code></pre>
+public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
+
+class Application {
+
+    static void main(String... args) {
+        Micronaut.run Application.class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
+
+object Application {
+
+    @JvmStatic
+    fun main(args: Array&lt;String&gt;) {
+        Micronaut.run(Application.javaClass)
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To run the application from a unit test you can use the <a href="../api/io/micronaut/runtime/server/EmbeddedServer.html">EmbeddedServer</a> interface. The following test is written in Groovy with <a href="http://spockframework.org">Spock</a>:</p>
+<p>To run the application from a unit test you can use the <a href="../api/io/micronaut/runtime/server/EmbeddedServer.html">EmbeddedServer</a> interface:</p>
 </div>
-<div class="listingblock">
-<div class="title">Micronaut Spock Test</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloControllerSpec.groovy[tags=imports, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloControllerSpec.groovy[tags=class-init, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloControllerSpec.groovy[tags=embededdedServer, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.env.Environment;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.client.HttpClient;
+import io.micronaut.runtime.server.EmbeddedServer;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/intro/HelloControllerSpec.groovy[tags=class-end, indent=0]</code></pre>
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+
+
+public class HelloControllerSpec {
+    private static EmbeddedServer server;
+    private static HttpClient client;
+
+    @BeforeClass
+    public static void setupServer() {
+
+        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
+
+        client = server
+                .getApplicationContext()
+                .createBean(HttpClient.class, server.getURL());<b class="conum">(2)</b>
+    }
+
+    @AfterClass
+    public static void stopServer() {
+        if (client != null) {
+            client.stop();
+        }
+        if (server != null) {
+            server.stop();
+        }
+    }
+
+    @Test
+    public void testHelloWorldResponse() {
+        String response = client.toBlocking() <b class="conum">(3)</b>
+                .retrieve(HttpRequest.GET("/hello"));
+        assertEquals("Hello World", response); //) <b class="conum">(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.http.client.HttpClient
+import io.micronaut.runtime.server.EmbeddedServer
+import spock.lang.AutoCleanup
+import spock.lang.Shared
+import spock.lang.Specification
+
+
+class HelloControllerSpec extends Specification {
+
+    @Shared
+    @AutoCleanup
+    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+
+    @Shared
+    @AutoCleanup
+    HttpClient client = HttpClient.create(embeddedServer.URL) <b class="conum">(2)</b>
+
+    void "test hello world response"() {
+        expect:
+            client.toBlocking() <b class="conum">(3)</b>
+                    .retrieve(HttpRequest.GET('/hello')) == "Hello World" <b class="conum">(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment
+import io.micronaut.http.client.HttpClient
+import io.micronaut.runtime.server.EmbeddedServer
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+
+class HelloControllerSpec() {
+    lateinit var server: EmbeddedServer
+    lateinit var client: HttpClient
+
+    @BeforeTest
+    fun setup() {
+
+        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
+
+        client = server
+                .getApplicationContext()
+                .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
+    }
+
+    @AfterTest
+    fun teardown() {
+        client?.close()
+        server?.close()
+    }
+
+    @Test
+    fun testHelloWorldResponse() {
+        val rsp: String = client.toBlocking() <b class="conum">(3)</b>
+                .retrieve("/hello")
+        assertEquals("Hello World", rsp) <b class="conum">(4)</b>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -404,6 +541,14 @@ Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/m
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>EmbeddedServer</code> interface provides the <code>URL</code> of the server under test which runs on a random port.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The test uses the Micronaut http client to make the call</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>retrieve</code> method returns the response of the controller as a <code>String</code></td>
 </tr>
 </table>
 </div>
