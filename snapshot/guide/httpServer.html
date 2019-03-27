@@ -2631,6 +2631,52 @@ class VersionedController {
 <p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/resolution/RequestVersionResolver.html">RequestVersionResolver</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
 </div>
 <div class="sect2">
+<h3 id="_default_version">Default Version</h3>
+<div class="paragraph">
+<p>It is possible to supply a default version through configuration.</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Default Version</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    router:
+        versioning:
+            enabled: true
+            default-version: 3 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sets the default version</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A route will <strong>not</strong> be matched if the following conditions are met:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The default version is configured</p>
+</li>
+<li>
+<p>No version is found in the request</p>
+</li>
+<li>
+<p>The route defines a version</p>
+</li>
+<li>
+<p>The route version does not match the default version</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the incoming request specifies a version then the default version has no effect.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_versioning_client_requests">Versioning Client Requests</h3>
 <div class="paragraph">
 <p>Micronaut&#8217;s <a href="#clientAnnotation">Declarative HTTP client</a> also supports automatic versioning of outgoing requests via the <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> annotation.</p>
