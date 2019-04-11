@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>9.2 Running Functions 1.0.5</title>
+    <title>9.2 Running Functions 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>9.2 Running Functions</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -135,7 +135,7 @@ function addJsClass() {
 <h2 id="runningFunctions">9.2 Running Functions</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/serverlessFunctions/runningFunctions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -149,7 +149,7 @@ function addJsClass() {
 <h2 id="functionWeb">9.2.1 Functions as Web Applications</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/serverlessFunctions/runningFunctions/functionWeb.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions/functionWeb.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -158,16 +158,37 @@ function addJsClass() {
 <div class="paragraph">
 <p>To run your function as a web application as described in this section, you will need the <code>function-web</code> dependency on your classpath. For example, in <code>build.gradle</code></p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    runtime "io.micronaut:micronaut-function-web"
-    runtime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
-    ...
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-http-server-netty'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-web'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -180,15 +201,39 @@ function addJsClass() {
 <div class="paragraph">
 <p>Once the dependencies have been added to the project, you can run the function via an <code>Application</code> class.</p>
 </div>
-<div class="listingblock">
-<div class="title">Example Application class</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.Micronaut;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
 
 public class Application {
 
     public static void main(String[] args) {
         Micronaut.run(Application.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
+
+class Application {
+
+    static void main(String... args) {
+        Micronaut.run Application.class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
+
+object Application {
+
+    @JvmStatic
+    fun main(args: Array&lt;String&gt;) {
+        Micronaut.run(Application.javaClass)
     }
 }</code></pre>
 </div>
@@ -278,16 +323,39 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 <div class="paragraph">
 <p>Functions can also be run as part of the Micronaut application context for ease of testing. Similarly to the example above, this approach requires the <code>function-web</code> and an HTTP server dependency on the classpath for tests. For example, in <code>build.gradle</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-    ...
-    testRuntime "io.micronaut:micronaut-function-web"
-    testRuntime "io.micronaut:micronaut-http-server-netty" <i class="conum" data-value="1"></i><b>(1)</b>
-    ...
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">testCompile <span class="hljs-string">'io.micronaut:micronaut-http-server-netty'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">testCompile <span class="hljs-string">'io.micronaut:micronaut-function-web'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -352,7 +420,7 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 <h2 id="functionCLI">9.2.2 Functions as CLI Applications</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/serverlessFunctions/runningFunctions/functionCLI.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions/functionCLI.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

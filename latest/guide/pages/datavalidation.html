@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.11 Data Validation 1.0.5</title>
+    <title>6.11 Data Validation 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.11 Data Validation</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="datavalidation">6.11 Data Validation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/datavalidation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/datavalidation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -137,11 +137,21 @@ function addJsClass() {
 <div class="paragraph">
 <p>First, add the Hibernate Validator configuration to your application:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-validator'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>We can validate parameters using <code>javax.validation</code> annotations and the <a href="../api/io/micronaut/validation/Validated.html">Validated</a> annotation at the class level.</p>
@@ -210,7 +220,22 @@ public class EmailController {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.docs.datavalidation.pogo;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
+ * Copyright 2017-2019 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.docs.datavalidation.pogo;
 
 import javax.validation.constraints.NotBlank;
 
@@ -315,6 +340,18 @@ public class EmailController {
     noExceptionThrown()
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Bean injection is supported in custom constraints with the hibernate validator configuration.
+</td>
+</tr>
+</table>
 </div>
 
 

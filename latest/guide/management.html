@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>14 Management &amp; Monitoring 1.0.5</title>
+    <title>14 Management &amp; Monitoring 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>14 Management &amp; Monitoring</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -157,7 +157,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#loggersEndpoint"><strong>14.2.7</strong><span>The Loggers Endpoint</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#stopEndpoint"><strong>14.2.8</strong><span>The Server Stop Endpoint</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#cachesEndpoint"><strong>14.2.8</strong><span>The Caches Endpoint</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#stopEndpoint"><strong>14.2.9</strong><span>The Server Stop Endpoint</span></a>
                     </div>
                     
                 </div>
@@ -168,7 +171,7 @@ function addJsClass() {
 <h1 id="management">14 Management & Monitoring</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -198,20 +201,30 @@ function addJsClass() {
 <p>Inspired by Spring Boot and Grails, the Micronaut <code>management</code> dependency adds support for monitoring of your application via <strong>endpoints</strong>: special URIs that return details about the health and state of your application. The <code>management</code> endpoints are also integrated with Micronaut&#8217;s <code>security</code> dependency, allowing for sensitive data to be restricted to authenticated users in your security system (see <a href="#builtInEndpointsAccess">Built-in Endpoints Access</a> in the Security section).</p>
 </div>
 <div class="paragraph">
-<p>To use the <code>management</code> features described in this section, add the dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>To use the <code>management</code> features described in this section, add the dependency on your classpath.</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-management"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-management'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-management&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 
 
 <h2 id="buildingEndpoints">14.1 Creating Endpoints</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/buildingEndpoints.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/buildingEndpoints.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -225,7 +238,7 @@ function addJsClass() {
 <h2 id="endpointAnnotation">14.1.1 The Endpoint Annotation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/buildingEndpoints/endpointAnnotation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/buildingEndpoints/endpointAnnotation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -313,7 +326,7 @@ class CurrentDateEndpoint {
 <h2 id="endpointMethod">14.1.2 Endpoint Methods</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/buildingEndpoints/endpointMethod.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/buildingEndpoints/endpointMethod.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -551,7 +564,7 @@ Message deleted</code></pre>
 <h2 id="endpointConfiguration">14.1.3 Endpoint Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/buildingEndpoints/endpointConfiguration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/buildingEndpoints/endpointConfiguration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -606,7 +619,7 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 <h2 id="providedEndpoints">14.2 Built-In Endpoints</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -636,14 +649,19 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the loaded bean definitions in the application (see <a href="#beansEndpoint">BeansEndpoint</a>)</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/health/HealthEndpoint.html">HealthEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/health</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the "health" of the application (see <a href="#healthEndpoint">HealthEndpoint</a>)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/info/InfoEndpoint.html">InfoEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/info</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns static information from the state of the application (see <a href="#infoEndpoint">InfoEndpoint</a>)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/health/HealthEndpoint.html">HealthEndpoint</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/health</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the "health" of the application (see <a href="#healthEndpoint">HealthEndpoint</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/loggers/LoggersEndpoint.html">LoggersEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/loggers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about available loggers and permits changing the configured log level (see <a href="#loggersEndpoint">LoggersEndpoint</a>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/configuration/metrics/management/endpoint/MetricsEndpoint.html">MetricsEndpoint</a></p></td>
@@ -659,11 +677,6 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/routes/RoutesEndpoint.html">RoutesEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/routes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about URIs available to be called for your application (see <a href="#routesEndpoint">RoutesEndpoint</a>)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/loggers/LoggersEndpoint.html">LoggersEndpoint</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/loggers</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about available loggers and permits changing the configured log level (see <a href="#loggersEndpoint">LoggersEndpoint</a>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -685,6 +698,11 @@ The base path for all endpoints is <code>/</code> by default. If you prefer the 
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/caches/CachesEndpoint.html">CachesEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/caches</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the caches and permits invalidating them (see <a href="#cachesEndpoint">CachesEndpoint</a>)</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/stop/ServerStopEndpoint.html">ServerStopEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/stop</code></p></td>
@@ -716,7 +734,7 @@ this should be used with care because private and sensitive information will be 
 <h2 id="beansEndpoint">14.2.1 The Beans Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/beansEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/beansEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -761,7 +779,7 @@ this should be used with care because private and sensitive information will be 
 <h2 id="infoEndpoint">14.2.2 The Info Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/infoEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/infoEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -888,7 +906,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="healthEndpoint">14.2.3 The Health Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/healthEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/healthEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1073,7 +1091,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="metricsEndpoint">14.2.4 The Metrics Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/metricsEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/metricsEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1116,7 +1134,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="refreshEndpoint">14.2.5 The Refresh Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/refreshEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/refreshEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1163,7 +1181,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="routesEndpoint">14.2.6 The Routes Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/routesEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/routesEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1208,7 +1226,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="loggersEndpoint">14.2.7 The Loggers Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/loggersEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/loggersEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1353,10 +1371,94 @@ public class CustomLoggingSystem implements LoggingSystem {
 </div>
 
 
-<h2 id="stopEndpoint">14.2.8 The Server Stop Endpoint</h2>
+<h2 id="cachesEndpoint">14.2.8 The Caches Endpoint</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/management/providedEndpoints/stopEndpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/cachesEndpoint.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The caches endpoint returns information about the caches in the application and
+permits invalidating them.</p>
+</div>
+<div class="paragraph">
+<p>To get a collection of all caches by name with their configuration, send a GET request to /caches.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl http://localhost:8080/caches</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To get the configuration of a particular cache, include the cache name in your GET request. For
+example, to access the configuration of the cache 'book-cache':</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl http://localhost:8080/caches/book-cache</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To invalidate all cached values within a single cache, send a DELETE request to the named cache URL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X DELETE http://localhost:8080/caches/book-cache</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To invalidate all caches, send a DELETE request to /caches.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -X DELETE http://localhost:8080/caches</code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To configure the caches endpoint, supply configuration through <code>endpoints.caches</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Caches Endpoint Configuration Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
+    caches:
+        enabled: Boolean
+        sensitive: Boolean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customization">Customization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The caches endpoint is composed of a cache data collector and a cache data implementation.
+The cache data collector (<a href="../api/io/micronaut/management/endpoint/caches/CacheDataCollector.html">CacheDataCollector</a>)
+is responsible for returning a publisher that will return the data used in the response.
+The cache data (<a href="../api/io/micronaut/management/endpoint/caches/CacheData.html">CacheData</a>) is responsible for returning
+data about an individual cache.</p>
+</div>
+<div class="paragraph">
+<p>To override the default behavior for either of the helper classes, either extend the default implementations
+(<a href="../api/io/micronaut/management/endpoint/caches/impl/RxJavaCacheDataCollector.html">RxJavaRouteDataCollector</a>, <a href="../api/io/micronaut/management/endpoint/caches/impl/DefaultCacheData.html">DefaultRouteData</a>),
+or implement the relevant interface directly.
+To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a>
+annotation to your class with the value being the default implementation.</p>
+</div>
+</div>
+</div>
+
+
+<h2 id="stopEndpoint">14.2.9 The Server Stop Endpoint</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/stopEndpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.7 Bean Factories 1.0.5</title>
+    <title>3.7 Bean Factories 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.7 Bean Factories</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="factories">3.7 Bean Factories</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/factories.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/factories.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -134,21 +134,43 @@ function addJsClass() {
 <p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a>.</p>
 </div>
 <div class="paragraph">
-<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation.</p>
+<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with a bean scope annotation. Which annotation you use depends on what scope you want the bean to be in. See the section on <a href="#scopes">bean scopes</a> for more information.</p>
 </div>
 <div class="paragraph">
-<p>The return types of methods annotated with <code>@Bean</code> are the bean types. This is best illustrated by an example:</p>
+<p>The return types of methods annotated with a bean scope annotation are the bean types. This is best illustrated by an example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.*
-import javax.inject.*
-
-
-@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private final CrankShaft crankShaft;
 
+    public V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    public String start() {
+        return "Starting V8";
+    }
+}
+@Factory
+class EngineFactory {
+
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        return new V8Engine(crankShaft);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class CrankShaft {
+}
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -161,11 +183,9 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         new V8Engine(crankShaft)
@@ -173,11 +193,32 @@ class EngineFactory {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans.</p>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+internal class CrankShaft
+internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
+    private val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Factory
+internal class EngineFactory {
+
+    @Singleton
+    fun v8Engine(crankShaft: CrankShaft): Engine {
+        return V8Engine(crankShaft)
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>A factory can also have multiple methods annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> each one returning a distinct bean type.</p>
+<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans. The resulting <code>V8Engine</code> bean will be a singleton.</p>
+</div>
+<div class="paragraph">
+<p>A factory can have multiple methods annotated with bean scope annotations, each one returning a distinct bean type.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -186,7 +227,19 @@ class EngineFactory {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you take this approach, then you should not invoke other methods annotated with <code>@Bean</code> internally within the class. Instead, inject the types via parameters.
+If you take this approach, then you should not invoke other bean methods internally within the class. Instead, inject the types via parameters.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To allow the resulting bean to participate in the application context shutdown process, annotate the method with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> and set the <code>preDestroy</code> argument to the name of the method that should be called to close the bean.
 </td>
 </tr>
 </table>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>15.3.3.3 JWT Token Validation 1.0.5</title>
+    <title>15.3.3.3 JWT Token Validation 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,9 +114,17 @@ function addJsClass() {
                 <div class="project">
                     <h1>15.3.3.3 JWT Token Validation</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#jwks"><strong>15.1</strong><span>Validation with remote JWKS</span></a>
+                    </div>
+                    
+                </div>
                 
 
                 
@@ -124,7 +132,7 @@ function addJsClass() {
 <h2 id="jwtValidation">15.3.3.3 JWT Token Validation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -143,6 +151,43 @@ participate as signature configurations in the JWT validation.</p>
 <p>Any beans of type <a href="../api/io/micronaut/security/token/jwt/encryption/rsa/RSAEncryptionConfiguration.html">RSAEncryptionConfiguration</a>,
 <a href="../api/io/micronaut/security/token/jwt/encryption/ec/ECEncryptionConfiguration.html">ECEncryptionConfiguration</a>,
 <a href="../api/io/micronaut/security/token/jwt/encryption/secret/SecretEncryptionConfiguration.html">SecretEncryptionConfiguration</a> participate as encryption configurations in the JWT validation.</p>
+</div>
+
+
+<h2 id="jwks">15.3.3.3.1 Validation with remote JWKS</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation/jwks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. You can use a remote JWK Set, A JSON object that represents a set of JWKs, to validate JWT signatures.</p>
+</div>
+<div class="paragraph">
+<p>You can configure a remote JWKS as a signature validator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">micronaut:
+  security:
+    enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            awscognito:
+              url: 'https://cognito-idp.eu-west-1.amazonaws.com/eu-west-XXXX/.well-known/jwks.json'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous snippet creates a <a href="../api/io/micronaut/security/token/jwt/signature/jwks/JwksSignature.html">JwksSignature</a> bean with a <code>awscognito</code> name qualifier.</p>
+</div>
+<div class="paragraph">
+<p>If you want to expose your own JWK Set, read the <a href="#keys">Keys Controller</a> section.</p>
 </div>
 
 

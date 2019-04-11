@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.5 Bean Qualifiers 1.0.5</title>
+    <title>3.5 Bean Qualifiers 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.5 Bean Qualifiers</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="qualifiers">3.5 Bean Qualifiers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/qualifiers.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/qualifiers.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -142,43 +142,116 @@ function addJsClass() {
 <div class="paragraph">
 <p>To qualify by name you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation. For example, consider the following classes:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine { <b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton
+public class V6Engine implements Engine {  <b class="conum">(2)</b>
+    public String start() {
+        return "Starting V6";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return 6;
+    }
+}
+@Singleton
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
+
+    public int getCylinders() {
+        return 8;
+    }
+
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    @Inject
+    public Vehicle(@Named("v8") Engine engine) {<b class="conum">(4)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();<b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
 @Singleton
-class V6Engine implements Engine { <i class="conum" data-value="2"></i><b>(2)</b>
+class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
 
     String start() {
         "Starting V6"
     }
 }
-
 @Singleton
-class V8Engine implements Engine { <i class="conum" data-value="3"></i><b>(3)</b>
+class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
 
     String start() {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    @Inject Vehicle(@Named('v8') Engine engine) { <i class="conum" data-value="4"></i><b>(4)</b>
+    @Inject Vehicle(@Named('v8') Engine engine) { <b class="conum">(4)</b>
         this.engine = engine
     }
 
     String start() {
-        engine.start() <i class="conum" data-value="5"></i><b>(5)</b>
+        engine.start() <b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine { <b class="conum">(1)</b>
+    val cylinders: Int
+    fun start(): String
+}
+@Singleton
+class V6Engine : Engine {  <b class="conum">(2)</b>
+
+    override var cylinders: Int = 6
+
+    override fun start(): String {
+        return "Starting V6"
+    }
+}
+@Singleton
+class V8Engine : Engine {
+
+    override var cylinders: Int = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+
+}
+@Singleton
+class Vehicle @Inject
+constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
+{
+
+    fun start(): String {
+        return engine.start()<b class="conum">(5)</b>
     }
 }</code></pre>
 </div>

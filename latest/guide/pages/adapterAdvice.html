@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.3 Method Adapter Advice 1.0.5</title>
+    <title>5.3 Method Adapter Advice 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5.3 Method Adapter Advice</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="adapterAdvice">5.3 Method Adapter Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/adapterAdvice.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/adapterAdvice.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -158,6 +158,8 @@ void onStartup(StartupEvent event) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.Adapter;
 import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.core.annotation.Indexed;
+
 import java.lang.annotation.*;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -166,6 +168,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Adapter(ApplicationEventListener.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Indexed(ApplicationEventListener.class)
 public @interface EventListener {
 }</code></pre>
 </div>

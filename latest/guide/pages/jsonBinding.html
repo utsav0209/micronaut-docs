@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.10 JSON Binding with Jackson 1.0.5</title>
+    <title>6.10 JSON Binding with Jackson 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.10 JSON Binding with Jackson</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="jsonBinding">6.10 JSON Binding with Jackson</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/jsonBinding.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/jsonBinding.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -278,12 +278,22 @@ The output produced by Jackson can be customized in a variety of manners, from d
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">timeZone</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Uses <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TimeZone.html#getTimeZone-java.lang.String-">TimeZone.getTimeZone</a>. Example: 'PST`</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uses <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TimeZone.html#getTimeZone-java.lang.String-">TimeZone.getTimeZone</a>. Example: <code>PST</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">serializationInclusion</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">One of <a href="http://fasterxml.github.io/jackson-annotations/javadoc/2.9/com/fasterxml/jackson/annotation/JsonInclude.Include.html">JsonInclude.Include</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">propertyNamingStrategy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of an instance of <a href="http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/PropertyNamingStrategy.html">PropertyNamingStrategy</a>. Example: <code>SNAKE_CASE</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">defaultTyping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The global defaultTyping for polymorphic type handling from enum <a href="http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.DefaultTyping.html">ObjectMapper.DefaultTyping</a>. Example: <code>NON_FINAL</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -339,6 +349,15 @@ The output produced by Jackson can be customized in a variety of manners, from d
         useBigIntegerForInts: true
         failOnUnknownProperties: false</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support_for_code_jsonview_code">Support for <code>@JsonView</code></h3>
+<div class="paragraph">
+<p>You can use the <code>@JsonView</code> annotation to controller methods if you set <code>jackson.json-view.enabled</code> to <code>true</code> in <code>application.yml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Jackson&#8217;s <code>@JsonView</code> annotation allows you to control which properties are exposes on a per response basis. See <a href="https://www.baeldung.com/jackson-json-view-annotation">Jackson JSON Views</a> for more information.</p>
 </div>
 </div>
 <div class="sect2">

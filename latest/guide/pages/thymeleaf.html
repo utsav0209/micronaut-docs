@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.24.1 Thymeleaf 1.0.5</title>
+    <title>6.25.1 Thymeleaf 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,19 +112,19 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>6.24.1 Thymeleaf</h1>
+                    <h1>6.25.1 Thymeleaf</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
 
                 
 
-<h2 id="thymeleaf">6.24.1 Thymeleaf</h2>
+<h2 id="thymeleaf">6.25.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -135,12 +135,25 @@ function addJsClass() {
 the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 <div class="paragraph">
-<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath.</p>
 </div>
-<div class="listingblock">
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.thymeleaf:thymeleaf:3.0.11.RELEASE'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf&lt;/artifactId&gt;
+    &lt;version&gt;3.0.11.RELEASE&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.</p>
@@ -223,7 +236,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 <div class="title">src/main/resources/views/home.html</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"&gt;
+&lt;html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org"&gt;
 &lt;head&gt;
     &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;

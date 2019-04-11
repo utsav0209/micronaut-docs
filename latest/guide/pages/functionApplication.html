@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>9.1.1 FunctionApplication 1.0.5</title>
+    <title>9.1.1 FunctionApplication 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>9.1.1 FunctionApplication</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="functionApplication">9.1.1 FunctionApplication</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/serverlessFunctions/writingFunctions/functionApplication.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/writingFunctions/functionApplication.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -160,6 +160,15 @@ This section applies to Java &amp; Kotlin functions - for functions written in G
     &lt;/properties&gt;
 &lt;/project&gt;</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/function/executor/FunctionApplication.html">FunctionApplication</a> will lookup the function to execute from the property <code>micronaut.function.name</code>.</p>
+</div>
+<div class="paragraph">
+<p>By default <code>micronaut.function.name</code> is configured in <code>application.yml</code> and set to a single function. You can however control which function to execute by setting the environment variable equivalent <code>MICRONAUT_FUNCTION_NAME</code>.</p>
+</div>
+<div class="paragraph">
+<p>This approach allows you to package multiple functions into a single application unit (JAR file) and control which function is executed by passing either <code>-Dmicronaut.function.name=myfunction</code> or setting the environment variable.</p>
 </div>
 
 

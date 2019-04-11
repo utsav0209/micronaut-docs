@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.6.2 Refreshable Scope 1.0.5</title>
+    <title>3.6.2 Refreshable Scope 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.6.2 Refreshable Scope</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="refreshable">3.6.2 Refreshable Scope</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/scopes/refreshable.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/refreshable.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -146,19 +146,53 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following example, illustrates the <code>@Refreshable</code> scope behavior.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Refreshable <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Refreshable <b class="conum">(1)</b>
+public static class WeatherService {
+    private String forecast;
+
+    @PostConstruct
+    public void init() {
+        forecast = "Scattered Clouds " + new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date());<b class="conum">(2)</b>
+    }
+
+    public String latestForecast() {
+        return forecast;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Refreshable <b class="conum">(1)</b>
 static class WeatherService {
 
     String forecast
 
     @PostConstruct
     void init() {
-        forecast = "Scattered Clouds ${new Date().format('dd/MMM/yy HH:ss.SSS')}" <i class="conum" data-value="2"></i><b>(2)</b>
+        forecast = "Scattered Clouds ${new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date())}" <b class="conum">(2)</b>
     }
 
     String latestForecast() {
+        return forecast
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Refreshable <b class="conum">(1)</b>
+open class WeatherService {
+    private var forecast: String? = null
+
+    @PostConstruct
+    fun init() {
+        forecast = "Scattered Clouds " + SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(Date())<b class="conum">(2)</b>
+    }
+
+    open fun latestForecast(): String? {
         return forecast
     }
 }</code></pre>
@@ -182,9 +216,19 @@ static class WeatherService {
 <div class="paragraph">
 <p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published then the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">applicationContext.publishEvent(new RefreshEvent());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">applicationContext.publishEvent(RefreshEvent())</code></pre>
 </div>
 </div>
 

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.24 Server Side View Rendering 1.0.5</title>
+    <title>6.25 Server Side View Rendering 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,9 +112,9 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>6.24 Server Side View Rendering</h1>
+                    <h1>6.25 Server Side View Rendering</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -130,15 +130,21 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#velocity"><strong>6.3</strong><span>Apache Velocity</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#freemarker"><strong>6.4</strong><span>Apache Freemarker</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#csp"><strong>6.5</strong><span>CSP Header Support</span></a>
+                    </div>
+                    
                 </div>
                 
 
                 
 
-<h2 id="views">6.24 Server Side View Rendering</h2>
+<h2 id="views">6.25 Server Side View Rendering</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/views.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -151,13 +157,23 @@ function addJsClass() {
 <p>The <code>views</code> module provides support for view rendering on the server side and does so by rendering views on the I/O thread pool in order to avoid blocking the Netty event loop.</p>
 </div>
 <div class="paragraph">
-<p>To use the view rendering features described in this section, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>To use the view rendering features described in this section, add the following dependency on your classpath.</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-views"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-views'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Views and templates can then be placed in the <code>src/main/resources/views</code> directory of your project.</p>
@@ -237,6 +253,10 @@ class ViewsController {
 </div>
 </div>
 <div class="paragraph">
+<p>You can also provide implementations of <a href="../api/io/micronaut/views/model/ViewsModelDecorator.html">ViewsModelDecorator</a> to decorate the model with
+extra properties.</p>
+</div>
+<div class="paragraph">
 <p>The following sections show different template engines integrations.</p>
 </div>
 <div class="paragraph">
@@ -244,10 +264,10 @@ class ViewsController {
 </div>
 
 
-<h2 id="thymeleaf">6.24.1 Thymeleaf</h2>
+<h2 id="thymeleaf">6.25.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/thymeleaf.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -258,12 +278,25 @@ class ViewsController {
 the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 <div class="paragraph">
-<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath.</p>
 </div>
-<div class="listingblock">
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.thymeleaf:thymeleaf:3.0.11.RELEASE'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf&lt;/artifactId&gt;
+    &lt;version&gt;3.0.11.RELEASE&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.</p>
@@ -346,7 +379,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 <div class="title">src/main/resources/views/home.html</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"&gt;
+&lt;html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org"&gt;
 &lt;head&gt;
     &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;
@@ -384,10 +417,10 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 
 
-<h2 id="handlebars">6.24.2 Handlebars.java</h2>
+<h2 id="handlebars">6.25.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/views/handlebars.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/handlebars.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -400,10 +433,23 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 <div class="paragraph">
 <p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
 </div>
-<div class="listingblock">
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "com.github.jknack:handlebars:4.1.0"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'com.github.jknack:handlebars:4.1.0'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;com.github.jknack&lt;/groupId&gt;
+    &lt;artifactId&gt;handlebars&lt;/artifactId&gt;
+    &lt;version&gt;4.1.0&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Handlebars template:</p>
@@ -428,10 +474,10 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 </div>
 
 
-<h2 id="velocity">6.24.3 Apache Velocity</h2>
+<h2 id="velocity">6.25.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/httpServer/views/velocity.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/velocity.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -442,12 +488,25 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template engine.</p>
 </div>
 <div class="paragraph">
-<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath.</p>
 </div>
-<div class="listingblock">
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "org.apache.velocity:velocity-engine-core:2.0"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.apache.velocity:velocity-engine-core:2.0'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.velocity&lt;/groupId&gt;
+    &lt;artifactId&gt;velocity-engine-core&lt;/artifactId&gt;
+    &lt;version&gt;2.0&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Velocity template:</p>
@@ -470,6 +529,155 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 &lt;/html&gt;</code></pre>
 </div>
 </div>
+
+
+<h2 id="freemarker">6.25.4 Apache Freemarker</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/freemarker.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut includes <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRenderer.html">FreemarkerViewsRenderer</a> which uses
+the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'org.freemarker:freemarker:2.3.28'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;org.freemarker&lt;/groupId&gt;
+    &lt;artifactId&gt;freemarker&lt;/artifactId&gt;
+    &lt;version&gt;2.3.28&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Freemarker template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.ftl</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;#--
+
+    Copyright 2017-2019 original authors
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;#if loggedIn??&gt;
+    &lt;h1&gt;username: &lt;span&gt;${username}&lt;/span&gt;&lt;/h1&gt;
+    &lt;#else&gt;
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    &lt;/#if&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Freemarker integration instantiates a freemarker <a href="https://freemarker.apache.org/docs/api/freemarker/template/Configuration.html"><code>Configuration</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>All configurable properties are extracted from <a href="https://freemarker.apache.org/docs/api/freemarker/template/Configuration.html"><code>Configuration</code></a> and
+<a href="https://freemarker.apache.org/docs/api/freemarker/core/Configurable.html"><code>Configurable</code></a>, and properties names are reused in the micronaut configuration.</p>
+</div>
+<div class="paragraph">
+<p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
+</div>
+
+
+<h2 id="csp">6.25.5 CSP Header Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views/csp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut supports CSP (<a href="https://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>) out of the box. By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    views:
+        csp:
+            enabled: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See the following table for all configuration options:</p>
+</div>
+<a id="io.micronaut.views.csp.CspConfiguration" href="#io.micronaut.views.csp.CspConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether CSP is enabled. Default false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.policy-directives</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the policy directives.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.report-only</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the Content-Security-Policy-Report-Only header will be sent instead
+ of Content-Security-Policy. Default false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path the CSP filter should apply to. Default value "/**".</p></td>
+</tr>
+</tbody>
+</table>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

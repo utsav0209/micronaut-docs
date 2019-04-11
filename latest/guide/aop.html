@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Aspect Oriented Programming 1.0.5</title>
+    <title>5 Aspect Oriented Programming 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Aspect Oriented Programming</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -153,7 +153,7 @@ function addJsClass() {
 <h1 id="aop">5 Aspect Oriented Programming</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -189,7 +189,7 @@ function addJsClass() {
 <h2 id="aroundAdvice">5.1 Around Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/aroundAdvice.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/aroundAdvice.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -393,7 +393,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <p>AOP advice applied at the class level of a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean will apply the advice to the factory itself and not to any beans defined with the <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> annotation.</p>
 </li>
 <li>
-<p>AOP advice applied on a method annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> will apply the AOP advice to the bean that the factory produces.</p>
+<p>AOP advice applied on a method annotated with a bean scope will apply the AOP advice to the bean that the factory produces.</p>
 </li>
 </ol>
 </div>
@@ -407,7 +407,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 @Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     MyBean myBean() {
         return new MyBean();
     }
@@ -426,7 +426,7 @@ class MyFactory {
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
 class MyFactory {
 
-    @Bean
+    @Prototype
     @Cacheable("my-cache")
     MyBean myBean() {
         return new MyBean();
@@ -450,7 +450,7 @@ class MyFactory {
 <h2 id="introductionAdvice">5.2 Introduction Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/introductionAdvice.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/introductionAdvice.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -598,7 +598,7 @@ assertNull(stubExample.getDate());</code></pre>
 <h2 id="adapterAdvice">5.3 Method Adapter Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/adapterAdvice.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/adapterAdvice.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -632,6 +632,8 @@ void onStartup(StartupEvent event) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.Adapter;
 import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.core.annotation.Indexed;
+
 import java.lang.annotation.*;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -640,6 +642,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Adapter(ApplicationEventListener.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Indexed(ApplicationEventListener.class)
 public @interface EventListener {
 }</code></pre>
 </div>
@@ -672,7 +675,7 @@ Micronaut will also automatically align the generic types for the SAM interface 
 <h2 id="validation">5.4 Validation Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/validation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/validation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -695,11 +698,21 @@ with a built-in configuration to use Hibernate Validator.</p>
 <div class="paragraph">
 <p>To get started, first add the Hibernate Validator configuration to your application:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-validator'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then simply add the <a href="../api/io/micronaut/validation/Validated.html">Validated</a> annotation to any class that requires validation. For example, consider this trivial service that retrieves books by title:</p>
@@ -764,7 +777,7 @@ public class BookService {
 <h2 id="caching">5.5 Cache Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/caching.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/caching.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -845,9 +858,64 @@ public class BookService {
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.CacheConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.record-stats</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether record stats is enabled. Default value ({@value #DEFAULT_RECORD_STATS}).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value ({@value #DEFAULT_TESTMODE}).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -883,7 +951,7 @@ public class BookService {
 <h2 id="retry">5.6 Retry Advice</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/retry.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/retry.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1051,7 +1119,7 @@ public class Neo4jDriverFactory {
 <h2 id="scheduling">5.7 Scheduled Tasks</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/scheduling.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/scheduling.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1250,7 +1318,7 @@ void configuredTask() {
 <h2 id="springAop">5.8 Bridging Spring AOP</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/aop/springAop.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/aop/springAop.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1268,11 +1336,21 @@ void configuredTask() {
 <div class="paragraph">
 <p>Micronaut provides support for Spring based transaction management without requiring Spring itself. You simply need to add the <code>spring</code> module to your application dependencies:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-spring"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">implementation <span class="hljs-string">'io.micronaut:micronaut-spring'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-spring&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="admonitionblock note">
 <table>

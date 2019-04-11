@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>15.3 Authentication Strategies 1.0.5</title>
+    <title>15.3 Authentication Strategies 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>15.3 Authentication Strategies</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -151,6 +151,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#jwtValidation"><strong>15.3.3</strong><span>JWT Token Validation</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:20px"><a href="#jwks"><strong>15.3.3.1</strong><span>Validation with remote JWKS</span></a>
+                    </div>
+                    
                     <div class="toc-item" style="margin-left:10px"><a href="#claimsGeneration"><strong>15.3.4</strong><span>Claims Generation</span></a>
                     </div>
                     
@@ -174,7 +177,7 @@ function addJsClass() {
 <h2 id="authenticationStrategies">15.3 Authentication Strategies</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -186,7 +189,7 @@ function addJsClass() {
 <h2 id="basicAuth">15.3.1 Basic Auth</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/basicAuth.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/basicAuth.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -226,6 +229,15 @@ function addJsClass() {
 <div class="paragraph">
 <p>After credentials are read from the HTTP Header, they are feed into an <a href="../api/io/micronaut/security/authentication/Authenticator.html">Authenticator</a>
 which attempts to validate them.</p>
+</div>
+<div class="paragraph">
+<p>The code snippet below illustrates how to send credentials using the <code>basicAuth</code> method from <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> method:</p>
+</div>
+<div class="listingblock">
+<div class="title">Accessing a protected resource using an Authorization request header</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">HttpRequest request = HttpRequest.GET("/home").basicAuth('sherlock', 'password')</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The following configuration properties are available to customize basic authentication behaviour:</p>
@@ -280,7 +292,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-basicauth/guide/
 <h2 id="session">15.3.2 Session Authentication</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/session.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/session.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -376,6 +388,11 @@ compile "io.micronaut:micronaut-security-session"</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the session config is enabled. Default value (false).</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.session.legacy-rejection-handler</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decides whether the deprecated {@link SessionSecurityFilterOrderProvider} is loaded, instead of the new <a href="../api/io/micronaut/security/handlers/RedirectRejectionHandler.html">RedirectRejectionHandler</a>. Defaults to (true).</p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect1">
@@ -415,7 +432,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-session/guide/in
 <h2 id="jwt">15.3.3 JSON Web Token</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -568,7 +585,7 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 <h2 id="reader">15.3.3.1 Reading JWT Token</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/reader.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/reader.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -580,20 +597,14 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 <h2 id="bearerToken">15.3.3.1.1 Bearer Token Reader</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/reader/bearerToken.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/reader/bearerToken.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Micronaut supports <a href="https://tools.ietf.org/html/rfc6750">RFC 6750 Bearer Token</a> specification out-of-the-box.</p>
-</div>
-<div class="paragraph">
-<p>It is enabled by default but requires JWT Authentication to be enabled.</p>
-</div>
-<div class="paragraph">
-<p>The following sequence illustrates the authentication flow:</p>
+<p>Micronaut supports the <a href="https://tools.ietf.org/html/rfc6750">RFC 6750 Bearer Token</a> specification for transmitting JWT tokens. The following sequence illustrates the RFC 6750 authentication flow:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -601,7 +612,7 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following configuration properties are available to customize Bearer Token read:</p>
+<p>The following configuration properties are available to customize how the Bearer Token will be read:</p>
 </div>
 <a id="io.micronaut.security.token.jwt.bearer.BearerTokenConfigurationProperties" href="#io.micronaut.security.token.jwt.bearer.BearerTokenConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
@@ -622,7 +633,7 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.bearer.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether to enable basic auth. Default value true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether to enable bearer token authentication. Default value true.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.bearer.header-name</code></p></td>
@@ -632,7 +643,7 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.bearer.prefix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the prefix to use for the auth token. Default value "Bearer"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the prefix to use for the auth token. Default value "Bearer".</p></td>
 </tr>
 </tbody>
 </table>
@@ -640,13 +651,21 @@ compile "io.micronaut:micronaut-security-jwt"</code></pre>
 <h2 id="_sending_tokens_in_the_request">Sending tokens in the request</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following code snippet illustrates how to send a JWT token in the <code>Authorization</code> request header:</p>
+<p>The code snippet below illustrates how to send a JWT token in the <code>Authorization</code> request header, using the <code>bearerAuth</code> method from <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> method:</p>
 </div>
 <div class="listingblock">
-<div class="title">Accessing a protected resource using Authorization request header</div>
+<div class="title">Accessing a protected resource using an Authorization request header</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String accessToken = rsp.body().accessToken
+List&lt;Book&gt; books = gatewayClient.toBlocking().retrieve(HttpRequest.GET("/api/gateway")
+        .bearerAuth(accessToken), Argument.listOf(Book))</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example of HTTP GET request using Authorization request header</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">GET /protectedResource HTTP/1.1
-Host: micronaut.example
+Host: micronaut.example`
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjI5OTU5MjIsInN1YiI6ImppbWkiLCJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sImlhdCI6MTQyMjk5MjMyMn0.rA7A2Gwt14LaYMpxNRtrCdO24RGrfHtZXY9fIjV8x8o</code></pre>
 </div>
 </div>
@@ -657,7 +676,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjI5OTU5MjIsInN1YiI6Imppb
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Read the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.html">Micronaut JWT Authentication</a> to learn more.
+Check out the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.html">Micronaut JWT Authentication guide</a> for a tutorial on Micronaut&#8217;s JWT support.
 </td>
 </tr>
 </table>
@@ -669,7 +688,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.
 <h2 id="cookieToken">15.3.3.1.2 Cookie Token Reader</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/reader/cookieToken.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/reader/cookieToken.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -706,6 +725,31 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-domain</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the domain name of this Cookie. Default value ("JWT").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path of the cookie. Default value ("/".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-http-only</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the Cookie can only be accessed via HTTP. Default value (true.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-secure</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the cookie is secured. Default value (true.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-max-age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.temporal.TemporalAmount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum age of the cookie.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether JWT cookie based security is enabled. Default value (false).</p></td>
@@ -718,12 +762,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt/guide/index.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cookie name to use. Default value ("JWT").</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.cookie-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cookie path to use. Default value (null).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cookie Name. Default value ("JWT").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.token.jwt.cookie.login-success-target-url</code></p></td>
@@ -754,7 +793,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <h2 id="jwtGenerator">15.3.3.2 JWT Token Generation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -799,7 +838,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <h2 id="jwtGeneratorSignature">15.3.3.2.1 JWT Signature</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator/jwtGeneratorSignature.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator/jwtGeneratorSignature.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -887,7 +926,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-security-jwt-cookie/guide
 <h2 id="jwtGeneratorEncryption">15.3.3.2.2 Encrypted JWTs</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator/jwtGeneratorEncryption.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtGenerator/jwtGeneratorEncryption.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1015,7 +1054,7 @@ class KeyPairProvider {
         // Parse the EC key pair
         PEMParser pemParser
         try {
-            pemParser = new PEMParser(new InputStreamReader(new FileInputStream(pemPath)))
+            pemParser = new PEMParser(new InputStreamReader(Files.newInputStream(Paths.get(pemPath))))
             PEMKeyPair pemKeyPair = (PEMKeyPair) pemParser.readObject()
 
             // Convert to Java (JCA) format
@@ -1046,7 +1085,7 @@ class KeyPairProvider {
 <h2 id="jwtValidation">15.3.3.3 JWT Token Validation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1068,10 +1107,47 @@ participate as signature configurations in the JWT validation.</p>
 </div>
 
 
+<h2 id="jwks">15.3.3.3.1 Validation with remote JWKS</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation/jwks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. You can use a remote JWK Set, A JSON object that represents a set of JWKs, to validate JWT signatures.</p>
+</div>
+<div class="paragraph">
+<p>You can configure a remote JWKS as a signature validator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">micronaut:
+  security:
+    enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            awscognito:
+              url: 'https://cognito-idp.eu-west-1.amazonaws.com/eu-west-XXXX/.well-known/jwks.json'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous snippet creates a <a href="../api/io/micronaut/security/token/jwt/signature/jwks/JwksSignature.html">JwksSignature</a> bean with a <code>awscognito</code> name qualifier.</p>
+</div>
+<div class="paragraph">
+<p>If you want to expose your own JWK Set, read the <a href="#keys">Keys Controller</a> section.</p>
+</div>
+
+
 <h2 id="claimsGeneration">15.3.3.4 Claims Generation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/claimsGeneration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/claimsGeneration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1157,7 +1233,7 @@ public class CustomJWTClaimsSetGenerator extends JWTClaimsSetGenerator {
 <h2 id="render">15.3.3.5 Token Render</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/jwt/render.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/render.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1196,7 +1272,7 @@ Pragma: no-cache
 <h2 id="ldap">15.3.4 LDAP Authentication</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/ldap.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/ldap.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1228,7 +1304,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-database-authentication-p
 <h2 id="configuration">15.3.4.1 Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/ldap/configuration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/ldap/configuration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1384,7 +1460,7 @@ Read the <a href="http://guides.micronaut.io/micronaut-database-authentication-p
 <h2 id="extending">15.3.4.2 Extending Default Behavior</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/security/authenticationStrategies/ldap/extending.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/ldap/extending.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1393,8 +1469,9 @@ Read the <a href="http://guides.micronaut.io/micronaut-database-authentication-p
 <div class="paragraph">
 <p>This section will outline some common requirements that will require custom code to implement and describe what to do in those cases.</p>
 </div>
-<div class="sect2">
-<h3 id="_authentication_data">Authentication Data</h3>
+<div class="sect1">
+<h2 id="_authentication_data">Authentication Data</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The authentication object returned from a successful authentication request is by default an instance of UserDetails, which only contains the username and any roles associated with the user. To store additional data in the authentication, extend <a href="../api/io/micronaut/security/authentication/UserDetails.html">UserDetails</a> with your own implementation that has fields for the additional data you wish to store.</p>
 </div>
@@ -1424,8 +1501,10 @@ public class MyContextAuthenticationMapper implements ContextAuthenticationMappe
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_groups">Groups</h3>
+</div>
+<div class="sect1">
+<h2 id="_groups">Groups</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>By default the groups found in LDAP, if enabled, will be returned as is without any processing. No additional groups from any other sources will be added to the list. It is a common requirement to retrieve additional groups from other sources, or to normalize the names of the groups in a specific format.</p>
 </div>
@@ -1467,8 +1546,10 @@ public class MyLdapGroupProcessor extends DefaultLdapGroupProcessor {
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_search_logic">Search Logic</h3>
+</div>
+<div class="sect1">
+<h2 id="_search_logic">Search Logic</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how LDAP searches are done, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/LdapSearchService.html">LdapSearchService</a>.</p>
 </div>
@@ -1483,8 +1564,10 @@ public class MyLdapSearchService implements LdapSearchService {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_context_building">Context Building</h3>
+</div>
+<div class="sect1">
+<h2 id="_context_building">Context Building</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To customize how the LDAP context is built, replace the default implementation with your own. See <a href="../api/io/micronaut/security/ldap/context/ContextBuilder.html">ContextBuilder</a>.</p>
 </div>
@@ -1496,6 +1579,7 @@ public class MyLdapSearchService implements LdapSearchService {
 public class MyContextBuilder implements ContextBuilder {
 
 }</code></pre>
+</div>
 </div>
 </div>
 </div>

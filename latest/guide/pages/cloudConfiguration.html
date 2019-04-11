@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8.1 Cloud Configuration 1.0.5</title>
+    <title>8.1 Cloud Configuration 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.1 Cloud Configuration</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -127,7 +127,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#distributedConfigurationConsul"><strong>8.2</strong><span>Consul Support</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#distributedConfigurationAwsParameterStore"><strong>8.3</strong><span>AWS Parameter Store Support</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#distributedConfigurationSpringCloud"><strong>8.3</strong><span>Spring Cloud Config Support</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#distributedConfigurationAwsParameterStore"><strong>8.4</strong><span>AWS Parameter Store Support</span></a>
                     </div>
                     
                 </div>
@@ -138,7 +141,7 @@ function addJsClass() {
 <h2 id="cloudConfiguration">8.1 Cloud Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/cloud/cloudConfiguration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cloud/cloudConfiguration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -159,15 +162,17 @@ function addJsClass() {
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Micronaut Environment Detection</caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Constant</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Requires Example</th>
+<th class="tableblock halign-left valign-top">Environment name</th>
 </tr>
 </thead>
 <tbody>
@@ -175,51 +180,67 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#ANDROID">ANDROID</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running as an Android application</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.ANDROID)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>android</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#TEST">TEST</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running within a JUnit or Spock test</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.TEST)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>test</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#CLOUD">CLOUD</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application is running in a Cloud environment (present for all other cloud platform types)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.CLOUD)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#AMAZON_EC2">AMAZON_EC2</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://aws.amazon.com/ec2">Amazon EC2</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.AMAZON_EC2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ec2</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#GOOGLE_COMPUTE">GOOGLE_COMPUTE</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://cloud.google.com/compute/">Google Compute</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.GOOGLE_COMPUTE)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gcp</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#KUBERNETES">KUBERNETES</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.kubernetes.io">Kubernetes</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.KUBERNETES)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k8s</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#HEROKU">HEROKU</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://heroku.com">Heroku</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.HEROKU)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heroku</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#CLOUD_FOUNDRY">CLOUD_FOUNDRY</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.cloudfoundry.org">Cloud Foundry</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.CLOUD_FOUNDRY)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pcf</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#AZURE">AZURE</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://azure.microsoft.com">Microsoft Azure</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.AZURE)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>azure</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#IBM">IBM</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.ibm.com/cloud/">IBM Cloud</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.IBM)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ibm</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#DIGITAL_OCEAN">DIGITAL_OCEAN</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://www.digitalocean.com/">Digital Ocean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.DIGITAL_OCEAN)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>digitalocean</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -245,7 +266,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <h2 id="_using_cloud_instance_metadata">Using Cloud Instance Metadata</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When Micronaut detects it is running on Google Compute or AWS EC2, upon startup Micronaut will populate the interface <a href="../api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html">ComputeInstanceMetadata</a>.</p>
+<p>When Micronaut detects it is running on any of the cloud platforms listed above, such as Google Compute or AWS EC2, upon startup Micronaut will populate the interface <a href="../api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html">ComputeInstanceMetadata</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -254,7 +275,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a> with metadata found from Google or Amazon&#8217;s metadata services.
+Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a>, <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/digitalocean/DigitalOceanInstanceMetadata.html">DigitalOceanInstanceMetadata</a> with metadata found from the cloud provider metadata services.
 </td>
 </tr>
 </table>
@@ -312,7 +333,7 @@ ConvertibleValues&lt;String&gt; metaData = serverInstance.getMetadata();</code><
 <h2 id="distributedConfiguration">8.1.1 Distributed Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/cloud/cloudConfiguration/distributedConfiguration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cloud/cloudConfiguration/distributedConfiguration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -341,7 +362,7 @@ ConvertibleValues&lt;String&gt; metaData = serverInstance.getMetadata();</code><
 <h2 id="distributedConfigurationConsul">8.1.2 Consul Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/cloud/cloudConfiguration/distributedConfigurationConsul.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cloud/cloudConfiguration/distributedConfigurationConsul.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -561,10 +582,50 @@ EOF</code></pre>
 </div>
 
 
-<h2 id="distributedConfigurationAwsParameterStore">8.1.3 AWS Parameter Store Support</h2>
+<h2 id="distributedConfigurationSpringCloud">8.1.3 Spring Cloud Config Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/cloud/cloudConfiguration/distributedConfigurationAwsParameterStore.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cloud/cloudConfiguration/distributedConfigurationSpringCloud.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since 1.1, Micronaut features a native <a href="https://spring.io/projects/spring-cloud-config">Spring Cloud Configuration</a> for those who have not switched to a dedicated more complete solution like Consul.</p>
+</div>
+<div class="paragraph">
+<p>To enable support for Spring Cloud Configuration simply add the following configuration to your <code>bootstrap.yml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="title">Integrating with Spring Cloud Configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    application:
+        name: hello-world
+    config-client:
+        enabled: true
+spring:
+    cloud:
+        config:
+            enabled: true
+            uri: http://localhost:8888/
+            retry-attempts: 4 # optional, number of times to retry
+            retry-delay: 2s # optional, delay between retries</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Micronaut will use the configured <code>micronaut.application.name</code> to lookup property sources for the application from Spring Cloud config server configured via <code>spring.cloud.config.uri</code>.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="https://spring.io/projects/spring-cloud-config#learn">Documentation for Spring Cloud Config Server</a> for more information on how to setup the server.</p>
+</div>
+
+
+<h2 id="distributedConfigurationAwsParameterStore">8.1.4 AWS Parameter Store Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cloud/cloudConfiguration/distributedConfigurationAwsParameterStore.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

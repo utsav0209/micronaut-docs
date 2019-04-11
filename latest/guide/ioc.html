@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.0.5</title>
+    <title>3 Inversion of Control 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -169,13 +169,16 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#events"><strong>3.13</strong><span>Bean Events</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#annotationMetadata"><strong>3.14</strong><span>Bean Annotation Metadata</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#introspection"><strong>3.14</strong><span>Bean Introspection</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#springBeans"><strong>3.15</strong><span>Micronaut Beans And Spring</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#annotationMetadata"><strong>3.15</strong><span>Bean Annotation Metadata</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#android"><strong>3.16</strong><span>Android Support</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#springBeans"><strong>3.16</strong><span>Micronaut Beans And Spring</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#android"><strong>3.17</strong><span>Android Support</span></a>
                     </div>
                     
                 </div>
@@ -186,7 +189,7 @@ function addJsClass() {
 <h1 id="ioc">3 Inversion of Control</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -238,8 +241,8 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.5" // <2>
-    compile "io.micronaut:micronaut-inject:1.0.5"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.0" // <2>
+    compile "io.micronaut:micronaut-inject:1.1.0"
     ...
 }</code></pre>
 </div>
@@ -309,7 +312,7 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 <h2 id="beans">3.1 Defining Beans</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/beans.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beans.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -321,16 +324,49 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 <div class="paragraph">
 <p>The following is a simple example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {<b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton<b class="conum">(2)</b>
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    private int cylinders = 8;
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    public Vehicle(Engine engine) {<b class="conum">(3)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
 
@@ -338,17 +374,42 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    Vehicle(Engine engine) { <i class="conum" data-value="3"></i><b>(3)</b>
+    Vehicle(Engine engine) { <b class="conum">(3)</b>
         this.engine = engine
     }
 
     String start() {
         engine.start()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
+    <b class="conum">(1)</b>
+    val cylinders: Int
+
+    fun start(): String
+}
+@Singleton<b class="conum">(2)</b>
+class V8Engine : Engine {
+
+    override var cylinders = 8
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Singleton
+class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
+{
+
+    fun start(): String {
+        return engine.start()
     }
 }</code></pre>
 </div>
@@ -372,13 +433,23 @@ class Vehicle {
 <div class="paragraph">
 <p>To perform dependency injection simply run the  <a href="../api/io/micronaut/context/BeanContext.html">BeanContext</a> using the <code>run()</code> method and lookup a bean using <code>getBean(Class)</code>, as per the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.*
-...
-Vehicle vehicle = BeanContext.run()
+<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+System.out.println(vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
                              .getBean(Vehicle)
 println( vehicle.start() )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -408,7 +479,7 @@ println( vehicle.start() )</code></pre>
 <h2 id="how">3.2 How Does it Work?</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/how.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/how.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -434,7 +505,7 @@ println( vehicle.start() )</code></pre>
 <h2 id="beanContext">3.3 The BeanContext</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/beanContext.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanContext.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -451,7 +522,7 @@ println( vehicle.start() )</code></pre>
 <h2 id="types">3.4 Injectable Container Types</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/types.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/types.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -507,7 +578,7 @@ println( vehicle.start() )</code></pre>
 <h2 id="qualifiers">3.5 Bean Qualifiers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/qualifiers.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/qualifiers.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -525,43 +596,116 @@ println( vehicle.start() )</code></pre>
 <div class="paragraph">
 <p>To qualify by name you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation. For example, consider the following classes:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine { <b class="conum">(1)</b>
+    int getCylinders();
+    String start();
+}
+@Singleton
+public class V6Engine implements Engine {  <b class="conum">(2)</b>
+    public String start() {
+        return "Starting V6";
+    }
 
-interface Engine { <i class="conum" data-value="1"></i><b>(1)</b>
+    public int getCylinders() {
+        return 6;
+    }
+}
+@Singleton
+public class V8Engine implements Engine {
+    public String start() {
+        return "Starting V8";
+    }
+
+    public int getCylinders() {
+        return 8;
+    }
+
+}
+@Singleton
+public class Vehicle {
+    private final Engine engine;
+
+    @Inject
+    public Vehicle(@Named("v8") Engine engine) {<b class="conum">(4)</b>
+        this.engine = engine;
+    }
+
+    public String start() {
+        return engine.start();<b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine { <b class="conum">(1)</b>
     int getCylinders()
     String start()
 }
-
 @Singleton
-class V6Engine implements Engine { <i class="conum" data-value="2"></i><b>(2)</b>
+class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
 
     String start() {
         "Starting V6"
     }
 }
-
 @Singleton
-class V8Engine implements Engine { <i class="conum" data-value="3"></i><b>(3)</b>
+class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
 
     String start() {
         "Starting V8"
     }
 }
-
 @Singleton
 class Vehicle {
     final Engine engine
 
-    @Inject Vehicle(@Named('v8') Engine engine) { <i class="conum" data-value="4"></i><b>(4)</b>
+    @Inject Vehicle(@Named('v8') Engine engine) { <b class="conum">(4)</b>
         this.engine = engine
     }
 
     String start() {
-        engine.start() <i class="conum" data-value="5"></i><b>(5)</b>
+        engine.start() <b class="conum">(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine { <b class="conum">(1)</b>
+    val cylinders: Int
+    fun start(): String
+}
+@Singleton
+class V6Engine : Engine {  <b class="conum">(2)</b>
+
+    override var cylinders: Int = 6
+
+    override fun start(): String {
+        return "Starting V6"
+    }
+}
+@Singleton
+class V8Engine : Engine {
+
+    override var cylinders: Int = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+
+}
+@Singleton
+class Vehicle @Inject
+constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
+{
+
+    fun start(): String {
+        return engine.start()<b class="conum">(5)</b>
     }
 }</code></pre>
 </div>
@@ -724,7 +868,7 @@ public class TestController {
 <h2 id="scopes">3.6 Scopes</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/scopes.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -738,7 +882,7 @@ public class TestController {
 <h2 id="builtInScopes">3.6.1 Built-In Scopes</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/scopes/builtInScopes.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/builtInScopes.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -783,6 +927,18 @@ public class TestController {
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</a> annotation is a synonym for <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> because the default scope is prototype.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Additional scopes can be added by defining a <code>@Singleton</code> bean that implements the <a href="../api/io/micronaut/context/scope/CustomScope.html">CustomScope</a> interface.</p>
 </div>
@@ -812,7 +968,7 @@ If your bean fails to initialize in parallel then the application will be automa
 <h2 id="refreshable">3.6.2 Refreshable Scope</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/scopes/refreshable.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/refreshable.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -834,19 +990,53 @@ If your bean fails to initialize in parallel then the application will be automa
 <div class="paragraph">
 <p>The following example, illustrates the <code>@Refreshable</code> scope behavior.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Refreshable <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Refreshable <b class="conum">(1)</b>
+public static class WeatherService {
+    private String forecast;
+
+    @PostConstruct
+    public void init() {
+        forecast = "Scattered Clouds " + new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date());<b class="conum">(2)</b>
+    }
+
+    public String latestForecast() {
+        return forecast;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Refreshable <b class="conum">(1)</b>
 static class WeatherService {
 
     String forecast
 
     @PostConstruct
     void init() {
-        forecast = "Scattered Clouds ${new Date().format('dd/MMM/yy HH:ss.SSS')}" <i class="conum" data-value="2"></i><b>(2)</b>
+        forecast = "Scattered Clouds ${new SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(new Date())}" <b class="conum">(2)</b>
     }
 
     String latestForecast() {
+        return forecast
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Refreshable <b class="conum">(1)</b>
+open class WeatherService {
+    private var forecast: String? = null
+
+    @PostConstruct
+    fun init() {
+        forecast = "Scattered Clouds " + SimpleDateFormat("dd/MMM/yy HH:mm:ss.SSS").format(Date())<b class="conum">(2)</b>
+    }
+
+    open fun latestForecast(): String? {
         return forecast
     }
 }</code></pre>
@@ -870,9 +1060,19 @@ static class WeatherService {
 <div class="paragraph">
 <p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published then the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">applicationContext.publishEvent(new RefreshEvent());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">applicationContext.publishEvent(new RefreshEvent())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">applicationContext.publishEvent(RefreshEvent())</code></pre>
 </div>
 </div>
 
@@ -880,7 +1080,7 @@ static class WeatherService {
 <h2 id="metaScopes">3.6.3 Scopes on Meta Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/scopes/metaScopes.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/metaScopes.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -889,10 +1089,9 @@ static class WeatherService {
 <div class="paragraph">
 <p>Scopes can be defined on Meta annotations that you can then apply to your classes. Consider the following example meta annotation:</p>
 </div>
-<div class="listingblock">
-<div class="title">Driver.java Annotation</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
+<pre class="highlight"><code class="language-java" data-lang="java">import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import io.micronaut.context.annotation.Requires;
 
@@ -900,12 +1099,46 @@ import javax.inject.Singleton;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 
-@Requires(classes = Car.class ) <i class="conum" data-value="1"></i><b>(1)</b>
-@Singleton <i class="conum" data-value="2"></i><b>(2)</b>
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
 @Documented
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+
+import javax.inject.Singleton
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy.RUNTIME
+import javax.inject.Singleton
+
+
+@Requires(classes = [Car::class]) <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -937,7 +1170,7 @@ class Foo {}</code></pre>
 <div class="paragraph">
 <p>If you wish for the scope to be overridable you should instead using the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @DefaultScope</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(classes = Car.class )
@@ -946,6 +1179,25 @@ class Foo {}</code></pre>
 @Retention(RUNTIME)
 public @interface Driver {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Requires(classes = Car.class )
+@DefaultScope(Singleton.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+@interface Driver {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Requires(classes = [Car::class])
+@DefaultScope(Singleton::class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Documented
+@Retention(RUNTIME)
+annotation class Driver</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -961,7 +1213,7 @@ public @interface Driver {
 <h2 id="factories">3.7 Bean Factories</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/factories.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/factories.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -971,21 +1223,43 @@ public @interface Driver {
 <p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a>.</p>
 </div>
 <div class="paragraph">
-<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation.</p>
+<p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with a bean scope annotation. Which annotation you use depends on what scope you want the bean to be in. See the section on <a href="#scopes">bean scopes</a> for more information.</p>
 </div>
 <div class="paragraph">
-<p>The return types of methods annotated with <code>@Bean</code> are the bean types. This is best illustrated by an example:</p>
+<p>The return types of methods annotated with a bean scope annotation are the bean types. This is best illustrated by an example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.*
-import javax.inject.*
-
-
-@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private final CrankShaft crankShaft;
 
+    public V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    public String start() {
+        return "Starting V8";
+    }
+}
+@Factory
+class EngineFactory {
+
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        return new V8Engine(crankShaft);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class CrankShaft {
+}
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -998,11 +1272,9 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
-
 @Factory
 class EngineFactory {
 
-    @Bean
     @Singleton
     Engine v8Engine(CrankShaft crankShaft) {
         new V8Engine(crankShaft)
@@ -1010,11 +1282,32 @@ class EngineFactory {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans.</p>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+internal class CrankShaft
+internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
+    private val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+@Factory
+internal class EngineFactory {
+
+    @Singleton
+    fun v8Engine(crankShaft: CrankShaft): Engine {
+        return V8Engine(crankShaft)
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>A factory can also have multiple methods annotated with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> each one returning a distinct bean type.</p>
+<p>In this case, the <code>V8Engine</code> is built by the <code>EngineFactory</code> class' <code>v8Engine</code> method. Note that you can inject parameters into the method and these parameters will be resolved as beans. The resulting <code>V8Engine</code> bean will be a singleton.</p>
+</div>
+<div class="paragraph">
+<p>A factory can have multiple methods annotated with bean scope annotations, each one returning a distinct bean type.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1023,7 +1316,19 @@ class EngineFactory {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you take this approach, then you should not invoke other methods annotated with <code>@Bean</code> internally within the class. Instead, inject the types via parameters.
+If you take this approach, then you should not invoke other bean methods internally within the class. Instead, inject the types via parameters.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To allow the resulting bean to participate in the application context shutdown process, annotate the method with <a href="../api/io/micronaut/context/annotation/Bean.html">@Bean</a> and set the <code>preDestroy</code> argument to the name of the method that should be called to close the bean.
 </td>
 </tr>
 </table>
@@ -1033,7 +1338,7 @@ If you take this approach, then you should not invoke other methods annotated wi
 <h2 id="conditionalBeans">3.8 Conditional Beans</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/conditionalBeans.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/conditionalBeans.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1177,6 +1482,14 @@ public class JdbcBookService implements BookService {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Require a property to not be part of the configuration</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(missingProperty="data-source.url")</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the presence of one of more files in the file system</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(resources="file:/path/to/file")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the presence of one of more classpath resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(resources="classpath:myFile.properties")</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect2">
@@ -1237,7 +1550,7 @@ public class JdbcBookService implements BookService {
 <h2 id="replaces">3.9 Bean Replacement</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/replaces.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/replaces.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1392,7 +1705,7 @@ public class TextBookFactory {
 <h2 id="beanConfigurations">3.10 Bean Configurations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/beanConfigurations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanConfigurations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1435,12 +1748,15 @@ package my.package</code></pre>
 <h2 id="lifecycle">3.11 Life-Cycle Methods</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/lifecycle.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/lifecycle.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
+<div class="sect1">
+<h2 id="_when_the_context_starts">When The Context Starts</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
 </div>
@@ -1483,12 +1799,110 @@ class V8Engine implements Engine {
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_when_the_context_closes">When The Context Closes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PreDestroy <i class="conum" data-value="1"></i><b>(1)</b>
+import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Singleton
+
+@Singleton
+class PreDestroyBean implements AutoCloseable {
+
+    AtomicBoolean stopped = new AtomicBoolean(false)
+
+    @PreDestroy <i class="conum" data-value="2"></i><b>(2)</b>
+    @Override
+    void close() throws Exception {
+        stopped.compareAndSet(false, true)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>PreDestroy</code> annotation is imported</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A method is annotated with <code>@PreDestroy</code> and will be invoked when the context is closed.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For factory beans, the <code>preDestroy</code> value in the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation can be used to tell Micronaut which method to invoke.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import javax.inject.Singleton
+
+@Factory
+class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") <i class="conum" data-value="1"></i><b>(1)</b>
+    @Singleton
+    Connection connection() {
+        new Connection()
+    }
+}
+
+import java.util.concurrent.atomic.AtomicBoolean
+
+class Connection {
+
+    AtomicBoolean stopped = new AtomicBoolean(false)
+
+    void stop() { <i class="conum" data-value="2"></i><b>(2)</b>
+        stopped.compareAndSet(false, true)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>preDestroy</code> value is set on the annotation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The annotation value matches the method name</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Just simply implementing the Closeable or AutoCloseable interfaces is not enough to get a bean to close with the context. One of the above methods must be used.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 
 
 <h2 id="contextEvents">3.12 Context Events</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/contextEvents.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/contextEvents.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1620,7 +2034,7 @@ public class DoOnStartup  {
 <h2 id="events">3.13 Bean Events</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/events.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/events.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1666,7 +2080,6 @@ class EngineFactory {
         engine = new V8Engine(rodLength: rodLength) <i class="conum" data-value="2"></i><b>(2)</b>
     }
 
-    @Bean
     @Singleton
     Engine v8Engine() {
         return engine <i class="conum" data-value="3"></i><b>(3)</b>
@@ -1713,10 +2126,380 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 </div>
 
 
-<h2 id="annotationMetadata">3.14 Bean Annotation Metadata</h2>
+<h2 id="introspection">3.14 Bean Introspection</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/annotationMetadata.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/introspection.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since Micronaut 1.1, a compilation time replacement for the JDK&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html">Introspector</a> class has been included.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/core/beans/BeanIntrospector.html">BeanIntrospector</a> and <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> interfaces allow looking up bean introspections that allow you to instantiate and read/write bean properties without using reflection or caching reflective metadata which consumes excessive memory for large beans.</p>
+</div>
+<div class="sect2">
+<h3 id="_making_a_bean_available_for_introspection">Making a Bean Available for Introspection</h3>
+<div class="paragraph">
+<p>Unlike the JDK&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html">Introspector</a> every class is not automatically available for introspection, to make a class available for introspection you must as a minimum enable Micronaut&#8217;s annotation processor (<code>micronaut-inject-java</code> for Java and Kotlin and <code>micronaut-inject-groovy</code> for Groovy) in your build and ensure you have a runtime time dependency on <code>micronaut-core</code>.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.0'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
+        &lt;version&gt;1.1.0&lt;/version&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>kapt</code> scope and for Groovy you should have <code>micronaut-inject-groovy</code> in <code>compileOnly</code> scope.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.0'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
+    &lt;version&gt;1.1.0&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Once your build is configured you have a few ways to generate introspection data.</p>
+</div>
+<div class="sect3">
+<h4 id="_use_the_code_introspected_code_annotation">Use the <code>@Introspected</code> Annotation</h4>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation can be used on any class which you want to make available for introspecton, simply annotate the class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a>:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Introspected;
+
+@Introspected
+public class Person {
+
+    private String name;
+    private int age = 18;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import groovy.transform.Canonical
+import io.micronaut.core.annotation.Introspected
+
+@Introspected
+@Canonical
+class Person {
+
+    String name
+    int age = 18
+
+    Person(String name) {
+        this.name = name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Introspected
+
+@Introspected
+data class Person(var name : String) {
+    var age : Int = 18
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once introspection data has been produced at compilation time you can then retrieve it via the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        final BeanIntrospection&lt;Person&gt; introspection = BeanIntrospection.getIntrospection(Person.class); <b class="conum">(1)</b>
+        Person person = introspection.instantiate("John"); <b class="conum">(2)</b>
+        System.out.println("Hello " + person.getName());
+
+        final BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String.class); <b class="conum">(3)</b>
+        property.set(person, "Fred"); <b class="conum">(4)</b>
+        String name = property.get(person); <b class="conum">(5)</b>
+        System.out.println("Hello " + person.getName());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        def introspection = BeanIntrospection.getIntrospection(Person) <b class="conum">(1)</b>
+        Person person = introspection.instantiate("John") <b class="conum">(2)</b>
+        println("Hello ${person.name}")
+
+        BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String) <b class="conum">(3)</b>
+        property.set(person, "Fred") <b class="conum">(4)</b>
+        String name = property.get(person) <b class="conum">(5)</b>
+        println("Hello ${person.name}")</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val introspection = BeanIntrospection.getIntrospection(Person::class.java) <b class="conum">(1)</b>
+        val person : Person = introspection.instantiate("John") <b class="conum">(2)</b>
+        print("Hello ${person.name}")
+
+        val property : BeanProperty&lt;Person, String&gt; = introspection.getRequiredProperty("name", String::class.java) <b class="conum">(3)</b>
+        property.set(person, "Fred") <b class="conum">(4)</b>
+        val name = property.get(person) <b class="conum">(5)</b>
+        print("Hello ${person.name}")</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>You can retrieve a <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> with the <code>getIntrospection</code> static method</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Once you have a <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> you can instantiate a bean with the <code>instantiate</code> method.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A <a href="../api/io/micronaut/core/beans/BeanProperty.html">BeanProperty</a> can be retreived from the introspection</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>.. and the <code>set</code> method used to set the property value</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>.. and the <code>get</code> method used to retrieve the property value</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_use_the_code_introspected_code_annotation_on_a_configuration_class">Use the <code>@Introspected</code> Annotation on a Configuration Class</h4>
+<div class="paragraph">
+<p>If the class you wish to introspect is already compiled and not under your control an alternative option is to define a configuration class or some sort that uses the <code>classes</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Introspected;
+
+@Introspected(classes = Person.class)
+public class PersonConfiguration {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Introspected
+
+@Introspected(classes = Person)
+class PersonConfiguration {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Introspected
+
+@Introspected(classes = [Person::class])
+class PersonConfiguration</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example the <code>PersonConfiguration</code> class will generate introspections for the <code>Person</code> class.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can also use the <code>packages</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> which will package scan at compilation time and generate introspections for all classes within a package. Note however this feature is currently regarded as experimental.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_write_a_code_annotationmapper_code_to_introspect_existing_annotations">Write a <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
+<div class="paragraph">
+<p>If there is an existing annotation that you wish to introspect by default you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>.</p>
+</div>
+<div class="paragraph">
+<p>An example of this is <a href="https://github.com/micronaut-projects/micronaut-core/blob/master/inject/src/main/java/io/micronaut/inject/beans/visitor/EntityIntrospectedAnnotationMapper.java">EntityIntrospectedAnnotationMapper</a> which ensures all beans annotated with <code>javax.persistence.Entity</code> are introspectable by default.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>AnnotationMapper</code> should be on the annotation processor classpath.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_beanwrapper_api">The BeanWrapper API</h3>
+<div class="paragraph">
+<p>A <a href="../api/io/micronaut/core/beans/BeanProperty.html">BeanProperty</a> provides raw access to read and write a property value for a given class and does not provide any automatic type conversion.</p>
+</div>
+<div class="paragraph">
+<p>It is expected that the values you pass to the <code>set</code> and <code>get</code> methods match the underlying property type otherwise an exception will occur.</p>
+</div>
+<div class="paragraph">
+<p>To provide additional type conversion smarts the <a href="../api/io/micronaut/core/beans/BeanWrapper.html">BeanWrapper</a> interface allows wrapping an existing bean instance and setting and getting properties from the bean, plus performing type conversion as necessary.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")); <b class="conum">(1)</b>
+
+        wrapper.setProperty("age", "20"); <b class="conum">(2)</b>
+        int newAge = wrapper.getRequiredProperty("age", int.class); <b class="conum">(3)</b>
+
+        System.out.println("Person's age now " + newAge);</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        final BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(new Person("Fred")) <b class="conum">(1)</b>
+
+        wrapper.setProperty("age", "20") <b class="conum">(2)</b>
+        int newAge = wrapper.getRequiredProperty("age", Integer) <b class="conum">(3)</b>
+
+        println("Person's age now $newAge")</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val wrapper = BeanWrapper.getWrapper(Person("Fred")) <b class="conum">(1)</b>
+
+        wrapper.setProperty("age", "20") <b class="conum">(2)</b>
+        val newAge = wrapper.getRequiredProperty("age", Int::class.java) <b class="conum">(3)</b>
+
+        println("Person's age now $newAge")</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>getWrapper</code> static method can be used to obtain a <a href="../api/io/micronaut/core/beans/BeanWrapper.html">BeanWrapper</a> for a bean instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>You can set properties and the <a href="../api/io/micronaut/core/beans/BeanWrapper.html">BeanWrapper</a> will perform type conversion, or throw <a href="../api/io/micronaut/core/convert/exceptions/ConversionErrorException.html">ConversionErrorException</a> if conversion is not possible.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>You can retrieve a property using <code>getRequiredProperty</code> and request the appropriate type. If the property doesn&#8217;t exist a <a href="../api/io/micronaut/core/beans/exceptions/IntrospectionException.html">IntrospectionException</a> will be thrown and if it cannot be converted a <a href="../api/io/micronaut/core/convert/exceptions/ConversionErrorException.html">ConversionErrorException</a> will be thrown.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jackson_and_bean_introspection">Jackson and Bean Introspection</h3>
+<div class="paragraph">
+<p>You can enable bean introspection integration with Jackson for reflection-free JSON serialization and deserialization using the <code>jackson.bean-introspection-module</code> setting.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This feature is currently regarded as experimental and may be subject to changes in the future.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Enabling Jackson Bean Introspection</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">jackson:
+    bean-introspection-module: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the above configuration in place Jackson will be configured to use the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API to read and write property values and construct objects resulting in reflection-free serialization/deserialization which is benefitial from a performance perspective and requires less configuring to operate correctly with runtimes such as GraalVM native.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Currently only bean properties (private field with public getter/setter) are supported and usage of public fields is not supported.
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+<h2 id="annotationMetadata">3.15 Bean Annotation Metadata</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/annotationMetadata.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1899,10 +2682,10 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 </div>
 
 
-<h2 id="springBeans">3.15 Micronaut Beans And Spring</h2>
+<h2 id="springBeans">3.16 Micronaut Beans And Spring</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/springBeans.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/springBeans.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1964,10 +2747,10 @@ class ByAnnotationTypeConfig {
 </div>
 
 
-<h2 id="android">3.16 Android Support</h2>
+<h2 id="android">3.17 Android Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/ioc/android.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/android.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1993,8 +2776,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.5"
-    compileOnly "io.micronaut:micronaut-inject-java:1.0.5"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.0"
+    compileOnly "io.micronaut:micronaut-inject-java:1.1.0"
     ...
 }</code></pre>
 </div>

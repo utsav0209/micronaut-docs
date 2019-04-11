@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.1 The Environment 1.0.5</title>
+    <title>4.1 The Environment 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.1 The Environment</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -124,7 +124,7 @@ function addJsClass() {
 <h2 id="environments">4.1 The Environment</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/config/environments.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/environments.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -163,6 +163,38 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 </div>
 <div class="paragraph">
 <p>Finally, the Cloud environment names are also detected. See the section on <a href="#cloudConfiguration">Cloud Configuration</a> for more information.</p>
+</div>
+<div class="sect1">
+<h2 id="_disabling_environment_detection">Disabling Environment Detection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The automatic detection of environments can be disabled setting the <code>micronaut.env.deduction</code> system property or the <code>MICRONAUT_ENV_DEDUCTION</code> environment variable to <code>false</code>. This will prevent Micronaut from detecting current environments, while still using any environments that are specifically provided as shown above.</p>
+</div>
+<div class="listingblock">
+<div class="title">Disabling environment detection via system property</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$  java -Dmicronaut.env.deduction=false -jar myapp.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can disable environment deduction using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a>'s <code>deduceEnvironment</code> method when setting up your application.</p>
+</div>
+<div class="listingblock">
+<div class="title">Using ApplicationContextBuilder to disable environment deduction</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">void "test disable environment deduction via builder"() {
+    when:
+    ApplicationContext ctx = ApplicationContext.build().deduceEnvironment(false).start()
+
+    then:
+    !ctx.environment.activeNames.contains(Environment.TEST)
+
+    cleanup:
+    ctx.close()
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 
 

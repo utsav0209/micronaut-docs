@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>12.1 Configurations for Data Access 1.0.5</title>
+    <title>12.1 Configurations for Data Access 1.1.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>12.1 Configurations for Data Access</h1>
 
-                    <p><strong>Version:</strong> 1.0.5</p>
+                    <p><strong>Version:</strong> 1.1.0</p>
                 </div>
 
                 
@@ -142,6 +142,12 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#cassandraSupport"><strong>12.7</strong><span>Configuring Cassandra</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#liquibaseSupport"><strong>12.8</strong><span>Configuring Liquibase</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#flywaySupport"><strong>12.9</strong><span>Configuring Flyway</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -150,7 +156,7 @@ function addJsClass() {
 <h2 id="dataAccess">12.1 Configurations for Data Access</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -254,7 +260,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <h2 id="sqlSupport">12.1.1 Configuring a SQL Data Source</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/sqlSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/sqlSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -343,11 +349,22 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <div class="paragraph">
 <p>You also need to add a JDBC driver dependency to your classpath. For example to add the <a href="http://www.h2database.com">H2 In-Memory Database</a>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">runtime "com.h2database:h2"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'com.h2database:h2'</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">Configuring JDBC</a> section of the <a href="https://github.com/micronaut-projects/micronaut-sql">Micronaut SQL libraries</a> project.</p>
@@ -359,7 +376,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <h2 id="hibernateSupport">12.1.2 Configuring Hibernate</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/hibernateSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/hibernateSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -447,7 +464,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <h2 id="mongoSupport">12.1.3 Configuring MongoDB</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/mongoSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/mongoSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -539,7 +556,7 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <h2 id="neo4jSupport">12.1.4 Configuring Neo4j</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/neo4jSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/neo4jSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -574,14 +591,14 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-:micronaut-neo4j-bolt'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-neo4j-bolt'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-:micronaut-neo4j-bolt&lt;/artifactId&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-neo4j-bolt&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -620,7 +637,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <h2 id="postgresSupport">12.1.5 Configuring Postgres</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/postgresSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/postgresSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -671,7 +688,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <h2 id="redisSupport">12.1.6 Configuring Redis</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/redisSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/redisSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -747,7 +764,7 @@ The <code>redis.uri</code> setting should be in the format as described in the <
 <h2 id="cassandraSupport">12.1.7 Configuring Cassandra</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/1.0.x/src/main/docs/guide/configurations/dataAccess/cassandraSupport.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/cassandraSupport.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -820,6 +837,36 @@ applicationContext.environment.addPropertySource(MapPropertySource.of(
 ))
 applicationContext.start()</code></pre>
 </div>
+</div>
+
+
+<h2 id="liquibaseSupport">12.1.8 Configuring Liquibase</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/liquibaseSupport.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To configure Micronaut integration with <a href="http://www.liquibase.org">Liquibase</a>, please follow
+<a href="https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html">these instructions</a>.</p>
+</div>
+
+
+<h2 id="flywaySupport">12.1.9 Configuring Flyway</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/flywaySupport.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To configure Micronaut integration with <a href="https://flywaydb.org/">Flyway</a>, please follow
+<a href="https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html">these instructions</a></p>
 </div>
 
 
