@@ -2542,7 +2542,7 @@ Currently only bean properties (private field with public getter/setter) are sup
 <p>XML-based configuration</p>
 </li>
 <li>
-<p>Instead of you <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> to define custom constraints, which supports validating annotations as compilation time.</p>
+<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> to define custom constraints, which supports validating annotations as compilation time.</p>
 </li>
 </ul>
 </div>
@@ -2571,17 +2571,24 @@ Currently only bean properties (private field with public getter/setter) are sup
 </li>
 </ul>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you require full Bean Validator 2.0 compliance you can add the <code>micronaut-hibernate-validator</code> module to your classpath, which will replace Micronaut&#8217;s implementation.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>If you require full Bean Validator 2.0 compliance you can add the <code>micronaut-hibernate-validator</code> module to your classpath, which will replace Micronaut&#8217;s implementation.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-hibernate-validator'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="sect2">
 <h3 id="_validating_bean_methods">Validating Bean Methods</h3>
@@ -2639,7 +2646,7 @@ open class PersonService {
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you are using Kotlin the class and method must be declared open so that Micronaut can create a compilation time subclass.
+If you are using Kotlin the class and method must be declared open so that Micronaut can create a compilation time subclass, alternatively you can annotate the class with <a href="../api/io/micronaut/validation/Validated.html">@Validated</a> and configure the Kotlin <code>all-open</code> plugin to open classes annotated with this type. See the <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html">Compiler plugins</a> section.
 </td>
 </tr>
 </table>
