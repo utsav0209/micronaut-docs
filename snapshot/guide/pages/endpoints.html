@@ -130,6 +130,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#refresh"><strong>15.3</strong><span>Refresh Controller</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#keys"><strong>15.4</strong><span>Keys Controller</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -371,6 +374,69 @@ See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of t
 </td>
 </tr>
 </table>
+</div>
+
+
+<h2 id="keys">15.6.4 Keys Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/keys.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This controller can only be enabled if you are using JWT authentication.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. The members of the object represent properties of the key, including its value.</p>
+</div>
+<div class="paragraph">
+<p>Meanwhile, a JWK Set is a JSON object that represents a set of JWKs. The JSON object MUST have a "keys" member, which is an array of JWKs.</p>
+</div>
+<div class="paragraph">
+<p>You can enable the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a> to expose an endpoint which returns a JWK Set. You can configure it with:</p>
+</div>
+<a id="io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties" href="#io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysControllerConfigurationProperties.html">KeysControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value "/keys".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Moreover, you will need to provide beans to type <a href="../api/io/micronaut/security/token/jwt/endpoints/JwkProvider.html">JwkProvider</a>.</p>
 </div>
 
 

@@ -172,6 +172,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:20px"><a href="#jwtValidation"><strong>15.3.3.3</strong><span>JWT Token Validation</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:30px"><a href="#jwks"><strong>15.3.3.3.1</strong><span>Validation with remote JWKS</span></a>
+                    </div>
+                    
                     <div class="toc-item" style="margin-left:20px"><a href="#claimsGeneration"><strong>15.3.3.4</strong><span>Claims Generation</span></a>
                     </div>
                     
@@ -203,6 +206,9 @@ function addJsClass() {
                     </div>
                     
                     <div class="toc-item" style="margin-left:10px"><a href="#refresh"><strong>15.6.3</strong><span>Refresh Controller</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#keys"><strong>15.6.4</strong><span>Keys Controller</span></a>
                     </div>
                     
                     <div class="toc-item" style="margin-left:0px"><a href="#retrievingAuthenticatedUser"><strong>15.7</strong><span>Retrieve the authenticated user</span></a>
@@ -562,7 +568,40 @@ public class ExampleController {
 </div>
 <div class="paragraph">
 <p>As you see in the previous code listing, any endpoint is identified by a combination of pattern
-and an optional HTTP Method</p>
+and an optional HTTP method.</p>
+</div>
+<div class="paragraph">
+<p>If a given request URI matches more than one intercept url map, the one that specifies an http method that matches the request method will be used. If there are multiple mappings that do not specify a method and match the request URI, then the first mapping will be used. For example:</p>
+</div>
+<div class="paragraph">
+<p>The example below defines that all HTTP requests to URIs matching the pattern <code>/v1/myResource/**</code> and using HTTP method <code>GET</code> will be accessible to everyone. Requests matching the same URI pattern but using a different HTTP method than <code>GET</code> require fully authenticated access.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  security:
+    enabled: true
+    intercept-url-map:
+      - pattern: /v1/myResource/**
+        httpMethod: GET <i class="conum" data-value="1"></i><b>(1)</b>
+        access:
+          - isAnonymous()
+      - pattern: /v1/myResource/**
+        access:
+          - isAuthenticated() <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a GET request does not require authentication.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a request that isn&#8217;t GET requires authentication.</td>
+</tr>
+</table>
 </div>
 
 
@@ -1536,6 +1575,43 @@ participate as signature configurations in the JWT validation.</p>
 </div>
 
 
+<h2 id="jwks">15.3.3.3.1 Validation with remote JWKS</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation/jwks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. You can use a remote JWK Set, A JSON object that represents a set of JWKs, to validate JWT signatures.</p>
+</div>
+<div class="paragraph">
+<p>You can configure a remote JWKS as a signature validator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">micronaut:
+  security:
+    enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            awscognito:
+              url: 'https://cognito-idp.eu-west-1.amazonaws.com/eu-west-XXXX/.well-known/jwks.json'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous snippet creates a <a href="../api/io/micronaut/security/token/jwt/signature/jwks/JwksSignature.html">JwksSignature</a> bean with a <code>awscognito</code> name qualifier.</p>
+</div>
+<div class="paragraph">
+<p>If you want to expose your own JWK Set, read the <a href="#keys">Keys Controller</a> section.</p>
+</div>
+
+
 <h2 id="claimsGeneration">15.3.3.4 Claims Generation</h2>
 
 <div class='contribute-btn'>
@@ -2350,6 +2426,69 @@ See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of t
 </td>
 </tr>
 </table>
+</div>
+
+
+<h2 id="keys">15.6.4 Keys Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/keys.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This controller can only be enabled if you are using JWT authentication.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. The members of the object represent properties of the key, including its value.</p>
+</div>
+<div class="paragraph">
+<p>Meanwhile, a JWK Set is a JSON object that represents a set of JWKs. The JSON object MUST have a "keys" member, which is an array of JWKs.</p>
+</div>
+<div class="paragraph">
+<p>You can enable the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a> to expose an endpoint which returns a JWK Set. You can configure it with:</p>
+</div>
+<a id="io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties" href="#io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysControllerConfigurationProperties.html">KeysControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value "/keys".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Moreover, you will need to provide beans to type <a href="../api/io/micronaut/security/token/jwt/endpoints/JwkProvider.html">JwkProvider</a>.</p>
 </div>
 
 

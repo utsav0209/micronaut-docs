@@ -370,10 +370,15 @@ dependencyManagement {
 <p>The <a href="../api/io/micronaut/security/token/jwt/render/AccessRefreshToken.html">AccessRefreshToken</a> API has been changed to  include <code>tokenType</code> and <code>expiresIn</code>. This change was necessary to comply with the token response <a href="https://tools.ietf.org/html/rfc6749#section-4.1.4.html">RFC 6749</a>.</p>
 </li>
 <li>
-<p>The behavior of the http client in regards to SSL and proxies has changed slightly. If SSL is enabled for the client (which is the default), the proxy settings will not be used. If you are currently using a proxy, disable SSL to keep the previous behavior. This change was required in order to send a request to an https URL through a proxy.</p>
+<p>Route binding behavior for a request argument with a generic type has changed. For routes that take in an <code>HttpRequest&lt;SomeType&gt;</code>, an <code>UnsatisfiedRouteException</code> will be thrown if no body is found in the request. To restore the previous behavior, remove the generic type from the argument.</p>
 <div class="literalblock">
 <div class="content">
-<pre>micronaut.http.client.ssl.enabled: false</pre>
+<pre>public String hello(HttpRequest&lt;Author&gt; request) //requires the body to be present</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest request) //the body will not be read (same as 1.0.x)</pre>
 </div>
 </div>
 </li>

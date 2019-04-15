@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -279,21 +279,27 @@ implements <a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.ht
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#isRunning--">isRunning</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#isKeepAlive--">isKeepAlive</a></span>()</code>
+<div class="block">Most servers provide a way to block such that the server doesn't exit, however some require the creation of a keep alive thread.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#isRunning--">isRunning</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#removeChannel-io.netty.channel.Channel-">removeChannel</a></span>(io.netty.channel.Channel&nbsp;channel)</code>
 <div class="block">Remove a channel from the repository.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#start--">start</a></span>()</code>
 <div class="block">Starts the lifecyle component.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/NettyHttpServer.html#stop--">stop</a></span>()</code>
 <div class="block">Stops the life cycle component.</div>
@@ -489,6 +495,23 @@ public&nbsp;NettyHttpServer(<a href="../../../../../io/micronaut/http/server/net
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isKeepAlive--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isKeepAlive</h4>
+<pre>public&nbsp;boolean&nbsp;isKeepAlive()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html#isKeepAlive--">EmbeddedServer</a></code></span></div>
+<div class="block">Most servers provide a way to block such that the server doesn't exit, however some require the creation of a keep alive thread.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html#isKeepAlive--">isKeepAlive</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/runtime/server/EmbeddedServer.html" title="interface in io.micronaut.runtime.server">EmbeddedServer</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the server should be kept alive.</dd>
+</dl>
+</li>
+</ul>
 <a name="getServerConfiguration--">
 <!--   -->
 </a>

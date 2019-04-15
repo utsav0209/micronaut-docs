@@ -174,7 +174,40 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>As you see in the previous code listing, any endpoint is identified by a combination of pattern
-and an optional HTTP Method</p>
+and an optional HTTP method.</p>
+</div>
+<div class="paragraph">
+<p>If a given request URI matches more than one intercept url map, the one that specifies an http method that matches the request method will be used. If there are multiple mappings that do not specify a method and match the request URI, then the first mapping will be used. For example:</p>
+</div>
+<div class="paragraph">
+<p>The example below defines that all HTTP requests to URIs matching the pattern <code>/v1/myResource/**</code> and using HTTP method <code>GET</code> will be accessible to everyone. Requests matching the same URI pattern but using a different HTTP method than <code>GET</code> require fully authenticated access.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  security:
+    enabled: true
+    intercept-url-map:
+      - pattern: /v1/myResource/**
+        httpMethod: GET <i class="conum" data-value="1"></i><b>(1)</b>
+        access:
+          - isAnonymous()
+      - pattern: /v1/myResource/**
+        access:
+          - isAuthenticated() <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a GET request does not require authentication.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a request that isn&#8217;t GET requires authentication.</td>
+</tr>
+</table>
 </div>
 
 

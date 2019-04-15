@@ -168,11 +168,13 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-introspection"><a href="#introspection"><strong>3.14</strong><span>Bean Introspection</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-annotationMetadata"><a href="#annotationMetadata"><strong>3.15</strong><span>Bean Annotation Metadata</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-beanValidation"><a href="#beanValidation"><strong>3.15</strong><span>Bean Validation</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-springBeans"><a href="#springBeans"><strong>3.16</strong><span>Micronaut Beans And Spring</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-annotationMetadata"><a href="#annotationMetadata"><strong>3.16</strong><span>Bean Annotation Metadata</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-android"><a href="#android"><strong>3.17</strong><span>Android Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springBeans"><a href="#springBeans"><strong>3.17</strong><span>Micronaut Beans And Spring</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-android"><a href="#android"><strong>3.18</strong><span>Android Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-config"><a href="#config"><strong>4</strong><span>Application Configuration</span></a></div>
         
@@ -506,6 +508,8 @@
         
         <div class="toc-item" style="margin-left:30px" id="toc-item-jwtValidation"><a href="#jwtValidation"><strong>15.3.3.3</strong><span>JWT Token Validation</span></a></div>
         
+        <div class="toc-item" style="margin-left:40px" id="toc-item-jwks"><a href="#jwks"><strong>15.3.3.3.1</strong><span>Validation with remote JWKS</span></a></div>
+        
         <div class="toc-item" style="margin-left:30px" id="toc-item-claimsGeneration"><a href="#claimsGeneration"><strong>15.3.3.4</strong><span>Claims Generation</span></a></div>
         
         <div class="toc-item" style="margin-left:30px" id="toc-item-render"><a href="#render"><strong>15.3.3.5</strong><span>Token Render</span></a></div>
@@ -527,6 +531,8 @@
         <div class="toc-item" style="margin-left:20px" id="toc-item-logout"><a href="#logout"><strong>15.6.2</strong><span>Logout Controller</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-refresh"><a href="#refresh"><strong>15.6.3</strong><span>Refresh Controller</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-keys"><a href="#keys"><strong>15.6.4</strong><span>Keys Controller</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-retrievingAuthenticatedUser"><a href="#retrievingAuthenticatedUser"><strong>15.7</strong><span>Retrieve the authenticated user</span></a></div>
         
@@ -674,481 +680,9 @@
 <p>Micronaut 1.2.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_modularization">Modularization</h3>
+<h3 id="_native_bean_validation_support">Native Bean Validation Support</h3>
 <div class="paragraph">
-<p>Micronaut is now modular with parts of Micronaut being shifted into sub-projects. See the following links for new sub-projects that now have independent release cycles outside of Micronaut core:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-kafka/1.1.x/guide/index.html">Micronaut Kafka</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-micrometer/1.1.x/guide/index.html">Micronaut Micrometer</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-groovy/1.1.x/guide/index.html">Micronaut Groovy</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-sql/1.1.x/guide/index.html">Micronaut SQL</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-mongodb/1.1.x/guide/index.html">Micronaut MongoDB</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-neo4j/1.1.x/guide/index.html">Micronaut Neo4j</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-redis/1.1.x/guide/index.html">Micronaut Redis</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-rabbitmq/1.1.x/guide/index.html">Micronaut RabbitMQ</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-test/latest/guide/index.html">Micronaut Test</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-netflix/latest/guide/index.html">Micronaut Netflix</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html">Micronaut AWS</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-grpc/latest/guide/index.html">Micronaut GRPC</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html">Micronaut Flyway</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html">Micronaut Liquibase</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/index.html">Micronaut Elasticsearch</a></p>
-</li>
-<li>
-<p><a href="https://micronaut-projects.github.io/micronaut-graphql/latest/guide/index.html">Micronaut GraphQL</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_file_watch_and_server_restart">File Watch and Server Restart</h3>
-<div class="paragraph">
-<p>A new <a href="#automaticRestart">Automatic Restart</a> feature is included that allows the server to restart if a change occurs to a file. This feature can be used both in production and at development time to achieve automatic application restarts when changing source code (when combined with a third party tool such as Gradle or Kubernetes in production).</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features file-watch
-$ cd my-app
-$ ./gradlew run --continuous</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_grpc_support">GRPC Support</h3>
-<div class="paragraph">
-<p>Support for creating <a href="https://grpc.io/">GRPC</a> + Micronaut applications has been added.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-grpc/latest/guide/">Micronaut GRPC</a> documentation for more information and example applications.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>Use the CLI to quickly create a GRPC application.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>mn create-app helloworld --profile grpc --lang java --build gradle</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_rabbitmq_support">RabbitMQ Support</h3>
-<div class="paragraph">
-<p>Support for creating Message-Driven Microservices with <a href="https://www.rabbitmq.com">RabbitMQ</a> has been added.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>Use the CLI to quickly create a RabbitMQ application.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>mn create-app hellorabbit --features rabbitmq</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-rabbitmq/latest/guide/">Micronaut RabbitMQ</a> documentation for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graphql_support">GraphQL Support</h3>
-<div class="paragraph">
-<p>Support for creating <a href="https://graphql.org/">GraphQL</a> + Micronaut applications has been added.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-graphql/latest/guide/">Micronaut GraphQL</a> documentation for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_compile_time_bean_introspection">Compile Time Bean Introspection</h3>
-<div class="paragraph">
-<p>A compilation time replacement for <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html">Introspector</a> has been added which allows introspecting and creating bean instances without using reflection, improving performance, memory consumption and GraalVM support.</p>
-</div>
-<div class="paragraph">
-<p>See the new section on <a href="#introspection">Bean Introspection</a> for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cold_start_and_performance_improvements">Cold Start and Performance Improvements</h3>
-<div class="paragraph">
-<p>Micronaut 1.1 cold start performance has been improved through a variety of optimizations including compilation time indexing of common bean types. Users should see superior cold start performance for both Microservices and Functions.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aws_api_gateway_proxy_support">AWS API Gateway Proxy Support</h3>
-<div class="paragraph">
-<p>Support for AWS API Gateway Proxy has been added allowing AWS Lambda&#8217;s to be defined as regular controllers. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Gateway Proxy Support</a> for more information and links to examples.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features aws-api-gateway</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graalvm_native_improvements">GraalVM Native Improvements</h3>
-<div class="paragraph">
-<p>Support for GraalVM Substrate (<code>nativeimage</code>) has been improved in a number of different ways.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Framework Improvements</strong> - Framework level dynamic classloading and reflection has been completely removed thus making it easier to get applications running on GraalVM <code>nativeimage</code> and reducing the number of customizations necessary.</p>
-</li>
-<li>
-<p><strong>Build Time Reflection Data</strong> - Thanks to the aforementioned feature, the older <code>GraalClassLoadingAnalyzer</code> runtime step has been removed and replaced by build time generation of <code>reflection-config.json</code> for classes that do require it (typically third party libraries).</p>
-</li>
-<li>
-<p><strong>Simplified Image Generation</strong> - You can now generate a native image with just <code>native-image --class-path myjar.jar</code> without any additional flags. Since Micronaut now computes the appropriate GraalVM configuration at compilation time.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_google_cloud_platform_gcp_support">Google Cloud Platform (GCP) Support</h3>
-<div class="paragraph">
-<p>A new <a href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/">Google Cloud Configuration</a> is available that adds general support for GCP and integration with Stackdriver Trace for distributed tracing.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aws_lambda_custom_runtime_graalvm_support">AWS Lambda Custom Runtime + GraalVM Support</h3>
-<div class="paragraph">
-<p>Support for creating AWS API Gateway applications (see above) that are compiled into GraalVM native images and run using an AWS Lambda Custom Runtime has been added. This reduces cold starts on Lambda to 100-200ms.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features aws-api-gateway-graal</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aws_lambda_alexa_skill_support">AWS Lambda Alexa Skill Support</h3>
-<div class="paragraph">
-<p>Support for creating <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#alexa">Alexa Skills with Micronaut</a> has been added.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>You can create Alexa functions with the CLI. Use the <code>-lang</code> parameter to specify <code>java</code>, <code>kotlin</code> or <code>groovy</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-function hello-alexa --provider alexa</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_test_templates">Micronaut Test Templates</h3>
-<div class="paragraph">
-<p>The CLI has been updated to generate tests that use <a href="https://micronaut-projects.github.io/micronaut-test/latest/guide/index.html">Micronaut Test</a> for JUnit 5 and Spock.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micrometer_1_1_and_timed_support">Micrometer 1.1 and @Timed Support</h3>
-<div class="paragraph">
-<p>Micrometer has been upgraded to 1.1 and support for <a href="https://micrometer.io/docs/concepts#_the_code_timed_code_annotation">@Timed</a> AOP advice added.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features micrometer</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_kafka_2_1_and_kafka_improvements">Kafka 2.1 and Kafka Improvements</h3>
-<div class="paragraph">
-<p>Kafka support has been improved with the release of <a href="https://micronaut-projects.github.io/micronaut-kafka/1.1.x/guide/">Micronaut Kafka</a> 1.1 including supports for metrics, distributed tracing and Kafka 2.1.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_api_versioning_support">API Versioning Support</h3>
-<div class="paragraph">
-<p>API versioning is now supported. See the <a href="#apiVersioning">API Versioning</a> documentation for more information on how to use this feature. Thanks for <a href="https://github.com/BogdanOros">Bogdan Oros</a> for contributing this feature.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_jackson_code_jsonview_code_support">Jackson <code>@JsonView</code> Support</h3>
-<div class="paragraph">
-<p>Support for using <code>@JsonView</code> on controller methods has been added can be optionally enabled by setting <code>jackson.json-view.enabled</code> to <code>true</code> in <code>application.yml</code>. Thanks to <a href="https://github.com/mmindenhall">Mark Mindenhall</a> for contributing this feature.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_support_for_spring_cloud_config_server">Support for Spring Cloud Config Server</h3>
-<div class="paragraph">
-<p>If you are already using <a href="https://spring.io/projects/spring-cloud-config">Spring Config Server</a> then Micronaut now features native integration for distributed configuration.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="#distributedConfigurationSpringCloud">Documentation on Distributed Configuration with Spring Cloud Config</a> for more information.</p>
-</div>
-<div class="paragraph">
-<p>Thanks to <a href="https://github.com/thiagolocatelli">Thiago Locatelli</a> and <a href="https://github.com/MichelSchudel">Michel Schudel</a> for contributing this feature.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_refactoring_of_file_responses">Refactoring of File Responses</h3>
-<div class="paragraph">
-<p>In an effort to make a more consistent and understandable API, some methods and classes related to sending file responses have been deprecated. <a href="../api/io/micronaut/http/server/types/files/SystemFile.html">SystemFile</a> is the replacement for <a href="../api/io/micronaut/http/server/types/files/AttachedFile.html">AttachedFile</a> and the constructors of <a href="../api/io/micronaut/http/server/types/files/StreamedFile.html">StreamedFile</a> have been deprecated in favor of new constructors that better convey the intended functionality.</p>
-</div>
-<div class="paragraph">
-<p>Note that <a href="../api/io/micronaut/http/server/types/files/SystemFile.html">SystemFile</a> behaves differently from <a href="../api/io/micronaut/http/server/types/files/AttachedFile.html">AttachedFile</a> in that responses are by default sent inline instead of attached. In addition, support for sending attached responses has been added to <a href="../api/io/micronaut/http/server/types/files/StreamedFile.html">StreamedFile</a>. The following methods can be used to attach a system or streamed file.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="../api/io/micronaut/http/server/types/files/StreamedFile.html#attach-java.lang.String-">StreamedFile#attach(String)</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/http/server/types/files/SystemFile.html#attach--">SystemFile#attach()</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/http/server/types/files/SystemFile.html#attach-java.lang.String-">SystemFile#attach(String)</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_support_for_freemarker_views">Support for Freemarker Views</h3>
-<div class="paragraph">
-<p>Support for rendering <a href="#freemarker">Freemarker Views</a> has been added. Thanks to <a href="https://github.com/jerolba">Jeronimo López</a> for contributing this feature.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_constraint_bean_support">Constraint Bean Support</h3>
-<div class="paragraph">
-<p>For those using the <code>micronaut-hibernate-validator</code> configuration, constraints will now be attempted to be retrieved from the bean context. This means you can now use dependency injection in your custom constraints.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_support_for_jcache_caching">Support for JCache Caching</h3>
-<div class="paragraph">
-<p>Support has been added for the JCache specification. If you define a <code>javax.cache.CacheManager</code> bean it will be used for caching. For example:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
-import io.micronaut.context.annotation.Factory;
-
-import javax.cache.CacheManager;
-import javax.cache.Caching;
-import javax.cache.configuration.MutableConfiguration;
-import javax.inject.Singleton;
-
-@Factory
-class CacheFactory {
-
-    @Singleton
-    CacheManager cacheManager() {
-        CacheManager cacheManager = Caching.getCachingProvider()
-                .getCacheManager();
-        cacheManager.createCache("my-cache", new MutableConfiguration());
-        return cacheManager;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
-
-import javax.cache.CacheManager
-import javax.cache.Caching
-import javax.cache.configuration.MutableConfiguration
-import javax.inject.Singleton
-
-@Factory
-class CacheFactory {
-
-    @Singleton
-    CacheManager cacheManager() {
-        CacheManager cacheManager = Caching.cachingProvider.cacheManager
-        cacheManager.createCache("my-cache", new MutableConfiguration())
-        cacheManager
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
-
-import javax.cache.CacheManager
-import javax.cache.Caching
-import javax.cache.configuration.MutableConfiguration
-import javax.inject.Singleton
-
-@Factory
-class CacheFactory {
-
-    @Singleton
-    fun cacheManager(): CacheManager {
-        val cacheManager = Caching.getCachingProvider().cacheManager
-        cacheManager.createCache("my-cache", MutableConfiguration&lt;Any, Any&gt;())
-        return cacheManager
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_support_for_jasync_sql">Support for JAsync SQL</h3>
-<div class="paragraph">
-<p>Support for <a href="https://micronaut-projects.github.io/micronaut-sql/1.1.x/guide/index.html#jasync">JAsync SQL</a> has been added, which includes non-blocking drivers for both Postgres and MySQL. Thanks to <a href="https://github.com/oshai">Ohad Shai</a> for contributing this feature.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_major_improvements_for_multipart_file_uploads">Major Improvements for Multipart File Uploads</h3>
-<div class="paragraph">
-<p>Several issues and improvements have been made in regards to file uploads in comparison to the previous version of Micronaut. These fixes have been substantial enough that they have caused the behavior of uploads to change, however these changes should not break any existing use cases. To summarize the issues:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Routes were not in control of the flow of bytes coming from the client with multipart uploads</p>
-</li>
-<li>
-<p>It was not possible to read and release a chunk of data at a time. The entire upload would be put into memory or disk</p>
-</li>
-<li>
-<p>Mixed (memory/disk with a threshold) uploads are not supported</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The following changes have been implemented:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Routes gain control of the data flow as soon as they are executed. A route cannot be executed until all of its arguments are fulfilled, so data will reside on memory or disk until the route can be executed.</p>
-</li>
-<li>
-<p>After processing a chunk of data it is immediately released. For memory uploads this means the data is immediately freed. For disk uploads the data remains on disk until after processing.</p>
-</li>
-<li>
-<p>Two new configuration options are available to support mixed uploads: <code>micronaut.server.multipart.mixed</code> and <code>micronaut.server.multipart.threshold</code>. When data needs to be buffered, mixed uploads will initially store data in memory. Once the threshold is reached, the data will be erased from memory and moved entirely onto disk.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_option_to_disable_environment_detection">Option to Disable Environment Detection</h3>
-<div class="paragraph">
-<p>Environment detection can be disabled through a method on the application context builder, system property, or evnironment variable.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="#environments">Environment</a> documentation for more information.</p>
+<p>Hibernate Validator is no longer a required dependency, with a new <a href="#beanValidation">native implementation of Bean Validation</a> available that is reflection free and supports reactive and AST level validations now available.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1159,73 +693,7 @@ class CacheFactory {
 <p>Groovy <code>2.5.4</code> &#8594; <code>2.5.6</code></p>
 </li>
 <li>
-<p>Gradle <code>4.10.2</code> &#8594; <code>5.1.1</code> (CLI Only)</p>
-</li>
-<li>
-<p>Kafka <code>2.0.1</code> &#8594; <code>2.1.1</code></p>
-</li>
-<li>
-<p>Micrometer <code>1.0.6</code> &#8594; <code>1.1.2</code></p>
-</li>
-<li>
-<p>Reactive Streams <code>1.0.1</code> &#8594; <code>1.0.2</code></p>
-</li>
-<li>
-<p>Jackson <code>2.9.7</code> &#8594; <code>2.9.8</code></p>
-</li>
-<li>
-<p>Nimbus JOSE+JWT  <code>6.0.2</code> &#8594; <code>6.8</code></p>
-</li>
-<li>
-<p>Spring <code>5.0.10.RELEASE</code> &#8594; <code>5.1.4.RELEASE</code></p>
-</li>
-<li>
-<p>Reactor <code>3.2.0.RELEASE</code> &#8594; <code>3.2.5.RELEASE</code></p>
-</li>
-<li>
-<p>RxJava 2 <code>2.2.2</code> &#8594; <code>2.2.6</code></p>
-</li>
-<li>
-<p>Reactive Postgres <code>0.10.5</code> &#8594; <code>0.11.2</code></p>
-</li>
-<li>
-<p>GORM <code>6.1.8.RELEASE</code> &#8594; <code>7.0.0.RC1</code></p>
-</li>
-<li>
-<p>Hibernate <code>5.3.7.Final</code> &#8594; <code>5.4.0.Final</code></p>
-</li>
-<li>
-<p>Hikari <code>2.7.9</code> &#8594; <code>3.3.0</code></p>
-</li>
-<li>
-<p>Commons DBCP 2 <code>2.1.1</code> &#8594; <code>2.5.0</code></p>
-</li>
-<li>
-<p>Tomcat Pool <code>9.0.1</code> &#8594; <code>9.0.14</code></p>
-</li>
-<li>
-<p>Neo4j Java Driver <code>1.6.4</code> &#8594; <code>1.7.2</code></p>
-</li>
-<li>
-<p>Mongo Java Driver <code>3.8.0</code> &#8594; <code>3.10.0</code></p>
-</li>
-<li>
-<p>Mongo Reactive Driver <code>1.8.0</code> &#8594; <code>1.10.0</code></p>
-</li>
-<li>
-<p>Redis Lettuce Driver <code>5.0.4.RELEASE</code> &#8594; <code>5.1.3.RELEASE</code></p>
-</li>
-<li>
-<p>Jaeger <code>0.31.0</code> &#8594; <code>0.33.1</code></p>
-</li>
-<li>
-<p>Zipkin Reporter <code>2.7.9</code> &#8594; <code>2.8.0</code></p>
-</li>
-<li>
-<p>Brave Instrumentation HTTP <code>5.4.2</code> &#8594; <code>5.6.1</code></p>
-</li>
-<li>
-<p>Brave Opentracing &#8594; <code>0.33.3</code> &#8594; <code>0.33.10</code></p>
+<p>TODO</p>
 </li>
 </ul>
 </div>
@@ -1758,46 +1226,31 @@ Visual Studio Code support currently only works for Maven builds.
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.env.Environment;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.server.EmbeddedServer;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class HelloControllerSpec {
-    private static EmbeddedServer server;
-    private static HttpClient client;
 
-    @BeforeClass
-    public static void setupServer() {
+@MicronautTest
+class HelloControllerSpec {
+    @Inject
+    EmbeddedServer server; <b class="conum">(1)</b>
 
-        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
-
-        client = server
-                .getApplicationContext()
-                .createBean(HttpClient.class, server.getURL());<b class="conum">(2)</b>
-    }
-
-    @AfterClass
-    public static void stopServer() {
-        if (client != null) {
-            client.stop();
-        }
-        if (server != null) {
-            server.stop();
-        }
-    }
+    @Inject
+    @Client("/")
+    HttpClient client; <b class="conum">(2)</b>
 
     @Test
-    public void testHelloWorldResponse() {
+    void testHelloWorldResponse() {
         String response = client.toBlocking() <b class="conum">(3)</b>
                 .retrieve(HttpRequest.GET("/hello"));
         assertEquals("Hello World", response); //) <b class="conum">(4)</b>
@@ -1809,21 +1262,22 @@ public class HelloControllerSpec {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
+import javax.inject.Inject
 
 
+
+@MicronautTest
 class HelloControllerSpec extends Specification {
+    @Inject
+    EmbeddedServer embeddedServer <b class="conum">(1)</b>
 
-    @Shared
-    @AutoCleanup
-    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
-
-    @Shared
-    @AutoCleanup
-    HttpClient client = HttpClient.create(embeddedServer.URL) <b class="conum">(2)</b>
+    @Inject
+    @Client("/")
+    HttpClient client <b class="conum">(2)</b>
 
     void "test hello world response"() {
         expect:
@@ -1835,35 +1289,25 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
-import io.micronaut.context.env.Environment
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Property
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
 
 
-class HelloControllerSpec() {
-    lateinit var server: EmbeddedServer
-    lateinit var client: HttpClient
 
-    @BeforeTest
-    fun setup() {
+@MicronautTest
+class HelloControllerSpec {
+    @Inject
+    lateinit var server: EmbeddedServer <b class="conum">(1)</b>
 
-        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
-
-        client = server
-                .getApplicationContext()
-                .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
-    }
-
-    @AfterTest
-    fun teardown() {
-        client?.close()
-        server?.close()
-    }
+    @Inject
+    @field:Client("/")
+    lateinit var client: HttpClient <b class="conum">(2)</b>
 
     @Test
     fun testHelloWorldResponse() {
@@ -1963,27 +1407,15 @@ interface HelloClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class HelloClientSpec  {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.test.annotation.MicronautTest;
+import javax.inject.Inject;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private static EmbeddedServer server;
-    private static HelloClient client;
+@MicronautTest <b class="conum">(1)</b>
+public class HelloClientSpec  {
 
-    @BeforeClass
-    public static void setupServer() {
-
-        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
-
-        client = server
-                .getApplicationContext()
-                .getBean(HelloClient.class);<b class="conum">(2)</b>
-    }
-
-    @AfterClass
-    public static void stopServer() {
-        if (server != null) {
-            server.stop();
-        }
-    }
+    @Inject
+    HelloClient client; <b class="conum">(2)</b>
 
     public void testHelloWorldResponse(){
         assertEquals("Hello World", client.hello().blockingGet());<b class="conum">(3)</b>
@@ -1993,14 +1425,15 @@ interface HelloClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class HelloClientSpec extends Specification {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.test.annotation.MicronautTest
+import spock.lang.Specification
 
-    @Shared @AutoCleanup EmbeddedServer embeddedServer =
-        ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+import javax.inject.Inject
 
-    @Shared HelloClient client = embeddedServer
-                                        .applicationContext
-                                        .getBean(HelloClient) <b class="conum">(2)</b>
+@MicronautTest <b class="conum">(1)</b>
+class HelloClientSpec extends Specification {
+
+    @Inject HelloClient client <b class="conum">(2)</b>
 
 
     void "test hello world response"() {
@@ -2013,25 +1446,17 @@ interface HelloClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Property
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
 
-    lateinit var server: EmbeddedServer
-    lateinit var client: HelloClient
+@MicronautTest <b class="conum">(1)</b>
+class HelloClientSpec {
 
-    @BeforeTest
-    fun setup() {
-
-        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
-
-        client = server!!
-                .applicationContext
-                .getBean(HelloClient::class.java)<b class="conum">(2)</b>
-    }
-
-    @AfterTest
-    fun teardown() {
-        server?.close()
-    }
+    @Inject
+    lateinit var client: HelloClient <b class="conum">(2)</b>
 
     @Test
     fun testHelloWorldResponse() {
@@ -2044,11 +1469,11 @@ interface HelloClient {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/runtime/server/EmbeddedServer.html">EmbeddedServer</a> is run</td>
+<td>The <code>@MicronautTest</code> annotation is used to define the test</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>HelloClient</code> is retrieved from the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a></td>
+<td>The <code>HelloClient</code> is injected from the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -3031,16 +2456,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy.RUNTIME
 import javax.inject.Singleton
 
 
 @Requires(classes = [Car::class]) <b class="conum">(1)</b>
 @Singleton <b class="conum">(2)</b>
-@Documented
-@Retention(RUNTIME)
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Driver</code></pre>
 </div>
 </div>
@@ -4399,7 +3821,781 @@ Currently only bean properties (private field with public getter/setter) are sup
 </div>
 
 
-<h2 id="annotationMetadata">3.15 Bean Annotation Metadata</h2>
+<h2 id="beanValidation">3.15 Bean Validation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanValidation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since Micronaut 1.2, Micronaut has built-in support for validating beans that are annotated with <code>javax.validation</code> annotations. As a minimum you should include the <code>micronaut-validation</code> module as a compile dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Note that Micronaut&#8217;s implementation is not currently fully compliant with the <a href="https://beanvalidation.org/2.0/spec/">Bean Validator specification</a> as the specification heavily relies on reflection-based APIs.</p>
+</div>
+<div class="paragraph">
+<p>The following features are unsupported at this time:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Annotations on generic argument types since only the Java language supports this feature.</p>
+</li>
+<li>
+<p>Any interaction with the <a href="https://beanvalidation.org/2.0/spec/#constraintmetadata">constraint metadata API</a>, since Micronaut uses compilation time metadata.</p>
+</li>
+<li>
+<p>XML-based configuration</p>
+</li>
+<li>
+<p>Instead of you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> to define custom constraints, which supports validating annotations as compilation time.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>However, Micronaut&#8217;s implementation includes the following benefits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reflection and Runtime Proxy free validation resulting in reduced memory consumption</p>
+</li>
+<li>
+<p>Smaller JAR size since Hibernate Validator adds another 1.4MB</p>
+</li>
+<li>
+<p>Faster startup since Hibernate Validator adds 200ms startup overhead</p>
+</li>
+<li>
+<p>Configurability via Annotation Metadata</p>
+</li>
+<li>
+<p>Support for Reactive Bean Validation</p>
+</li>
+<li>
+<p>Support for validating the source AST at compilation time</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you require full Bean Validator 2.0 compliance you can add the <code>micronaut-hibernate-validator</code> module to your classpath, which will replace Micronaut&#8217;s implementation.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_validating_bean_methods">Validating Bean Methods</h3>
+<div class="paragraph">
+<p>You can validate methods of any class declared as a Micronaut bean simply by using the <code>javax.validation</code> annotation as arguments:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+import javax.validation.constraints.NotBlank;
+
+@Singleton
+public class PersonService {
+    public void sayHello(@NotBlank String name) {
+        System.out.println("Hello " + name);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+@Singleton
+class PersonService {
+
+    void sayHello(@NotBlank String name) {
+        println "Hello $name"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+
+@Singleton
+open class PersonService {
+    open fun sayHello(@NotBlank name: String) {
+        println("Hello $name")
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example declares that the <code>@NotBlank</code> annotation should be validated when executing the <code>sayHello</code> method.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you are using Kotlin the class and method must be declared open so that Micronaut can create a compilation time subclass.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a validation error occurs a <code>javax.validation.ConstraintViolationException</code> will be thrown. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject PersonService personService;
+
+    @Test
+    void testThatNameIsValidated() {
+        final ConstraintViolationException exception =
+                assertThrows(ConstraintViolationException.class, () -&gt;
+                personService.sayHello("") <b class="conum">(1)</b>
+        );
+
+        assertEquals("sayHello.name: must not be blank", exception.getMessage()); <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.test.annotation.MicronautTest
+import spock.lang.Specification
+
+import javax.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec extends Specification {
+
+    @Inject PersonService personService
+
+    void "test person name is validated"() {
+        when:"The sayHello method is called with a blank string"
+        personService.sayHello("") <b class="conum">(1)</b>
+
+        then:"A validation error occurs"
+        def e = thrown(ConstraintViolationException)
+        e.message == "sayHello.name: must not be blank" //  <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.*
+
+import javax.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject
+    var personService: PersonService? = null
+
+    @Test
+    fun testThatNameIsValidated() {
+        val exception = assertThrows(ConstraintViolationException::class.java
+        ) { personService!!.sayHello("") } <b class="conum">(1)</b>
+
+        assertEquals("sayHello.name: must not be blank", exception.message) <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The method is called with a blank string</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>An exception occurs</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_data_classes">Validating Data Classes</h3>
+<div class="paragraph">
+<p>If you wish to validation data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Introspected;
+import javax.validation.constraints.*;
+
+@Introspected
+public class Person {
+    private String name;
+    @Min(18)
+    private int age;
+
+    @NotBlank
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Introspected
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+class Person {
+    @NotBlank
+    String name
+    @Min(18l)
+    int age
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Introspected
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+data class Person(
+    @field:NotBlank var name: String,
+    @field:Min(18) var age: Int
+)</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation can be used as a meta-annotation and common annotations like <code>@javax.persistence.Entity</code> are treated as <code>@Introspected</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example defines a class called <code>Person</code> that has 2 properties (<code>name</code> and <code>age</code>) that have constraints applied to them. Note that in Java the annotations can be on the field or the getter and with Kotlin data classes the annotation should target the field.</p>
+</div>
+<div class="paragraph">
+<p>If you wish to validate the class manually then you can inject an instance of <a href="../api/io/micronaut/validation/validator/Validator.html">Validator</a>:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject
+Validator validator;
+
+@Test
+void testThatPersonIsValidWithValidator() {
+    Person person = new Person();
+    person.setName("");
+    person.setAge(10);
+
+    final Set&lt;ConstraintViolation&lt;Person&gt;&gt; constraintViolations = validator.validate(person);
+
+    assertEquals(2, constraintViolations.size()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Inject Validator validator
+
+void "test person is validated with validator"() {
+    when:"The person is validated"
+    def constraintViolations = validator.validate(new Person(name: "", age: 10)) <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    constraintViolations.size() == 2 //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var validator: Validator
+
+@Test
+fun testThatPersonIsValidWithValidator() {
+    val person = Person("", 10)
+    val constraintViolations = validator.validate(person)
+
+    assertEquals(2, constraintViolations.size) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The validator is used to validate the person</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The constraint violations are verified</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Alternatively on Bean methods you can use <code>javax.validation.Valid</code> to trigger cascading validation:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class PersonService {
+    public void sayHello(@Valid Person person) {
+        System.out.println("Hello " + person.getName());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class PersonService {
+    void sayHello(@Valid Person person) {
+        println "Hello $person.name"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class PersonService {
+    open fun sayHello(@Valid person: Person) {
+        println("Hello ${person.name}")
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>PersonService</code> will now validate the <code>Person</code> class when invoked:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject
+PersonService personService;
+
+@Test
+void testThatPersonIsValid() {
+    Person person = new Person();
+    person.setName("");
+    person.setAge(10);
+
+    final ConstraintViolationException exception =
+            assertThrows(ConstraintViolationException.class, () -&gt;
+                    personService.sayHello(person) <b class="conum">(1)</b>
+            );
+
+    assertEquals(2, exception.getConstraintViolations().size()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Inject PersonService personService
+
+void "test person name is validated"() {
+    when:"The sayHello method is called with an invalid person"
+    personService.sayHello(new Person(name: "", age: 10)) <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.constraintViolations.size() == 2 //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var personService: PersonService
+
+@Test
+fun testThatPersonIsValid() {
+    val person = Person("", 10)
+    val exception = assertThrows(ConstraintViolationException::class.java  <b class="conum">(1)</b>
+    ) { personService.sayHello(person) }
+
+    assertEquals(2, exception.constraintViolations.size) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A validated method is invoked</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The constraint violations are verified</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_configuration_properties">Validating Configuration Properties</h3>
+<div class="paragraph">
+<p>You can also validate the properties of classes that are annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> to ensure configuration is correct.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is recommended that you annotate <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> that features validation with <a href="../api/io/micronaut/context/annotation/Context.html">@Context</a> to ensure that the validation occurs at startup time.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defining_additional_constraints">Defining Additional Constraints</h3>
+<div class="paragraph">
+<p>To define additional constraints you can define a new annotation, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.validation.Constraint;
+import java.lang.annotation.*;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = { }) <b class="conum">(1)</b>
+public @interface DurationPattern {
+
+    String message() default "invalid duration ({validatedValue})"; <b class="conum">(2)</b>
+
+    /**
+     * Defines several constraints on the same element.
+     */
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
+        DurationPattern[] value(); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.validation.Constraint
+import java.lang.annotation.*
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Retention(RUNTIME)
+@Constraint(validatedBy = []) <b class="conum">(1)</b>
+@interface DurationPattern {
+    String message() default "invalid duration ({validatedValue})" <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.validation.Constraint
+
+@Retention(AnnotationRetention.RUNTIME)
+@Constraint(validatedBy = []) <b class="conum">(1)</b>
+annotation class DurationPattern(
+    val message: String = "invalid duration ({validatedValue})" <b class="conum">(2)</b>
+)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The annotation should be annotated with <code>javax.validation.Constraint</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>message</code> template can be provided in a hard coded manner as above. If none is specified Micronaut will try to find a message using <code>ClassName.message</code> using the <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> interface. (optional)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>To support repeated annotations you can define a inner annotation (optional).</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can add messages and message bundles using the <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> and <a href="../api/io/micronaut/context/i18n/ResourceBundleMessageSource.html">ResourceBundleMessageSource</a> classes.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you have defined the annotation you need to implement a <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> that validates the annotation. You can either implement a bean that implements the interace directly or define a factory that returns one or more validators.</p>
+</div>
+<div class="paragraph">
+<p>The latter approach is recommended if you plant to define multiple validators:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Factory;
+import io.micronaut.validation.validator.constraints.ConstraintValidator;
+import javax.inject.Singleton;
+
+@Factory
+public class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator&lt;DurationPattern, CharSequence&gt; durationPatternValidator() {
+        return (value, annotationMetadata, context) -&gt;
+                value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+import javax.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator&lt;DurationPattern, CharSequence&gt; durationPatternValidator() {
+        return { CharSequence value,
+                 AnnotationValue&lt;DurationPattern&gt; annotation,
+                 ConstraintValidatorContext context -&gt;
+            return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+        } as ConstraintValidator&lt;DurationPattern, CharSequence&gt;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Factory
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import javax.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    fun durationPatternValidator() : ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+        return ConstraintValidator { value, annotation, context -&gt;
+            value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example implements a validator that validates any field, parameter etc. that is annotated with <code>DurationPattern</code>, ensuring that the string can be parsed with <code>java.time.Duration.parse</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Generally <code>null</code> is regarded as valid and <code>@NotNull</code> used to constrain a value as not being <code>null</code>. The example above returns regards <code>null</code> as a valid value.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class HolidayService {
+
+    public String startHoliday(@NotBlank String person,
+                        @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration);
+        return "Person " + person + " is off on holiday for " + d.toMinutes() + " minutes";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class HolidayService {
+
+    String startHoliday(@NotBlank String person,
+                        @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration)
+        return "Person $person is off on holiday for ${d.toMinutes()} minutes"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class HolidayService {
+
+    open fun startHoliday( @NotBlank person: String,
+                           @DurationPattern duration: String): String {
+        val d = Duration.parse(duration)
+        val mins = d.toMinutes()
+        return "Person $person is off on holiday for $mins minutes"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To verify the above examples validates the <code>duration</code> parameter you can define a test:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject HolidayService holidayService;
+
+@Test
+void testCustomValidator() {
+    final ConstraintViolationException exception =
+            assertThrows(ConstraintViolationException.class, () -&gt;
+                    holidayService.startHoliday("Fred", "junk")
+            );
+
+    assertEquals("startHoliday.duration: invalid duration (junk)", exception.getMessage()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">void "test test custom validator"() {
+    when:"A custom validator is used"
+    holidayService.startHoliday("Fred", "junk") <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.message == "startHoliday.duration: invalid duration (junk)" //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var holidayService: HolidayService
+
+@Test
+fun testCustomValidator() {
+    val exception = assertThrows(ConstraintViolationException::class.java
+    ) { holidayService.startHoliday("Fred", "junk") }
+
+    assertEquals("startHoliday.duration: invalid duration (junk)", exception.message) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_annotations_at_compilation_time">Validating Annotations at Compilation Time</h3>
+<div class="paragraph">
+<p>You can use Micronaut&#8217;s validator to validate annotation usages at compilation time. To do so you should include <code>micronaut-validation</code> in the annotation processor classpath:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validation_error_messages">Validation Error Messages</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+
+
+<h2 id="annotationMetadata">3.16 Bean Annotation Metadata</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/annotationMetadata.adoc"'>
@@ -4585,7 +4781,7 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 </div>
 
 
-<h2 id="springBeans">3.16 Micronaut Beans And Spring</h2>
+<h2 id="springBeans">3.17 Micronaut Beans And Spring</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/springBeans.adoc"'>
@@ -4650,7 +4846,7 @@ class ByAnnotationTypeConfig {
 </div>
 
 
-<h2 id="android">3.17 Android Support</h2>
+<h2 id="android">3.18 Android Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/android.adoc"'>
@@ -7611,46 +7807,29 @@ object Application {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.env.Environment;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.server.EmbeddedServer;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@MicronautTest
+class HelloControllerSpec {
+    @Inject
+    EmbeddedServer server; <b class="conum">(1)</b>
 
-public class HelloControllerSpec {
-    private static EmbeddedServer server;
-    private static HttpClient client;
-
-    @BeforeClass
-    public static void setupServer() {
-
-        server = ApplicationContext.run(EmbeddedServer.class) <b class="conum">(1)</b>
-
-        client = server
-                .getApplicationContext()
-                .createBean(HttpClient.class, server.getURL());<b class="conum">(2)</b>
-    }
-
-    @AfterClass
-    public static void stopServer() {
-        if (client != null) {
-            client.stop();
-        }
-        if (server != null) {
-            server.stop();
-        }
-    }
+    @Inject
+    @Client("/")
+    HttpClient client; <b class="conum">(2)</b>
 
     @Test
-    public void testHelloWorldResponse() {
+    void testHelloWorldResponse() {
         String response = client.toBlocking() <b class="conum">(3)</b>
                 .retrieve(HttpRequest.GET("/hello"));
         assertEquals("Hello World", response); //) <b class="conum">(4)</b>
@@ -7662,21 +7841,20 @@ public class HelloControllerSpec {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
+import javax.inject.Inject
 
-
+@MicronautTest
 class HelloControllerSpec extends Specification {
+    @Inject
+    EmbeddedServer embeddedServer <b class="conum">(1)</b>
 
-    @Shared
-    @AutoCleanup
-    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
-
-    @Shared
-    @AutoCleanup
-    HttpClient client = HttpClient.create(embeddedServer.URL) <b class="conum">(2)</b>
+    @Inject
+    @Client("/")
+    HttpClient client <b class="conum">(2)</b>
 
     void "test hello world response"() {
         expect:
@@ -7688,35 +7866,23 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
-import io.micronaut.context.env.Environment
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Property
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
 
+@MicronautTest
+class HelloControllerSpec {
+    @Inject
+    lateinit var server: EmbeddedServer <b class="conum">(1)</b>
 
-class HelloControllerSpec() {
-    lateinit var server: EmbeddedServer
-    lateinit var client: HttpClient
-
-    @BeforeTest
-    fun setup() {
-
-        server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
-
-        client = server
-                .getApplicationContext()
-                .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
-    }
-
-    @AfterTest
-    fun teardown() {
-        client?.close()
-        server?.close()
-    }
+    @Inject
+    @field:Client("/")
+    lateinit var client: HttpClient <b class="conum">(2)</b>
 
     @Test
     fun testHelloWorldResponse() {
@@ -8273,7 +8439,6 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
-@Validated
 public class BookmarkController {
 
 @Get("/bookmarks/list{?paginationCommand*}")
@@ -8488,6 +8653,18 @@ bind the method arguments from the body.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> should be declared parametrized with a concrete generic type if the request body is needed, e.g. <code>HttpRequest&lt;MyClass&gt; request</code>. The body may not be available from the request otherwise.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>In addition, for full control over the emitted HTTP response you can use the static factory methods of the <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> class which return a <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a>.</p>
 </div>
@@ -9322,8 +9499,11 @@ public class EmailController {
  */
 package io.micronaut.docs.datavalidation.pogo;
 
+import io.micronaut.core.annotation.Introspected;
+
 import javax.validation.constraints.NotBlank;
 
+@Introspected
 public class Email {
 
     @NotBlank <i class="conum" data-value="1"></i><b>(1)</b>
@@ -21226,10 +21406,10 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc14 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc15 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-14-grl
-$ sdk use java 1.0.0-rc-14-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-15-grl
+$ sdk use java 1.0.0-rc-15-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23130,7 +23310,40 @@ public class ExampleController {
 </div>
 <div class="paragraph">
 <p>As you see in the previous code listing, any endpoint is identified by a combination of pattern
-and an optional HTTP Method</p>
+and an optional HTTP method.</p>
+</div>
+<div class="paragraph">
+<p>If a given request URI matches more than one intercept url map, the one that specifies an http method that matches the request method will be used. If there are multiple mappings that do not specify a method and match the request URI, then the first mapping will be used. For example:</p>
+</div>
+<div class="paragraph">
+<p>The example below defines that all HTTP requests to URIs matching the pattern <code>/v1/myResource/**</code> and using HTTP method <code>GET</code> will be accessible to everyone. Requests matching the same URI pattern but using a different HTTP method than <code>GET</code> require fully authenticated access.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  security:
+    enabled: true
+    intercept-url-map:
+      - pattern: /v1/myResource/**
+        httpMethod: GET <i class="conum" data-value="1"></i><b>(1)</b>
+        access:
+          - isAnonymous()
+      - pattern: /v1/myResource/**
+        access:
+          - isAuthenticated() <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a GET request does not require authentication.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Accessing <code>/v1/myResource/**</code> with a request that isn&#8217;t GET requires authentication.</td>
+</tr>
+</table>
 </div>
 
 
@@ -24104,6 +24317,43 @@ participate as signature configurations in the JWT validation.</p>
 </div>
 
 
+<h2 id="jwks">15.3.3.3.1 Validation with remote JWKS</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/authenticationStrategies/jwt/jwtValidation/jwks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. You can use a remote JWK Set, A JSON object that represents a set of JWKs, to validate JWT signatures.</p>
+</div>
+<div class="paragraph">
+<p>You can configure a remote JWKS as a signature validator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">micronaut:
+  security:
+    enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            awscognito:
+              url: 'https://cognito-idp.eu-west-1.amazonaws.com/eu-west-XXXX/.well-known/jwks.json'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous snippet creates a <a href="../api/io/micronaut/security/token/jwt/signature/jwks/JwksSignature.html">JwksSignature</a> bean with a <code>awscognito</code> name qualifier.</p>
+</div>
+<div class="paragraph">
+<p>If you want to expose your own JWK Set, read the <a href="#keys">Keys Controller</a> section.</p>
+</div>
+
+
 <h2 id="claimsGeneration">15.3.3.4 Claims Generation</h2>
 
 <div class='contribute-btn'>
@@ -24918,6 +25168,69 @@ See <a href="https://tools.ietf.org/html/rfc6749#section-10.4">section 10.4 of t
 </td>
 </tr>
 </table>
+</div>
+
+
+<h2 id="keys">15.6.4 Keys Controller</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/security/endpoints/keys.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This controller can only be enabled if you are using JWT authentication.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a> is a JSON object that represents a cryptographic key. The members of the object represent properties of the key, including its value.</p>
+</div>
+<div class="paragraph">
+<p>Meanwhile, a JWK Set is a JSON object that represents a set of JWKs. The JSON object MUST have a "keys" member, which is an array of JWKs.</p>
+</div>
+<div class="paragraph">
+<p>You can enable the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a> to expose an endpoint which returns a JWK Set. You can configure it with:</p>
+</div>
+<a id="io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties" href="#io.micronaut.security.token.jwt.endpoints.KeysControllerConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysControllerConfigurationProperties.html">KeysControllerConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.endpoints.keys.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the <a href="../api/io/micronaut/security/token/jwt/endpoints/KeysController.html">KeysController</a>. Default value "/keys".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Moreover, you will need to provide beans to type <a href="../api/io/micronaut/security/token/jwt/endpoints/JwkProvider.html">JwkProvider</a>.</p>
 </div>
 
 
@@ -27552,10 +27865,15 @@ dependencyManagement {
 <p>The <a href="../api/io/micronaut/security/token/jwt/render/AccessRefreshToken.html">AccessRefreshToken</a> API has been changed to  include <code>tokenType</code> and <code>expiresIn</code>. This change was necessary to comply with the token response <a href="https://tools.ietf.org/html/rfc6749#section-4.1.4.html">RFC 6749</a>.</p>
 </li>
 <li>
-<p>The behavior of the http client in regards to SSL and proxies has changed slightly. If SSL is enabled for the client (which is the default), the proxy settings will not be used. If you are currently using a proxy, disable SSL to keep the previous behavior. This change was required in order to send a request to an https URL through a proxy.</p>
+<p>Route binding behavior for a request argument with a generic type has changed. For routes that take in an <code>HttpRequest&lt;SomeType&gt;</code>, an <code>UnsatisfiedRouteException</code> will be thrown if no body is found in the request. To restore the previous behavior, remove the generic type from the argument.</p>
 <div class="literalblock">
 <div class="content">
-<pre>micronaut.http.client.ssl.enabled: false</pre>
+<pre>public String hello(HttpRequest&lt;Author&gt; request) //requires the body to be present</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest request) //the body will not be read (same as 1.0.x)</pre>
 </div>
 </div>
 </li>
