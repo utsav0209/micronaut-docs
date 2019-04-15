@@ -2717,12 +2717,12 @@ import javax.validation.ConstraintViolationException
 class PersonServiceSpec {
 
     @Inject
-    var personService: PersonService? = null
+    lateinit var personService: PersonService
 
     @Test
     fun testThatNameIsValidated() {
         val exception = assertThrows(ConstraintViolationException::class.java
-        ) { personService!!.sayHello("") } <b class="conum">(1)</b>
+        ) { personService.sayHello("") } <b class="conum">(1)</b>
 
         assertEquals("sayHello.name: must not be blank", exception.message) <b class="conum">(2)</b>
     }
@@ -2745,7 +2745,7 @@ class PersonServiceSpec {
 <div class="sect2">
 <h3 id="_validating_data_classes">Validating Data Classes</h3>
 <div class="paragraph">
-<p>If you wish to validation data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
+<p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -3084,7 +3084,7 @@ You can add messages and message bundles using the <a href="../api/io/micronaut/
 <p>Once you have defined the annotation you need to implement a <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> that validates the annotation. You can either implement a bean that implements the interace directly or define a factory that returns one or more validators.</p>
 </div>
 <div class="paragraph">
-<p>The latter approach is recommended if you plant to define multiple validators:</p>
+<p>The latter approach is recommended if you plan to define multiple validators:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
