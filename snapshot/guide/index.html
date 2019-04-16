@@ -3861,7 +3861,7 @@ Currently only bean properties (private field with public getter/setter) are sup
 <p>Annotations on generic argument types since only the Java language supports this feature.</p>
 </li>
 <li>
-<p>Any interaction with the <a href="https://beanvalidation.org/2.0/spec/#constraintmetadata">constraint metadata API</a>, since Micronaut uses compilation time metadata.</p>
+<p>Any interaction with the <a href="https://beanvalidation.org/2.0/spec/#constraintmetadata">constraint metadata API</a>, since Micronaut uses already computed compilation time metadata.</p>
 </li>
 <li>
 <p>XML-based configuration</p>
@@ -3893,6 +3893,9 @@ Currently only bean properties (private field with public getter/setter) are sup
 </li>
 <li>
 <p>Support for validating the source AST at compilation time</p>
+</li>
+<li>
+<p>Automatic compatibility with GraalVM native without additional configuration</p>
 </li>
 </ul>
 </div>
@@ -4477,7 +4480,7 @@ class MyValidatorFactory {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Generally <code>null</code> is regarded as valid and <code>@NotNull</code> used to constrain a value as not being <code>null</code>. The example above returns regards <code>null</code> as a valid value.
+Generally <code>null</code> is regarded as valid and <code>@NotNull</code> used to constrain a value as not being <code>null</code>. The example above regards <code>null</code> as a valid value.
 </td>
 </tr>
 </table>
@@ -4640,6 +4643,74 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Note that if you wish to allow use of a custom <code>ConstraintValidator</code> at compilation time you should instead define the validator as a class:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.validation.validator.constraints.*;
+import javax.annotation.*;
+
+public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    @Override
+    public boolean isValid(
+            @Nullable CharSequence value,
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+import javax.annotation.*
+
+class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    @Override
+    boolean isValid(
+            @Nullable CharSequence value,
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
+        return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+
+class DurationPatternValidator : ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    override fun isValid(
+            value: CharSequence?,
+            annotationMetadata: AnnotationValue&lt;DurationPattern&gt;,
+            context: ConstraintValidatorContext): Boolean {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to the following requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Define a <code>META-INF/services/io.micronaut.validation.validator.constraints.ConstraintValidator</code> file that references the class.</p>
+</li>
+<li>
+<p>The class should be public and feature a zero argument public constructor</p>
+</li>
+<li>
+<p>The class should be placed on the annotation processor classpath of the project that is to be validated.</p>
+</li>
+</ul>
 </div>
 </div>
 
