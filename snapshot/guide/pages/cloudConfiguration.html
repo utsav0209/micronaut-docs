@@ -242,6 +242,12 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.DIGITAL_OCEAN)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>digitalocean</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/env/Environment.html#ORACLE_CLOUD">ORACLE_CLOUD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Running on <a href="https://cloud.oracle.com/">Oracle Cloud</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(env = Environment.ORACLE_CLOUD)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>oraclecloud</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -275,7 +281,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a>, <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/digitalocean/DigitalOceanInstanceMetadata.html">DigitalOceanInstanceMetadata</a> with metadata found from the cloud provider metadata services.
+Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a>, <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a>,  <a href="../api/io/micronaut/discovery/cloud/digitalocean/DigitalOceanInstanceMetadata.html">DigitalOceanInstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/oraclecloud/OracleCloudInstanceMetadata.html">OracleCloudInstanceMetadata</a> with metadata found from the cloud provider metadata services.
 </td>
 </tr>
 </table>
@@ -320,19 +326,15 @@ Flowable.fromPublisher(
 <p>The <a href="../api/io/micronaut/runtime/server/EmbeddedServerInstance.html">EmbeddedServerInstance</a> is available through event listeners that listen for the <a href="../api/io/micronaut/discovery/event/ServiceStartedEvent.html">ServiceStartedEvent</a>. The <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation makes it easy to listen for the event inside one of your existing beans.</p>
 </div>
 <div class="paragraph">
-<p>For example to get the metadata inside a controller:</p>
+<p>To obtain metadata for the locally running server use an <a href="#events">EventListener</a> for the <a href="../api/io/micronaut/discovery/event/ServiceStartedEvent.html">ServiceStartedEvent</a>:</p>
 </div>
 <div class="listingblock">
+<div class="title">Obtaining Metadata for a Local Server</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
-public class TestController {
-
-    private ServiceInstance serviceInstance;
-
-    @EventListener
-    public void onServiceStarted(ServiceStartedEvent event) {
-        this.serviceInstance = event.getSource();
-    }
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@EventListener
+void onServiceStarted(ServiceStartedEvent event) {
+    ServiceInstance serviceInstance = event.getSource()
+    ConvertibleValues&lt;String&gt; metadata = serviceInstance.metadata
 }</code></pre>
 </div>
 </div>
