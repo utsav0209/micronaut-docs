@@ -632,6 +632,12 @@
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_conditional_beans_with_factories">Conditional Beans with Factories</h3>
+<div class="paragraph">
+<p>The use of <code>@Requires</code> is the preferred method for dealing with conditional beans, however it does not fit all use cases. When using <code>@EachProperty</code> it is common to require additional beans based on the configuration. <code>@EachBean</code> allows a bean to be created for each configuration, however a common use case is creating a bean only if some configuration property condition is met. To allow for this use case, it is now possible to return <code>null</code> from <code>@Factory</code> methods.</p>
+</div>
+</div>
 
 
 <h1 id="quickStart">2 Quick Start</h1>
@@ -2479,7 +2485,7 @@ annotation class Driver</code></pre>
 
 
 <div class="paragraph">
-<p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a>.</p>
+<p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a>.</p>
 </div>
 <div class="paragraph">
 <p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with a bean scope annotation. Which annotation you use depends on what scope you want the bean to be in. See the section on <a href="#scopes">bean scopes</a> for more information.</p>
@@ -2591,6 +2597,76 @@ To allow the resulting bean to participate in the application context shutdown p
 </td>
 </tr>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_nullability">Nullability</h3>
+<div class="paragraph">
+<p>Factory methods can return null to allow for beans to be created conditionally. The use of <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> should always be the preferred method to conditionally create beans and returning null from a factory method should only be done if using <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> is not possible.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {
+    Integer getCylinders();
+}
+@Factory
+public class EngineFactory {
+
+    @EachBean(EngineConfiguration.class)
+    public Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.isEnabled()) {
+            return engineConfiguration::getCylinders;
+        } else {
+            return null;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine {
+    Integer getCylinders()
+}
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration)
+    Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.enabled) {
+            (Engine){ -&gt; engineConfiguration.cylinders }
+        } else {
+            null
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
+    fun getCylinders(): Int
+}
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration::class)
+    fun buildEngine(engineConfiguration: EngineConfiguration): Engine? {
+        return if (engineConfiguration.isEnabled) {
+            object : Engine {
+                override fun getCylinders(): Int {
+                    return engineConfiguration.cylinders!!
+                }
+            }
+        } else {
+            null
+        }
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 
 
