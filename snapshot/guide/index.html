@@ -21463,7 +21463,7 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 <p>A <code>Dockerfile</code> which can be used to construct the native image using Docker and a script <code>docker-build.sh</code> to run it.</p>
 </li>
 <li>
-<p>A <code>native-image.properties</code> configuration file to <code>src/main/resources/META-INF/native-image</code> simplify building the image.</p>
+<p>A <code>native-image.properties</code> configuration file <code>src/main/resources/META-INF/native-image</code> to simplify building the image.</p>
 </li>
 </ol>
 </div>
@@ -21500,34 +21500,25 @@ As of this writing, GraalVM is currently only available for Linux and Mac OS X s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker build . -t hello-world
-$ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble # or ./mvnw package if using Maven
+$ docker build . -t hello-world
+$ docker run -p 8080:8080 hello-world</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Start the Docker container with <code>--network=host</code> makes the application uses the same network as the host so all ports are exposed automatically without needing to map them manually</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>Or use the provided script:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./docker-build.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble # or ./mvnw package if using Maven
+$ ./docker-build.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The provided <code>Dockerfile</code> is a multi-stage dockerfile which builds the project in three steps:</p>
+<p>The provided <code>Dockerfile</code> is a multi-stage dockerfile which builds the project in two steps:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
-<li>
-<p>A Gradle or Maven image will build the project.</p>
-</li>
 <li>
 <p>A GraalVM official image will build the native image.</p>
 </li>
@@ -21536,9 +21527,6 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>With this approach you need to have installed only Docker as it downloads the required images, if necessary.</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_building_a_native_image_without_using_docker">Building a Native Image Without Using Docker</h4>
@@ -21546,10 +21534,10 @@ $ docker run --network=host hello-world <i class="conum" data-value="1"></i><b>(
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc15 with SDKman</div>
+<div class="title">Installing GraalVM 1.0.0-rc16 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-15-grl
-$ sdk use java 1.0.0-rc-15-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-16-grl
+$ sdk use java 1.0.0-rc-16-grl</code></pre>
 </div>
 </div>
 <div class="listingblock">
