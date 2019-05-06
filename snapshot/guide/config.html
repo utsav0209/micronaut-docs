@@ -1041,27 +1041,69 @@ List&lt;URL&gt; urls;</code></pre>
 <div class="paragraph">
 <p>For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">@ConfigurationBuilder Example</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationBuilder
-import io.micronaut.context.annotation.ConfigurationProperties
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationBuilder;
+import io.micronaut.context.annotation.ConfigurationProperties;
 
-@ConfigurationProperties('my.engine') <i class="conum" data-value="1"></i><b>(1)</b>
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 class EngineConfig {
 
-    @ConfigurationBuilder(prefixes = "with") <i class="conum" data-value="2"></i><b>(2)</b>
+    @ConfigurationBuilder(prefixes = "with") <b class="conum">(2)</b>
+    EngineImpl.Builder builder = EngineImpl.builder();
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <b class="conum">(3)</b>
+    CrankShaft.Builder crankShaft = CrankShaft.builder();
+
+    private SparkPlug.Builder sparkPlug = SparkPlug.builder();
+
+    SparkPlug.Builder getSparkPlug() { return this.sparkPlug; }
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug") <b class="conum">(4)</b>
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationBuilder
+import io.micronaut.context.annotation.ConfigurationProperties
+
+@ConfigurationProperties('my.engine') <b class="conum">(1)</b>
+class EngineConfig {
+
+    @ConfigurationBuilder(prefixes = "with") <b class="conum">(2)</b>
     EngineImpl.Builder builder = EngineImpl.builder()
 
-    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <i class="conum" data-value="3"></i><b>(3)</b>
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") <b class="conum">(3)</b>
     CrankShaft.Builder crankShaft = CrankShaft.builder()
 
     SparkPlug.Builder sparkPlug = SparkPlug.builder()
 
-    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug")
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug") <b class="conum">(4)</b>
     void setSparkPlug(SparkPlug.Builder sparkPlug) {
         this.sparkPlug = sparkPlug
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationBuilder
+import io.micronaut.context.annotation.ConfigurationProperties
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+internal class EngineConfig {
+    @ConfigurationBuilder(prefixes = ["with"])  <b class="conum">(2)</b>
+    val builder = EngineImpl.builder()
+
+    @ConfigurationBuilder(prefixes = ["with"], configurationPrefix = "crank-shaft") <b class="conum">(3)</b>
+    val crankShaft = CrankShaft.builder()
+
+    @set:ConfigurationBuilder(prefixes = ["with"], configurationPrefix = "spark-plug") <b class="conum">(4)</b>
+    var sparkPlug = SparkPlug.builder()
 }</code></pre>
 </div>
 </div>
@@ -1073,11 +1115,15 @@ class EngineConfig {
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The first builder can be configured with the class configuration prefix</td>
+<td>The first builder can be configured without the class configuration prefix; it will inherit from the above.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>The second builder can be configured with the class configuration prefix + the <code>configurationPrefix</code> value.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The third builder demonstrates that the annotation can be applied to a method as well as a property.</td>
 </tr>
 </table>
 </div>
@@ -1096,10 +1142,25 @@ By default, only builder methods that take a single argument are supported. To s
 <div class="paragraph">
 <p>Just like in the previous example, we can construct an <code>EngineImpl</code>. Since we are using a builder, a factory class can be used to build the engine from the builder.</p>
 </div>
-<div class="listingblock">
-<div class="title">Factory Bean</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Factory
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Factory;
+
+import javax.inject.Singleton;
+
+@Factory
+class EngineFactory {
+
+    @Singleton
+    EngineImpl buildEngine(EngineConfig engineConfig) {
+        return engineConfig.builder.build(engineConfig.crankShaft, engineConfig.getSparkPlug());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
 
@@ -1113,33 +1174,80 @@ class EngineFactory {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Factory
+import javax.inject.Singleton
+
+@Factory
+internal class EngineFactory {
+
+    @Singleton
+    fun buildEngine(engineConfig: EngineConfig): EngineImpl {
+        return engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The engine that was returned can then be injected anywhere an engine is depended on.</p>
 </div>
 <div class="paragraph">
 <p>Configuration values can be supplied from one of the <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances. For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">Supply Configuration</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
-        ['my.engine.cylinders':'4',
-         'my.engine.manufacturer'          : 'Subaru',
-         'my.engine.crank-shaft.rod-length': 4,
-         'my.engine.spark-plug.name'       : '6619 LFR6AIX',
-         'my.engine.spark-plug.type'       : 'Iridium',
-         'my.engine.spark-plug.companyName': 'NGK'
-        ],
-        "test"
-)
+<pre class="highlight"><code class="language-java" data-lang="java">        HashMap&lt;String, Object&gt; properties = new HashMap&lt;&gt;();
+        properties.put("my.engine.cylinders"             ,"4");
+        properties.put("my.engine.manufacturer"          , "Subaru");
+        properties.put("my.engine.crank-shaft.rod-length", 4);
+        properties.put("my.engine.spark-plug.name"       , "6619 LFR6AIX");
+        properties.put("my.engine.spark-plug.type"       , "Iridium");
+        properties.put("my.engine.spark-plug.companyName", "NGK");
+        ApplicationContext applicationContext = ApplicationContext.run(properties, "test");
 
-Vehicle vehicle = applicationContext
-        .getBean(Vehicle)
-println(vehicle.start())</code></pre>
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+        System.out.println(vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        ApplicationContext applicationContext = ApplicationContext.run(
+                ['my.engine.cylinders'             : '4',
+                 'my.engine.manufacturer'          : 'Subaru',
+                 'my.engine.crank-shaft.rod-length': 4,
+                 'my.engine.spark-plug.name'       : '6619 LFR6AIX',
+                 'my.engine.spark-plug.type'       : 'Iridium',
+                 'my.engine.spark-plug.companyName': 'NGK'
+                ],
+                "test"
+        )
+
+        Vehicle vehicle = applicationContext
+                .getBean(Vehicle)
+        println(vehicle.start())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(
+                mapOf(
+                        "my.engine.cylinders" to "4",
+                        "my.engine.manufacturer" to "Subaru",
+                        "my.engine.crank-shaft.rod-length" to 4,
+                        "my.engine.spark-plug.name" to "6619 LFR6AIX",
+                        "my.engine.spark-plug.type" to "Iridium",
+                        "my.engine.spark-plug.company" to "NGK"
+                ),
+                "test"
+        )
+
+        val vehicle = applicationContext.getBean(Vehicle::class.java)
+        println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above example prints: <code>"Subaru Engine Starting V4 [rodLength=4.0]"</code></p>
+<p>The above example prints: <code>"Subaru Engine Starting V4 [rodLength=4.0, sparkPlug=Iridium(NGK 6619 LFR6AIX)]"</code></p>
 </div>
 </div>
 </div>
