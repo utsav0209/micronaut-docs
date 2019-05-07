@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
+var methods = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -133,7 +133,15 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/discovery/spring/config/client/response/ConfigServerResponse.html" title="class in io.micronaut.discovery.spring.config.client.response">ConfigServerResponse</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/discovery/spring/config/client/SpringCloudConfigOperations.html#readValues-java.lang.String-java.lang.String-">readValues</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;applicationName,
           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;profiles)</code>
-<div class="block">Reads a Key from Consul.</div>
+<div class="block">Reads an application configuration from Spring Config Server.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/discovery/spring/config/client/response/ConfigServerResponse.html" title="class in io.micronaut.discovery.spring.config.client.response">ConfigServerResponse</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/discovery/spring/config/client/SpringCloudConfigOperations.html#readValues-java.lang.String-java.lang.String-java.lang.String-">readValues</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;applicationName,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;profiles,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;label)</code>
+<div class="block">Reads a versioned (#label) application configuration from Spring Config Server.</div>
 </td>
 </tr>
 </table>
@@ -154,7 +162,7 @@ var activeTableTab = "activeTableTab";
 <a name="readValues-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>readValues</h4>
 <pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/{applicationName}/{profiles}")
@@ -166,11 +174,39 @@ var activeTableTab = "activeTableTab";
                                                                                                                                                                                                                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;applicationName,
                                                                                                                                                                                                                                                               <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
                                                                                                                                                                                                                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;profiles)</pre>
-<div class="block">Reads a Key from Consul. See https://www.consul.io/api/kv.html.</div>
+<div class="block">Reads an application configuration from Spring Config Server.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>applicationName</code> - The key</dd>
-<dd><code>profiles</code> - The data center</dd>
+<dd><code>applicationName</code> - The application name</dd>
+<dd><code>profiles</code> - The active profiles</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that emits a list of <a href="../../../../../../io/micronaut/discovery/spring/config/client/response/ConfigServerResponse.html" title="class in io.micronaut.discovery.spring.config.client.response"><code>ConfigServerResponse</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="readValues-java.lang.String-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>readValues</h4>
+<pre><a href="../../../../../../io/micronaut/http/annotation/Get.html" title="annotation in io.micronaut.http.annotation">@Get</a>(<a href="../../../../../../io/micronaut/http/annotation/Get.html#value--">value</a>="/{applicationName}/{profiles}/{label}")
+ <a href="../../../../../../io/micronaut/http/annotation/Produces.html" title="annotation in io.micronaut.http.annotation">@Produces</a>(<a href="../../../../../../io/micronaut/http/annotation/Produces.html#single--">single</a>=true)
+ <a href="../../../../../../io/micronaut/retry/annotation/Retryable.html" title="annotation in io.micronaut.retry.annotation">@Retryable</a>(<a href="../../../../../../io/micronaut/retry/annotation/Retryable.html#attempts--">attempts</a>="${spring.cloud.config.config.retry-count:3}",
+           <a href="../../../../../../io/micronaut/retry/annotation/Retryable.html#delay--">delay</a>="${spring.cloud.config.config.retry-delay:1s}")
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/discovery/spring/config/client/response/ConfigServerResponse.html" title="class in io.micronaut.discovery.spring.config.client.response">ConfigServerResponse</a>&gt;&nbsp;readValues(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                                                                                                                                                                                                                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;applicationName,
+                                                                                                                                                                                                                                                                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                                                                                                                                                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;profiles,
+                                                                                                                                                                                                                                                                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                                                                                                                                                                                                                                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;label)</pre>
+<div class="block">Reads a versioned (#label) application configuration from Spring Config Server.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationName</code> - The application name</dd>
+<dd><code>profiles</code> - The active profiles</dd>
+<dd><code>label</code> - The label</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that emits a list of <a href="../../../../../../io/micronaut/discovery/spring/config/client/response/ConfigServerResponse.html" title="class in io.micronaut.discovery.spring.config.client.response"><code>ConfigServerResponse</code></a></dd>
 </dl>
