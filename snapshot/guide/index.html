@@ -2012,9 +2012,22 @@ constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</
 <div class="paragraph">
 <p>In addition to being able to qualify by name, you can build your own qualifiers using the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> annotation. For example, consider the following annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.Qualifier
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Qualifier;
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Qualifier
+@Retention(RUNTIME)
+public @interface V8 {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Qualifier
 import java.lang.annotation.Retention
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME
@@ -2025,14 +2038,37 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Qualifier
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class V8</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The above annotation is itself annotated with the <code>@Qualifier</code> annotation to designate it as a qualifier. You can then use the annotation at any injection point in your code. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Inject Vehicle(@V8 Engine engine) {
-    this.engine = engine
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Inject Vehicle(@V8 Engine engine) {
+        this.engine = engine;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Inject Vehicle(@V8 Engine engine) {
+        this.engine = engine
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject constructor(@V8 val engine: Engine) {</code></pre>
 </div>
 </div>
 </div>
@@ -2046,26 +2082,49 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ColorPicker {
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.context.annotation.primary;
+
+//tag::clazz[]
+public interface ColorPicker {
+    String color();
+}
+//end::clazz[]</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.context.annotation.primary
+//tag::clazz[]
+interface ColorPicker {
     String color()
-}</code></pre>
+}
+//end::clazz[]</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.context.annotation.primary
+
+//tag::clazz[]
+interface ColorPicker {
+    fun color(): String
+}
+//end::clazz[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Given a common interface called <code>ColorPicker</code> that is implemented by multiple classes.</p>
 </div>
-<div class="listingblock">
-<div class="title">The Primary Bean</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Primary;
-import io.micronaut.context.annotation.Requires;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
 import javax.inject.Singleton;
 
 @Primary
 @Singleton
-public class Green implements ColorPicker {
+class Green implements ColorPicker {
 
     @Override
     public String color() {
@@ -2074,14 +2133,44 @@ public class Green implements ColorPicker {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Primary
+import javax.inject.Singleton
+
+@Primary
+@Singleton
+class Green implements ColorPicker {
+
+    @Override
+    String color() {
+        return "green"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Primary
+import javax.inject.Singleton
+
+
+@Primary
+@Singleton
+class Green: ColorPicker {
+    override fun color(): String {
+        return "green"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The <code>Green</code> bean is a <code>ColorPicker</code>, but is annotated with <code>@Primary</code>.</p>
 </div>
-<div class="listingblock">
-<div class="title">Another Bean of the Same Type</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Requires;
-import javax.inject.Singleton;
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
 
 @Singleton
 public class Blue implements ColorPicker {
@@ -2093,23 +2182,81 @@ public class Blue implements ColorPicker {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+
+
+@Singleton
+class Blue implements ColorPicker {
+
+    @Override
+    String color() {
+        return "blue"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+
+@Singleton
+class Blue: ColorPicker {
+    override fun color(): String {
+        return "blue"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The <code>Blue</code> bean is also a <code>ColorPicker</code> and hence you have two possible candidates when injecting the <code>ColorPicker</code> interface. Since <code>Green</code> is the primary it will always be favoured.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/test")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/test")
 public class TestController {
 
     protected final ColorPicker colorPicker;
 
-    public TestController(ColorPicker colorPicker) { <i class="conum" data-value="1"></i><b>(1)</b>
+    public TestController(ColorPicker colorPicker) { <b class="conum">(1)</b>
         this.colorPicker = colorPicker;
     }
 
     @Get
     public String index() {
         return colorPicker.color();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/test")
+class TestController {
+
+    protected final ColorPicker colorPicker
+
+    TestController(ColorPicker colorPicker) { <b class="conum">(1)</b>
+        this.colorPicker = colorPicker
+    }
+
+    @Get
+    String index() {
+        colorPicker.color()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/test")
+class TestController(val colorPicker: ColorPicker) { <b class="conum">(1)</b>
+
+    @Get
+    fun index(): String {
+        return colorPicker.color()
     }
 }</code></pre>
 </div>
@@ -20760,7 +20907,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 <h2 id="_using_micronaut_with_java_9">Using Micronaut with Java 9+</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Micronaut is built with Java 8, however works fine with Java 9/10 and above as well. The classes that Micronaut generates sit along side existing classes within the same package, hence do not violate anything regarding the Java module system.</p>
+<p>Micronaut is built with Java 8, however works fine with Java 9/10 and above as well. The classes that Micronaut generates sit alongside existing classes within the same package, hence do not violate anything regarding the Java module system.</p>
 </div>
 <div class="paragraph">
 <p>There are some considerations to take into account when using Java 9/10 with Micronaut.</p>
