@@ -1597,6 +1597,7 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
     int getCylinders();
     String start();
 }
+
 @Singleton<b class="conum">(2)</b>
 public class V8Engine implements Engine {
     public String start() {
@@ -1613,6 +1614,7 @@ public class V8Engine implements Engine {
 
     private int cylinders = 8;
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -1633,6 +1635,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
@@ -1641,6 +1644,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -1663,6 +1667,7 @@ class Vehicle {
 
     fun start(): String
 }
+
 @Singleton<b class="conum">(2)</b>
 class V8Engine : Engine {
 
@@ -1671,6 +1676,7 @@ class V8Engine : Engine {
         return "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 {
@@ -1881,6 +1887,7 @@ A prototype bean will have one instance created per place the bean is injected. 
     int getCylinders();
     String start();
 }
+
 @Singleton
 public class V6Engine implements Engine {  <b class="conum">(2)</b>
     public String start() {
@@ -1891,6 +1898,7 @@ public class V6Engine implements Engine {  <b class="conum">(2)</b>
         return 6;
     }
 }
+
 @Singleton
 public class V8Engine implements Engine {
     public String start() {
@@ -1902,6 +1910,7 @@ public class V8Engine implements Engine {
     }
 
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -1923,6 +1932,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton
 class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
@@ -1931,6 +1941,7 @@ class V6Engine implements Engine { <b class="conum">(2)</b>
         "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
@@ -1939,6 +1950,7 @@ class V8Engine implements Engine { <b class="conum">(3)</b>
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -1959,6 +1971,7 @@ class Vehicle {
     val cylinders: Int
     fun start(): String
 }
+
 @Singleton
 class V6Engine : Engine {  <b class="conum">(2)</b>
 
@@ -1968,6 +1981,7 @@ class V6Engine : Engine {  <b class="conum">(2)</b>
         return "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine : Engine {
 
@@ -1978,6 +1992,7 @@ class V8Engine : Engine {
     }
 
 }
+
 @Singleton
 class Vehicle @Inject
 constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
@@ -2130,6 +2145,7 @@ interface ColorPicker {
 <p>Given a common interface called <code>ColorPicker</code> that is implemented by multiple classes.</p>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">The Primary Bean</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
 import javax.inject.Singleton;
@@ -2142,23 +2158,29 @@ class Green implements ColorPicker {
     public String color() {
         return "green";
     }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Primary
-import javax.inject.Singleton
+}
+----.The Primary Bean
 
-@Primary
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>import io.micronaut.context.annotation.Primary
+import javax.inject.Singleton</p>
+</div>
+<div class="paragraph">
+<p>@Primary
 @Singleton
-class Green implements ColorPicker {
-
-    @Override
+class Green implements ColorPicker {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Override
     String color() {
         return "green"
     }
-}</code></pre>
+}
+----.The Primary Bean</pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2180,6 +2202,7 @@ class Green: ColorPicker {
 <p>The <code>Green</code> bean is a <code>ColorPicker</code>, but is annotated with <code>@Primary</code>.</p>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Another Bean of the Same Type</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
 
@@ -2191,22 +2214,27 @@ public class Blue implements ColorPicker {
     public String color() {
         return "blue";
     }
-}</code></pre>
+}
+----.Another Bean of the Same Type
+
+[source.multi-language-sample,groovy]</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="paragraph">
+<p>import javax.inject.Singleton</p>
+</div>
+<div class="paragraph">
+<p>@Singleton
+class Blue implements ColorPicker {</p>
+</div>
+<div class="literalblock">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
-
-
-@Singleton
-class Blue implements ColorPicker {
-
-    @Override
+<pre>    @Override
     String color() {
         return "blue"
     }
-}</code></pre>
+}
+----.Another Bean of the Same Type</pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2656,6 +2684,7 @@ annotation class Driver</code></pre>
 <pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     private final int cylinders = 8;
     private final CrankShaft crankShaft;
@@ -2668,6 +2697,7 @@ class V8Engine implements Engine {
         return "Starting V8";
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -2683,6 +2713,7 @@ class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -2695,6 +2726,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -2709,6 +2741,7 @@ class EngineFactory {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 internal class CrankShaft
+
 internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
     private val cylinders = 8
 
@@ -2716,6 +2749,7 @@ internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
         return "Starting V8"
     }
 }
+
 @Factory
 internal class EngineFactory {
 
@@ -2769,6 +2803,8 @@ To allow the resulting bean to participate in the application context shutdown p
 <pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {
     Integer getCylinders();
 }
+
+
 @Factory
 public class EngineFactory {
 
@@ -2788,6 +2824,8 @@ public class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine {
     Integer getCylinders()
 }
+
+
 @Factory
 class EngineFactory {
 
@@ -2807,6 +2845,8 @@ class EngineFactory {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
     fun getCylinders(): Int
 }
+
+
 @Factory
 class EngineFactory {
 

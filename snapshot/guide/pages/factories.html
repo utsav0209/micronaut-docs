@@ -144,6 +144,7 @@ function addJsClass() {
 <pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     private final int cylinders = 8;
     private final CrankShaft crankShaft;
@@ -156,6 +157,7 @@ class V8Engine implements Engine {
         return "Starting V8";
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -171,6 +173,7 @@ class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -183,6 +186,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -197,6 +201,7 @@ class EngineFactory {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 internal class CrankShaft
+
 internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
     private val cylinders = 8
 
@@ -204,6 +209,7 @@ internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
         return "Starting V8"
     }
 }
+
 @Factory
 internal class EngineFactory {
 
@@ -257,6 +263,8 @@ To allow the resulting bean to participate in the application context shutdown p
 <pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {
     Integer getCylinders();
 }
+
+
 @Factory
 public class EngineFactory {
 
@@ -276,6 +284,8 @@ public class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine {
     Integer getCylinders()
 }
+
+
 @Factory
 class EngineFactory {
 
@@ -295,6 +305,8 @@ class EngineFactory {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
     fun getCylinders(): Int
 }
+
+
 @Factory
 class EngineFactory {
 
