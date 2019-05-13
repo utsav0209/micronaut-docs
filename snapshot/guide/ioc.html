@@ -571,11 +571,23 @@ println(vehicle.start())</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html">Provider</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it or to instantiate a prototype for each <code>get</code> call.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Provider&lt;Engine&gt;</code></p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A prototype bean will have one instance created per place the bean is injected. When a prototype bean is injected as a <code>Provider</code>, each call to <code>get()</code> will create a new instance.
+</td>
+</tr>
+</table>
+</div>
 
 
 <h2 id="qualifiers">3.5 Bean Qualifiers</h2>
