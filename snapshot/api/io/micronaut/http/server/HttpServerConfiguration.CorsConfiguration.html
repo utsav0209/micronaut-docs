@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,6 +142,10 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#DEFAULT_ENABLED">DEFAULT_ENABLED</a></span></code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#DEFAULT_SINGLE_HEADER">DEFAULT_SINGLE_HEADER</a></span></code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -183,15 +187,25 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#isEnabled--">isEnabled</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#isSingleHeader--">isSingleHeader</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#setConfigurations-java.util.Map-">setConfigurations</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/http/server/cors/CorsOriginConfiguration.html" title="class in io.micronaut.http.server.cors">CorsOriginConfiguration</a>&gt;&nbsp;configurations)</code>
 <div class="block">Sets the CORS configurations.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#setEnabled-boolean-">setEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Sets whether CORS is enabled.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#setSingleHeader-boolean-">setSingleHeader</a></span>(boolean&nbsp;singleHeader)</code>
+<div class="block">Sets whether CORS header values should be joined into a single header.</div>
 </td>
 </tr>
 </table>
@@ -219,13 +233,26 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <a name="DEFAULT_ENABLED">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>DEFAULT_ENABLED</h4>
 <pre>public static final&nbsp;boolean DEFAULT_ENABLED</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../constant-values.html#io.micronaut.http.server.HttpServerConfiguration.CorsConfiguration.DEFAULT_ENABLED">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_SINGLE_HEADER">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT_SINGLE_HEADER</h4>
+<pre>public static final&nbsp;boolean DEFAULT_SINGLE_HEADER</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.http.server.HttpServerConfiguration.CorsConfiguration.DEFAULT_SINGLE_HEADER">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -282,6 +309,19 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 </dl>
 </li>
 </ul>
+<a name="isSingleHeader--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSingleHeader</h4>
+<pre>public&nbsp;boolean&nbsp;isSingleHeader()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether headers should be combined into a single header</dd>
+</dl>
+</li>
+</ul>
 <a name="setEnabled-boolean-">
 <!--   -->
 </a>
@@ -299,7 +339,7 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <a name="setConfigurations-java.util.Map-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setConfigurations</h4>
 <pre>public&nbsp;void&nbsp;setConfigurations(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/http/server/cors/CorsOriginConfiguration.html" title="class in io.micronaut.http.server.cors">CorsOriginConfiguration</a>&gt;&nbsp;configurations)</pre>
@@ -307,6 +347,20 @@ implements <a href="../../../../io/micronaut/core/util/Toggleable.html" title="i
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>configurations</code> - The CORS configurations</dd>
+</dl>
+</li>
+</ul>
+<a name="setSingleHeader-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setSingleHeader</h4>
+<pre>public&nbsp;void&nbsp;setSingleHeader(boolean&nbsp;singleHeader)</pre>
+<div class="block">Sets whether CORS header values should be joined into a single header. Default value (<a href="../../../../io/micronaut/http/server/HttpServerConfiguration.CorsConfiguration.html#DEFAULT_SINGLE_HEADER">false</a>).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>singleHeader</code> - The single header flag</dd>
 </dl>
 </li>
 </ul>
