@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.2.7 Client Fallbacks 1.2.0.BUILD-SNAPSHOT</title>
+    <title>7.2.3 Error Responses 1.2.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,7 +112,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>7.2.7 Client Fallbacks</h1>
+                    <h1>7.2.3 Error Responses</h1>
 
                     <p><strong>Version:</strong> 1.2.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -121,65 +121,45 @@ function addJsClass() {
 
                 
 
-<h2 id="clientFallback">7.2.7 Client Fallbacks</h2>
+<h2 id="clientError">7.2.3 Error Responses</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientFallback.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientError.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>In distributed systems, failure happens and it is best to be prepared for it and handle it in as graceful a manner possible.</p>
+<p>If an HTTP response is returned with a code of 400 or above, an <a href="../api/io/micronaut/client/response/exceptions/HttpClientResponseException.html">HttpClientResponseException</a> is created. The exception contains the original response. How that exception gets thrown depends on the return type of the method.</p>
 </div>
-<div class="paragraph">
-<p>In addition, when developing Microservices it is quite common to work on a single Microservice without other Microservices the project requires being available.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For reactive response types, the exception is passed through the publisher as an error.</p>
+</li>
+<li>
+<p>For blocking response types, the exception is thrown and should be caught and handled by the caller.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>With that in mind Micronaut features a native fallback mechanism that is integrated into <a href="#retry">Retry Advice</a> that allows falling back to another implementation in the case of failure.</p>
-</div>
-<div class="paragraph">
-<p>Using the <a href="../api/io/micronaut/retry/annotation/Fallback.html">@Fallback</a> annotation you can declare a fallback implementation of a client that will be picked up and used once all possible retries have been exhausted.</p>
-</div>
-<div class="paragraph">
-<p>In fact the mechanism is not strictly linked to Retry, you can declare any class as <a href="../api/io/micronaut/retry/annotation/Recoverable.html">@Recoverable</a> and if a method call fails (or, in the case of reactive types, an error is emitted) a class annotated with <code>@Fallback</code> will be searched for.</p>
-</div>
-<div class="paragraph">
-<p>To illustrate this consider again the <code>PetOperations</code> interface declared earlier. You can define a <code>PetFallback</code> class that will be called in the case of failure:</p>
-</div>
-<div class="listingblock">
-<div class="title">Defining a Fallback</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Fallback
-public class PetFallback implements PetOperations {
-    @Override
-    public Single&lt;Pet&gt; save(String name, int age) {
-        Pet pet = new Pet();
-        pet.setAge(age);
-        pet.setName(name);
-        return Single.just(pet);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-If you purely want to use fallbacks to help with testing against external Microservices you can define fallbacks in the <code>src/test/java</code> directory so they are not included in production code.
+The one exception to this rule is HTTP Not Found (404) responses. This exception only applies to the declarative client.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>As you can see the fallback does not perform any network operations and is quite simple, hence will provide a successful result in the case of an external system being down.</p>
+<p>HTTP Not Found (404) responses for blocking return types is <strong>not</strong> considered an error condition and the client exception will <strong>not</strong> be thrown. That behavior includes methods that return <code>void</code>.</p>
 </div>
 <div class="paragraph">
-<p>Of course, the actual behaviour of the fallback is down to you. You could for example implement a fallback that pulls data from a local cache when the real data is not available, and sends alert emails to operations about downtime or whatever.</p>
+<p>If the method returns an <code>HttpResponse</code>, the original response will be returned. If the return type is <code>Optional</code>, an empty optional will be returned. For all other types, <code>null</code> will be returned.</p>
 </div>
 
 

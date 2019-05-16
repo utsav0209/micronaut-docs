@@ -127,19 +127,22 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#clientAnnotationStreaming"><strong>7.2</strong><span>Streaming with @Client</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#clientHeaders"><strong>7.3</strong><span>Customizing Request Headers</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#clientError"><strong>7.3</strong><span>Error Responses</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#clientJackson"><strong>7.4</strong><span>Customizing Jackson Settings</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#clientHeaders"><strong>7.4</strong><span>Customizing Request Headers</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#clientRetry"><strong>7.5</strong><span>Retry and Circuit Breaker</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#clientJackson"><strong>7.5</strong><span>Customizing Jackson Settings</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#clientFallback"><strong>7.6</strong><span>Client Fallbacks</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#clientRetry"><strong>7.6</strong><span>Retry and Circuit Breaker</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#netflixHystrix"><strong>7.7</strong><span>Netflix Hystrix Support</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#clientFallback"><strong>7.7</strong><span>Client Fallbacks</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#netflixHystrix"><strong>7.8</strong><span>Netflix Hystrix Support</span></a>
                     </div>
                     
                 </div>
@@ -694,7 +697,49 @@ public interface HeadlineClient {
 </div>
 
 
-<h2 id="clientHeaders">7.2.3 Customizing Request Headers</h2>
+<h2 id="clientError">7.2.3 Error Responses</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientError.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If an HTTP response is returned with a code of 400 or above, an <a href="../api/io/micronaut/client/response/exceptions/HttpClientResponseException.html">HttpClientResponseException</a> is created. The exception contains the original response. How that exception gets thrown depends on the return type of the method.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For reactive response types, the exception is passed through the publisher as an error.</p>
+</li>
+<li>
+<p>For blocking response types, the exception is thrown and should be caught and handled by the caller.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The one exception to this rule is HTTP Not Found (404) responses. This exception only applies to the declarative client.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>HTTP Not Found (404) responses for blocking return types is <strong>not</strong> considered an error condition and the client exception will <strong>not</strong> be thrown. That behavior includes methods that return <code>void</code>.</p>
+</div>
+<div class="paragraph">
+<p>If the method returns an <code>HttpResponse</code>, the original response will be returned. If the return type is <code>Optional</code>, an empty optional will be returned. For all other types, <code>null</code> will be returned.</p>
+</div>
+
+
+<h2 id="clientHeaders">7.2.4 Customizing Request Headers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientHeaders.adoc"'>
@@ -762,7 +807,7 @@ public interface PetClient extends PetOperations {
 </div>
 
 
-<h2 id="clientJackson">7.2.4 Customizing Jackson Settings</h2>
+<h2 id="clientJackson">7.2.5 Customizing Jackson Settings</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientJackson.adoc"'>
@@ -825,7 +870,7 @@ If the customization offered by <code>JacksonFeatures</code> is not enough, you 
 </div>
 
 
-<h2 id="clientRetry">7.2.5 Retry and Circuit Breaker</h2>
+<h2 id="clientRetry">7.2.6 Retry and Circuit Breaker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientRetry.adoc"'>
@@ -857,7 +902,7 @@ public interface PetClient extends PetOperations {
 </div>
 
 
-<h2 id="clientFallback">7.2.6 Client Fallbacks</h2>
+<h2 id="clientFallback">7.2.7 Client Fallbacks</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientFallback.adoc"'>
@@ -919,7 +964,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 
 
-<h2 id="netflixHystrix">7.2.7 Netflix Hystrix Support</h2>
+<h2 id="netflixHystrix">7.2.8 Netflix Hystrix Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/netflixHystrix.adoc"'>

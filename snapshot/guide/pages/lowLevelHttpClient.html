@@ -136,7 +136,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#clientConfiguration"><strong>7.5</strong><span>Configuring HTTP clients</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#bindErrors"><strong>7.6</strong><span>Bind Errors</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#lowLevelClientError"><strong>7.6</strong><span>Error Responses</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#bindErrors"><strong>7.7</strong><span>Bind Errors</span></a>
                     </div>
                     
                 </div>
@@ -1066,7 +1069,24 @@ RxHttpClient httpClient;</code></pre>
 </div>
 
 
-<h2 id="bindErrors">7.1.6 Bind Errors</h2>
+<h2 id="lowLevelClientError">7.1.6 Error Responses</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/lowLevelClientError.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If an HTTP response is returned with a code of 400 or above, an <a href="../api/io/micronaut/client/response/exceptions/HttpClientResponseException.html">HttpClientResponseException</a> is created. The exception contains the original response. How that exception gets thrown depends on the return type of the method.</p>
+</div>
+<div class="paragraph">
+<p>For blocking clients, the exception is thrown and should be caught and handled by the caller. For reactive clients, the exception is passed through the publisher as an error.</p>
+</div>
+
+
+<h2 id="bindErrors">7.1.7 Bind Errors</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/bindErrors.adoc"'>
