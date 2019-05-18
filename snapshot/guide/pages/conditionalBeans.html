@@ -139,10 +139,10 @@ function addJsClass() {
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Requires</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 @Requires(beans = DataSource.class)
 @Requires(property = "datasource.url")
 public class JdbcBookService implements BookService {
@@ -153,7 +153,19 @@ public class JdbcBookService implements BookService {
         this.dataSource = dataSource;
     }
 
-}</code></pre>
+----.Using @Requires
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>----.Using @Requires</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+class JdbcBookService(internal var dataSource: DataSource) : BookService {</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -174,16 +186,38 @@ Kotlin currently does not support repeatable annotations. Use the <code>@Require
 <div class="paragraph">
 <p>If you have multiple requirements that you find you may need to repeat on multiple beans then you can define a meta-annotation with the requirements:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using a @Requires meta-annotation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Documented
+<pre class="highlight"><code class="language-java" data-lang="java">@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PACKAGE, ElementType.TYPE})
 @Requires(beans = DataSource.class)
 @Requires(property = "datasource.url")
 public @interface RequiresJdbc {
-}</code></pre>
+}
+----.Using a @Requires meta-annotation
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target([ElementType.PACKAGE, ElementType.TYPE])
+@Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
+@interface RequiresJdbc {
+}
+----.Using a @Requires meta-annotation</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Documented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+annotation class RequiresJdbc</code></pre>
 </div>
 </div>
 <div class="paragraph">

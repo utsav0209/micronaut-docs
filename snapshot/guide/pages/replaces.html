@@ -158,11 +158,12 @@ function addJsClass() {
 <div class="paragraph">
 <p>Any existing bean can be replaced by another bean that declares <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a>. For example, consider the following class:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">JdbcBookService.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 @Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
 public class JdbcBookService implements BookService {
 
     DataSource dataSource;
@@ -171,16 +172,28 @@ public class JdbcBookService implements BookService {
         this.dataSource = dataSource;
     }
 
-}</code></pre>
+----.JdbcBookService.java
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>----.JdbcBookService.java</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+class JdbcBookService(internal var dataSource: DataSource) : BookService {</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>You can define a class in <code>src/test/java</code> that replaces this class just for your tests:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Replaces</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Replaces(JdbcBookService.class) <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Replaces(JdbcBookService.class) <b class="conum">(1)</b>
 @Singleton
 public class MockBookService implements BookService {
 
@@ -189,6 +202,43 @@ public class MockBookService implements BookService {
     @Override
     public Book findBook(String title) {
         return bookMap.get(title);
+    }
+}
+----.Using @Replaces
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Replaces(JdbcBookService.class) // &lt;1&gt;
+@Singleton
+class MockBookService implements BookService {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Map&lt;String, Book&gt; bookMap = [:]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Override
+    Book findBook(String title) {
+        bookMap.get(title)
+    }
+}
+----.Using @Replaces</pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Replaces(JdbcBookService::class) <b class="conum">(1)</b>
+@Singleton
+class MockBookService : BookService {
+
+    var bookMap: Map&lt;String, Book&gt; = LinkedHashMap()
+
+    override fun findBook(title: String): Book? {
+        return bookMap[title]
     }
 }</code></pre>
 </div>
@@ -209,10 +259,10 @@ public class MockBookService implements BookService {
 <div class="paragraph">
 <p>For example, it may be desired to replace all or part of the given factory class:</p>
 </div>
-<div class="listingblock">
-<div class="title">BookFactory.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">BookFactory</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory
 public class BookFactory {
 
     @Singleton
@@ -223,6 +273,48 @@ public class BookFactory {
     @Singleton
     TextBook textBook() {
         return new TextBook("Learning 101");
+    }
+}
+----.BookFactory
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Factory
+class BookFactory {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Singleton
+Book novel() {
+    new Book('A Great Novel')
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Singleton
+    TextBook textBook() {
+        new TextBook('Learning 101')
+    }
+}
+----.BookFactory</pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
+class BookFactory {
+
+    @Singleton
+    internal fun novel(): Book {
+        return Book("A Great Novel")
+    }
+
+    @Singleton
+    internal fun textBook(): TextBook {
+        return TextBook("Learning 101")
     }
 }</code></pre>
 </div>
@@ -242,10 +334,10 @@ To replace a factory in its entirety, it is necessary that your factory methods 
 <div class="paragraph">
 <p>In this example, the <code>BookFactory#textBook()</code> will <strong>not</strong> be replaced because this factory does not have a factory method that returns a TextBook.</p>
 </div>
-<div class="listingblock">
-<div class="title">CustomBookFactory.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CustomBookFactory</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory
 @Replaces(factory = BookFactory.class)
 public class CustomBookFactory {
 
@@ -253,22 +345,84 @@ public class CustomBookFactory {
     Book otherNovel() {
         return new Book("An OK Novel");
     }
+}
+----.CustomBookFactory
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Factory
+@Replaces(factory = BookFactory.class)
+class CustomBookFactory {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Singleton
+    Book otherNovel() {
+        new Book('An OK Novel')
+    }
+}
+----.CustomBookFactory</pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
+@Replaces(factory = BookFactory::class)
+class CustomBookFactory {
+
+    @Singleton
+    internal fun otherNovel(): Book {
+        return Book("An OK Novel")
+    }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>It may be the case that you don&#8217;t wish for the factory methods to be replaced, except for a select few. For that use case, you can apply the <code>@Replaces</code> annotation on the method and denote the factory that it should apply to.</p>
 </div>
-<div class="listingblock">
-<div class="title">TextBookFactory.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">TextBookFactory</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory
 public class TextBookFactory {
 
     @Singleton
     @Replaces(value = TextBook.class, factory = BookFactory.class)
     TextBook textBook() {
         return new TextBook("Learning 305");
+    }
+}
+----.TextBookFactory
+
+[source.multi-language-sample,groovy]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>@Factory
+class TextBookFactory {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Singleton
+    @Replaces(value = TextBook.class, factory = BookFactory.class)
+    TextBook textBook() {
+        new TextBook('Learning 305')
+    }
+}
+----.TextBookFactory</pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
+class TextBookFactory {
+
+    @Singleton
+    @Replaces(value = TextBook::class, factory = BookFactory::class)
+    internal fun textBook(): TextBook {
+        return TextBook("Learning 305")
     }
 }</code></pre>
 </div>
