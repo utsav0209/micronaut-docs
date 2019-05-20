@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13.4 Micronaut for GraalVM 1.1.1</title>
+    <title>13.4 Micronaut for GraalVM 1.1.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13.4 Micronaut for GraalVM</h1>
 
-                    <p><strong>Version:</strong> 1.1.1</p>
+                    <p><strong>Version:</strong> 1.1.2</p>
                 </div>
 
                 
@@ -156,7 +156,7 @@ function addJsClass() {
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-GraalVM support (like GraalVM itself) is still in the incubating phase. Third-party library support is hit and miss and the Micronaut team are still ironing out all of the potential issues. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however and gradually over time the support will become more stable.
+Although GraalVM <code>19.0.0</code> is the first Production ready release the support for creating native-images is still considered experimental. Third-party library support is hit and miss and the Micronaut team are still ironing out all of the potential issues. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however and gradually over time the support will become more stable.
 </td>
 </tr>
 </table>
@@ -181,18 +181,6 @@ Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java 
 </div>
 <div class="paragraph">
 <p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-As of this writing, GraalVM is currently only available for Linux and Mac OS X systems.
-</td>
-</tr>
-</table>
 </div>
 </div>
 
@@ -300,17 +288,26 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc16 with SDKman</div>
+<div class="title">Installing GraalVM 19.0.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-16-grl
-$ sdk use java 1.0.0-rc-16-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.0.0-grl
+$ sdk use java 19.0.0-grl</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently it is available as an early adopter plugin. To install it, run:</p>
+</div>
+<div class="listingblock">
+<div class="title">Installing <code>native-image</code> tool</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gu install native-image</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image --no-server -cp build/libs/hello-world-0.1-all.jar</code></pre>
+$ native-image --no-server -cp build/libs/hello-world-0.1.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">

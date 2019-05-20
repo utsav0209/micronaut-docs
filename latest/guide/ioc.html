@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.1.1</title>
+    <title>3 Inversion of Control 1.1.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.1.1</p>
+                    <p><strong>Version:</strong> 1.1.2</p>
                 </div>
 
                 
@@ -241,8 +241,8 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.1" // <2>
-    compile "io.micronaut:micronaut-inject:1.1.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.2" // <2>
+    compile "io.micronaut:micronaut-inject:1.1.2"
     ...
 }</code></pre>
 </div>
@@ -330,6 +330,7 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
     int getCylinders();
     String start();
 }
+
 @Singleton<b class="conum">(2)</b>
 public class V8Engine implements Engine {
     public String start() {
@@ -346,6 +347,7 @@ public class V8Engine implements Engine {
 
     private int cylinders = 8;
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -366,6 +368,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
@@ -374,6 +377,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -396,6 +400,7 @@ class Vehicle {
 
     fun start(): String
 }
+
 @Singleton<b class="conum">(2)</b>
 class V8Engine : Engine {
 
@@ -404,6 +409,7 @@ class V8Engine : Engine {
         return "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 {
@@ -602,6 +608,7 @@ println(vehicle.start())</code></pre>
     int getCylinders();
     String start();
 }
+
 @Singleton
 public class V6Engine implements Engine {  <b class="conum">(2)</b>
     public String start() {
@@ -612,6 +619,7 @@ public class V6Engine implements Engine {  <b class="conum">(2)</b>
         return 6;
     }
 }
+
 @Singleton
 public class V8Engine implements Engine {
     public String start() {
@@ -623,6 +631,7 @@ public class V8Engine implements Engine {
     }
 
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -644,6 +653,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton
 class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
@@ -652,6 +662,7 @@ class V6Engine implements Engine { <b class="conum">(2)</b>
         "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
@@ -660,6 +671,7 @@ class V8Engine implements Engine { <b class="conum">(3)</b>
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -680,6 +692,7 @@ class Vehicle {
     val cylinders: Int
     fun start(): String
 }
+
 @Singleton
 class V6Engine : Engine {  <b class="conum">(2)</b>
 
@@ -689,6 +702,7 @@ class V6Engine : Engine {  <b class="conum">(2)</b>
         return "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine : Engine {
 
@@ -699,6 +713,7 @@ class V8Engine : Engine {
     }
 
 }
+
 @Singleton
 class Vehicle @Inject
 constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
@@ -1233,6 +1248,7 @@ annotation class Driver</code></pre>
 <pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     private final int cylinders = 8;
     private final CrankShaft crankShaft;
@@ -1245,6 +1261,7 @@ class V8Engine implements Engine {
         return "Starting V8";
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -1260,6 +1277,7 @@ class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -1272,6 +1290,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -1286,6 +1305,7 @@ class EngineFactory {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 internal class CrankShaft
+
 internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
     private val cylinders = 8
 
@@ -1293,6 +1313,7 @@ internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
         return "Starting V8"
     }
 }
+
 @Factory
 internal class EngineFactory {
 
@@ -2149,7 +2170,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.1'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.2'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2158,7 +2179,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.1.1&lt;/version&gt;
+        &lt;version&gt;1.1.2&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -2180,7 +2201,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.1'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.2'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2188,7 +2209,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;version&gt;1.1.2&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -2759,8 +2780,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.1"
-    compileOnly "io.micronaut:micronaut-inject-java:1.1.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.2"
+    compileOnly "io.micronaut:micronaut-inject-java:1.1.2"
     ...
 }</code></pre>
 </div>

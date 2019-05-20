@@ -306,7 +306,9 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-clientConfiguration"><a href="#clientConfiguration"><strong>7.1.5</strong><span>Configuring HTTP clients</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-bindErrors"><a href="#bindErrors"><strong>7.1.6</strong><span>Bind Errors</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-lowLevelClientError"><a href="#lowLevelClientError"><strong>7.1.6</strong><span>Error Responses</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-bindErrors"><a href="#bindErrors"><strong>7.1.7</strong><span>Bind Errors</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-clientAnnotation"><a href="#clientAnnotation"><strong>7.2</strong><span>Declarative HTTP Clients with @Client</span></a></div>
         
@@ -314,15 +316,17 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-clientAnnotationStreaming"><a href="#clientAnnotationStreaming"><strong>7.2.2</strong><span>Streaming with @Client</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientHeaders"><a href="#clientHeaders"><strong>7.2.3</strong><span>Customizing Request Headers</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientError"><a href="#clientError"><strong>7.2.3</strong><span>Error Responses</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientJackson"><a href="#clientJackson"><strong>7.2.4</strong><span>Customizing Jackson Settings</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientHeaders"><a href="#clientHeaders"><strong>7.2.4</strong><span>Customizing Request Headers</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientRetry"><a href="#clientRetry"><strong>7.2.5</strong><span>Retry and Circuit Breaker</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientJackson"><a href="#clientJackson"><strong>7.2.5</strong><span>Customizing Jackson Settings</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientFallback"><a href="#clientFallback"><strong>7.2.6</strong><span>Client Fallbacks</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientRetry"><a href="#clientRetry"><strong>7.2.6</strong><span>Retry and Circuit Breaker</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-netflixHystrix"><a href="#netflixHystrix"><strong>7.2.7</strong><span>Netflix Hystrix Support</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientFallback"><a href="#clientFallback"><strong>7.2.7</strong><span>Client Fallbacks</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-netflixHystrix"><a href="#netflixHystrix"><strong>7.2.8</strong><span>Netflix Hystrix Support</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-clientFilter"><a href="#clientFilter"><strong>7.3</strong><span>HTTP Client Filters</span></a></div>
         
@@ -522,7 +526,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.1.1</p>
+        <p><strong>Version:</strong> 1.1.2</p>
     </div>
     
 
@@ -609,7 +613,25 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.1.1 includes the following changes:</p>
+<p>Micronaut 1.1.2 includes the following changes:</p>
+</div>
+<div class="sect2">
+<h3 id="_graalvm_19_native_image_support">GraalVM 19 Native Image Support</h3>
+<div class="paragraph">
+<p>Micronaut 1.1.2 is the first version to support GraalVM 19&#8217;s native image changes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Although GraalVM 19 is the first official stable release of GraalVM, Substrate and the <code>native-image</code> tool remain in early adopter / experimental status. Therefore support for native images in Micronaut also remains experimental at this stage.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_modularization">Modularization</h3>
@@ -1244,7 +1266,7 @@ class CacheFactory {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.2</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2091,8 +2113,8 @@ interface HelloClient {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.1" // <2>
-    compile "io.micronaut:micronaut-inject:1.1.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.2" // <2>
+    compile "io.micronaut:micronaut-inject:1.1.2"
     ...
 }</code></pre>
 </div>
@@ -2180,6 +2202,7 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
     int getCylinders();
     String start();
 }
+
 @Singleton<b class="conum">(2)</b>
 public class V8Engine implements Engine {
     public String start() {
@@ -2196,6 +2219,7 @@ public class V8Engine implements Engine {
 
     private int cylinders = 8;
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -2216,6 +2240,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton <b class="conum">(2)</b>
 class V8Engine implements Engine {
     int cylinders = 8
@@ -2224,6 +2249,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -2246,6 +2272,7 @@ class Vehicle {
 
     fun start(): String
 }
+
 @Singleton<b class="conum">(2)</b>
 class V8Engine : Engine {
 
@@ -2254,6 +2281,7 @@ class V8Engine : Engine {
         return "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 {
@@ -2452,6 +2480,7 @@ println(vehicle.start())</code></pre>
     int getCylinders();
     String start();
 }
+
 @Singleton
 public class V6Engine implements Engine {  <b class="conum">(2)</b>
     public String start() {
@@ -2462,6 +2491,7 @@ public class V6Engine implements Engine {  <b class="conum">(2)</b>
         return 6;
     }
 }
+
 @Singleton
 public class V8Engine implements Engine {
     public String start() {
@@ -2473,6 +2503,7 @@ public class V8Engine implements Engine {
     }
 
 }
+
 @Singleton
 public class Vehicle {
     private final Engine engine;
@@ -2494,6 +2525,7 @@ public class Vehicle {
     int getCylinders()
     String start()
 }
+
 @Singleton
 class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
@@ -2502,6 +2534,7 @@ class V6Engine implements Engine { <b class="conum">(2)</b>
         "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
@@ -2510,6 +2543,7 @@ class V8Engine implements Engine { <b class="conum">(3)</b>
         "Starting V8"
     }
 }
+
 @Singleton
 class Vehicle {
     final Engine engine
@@ -2530,6 +2564,7 @@ class Vehicle {
     val cylinders: Int
     fun start(): String
 }
+
 @Singleton
 class V6Engine : Engine {  <b class="conum">(2)</b>
 
@@ -2539,6 +2574,7 @@ class V6Engine : Engine {  <b class="conum">(2)</b>
         return "Starting V6"
     }
 }
+
 @Singleton
 class V8Engine : Engine {
 
@@ -2549,6 +2585,7 @@ class V8Engine : Engine {
     }
 
 }
+
 @Singleton
 class Vehicle @Inject
 constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
@@ -3083,6 +3120,7 @@ annotation class Driver</code></pre>
 <pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     private final int cylinders = 8;
     private final CrankShaft crankShaft;
@@ -3095,6 +3133,7 @@ class V8Engine implements Engine {
         return "Starting V8";
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -3110,6 +3149,7 @@ class EngineFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class CrankShaft {
 }
+
 class V8Engine implements Engine {
     final int cylinders = 8
     final CrankShaft crankShaft
@@ -3122,6 +3162,7 @@ class V8Engine implements Engine {
         "Starting V8"
     }
 }
+
 @Factory
 class EngineFactory {
 
@@ -3136,6 +3177,7 @@ class EngineFactory {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 internal class CrankShaft
+
 internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
     private val cylinders = 8
 
@@ -3143,6 +3185,7 @@ internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
         return "Starting V8"
     }
 }
+
 @Factory
 internal class EngineFactory {
 
@@ -3999,7 +4042,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.1'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.2'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4008,7 +4051,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.1.1&lt;/version&gt;
+        &lt;version&gt;1.1.2&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -4030,7 +4073,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.1'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.2'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4038,7 +4081,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;version&gt;1.1.2&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -4609,8 +4652,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.1"
-    compileOnly "io.micronaut:micronaut-inject-java:1.1.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.2"
+    compileOnly "io.micronaut:micronaut-inject-java:1.1.2"
     ...
 }</code></pre>
 </div>
@@ -7275,6 +7318,24 @@ void everyMondayAtTenFifteenAm() {
 </div>
 <div class="paragraph">
 <p>The above example will run the task every Monday morning at 10:15AM.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scheduling_with_only_an_initial_delay">Scheduling with only an Initial Delay</h3>
+<div class="paragraph">
+<p>To schedule a task so that is runs a single time after the server starts, use the <code>initialDelay</code> member:</p>
+</div>
+<div class="listingblock">
+<div class="title">Initial Delay Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled(initialDelay = "1m" )
+void onceOneMinuteAfterStartup() {
+    System.out.println("Executing onceOneMinuteAfterStartup()");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will only run a single time 1 minute after the server starts.</p>
 </div>
 </div>
 </div>
@@ -14097,7 +14158,24 @@ RxHttpClient httpClient;</code></pre>
 </div>
 
 
-<h2 id="bindErrors">7.1.6 Bind Errors</h2>
+<h2 id="lowLevelClientError">7.1.6 Error Responses</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/lowLevelClientError.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If an HTTP response is returned with a code of 400 or above, an <a href="../api/io/micronaut/client/response/exceptions/HttpClientResponseException.html">HttpClientResponseException</a> is created. The exception contains the original response. How that exception gets thrown depends on the return type of the method.</p>
+</div>
+<div class="paragraph">
+<p>For blocking clients, the exception is thrown and should be caught and handled by the caller. For reactive clients, the exception is passed through the publisher as an error.</p>
+</div>
+
+
+<h2 id="bindErrors">7.1.7 Bind Errors</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/bindErrors.adoc"'>
@@ -14715,7 +14793,49 @@ public interface HeadlineClient {
 </div>
 
 
-<h2 id="clientHeaders">7.2.3 Customizing Request Headers</h2>
+<h2 id="clientError">7.2.3 Error Responses</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientError.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If an HTTP response is returned with a code of 400 or above, an <a href="../api/io/micronaut/client/response/exceptions/HttpClientResponseException.html">HttpClientResponseException</a> is created. The exception contains the original response. How that exception gets thrown depends on the return type of the method.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For reactive response types, the exception is passed through the publisher as an error.</p>
+</li>
+<li>
+<p>For blocking response types, the exception is thrown and should be caught and handled by the caller.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The one exception to this rule is HTTP Not Found (404) responses. This exception only applies to the declarative client.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>HTTP Not Found (404) responses for blocking return types is <strong>not</strong> considered an error condition and the client exception will <strong>not</strong> be thrown. That behavior includes methods that return <code>void</code>.</p>
+</div>
+<div class="paragraph">
+<p>If the method returns an <code>HttpResponse</code>, the original response will be returned. If the return type is <code>Optional</code>, an empty optional will be returned. For all other types, <code>null</code> will be returned.</p>
+</div>
+
+
+<h2 id="clientHeaders">7.2.4 Customizing Request Headers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientHeaders.adoc"'>
@@ -14783,7 +14903,7 @@ public interface PetClient extends PetOperations {
 </div>
 
 
-<h2 id="clientJackson">7.2.4 Customizing Jackson Settings</h2>
+<h2 id="clientJackson">7.2.5 Customizing Jackson Settings</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientJackson.adoc"'>
@@ -14846,7 +14966,7 @@ If the customization offered by <code>JacksonFeatures</code> is not enough, you 
 </div>
 
 
-<h2 id="clientRetry">7.2.5 Retry and Circuit Breaker</h2>
+<h2 id="clientRetry">7.2.6 Retry and Circuit Breaker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientRetry.adoc"'>
@@ -14878,7 +14998,7 @@ public interface PetClient extends PetOperations {
 </div>
 
 
-<h2 id="clientFallback">7.2.6 Client Fallbacks</h2>
+<h2 id="clientFallback">7.2.7 Client Fallbacks</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientFallback.adoc"'>
@@ -14940,7 +15060,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 
 
-<h2 id="netflixHystrix">7.2.7 Netflix Hystrix Support</h2>
+<h2 id="netflixHystrix">7.2.8 Netflix Hystrix Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/netflixHystrix.adoc"'>
@@ -21115,7 +21235,7 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-GraalVM support (like GraalVM itself) is still in the incubating phase. Third-party library support is hit and miss and the Micronaut team are still ironing out all of the potential issues. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however and gradually over time the support will become more stable.
+Although GraalVM <code>19.0.0</code> is the first Production ready release the support for creating native-images is still considered experimental. Third-party library support is hit and miss and the Micronaut team are still ironing out all of the potential issues. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however and gradually over time the support will become more stable.
 </td>
 </tr>
 </table>
@@ -21140,18 +21260,6 @@ Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java 
 </div>
 <div class="paragraph">
 <p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-As of this writing, GraalVM is currently only available for Linux and Mac OS X systems.
-</td>
-</tr>
-</table>
 </div>
 </div>
 
@@ -21259,17 +21367,26 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 1.0.0-rc16 with SDKman</div>
+<div class="title">Installing GraalVM 19.0.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 1.0.0-rc-16-grl
-$ sdk use java 1.0.0-rc-16-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.0.0-grl
+$ sdk use java 19.0.0-grl</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently it is available as an early adopter plugin. To install it, run:</p>
+</div>
+<div class="listingblock">
+<div class="title">Installing <code>native-image</code> tool</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gu install native-image</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image --no-server -cp build/libs/hello-world-0.1-all.jar</code></pre>
+$ native-image --no-server -cp build/libs/hello-world-0.1.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
