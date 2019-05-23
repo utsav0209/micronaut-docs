@@ -200,8 +200,8 @@ assertEquals("/hello/John", template.expand(  <i class="conum" data-value="2"></
 public class IssuesController {
 
     @Get("/{number}") <i class="conum" data-value="2"></i><b>(2)</b>
-    String issue(Integer number) {
-        return "Issue # " + number + "!"; <i class="conum" data-value="3"></i><b>(3)</b>
+    String issue(@PathVariable Integer number) { <i class="conum" data-value="3"></i><b>(3)</b>
+        return "Issue # " + number + "!"; <i class="conum" data-value="4"></i><b>(4)</b>
     }
 }</code></pre>
 </div>
@@ -218,6 +218,10 @@ public class IssuesController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The method argument can be optionally annotated with <a href="../api/io/micronaut/http/annotation/PathVariable.html">PathVariable</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>The value of the URI variable is referenced in the implementation</td>
 </tr>
 </table>
