@@ -151,17 +151,22 @@ public class JdbcBookService implements BookService {
 
     public JdbcBookService(DataSource dataSource) {
         this.dataSource = dataSource;
-    }
-
-----.Using @Requires
-
-[source.multi-language-sample,groovy]</code></pre>
+    }</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>----.Using @Requires</p>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Using @Requires</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+@Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
+class JdbcBookService implements BookService {
+
+    DataSource dataSource</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Requires</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 @Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
@@ -195,23 +200,23 @@ Kotlin currently does not support repeatable annotations. Use the <code>@Require
 @Requires(beans = DataSource.class)
 @Requires(property = "datasource.url")
 public @interface RequiresJdbc {
-}
-----.Using a @Requires meta-annotation
-
-[source.multi-language-sample,groovy]</code></pre>
+}</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>@Documented
+<div class="listingblock multi-language-sample">
+<div class="title">Using a @Requires meta-annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target([ElementType.PACKAGE, ElementType.TYPE])
 @Requires(beans = DataSource.class)
 @Requires(property = "datasource.url")
 @interface RequiresJdbc {
-}
-----.Using a @Requires meta-annotation</p>
+}</code></pre>
+</div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Using a @Requires meta-annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Documented
 @Retention(AnnotationRetention.RUNTIME)
@@ -224,7 +229,7 @@ annotation class RequiresJdbc</code></pre>
 <p>In the above example an annotation called <code>RequiresJdbc</code> is defined that can then be used on the <code>JdbcBookService</code> instead:</p>
 </div>
 <div class="listingblock">
-<div class="title">Using a @Requires meta-annotation</div>
+<div class="title">Using a meta-annotation</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RequiresJdbc
 public class JdbcBookService implements BookService {
