@@ -156,6 +156,30 @@ Although GraalVM 19 is the first official stable release of GraalVM, Substrate a
 </div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_security_1_2_update">Micronaut Security 1.2 update</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_optional_beans_returned_from_factories">Optional Beans Returned from Factories</h3>
+<div class="paragraph">
+<p>A <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean can now return <code>null</code> if it is not possible to create the bean which will indicate to the dependency injection container that the bean does not exist. This allows for more complex logic within factory beans that can conditionally disable the bean if certain conditions are not met.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hashicorp_vault_support">HashiCorp Vault Support</h3>
+<div class="paragraph">
+<p>Initial support distributed configuration for <a href="https://www.vaultproject.io">HashiCorp Vault</a> has been added. See the documentation on <a href="#distributedConfigurationVault">HashiCorp Vault Support</a> for more information. Thanks to <a href="https://github.com/thiagolocatelli">Thiago Locatelli</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oracle_cloud_support">Oracle Cloud Support</h3>
+<div class="paragraph">
+<p>Initial support for environment detection and cloud metadata for Oracle Cloud has been added. Thanks to <a href="https://github.com/recursivecodes">Todd Sharp</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_dependency_upgrades">Dependency Upgrades</h3>
 <div class="ulist">
 <ul>
@@ -163,15 +187,18 @@ Although GraalVM 19 is the first official stable release of GraalVM, Substrate a
 <p>Groovy <code>2.5.4</code> &#8594; <code>2.5.6</code></p>
 </li>
 <li>
-<p>TODO</p>
+<p>Micronaut SQL <code>1.1.1</code> &#8594; <code>1.2.0.M1</code></p>
+</li>
+<li>
+<p>Micronaut Micrometer <code>1.1.0</code> &#8594; <code>1.2.0.RC1</code></p>
+</li>
+<li>
+<p>Micronaut Security <code>1.1.1</code> &#8594; <code>1.2.0.M1</code></p>
+</li>
+<li>
+<p>Micronaut Views <code>1.1.3</code> &#8594; <code>1.2.0.RC1</code></p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_conditional_beans_with_factories">Conditional Beans with Factories</h3>
-<div class="paragraph">
-<p>The use of <code>@Requires</code> is the preferred method for dealing with conditional beans, however it does not fit all use cases. When using <code>@EachProperty</code> it is common to require additional beans based on the configuration. <code>@EachBean</code> allows a bean to be created for each configuration, however a common use case is creating a bean only if some configuration property condition is met. To allow for this use case, it is now possible to return <code>null</code> from <code>@Factory</code> methods.</p>
 </div>
 </div>
 
