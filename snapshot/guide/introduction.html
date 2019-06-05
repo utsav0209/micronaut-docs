@@ -213,43 +213,50 @@ function addJsClass() {
 <p>Micronaut 1.2.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_environment_order_and_priority">Environment Order and Priority</h3>
-<div class="paragraph">
-<p>In previous versions of Micronaut, the property sources for an active environment had no priority over any other active environment. It was non deterministic which environment&#8217;s properties would override other environments. Now the last environment supplied has the highest priority. For example, if an application is started with <code>-Dmicronaut.environments=first,second</code>, <code>application-second.yml</code> will override properties in <code>application-first.yml</code>. This change affects all sources of properties, including distributed configuration sources.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graalvm_19_native_image_support">GraalVM 19 Native Image Support</h3>
-<div class="paragraph">
-<p>Micronaut 1.2.0.BUILD-SNAPSHOT is the first version to support GraalVM 19&#8217;s native image changes.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Although GraalVM 19 is the first official stable release of GraalVM, Substrate and the <code>native-image</code> tool remain in early adopter / experimental status. Therefore support for native images in Micronaut also remains experimental at this stage.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_native_bean_validation_support">Native Bean Validation Support</h3>
 <div class="paragraph">
-<p>Hibernate Validator is no longer a required dependency, with a new <a href="#beanValidation">native implementation of Bean Validation</a> available that is reflection free and supports reactive and AST level validations now available.</p>
+<p>Hibernate Validator is no longer a required dependency to activate bean validation, with a new <a href="#beanValidation">native implementation of Bean Validation</a> available that is reflection free and supports reactive and AST level validations now available.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_validated_and_valid">@Validated and @Valid</h3>
 <div class="paragraph">
-<p>It is no longer necessary to apply the <code>@Validated</code> annotation to beans that accept <code>@Valid</code> arguments.</p>
+<p>The <code>micronaut-validation</code> dependency is all that it is needed now and provides the following benefits over Hibernate Validator:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reflection Free</p>
+</li>
+<li>
+<p>Compile Time Computed Bean Metadata resulting in lower memory requirements</p>
+</li>
+<li>
+<p>Reduction in JAR size by 2MB</p>
+</li>
+<li>
+<p>Reduction in startup time by 300ms which was the cost of initializing Hibernate validator</p>
+</li>
+<li>
+<p>Out-of-the-box GraalVM native image support</p>
+</li>
+<li>
+<p>Reduction in GraalVM native image size by 10MB</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_micronaut_security_1_2_update">Micronaut Security 1.2 update</h3>
+<h3 id="_reactive_bean_validation_support">Reactive Bean Validation Support</h3>
+<div class="paragraph">
+<p>In previous versions of Micronaut manual validation had to be applied to reactive flows. You can now declare <code>@Valid</code> on method parameters that receive a reactive type and validation will automatically be applied.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implicit_validated_and_valid">Implicit @Validated and @Valid</h3>
+<div class="paragraph">
+<p>It is no longer necessary to apply the <a href="../api/io/micronaut/validation/Validated.html">@Validated</a> annotation to beans that accept <code>@Valid</code> arguments or use any <code>javax.validation</code> annotation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_security_1_2_update">Micronaut Security 1.2 Update</h3>
 <div class="paragraph">
 <p>Support for OAuth 2.0 and OpenID clients has been added to the Micronaut security module through a new dependency: <code>micronaut-security-oauth2</code>. It is now very easy to add support for login through an OAuth providers. See the <a href="https://micronaut-projects.github.io/micronaut-security/latest/guide/#oauth">Oauth section</a> in the security documentation for more information.</p>
 </div>
@@ -303,6 +310,12 @@ Although GraalVM 19 is the first official stable release of GraalVM, Substrate a
 <h3 id="_request_scope">Request Scope</h3>
 <div class="paragraph">
 <p>A new bean scope has been created to allow for beans that only exist in the scope of a given HTTP request. See <a href="../api/io/micronaut/runtime/http/scope/RequestScope.html">@RequestScope</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_environment_order_and_priority">Environment Order and Priority</h3>
+<div class="paragraph">
+<p>In previous versions of Micronaut, the property sources for an active environment had no priority over any other active environment. It was non deterministic which environment&#8217;s properties would override other environments. Now the last environment supplied has the highest priority. For example, if an application is started with <code>-Dmicronaut.environments=first,second</code>, <code>application-second.yml</code> will override properties in <code>application-first.yml</code>. This change affects all sources of properties, including distributed configuration sources.</p>
 </div>
 </div>
 <div class="sect2">
