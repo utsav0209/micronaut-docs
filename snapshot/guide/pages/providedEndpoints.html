@@ -148,6 +148,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#stopEndpoint"><strong>14.9</strong><span>The Server Stop Endpoint</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#environmentEndpoint"><strong>14.10</strong><span>The Environment Endpoint</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -214,6 +217,11 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/routes/RoutesEndpoint.html">RoutesEndpoint</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/routes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about URIs available to be called for your application (see <a href="#routesEndpoint">RoutesEndpoint</a>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/env/EnvironmentEndpoint.html">EnvironmentEndpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/env</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns information about the environment and its property sources (see <a href="#environmentEndpoint">EnvironmentEndpoint</a>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -1026,6 +1034,53 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+
+
+<h2 id="environmentEndpoint">14.2.10 The Environment Endpoint</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/management/providedEndpoints/environmentEndpoint.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The environment endpoint returns information about the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> and its <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a>s.</p>
+</div>
+<div class="sect1">
+<h2 id="_configuration">Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To configure the info endpoint, supply configuration through <code>endpoints.info</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Environment Endpoint Configuration Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
+    env:
+        enabled: Boolean    # default: true
+        sensitive: Boolean  # default: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_information_about_the_environment">Getting information about the environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To execute the endpoint, send a <code>GET</code> request to <code>/env</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_information_about_a_particular_code_propertysource_code">Getting information about a particular <code>PropertySource</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To execute the endpoint, send a <code>GET</code> request to <code>/env/{propertySourceName}</code>.</p>
 </div>
 </div>
 </div>
