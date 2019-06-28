@@ -226,15 +226,6 @@ public class BaseApplication extends Application { <i class="conum" data-value="
             ... // shortened for brevity, it is not necessary to implement other methods
         });
     }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        if(ctx != null &amp;&amp; ctx.isRunning()) { <i class="conum" data-value="4"></i><b>(4)</b>
-            ctx.stop();
-        }
-    }
-
 }</code></pre>
 </div>
 </div>
@@ -251,10 +242,6 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>To allow dependency injection of Android <code>Activity</code> instances register a <code>ActivityLifecycleCallbacks</code> instance</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Stop the <code>ApplicationContext</code> when the application terminates</td>
 </tr>
 </table>
 </div>
