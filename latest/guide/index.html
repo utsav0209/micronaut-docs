@@ -526,7 +526,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.1.3</p>
+        <p><strong>Version:</strong> 1.1.4</p>
     </div>
     
 
@@ -613,7 +613,7 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.1.3 includes the following changes:</p>
+<p>Micronaut 1.1.4 includes the following changes:</p>
 </div>
 <div class="sect2">
 <h3 id="_graalvm_19_native_image_support">GraalVM 19 Native Image Support</h3>
@@ -1266,7 +1266,7 @@ class CacheFactory {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.3</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.4</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1804,21 +1804,19 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.env.Environment
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 
-class HelloControllerSpec() {
+class HelloControllerSpec : AnnotationSpec(){
     lateinit var server: EmbeddedServer
     lateinit var client: HttpClient
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
 
         server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
@@ -1828,7 +1826,7 @@ class HelloControllerSpec() {
                 .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         client?.close()
         server?.close()
@@ -1838,7 +1836,7 @@ class HelloControllerSpec() {
     fun testHelloWorldResponse() {
         val rsp: String = client.toBlocking() <b class="conum">(3)</b>
                 .retrieve("/hello")
-        assertEquals("Hello World", rsp) <b class="conum">(4)</b>
+        rsp.shouldBe("Hello World") <b class="conum">(4)</b>
     }
 }</code></pre>
 </div>
@@ -1982,12 +1980,12 @@ interface HelloClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec : AnnotationSpec() {
 
     lateinit var server: EmbeddedServer
     lateinit var client: HelloClient
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
 
         server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
@@ -1997,14 +1995,14 @@ interface HelloClient {
                 .getBean(HelloClient::class.java)<b class="conum">(2)</b>
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         server?.close()
     }
 
     @Test
     fun testHelloWorldResponse() {
-        assertEquals("Hello World", client.hello().blockingGet())<b class="conum">(3)</b>
+        client.hello().blockingGet().shouldBe("Hello World")<b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -2113,8 +2111,8 @@ interface HelloClient {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.3" // <2>
-    compile "io.micronaut:micronaut-inject:1.1.3"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.4" // <2>
+    compile "io.micronaut:micronaut-inject:1.1.4"
     ...
 }</code></pre>
 </div>
@@ -3816,6 +3814,9 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>In the above example, all bean definitions within the annotated package will only be loaded and made available if a <code>javax.sql.DataSource</code> bean is present. This allows you to implement conditional auto-configuration of bean definitions.</p>
 </div>
+<div class="paragraph">
+<p>INFO: Java and Kotlin also support this functionality via <code>package-info.java</code>. Kotlin does not support a <code>package-info.kt</code> as of version 1.3.</p>
+</div>
 
 
 <h2 id="lifecycle">3.11 Life-Cycle Methods</h2>
@@ -3833,15 +3834,58 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PostConstruct <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.annotation.PostConstruct;
+import javax.inject.Singleton;
+
+@Singleton
+public class V8Engine implements Engine {
+    private int cylinders = 8;
+    private boolean initialized = false; <b class="conum">(2)</b>
+
+    public String start() {
+        if (!initialized) throw new IllegalStateException("Engine not initialized!");
+
+        return "Starting V8";
+    }
+
+    @PostConstruct <b class="conum">(3)</b>
+    public void initialize() {
+        this.initialized = true;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public boolean getInitialized() {
+        return initialized;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PostConstruct <b class="conum">(1)</b>
 import javax.inject.Singleton
 
 @Singleton
 class V8Engine implements Engine {
     int cylinders = 8
-    boolean initialized = false <i class="conum" data-value="2"></i><b>(2)</b>
+    boolean initialized = false <b class="conum">(2)</b>
 
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
@@ -3849,8 +3893,31 @@ class V8Engine implements Engine {
         return "Starting V8"
     }
 
-    @PostConstruct <i class="conum" data-value="3"></i><b>(3)</b>
+    @PostConstruct <b class="conum">(3)</b>
     void initialize() {
+        this.initialized = true
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PostConstruct
+import javax.inject.Singleton
+
+@Singleton
+class V8Engine : Engine {
+    override var cylinders = 8
+    var initialized = false <b class="conum">(2)</b>
+
+    override fun start(): String {
+        if (!initialized) throw IllegalStateException("Engine not initialized!")
+
+        return "Starting V8"
+    }
+
+    @PostConstruct <b class="conum">(3)</b>
+    fun initialize() {
         this.initialized = true
     }
 }</code></pre>
@@ -3880,9 +3947,32 @@ class V8Engine implements Engine {
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PreDestroy <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class PreDestroyBean implements AutoCloseable {
+
+    private AtomicBoolean stopped = new AtomicBoolean(false);
+
+    @PreDestroy <b class="conum">(2)</b>
+    @Override
+    public void close() throws Exception {
+        stopped.compareAndSet(false, true);
+    }
+
+    public AtomicBoolean getStopped() {
+        return stopped;
+    }
+
+    public void setStopped(AtomicBoolean stopped) {
+        this.stopped = stopped;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PreDestroy <b class="conum">(1)</b>
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Singleton
 
@@ -3891,9 +3981,28 @@ class PreDestroyBean implements AutoCloseable {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    @PreDestroy <i class="conum" data-value="2"></i><b>(2)</b>
+    @PreDestroy <b class="conum">(2)</b>
     @Override
     void close() throws Exception {
+        stopped.compareAndSet(false, true)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy <b class="conum">(1)</b>
+import javax.inject.Singleton
+import java.util.concurrent.atomic.AtomicBoolean
+
+@Singleton
+class PreDestroyBean : AutoCloseable {
+
+    var stopped = AtomicBoolean(false)
+
+    @PreDestroy <b class="conum">(2)</b>
+    @Throws(Exception::class)
+    override fun close() {
         stopped.compareAndSet(false, true)
     }
 }</code></pre>
@@ -3914,9 +4023,47 @@ class PreDestroyBean implements AutoCloseable {
 <div class="paragraph">
 <p>For factory beans, the <code>preDestroy</code> value in the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation can be used to tell Micronaut which method to invoke.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Factory;
+
+import javax.inject.Singleton;
+
+@Factory
+public class ConnectionFactory {
+
+    @Bean(preDestroy = "stop")<b class="conum">(1)</b>
+    @Singleton
+    public Connection connection() {
+        return new Connection();
+    }
+
+}
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class Connection {
+
+    private AtomicBoolean stopped = new AtomicBoolean(false);
+
+    public void stop() { <b class="conum">(2)</b>
+        stopped.compareAndSet(false, true);
+    }
+
+    public AtomicBoolean getStopped() {
+        return stopped;
+    }
+
+    public void setStopped(AtomicBoolean stopped) {
+        this.stopped = stopped;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
@@ -3924,7 +4071,7 @@ import javax.inject.Singleton
 @Factory
 class ConnectionFactory {
 
-    @Bean(preDestroy = "stop") <i class="conum" data-value="1"></i><b>(1)</b>
+    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
     @Singleton
     Connection connection() {
         new Connection()
@@ -3937,10 +4084,39 @@ class Connection {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    void stop() { <i class="conum" data-value="2"></i><b>(2)</b>
+    void stop() { <b class="conum">(2)</b>
         stopped.compareAndSet(false, true)
     }
 
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import javax.inject.Singleton
+
+@Factory
+class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
+    @Singleton
+    fun connection(): Connection {
+        return Connection()
+    }
+}
+
+import java.util.concurrent.atomic.AtomicBoolean
+
+class Connection {
+
+    var stopped = AtomicBoolean(false)
+
+    fun stop() { <b class="conum">(2)</b>
+        stopped.compareAndSet(false, true)
+    }
 }</code></pre>
 </div>
 </div>
@@ -3992,15 +4168,62 @@ Just simply implementing the Closeable or AutoCloseable interfaces is not enough
 <div class="paragraph">
 <p>To publish an event, obtain an instance of <a href="../api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a> either directly from the context or through dependency injection, and execute the <code>publishEvent</code> method with your event object.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventPublisher;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class MyBean {
 
-    @Inject ApplicationEventPublisher eventPublisher;
+    @Inject
+    ApplicationEventPublisher eventPublisher;
 
     void doSomething() {
-        eventPublisher.publishEvent(...);
+        eventPublisher.publishEvent("SampleEvent");
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MyBean {
+
+    @Inject
+    ApplicationEventPublisher eventPublisher
+
+    void doSomething() {
+        eventPublisher.publishEvent("SampleEvent")
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+
+@Singleton
+class MyBean {
+
+    @Inject
+    internal var eventPublisher: ApplicationEventPublisher? = null
+
+    internal fun doSomething() {
+        eventPublisher!!.publishEvent("SampleEvent")
     }
 
 }</code></pre>
@@ -4024,15 +4247,52 @@ Publishing an event is <strong>synchronous</strong> by default! The <code>publis
 <div class="paragraph">
 <p>To listen to an event, register a bean that implements <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> where the generic type is the type of event the listener should be executed for.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.discovery.event.ServiceStartedEvent;
+
+@Singleton
 public class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
 
     @Override
+    public void onApplicationEvent(ServiceStartedEvent event) {
+        // respond to app event
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.discovery.event.ServiceStartedEvent
+
+@Singleton
+class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+
+    @Override
     void onApplicationEvent(ServiceStartedEvent event) {
-        ...
+        // respond to app event
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.discovery.event.ServiceStartedEvent
+import javax.inject.Singleton
+
+@Singleton
+class DoOnStartup : ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+
+
+    override fun onApplicationEvent(event: ServiceStartedEvent) {
+        // respond to app event
+
     }
 }</code></pre>
 </div>
@@ -4052,17 +4312,52 @@ The <a href="../api/io/micronaut/context/event/ApplicationEventListener.html#sup
 <div class="paragraph">
 <p>Alternatively you can use the <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation if you do not wish to specifically implement an interface:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
-...
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.discovery.event.ServiceStartedEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
+
 @Singleton
 public class DoOnStartup  {
 
     @EventListener
     void onStartup(ServiceStartedEvent event) {
-        ...
+        // do startup things
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.discovery.event.ServiceStartedEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class DoOnStartup  {
+
+    @EventListener
+    void onStartup(ServiceStartedEvent event) {
+        // do startup things
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.discovery.event.ServiceStartedEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import javax.inject.Singleton
+
+@Singleton
+class DoOnStartup {
+
+
+    @EventListener
+    internal fun onStartup(event: ServiceStartedEvent) {
+        // do startup things
     }
 }</code></pre>
 </div>
@@ -4070,20 +4365,56 @@ public class DoOnStartup  {
 <div class="paragraph">
 <p>If your listener performs work that could take a while then you can use the <a href="../api/io/micronaut/scheduling/annotation/Async.html">@Async</a> annotation to run the operation on a separate thread:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.discovery.event.ServiceStartedEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.scheduling.annotation.Async;
 
-...
 @Singleton
 public class DoOnStartup  {
 
     @EventListener
     @Async
     void onStartup(ServiceStartedEvent event) {
-        ...
+        // handle long events async
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.discovery.event.ServiceStartedEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+class DoOnStartup  {
+
+    @EventListener
+    @Async
+    void onStartup(ServiceStartedEvent event) {
+        // handle long events async
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.discovery.event.ServiceStartedEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+open class DoOnStartup {
+
+    @EventListener
+    @Async
+    open fun onStartup(event: ServiceStartedEvent) {
+        // handle long events async
     }
 }</code></pre>
 </div>
@@ -4222,7 +4553,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.3'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.4'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4231,7 +4562,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.1.3&lt;/version&gt;
+        &lt;version&gt;1.1.4&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -4253,7 +4584,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.3'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.4'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4261,7 +4592,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.1.3&lt;/version&gt;
+    &lt;version&gt;1.1.4&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -4832,8 +5163,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.3"
-    compileOnly "io.micronaut:micronaut-inject-java:1.1.3"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.4"
+    compileOnly "io.micronaut:micronaut-inject-java:1.1.4"
     ...
 }</code></pre>
 </div>
@@ -8054,21 +8385,19 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.env.Environment
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 
-class HelloControllerSpec() {
+class HelloControllerSpec : AnnotationSpec(){
     lateinit var server: EmbeddedServer
     lateinit var client: HttpClient
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
 
         server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
@@ -8078,7 +8407,7 @@ class HelloControllerSpec() {
                 .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         client?.close()
         server?.close()
@@ -8088,7 +8417,7 @@ class HelloControllerSpec() {
     fun testHelloWorldResponse() {
         val rsp: String = client.toBlocking() <b class="conum">(3)</b>
                 .retrieve("/hello")
-        assertEquals("Hello World", rsp) <b class="conum">(4)</b>
+        rsp.shouldBe("Hello World") <b class="conum">(4)</b>
     }
 }</code></pre>
 </div>
@@ -13362,18 +13691,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 <div class="listingblock">
 <div class="title">src/main/java/myapp/BooksController.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
-public class BooksController {
-
-    @Secured(SecurityRule.IS_AUTHENTICATED)
-    @View("securitydecorator")
-    @Get
-    public Map&lt;String, Object&gt; index() {
-        Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();
-        model.put("books", Arrays.asList("Developing Microservices"));
-        return model;
-    }
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::views/src/test/groovy/io/micronaut/views/model/security/BooksController.java[tags=class]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -13382,26 +13700,7 @@ public class BooksController {
 <div class="listingblock">
 <div class="title">src/main/resources/views/books.vm</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;User Books&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    #if( $security )
-      &lt;h1&gt;User: ${security['name']} email: ${security['attributes']['email']}&lt;/h1&gt;
-    #end
-
-    #foreach($book in $books)
-      $book
-    #end
-
-    #if( $securitycustom )
-    &lt;h1&gt;Custom: ${securitycustom['name']}&lt;/span&gt;&lt;/h1&gt;
-    #end
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">Unresolved directive in &lt;stdin&gt; - include::views/src/test/resources/views/securitydecorator.vm[tag=html]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -14485,7 +14784,7 @@ public class BooksController {
             Argument.of(CustomError)) <i class="conum" data-value="2"></i><b>(2)</b>
 
     then:
-    def e = thrown(HttpClientException)
+    def e = thrown(HttpClientResponseException)
     e.response.status == HttpStatus.UNAUTHORIZED
 
     when:

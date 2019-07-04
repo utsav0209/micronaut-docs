@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2 Quick Start 1.1.3</title>
+    <title>2 Quick Start 1.1.4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2 Quick Start</h1>
 
-                    <p><strong>Version:</strong> 1.1.3</p>
+                    <p><strong>Version:</strong> 1.1.4</p>
                 </div>
 
                 
@@ -217,7 +217,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.3</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.1.4</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -755,21 +755,19 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.env.Environment
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 
-class HelloControllerSpec() {
+class HelloControllerSpec : AnnotationSpec(){
     lateinit var server: EmbeddedServer
     lateinit var client: HttpClient
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
 
         server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
@@ -779,7 +777,7 @@ class HelloControllerSpec() {
                 .createBean(HttpClient::class.java, server.getURL())<b class="conum">(2)</b>
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         client?.close()
         server?.close()
@@ -789,7 +787,7 @@ class HelloControllerSpec() {
     fun testHelloWorldResponse() {
         val rsp: String = client.toBlocking() <b class="conum">(3)</b>
                 .retrieve("/hello")
-        assertEquals("Hello World", rsp) <b class="conum">(4)</b>
+        rsp.shouldBe("Hello World") <b class="conum">(4)</b>
     }
 }</code></pre>
 </div>
@@ -933,12 +931,12 @@ interface HelloClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class HelloClientSpec : AnnotationSpec() {
 
     lateinit var server: EmbeddedServer
     lateinit var client: HelloClient
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
 
         server = ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
@@ -948,14 +946,14 @@ interface HelloClient {
                 .getBean(HelloClient::class.java)<b class="conum">(2)</b>
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         server?.close()
     }
 
     @Test
     fun testHelloWorldResponse() {
-        assertEquals("Hello World", client.hello().blockingGet())<b class="conum">(3)</b>
+        client.hello().blockingGet().shouldBe("Hello World")<b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
