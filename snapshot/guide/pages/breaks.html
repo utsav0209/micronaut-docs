@@ -141,6 +141,9 @@ function addJsClass() {
 <li>
 <p>The AWS distributed configuration through systems manager property store supported the notion of <code>key=value</code> in the value section of the configuration. This functionality has been removed because it did not consider properties that contain an <code>=</code> but are not in the format of <code>key=value</code>.</p>
 </li>
+<li>
+<p>The return of reactive types with a generic of <code>Void</code> has been changed from always returning a 404 status to returning a 200, or whatever status is defined in the <code>@Status</code> annotation. This includes <code>CompletionStage</code>, RxJava2, and Reactor types. The change was made to be consistent with the behavior of methods that return <code>void</code>.</p>
+</li>
 </ul>
 </div>
 </div>
