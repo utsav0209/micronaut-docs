@@ -133,24 +133,63 @@ function addJsClass() {
 <div class="paragraph">
 <p>Additional <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances can be added to the environment prior to initializing the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Initializing the Environment</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ApplicationContext applicationContext = ApplicationContext.run(
-        PropertySource.of(
-                "test",
-                CollectionUtils.mapOf(
-                    "micronaut.server.host", "foo",
-                    "micronaut.server.port", 8080
-                )
-        ),
-        "test", "android");
-Environment environment = applicationContext.getEnvironment();
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        CollectionUtils.mapOf(
+                            "micronaut.server.host", "foo",
+                            "micronaut.server.port", 8080
+                        )
+                ),
+                "test", "android");
+        Environment environment = applicationContext.getEnvironment();
 
-assertEquals(
-        "foo",
-        environment.getProperty("micronaut.server.host", String.class).orElse("localhost")
-);</code></pre>
+        assertEquals(
+                "foo",
+                environment.getProperty("micronaut.server.host", String.class).orElse("localhost")
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        ApplicationContext applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        [
+                            "micronaut.server.host": "foo",
+                            "micronaut.server.port": 8080
+                        ]
+                ),
+                "test", "android")
+        Environment environment = applicationContext.getEnvironment()
+
+        then:
+        "foo" == environment.getProperty("micronaut.server.host", String.class).orElse("localhost")</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        mapOf(
+                                "micronaut.server.host" to "foo",
+                                "micronaut.server.port" to 8080
+                        )
+                ),
+                "test", "android")
+        val environment = applicationContext.getEnvironment()
+
+        assertEquals(
+                "foo",
+                environment.getProperty("micronaut.server.host", String::class.java).orElse("localhost")
+        )</code></pre>
 </div>
 </div>
 <div class="paragraph">

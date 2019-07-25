@@ -2485,15 +2485,79 @@ Just simply implementing the Closeable or AutoCloseable interfaces is not enough
 <div class="paragraph">
 <p>To publish an event, obtain an instance of <a href="../api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a> either directly from the context or through dependency injection, and execute the <code>publishEvent</code> method with your event object.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
-public class MyBean {
+<pre class="highlight"><code class="language-java" data-lang="java">public class SampleEvent {
+    private String message = "Something happened";
 
-    @Inject ApplicationEventPublisher eventPublisher;
+    public String getMessage() {
+        return message;
+    }
 
-    void doSomething() {
-        eventPublisher.publishEvent(...);
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
+public class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher eventPublisher;
+
+    public void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent());
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleEvent {
+    String message = "Something happened"
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher eventPublisher
+
+    void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent())
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">data class SampleEvent(val message: String = "Something happened")
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    internal var eventPublisher: ApplicationEventPublisher? = null
+
+    fun publishSampleEvent() {
+        eventPublisher!!.publishEvent(SampleEvent())
     }
 
 }</code></pre>
@@ -2517,15 +2581,103 @@ Publishing an event is <strong>synchronous</strong> by default! The <code>publis
 <div class="paragraph">
 <p>To listen to an event, register a bean that implements <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> where the generic type is the type of event the listener should be executed for.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
-public class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.docs.context.events.SampleEvent;
+
+@Singleton
+public class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    private int invocationCounter = 0;
 
     @Override
-    void onApplicationEvent(ServiceStartedEvent event) {
-        ...
+    public void onApplicationEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}
+
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        assertEquals(1, listener.getInvocationCounter());
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+
+@Singleton
+class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    int invocationCounter = 0
+
+    @Override
+    void onApplicationEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}
+
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        listener.invocationCounter == 1
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+
+@Singleton
+class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
+    var invocationCounter = 0
+
+    override fun onApplicationEvent(event: SampleEvent) {
+        invocationCounter++
+    }
+}
+
+
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.shouldBe(0)
+        emitter.publishSampleEvent()
+        listener.invocationCounter.shouldBe(1)
     }
 }</code></pre>
 </div>
@@ -2545,17 +2697,57 @@ The <a href="../api/io/micronaut/context/event/ApplicationEventListener.html#sup
 <div class="paragraph">
 <p>Alternatively you can use the <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation if you do not wish to specifically implement an interface:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
-...
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
+
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private int invocationCounter = 0;
 
     @EventListener
-    void onStartup(ServiceStartedEvent event) {
-        ...
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    int invocationCounter = 0
+
+    @EventListener
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    var invocationCounter = 0
+
+    @EventListener
+    internal fun onSampleEvent(event: SampleEvent) {
+        invocationCounter++
     }
 }</code></pre>
 </div>
@@ -2563,20 +2755,120 @@ public class DoOnStartup  {
 <div class="paragraph">
 <p>If your listener performs work that could take a while then you can use the <a href="../api/io/micronaut/scheduling/annotation/Async.html">@Async</a> annotation to run the operation on a separate thread:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.scheduling.annotation.Async;
 
-...
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private AtomicInteger invocationCounter = new AtomicInteger(0);
 
     @EventListener
     @Async
-    void onStartup(ServiceStartedEvent event) {
-        ...
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement();
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter.get();
+    }
+}
+
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+class SampleEventListener {
+    AtomicInteger invocationCounter = new AtomicInteger(0)
+
+    @EventListener
+    @Async
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement()
+    }
+}
+
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter.get() == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        new PollingConditions().eventually {
+            listener.invocationCounter.get() == 1
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+import java.util.concurrent.atomic.AtomicInteger
+
+@Singleton
+open class SampleEventListener {
+
+    var invocationCounter = AtomicInteger(0)
+
+    @EventListener
+    @Async
+    open fun onSampleEvent(event: SampleEvent) {
+        println("Incrementing invocation counter...")
+        invocationCounter.getAndIncrement()
+    }
+}
+
+
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+//    @Ignore // TODO can't get this to pass on CI, any help is welcome
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.get().shouldBe(0)
+        emitter.publishSampleEvent()
+
+        eventually(5.seconds,  AssertionFailedError::class.java) {
+            println("Current value of counter: " + listener.invocationCounter.get())
+            listener.invocationCounter.get().shouldBe(1)
+        }
     }
 }</code></pre>
 </div>
@@ -2622,13 +2914,70 @@ public class DoOnStartup  {
 <div class="paragraph">
 <p>The <code>BeanInitializedEventListener</code> interface is commonly used in combination with <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> beans. Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private double rodLength; <b class="conum">(1)</b>
 
-class V8Engine implements Engine {
+    public V8Engine(double rodLength) {
+        this.rodLength = rodLength;
+    }
+
+    public String start() {
+        return "Starting V" + String.valueOf(getCylinders()) + " [rodLength=" + String.valueOf(getRodLength()) + "]";
+    }
+
+    public final int getCylinders() {
+        return cylinders;
+    }
+
+    public double getRodLength() {
+        return rodLength;
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Factory
+public class EngineFactory {
+
+    private V8Engine engine;
+    private double rodLength = 5.7;
+
+    @PostConstruct
+    public void initialize() {
+        engine = new V8Engine(rodLength); <b class="conum">(2)</b>
+    }
+
+    @Singleton
+    public Engine v8Engine() {
+        return engine;<b class="conum">(3)</b>
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Singleton
+public class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
+    @Override
+    public EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
+        EngineFactory engineFactory = event.getBean();
+        engineFactory.setRodLength(6.6);<b class="conum">(5)</b>
+        return ((EngineFactory) (event.getBean()));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class V8Engine implements Engine {
     final int cylinders = 8
-    double rodLength <i class="conum" data-value="1"></i><b>(1)</b>
+    double rodLength <b class="conum">(1)</b>
 
     String start() {
         return "Starting V${cylinders} [rodLength=$rodLength]"
@@ -2637,28 +2986,69 @@ class V8Engine implements Engine {
 
 @Factory
 class EngineFactory {
-
     private V8Engine engine
     double rodLength = 5.7
 
     @PostConstruct
     void initialize() {
-        engine = new V8Engine(rodLength: rodLength) <i class="conum" data-value="2"></i><b>(2)</b>
+        engine = new V8Engine(rodLength: rodLength) <b class="conum">(2)</b>
     }
 
     @Singleton
     Engine v8Engine() {
-        return engine <i class="conum" data-value="3"></i><b>(3)</b>
+        return engine <b class="conum">(3)</b>
     }
 }
 
 @Singleton
-class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <i class="conum" data-value="4"></i><b>(4)</b>
+class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
     @Override
     EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
         EngineFactory engineFactory = event.bean
-        engineFactory.rodLength = 6.6 <i class="conum" data-value="5"></i><b>(5)</b>
+        engineFactory.rodLength = 6.6 <b class="conum">(5)</b>
         return event.bean
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class V8Engine(var rodLength: Double) : Engine {  <b class="conum">(1)</b>
+
+    override val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V$cylinders [rodLength=$rodLength]"
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    private var engine: V8Engine? = null
+    private var rodLength = 5.7
+
+    @PostConstruct
+    fun initialize() {
+        engine = V8Engine(rodLength) <b class="conum">(2)</b>
+    }
+
+    @Singleton
+    fun v8Engine(): Engine? {
+        return engine<b class="conum">(3)</b>
+    }
+
+    fun setRodLength(rodLength: Double) {
+        this.rodLength = rodLength
+    }
+}
+
+@Singleton
+class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
+    override fun onInitialized(event: BeanInitializingEvent&lt;EngineFactory&gt;): EngineFactory {
+        val engineFactory = event.bean
+        engineFactory.setRodLength(6.6)<b class="conum">(5)</b>
+        return event.bean as EngineFactory
     }
 }</code></pre>
 </div>
@@ -4082,31 +4472,39 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 </table>
 </div>
 <div class="paragraph">
-<p>As an example the the <code>AnnotationMapper</code> that maps the <code>javax.annotation.security.PermitAll</code> standard Java annotation to the internal Micronaut <code>Secured</code> annotation looks like the following:</p>
+<p>As an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
 </div>
 <div class="listingblock">
 <div class="title">PermitAllAnnotationMapper Mapper Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::security/src/main/java/io/micronaut/security/annotation/PermitAllAnnotationMapper.java[tag=clazz]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
+    @Nonnull
+    @Override
+    public String getName() {
+        return "javax.persistence.Entity";
+    }
+
+    @Override
+    public List&lt;AnnotationValue&lt;?&gt;&gt; map(AnnotationValue&lt;Annotation&gt; annotation, VisitorContext visitorContext) { <i class="conum" data-value="1"></i><b>(1)</b>
+        final AnnotationValueBuilder&lt;Introspected&gt; builder = AnnotationValue.builder(Introspected.class)
+                // don't bother with transients properties
+                .member("excludedAnnotations", "javax.persistence.Transient"); <i class="conum" data-value="2"></i><b>(2)</b>
+        return Collections.singletonList(
+                builder.build()
+        );
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The annotation type to be mapped is specified as a generic type argument.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>map</code> method receives a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> with the values for the annotation.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>One or more annotations can be returned, in this case <code>@Secured</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Annotations values can be provided.</td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>One or more annotations can be returned, in this case <code>@Transient</code>.</td>
 </tr>
 </table>
 </div>
@@ -4117,7 +4515,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The example above implements the <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> interface which requires the annotation class itself to be on the annotation processor classpath. If that is undesirable (such as for projects that mix annotations with runtime code) then you should use <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> instead.
+The example above implements the <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> interface which allows for annotations to be mixed with runtime code. If you want to operate against a concrete annotation type then you should use <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> instead, though note it requires the annotation class itself to be on the annotation processor classpath.
 </td>
 </tr>
 </table>

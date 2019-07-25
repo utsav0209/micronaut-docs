@@ -247,31 +247,39 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 </table>
 </div>
 <div class="paragraph">
-<p>As an example the the <code>AnnotationMapper</code> that maps the <code>javax.annotation.security.PermitAll</code> standard Java annotation to the internal Micronaut <code>Secured</code> annotation looks like the following:</p>
+<p>As an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
 </div>
 <div class="listingblock">
 <div class="title">PermitAllAnnotationMapper Mapper Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::security/src/main/java/io/micronaut/security/annotation/PermitAllAnnotationMapper.java[tag=clazz]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
+    @Nonnull
+    @Override
+    public String getName() {
+        return "javax.persistence.Entity";
+    }
+
+    @Override
+    public List&lt;AnnotationValue&lt;?&gt;&gt; map(AnnotationValue&lt;Annotation&gt; annotation, VisitorContext visitorContext) { <i class="conum" data-value="1"></i><b>(1)</b>
+        final AnnotationValueBuilder&lt;Introspected&gt; builder = AnnotationValue.builder(Introspected.class)
+                // don't bother with transients properties
+                .member("excludedAnnotations", "javax.persistence.Transient"); <i class="conum" data-value="2"></i><b>(2)</b>
+        return Collections.singletonList(
+                builder.build()
+        );
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The annotation type to be mapped is specified as a generic type argument.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>map</code> method receives a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> with the values for the annotation.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>One or more annotations can be returned, in this case <code>@Secured</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Annotations values can be provided.</td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>One or more annotations can be returned, in this case <code>@Transient</code>.</td>
 </tr>
 </table>
 </div>
@@ -282,7 +290,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The example above implements the <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> interface which requires the annotation class itself to be on the annotation processor classpath. If that is undesirable (such as for projects that mix annotations with runtime code) then you should use <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> instead.
+The example above implements the <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> interface which allows for annotations to be mixed with runtime code. If you want to operate against a concrete annotation type then you should use <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> instead, though note it requires the annotation class itself to be on the annotation processor classpath.
 </td>
 </tr>
 </table>

@@ -141,15 +141,79 @@ function addJsClass() {
 <div class="paragraph">
 <p>To publish an event, obtain an instance of <a href="../api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a> either directly from the context or through dependency injection, and execute the <code>publishEvent</code> method with your event object.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
-public class MyBean {
+<pre class="highlight"><code class="language-java" data-lang="java">public class SampleEvent {
+    private String message = "Something happened";
 
-    @Inject ApplicationEventPublisher eventPublisher;
+    public String getMessage() {
+        return message;
+    }
 
-    void doSomething() {
-        eventPublisher.publishEvent(...);
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
+public class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher eventPublisher;
+
+    public void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent());
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleEvent {
+    String message = "Something happened"
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher eventPublisher
+
+    void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent())
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing an Event</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">data class SampleEvent(val message: String = "Something happened")
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    internal var eventPublisher: ApplicationEventPublisher? = null
+
+    fun publishSampleEvent() {
+        eventPublisher!!.publishEvent(SampleEvent())
     }
 
 }</code></pre>
@@ -173,15 +237,103 @@ Publishing an event is <strong>synchronous</strong> by default! The <code>publis
 <div class="paragraph">
 <p>To listen to an event, register a bean that implements <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> where the generic type is the type of event the listener should be executed for.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
-public class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.docs.context.events.SampleEvent;
+
+@Singleton
+public class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    private int invocationCounter = 0;
 
     @Override
-    void onApplicationEvent(ServiceStartedEvent event) {
-        ...
+    public void onApplicationEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}
+
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        assertEquals(1, listener.getInvocationCounter());
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+
+@Singleton
+class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    int invocationCounter = 0
+
+    @Override
+    void onApplicationEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}
+
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        listener.invocationCounter == 1
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+
+@Singleton
+class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
+    var invocationCounter = 0
+
+    override fun onApplicationEvent(event: SampleEvent) {
+        invocationCounter++
+    }
+}
+
+
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.shouldBe(0)
+        emitter.publishSampleEvent()
+        listener.invocationCounter.shouldBe(1)
     }
 }</code></pre>
 </div>
@@ -201,17 +353,57 @@ The <a href="../api/io/micronaut/context/event/ApplicationEventListener.html#sup
 <div class="paragraph">
 <p>Alternatively you can use the <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation if you do not wish to specifically implement an interface:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
-...
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
+
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private int invocationCounter = 0;
 
     @EventListener
-    void onStartup(ServiceStartedEvent event) {
-        ...
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    int invocationCounter = 0
+
+    @EventListener
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    var invocationCounter = 0
+
+    @EventListener
+    internal fun onSampleEvent(event: SampleEvent) {
+        invocationCounter++
     }
 }</code></pre>
 </div>
@@ -219,20 +411,120 @@ public class DoOnStartup  {
 <div class="paragraph">
 <p>If your listener performs work that could take a while then you can use the <a href="../api/io/micronaut/scheduling/annotation/Async.html">@Async</a> annotation to run the operation on a separate thread:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.scheduling.annotation.Async;
 
-...
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private AtomicInteger invocationCounter = new AtomicInteger(0);
 
     @EventListener
     @Async
-    void onStartup(ServiceStartedEvent event) {
-        ...
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement();
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter.get();
+    }
+}
+
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+class SampleEventListener {
+    AtomicInteger invocationCounter = new AtomicInteger(0)
+
+    @EventListener
+    @Async
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement()
+    }
+}
+
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter.get() == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        new PollingConditions().eventually {
+            listener.invocationCounter.get() == 1
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+import java.util.concurrent.atomic.AtomicInteger
+
+@Singleton
+open class SampleEventListener {
+
+    var invocationCounter = AtomicInteger(0)
+
+    @EventListener
+    @Async
+    open fun onSampleEvent(event: SampleEvent) {
+        println("Incrementing invocation counter...")
+        invocationCounter.getAndIncrement()
+    }
+}
+
+
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+//    @Ignore // TODO can't get this to pass on CI, any help is welcome
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.get().shouldBe(0)
+        emitter.publishSampleEvent()
+
+        eventually(5.seconds,  AssertionFailedError::class.java) {
+            println("Current value of counter: " + listener.invocationCounter.get())
+            listener.invocationCounter.get().shouldBe(1)
+        }
     }
 }</code></pre>
 </div>

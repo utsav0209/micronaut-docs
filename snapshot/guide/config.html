@@ -185,14 +185,36 @@ function addJsClass() {
 <div class="paragraph">
 <p>The application environment is modelled by the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> interface, which allows specifying one or many unique environment names when creating an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Initializing the Environment</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ApplicationContext applicationContext = ApplicationContext.run("test", "android");
-Environment environment = applicationContext.getEnvironment();
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run("test", "android");
+        Environment environment = applicationContext.getEnvironment();
 
-assertTrue(environment.getActiveNames().contains("test"));
-assertTrue(environment.getActiveNames().contains("android"));</code></pre>
+        assertTrue(environment.getActiveNames().contains("test"));
+        assertTrue(environment.getActiveNames().contains("android"));</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        ApplicationContext applicationContext = ApplicationContext.run("test", "android")
+        Environment environment = applicationContext.getEnvironment()
+
+        then:
+        environment.getActiveNames().contains("test")
+        environment.getActiveNames().contains("android")</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run("test", "android")
+        val environment = applicationContext.getEnvironment()
+
+        assertTrue(environment.getActiveNames().contains("test"))
+        assertTrue(environment.getActiveNames().contains("android"))</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -231,19 +253,40 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 <div class="paragraph">
 <p>Alternatively, you can disable environment deduction using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a>'s <code>deduceEnvironment</code> method when setting up your application.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using ApplicationContextBuilder to disable environment deduction</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">void "test disable environment deduction via builder"() {
-    when:
-    ApplicationContext ctx = ApplicationContext.build().deduceEnvironment(false).start()
+<pre class="highlight"><code class="language-java" data-lang="java">    @Test
+    public void testDisableEnvironmentDeductionViaBuilder() {
+        ApplicationContext ctx = ApplicationContext.build().deduceEnvironment(false).start();
+        assertFalse(ctx.getEnvironment().getActiveNames().contains(Environment.TEST));
+        ctx.close();
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using ApplicationContextBuilder to disable environment deduction</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test disable environment deduction via builder"() {
+        when:
+        ApplicationContext ctx = ApplicationContext.build().deduceEnvironment(false).start()
 
-    then:
-    !ctx.environment.activeNames.contains(Environment.TEST)
+        then:
+        !ctx.environment.activeNames.contains(Environment.TEST)
 
-    cleanup:
-    ctx.close()
-}</code></pre>
+        cleanup:
+        ctx.close()
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using ApplicationContextBuilder to disable environment deduction</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    "test disable environment deduction via builder"() {
+        val ctx = ApplicationContext.build().deduceEnvironment(false).start()
+        assertFalse(ctx.getEnvironment().getActiveNames().contains(Environment.TEST))
+        ctx.close()
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -262,24 +305,63 @@ assertTrue(environment.getActiveNames().contains("android"));</code></pre>
 <div class="paragraph">
 <p>Additional <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances can be added to the environment prior to initializing the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Initializing the Environment</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ApplicationContext applicationContext = ApplicationContext.run(
-        PropertySource.of(
-                "test",
-                CollectionUtils.mapOf(
-                    "micronaut.server.host", "foo",
-                    "micronaut.server.port", 8080
-                )
-        ),
-        "test", "android");
-Environment environment = applicationContext.getEnvironment();
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        CollectionUtils.mapOf(
+                            "micronaut.server.host", "foo",
+                            "micronaut.server.port", 8080
+                        )
+                ),
+                "test", "android");
+        Environment environment = applicationContext.getEnvironment();
 
-assertEquals(
-        "foo",
-        environment.getProperty("micronaut.server.host", String.class).orElse("localhost")
-);</code></pre>
+        assertEquals(
+                "foo",
+                environment.getProperty("micronaut.server.host", String.class).orElse("localhost")
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        ApplicationContext applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        [
+                            "micronaut.server.host": "foo",
+                            "micronaut.server.port": 8080
+                        ]
+                ),
+                "test", "android")
+        Environment environment = applicationContext.getEnvironment()
+
+        then:
+        "foo" == environment.getProperty("micronaut.server.host", String.class).orElse("localhost")</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initializing the Environment</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(
+                PropertySource.of(
+                        "test",
+                        mapOf(
+                                "micronaut.server.host" to "foo",
+                                "micronaut.server.port" to 8080
+                        )
+                ),
+                "test", "android")
+        val environment = applicationContext.getEnvironment()
+
+        assertEquals(
+                "foo",
+                environment.getProperty("micronaut.server.host", String::class.java).orElse("localhost")
+        )</code></pre>
 </div>
 </div>
 <div class="paragraph">
