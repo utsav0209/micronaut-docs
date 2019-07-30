@@ -264,6 +264,31 @@ To allow the resulting bean to participate in the application context shutdown p
     Integer getCylinders();
 }
 
+@EachProperty("engines")
+public class EngineConfiguration implements Toggleable {
+
+    private boolean enabled = true;
+    private Integer cylinders;
+
+    @NotNull
+    public Integer getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(Integer cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+}
 
 @Factory
 public class EngineFactory {
@@ -285,6 +310,12 @@ public class EngineFactory {
     Integer getCylinders()
 }
 
+@EachProperty("engines")
+class EngineConfiguration implements Toggleable {
+    boolean enabled = true
+    @NotNull
+    Integer cylinders
+}
 
 @Factory
 class EngineFactory {
@@ -306,6 +337,18 @@ class EngineFactory {
     fun getCylinders(): Int
 }
 
+@EachProperty("engines")
+class EngineConfiguration : Toggleable {
+
+    val enabled = true
+
+    @NotNull
+    val cylinders: Int? = null
+
+    override fun isEnabled(): Boolean {
+        return enabled
+    }
+}
 
 @Factory
 class EngineFactory {

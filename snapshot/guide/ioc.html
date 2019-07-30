@@ -1544,6 +1544,31 @@ To allow the resulting bean to participate in the application context shutdown p
     Integer getCylinders();
 }
 
+@EachProperty("engines")
+public class EngineConfiguration implements Toggleable {
+
+    private boolean enabled = true;
+    private Integer cylinders;
+
+    @NotNull
+    public Integer getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(Integer cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+}
 
 @Factory
 public class EngineFactory {
@@ -1565,6 +1590,12 @@ public class EngineFactory {
     Integer getCylinders()
 }
 
+@EachProperty("engines")
+class EngineConfiguration implements Toggleable {
+    boolean enabled = true
+    @NotNull
+    Integer cylinders
+}
 
 @Factory
 class EngineFactory {
@@ -1586,6 +1617,18 @@ class EngineFactory {
     fun getCylinders(): Int
 }
 
+@EachProperty("engines")
+class EngineConfiguration : Toggleable {
+
+    val enabled = true
+
+    @NotNull
+    val cylinders: Int? = null
+
+    override fun isEnabled(): Boolean {
+        return enabled
+    }
+}
 
 @Factory
 class EngineFactory {
@@ -2601,6 +2644,11 @@ public class SampleEventListener implements ApplicationEventListener&lt;SampleEv
     }
 }
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class SampleEventListenerSpec {
 
@@ -2633,6 +2681,9 @@ class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt;
     }
 }
 
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
 
 class SampleEventListenerSpec extends Specification {
 
@@ -2667,6 +2718,10 @@ class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
     }
 }
 
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
 
 class SampleEventListenerSpec : AnnotationSpec() {
 
@@ -2777,6 +2832,14 @@ public class SampleEventListener {
     }
 }
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.equalTo;
 
 public class SampleEventListenerSpec {
 
@@ -2811,6 +2874,10 @@ class SampleEventListener {
     }
 }
 
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+import spock.util.concurrent.PollingConditions
 
 class SampleEventListenerSpec extends Specification {
 
@@ -2853,6 +2920,13 @@ open class SampleEventListener {
     }
 }
 
+import io.kotlintest.eventually
+import io.kotlintest.seconds
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import org.opentest4j.AssertionFailedError
 
 class SampleEventListenerSpec : AnnotationSpec() {
 

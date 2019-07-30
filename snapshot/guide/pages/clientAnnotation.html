@@ -506,7 +506,13 @@ Single&lt;Pet&gt; save(
 <div class="listingblock">
 <div class="title">HeadlineClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/streaming")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Flowable;
+import reactor.core.publisher.Flux;
+
+@Client("/streaming")
 public interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>

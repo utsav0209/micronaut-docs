@@ -3069,6 +3069,31 @@ To allow the resulting bean to participate in the application context shutdown p
     Integer getCylinders();
 }
 
+@EachProperty("engines")
+public class EngineConfiguration implements Toggleable {
+
+    private boolean enabled = true;
+    private Integer cylinders;
+
+    @NotNull
+    public Integer getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(Integer cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+}
 
 @Factory
 public class EngineFactory {
@@ -3090,6 +3115,12 @@ public class EngineFactory {
     Integer getCylinders()
 }
 
+@EachProperty("engines")
+class EngineConfiguration implements Toggleable {
+    boolean enabled = true
+    @NotNull
+    Integer cylinders
+}
 
 @Factory
 class EngineFactory {
@@ -3111,6 +3142,18 @@ class EngineFactory {
     fun getCylinders(): Int
 }
 
+@EachProperty("engines")
+class EngineConfiguration : Toggleable {
+
+    val enabled = true
+
+    @NotNull
+    val cylinders: Int? = null
+
+    override fun isEnabled(): Boolean {
+        return enabled
+    }
+}
 
 @Factory
 class EngineFactory {
@@ -4126,6 +4169,11 @@ public class SampleEventListener implements ApplicationEventListener&lt;SampleEv
     }
 }
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class SampleEventListenerSpec {
 
@@ -4158,6 +4206,9 @@ class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt;
     }
 }
 
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
 
 class SampleEventListenerSpec extends Specification {
 
@@ -4192,6 +4243,10 @@ class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
     }
 }
 
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
 
 class SampleEventListenerSpec : AnnotationSpec() {
 
@@ -4302,6 +4357,14 @@ public class SampleEventListener {
     }
 }
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.equalTo;
 
 public class SampleEventListenerSpec {
 
@@ -4336,6 +4399,10 @@ class SampleEventListener {
     }
 }
 
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+import spock.util.concurrent.PollingConditions
 
 class SampleEventListenerSpec extends Specification {
 
@@ -4378,6 +4445,13 @@ open class SampleEventListener {
     }
 }
 
+import io.kotlintest.eventually
+import io.kotlintest.seconds
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import org.opentest4j.AssertionFailedError
 
 class SampleEventListenerSpec : AnnotationSpec() {
 
@@ -7859,24 +7933,10 @@ public class DataSourceFactory {
 
 
 <div class="paragraph">
-<p>Micronaut currently has basic support for JMX. At this time, the support is <strong>experimental</strong> and subject to change. To get started, simply add a dependency on the configuration.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-jmx"</code></pre>
-</div>
+<p>Micronaut provides basic support for JMX.</p>
 </div>
 <div class="paragraph">
-<p>The configuration will create a bean for the management bean server based on configuration.</p>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.configuration.jmx.JmxConfiguration.adoc[]</p>
-</div>
-<div class="sect2">
-<h3 id="_endpoints">Endpoints</h3>
-<div class="paragraph">
-<p>If the management dependency is also on the classpath, management beans will be created for all endpoints by default.</p>
-</div>
+<p>For more information, see the <a href="https://micronaut-projects.github.io/micronaut-jmx/latest/guide/">documentation</a> for the micronaut-jmx project.</p>
 </div>
 
 
@@ -15728,7 +15788,13 @@ Single&lt;Pet&gt; save(
 <div class="listingblock">
 <div class="title">HeadlineClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/streaming")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+import io.reactivex.Flowable;
+import reactor.core.publisher.Flux;
+
+@Client("/streaming")
 public interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>
@@ -16962,14 +17028,135 @@ vault:
             enabled: true</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.vault.VaultClientConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.discovery.vault.config.VaultClientConfiguration" href="#io.micronaut.discovery.vault.config.VaultClientConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/vault/config/VaultClientConfiguration.html">VaultClientConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the Vault Server Uri. Default value ("http://locahost:8200").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the Vault authentication token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.kv-version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/vault/config/VaultClientConfiguration.VaultKvVersion.html">VaultClientConfiguration$VaultKvVersion</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the version of the Vault Secret engine. V1 or V2. Default value (V2).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.secret-engine-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the name of the Vault Secret engine name. Default value ("secret").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.fail-fast</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set to true an exception will be thrown if configuration is not found
+ for the application or any of its environments. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.ssl-configuration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/ssl/SslConfiguration.html">SslConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.logger-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.follow-redirects</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.default-charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.channel-options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.shutdown-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.read-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.read-idle-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.connect-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.num-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.thread-factory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.max-content-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.Proxy$Type</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.SocketAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Micronaut will use the configured <code>micronaut.application.name</code> to lookup property sources for the application from Vault.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Resolution Precedence</caption>
+<caption class="title">Table 2. Configuration Resolution Precedence</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -19685,11 +19872,15 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 </div>
 </p>
 </div>
-<div class="colist arabic">
+<div class="admonitionblock tip">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>In order to run the function as a web application, you will need an HTTP server, such as the <code>http-server-netty</code> dependency</td>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In order to run the function as a web application, you will need an HTTP server, such as the <code>http-server-netty</code> dependency
+</td>
 </tr>
 </table>
 </div>
