@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.4 Validation Advice 1.1.4</title>
+    <title>5.4 Validation Advice 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5.4 Validation Advice</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -134,29 +134,44 @@ function addJsClass() {
 <p>Validation advice is one of the most common advice types you are likely to want to incorporate into your application.</p>
 </div>
 <div class="paragraph">
-<p>Validation advice is built on <a href="https://jcp.org/en/jsr/detail?id=380">JSR 380</a>, also known as Bean Validation 2.0.</p>
+<p>Validation advice is built on <a href="https://beanvalidation.org/2.0/spec/">Bean Validation JSR 380</a>.</p>
 </div>
 <div class="paragraph">
 <p>JSR 380 is a specification of the Java API for bean validation which ensures that the
 properties of a bean meet specific criteria, using <code>javax.validation</code> annotations such as <code>@NotNull</code>, <code>@Min</code>, and <code>@Max</code>.</p>
 </div>
 <div class="paragraph">
-<p><a href="http://hibernate.org/validator">Hibernate Validator</a> project is a reference implementation for JSR 380. Micronaut ships
-with a built-in configuration to use Hibernate Validator.</p>
-</div>
-<div class="paragraph">
-<p>To get started, first add the Hibernate Validator configuration to your application:</p>
+<p>Micronaut provides native support for the <code>javax.validation</code> annotations with the <code>micronaut-validation</code> dependency:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-validator'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Or full JSR 380 compliance with the <code>micronaut-hibernate-validator</code> dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-hibernate-validator'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -164,62 +179,7 @@ with a built-in configuration to use Hibernate Validator.</p>
 </p>
 </div>
 <div class="paragraph">
-<p>Then simply add the <a href="../api/io/micronaut/validation/Validated.html">Validated</a> annotation to any class that requires validation. For example, consider this trivial service that retrieves books by title:</p>
-</div>
-<div class="listingblock">
-<div class="title">BookService.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.validation.Validated;
-import javax.inject.Singleton;
-import javax.validation.constraints.NotBlank;
-import java.util.*;
-
-@Singleton
-@Validated <i class="conum" data-value="1"></i><b>(1)</b>
-public class BookService {
-
-    private Map&lt;String, String&gt; authorsByTitle = new LinkedHashMap&lt;&gt;();
-
-    public String getAuthor(@NotBlank String title) { <i class="conum" data-value="2"></i><b>(2)</b>
-        return authorsByTitle.get(title);
-    }
-
-    public void addBook(@NotBlank String author, @NotBlank String title) {
-        authorsByTitle.put(title, author);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/validation/Validated.html">Validated</a> annotation is defined at the class level</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>javax.validation.NotBlank</code> constraint is used to ensure parameters passed cannot be blank</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You can verify the behaviour of the class by writing a test. The following test is written in Groovy and Spock:</p>
-</div>
-<div class="listingblock">
-<div class="title">Testing Validation</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">void "test validate book service"() {
-    given:
-    BookService bookService = applicationContext.getBean(BookService)
-
-    when:"An invalid title is passed"
-    bookService.getAuthor("")
-
-    then:"A constraint violation occurred"
-    def e = thrown(ConstraintViolationException)
-    e.message == 'getAuthor.title: must not be blank'
-}</code></pre>
-</div>
+<p>See the section on <a href="#beanValidation">Bean Validation</a> for more informatino on how to apply validation rules to your bean classes.</p>
 </div>
 
 

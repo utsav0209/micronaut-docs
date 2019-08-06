@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.11 Life-Cycle Methods 1.1.4</title>
+    <title>3.11 Life-Cycle Methods 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.11 Life-Cycle Methods</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -136,58 +136,15 @@ function addJsClass() {
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import javax.annotation.PostConstruct;
-import javax.inject.Singleton;
-
-@Singleton
-public class V8Engine implements Engine {
-    private int cylinders = 8;
-    private boolean initialized = false; <b class="conum">(2)</b>
-
-    public String start() {
-        if (!initialized) throw new IllegalStateException("Engine not initialized!");
-
-        return "Starting V8";
-    }
-
-    @PostConstruct <b class="conum">(3)</b>
-    public void initialize() {
-        this.initialized = true;
-    }
-
-    public int getCylinders() {
-        return cylinders;
-    }
-
-    public void setCylinders(int cylinders) {
-        this.cylinders = cylinders;
-    }
-
-    public boolean getInitialized() {
-        return initialized;
-    }
-
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PostConstruct <b class="conum">(1)</b>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PostConstruct <i class="conum" data-value="1"></i><b>(1)</b>
 import javax.inject.Singleton
 
 @Singleton
 class V8Engine implements Engine {
     int cylinders = 8
-    boolean initialized = false <b class="conum">(2)</b>
+    boolean initialized = false <i class="conum" data-value="2"></i><b>(2)</b>
 
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
@@ -195,31 +152,8 @@ class V8Engine implements Engine {
         return "Starting V8"
     }
 
-    @PostConstruct <b class="conum">(3)</b>
+    @PostConstruct <i class="conum" data-value="3"></i><b>(3)</b>
     void initialize() {
-        this.initialized = true
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PostConstruct
-import javax.inject.Singleton
-
-@Singleton
-class V8Engine : Engine {
-    override var cylinders = 8
-    var initialized = false <b class="conum">(2)</b>
-
-    override fun start(): String {
-        if (!initialized) throw IllegalStateException("Engine not initialized!")
-
-        return "Starting V8"
-    }
-
-    @PostConstruct <b class="conum">(3)</b>
-    fun initialize() {
         this.initialized = true
     }
 }</code></pre>
@@ -249,32 +183,9 @@ class V8Engine : Engine {
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
-public class PreDestroyBean implements AutoCloseable {
-
-    private AtomicBoolean stopped = new AtomicBoolean(false);
-
-    @PreDestroy <b class="conum">(2)</b>
-    @Override
-    public void close() throws Exception {
-        stopped.compareAndSet(false, true);
-    }
-
-    public AtomicBoolean getStopped() {
-        return stopped;
-    }
-
-    public void setStopped(AtomicBoolean stopped) {
-        this.stopped = stopped;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PreDestroy <b class="conum">(1)</b>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PreDestroy <i class="conum" data-value="1"></i><b>(1)</b>
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Singleton
 
@@ -283,28 +194,9 @@ class PreDestroyBean implements AutoCloseable {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    @PreDestroy <b class="conum">(2)</b>
+    @PreDestroy <i class="conum" data-value="2"></i><b>(2)</b>
     @Override
     void close() throws Exception {
-        stopped.compareAndSet(false, true)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy <b class="conum">(1)</b>
-import javax.inject.Singleton
-import java.util.concurrent.atomic.AtomicBoolean
-
-@Singleton
-class PreDestroyBean : AutoCloseable {
-
-    var stopped = AtomicBoolean(false)
-
-    @PreDestroy <b class="conum">(2)</b>
-    @Throws(Exception::class)
-    override fun close() {
         stopped.compareAndSet(false, true)
     }
 }</code></pre>
@@ -325,47 +217,9 @@ class PreDestroyBean : AutoCloseable {
 <div class="paragraph">
 <p>For factory beans, the <code>preDestroy</code> value in the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation can be used to tell Micronaut which method to invoke.</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
-import io.micronaut.context.annotation.Factory;
-
-import javax.inject.Singleton;
-
-@Factory
-public class ConnectionFactory {
-
-    @Bean(preDestroy = "stop")<b class="conum">(1)</b>
-    @Singleton
-    public Connection connection() {
-        return new Connection();
-    }
-
-}
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public class Connection {
-
-    private AtomicBoolean stopped = new AtomicBoolean(false);
-
-    public void stop() { <b class="conum">(2)</b>
-        stopped.compareAndSet(false, true);
-    }
-
-    public AtomicBoolean getStopped() {
-        return stopped;
-    }
-
-    public void setStopped(AtomicBoolean stopped) {
-        this.stopped = stopped;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
@@ -373,7 +227,7 @@ import javax.inject.Singleton
 @Factory
 class ConnectionFactory {
 
-    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
+    @Bean(preDestroy = "stop") <i class="conum" data-value="1"></i><b>(1)</b>
     @Singleton
     Connection connection() {
         new Connection()
@@ -386,39 +240,10 @@ class Connection {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    void stop() { <b class="conum">(2)</b>
+    void stop() { <i class="conum" data-value="2"></i><b>(2)</b>
         stopped.compareAndSet(false, true)
     }
 
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
-
-import javax.inject.Singleton
-
-@Factory
-class ConnectionFactory {
-
-    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
-    @Singleton
-    fun connection(): Connection {
-        return Connection()
-    }
-}
-
-import java.util.concurrent.atomic.AtomicBoolean
-
-class Connection {
-
-    var stopped = AtomicBoolean(false)
-
-    fun stop() { <b class="conum">(2)</b>
-        stopped.compareAndSet(false, true)
-    }
 }</code></pre>
 </div>
 </div>

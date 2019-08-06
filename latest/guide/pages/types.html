@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.4 Injectable Container Types 1.1.4</title>
+    <title>3.4 Injectable Container Types 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.4 Injectable Container Types</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -170,11 +170,23 @@ function addJsClass() {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html">Provider</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it or to instantiate a prototype for each <code>get</code> call.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Provider&lt;Engine&gt;</code></p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A prototype bean will have one instance created per place the bean is injected. When a prototype bean is injected as a <code>Provider</code>, each call to <code>get()</code> will create a new instance.
+</td>
+</tr>
+</table>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

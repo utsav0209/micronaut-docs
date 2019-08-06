@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.1.4</title>
+    <title>3 Inversion of Control 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -172,13 +172,16 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#introspection"><strong>3.14</strong><span>Bean Introspection</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#annotationMetadata"><strong>3.15</strong><span>Bean Annotation Metadata</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#beanValidation"><strong>3.15</strong><span>Bean Validation</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#springBeans"><strong>3.16</strong><span>Micronaut Beans And Spring</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#annotationMetadata"><strong>3.16</strong><span>Bean Annotation Metadata</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#android"><strong>3.17</strong><span>Android Support</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#springBeans"><strong>3.17</strong><span>Micronaut Beans And Spring</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#android"><strong>3.18</strong><span>Android Support</span></a>
                     </div>
                     
                 </div>
@@ -241,8 +244,10 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.4" // <2>
-    compile "io.micronaut:micronaut-inject:1.1.4"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.0" // <2>
+    compile "io.micronaut:micronaut-inject:1.2.0"
+    ...
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.0" // <3>
     ...
 }</code></pre>
 </div>
@@ -257,6 +262,10 @@ dependencies {
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Include the minimal dependencies required to perform dependency injection</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is necessary to create beans in the <code>test</code> directory</td>
+</tr>
 </table>
 </div>
 <div class="admonitionblock note">
@@ -266,7 +275,7 @@ dependencies {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> scope.
+For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> and <code>testCompileOnly</code> scopes.
 </td>
 </tr>
 </table>
@@ -574,11 +583,23 @@ println(vehicle.start())</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html">Provider</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>javax.inject.Provider</code> if a circular dependency requires it or to instantiate a prototype for each <code>get</code> call.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Provider&lt;Engine&gt;</code></p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A prototype bean will have one instance created per place the bean is injected. When a prototype bean is injected as a <code>Provider</code>, each call to <code>get()</code> will create a new instance.
+</td>
+</tr>
+</table>
+</div>
 
 
 <h2 id="qualifiers">3.5 Bean Qualifiers</h2>
@@ -760,9 +781,22 @@ constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</
 <div class="paragraph">
 <p>In addition to being able to qualify by name, you can build your own qualifiers using the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> annotation. For example, consider the following annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.Qualifier
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Qualifier;
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Qualifier
+@Retention(RUNTIME)
+public @interface V8 {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Qualifier
 import java.lang.annotation.Retention
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME
@@ -773,14 +807,37 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Qualifier
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class V8</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The above annotation is itself annotated with the <code>@Qualifier</code> annotation to designate it as a qualifier. You can then use the annotation at any injection point in your code. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Inject Vehicle(@V8 Engine engine) {
-    this.engine = engine
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Inject Vehicle(@V8 Engine engine) {
+        this.engine = engine;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Inject Vehicle(@V8 Engine engine) {
+        this.engine = engine
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject constructor(@V8 val engine: Engine) {</code></pre>
 </div>
 </div>
 </div>
@@ -794,26 +851,39 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ColorPicker {
+<pre class="highlight"><code class="language-java" data-lang="java">public interface ColorPicker {
+    String color();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface ColorPicker {
     String color()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface ColorPicker {
+    fun color(): String
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Given a common interface called <code>ColorPicker</code> that is implemented by multiple classes.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">The Primary Bean</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Primary;
-import io.micronaut.context.annotation.Requires;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Primary;
 import javax.inject.Singleton;
 
 @Primary
 @Singleton
-public class Green implements ColorPicker {
+class Green implements ColorPicker {
 
     @Override
     public String color() {
@@ -822,14 +892,47 @@ public class Green implements ColorPicker {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">The Primary Bean</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Primary
+import javax.inject.Singleton
+
+@Primary
+@Singleton
+class Green implements ColorPicker {
+
+    @Override
+    String color() {
+        return "green"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">The Primary Bean</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Primary
+import javax.inject.Singleton
+
+
+@Primary
+@Singleton
+class Green: ColorPicker {
+    override fun color(): String {
+        return "green"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The <code>Green</code> bean is a <code>ColorPicker</code>, but is annotated with <code>@Primary</code>.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Another Bean of the Same Type</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Requires;
-import javax.inject.Singleton;
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
 
 @Singleton
 public class Blue implements ColorPicker {
@@ -841,23 +944,83 @@ public class Blue implements ColorPicker {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Another Bean of the Same Type</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+
+
+@Singleton
+class Blue implements ColorPicker {
+
+    @Override
+    String color() {
+        return "blue"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Another Bean of the Same Type</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+
+@Singleton
+class Blue: ColorPicker {
+    override fun color(): String {
+        return "blue"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The <code>Blue</code> bean is also a <code>ColorPicker</code> and hence you have two possible candidates when injecting the <code>ColorPicker</code> interface. Since <code>Green</code> is the primary it will always be favoured.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/test")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/test")
 public class TestController {
 
     protected final ColorPicker colorPicker;
 
-    public TestController(ColorPicker colorPicker) { <i class="conum" data-value="1"></i><b>(1)</b>
+    public TestController(ColorPicker colorPicker) { <b class="conum">(1)</b>
         this.colorPicker = colorPicker;
     }
 
     @Get
     public String index() {
         return colorPicker.color();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/test")
+class TestController {
+
+    protected final ColorPicker colorPicker
+
+    TestController(ColorPicker colorPicker) { <b class="conum">(1)</b>
+        this.colorPicker = colorPicker
+    }
+
+    @Get
+    String index() {
+        colorPicker.color()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/test")
+class TestController(val colorPicker: ColorPicker) { <b class="conum">(1)</b>
+
+    @Get
+    fun index(): String {
+        return colorPicker.color()
     }
 }</code></pre>
 </div>
@@ -930,7 +1093,7 @@ public class TestController {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/annotation/Infrastructure.html">@Infrastructure</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure is a <code>@Context</code> scope stereotype that indicates the bean cannot be replaced</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure scope represents a bean that cannot be overridden or replaced using <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> because it is critical to the functioning of the system.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/context/scope/ThreadLocal.html">@ThreadLocal</a></p></td>
@@ -939,6 +1102,10 @@ public class TestController {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/context/scope/Refreshable.html">@Refreshable</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Refreshable</code> scope is a custom scope that allows a bean&#8217;s state to be refreshed via the <code>/refresh</code> endpoint.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/http/scope/RequestScope.html">@RequestScope</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestScope</code> scope is a custom scope that indicates a new instance of the bean is created and associated with each HTTP request</p></td>
 </tr>
 </tbody>
 </table>
@@ -1143,16 +1310,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy.RUNTIME
 import javax.inject.Singleton
 
 
 @Requires(classes = [Car::class]) <b class="conum">(1)</b>
 @Singleton <b class="conum">(2)</b>
-@Documented
-@Retention(RUNTIME)
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Driver</code></pre>
 </div>
 </div>
@@ -1235,7 +1399,7 @@ annotation class Driver</code></pre>
 
 
 <div class="paragraph">
-<p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a>.</p>
+<p>In many cases, you may want to make available as a bean a class that is not part of your codebase such as those provided by third-party libraries. In this case, you cannot annotate the already compiled class. Instead, you should implement a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a>.</p>
 </div>
 <div class="paragraph">
 <p>A factory is a class annotated with the <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> annotation that provides 1 or more methods annotated with a bean scope annotation. Which annotation you use depends on what scope you want the bean to be in. See the section on <a href="#scopes">bean scopes</a> for more information.</p>
@@ -1354,6 +1518,125 @@ To allow the resulting bean to participate in the application context shutdown p
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_nullability">Nullability</h3>
+<div class="paragraph">
+<p>Factory methods can return null to allow for beans to be created conditionally. The use of <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> should always be the preferred method to conditionally create beans and returning null from a factory method should only be done if using <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> is not possible.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine {
+    Integer getCylinders();
+}
+
+@EachProperty("engines")
+public class EngineConfiguration implements Toggleable {
+
+    private boolean enabled = true;
+    private Integer cylinders;
+
+    @NotNull
+    public Integer getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(Integer cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+}
+
+@Factory
+public class EngineFactory {
+
+    @EachBean(EngineConfiguration.class)
+    public Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.isEnabled()) {
+            return engineConfiguration::getCylinders;
+        } else {
+            return null;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine {
+    Integer getCylinders()
+}
+
+@EachProperty("engines")
+class EngineConfiguration implements Toggleable {
+    boolean enabled = true
+    @NotNull
+    Integer cylinders
+}
+
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration)
+    Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.enabled) {
+            (Engine){ -&gt; engineConfiguration.cylinders }
+        } else {
+            null
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine {
+    fun getCylinders(): Int
+}
+
+@EachProperty("engines")
+class EngineConfiguration : Toggleable {
+
+    val enabled = true
+
+    @NotNull
+    val cylinders: Int? = null
+
+    override fun isEnabled(): Boolean {
+        return enabled
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration::class)
+    fun buildEngine(engineConfiguration: EngineConfiguration): Engine? {
+        return if (engineConfiguration.isEnabled) {
+            object : Engine {
+                override fun getCylinders(): Int {
+                    return engineConfiguration.cylinders!!
+                }
+            }
+        } else {
+            null
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
 
 
 <h2 id="conditionalBeans">3.8 Conditional Beans</h2>
@@ -1427,7 +1710,7 @@ Kotlin currently does not support repeatable annotations. Use the <code>@Require
 <p>If you have multiple requirements that you find you may need to repeat on multiple beans then you can define a meta-annotation with the requirements:</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Creating a @RequiresJdbc meta-annotation</div>
+<div class="title">Using a @Requires meta-annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">@Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -1439,7 +1722,7 @@ public @interface RequiresJdbc {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Creating a @RequiresJdbc meta-annotation</div>
+<div class="title">Using a @Requires meta-annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -1451,7 +1734,7 @@ public @interface RequiresJdbc {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Creating a @RequiresJdbc meta-annotation</div>
+<div class="title">Using a @Requires meta-annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Documented
 @Retention(AnnotationRetention.RUNTIME)
@@ -1736,6 +2019,8 @@ class MockBookService : BookService {
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_factory_replacement">Factory Replacement</h3>
 <div class="paragraph">
 <p>The <code>@Replaces</code> annotation also supports a <code>factory</code> argument. That argument allows the replacement of factory beans in their entirety or specific types created by the factory.</p>
 </div>
@@ -1901,6 +2186,117 @@ class TextBookFactory {
 <div class="paragraph">
 <p>The <code>BookFactory#novel()</code> method will not be replaced because the TextBook class is defined in the annotation.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_default_implementation">Default Implementation</h3>
+<div class="paragraph">
+<p>When exposing an API, it may be desirable for the default implementation of an interface to not be exposed as part of the public API. Doing so would prevent users from being able to replace the implementation because they would not be able to reference the class. The solution is to annotate the interface with <a href="../api/io/micronaut/context/annotation/DefaultImplementation.html">DefaultImplementation</a> to indicate which implementation should be replaced if a user creates a bean that <code>@Replaces(YourInterface.class)</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example consider:</p>
+</div>
+<div class="paragraph">
+<p>A public API contract</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.DefaultImplementation;
+
+@DefaultImplementation(DefaultResponseStrategy.class)
+public interface ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy)
+interface ResponseStrategy {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy::class)
+interface ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default implementation</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+@Singleton
+internal class DefaultResponseStrategy : ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The custom implementation</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Replaces;
+import javax.inject.Singleton;
+
+@Singleton
+@Replaces(ResponseStrategy.class)
+public class CustomResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Replaces
+import javax.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy)
+class CustomResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Replaces
+import javax.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy::class)
+class CustomResponseStrategy : ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example, the <code>CustomResponseStrategy</code> will replace the <code>DefaultResponseStrategy</code> because the <a href="../api/io/micronaut/context/annotation/DefaultImplementation.html">DefaultImplementation</a> annotation points to the <code>DefaultResponseStrategy</code>.</p>
+</div>
+</div>
 
 
 <h2 id="beanConfigurations">3.10 Bean Configurations</h2>
@@ -1944,9 +2340,6 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>In the above example, all bean definitions within the annotated package will only be loaded and made available if a <code>javax.sql.DataSource</code> bean is present. This allows you to implement conditional auto-configuration of bean definitions.</p>
 </div>
-<div class="paragraph">
-<p>INFO: Java and Kotlin also support this functionality via <code>package-info.java</code>. Kotlin does not support a <code>package-info.kt</code> as of version 1.3.</p>
-</div>
 
 
 <h2 id="lifecycle">3.11 Life-Cycle Methods</h2>
@@ -1964,58 +2357,15 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import javax.annotation.PostConstruct;
-import javax.inject.Singleton;
-
-@Singleton
-public class V8Engine implements Engine {
-    private int cylinders = 8;
-    private boolean initialized = false; <b class="conum">(2)</b>
-
-    public String start() {
-        if (!initialized) throw new IllegalStateException("Engine not initialized!");
-
-        return "Starting V8";
-    }
-
-    @PostConstruct <b class="conum">(3)</b>
-    public void initialize() {
-        this.initialized = true;
-    }
-
-    public int getCylinders() {
-        return cylinders;
-    }
-
-    public void setCylinders(int cylinders) {
-        this.cylinders = cylinders;
-    }
-
-    public boolean getInitialized() {
-        return initialized;
-    }
-
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PostConstruct <b class="conum">(1)</b>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PostConstruct <i class="conum" data-value="1"></i><b>(1)</b>
 import javax.inject.Singleton
 
 @Singleton
 class V8Engine implements Engine {
     int cylinders = 8
-    boolean initialized = false <b class="conum">(2)</b>
+    boolean initialized = false <i class="conum" data-value="2"></i><b>(2)</b>
 
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
@@ -2023,31 +2373,8 @@ class V8Engine implements Engine {
         return "Starting V8"
     }
 
-    @PostConstruct <b class="conum">(3)</b>
+    @PostConstruct <i class="conum" data-value="3"></i><b>(3)</b>
     void initialize() {
-        this.initialized = true
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PostConstruct
-import javax.inject.Singleton
-
-@Singleton
-class V8Engine : Engine {
-    override var cylinders = 8
-    var initialized = false <b class="conum">(2)</b>
-
-    override fun start(): String {
-        if (!initialized) throw IllegalStateException("Engine not initialized!")
-
-        return "Starting V8"
-    }
-
-    @PostConstruct <b class="conum">(3)</b>
-    fun initialize() {
         this.initialized = true
     }
 }</code></pre>
@@ -2077,32 +2404,9 @@ class V8Engine : Engine {
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
-public class PreDestroyBean implements AutoCloseable {
-
-    private AtomicBoolean stopped = new AtomicBoolean(false);
-
-    @PreDestroy <b class="conum">(2)</b>
-    @Override
-    public void close() throws Exception {
-        stopped.compareAndSet(false, true);
-    }
-
-    public AtomicBoolean getStopped() {
-        return stopped;
-    }
-
-    public void setStopped(AtomicBoolean stopped) {
-        this.stopped = stopped;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PreDestroy <b class="conum">(1)</b>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PreDestroy <i class="conum" data-value="1"></i><b>(1)</b>
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Singleton
 
@@ -2111,28 +2415,9 @@ class PreDestroyBean implements AutoCloseable {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    @PreDestroy <b class="conum">(2)</b>
+    @PreDestroy <i class="conum" data-value="2"></i><b>(2)</b>
     @Override
     void close() throws Exception {
-        stopped.compareAndSet(false, true)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy <b class="conum">(1)</b>
-import javax.inject.Singleton
-import java.util.concurrent.atomic.AtomicBoolean
-
-@Singleton
-class PreDestroyBean : AutoCloseable {
-
-    var stopped = AtomicBoolean(false)
-
-    @PreDestroy <b class="conum">(2)</b>
-    @Throws(Exception::class)
-    override fun close() {
         stopped.compareAndSet(false, true)
     }
 }</code></pre>
@@ -2153,47 +2438,9 @@ class PreDestroyBean : AutoCloseable {
 <div class="paragraph">
 <p>For factory beans, the <code>preDestroy</code> value in the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation can be used to tell Micronaut which method to invoke.</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
-import io.micronaut.context.annotation.Factory;
-
-import javax.inject.Singleton;
-
-@Factory
-public class ConnectionFactory {
-
-    @Bean(preDestroy = "stop")<b class="conum">(1)</b>
-    @Singleton
-    public Connection connection() {
-        return new Connection();
-    }
-
-}
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public class Connection {
-
-    private AtomicBoolean stopped = new AtomicBoolean(false);
-
-    public void stop() { <b class="conum">(2)</b>
-        stopped.compareAndSet(false, true);
-    }
-
-    public AtomicBoolean getStopped() {
-        return stopped;
-    }
-
-    public void setStopped(AtomicBoolean stopped) {
-        this.stopped = stopped;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
@@ -2201,7 +2448,7 @@ import javax.inject.Singleton
 @Factory
 class ConnectionFactory {
 
-    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
+    @Bean(preDestroy = "stop") <i class="conum" data-value="1"></i><b>(1)</b>
     @Singleton
     Connection connection() {
         new Connection()
@@ -2214,39 +2461,10 @@ class Connection {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    void stop() { <b class="conum">(2)</b>
+    void stop() { <i class="conum" data-value="2"></i><b>(2)</b>
         stopped.compareAndSet(false, true)
     }
 
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
-
-import javax.inject.Singleton
-
-@Factory
-class ConnectionFactory {
-
-    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
-    @Singleton
-    fun connection(): Connection {
-        return Connection()
-    }
-}
-
-import java.util.concurrent.atomic.AtomicBoolean
-
-class Connection {
-
-    var stopped = AtomicBoolean(false)
-
-    fun stop() { <b class="conum">(2)</b>
-        stopped.compareAndSet(false, true)
-    }
 }</code></pre>
 </div>
 </div>
@@ -2301,18 +2519,30 @@ Just simply implementing the Closeable or AutoCloseable interfaces is not enough
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventPublisher;
+<pre class="highlight"><code class="language-java" data-lang="java">public class SampleEvent {
+    private String message = "Something happened";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class MyBean {
+public class SampleEventEmitterBean {
 
     @Inject
     ApplicationEventPublisher eventPublisher;
 
-    void doSomething() {
-        eventPublisher.publishEvent("SampleEvent");
+    public void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent());
     }
 
 }</code></pre>
@@ -2321,18 +2551,22 @@ public class MyBean {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventPublisher
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleEvent {
+    String message = "Something happened"
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MyBean {
+class SampleEventEmitterBean {
 
     @Inject
     ApplicationEventPublisher eventPublisher
 
-    void doSomething() {
-        eventPublisher.publishEvent("SampleEvent")
+    void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent())
     }
 
 }</code></pre>
@@ -2341,19 +2575,20 @@ class MyBean {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing an Event</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventPublisher
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">data class SampleEvent(val message: String = "Something happened")
+
+import io.micronaut.context.event.ApplicationEventPublisher
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
-class MyBean {
+class SampleEventEmitterBean {
 
     @Inject
     internal var eventPublisher: ApplicationEventPublisher? = null
 
-    internal fun doSomething() {
-        eventPublisher!!.publishEvent("SampleEvent")
+    fun publishSampleEvent() {
+        eventPublisher!!.publishEvent(SampleEvent())
     }
 
 }</code></pre>
@@ -2381,15 +2616,40 @@ Publishing an event is <strong>synchronous</strong> by default! The <code>publis
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.event.ApplicationEventListener;
-import io.micronaut.discovery.event.ServiceStartedEvent;
+import io.micronaut.docs.context.events.SampleEvent;
 
 @Singleton
-public class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+public class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    private int invocationCounter = 0;
 
     @Override
-    public void onApplicationEvent(ServiceStartedEvent event) {
-        // respond to app event
+    public void onApplicationEvent(SampleEvent event) {
+        invocationCounter++;
     }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}
+
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        assertEquals(1, listener.getInvocationCounter());
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -2397,14 +2657,36 @@ public class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEv
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventListener
-import io.micronaut.discovery.event.ServiceStartedEvent
+import io.micronaut.docs.context.events.SampleEvent
 
 @Singleton
-class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
+    int invocationCounter = 0
 
     @Override
-    void onApplicationEvent(ServiceStartedEvent event) {
-        // respond to app event
+    void onApplicationEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}
+
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        listener.invocationCounter == 1
     }
 }</code></pre>
 </div>
@@ -2413,16 +2695,32 @@ class DoOnStartup implements ApplicationEventListener&lt;ServiceStartedEvent&gt;
 <div class="title">Listening for Events with <code>ApplicationEventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventListener
-import io.micronaut.discovery.event.ServiceStartedEvent
-import javax.inject.Singleton
+import io.micronaut.docs.context.events.SampleEvent
 
 @Singleton
-class DoOnStartup : ApplicationEventListener&lt;ServiceStartedEvent&gt; {
+class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
+    var invocationCounter = 0
 
+    override fun onApplicationEvent(event: SampleEvent) {
+        invocationCounter++
+    }
+}
 
-    override fun onApplicationEvent(event: ServiceStartedEvent) {
-        // respond to app event
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
 
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.shouldBe(0)
+        emitter.publishSampleEvent()
+        listener.invocationCounter.shouldBe(1)
     }
 }</code></pre>
 </div>
@@ -2445,15 +2743,20 @@ The <a href="../api/io/micronaut/context/event/ApplicationEventListener.html#sup
 <div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.discovery.event.ServiceStartedEvent;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
 import io.micronaut.runtime.event.annotation.EventListener;
 
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private int invocationCounter = 0;
 
     @EventListener
-    void onStartup(ServiceStartedEvent event) {
-        // do startup things
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
     }
 }</code></pre>
 </div>
@@ -2461,15 +2764,16 @@ public class DoOnStartup  {
 <div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.discovery.event.ServiceStartedEvent
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
 import io.micronaut.runtime.event.annotation.EventListener
 
 @Singleton
-class DoOnStartup  {
+class SampleEventListener {
+    int invocationCounter = 0
 
     @EventListener
-    void onStartup(ServiceStartedEvent event) {
-        // do startup things
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter++
     }
 }</code></pre>
 </div>
@@ -2477,17 +2781,16 @@ class DoOnStartup  {
 <div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.discovery.event.ServiceStartedEvent
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
 import io.micronaut.runtime.event.annotation.EventListener
-import javax.inject.Singleton
 
 @Singleton
-class DoOnStartup {
-
+class SampleEventListener {
+    var invocationCounter = 0
 
     @EventListener
-    internal fun onStartup(event: ServiceStartedEvent) {
-        // do startup things
+    internal fun onSampleEvent(event: SampleEvent) {
+        invocationCounter++
     }
 }</code></pre>
 </div>
@@ -2498,17 +2801,88 @@ class DoOnStartup {
 <div class="listingblock multi-language-sample">
 <div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.discovery.event.ServiceStartedEvent;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.scheduling.annotation.Async;
 
 @Singleton
-public class DoOnStartup  {
+public class SampleEventListener {
+    private AtomicInteger invocationCounter = new AtomicInteger(0);
 
     @EventListener
     @Async
-    void onStartup(ServiceStartedEvent event) {
-        // handle long events async
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement();
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter.get();
+    }
+}
+
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.equalTo;
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        ApplicationContext context = ApplicationContext.run();
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+        SampleEventListener listener = context.getBean(SampleEventListener.class);
+        assertEquals(0, listener.getInvocationCounter());
+        emitter.publishSampleEvent();
+        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+class SampleEventListener {
+    AtomicInteger invocationCounter = new AtomicInteger(0)
+
+    @EventListener
+    @Async
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement()
+    }
+}
+
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+import spock.util.concurrent.PollingConditions
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+        assert listener.invocationCounter.get() == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        new PollingConditions().eventually {
+            listener.invocationCounter.get() == 1
+        }
     }
 }</code></pre>
 </div>
@@ -2516,35 +2890,47 @@ public class DoOnStartup  {
 <div class="listingblock multi-language-sample">
 <div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.discovery.event.ServiceStartedEvent
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import io.micronaut.scheduling.annotation.Async
+import java.util.concurrent.atomic.AtomicInteger
 
 @Singleton
-class DoOnStartup  {
+open class SampleEventListener {
+
+    var invocationCounter = AtomicInteger(0)
 
     @EventListener
     @Async
-    void onStartup(ServiceStartedEvent event) {
-        // handle long events async
+    open fun onSampleEvent(event: SampleEvent) {
+        println("Incrementing invocation counter...")
+        invocationCounter.getAndIncrement()
     }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Asynchronously listening for Events with <code>@EventListener</code></div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.discovery.event.ServiceStartedEvent
-import io.micronaut.runtime.event.annotation.EventListener
-import io.micronaut.scheduling.annotation.Async
+}
 
-@Singleton
-open class DoOnStartup {
+import io.kotlintest.eventually
+import io.kotlintest.seconds
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import org.opentest4j.AssertionFailedError
 
-    @EventListener
-    @Async
-    open fun onStartup(event: ServiceStartedEvent) {
-        // handle long events async
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+//    @Ignore // TODO can't get this to pass on CI, any help is welcome
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.get().shouldBe(0)
+        emitter.publishSampleEvent()
+
+        eventually(5.seconds,  AssertionFailedError::class.java) {
+            println("Current value of counter: " + listener.invocationCounter.get())
+            listener.invocationCounter.get().shouldBe(1)
+        }
     }
 }</code></pre>
 </div>
@@ -2590,13 +2976,70 @@ open class DoOnStartup {
 <div class="paragraph">
 <p>The <code>BeanInitializedEventListener</code> interface is commonly used in combination with <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> beans. Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.inject.*
+<pre class="highlight"><code class="language-java" data-lang="java">public class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private double rodLength; <b class="conum">(1)</b>
 
-class V8Engine implements Engine {
+    public V8Engine(double rodLength) {
+        this.rodLength = rodLength;
+    }
+
+    public String start() {
+        return "Starting V" + String.valueOf(getCylinders()) + " [rodLength=" + String.valueOf(getRodLength()) + "]";
+    }
+
+    public final int getCylinders() {
+        return cylinders;
+    }
+
+    public double getRodLength() {
+        return rodLength;
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Factory
+public class EngineFactory {
+
+    private V8Engine engine;
+    private double rodLength = 5.7;
+
+    @PostConstruct
+    public void initialize() {
+        engine = new V8Engine(rodLength); <b class="conum">(2)</b>
+    }
+
+    @Singleton
+    public Engine v8Engine() {
+        return engine;<b class="conum">(3)</b>
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Singleton
+public class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
+    @Override
+    public EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
+        EngineFactory engineFactory = event.getBean();
+        engineFactory.setRodLength(6.6);<b class="conum">(5)</b>
+        return ((EngineFactory) (event.getBean()));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class V8Engine implements Engine {
     final int cylinders = 8
-    double rodLength <i class="conum" data-value="1"></i><b>(1)</b>
+    double rodLength <b class="conum">(1)</b>
 
     String start() {
         return "Starting V${cylinders} [rodLength=$rodLength]"
@@ -2605,28 +3048,69 @@ class V8Engine implements Engine {
 
 @Factory
 class EngineFactory {
-
     private V8Engine engine
     double rodLength = 5.7
 
     @PostConstruct
     void initialize() {
-        engine = new V8Engine(rodLength: rodLength) <i class="conum" data-value="2"></i><b>(2)</b>
+        engine = new V8Engine(rodLength: rodLength) <b class="conum">(2)</b>
     }
 
     @Singleton
     Engine v8Engine() {
-        return engine <i class="conum" data-value="3"></i><b>(3)</b>
+        return engine <b class="conum">(3)</b>
     }
 }
 
 @Singleton
-class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <i class="conum" data-value="4"></i><b>(4)</b>
+class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
     @Override
     EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
         EngineFactory engineFactory = event.bean
-        engineFactory.rodLength = 6.6 <i class="conum" data-value="5"></i><b>(5)</b>
+        engineFactory.rodLength = 6.6 <b class="conum">(5)</b>
         return event.bean
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class V8Engine(var rodLength: Double) : Engine {  <b class="conum">(1)</b>
+
+    override val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V$cylinders [rodLength=$rodLength]"
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    private var engine: V8Engine? = null
+    private var rodLength = 5.7
+
+    @PostConstruct
+    fun initialize() {
+        engine = V8Engine(rodLength) <b class="conum">(2)</b>
+    }
+
+    @Singleton
+    fun v8Engine(): Engine? {
+        return engine<b class="conum">(3)</b>
+    }
+
+    fun setRodLength(rodLength: Double) {
+        this.rodLength = rodLength
+    }
+}
+
+@Singleton
+class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
+    override fun onInitialized(event: BeanInitializingEvent&lt;EngineFactory&gt;): EngineFactory {
+        val engineFactory = event.bean
+        engineFactory.setRodLength(6.6)<b class="conum">(5)</b>
+        return event.bean as EngineFactory
     }
 }</code></pre>
 </div>
@@ -2683,7 +3167,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.1.4'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2692,7 +3176,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.1.4&lt;/version&gt;
+        &lt;version&gt;1.2.0&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -2714,7 +3198,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.1.4'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2722,7 +3206,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.1.4&lt;/version&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -2864,7 +3348,7 @@ data class Person(var name : String) {
 <div class="sect3">
 <h4 id="_use_the_code_introspected_code_annotation_on_a_configuration_class">Use the <code>@Introspected</code> Annotation on a Configuration Class</h4>
 <div class="paragraph">
-<p>If the class you wish to introspect is already compiled and not under your control an alternative option is to define a configuration class or some sort that uses the <code>classes</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation.</p>
+<p>If the class you wish to introspect is already compiled and not under your control an alternative option is to define a configuration class with the <code>classes</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation set.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -3030,7 +3514,901 @@ Currently only bean properties (private field with public getter/setter) are sup
 </div>
 
 
-<h2 id="annotationMetadata">3.15 Bean Annotation Metadata</h2>
+<h2 id="beanValidation">3.15 Bean Validation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanValidation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since Micronaut 1.2, Micronaut has built-in support for validating beans that are annotated with <code>javax.validation</code> annotations. As a minimum you should include the <code>micronaut-validation</code> module as a compile dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Note that Micronaut&#8217;s implementation is not currently fully compliant with the <a href="https://beanvalidation.org/2.0/spec/">Bean Validator specification</a> as the specification heavily relies on reflection-based APIs.</p>
+</div>
+<div class="paragraph">
+<p>The following features are unsupported at this time:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Annotations on generic argument types since only the Java language supports this feature.</p>
+</li>
+<li>
+<p>Any interaction with the <a href="https://beanvalidation.org/2.0/spec/#constraintmetadata">constraint metadata API</a>, since Micronaut uses already computed compilation time metadata.</p>
+</li>
+<li>
+<p>XML-based configuration</p>
+</li>
+<li>
+<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> to define custom constraints, which supports validating annotations as compilation time.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Micronaut&#8217;s implementation includes the following benefits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reflection and Runtime Proxy free validation resulting in reduced memory consumption</p>
+</li>
+<li>
+<p>Smaller JAR size since Hibernate Validator adds another 1.4MB</p>
+</li>
+<li>
+<p>Faster startup since Hibernate Validator adds 200ms+ startup overhead</p>
+</li>
+<li>
+<p>Configurability via Annotation Metadata</p>
+</li>
+<li>
+<p>Support for Reactive Bean Validation</p>
+</li>
+<li>
+<p>Support for validating the source AST at compilation time</p>
+</li>
+<li>
+<p>Automatic compatibility with GraalVM native without additional configuration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you require full Bean Validator 2.0 compliance you can add the <code>micronaut-hibernate-validator</code> module to your classpath, which will replace Micronaut&#8217;s implementation.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-validator'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="sect2">
+<h3 id="_validating_bean_methods">Validating Bean Methods</h3>
+<div class="paragraph">
+<p>You can validate methods of any class declared as a Micronaut bean simply by using the <code>javax.validation</code> annotation as arguments:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+import javax.validation.constraints.NotBlank;
+
+@Singleton
+public class PersonService {
+    public void sayHello(@NotBlank String name) {
+        System.out.println("Hello " + name);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+@Singleton
+class PersonService {
+
+    void sayHello(@NotBlank String name) {
+        println "Hello $name"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+
+@Singleton
+open class PersonService {
+    open fun sayHello(@NotBlank name: String) {
+        println("Hello $name")
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example declares that the <code>@NotBlank</code> annotation should be validated when executing the <code>sayHello</code> method.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you are using Kotlin the class and method must be declared open so that Micronaut can create a compilation time subclass, alternatively you can annotate the class with <a href="../api/io/micronaut/validation/Validated.html">@Validated</a> and configure the Kotlin <code>all-open</code> plugin to open classes annotated with this type. See the <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html">Compiler plugins</a> section.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a validation error occurs a <code>javax.validation.ConstraintViolationException</code> will be thrown. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject PersonService personService;
+
+    @Test
+    void testThatNameIsValidated() {
+        final ConstraintViolationException exception =
+                assertThrows(ConstraintViolationException.class, () -&gt;
+                personService.sayHello("") <b class="conum">(1)</b>
+        );
+
+        assertEquals("sayHello.name: must not be blank", exception.getMessage()); <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.test.annotation.MicronautTest
+import spock.lang.Specification
+
+import javax.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec extends Specification {
+
+    @Inject PersonService personService
+
+    void "test person name is validated"() {
+        when:"The sayHello method is called with a blank string"
+        personService.sayHello("") <b class="conum">(1)</b>
+
+        then:"A validation error occurs"
+        def e = thrown(ConstraintViolationException)
+        e.message == "sayHello.name: must not be blank" //  <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.*
+
+import javax.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject
+    lateinit var personService: PersonService
+
+    @Test
+    fun testThatNameIsValidated() {
+        val exception = assertThrows(ConstraintViolationException::class.java
+        ) { personService.sayHello("") } <b class="conum">(1)</b>
+
+        assertEquals("sayHello.name: must not be blank", exception.message) <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The method is called with a blank string</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>An exception occurs</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_data_classes">Validating Data Classes</h3>
+<div class="paragraph">
+<p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Introspected;
+import javax.validation.constraints.*;
+
+@Introspected
+public class Person {
+    private String name;
+    @Min(18)
+    private int age;
+
+    @NotBlank
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Introspected
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+class Person {
+    @NotBlank
+    String name
+    @Min(18l)
+    int age
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Introspected
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+data class Person(
+    @field:NotBlank var name: String,
+    @field:Min(18) var age: Int
+)</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation can be used as a meta-annotation and common annotations like <code>@javax.persistence.Entity</code> are treated as <code>@Introspected</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example defines a class called <code>Person</code> that has 2 properties (<code>name</code> and <code>age</code>) that have constraints applied to them. Note that in Java the annotations can be on the field or the getter and with Kotlin data classes the annotation should target the field.</p>
+</div>
+<div class="paragraph">
+<p>If you wish to validate the class manually then you can inject an instance of <a href="../api/io/micronaut/validation/validator/Validator.html">Validator</a>:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject
+Validator validator;
+
+@Test
+void testThatPersonIsValidWithValidator() {
+    Person person = new Person();
+    person.setName("");
+    person.setAge(10);
+
+    final Set&lt;ConstraintViolation&lt;Person&gt;&gt; constraintViolations = validator.validate(person);
+
+    assertEquals(2, constraintViolations.size()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Inject Validator validator
+
+void "test person is validated with validator"() {
+    when:"The person is validated"
+    def constraintViolations = validator.validate(new Person(name: "", age: 10)) <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    constraintViolations.size() == 2 //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var validator: Validator
+
+@Test
+fun testThatPersonIsValidWithValidator() {
+    val person = Person("", 10)
+    val constraintViolations = validator.validate(person)
+
+    assertEquals(2, constraintViolations.size) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The validator is used to validate the person</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The constraint violations are verified</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Alternatively on Bean methods you can use <code>javax.validation.Valid</code> to trigger cascading validation:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class PersonService {
+    public void sayHello(@Valid Person person) {
+        System.out.println("Hello " + person.getName());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class PersonService {
+    void sayHello(@Valid Person person) {
+        println "Hello $person.name"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class PersonService {
+    open fun sayHello(@Valid person: Person) {
+        println("Hello ${person.name}")
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>PersonService</code> will now validate the <code>Person</code> class when invoked:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject
+PersonService personService;
+
+@Test
+void testThatPersonIsValid() {
+    Person person = new Person();
+    person.setName("");
+    person.setAge(10);
+
+    final ConstraintViolationException exception =
+            assertThrows(ConstraintViolationException.class, () -&gt;
+                    personService.sayHello(person) <b class="conum">(1)</b>
+            );
+
+    assertEquals(2, exception.getConstraintViolations().size()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Inject PersonService personService
+
+void "test person name is validated"() {
+    when:"The sayHello method is called with an invalid person"
+    personService.sayHello(new Person(name: "", age: 10)) <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.constraintViolations.size() == 2 //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var personService: PersonService
+
+@Test
+fun testThatPersonIsValid() {
+    val person = Person("", 10)
+    val exception = assertThrows(ConstraintViolationException::class.java  <b class="conum">(1)</b>
+    ) { personService.sayHello(person) }
+
+    assertEquals(2, exception.constraintViolations.size) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A validated method is invoked</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The constraint violations are verified</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_configuration_properties">Validating Configuration Properties</h3>
+<div class="paragraph">
+<p>You can also validate the properties of classes that are annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> to ensure configuration is correct.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is recommended that you annotate <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> that features validation with <a href="../api/io/micronaut/context/annotation/Context.html">@Context</a> to ensure that the validation occurs at startup time.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defining_additional_constraints">Defining Additional Constraints</h3>
+<div class="paragraph">
+<p>To define additional constraints you can define a new annotation, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.validation.Constraint;
+import java.lang.annotation.*;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = { }) <b class="conum">(1)</b>
+public @interface DurationPattern {
+
+    String message() default "invalid duration ({validatedValue})"; <b class="conum">(2)</b>
+
+    /**
+     * Defines several constraints on the same element.
+     */
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
+        DurationPattern[] value(); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.validation.Constraint
+import java.lang.annotation.*
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Retention(RUNTIME)
+@Constraint(validatedBy = []) <b class="conum">(1)</b>
+@interface DurationPattern {
+    String message() default "invalid duration ({validatedValue})" <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.validation.Constraint
+
+@Retention(AnnotationRetention.RUNTIME)
+@Constraint(validatedBy = []) <b class="conum">(1)</b>
+annotation class DurationPattern(
+    val message: String = "invalid duration ({validatedValue})" <b class="conum">(2)</b>
+)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The annotation should be annotated with <code>javax.validation.Constraint</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>message</code> template can be provided in a hard coded manner as above. If none is specified Micronaut will try to find a message using <code>ClassName.message</code> using the <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> interface. (optional)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>To support repeated annotations you can define a inner annotation (optional).</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can add messages and message bundles using the <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> and <a href="../api/io/micronaut/context/i18n/ResourceBundleMessageSource.html">ResourceBundleMessageSource</a> classes.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you have defined the annotation you need to implement a <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> that validates the annotation. You can either implement a bean that implements the interace directly or define a factory that returns one or more validators.</p>
+</div>
+<div class="paragraph">
+<p>The latter approach is recommended if you plan to define multiple validators:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Factory;
+import io.micronaut.validation.validator.constraints.ConstraintValidator;
+import javax.inject.Singleton;
+
+@Factory
+public class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator&lt;DurationPattern, CharSequence&gt; durationPatternValidator() {
+        return (value, annotationMetadata, context) -&gt;
+                value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+import javax.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator&lt;DurationPattern, CharSequence&gt; durationPatternValidator() {
+        return { CharSequence value,
+                 AnnotationValue&lt;DurationPattern&gt; annotation,
+                 ConstraintValidatorContext context -&gt;
+            return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+        } as ConstraintValidator&lt;DurationPattern, CharSequence&gt;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Factory
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import javax.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    fun durationPatternValidator() : ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+        return ConstraintValidator { value, annotation, context -&gt;
+            value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example implements a validator that validates any field, parameter etc. that is annotated with <code>DurationPattern</code>, ensuring that the string can be parsed with <code>java.time.Duration.parse</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Generally <code>null</code> is regarded as valid and <code>@NotNull</code> used to constrain a value as not being <code>null</code>. The example above regards <code>null</code> as a valid value.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class HolidayService {
+
+    public String startHoliday(@NotBlank String person,
+                        @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration);
+        return "Person " + person + " is off on holiday for " + d.toMinutes() + " minutes";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class HolidayService {
+
+    String startHoliday(@NotBlank String person,
+                        @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration)
+        return "Person $person is off on holiday for ${d.toMinutes()} minutes"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class HolidayService {
+
+    open fun startHoliday( @NotBlank person: String,
+                           @DurationPattern duration: String): String {
+        val d = Duration.parse(duration)
+        val mins = d.toMinutes()
+        return "Person $person is off on holiday for $mins minutes"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To verify the above examples validates the <code>duration</code> parameter you can define a test:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Inject HolidayService holidayService;
+
+@Test
+void testCustomValidator() {
+    final ConstraintViolationException exception =
+            assertThrows(ConstraintViolationException.class, () -&gt;
+                    holidayService.startHoliday("Fred", "junk")
+            );
+
+    assertEquals("startHoliday.duration: invalid duration (junk)", exception.getMessage()); <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">void "test test custom validator"() {
+    when:"A custom validator is used"
+    holidayService.startHoliday("Fred", "junk") <b class="conum">(1)</b>
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.message == "startHoliday.duration: invalid duration (junk)" //  <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject
+lateinit var holidayService: HolidayService
+
+@Test
+fun testCustomValidator() {
+    val exception = assertThrows(ConstraintViolationException::class.java
+    ) { holidayService.startHoliday("Fred", "junk") }
+
+    assertEquals("startHoliday.duration: invalid duration (junk)", exception.message) <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_validating_annotations_at_compilation_time">Validating Annotations at Compilation Time</h3>
+<div class="paragraph">
+<p>You can use Micronaut&#8217;s validator to validate annotation usages at compilation time. To do so you should include <code>micronaut-validation</code> in the annotation processor classpath:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Once this is done Micronaut will at compilation validate annotation values that are themselves annotated with <code>javax.validation</code>. For example consider the following annotation:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TimeOff {
+    @DurationPattern
+    String duration();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import java.lang.annotation.*
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface TimeOff {
+    @DurationPattern
+    String duration()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Retention(AnnotationRetention.RUNTIME)
+annotation class TimeOff(
+    @DurationPattern val duration: String
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If your attempt to use <code>@TimeOff(duration="junk")</code> in your source Micronaut will fail compilation due to the value of <code>duration</code> violating the <code>DurationPattern</code> constraint.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If <code>duration</code> is a property placeholder such as <code>@TimeOff(duration="${my.value}")</code> then validation handling will be deferred until runtime.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that if you wish to allow use of a custom <code>ConstraintValidator</code> at compilation time you should instead define the validator as a class:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.validation.validator.constraints.*;
+import javax.annotation.*;
+
+public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    @Override
+    public boolean isValid(
+            @Nullable CharSequence value,
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+import javax.annotation.*
+
+class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    @Override
+    boolean isValid(
+            @Nullable CharSequence value,
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
+        return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.*
+
+class DurationPatternValidator : ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
+    override fun isValid(
+            value: CharSequence?,
+            annotationMetadata: AnnotationValue&lt;DurationPattern&gt;,
+            context: ConstraintValidatorContext): Boolean {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to the following requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Define a <code>META-INF/services/io.micronaut.validation.validator.constraints.ConstraintValidator</code> file that references the class.</p>
+</li>
+<li>
+<p>The class should be public and feature a zero argument public constructor</p>
+</li>
+<li>
+<p>The class should be placed on the annotation processor classpath of the project that is to be validated.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+<h2 id="annotationMetadata">3.16 Bean Annotation Metadata</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/annotationMetadata.adoc"'>
@@ -3156,31 +4534,39 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 </table>
 </div>
 <div class="paragraph">
-<p>As an example the the <code>AnnotationMapper</code> that maps the <code>javax.annotation.security.PermitAll</code> standard Java annotation to the internal Micronaut <code>Secured</code> annotation looks like the following:</p>
+<p>As an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
 </div>
 <div class="listingblock">
 <div class="title">PermitAllAnnotationMapper Mapper Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::security/src/main/java/io/micronaut/security/annotation/PermitAllAnnotationMapper.java[tag=clazz]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
+    @Nonnull
+    @Override
+    public String getName() {
+        return "javax.persistence.Entity";
+    }
+
+    @Override
+    public List&lt;AnnotationValue&lt;?&gt;&gt; map(AnnotationValue&lt;Annotation&gt; annotation, VisitorContext visitorContext) { <i class="conum" data-value="1"></i><b>(1)</b>
+        final AnnotationValueBuilder&lt;Introspected&gt; builder = AnnotationValue.builder(Introspected.class)
+                // don't bother with transients properties
+                .member("excludedAnnotations", "javax.persistence.Transient"); <i class="conum" data-value="2"></i><b>(2)</b>
+        return Collections.singletonList(
+                builder.build()
+        );
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The annotation type to be mapped is specified as a generic type argument.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>map</code> method receives a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> with the values for the annotation.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>One or more annotations can be returned, in this case <code>@Secured</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Annotations values can be provided.</td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>One or more annotations can be returned, in this case <code>@Transient</code>.</td>
 </tr>
 </table>
 </div>
@@ -3191,7 +4577,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The example above implements the <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> interface which requires the annotation class itself to be on the annotation processor classpath. If that is undesirable (such as for projects that mix annotations with runtime code) then you should use <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> instead.
+The example above implements the <a href="../api/io/micronaut/inject/annotation/NamedAnnotationMapper.html">NamedAnnotationMapper</a> interface which allows for annotations to be mixed with runtime code. If you want to operate against a concrete annotation type then you should use <a href="../api/io/micronaut/inject/annotation/TypedAnnotationMapper.html">TypedAnnotationMapper</a> instead, though note it requires the annotation class itself to be on the annotation processor classpath.
 </td>
 </tr>
 </table>
@@ -3199,7 +4585,7 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 </div>
 
 
-<h2 id="springBeans">3.16 Micronaut Beans And Spring</h2>
+<h2 id="springBeans">3.17 Micronaut Beans And Spring</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/springBeans.adoc"'>
@@ -3264,7 +4650,7 @@ class ByAnnotationTypeConfig {
 </div>
 
 
-<h2 id="android">3.17 Android Support</h2>
+<h2 id="android">3.18 Android Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/android.adoc"'>
@@ -3293,8 +4679,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.1.4"
-    compileOnly "io.micronaut:micronaut-inject-java:1.1.4"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.0"
+    compileOnly "io.micronaut:micronaut-inject-java:1.2.0"
     ...
 }</code></pre>
 </div>
@@ -3369,15 +4755,6 @@ public class BaseApplication extends Application { <i class="conum" data-value="
             ... // shortened for brevity, it is not necessary to implement other methods
         });
     }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        if(ctx != null &amp;&amp; ctx.isRunning()) { <i class="conum" data-value="4"></i><b>(4)</b>
-            ctx.stop();
-        }
-    }
-
 }</code></pre>
 </div>
 </div>
@@ -3394,10 +4771,6 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>To allow dependency injection of Android <code>Activity</code> instances register a <code>ActivityLifecycleCallbacks</code> instance</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Stop the <code>ApplicationContext</code> when the application terminates</td>
 </tr>
 </table>
 </div>

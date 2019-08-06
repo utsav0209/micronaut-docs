@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.5 The HttpRequest and HttpResponse 1.1.4</title>
+    <title>6.7 The HttpRequest and HttpResponse 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -112,16 +112,16 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>6.5 The HttpRequest and HttpResponse</h1>
+                    <h1>6.7 The HttpRequest and HttpResponse</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
 
                 
 
-<h2 id="requestResponse">6.5 The HttpRequest and HttpResponse</h2>
+<h2 id="requestResponse">6.7 The HttpRequest and HttpResponse</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/requestResponse.adoc"'>
@@ -231,6 +231,21 @@ public class MessageController {
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>The <a href="../api/io/micronaut/http/HttpResponse.html#ok-T-">HttpResponse.ok(T)</a> method is used to return a <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> with a text body. A header called <code>X-My-Header</code> is also added to the response object.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is also availble from static context via io.micronaut.http.context.ServerRequestContext[].</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Generally io.micronaut.http.context.ServerRequestContext[] is available within reactive flow, but recommended aproach is to propogate necessary state through lambdas.
+</td>
 </tr>
 </table>
 </div>

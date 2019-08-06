@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.9 Bean Replacement 1.1.4</title>
+    <title>3.9 Bean Replacement 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.9 Bean Replacement</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -250,6 +250,8 @@ class MockBookService : BookService {
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_factory_replacement">Factory Replacement</h3>
 <div class="paragraph">
 <p>The <code>@Replaces</code> annotation also supports a <code>factory</code> argument. That argument allows the replacement of factory beans in their entirety or specific types created by the factory.</p>
 </div>
@@ -414,6 +416,117 @@ class TextBookFactory {
 </div>
 <div class="paragraph">
 <p>The <code>BookFactory#novel()</code> method will not be replaced because the TextBook class is defined in the annotation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_default_implementation">Default Implementation</h3>
+<div class="paragraph">
+<p>When exposing an API, it may be desirable for the default implementation of an interface to not be exposed as part of the public API. Doing so would prevent users from being able to replace the implementation because they would not be able to reference the class. The solution is to annotate the interface with <a href="../api/io/micronaut/context/annotation/DefaultImplementation.html">DefaultImplementation</a> to indicate which implementation should be replaced if a user creates a bean that <code>@Replaces(YourInterface.class)</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example consider:</p>
+</div>
+<div class="paragraph">
+<p>A public API contract</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.DefaultImplementation;
+
+@DefaultImplementation(DefaultResponseStrategy.class)
+public interface ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy)
+interface ResponseStrategy {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy::class)
+interface ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default implementation</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+@Singleton
+internal class DefaultResponseStrategy : ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The custom implementation</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Replaces;
+import javax.inject.Singleton;
+
+@Singleton
+@Replaces(ResponseStrategy.class)
+public class CustomResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Replaces
+import javax.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy)
+class CustomResponseStrategy implements ResponseStrategy {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Replaces
+import javax.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy::class)
+class CustomResponseStrategy : ResponseStrategy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example, the <code>CustomResponseStrategy</code> will replace the <code>DefaultResponseStrategy</code> because the <a href="../api/io/micronaut/context/annotation/DefaultImplementation.html">DefaultImplementation</a> annotation points to the <code>DefaultResponseStrategy</code>.</p>
+</div>
 </div>
 
 

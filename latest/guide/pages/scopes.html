@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.6 Scopes 1.1.4</title>
+    <title>3.6 Scopes 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.6 Scopes</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
                 </div>
 
                 
@@ -185,7 +185,7 @@ function addJsClass() {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/annotation/Infrastructure.html">@Infrastructure</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure is a <code>@Context</code> scope stereotype that indicates the bean cannot be replaced</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure scope represents a bean that cannot be overridden or replaced using <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> because it is critical to the functioning of the system.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/context/scope/ThreadLocal.html">@ThreadLocal</a></p></td>
@@ -194,6 +194,10 @@ function addJsClass() {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/context/scope/Refreshable.html">@Refreshable</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Refreshable</code> scope is a custom scope that allows a bean&#8217;s state to be refreshed via the <code>/refresh</code> endpoint.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/runtime/http/scope/RequestScope.html">@RequestScope</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestScope</code> scope is a custom scope that indicates a new instance of the bean is created and associated with each HTTP request</p></td>
 </tr>
 </tbody>
 </table>
@@ -398,16 +402,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy.RUNTIME
 import javax.inject.Singleton
 
 
 @Requires(classes = [Car::class]) <b class="conum">(1)</b>
 @Singleton <b class="conum">(2)</b>
-@Documented
-@Retention(RUNTIME)
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Driver</code></pre>
 </div>
 </div>
