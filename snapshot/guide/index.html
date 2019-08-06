@@ -6862,23 +6862,45 @@ To maintain a fast startup time, it is recommended to use this feature as sparin
 
 
 <div class="paragraph">
-<p>You can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
+<p>eYou can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
 </div>
 <div class="sect2">
 <h3 id="_using_the_code_value_code_annotation">Using the <code>@Value</code> Annotation</h3>
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">@Value Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Value
-import javax.inject.Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
+@Singleton
+public class EngineImpl implements Engine {
+
+    @Value("${my.engine.cylinders:6}") <b class="conum">(1)</b>
+    protected int cylinders;
+
+    @Override
+    public int getCylinders() {
+        return this.cylinders;
+    }
+
+    public String start() {<b class="conum">(2)</b>
+        return "Starting V" + getCylinders() + " Engine";
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Value Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
 
 @Singleton
 class EngineImpl implements Engine {
 
-    @Value('${my.engine.cylinders:6}') <i class="conum" data-value="1"></i><b>(1)</b>
+    @Value('${my.engine.cylinders:6}') <b class="conum">(1)</b>
     protected int cylinders
 
     @Override
@@ -6886,8 +6908,26 @@ class EngineImpl implements Engine {
         this.cylinders
     }
 
-    String start() { <i class="conum" data-value="2"></i><b>(2)</b>
+    String start() { <b class="conum">(2)</b>
         "Starting V${cylinders} Engine"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Value Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+@Singleton
+class EngineImpl : Engine {
+
+    @Value("\${my.engine.cylinders:6}") <b class="conum">(1)</b>
+    override var cylinders: Int = 0
+        protected set
+
+    override fun start(): String {<b class="conum">(2)</b>
+        return "Starting V$cylinders Engine"
     }
 }</code></pre>
 </div>
@@ -7059,30 +7099,108 @@ The <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat<
 <div class="paragraph">
 <p>An example of a configuration class can be seen below:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+@ConfigurationProperties("my.engine")
+public class EngineConfig {
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public CrankShaft getCrankShaft() {
+        return crankShaft;
+    }
+
+    public void setCrankShaft(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    @NotBlank
+    private String manufacturer = "Ford";
+    @Min(1L)
+    private int cylinders;
+    private CrankShaft crankShaft = new CrankShaft();
+
+    @ConfigurationProperties("crank-shaft")
+    public static class CrankShaft {
+        public Optional&lt;Double&gt; getRodLength() {
+            return rodLength;
+        }
+
+        public void setRodLength(Optional&lt;Double&gt; rodLength) {
+            this.rodLength = rodLength;
+        }
+
+        private Optional&lt;Double&gt; rodLength = Optional.empty();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 
-
-@ConfigurationProperties('my.engine') <i class="conum" data-value="1"></i><b>(1)</b>
+@ConfigurationProperties('my.engine') <b class="conum">(1)</b>
 class EngineConfig {
 
-    @NotBlank <i class="conum" data-value="2"></i><b>(2)</b>
-    String manufacturer = "Ford" <i class="conum" data-value="3"></i><b>(3)</b>
+    @NotBlank <b class="conum">(2)</b>
+    String manufacturer = "Ford" <b class="conum">(3)</b>
 
     @Min(1L)
     int cylinders
     CrankShaft crankShaft = new CrankShaft()
 
     @ConfigurationProperties('crank-shaft')
-    static class CrankShaft { <i class="conum" data-value="4"></i><b>(4)</b>
-        Optional&lt;Double&gt; rodLength = Optional.empty() <i class="conum" data-value="5"></i><b>(5)</b>
+    static class CrankShaft { <b class="conum">(4)</b>
+        Optional&lt;Double&gt; rodLength = Optional.empty() <b class="conum">(5)</b>
     }
 
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@ConfigurationProperties("my.engine")
+class EngineConfig {
+
+    @NotBlank
+    var manufacturer = "Ford"
+    @Min(1L)
+    var cylinders: Int = 0
+    var crankShaft = CrankShaft()
+
+    @ConfigurationProperties("crank-shaft")
+    class CrankShaft {
+        var rodLength: Double? = null
+    }
 }</code></pre>
 </div>
 </div>
@@ -7113,14 +7231,41 @@ class EngineConfig {
 <div class="paragraph">
 <p>Once you have prepared a type safe configuration it can simply be injected into your objects like any other bean:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">@ConfigurationProperties Dependency Injection</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class EngineImpl implements Engine {
+    private final EngineConfig config;
+
+    public EngineImpl(EngineConfig config) {<b class="conum">(1)</b>
+        this.config = config;
+    }
+
+    @Override
+    public int getCylinders() {
+        return config.getCylinders();
+    }
+
+    public String start() {<b class="conum">(2)</b>
+        return getConfig().getManufacturer() + " Engine Starting V" + getConfig().getCylinders() +
+                " [rodLength=" + getConfig().getCrankShaft().getRodLength().orElse(6.0d) + "]";
+    }
+
+    public final EngineConfig getConfig() {
+        return config;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Dependency Injection</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class EngineImpl implements Engine {
     final EngineConfig config
 
-    EngineImpl(EngineConfig config) { <i class="conum" data-value="1"></i><b>(1)</b>
+    EngineImpl(EngineConfig config) { <b class="conum">(1)</b>
         this.config = config
     }
 
@@ -7129,8 +7274,23 @@ class EngineImpl implements Engine {
         config.cylinders
     }
 
-    String start() { <i class="conum" data-value="2"></i><b>(2)</b>
+    String start() { <b class="conum">(2)</b>
         "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength.orElse(6.0d)}]"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Dependency Injection</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
+
+    override val cylinders: Int
+        get() = config.cylinders
+
+    override fun start(): String {<b class="conum">(2)</b>
+        return "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength ?: 6.0}]"
     }
 }</code></pre>
 </div>
@@ -7150,17 +7310,38 @@ class EngineImpl implements Engine {
 <div class="paragraph">
 <p>Configuration values can then be supplied from one of the <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Supply Configuration</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
-        ['my.engine.cylinders': '8'],
-        "test"
-)
+<pre class="highlight"><code class="language-java" data-lang="java">        LinkedHashMap&lt;String, Object&gt; map = new LinkedHashMap(1);
+        map.put("my.engine.cylinders", "8");
+        ApplicationContext applicationContext = ApplicationContext.run(map, "test");
 
-Vehicle vehicle = applicationContext
-        .getBean(Vehicle)
-println(vehicle.start())</code></pre>
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+        DefaultGroovyMethods.println(this, vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Supply Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        ApplicationContext applicationContext = ApplicationContext.run(
+                ['my.engine.cylinders': '8'],
+                "test"
+        )
+
+        Vehicle vehicle = applicationContext
+                .getBean(Vehicle)
+        println(vehicle.start())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Supply Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val map = mapOf( "my.engine.cylinders" to "8")
+        val applicationContext = ApplicationContext.run(map, "test")
+
+        val vehicle = applicationContext.getBean(Vehicle::class.java)
+        DefaultGroovyMethods.println(this, vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7591,10 +7772,40 @@ internal class EngineFactory {
 <div class="paragraph">
 <p>For this purpose, the <a href="../api/io/micronaut/core/convert/format/MapFormat.html">MapFormat</a> annotation allows you to bind a map to a single configuration property, and specify whether to accept a flat map of keys to values, or a nested map (where the values may be additional maps].</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.core.convert.format.MapFormat
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.convert.format.MapFormat;
+
+@ConfigurationProperties("my.engine")
+public class EngineConfig {
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public Map&lt;Integer, String&gt; getSensors() {
+        return sensors;
+    }
+
+    public void setSensors(Map&lt;Integer, String&gt; sensors) {
+        this.sensors = sensors;
+    }
+
+    @Min(1L)
+    private int cylinders;
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT)
+    private Map&lt;Integer, String&gt; sensors;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@MapFormat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.format.MapFormat
 
 @ConfigurationProperties('my.engine')
 class EngineConfig {
@@ -7602,9 +7813,22 @@ class EngineConfig {
     @Min(1L)
     int cylinders
 
-    @MapFormat(transformation = MapFormat.MapTransformation.FLAT) <i class="conum" data-value="1"></i><b>(1)</b>
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT) <b class="conum">(1)</b>
     Map&lt;Integer, String&gt; sensors
 
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@MapFormat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@ConfigurationProperties("my.engine")
+class EngineConfig {
+
+    @Min(1L)
+    var cylinders: Int = 0
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT)
+    var sensors: Map&lt;Int, String&gt;? = null
 }</code></pre>
 </div>
 </div>
@@ -7616,10 +7840,37 @@ class EngineConfig {
 </tr>
 </table>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">EngineImpl</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class EngineImpl implements Engine {
+    @Override
+    public Map getSensors() {
+        return config.getSensors();
+    }
+
+    public String start() {
+        return "Engine Starting V" + getConfig().getCylinders() + " [sensors=" + getSensors().size() + "]";
+    }
+
+    public EngineConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(EngineConfig config) {
+        this.config = config;
+    }
+
+    @Inject
+    private EngineConfig config;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">EngineImpl</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class EngineImpl implements Engine {
 
     @Inject EngineConfig config
@@ -7635,20 +7886,69 @@ class EngineImpl implements Engine {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">EngineImpl</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class EngineImpl : Engine {
+    override val sensors: Map&lt;*, *&gt;?
+        get() = config!!.sensors
+
+    @Inject
+    var config: EngineConfig? = null
+
+    override fun start(): String {
+        return "Engine Starting V${config!!.cylinders} [sensors=${sensors!!.size}]"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Now a map of properties can be supplied to the <code>my.engine.sensors</code> configuration property.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Use Map Configuration</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext applicationContext = ApplicationContext.run(
-        ['my.engine.cylinders': '8', 'my.engine.sensors': [0: 'thermostat', 1: 'fuel pressure']],
-        "test"
-)
+<pre class="highlight"><code class="language-java" data-lang="java">        LinkedHashMap&lt;String, Object&gt; map = new LinkedHashMap(2);
+        map.put("my.engine.cylinders", "8");
+        LinkedHashMap&lt;Integer, String&gt; map1 = new LinkedHashMap(2);
+        map1.put(0, "thermostat");
+        map1.put(1, "fuel pressure");
+        map.put("my.engine.sensors", map1);
+        ApplicationContext applicationContext = ApplicationContext.run(map, "test");
 
-Vehicle vehicle = applicationContext
-        .getBean(Vehicle)
-println(vehicle.start())</code></pre>
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+        DefaultGroovyMethods.println(this, vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Use Map Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        ApplicationContext applicationContext = ApplicationContext.run(
+                ['my.engine.cylinders': '8', 'my.engine.sensors': [0: 'thermostat', 1: 'fuel pressure']],
+                "test"
+        )
+
+        Vehicle vehicle = applicationContext
+                .getBean(Vehicle)
+        println(vehicle.start())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Use Map Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val subMap = mapOf(
+                0 to "thermostat",
+                1 to "fuel pressure"
+        )
+        val map = mapOf(
+                "my.engine.cylinders" to "8",
+                "my.engine.sensors" to subMap
+        )
+        val applicationContext = ApplicationContext.run(map, "test")
+
+        val vehicle = applicationContext.getBean(Vehicle::class.java)
+        DefaultGroovyMethods.println(this, vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7676,9 +7976,22 @@ println(vehicle.start())</code></pre>
 <div class="paragraph">
 <p>Consider the following <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">ConfigurationProperties</a>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
+<pre class="highlight"><code class="language-java" data-lang="java">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
+public class MyConfigurationProperties {
+    public LocalDate getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public static final String PREFIX = "myapp";
+    protected LocalDate updatedAt;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
 class MyConfigurationProperties {
     public static final String PREFIX = "myapp"
     protected LocalDate updatedAt
@@ -7689,43 +8002,186 @@ class MyConfigurationProperties {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
+class MyConfigurationProperties {
+    var updatedAt: LocalDate? = null
+        protected set
+
+    companion object {
+        const val PREFIX = "myapp"
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The type <code>MyConfigurationProperties</code> features a property called <code>updatedAt</code> which is of type <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html">LocalDate</a>.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s say you want to allow binding to this property from a map via configuration:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ApplicationContext ctx = ApplicationContext.run(
-        "myapp.updatedAt": [day: 28, month: 10, year: 1982]  <i class="conum" data-value="1"></i><b>(1)</b>
-)</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    private static ApplicationContext ctx;
+
+    @BeforeClass
+    public static void setupCtx() {
+        ctx = ApplicationContext.run(
+                new LinkedHashMap&lt;String, Object&gt;() {{
+                    put("myapp.updatedAt", <b class="conum">(1)</b>
+                            new LinkedHashMap&lt;String, Integer&gt;() {{
+                                put("day", 28);
+                                put("month", 10);
+                                put("year", 1982);
+                            }}
+                    );
+                }}
+        );
+    }
+
+    @AfterClass
+    public static void teardownCtx() {
+        if(ctx != null) {
+            ctx.stop();
+        }
+    }</code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @AutoCleanup
+    @Shared
+    ApplicationContext ctx = ApplicationContext.run(
+            "myapp.updatedAt": [day: 28, month: 10, year: 1982]  <b class="conum">(1)</b>
+    )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    lateinit var ctx: ApplicationContext
+
+    @BeforeEach
+    fun setup() {
+        ctx = ApplicationContext.run(
+                mapOf(
+                        "myapp.updatedAt" to mapOf( <b class="conum">(1)</b>
+                                "day" to 28,
+                                "month" to 10,
+                                "year" to 1982
+                        )
+                )
+        )
+    }
+
+    @AfterEach
+    fun teardown() {
+        ctx?.close()
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Note how we match the <code>myapp</code> prefix and <code>updatedAt</code> property name in our <code>MyConfigurationProperties</code> class above</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This won&#8217;t work by default, since there is no built in conversion from <code>Map</code> to <code>LocalDate</code>. To resolve this you can define a custom <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.core.convert.*
-import java.time.*
-import javax.inject.Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.convert.ConversionContext;
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.core.convert.TypeConverter;
+
+import javax.inject.Singleton;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.Optional;
 
 @Singleton
-class MapToLocalDateConverter implements TypeConverter&lt;Map, LocalDate&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+public class MapToLocalDateConverter implements TypeConverter&lt;Map, LocalDate&gt; { <b class="conum">(1)</b>
     @Override
-    Optional&lt;LocalDate&gt; convert(Map object, Class&lt;LocalDate&gt; targetType, ConversionContext context) {
-        Optional&lt;Integer&gt; day = ConversionService.SHARED.convert(object.get("day"), Integer.class)
-        Optional&lt;Integer&gt; month = ConversionService.SHARED.convert(object.get("month"), Integer.class)
-        Optional&lt;Integer&gt; year = ConversionService.SHARED.convert(object.get("year"), Integer.class)
+    public Optional&lt;LocalDate&gt; convert(Map propertyMap, Class&lt;LocalDate&gt; targetType, ConversionContext context) {
+        Optional&lt;Integer&gt; day = ConversionService.SHARED.convert(propertyMap.get("day"), Integer.class);
+        Optional&lt;Integer&gt; month = ConversionService.SHARED.convert(propertyMap.get("month"), Integer.class);
+        Optional&lt;Integer&gt; year = ConversionService.SHARED.convert(propertyMap.get("year"), Integer.class);
         if (day.isPresent() &amp;&amp; month.isPresent() &amp;&amp; year.isPresent()) {
             try {
-                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) <i class="conum" data-value="2"></i><b>(2)</b>
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())); <b class="conum">(2)</b>
             } catch (DateTimeException e) {
-                context.reject(object, e) <i class="conum" data-value="3"></i><b>(3)</b>
+                context.reject(propertyMap, e); <b class="conum">(3)</b>
+                return Optional.empty();
+            }
+
+        }
+
+        return Optional.empty();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.ConversionContext
+import io.micronaut.core.convert.ConversionService
+import io.micronaut.core.convert.TypeConverter
+
+import javax.inject.Singleton
+import java.time.DateTimeException
+import java.time.LocalDate
+
+@Singleton
+class MapToLocalDateConverter implements TypeConverter&lt;Map, LocalDate&gt; { <b class="conum">(1)</b>
+    @Override
+    Optional&lt;LocalDate&gt; convert(Map propertyMap, Class&lt;LocalDate&gt; targetType, ConversionContext context) {
+        Optional&lt;Integer&gt; day = ConversionService.SHARED.convert(propertyMap.get("day"), Integer.class)
+        Optional&lt;Integer&gt; month = ConversionService.SHARED.convert(propertyMap.get("month"), Integer.class)
+        Optional&lt;Integer&gt; year = ConversionService.SHARED.convert(propertyMap.get("year"), Integer.class)
+        if (day.isPresent() &amp;&amp; month.isPresent() &amp;&amp; year.isPresent()) {
+            try {
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) <b class="conum">(2)</b>
+            } catch (DateTimeException e) {
+                context.reject(propertyMap, e) <b class="conum">(3)</b>
                 return Optional.empty()
             }
         }
+        return Optional.empty()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.convert.ConversionContext
+import io.micronaut.core.convert.ConversionService
+import io.micronaut.core.convert.TypeConverter
+
+import javax.inject.Singleton
+import java.time.DateTimeException
+import java.time.LocalDate
+import java.util.Optional
+
+@Singleton
+class MapToLocalDateConverter : TypeConverter&lt;Map&lt;*, *&gt;, LocalDate&gt; { <b class="conum">(1)</b>
+    override fun convert(propertyMap: Map&lt;*, *&gt;, targetType: Class&lt;LocalDate&gt;, context: ConversionContext): Optional&lt;LocalDate&gt; {
+        val day = ConversionService.SHARED.convert(propertyMap["day"], Int::class.java)
+        val month = ConversionService.SHARED.convert(propertyMap["month"], Int::class.java)
+        val year = ConversionService.SHARED.convert(propertyMap["year"], Int::class.java)
+        if (day.isPresent &amp;&amp; month.isPresent &amp;&amp; year.isPresent) {
+            try {
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) <b class="conum">(2)</b>
+            } catch (e: DateTimeException) {
+                context.reject(propertyMap, e) <b class="conum">(3)</b>
+                return Optional.empty()
+            }
+
+        }
+
         return Optional.empty()
     }
 }</code></pre>

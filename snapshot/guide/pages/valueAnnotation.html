@@ -131,23 +131,45 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>You can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
+<p>eYou can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
 </div>
 <div class="sect2">
 <h3 id="_using_the_code_value_code_annotation">Using the <code>@Value</code> Annotation</h3>
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">@Value Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Value
-import javax.inject.Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.inject.Singleton;
+
+@Singleton
+public class EngineImpl implements Engine {
+
+    @Value("${my.engine.cylinders:6}") <b class="conum">(1)</b>
+    protected int cylinders;
+
+    @Override
+    public int getCylinders() {
+        return this.cylinders;
+    }
+
+    public String start() {<b class="conum">(2)</b>
+        return "Starting V" + getCylinders() + " Engine";
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Value Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
 
 @Singleton
 class EngineImpl implements Engine {
 
-    @Value('${my.engine.cylinders:6}') <i class="conum" data-value="1"></i><b>(1)</b>
+    @Value('${my.engine.cylinders:6}') <b class="conum">(1)</b>
     protected int cylinders
 
     @Override
@@ -155,8 +177,26 @@ class EngineImpl implements Engine {
         this.cylinders
     }
 
-    String start() { <i class="conum" data-value="2"></i><b>(2)</b>
+    String start() { <b class="conum">(2)</b>
         "Starting V${cylinders} Engine"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Value Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+@Singleton
+class EngineImpl : Engine {
+
+    @Value("\${my.engine.cylinders:6}") <b class="conum">(1)</b>
+    override var cylinders: Int = 0
+        protected set
+
+    override fun start(): String {<b class="conum">(2)</b>
+        return "Starting V$cylinders Engine"
     }
 }</code></pre>
 </div>
