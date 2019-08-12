@@ -7184,6 +7184,7 @@ class EngineConfig {
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import java.util.*
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
@@ -7199,7 +7200,7 @@ class EngineConfig {
 
     @ConfigurationProperties("crank-shaft")
     class CrankShaft {
-        var rodLength: Double? = null
+        var rodLength: Optional&lt;Double&gt; = Optional.empty()
     }
 }</code></pre>
 </div>
@@ -7290,7 +7291,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
         get() = config.cylinders
 
     override fun start(): String {<b class="conum">(2)</b>
-        return "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength ?: 6.0}]"
+        return "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength.orElse(6.0)}]"
     }
 }</code></pre>
 </div>
