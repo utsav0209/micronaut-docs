@@ -8321,19 +8321,19 @@ class MapToLocalDateConverter : TypeConverter&lt;Map&lt;*, *&gt;, LocalDate&gt; 
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> annotation will create a <code>ConfigurationProperties</code> bean for each sub-property within the given property. As an example consider the following class:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Parameter;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.EachProperty;
 
-@EachProperty("test.datasource")  <i class="conum" data-value="1"></i><b>(1)</b>
+@EachProperty("test.datasource")  <b class="conum">(1)</b>
 public class DataSourceConfiguration {
 
     private final String name;
     private URI url = new URI("localhost");
 
-    public DataSourceConfiguration(@Parameter String name) <i class="conum" data-value="2"></i><b>(2)</b>
+    public DataSourceConfiguration(@Parameter String name) <b class="conum">(2)</b>
             throws URISyntaxException {
         this.name = name;
     }
@@ -8342,13 +8342,42 @@ public class DataSourceConfiguration {
         return name;
     }
 
-    public URI getUrl() { <i class="conum" data-value="3"></i><b>(3)</b>
+    public URI getUrl() { <b class="conum">(3)</b>
         return url;
     }
 
     public void setUrl(URI url) {
         this.url = url;
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@EachProperty("test.datasource")
+<b class="conum">(1)</b>
+class DataSourceConfiguration {
+
+    final String name
+    URI url = new URI("localhost")
+
+    DataSourceConfiguration(@Parameter String name) <b class="conum">(2)</b>
+            throws URISyntaxException {
+        this.name = name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@EachProperty("test.datasource")  <b class="conum">(1)</b>
+class DataSourceConfiguration <b class="conum">(2)</b>
+@Throws(URISyntaxException::class)
+constructor(@param:Parameter val name: String) {
+    <b class="conum">(3)</b>
+    var url = URI("localhost")
 }</code></pre>
 </div>
 </div>
@@ -8371,35 +8400,93 @@ public class DataSourceConfiguration {
 <div class="paragraph">
 <p>The above <code>DataSourceConfiguration</code> defines a <code>url</code> property to configure one or many hypothetical data sources of some sort. The URLs themselves can be configured using any of the <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances evaluated to Micronaut:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Providing Configuration to @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
-        "test",
-        CollectionUtils.mapOf(
-        "test.datasource.one.url", "jdbc:mysql://localhost/one",
-        "test.datasource.two.url", "jdbc:mysql://localhost/two")
-));</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+                "test",
+                CollectionUtils.mapOf(
+                        "test.datasource.one.url", "jdbc:mysql://localhost/one",
+                        "test.datasource.two.url", "jdbc:mysql://localhost/two")
+
+        ));</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Providing Configuration to @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+            "test",
+            [
+                    "test.datasource.one.url": "jdbc:mysql://localhost/one",
+                    "test.datasource.two.url": "jdbc:mysql://localhost/two"
+            ]
+    ))</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Providing Configuration to @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(PropertySource.of(
+                "test",
+                mapOf(
+                        "test.datasource.one.url" to "jdbc:mysql://localhost/one",
+                        "test.datasource.two.url" to "jdbc:mysql://localhost/two"
+                )
+        ))</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>In the above example two data sources (called <code>one</code> and <code>two</code>) are defined under the <code>test.datasource</code> prefix defined earlier in the <code>@EachProperty</code> annotation. Each of these configuration entries triggers the creation of a new <code>DataSourceConfiguration</code> bean such that the following test succeeds:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Evaluating Beans Built by @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
-assertEquals(2, beansOfType.size()); <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">        Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
+        assertEquals(2, beansOfType.size()); <b class="conum">(1)</b>
 
-DataSourceConfiguration firstConfig = applicationContext.getBean(
-        DataSourceConfiguration.class,
-        Qualifiers.byName("one") <i class="conum" data-value="2"></i><b>(2)</b>
-);
+        DataSourceConfiguration firstConfig = applicationContext.getBean(
+                DataSourceConfiguration.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        );
 
-assertEquals(
-        new URI("jdbc:mysql://localhost/one"),
-        firstConfig.getUrl()
-);</code></pre>
+        assertEquals(
+                new URI("jdbc:mysql://localhost/one"),
+                firstConfig.getUrl()
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Evaluating Beans Built by @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class)
+        assertEquals(2, beansOfType.size()) <b class="conum">(1)</b>
+
+        DataSourceConfiguration firstConfig = applicationContext.getBean(
+                DataSourceConfiguration.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )
+
+        then:
+        new URI("jdbc:mysql://localhost/one") == firstConfig.getUrl()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Evaluating Beans Built by @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration::class.java)
+        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+
+        val firstConfig = applicationContext.getBean(
+                DataSourceConfiguration::class.java,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )
+
+        assertEquals(
+                URI("jdbc:mysql://localhost/one"),
+                firstConfig.url
+        )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8428,19 +8515,43 @@ assertEquals(
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> is a great way to drive dynamic configuration, but typically you want to inject that configuration into another bean that depends on it. Injecting a single instance with a hard coded qualifier is not a great solution, hence <code>@EachProperty</code> is typically used in combination with <a href="../api/io/micronaut/context/annotation/EachBean.html">@EachBean</a>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @EachBean</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory <b class="conum">(1)</b>
 public class DataSourceFactory {
 
-    @EachBean(DataSourceConfiguration.class) <i class="conum" data-value="2"></i><b>(2)</b>
-    DataSource dataSource(DataSourceConfiguration configuration) { <i class="conum" data-value="3"></i><b>(3)</b>
+    @EachBean(DataSourceConfiguration.class) <b class="conum">(2)</b>
+    DataSource dataSource(DataSourceConfiguration configuration) { <b class="conum">(3)</b>
         URI url = configuration.getUrl();
         return new DataSource(url);
-    }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachBean</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory <b class="conum">(1)</b>
+class DataSourceFactory {
 
-}</code></pre>
+    @EachBean(DataSourceConfiguration.class) <b class="conum">(2)</b>
+    DataSource dataSource(DataSourceConfiguration configuration) { <b class="conum">(3)</b>
+        URI url = configuration.getUrl()
+        return new DataSource(url)
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachBean</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory <b class="conum">(1)</b>
+class DataSourceFactory {
+
+    @EachBean(DataSourceConfiguration::class) <b class="conum">(2)</b>
+    internal fun dataSource(configuration: DataSourceConfiguration): DataSource { <b class="conum">(3)</b>
+        val url = configuration.url
+        return DataSource(url)
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8465,14 +8576,54 @@ public class DataSourceFactory {
 <div class="paragraph">
 <p>In other words, to retrieve the <code>DataSource</code> created by <code>test.datasource.one</code> you can do:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using a Qualifier</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataSource firstDataSource = applicationContext.getBean(
-        DataSource.class,
-        Qualifiers.byName("one")
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource.class);
+        assertEquals(2, beansOfType.size()); <b class="conum">(1)</b>
+
+        DataSource firstConfig = applicationContext.getBean(
+                DataSource.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        );</code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a Qualifier</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource.class)
+        assertEquals(2, beansOfType.size()) <b class="conum">(1)</b>
+
+        DataSource firstConfig = applicationContext.getBean(
+                DataSource.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a Qualifier</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSource::class.java)
+        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+
+        val firstConfig = applicationContext.getBean(
+                DataSource::class.java,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We demonstrate here that there are indeed two data sources. How can we get one in particular?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>By using <code>Qualifiers.byName("one")</code>, we can select which of the two beans we&#8217;d like to reference.</td>
+</tr>
+</table>
 </div>
 
 
@@ -8547,17 +8698,17 @@ public class DataSourceFactory {
 <div class="paragraph">
 <p>The first step to defining Around advice is to implement a <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a>. For example the following interceptor disallows parameters with <code>null</code> values:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">MethodInterceptor Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.aop.*;
 import io.micronaut.core.type.MutableArgumentValue;
 
 import javax.inject.Singleton;
 import java.util.*;
 
 @Singleton
-public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(1)</b>
     @Override
     public Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
         Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
@@ -8567,11 +8718,73 @@ public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&g
                 MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue();
                 return Objects.isNull(argumentValue.getValue());
             })
-            .findFirst(); <i class="conum" data-value="2"></i><b>(2)</b>
+            .findFirst(); <b class="conum">(2)</b>
         if (nullParam.isPresent()) {
-            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed"); <i class="conum" data-value="3"></i><b>(3)</b>
+            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed"); <b class="conum">(3)</b>
         } else {
-            return context.proceed(); <i class="conum" data-value="4"></i><b>(4)</b>
+            return context.proceed(); <b class="conum">(4)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MethodInterceptor Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.MethodInterceptor
+import io.micronaut.aop.MethodInvocationContext
+import io.micronaut.core.type.MutableArgumentValue
+
+import javax.inject.Singleton
+
+@Singleton
+class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(1)</b>
+    @Override
+    Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
+        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
+            .entrySet()
+            .stream()
+            .filter({entry -&gt;
+                MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue()
+                return Objects.isNull(argumentValue.getValue())
+            })
+            .findFirst() <b class="conum">(2)</b>
+        if (nullParam.isPresent()) {
+            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed") <b class="conum">(3)</b>
+        } else {
+            return context.proceed() <b class="conum">(4)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MethodInterceptor Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.MethodInterceptor
+import io.micronaut.aop.MethodInvocationContext
+import io.micronaut.core.type.MutableArgumentValue
+
+import javax.inject.Singleton
+import java.util.Objects
+import java.util.Optional
+
+
+@Singleton
+class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1)</b>
+    override fun intercept(context: MethodInvocationContext&lt;Any, Any&gt;): Any {
+        val nullParam = context.parameters
+                .entries
+                .stream()
+                .filter { entry -&gt;
+                    val argumentValue = entry.value
+                    Objects.isNull(argumentValue.value)
+                }
+                .findFirst() <b class="conum">(2)</b>
+        return if (nullParam.isPresent) {
+            throw IllegalArgumentException("Null parameter [" + nullParam.get().key + "] not allowed") <b class="conum">(3)</b>
+        } else {
+            context.proceed() <b class="conum">(4)</b>
         }
     }
 }</code></pre>
@@ -8612,21 +8825,63 @@ Micronaut AOP interceptors use no reflection which improves performance and redu
 <div class="paragraph">
 <p>To put the new <code>MethodInterceptor</code> to work the next step is to define an annotation that will trigger the <code>MethodInterceptor</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Annotation Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Type;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Type;
 import io.micronaut.aop.Around;
 import java.lang.annotation.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Retention(RUNTIME) <i class="conum" data-value="1"></i><b>(1)</b>
-@Target({ElementType.TYPE, ElementType.METHOD}) <i class="conum" data-value="2"></i><b>(2)</b>
-@Around <i class="conum" data-value="3"></i><b>(3)</b>
-@Type(NotNullInterceptor.class) <i class="conum" data-value="4"></i><b>(4)</b>
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target({ElementType.TYPE, ElementType.METHOD}) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor.class) <b class="conum">(4)</b>
 public @interface NotNull {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Annotation Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.Around
+import io.micronaut.context.annotation.Type
+
+import java.lang.annotation.Documented
+import java.lang.annotation.ElementType
+import java.lang.annotation.Retention
+import java.lang.annotation.Target
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Documented
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target([ElementType.TYPE, ElementType.METHOD]) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor.class) <b class="conum">(4)</b>
+@interface NotNull {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Annotation Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.Around
+import io.micronaut.context.annotation.Type
+
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+
+import java.lang.annotation.RetentionPolicy.RUNTIME
+
+
+@Documented
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor::class) <b class="conum">(4)</b>
+annotation class NotNull</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8652,10 +8907,10 @@ public @interface NotNull {
 <div class="paragraph">
 <p>With the interceptor and annotation implemented you can then simply apply the annotation to the target classes:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Usage Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 public class NotNullExample {
 
     @NotNull
@@ -8665,25 +8920,82 @@ public class NotNullExample {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Usage Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class NotNullExample {
+
+    @NotNull
+    void doWork(String taskName) {
+        println("Doing job: " + taskName)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Usage Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class NotNullExample {
+
+    @NotNull
+    open fun doWork(taskName: String?) {
+        println("Doing job: $taskName")
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Whenever the type <code>NotNullExample</code> is injected into any class, a compile time generated proxy will instead be injected that decorates the appropriate method calls with the <code>@NotNull</code> advice defined earlier. You can verify that the advice works by writing a test. The following test uses a JUnit <code>ExpectedException</code> rule to verify the appropriate exception is thrown when an argument is <code>null</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Test</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Rule
-public ExpectedException thrown = ExpectedException.none();
+<pre class="highlight"><code class="language-java" data-lang="java">    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-@Test
-public void testNotNull() {
-    ApplicationContext applicationContext = ApplicationContext.run();
-    NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+    @Test
+    public void testNotNull() {
+        ApplicationContext applicationContext = ApplicationContext.run();
+        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("Null parameter [taskName] not allowed");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Null parameter [taskName] not allowed");
 
-    exampleBean.doWork(null);
-}</code></pre>
+        exampleBean.doWork(null);
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test not null"() {
+        when:
+        ApplicationContext applicationContext = ApplicationContext.run()
+        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class)
+
+        exampleBean.doWork(null)
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message == 'Null parameter [taskName] not allowed'
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Test
+    fun testNotNull() {
+        val applicationContext = ApplicationContext.run()
+        val exampleBean = applicationContext.getBean(NotNullExample::class.java)
+
+        val exception = shouldThrow&lt;IllegalArgumentException&gt; {
+            exampleBean.doWork(null)
+        }
+        exception.message shouldBe "Null parameter [taskName] not allowed"
+    }</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -8743,16 +9055,44 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <div class="paragraph">
 <p>Consider the following two examples:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Cacheable("my-cache")
+<pre class="highlight"><code class="language-java" data-lang="java">@Cacheable("my-cache")
+@Factory
+public class MyFactory {
+
+    @Prototype
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Cacheable("my-cache")
 @Factory
 class MyFactory {
 
     @Prototype
     MyBean myBean() {
-        return new MyBean();
+        return new MyBean()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Cacheable("my-cache")
+@Factory
+open class MyFactory {
+
+    @Prototype
+    open fun myBean(): MyBean {
+        return MyBean()
     }
 }</code></pre>
 </div>
@@ -8763,16 +9103,44 @@ class MyFactory {
 <div class="paragraph">
 <p>Now consider this example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory
+public class MyFactory {
+
+    @Prototype
+    @Cacheable("my-cache")
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory
 class MyFactory {
 
     @Prototype
     @Cacheable("my-cache")
     MyBean myBean() {
-        return new MyBean();
+        return new MyBean()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
+open class MyFactory {
+
+    @Prototype
+    @Cacheable("my-cache")
+    open fun myBean(): MyBean {
+        return MyBean()
     }
 }</code></pre>
 </div>

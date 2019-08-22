@@ -133,19 +133,43 @@ function addJsClass() {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> is a great way to drive dynamic configuration, but typically you want to inject that configuration into another bean that depends on it. Injecting a single instance with a hard coded qualifier is not a great solution, hence <code>@EachProperty</code> is typically used in combination with <a href="../api/io/micronaut/context/annotation/EachBean.html">@EachBean</a>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @EachBean</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory <b class="conum">(1)</b>
 public class DataSourceFactory {
 
-    @EachBean(DataSourceConfiguration.class) <i class="conum" data-value="2"></i><b>(2)</b>
-    DataSource dataSource(DataSourceConfiguration configuration) { <i class="conum" data-value="3"></i><b>(3)</b>
+    @EachBean(DataSourceConfiguration.class) <b class="conum">(2)</b>
+    DataSource dataSource(DataSourceConfiguration configuration) { <b class="conum">(3)</b>
         URI url = configuration.getUrl();
         return new DataSource(url);
-    }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachBean</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory <b class="conum">(1)</b>
+class DataSourceFactory {
 
-}</code></pre>
+    @EachBean(DataSourceConfiguration.class) <b class="conum">(2)</b>
+    DataSource dataSource(DataSourceConfiguration configuration) { <b class="conum">(3)</b>
+        URI url = configuration.getUrl()
+        return new DataSource(url)
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachBean</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory <b class="conum">(1)</b>
+class DataSourceFactory {
+
+    @EachBean(DataSourceConfiguration::class) <b class="conum">(2)</b>
+    internal fun dataSource(configuration: DataSourceConfiguration): DataSource { <b class="conum">(3)</b>
+        val url = configuration.url
+        return DataSource(url)
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -170,14 +194,54 @@ public class DataSourceFactory {
 <div class="paragraph">
 <p>In other words, to retrieve the <code>DataSource</code> created by <code>test.datasource.one</code> you can do:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using a Qualifier</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataSource firstDataSource = applicationContext.getBean(
-        DataSource.class,
-        Qualifiers.byName("one")
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource.class);
+        assertEquals(2, beansOfType.size()); <b class="conum">(1)</b>
+
+        DataSource firstConfig = applicationContext.getBean(
+                DataSource.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        );</code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a Qualifier</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource.class)
+        assertEquals(2, beansOfType.size()) <b class="conum">(1)</b>
+
+        DataSource firstConfig = applicationContext.getBean(
+                DataSource.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a Qualifier</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSource::class.java)
+        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+
+        val firstConfig = applicationContext.getBean(
+                DataSource::class.java,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We demonstrate here that there are indeed two data sources. How can we get one in particular?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>By using <code>Qualifiers.byName("one")</code>, we can select which of the two beans we&#8217;d like to reference.</td>
+</tr>
+</table>
 </div>
 
 
