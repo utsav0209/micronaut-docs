@@ -25138,6 +25138,9 @@ create-app [NAME]
 <p><code>-p</code>, <code>--profile</code></p>
 </li>
 <li>
+<p><code>-l</code>, <code>--lang</code></p>
+</li>
+<li>
 <p><code>-f</code>, <code>--features</code></p>
 </li>
 <li>
@@ -25184,7 +25187,7 @@ create-app [NAME]
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn create-cli-app my-project --features
  http-client,jdbc-hikari --build maven
- --lang kotlin --test spek</code></pre>
+ --lang kotlin --test kotlintest</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -25374,11 +25377,11 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 <div class="sect3">
 <h4 id="_groovy">Groovy</h4>
 <div class="paragraph">
-<p>To create an app with Groovy &amp; Spock support, supply the appropriate features via the <code>feature</code> flag:</p>
+<p>To create an app with Groovy support (which comes with Spock by default), supply the appropriate language via the <code>lang</code> flag:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-groovy-app --features groovy,spock</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-groovy-app --lang groovy</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -25388,15 +25391,15 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 <div class="sect3">
 <h4 id="_kotlin">Kotlin</h4>
 <div class="paragraph">
-<p>To create an app with Kotlin &amp; Spek support, supply the appropriate features via the <code>feature</code> flag:</p>
+<p>To create an app with Kotlin support (which comes with Kotlintest by default), supply the appropriate language via the <code>lang</code> flag:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-kotlin-app --features kotlin,spek</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-kotlin-app --lang kotlin</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will include the Kotlin &amp; Spek dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
+<p>This will include the Kotlin &amp; Kotlintest dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
 </div>
 </div>
 </div>
@@ -25530,15 +25533,15 @@ sourceLanguage: java</code></pre>
 <div class="sect3">
 <h4 id="_kotlin_2">Kotlin</h4>
 <div class="paragraph">
-<p>To create an app with Kotlin &amp; Spek support, supply the appropriate features via the <code>lang</code> and <code>test</code> flags:</p>
+<p>To create an app with Kotlin &amp; KotlinTest support, supply the appropriate features via the <code>lang</code> and <code>test</code> flags:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-cli-app my-kotlin-app --lang=kotlin --test=spek</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-cli-app my-kotlin-app --lang=kotlin --test=kotlintest</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will include the Kotlin &amp; Spek dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
+<p>This will include the Kotlin &amp; KotlinTest dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
 </div>
 </div>
 </div>
@@ -25638,7 +25641,7 @@ Currently AWS Lambda is the only supported cloud provider for Micronaut function
 <p>Setting the language using the <code>lang</code> flag will generate a <code>*Function</code> file in the appropriate language. For Java/Kotlin, this will generate a class annotated with <a href="../api/io/micronaut/function/FunctionBean.html">@FunctionBean</a>. For Groovy, a Groovy function script will be generated. See <a href="#writingFunctions">Writing Functions</a> for more details on how to write and test Micronaut functions.</p>
 </div>
 <div class="paragraph">
-<p>Depending on language choice, an appropriate test will also be generated. By default, a Java function will include a JUnit test, a Groovy function will include a Spock test, and a Kotlin function will include a Spek test. However, you can override the chosen test framework with the <code>test</code> flag.</p>
+<p>Depending on language choice, an appropriate test will also be generated. By default, a Java function will include a JUnit test, a Groovy function will include a Spock test, and a Kotlin function will include a KotlinTest test. However, you can override the chosen test framework with the <code>test</code> flag.</p>
 </div>
 <div class="listingblock">
 <div class="content">
