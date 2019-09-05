@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.1 Around Advice 1.2.0</title>
+    <title>5.1 Around Advice 1.2.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5.1 Around Advice</h1>
 
-                    <p><strong>Version:</strong> 1.2.0</p>
+                    <p><strong>Version:</strong> 1.2.1</p>
                 </div>
 
                 
@@ -139,17 +139,17 @@ function addJsClass() {
 <div class="paragraph">
 <p>The first step to defining Around advice is to implement a <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a>. For example the following interceptor disallows parameters with <code>null</code> values:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">MethodInterceptor Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.aop.*;
 import io.micronaut.core.type.MutableArgumentValue;
 
 import javax.inject.Singleton;
 import java.util.*;
 
 @Singleton
-public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(1)</b>
     @Override
     public Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
         Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
@@ -159,11 +159,73 @@ public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&g
                 MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue();
                 return Objects.isNull(argumentValue.getValue());
             })
-            .findFirst(); <i class="conum" data-value="2"></i><b>(2)</b>
+            .findFirst(); <b class="conum">(2)</b>
         if (nullParam.isPresent()) {
-            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed"); <i class="conum" data-value="3"></i><b>(3)</b>
+            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed"); <b class="conum">(3)</b>
         } else {
-            return context.proceed(); <i class="conum" data-value="4"></i><b>(4)</b>
+            return context.proceed(); <b class="conum">(4)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MethodInterceptor Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.MethodInterceptor
+import io.micronaut.aop.MethodInvocationContext
+import io.micronaut.core.type.MutableArgumentValue
+
+import javax.inject.Singleton
+
+@Singleton
+class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(1)</b>
+    @Override
+    Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
+        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
+            .entrySet()
+            .stream()
+            .filter({entry -&gt;
+                MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue()
+                return Objects.isNull(argumentValue.getValue())
+            })
+            .findFirst() <b class="conum">(2)</b>
+        if (nullParam.isPresent()) {
+            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed") <b class="conum">(3)</b>
+        } else {
+            return context.proceed() <b class="conum">(4)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MethodInterceptor Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.MethodInterceptor
+import io.micronaut.aop.MethodInvocationContext
+import io.micronaut.core.type.MutableArgumentValue
+
+import javax.inject.Singleton
+import java.util.Objects
+import java.util.Optional
+
+
+@Singleton
+class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1)</b>
+    override fun intercept(context: MethodInvocationContext&lt;Any, Any&gt;): Any {
+        val nullParam = context.parameters
+                .entries
+                .stream()
+                .filter { entry -&gt;
+                    val argumentValue = entry.value
+                    Objects.isNull(argumentValue.value)
+                }
+                .findFirst() <b class="conum">(2)</b>
+        return if (nullParam.isPresent) {
+            throw IllegalArgumentException("Null parameter [" + nullParam.get().key + "] not allowed") <b class="conum">(3)</b>
+        } else {
+            context.proceed() <b class="conum">(4)</b>
         }
     }
 }</code></pre>
@@ -204,21 +266,63 @@ Micronaut AOP interceptors use no reflection which improves performance and redu
 <div class="paragraph">
 <p>To put the new <code>MethodInterceptor</code> to work the next step is to define an annotation that will trigger the <code>MethodInterceptor</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Annotation Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Type;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Type;
 import io.micronaut.aop.Around;
 import java.lang.annotation.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Retention(RUNTIME) <i class="conum" data-value="1"></i><b>(1)</b>
-@Target({ElementType.TYPE, ElementType.METHOD}) <i class="conum" data-value="2"></i><b>(2)</b>
-@Around <i class="conum" data-value="3"></i><b>(3)</b>
-@Type(NotNullInterceptor.class) <i class="conum" data-value="4"></i><b>(4)</b>
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target({ElementType.TYPE, ElementType.METHOD}) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor.class) <b class="conum">(4)</b>
 public @interface NotNull {
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Annotation Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.Around
+import io.micronaut.context.annotation.Type
+
+import java.lang.annotation.Documented
+import java.lang.annotation.ElementType
+import java.lang.annotation.Retention
+import java.lang.annotation.Target
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Documented
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target([ElementType.TYPE, ElementType.METHOD]) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor.class) <b class="conum">(4)</b>
+@interface NotNull {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Annotation Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.Around
+import io.micronaut.context.annotation.Type
+
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+
+import java.lang.annotation.RetentionPolicy.RUNTIME
+
+
+@Documented
+@Retention(RUNTIME) <b class="conum">(1)</b>
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER) <b class="conum">(2)</b>
+@Around <b class="conum">(3)</b>
+@Type(NotNullInterceptor::class) <b class="conum">(4)</b>
+annotation class NotNull</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -244,10 +348,10 @@ public @interface NotNull {
 <div class="paragraph">
 <p>With the interceptor and annotation implemented you can then simply apply the annotation to the target classes:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Usage Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
 public class NotNullExample {
 
     @NotNull
@@ -257,25 +361,82 @@ public class NotNullExample {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Usage Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class NotNullExample {
+
+    @NotNull
+    void doWork(String taskName) {
+        println("Doing job: " + taskName)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Usage Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+open class NotNullExample {
+
+    @NotNull
+    open fun doWork(taskName: String?) {
+        println("Doing job: $taskName")
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Whenever the type <code>NotNullExample</code> is injected into any class, a compile time generated proxy will instead be injected that decorates the appropriate method calls with the <code>@NotNull</code> advice defined earlier. You can verify that the advice works by writing a test. The following test uses a JUnit <code>ExpectedException</code> rule to verify the appropriate exception is thrown when an argument is <code>null</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Around Advice Test</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Rule
-public ExpectedException thrown = ExpectedException.none();
+<pre class="highlight"><code class="language-java" data-lang="java">    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-@Test
-public void testNotNull() {
-    ApplicationContext applicationContext = ApplicationContext.run();
-    NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+    @Test
+    public void testNotNull() {
+        ApplicationContext applicationContext = ApplicationContext.run();
+        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("Null parameter [taskName] not allowed");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Null parameter [taskName] not allowed");
 
-    exampleBean.doWork(null);
-}</code></pre>
+        exampleBean.doWork(null);
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test not null"() {
+        when:
+        ApplicationContext applicationContext = ApplicationContext.run()
+        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class)
+
+        exampleBean.doWork(null)
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message == 'Null parameter [taskName] not allowed'
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Around Advice Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Test
+    fun testNotNull() {
+        val applicationContext = ApplicationContext.run()
+        val exampleBean = applicationContext.getBean(NotNullExample::class.java)
+
+        val exception = shouldThrow&lt;IllegalArgumentException&gt; {
+            exampleBean.doWork(null)
+        }
+        exception.message shouldBe "Null parameter [taskName] not allowed"
+    }</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -335,16 +496,44 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <div class="paragraph">
 <p>Consider the following two examples:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Cacheable("my-cache")
+<pre class="highlight"><code class="language-java" data-lang="java">@Cacheable("my-cache")
+@Factory
+public class MyFactory {
+
+    @Prototype
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Cacheable("my-cache")
 @Factory
 class MyFactory {
 
     @Prototype
     MyBean myBean() {
-        return new MyBean();
+        return new MyBean()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Cacheable("my-cache")
+@Factory
+open class MyFactory {
+
+    @Prototype
+    open fun myBean(): MyBean {
+        return MyBean()
     }
 }</code></pre>
 </div>
@@ -355,16 +544,44 @@ class MyFactory {
 <div class="paragraph">
 <p>Now consider this example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Factory
+<pre class="highlight"><code class="language-java" data-lang="java">@Factory
+public class MyFactory {
+
+    @Prototype
+    @Cacheable("my-cache")
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory
 class MyFactory {
 
     @Prototype
     @Cacheable("my-cache")
     MyBean myBean() {
-        return new MyBean();
+        return new MyBean()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">AOP Advice at the method level of a <code>@Factory</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
+open class MyFactory {
+
+    @Prototype
+    @Cacheable("my-cache")
+    open fun myBean(): MyBean {
+        return MyBean()
     }
 }</code></pre>
 </div>

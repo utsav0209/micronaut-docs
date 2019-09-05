@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.6 Using @EachProperty to Drive Configuration 1.2.0</title>
+    <title>4.6 Using @EachProperty to Drive Configuration 1.2.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.6 Using @EachProperty to Drive Configuration</h1>
 
-                    <p><strong>Version:</strong> 1.2.0</p>
+                    <p><strong>Version:</strong> 1.2.1</p>
                 </div>
 
                 
@@ -136,19 +136,19 @@ function addJsClass() {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> annotation will create a <code>ConfigurationProperties</code> bean for each sub-property within the given property. As an example consider the following class:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.annotation.Parameter;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.EachProperty;
 
-@EachProperty("test.datasource")  <i class="conum" data-value="1"></i><b>(1)</b>
+@EachProperty("test.datasource")  <b class="conum">(1)</b>
 public class DataSourceConfiguration {
 
     private final String name;
     private URI url = new URI("localhost");
 
-    public DataSourceConfiguration(@Parameter String name) <i class="conum" data-value="2"></i><b>(2)</b>
+    public DataSourceConfiguration(@Parameter String name) <b class="conum">(2)</b>
             throws URISyntaxException {
         this.name = name;
     }
@@ -157,13 +157,42 @@ public class DataSourceConfiguration {
         return name;
     }
 
-    public URI getUrl() { <i class="conum" data-value="3"></i><b>(3)</b>
+    public URI getUrl() { <b class="conum">(3)</b>
         return url;
     }
 
     public void setUrl(URI url) {
         this.url = url;
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@EachProperty("test.datasource")
+<b class="conum">(1)</b>
+class DataSourceConfiguration {
+
+    final String name
+    URI url = new URI("localhost")
+
+    DataSourceConfiguration(@Parameter String name) <b class="conum">(2)</b>
+            throws URISyntaxException {
+        this.name = name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@EachProperty("test.datasource")  <b class="conum">(1)</b>
+class DataSourceConfiguration <b class="conum">(2)</b>
+@Throws(URISyntaxException::class)
+constructor(@param:Parameter val name: String) {
+    <b class="conum">(3)</b>
+    var url = URI("localhost")
 }</code></pre>
 </div>
 </div>
@@ -186,35 +215,93 @@ public class DataSourceConfiguration {
 <div class="paragraph">
 <p>The above <code>DataSourceConfiguration</code> defines a <code>url</code> property to configure one or many hypothetical data sources of some sort. The URLs themselves can be configured using any of the <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances evaluated to Micronaut:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Providing Configuration to @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
-        "test",
-        CollectionUtils.mapOf(
-        "test.datasource.one.url", "jdbc:mysql://localhost/one",
-        "test.datasource.two.url", "jdbc:mysql://localhost/two")
-));</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+                "test",
+                CollectionUtils.mapOf(
+                        "test.datasource.one.url", "jdbc:mysql://localhost/one",
+                        "test.datasource.two.url", "jdbc:mysql://localhost/two")
+
+        ));</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Providing Configuration to @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+            "test",
+            [
+                    "test.datasource.one.url": "jdbc:mysql://localhost/one",
+                    "test.datasource.two.url": "jdbc:mysql://localhost/two"
+            ]
+    ))</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Providing Configuration to @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(PropertySource.of(
+                "test",
+                mapOf(
+                        "test.datasource.one.url" to "jdbc:mysql://localhost/one",
+                        "test.datasource.two.url" to "jdbc:mysql://localhost/two"
+                )
+        ))</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>In the above example two data sources (called <code>one</code> and <code>two</code>) are defined under the <code>test.datasource</code> prefix defined earlier in the <code>@EachProperty</code> annotation. Each of these configuration entries triggers the creation of a new <code>DataSourceConfiguration</code> bean such that the following test succeeds:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Evaluating Beans Built by @EachProperty</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
-assertEquals(2, beansOfType.size()); <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">        Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
+        assertEquals(2, beansOfType.size()); <b class="conum">(1)</b>
 
-DataSourceConfiguration firstConfig = applicationContext.getBean(
-        DataSourceConfiguration.class,
-        Qualifiers.byName("one") <i class="conum" data-value="2"></i><b>(2)</b>
-);
+        DataSourceConfiguration firstConfig = applicationContext.getBean(
+                DataSourceConfiguration.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        );
 
-assertEquals(
-        new URI("jdbc:mysql://localhost/one"),
-        firstConfig.getUrl()
-);</code></pre>
+        assertEquals(
+                new URI("jdbc:mysql://localhost/one"),
+                firstConfig.getUrl()
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Evaluating Beans Built by @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class)
+        assertEquals(2, beansOfType.size()) <b class="conum">(1)</b>
+
+        DataSourceConfiguration firstConfig = applicationContext.getBean(
+                DataSourceConfiguration.class,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )
+
+        then:
+        new URI("jdbc:mysql://localhost/one") == firstConfig.getUrl()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Evaluating Beans Built by @EachProperty</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration::class.java)
+        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+
+        val firstConfig = applicationContext.getBean(
+                DataSourceConfiguration::class.java,
+                Qualifiers.byName("one") <b class="conum">(2)</b>
+        )
+
+        assertEquals(
+                URI("jdbc:mysql://localhost/one"),
+                firstConfig.url
+        )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
