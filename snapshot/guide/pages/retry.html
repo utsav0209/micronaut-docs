@@ -145,13 +145,28 @@ function addJsClass() {
 <div class="paragraph">
 <p>For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">Simply Retry Example</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Simple Retry Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Retryable
-public List&lt;Book&gt; listBooks() {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Retryable
+    public List&lt;Book&gt; listBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Simple Retry Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable
+    List&lt;Book&gt; listBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Simple Retry Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable
+    open fun listBooks(): List&lt;Book&gt; {
+        // ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -166,27 +181,59 @@ public List&lt;Book&gt; listBooks() {
 <div class="paragraph">
 <p>To customize retry behaviour you can set the <code>attempts</code> and <code>delay</code> members, For example to configure 5 attempts with a 2 second delay:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Setting Retry Attempts</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Retryable( attempts = "5",
-            delay = "2s" )
-public Book findBook(String title) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Retryable( attempts = "5",
+                delay = "2s" )
+    public Book findBook(String title) {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Setting Retry Attempts</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable( attempts = "5",
+                delay = "2s" )
+    Book findBook(String title) {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Setting Retry Attempts</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "5", delay = "2s")
+    open fun findBook(title: String): Book {
+        // ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Notice how both <code>attempts</code> and <code>delay</code> are defined as strings. This is to support configurability through annotation metadata. For example you can allow the retry policy to be configured using property placeholder resolution:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Setting Retry via Configuration</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Retryable( attempts = "${book.retry.attempts:3}",
-            delay = "${book.retry.delay:1s}" )
-public Book getBook(String title) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Retryable( attempts = "${book.retry.attempts:3}",
+                delay = "${book.retry.delay:1s}" )
+    public Book getBook(String title) {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Setting Retry via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable( attempts = "\${book.retry.attempts:3}",
+            delay = "\${book.retry.delay:1s}")
+    Book getBook(String title) {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Setting Retry via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "\${book.retry.attempts:3}", delay = "\${book.retry.delay:1s}")
+    open fun getBook(title: String): Book {
+        // ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -200,13 +247,28 @@ public Book getBook(String title) {
 <div class="paragraph">
 <p><code>@Retryable</code> advice can also be applied to methods that return reactive types, such as an RxJava <code>Flowable</code>. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Applying Retry Policy to Reactive Types</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Retryable
-public Flowable&lt;Book&gt; streamBooks() {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Retryable
+    public Flowable&lt;Book&gt; streamBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Applying Retry Policy to Reactive Types</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable
+    Flowable&lt;Book&gt; streamBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Applying Retry Policy to Reactive Types</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable
+    open fun streamBooks(): Flowable&lt;Book&gt; {
+        // ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -226,13 +288,28 @@ public Flowable&lt;Book&gt; streamBooks() {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/retry/annotation/CircuitBreaker.html">CircuitBreaker</a> annotation is a variation of the <code>@Retryable</code> annotation that supports a <code>reset</code> member that indicates how long the circuit should remain open before it is reset (the default is 20 seconds).</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Applying CircuitBreaker Advice</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@CircuitBreaker(reset = "30s")
-public List&lt;Book&gt; findBooks() {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @CircuitBreaker(reset = "30s")
+    public List&lt;Book&gt; findBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Applying CircuitBreaker Advice</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @CircuitBreaker(reset = "30s")
+    List&lt;Book&gt; findBooks() {
+        // ...</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Applying CircuitBreaker Advice</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @CircuitBreaker(reset = "30s")
+    open fun findBooks(): List&lt;Book&gt; {
+        // ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
