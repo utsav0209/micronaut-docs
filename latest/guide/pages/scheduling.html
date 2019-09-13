@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5.7 Scheduled Tasks 1.2.1</title>
+    <title>5.7 Scheduled Tasks 1.2.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5.7 Scheduled Tasks</h1>
 
-                    <p><strong>Version:</strong> 1.2.1</p>
+                    <p><strong>Version:</strong> 1.2.2</p>
                 </div>
 
                 
@@ -156,13 +156,31 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="paragraph">
 <p>To schedule a task at a fixed rate, use the <code>fixedRate</code> member. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Fixed Rate Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled(fixedRate = "5m")
-void everyFiveMinutes() {
-    System.out.println("Executing everyFiveMinutes()");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Scheduled(fixedRate = "5m")
+    void everyFiveMinutes() {
+        System.out.println("Executing everyFiveMinutes()");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Fixed Rate Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(fixedRate = "5m")
+    void everyFiveMinutes() {
+        System.out.println("Executing everyFiveMinutes()")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Fixed Rate Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Scheduled(fixedRate = "5m")
+    internal fun everyFiveMinutes() {
+        println("Executing everyFiveMinutes()")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -172,15 +190,33 @@ void everyFiveMinutes() {
 <div class="sect2">
 <h3 id="_scheduling_with_a_fixed_delay">Scheduling with a Fixed Delay</h3>
 <div class="paragraph">
-<p>To schedule a task so that is runs 5 minutes after the termination of the previous task use the <code>fixedDelay</code> member. For example:</p>
+<p>To schedule a task so that it runs 5 minutes after the termination of the previous task use the <code>fixedDelay</code> member. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Fixed Delay Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled(fixedDelay = "5m")
-void fiveMinutesAfterLastExecution() {
-    System.out.println("Executing fiveMinutesAfterLastExecution()");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Scheduled(fixedDelay = "5m")
+    void fiveMinutesAfterLastExecution() {
+        System.out.println("Executing fiveMinutesAfterLastExecution()");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Fixed Delay Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(fixedDelay = "5m")
+    void fiveMinutesAfterLastExecution() {
+        System.out.println("Executing fiveMinutesAfterLastExecution()")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Fixed Delay Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Scheduled(fixedDelay = "5m")
+    internal fun fiveMinutesAfterLastExecution() {
+        println("Executing fiveMinutesAfterLastExecution()")
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -189,31 +225,67 @@ void fiveMinutesAfterLastExecution() {
 <div class="paragraph">
 <p>To schedule a <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> task use the <code>cron</code> member:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Cron Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled(cron = "0 15 10 ? * MON" )
-void everyMondayAtTenFifteenAm() {
-    System.out.println("Executing everyMondayAtTenFifteenAm()");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Scheduled(cron = "0 15 10 ? * MON" )
+    void everyMondayAtTenFifteenAm() {
+        System.out.println("Executing everyMondayAtTenFifteenAm()");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Cron Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(cron = "0 15 10 ? * MON" )
+    void everyMondayAtTenFifteenAm() {
+        System.out.println("Executing everyMondayAtTenFifteenAm()")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Cron Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Scheduled(cron = "0 15 10 ? * MON")
+    internal fun everyMondayAtTenFifteenAm() {
+        println("Executing everyMondayAtTenFifteenAm()")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will run the task every Monday morning at 10:15AM.</p>
+<p>The above example will run the task every Monday morning at 10:15AM for the time zone of the server.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_scheduling_with_only_an_initial_delay">Scheduling with only an Initial Delay</h3>
 <div class="paragraph">
-<p>To schedule a task so that is runs a single time after the server starts, use the <code>initialDelay</code> member:</p>
+<p>To schedule a task so that it runs a single time after the server starts, use the <code>initialDelay</code> member:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Initial Delay Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled(initialDelay = "1m" )
-void onceOneMinuteAfterStartup() {
-    System.out.println("Executing onceOneMinuteAfterStartup()");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Scheduled(initialDelay = "1m" )
+    void onceOneMinuteAfterStartup() {
+        System.out.println("Executing onceOneMinuteAfterStartup()");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initial Delay Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(initialDelay = "1m" )
+    void onceOneMinuteAfterStartup() {
+        System.out.println("Executing onceOneMinuteAfterStartup()")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Initial Delay Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Scheduled(initialDelay = "1m")
+    internal fun onceOneMinuteAfterStartup() {
+        println("Executing onceOneMinuteAfterStartup()")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -228,9 +300,25 @@ void onceOneMinuteAfterStartup() {
 <div class="paragraph">
 <p>If you wish to programmatically schedule tasks, then you can use the <a href="../api/io/micronaut/scheduling/TaskScheduler.html">TaskScheduler</a> bean which can be injected as follows:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject @Named(TaskExecutors.SCHEDULED) TaskScheduler taskScheduler;</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Inject
+    @Named(TaskExecutors.SCHEDULED)
+    TaskScheduler taskScheduler;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Inject
+    @Named(TaskExecutors.SCHEDULED)
+    TaskScheduler taskScheduler</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Inject
+    @Named(TaskExecutors.SCHEDULED)
+    lateinit var taskScheduler: TaskScheduler</code></pre>
 </div>
 </div>
 </div>
@@ -241,14 +329,34 @@ void onceOneMinuteAfterStartup() {
 <div class="paragraph">
 <p>If you wish to make your application&#8217;s tasks configurable then you can use annotation metadata and property placeholder configuration to do so. For example:</p>
 </div>
-<div class="listingblock">
-<div class="title">Allowing Tasks to be Configured</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Allow tasks to be configured</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Scheduled( fixedRate = "${my.task.rate:5m}",
-            initialDelay = "${my.task.delay:1m}" )
-void configuredTask() {
-    System.out.println("Executing configuredTask()");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Scheduled( fixedRate = "${my.task.rate:5m}",
+                initialDelay = "${my.task.delay:1m}" )
+    void configuredTask() {
+        System.out.println("Executing configuredTask()");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Allow tasks to be configured</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled( fixedRate = "\${my.task.rate:5m}",
+                initialDelay = "\${my.task.delay:1m}" )
+    void configuredTask() {
+        System.out.println("Executing configuredTask()")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Allow tasks to be configured</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Scheduled(fixedRate = "\${my.task.rate:5m}",
+            initialDelay = "\${my.task.delay:1m}")
+    internal fun configuredTask() {
+        println("Executing configuredTask()")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -332,7 +440,7 @@ void configuredTask() {
 <p>By default Micronaut includes a <a href="../api/io/micronaut/scheduling/DefaultTaskExceptionHandler.html">DefaultTaskExceptionHandler</a> bean that implements the <a href="../api/io/micronaut/scheduling/TaskExceptionHandler.html">TaskExceptionHandler</a> and simply logs the exception if an error occurs invoking a scheduled task.</p>
 </div>
 <div class="paragraph">
-<p>If you have custom requirements you can replace this bean with a custom implementation (for example if you wish to send an email or shutdown context to fail fast). To do so simply write your own <a href="../api/io/micronaut/scheduling/TaskExceptionHandler.html">TaskExceptionHandler</a> and annotated it with <code>@Replaces(DefaultTaskExceptionHandler.class)</code>.</p>
+<p>If you have custom requirements you can replace this bean with a custom implementation (for example if you wish to send an email or shutdown context to fail fast). To do so simply write your own <a href="../api/io/micronaut/scheduling/TaskExceptionHandler.html">TaskExceptionHandler</a> and annotate it with <code>@Replaces(DefaultTaskExceptionHandler.class)</code>.</p>
 </div>
 </div>
 </div>
