@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4 Application Configuration 1.2.2.BUILD-SNAPSHOT</title>
+    <title>4 Application Configuration 1.3.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4 Application Configuration</h1>
 
-                    <p><strong>Version:</strong> 1.2.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -149,8 +149,7 @@ function addJsClass() {
                 
 
                 
-
-<h1 id="config">4 Application Configuration</h1>
+<h1 id="config"><a class="anchor" href="#config"></a>4 Application Configuration</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config.adoc"'>
@@ -172,8 +171,7 @@ function addJsClass() {
 <p>Each source of configuration is modeled with the <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> interface and the mechanism is extensible allowing the implementation of additional <a href="../api/io/micronaut/context/env/PropertySourceLoader.html">PropertySourceLoader</a> implementations.</p>
 </div>
 
-
-<h2 id="environments">4.1 The Environment</h2>
+<h2 id="environments"><a class="anchor" href="#environments"></a>4.1 The Environment</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/environments.adoc"'>
@@ -239,7 +237,7 @@ function addJsClass() {
 <p>Finally, the Cloud environment names are also detected. See the section on <a href="#cloudConfiguration">Cloud Configuration</a> for more information.</p>
 </div>
 <div class="sect1">
-<h2 id="_disabling_environment_detection">Disabling Environment Detection</h2>
+<h2 id="_disabling_environment_detection"><a class="anchor" href="#_disabling_environment_detection"></a>Disabling Environment Detection</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The automatic detection of environments can be disabled setting the <code>micronaut.env.deduction</code> system property or the <code>MICRONAUT_ENV_DEDUCTION</code> environment variable to <code>false</code>. This will prevent Micronaut from detecting current environments, while still using any environments that are specifically provided as shown above.</p>
@@ -292,8 +290,7 @@ function addJsClass() {
 </div>
 </div>
 
-
-<h2 id="propertySource">4.2 Externalized Configuration with PropertySources</h2>
+<h2 id="propertySource"><a class="anchor" href="#propertySource"></a>4.2 Externalized Configuration with PropertySources</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/propertySource.adoc"'>
@@ -371,7 +368,7 @@ function addJsClass() {
 <p>Alternatively one can register a <a href="../api/io/micronaut/context/env/PropertySourceLoader.html">PropertySourceLoader</a> by creating a <code>META-INF/services/io.micronaut.context.env.PropertySourceLoader</code> containing a reference to the class name of the <code>PropertySourceLoader</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_included_propertysource_loaders">Included PropertySource Loaders</h3>
+<h3 id="_included_propertysource_loaders"><a class="anchor" href="#_included_propertysource_loaders"></a>Included PropertySource Loaders</h3>
 <div class="paragraph">
 <p>Micronaut by default contains <code>PropertySourceLoader</code> implementations that load properties from the given locations and priority:</p>
 </div>
@@ -414,7 +411,7 @@ To use custom properties from local files, you can either call your application 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_property_value_placeholders">Property Value Placeholders</h3>
+<h3 id="_property_value_placeholders"><a class="anchor" href="#_property_value_placeholders"></a>Property Value Placeholders</h3>
 <div class="paragraph">
 <p>Micronaut includes a property placeholder syntax which can be used to reference configuration properties both within configuration values and with any Micronaut annotation (see <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> and the section on <a href="#valueAnnotation">Configuration Injection</a>).</p>
 </div>
@@ -468,7 +465,7 @@ Programmatic usage is also possible via the <a href="../api/io/micronaut/context
 </div>
 </div>
 <div class="sect2">
-<h3 id="_property_value_binding">Property Value Binding</h3>
+<h3 id="_property_value_binding"><a class="anchor" href="#_property_value_binding"></a>Property Value Binding</h3>
 <div class="paragraph">
 <p>Note that these property references should always be in kebab case (lowercase and hyphen-separated) when placing references in code or in placeholder values. In other words you should use for example <code>micronaut.server.default-charset</code> and not <code>micronaut.server.defaultCharset</code>.</p>
 </div>
@@ -496,7 +493,7 @@ Programmatic usage is also possible via the <a href="../api/io/micronaut/context
 <td class="tableblock halign-left valign-top"><p class="tableblock">Properties, YAML etc.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myApp.myStuff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.myStuff</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>my-app.my-stuff</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Properties, YAML etc.</p></td>
 </tr>
@@ -610,7 +607,7 @@ The configuration above does not have any impact on property placeholders. It is
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_random_properties">Using Random Properties</h3>
+<h3 id="_using_random_properties"><a class="anchor" href="#_using_random_properties"></a>Using Random Properties</h3>
 <div class="paragraph">
 <p>You can use <code>random</code> values by using the following properties.  These can be used in configuration files as variables like the following.</p>
 </div>
@@ -672,7 +669,7 @@ The configuration above does not have any impact on property placeholders. It is
 </table>
 </div>
 <div class="sect2">
-<h3 id="_fail_fast_property_injection">Fail Fast Property Injection</h3>
+<h3 id="_fail_fast_property_injection"><a class="anchor" href="#_fail_fast_property_injection"></a>Fail Fast Property Injection</h3>
 <div class="paragraph">
 <p>For beans that inject required properties, the injection and potential failure will not occur until the bean is requested. To verify at startup that the properties exist and can be injected, the bean can be annotated with <a href="../api/io/micronaut/context/annotation/Context.html">@Context</a>. Context scoped beans will be injected at startup time and thus will fail at startup time if any required properties are missing or could not be converted to the required type.</p>
 </div>
@@ -690,8 +687,7 @@ To maintain a fast startup time, it is recommended to use this feature as sparin
 </div>
 </div>
 
-
-<h2 id="valueAnnotation">4.3 Configuration Injection</h2>
+<h2 id="valueAnnotation"><a class="anchor" href="#valueAnnotation"></a>4.3 Configuration Injection</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/valueAnnotation.adoc"'>
@@ -701,10 +697,10 @@ To maintain a fast startup time, it is recommended to use this feature as sparin
 
 
 <div class="paragraph">
-<p>eYou can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
+<p>You can inject configuration values into beans with Micronaut using the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation.</p>
 </div>
 <div class="sect2">
-<h3 id="_using_the_code_value_code_annotation">Using the <code>@Value</code> Annotation</h3>
+<h3 id="_using_the_code_value_code_annotation"><a class="anchor" href="#_using_the_code_value_code_annotation"></a>Using the <code>@Value</code> Annotation</h3>
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
@@ -849,7 +845,7 @@ interface HelloClient {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_the_code_property_code_annotation">Using the <code>@Property</code> Annotation</h3>
+<h3 id="_using_the_code_property_code_annotation"><a class="anchor" href="#_using_the_code_property_code_annotation"></a>Using the <code>@Property</code> Annotation</h3>
 <div class="paragraph">
 <p>Recall that the <a href="../api/io/micronaut/context/annotation/Value.html">@Value</a> annotation receives a String value which is a mix of static content and placeholder expressions. This can lead to confusion if you attempt to do the following:</p>
 </div>
@@ -974,6 +970,9 @@ Because it is not possible to define a default value with <code>@Property</code>
 </table>
 </div>
 <div class="paragraph">
+<p>The above will instead inject the value of the <code>my.url</code> property resolved from application configuration. If the property can not be found in configuration, an exception will be thrown. As with other types of injection, the injection point can also be annotated with <code>@Nullable</code> to make the injection optional.</p>
+</div>
+<div class="paragraph">
 <p>You can also use this feature to resolve sub maps. For example, consider the following configuration:</p>
 </div>
 <div class="listingblock">
@@ -1018,8 +1017,7 @@ The <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat<
 </div>
 </div>
 
-
-<h2 id="configurationProperties">4.4 Configuration Properties</h2>
+<h2 id="configurationProperties"><a class="anchor" href="#configurationProperties"></a>4.4 Configuration Properties</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/configurationProperties.adoc"'>
@@ -1294,7 +1292,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <p>For example creating a subclass of <code>EngineConfig</code> with <code>@ConfigurationProperties('bar')</code> will resolve all properties under the path <code>my.engine.bar</code>.</p>
 </div>
 <div class="sect1">
-<h2 id="_property_type_conversion">Property Type Conversion</h2>
+<h2 id="_property_type_conversion"><a class="anchor" href="#_property_type_conversion"></a>Property Type Conversion</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When resolving properties Micronaut will use the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> bean to convert properties. You can register additional converters for types not supported by micronaut by defining beans that implement the <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> interface.</p>
@@ -1303,7 +1301,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <p>Micronaut features some built-in conversions that are useful, which are detailed below.</p>
 </div>
 <div class="sect2">
-<h3 id="_duration_conversion">Duration Conversion</h3>
+<h3 id="_duration_conversion"><a class="anchor" href="#_duration_conversion"></a>Duration Conversion</h3>
 <div class="paragraph">
 <p>Durations can be specified by appending the unit with a number. Supported units are <code>s</code>, <code>ms</code>, <code>m</code> etc. The following table summarizes examples:</p>
 </div>
@@ -1364,7 +1362,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_list_array_conversion">List / Array Conversion</h3>
+<h3 id="_list_array_conversion"><a class="anchor" href="#_list_array_conversion"></a>List / Array Conversion</h3>
 <div class="paragraph">
 <p>Lists and arrays can be specified in Java properties files as comma-separated values or in YAML using native YAML lists. The generic types are used to convert the values. For example in YAML:</p>
 </div>
@@ -1412,7 +1410,7 @@ List&lt;URL&gt; urls;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_readable_bytes">Readable Bytes</h3>
+<h3 id="_readable_bytes"><a class="anchor" href="#_readable_bytes"></a>Readable Bytes</h3>
 <div class="paragraph">
 <p>You can annotate any setter parameter with <a href="../api/io/micronaut/core/convert/format/ReadableBytes.html">@ReadableBytes</a> to allow the value to be set using a shorthand syntax for specifying bytes, kilobytes etc. For example the following is taken from <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a>:</p>
 </div>
@@ -1460,14 +1458,14 @@ List&lt;URL&gt; urls;</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_formatting_dates">Formatting Dates</h3>
+<h3 id="_formatting_dates"><a class="anchor" href="#_formatting_dates"></a>Formatting Dates</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/core/convert/format/Format.html">@Format</a> annotation can be used on any setter to allow the date format to be specified when binding <code>javax.time</code> date objects.</p>
 </div>
 <div class="listingblock">
 <div class="title">Using <code>@Format</code> for Dates</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMyDate(@Format("yy-mm-dd") LocalDate date) {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMyDate(@Format("yyyy-MM-dd") LocalDate date) {
     this.myDate = date;
 }</code></pre>
 </div>
@@ -1476,7 +1474,7 @@ List&lt;URL&gt; urls;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_builder">Configuration Builder</h2>
+<h2 id="_configuration_builder"><a class="anchor" href="#_configuration_builder"></a>Configuration Builder</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Many existing frameworks and tools already use builder-style classes to construct configuration.</p>
@@ -1704,7 +1702,7 @@ internal class EngineFactory {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mapformat">MapFormat</h2>
+<h2 id="_mapformat"><a class="anchor" href="#_mapformat"></a>MapFormat</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For some use cases it may be desirable to accept a map of arbitrary configuration properties that can be supplied to a bean, especially if the bean represents a third-party API where not all of the possible configuration properties are known by the developer. For example, a datasource may accept a map of configuration properties specific to a particular database driver, allowing the user to specify any desired options in the map without coding every single property explicitly.</p>
@@ -1715,7 +1713,10 @@ internal class EngineFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.convert.format.MapFormat;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+import javax.validation.constraints.Min;
+import java.util.Map;
+import io.micronaut.core.convert.format.MapFormat;
 
 @ConfigurationProperties("my.engine")
 public class EngineConfig {
@@ -1745,7 +1746,9 @@ public class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.format.MapFormat
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+import javax.validation.constraints.Min
+import io.micronaut.core.convert.format.MapFormat
 
 @ConfigurationProperties('my.engine')
 class EngineConfig {
@@ -1762,7 +1765,11 @@ class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@ConfigurationProperties("my.engine")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import javax.validation.constraints.Min
+import io.micronaut.core.convert.format.MapFormat
+
+@ConfigurationProperties("my.engine")
 class EngineConfig {
 
     @Min(1L)
@@ -1897,8 +1904,7 @@ class EngineImpl : Engine {
 </div>
 </div>
 
-
-<h2 id="customTypeConverter">4.5 Custom Type Converters</h2>
+<h2 id="customTypeConverter"><a class="anchor" href="#customTypeConverter"></a>4.5 Custom Type Converters</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/customTypeConverter.adoc"'>
@@ -2144,8 +2150,7 @@ class MapToLocalDateConverter : TypeConverter&lt;Map&lt;*, *&gt;, LocalDate&gt; 
 </table>
 </div>
 
-
-<h2 id="eachProperty">4.6 Using @EachProperty to Drive Configuration</h2>
+<h2 id="eachProperty"><a class="anchor" href="#eachProperty"></a>4.6 Using @EachProperty to Drive Configuration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/eachProperty.adoc"'>
@@ -2341,8 +2346,7 @@ constructor(@param:Parameter val name: String) {
 </table>
 </div>
 
-
-<h2 id="eachBean">4.7 Using @EachBean to Drive Configuration</h2>
+<h2 id="eachBean"><a class="anchor" href="#eachBean"></a>4.7 Using @EachBean to Drive Configuration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/eachBean.adoc"'>
@@ -2465,8 +2469,7 @@ class DataSourceFactory {
 </table>
 </div>
 
-
-<h2 id="jmx">4.8 JMX Support</h2>
+<h2 id="jmx"><a class="anchor" href="#jmx"></a>4.8 JMX Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/jmx.adoc"'>

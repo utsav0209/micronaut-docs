@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.1 Using the Low-Level HTTP Client 1.2.2.BUILD-SNAPSHOT</title>
+    <title>7.1 Using the Low-Level HTTP Client 1.3.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.1 Using the Low-Level HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.2.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -146,8 +146,7 @@ function addJsClass() {
                 
 
                 
-
-<h2 id="lowLevelHttpClient">7.1 Using the Low-Level HTTP Client</h2>
+<h2 id="lowLevelHttpClient"><a class="anchor" href="#lowLevelHttpClient"></a>7.1 Using the Low-Level HTTP Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient.adoc"'>
@@ -163,8 +162,7 @@ function addJsClass() {
 <p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
 </div>
 
-
-<h2 id="clientBasics">7.1.1 Sending your first HTTP request</h2>
+<h2 id="clientBasics"><a class="anchor" href="#clientBasics"></a>7.1.1 Sending your first HTTP request</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/clientBasics.adoc"'>
@@ -174,7 +172,7 @@ function addJsClass() {
 
 
 <div class="sect3">
-<h4 id="_obtaining_a_httpclient">Obtaining a HttpClient</h4>
+<h4 id="_obtaining_a_httpclient"><a class="anchor" href="#_obtaining_a_httpclient"></a>Obtaining a HttpClient</h4>
 <div class="paragraph">
 <p>There are a few ways by which you can obtain a reference to a <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a>. The most common way is using the <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation. For example:</p>
 </div>
@@ -219,7 +217,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_performing_an_http_get">Performing an HTTP GET</h4>
+<h4 id="_performing_an_http_get"><a class="anchor" href="#_performing_an_http_get"></a>Performing an HTTP GET</h4>
 <div class="paragraph">
 <p>Generally there are two methods of interest when working with the <code>HttpClient</code>. The first method is called <code>retrieve</code>, which will execute an HTTP request and return the body in whichever type you request (by default a <code>String</code>) as an RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</p>
 </div>
@@ -296,7 +294,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_debugging_tracing_the_http_client">Debugging / Tracing the HTTP Client</h4>
+<h4 id="_debugging_tracing_the_http_client"><a class="anchor" href="#_debugging_tracing_the_http_client"></a>Debugging / Tracing the HTTP Client</h4>
 <div class="paragraph">
 <p>To debug the requests being sent and received from the HTTP client you can enable tracing logging via your <code>logback.xml</code> file:</p>
 </div>
@@ -308,7 +306,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_client_specific_debugging_tracing">Client Specific Debugging / Tracing</h4>
+<h4 id="_client_specific_debugging_tracing"><a class="anchor" href="#_client_specific_debugging_tracing"></a>Client Specific Debugging / Tracing</h4>
 <div class="paragraph">
 <p>To enable client-specific logging you could configure the default logger for all HTTP clients. And, you could also configure different loggers for different clients using <a href="#_client_specific_configuration">Client Specific Configuration</a>. For example, in <code>application.yml</code>:</p>
 </div>
@@ -336,7 +334,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_customizing_the_http_request">Customizing the HTTP Request</h4>
+<h4 id="_customizing_the_http_request"><a class="anchor" href="#_customizing_the_http_request"></a>Customizing the HTTP Request</h4>
 <div class="paragraph">
 <p>The previous example demonstrated using the static methods of the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> interface to construct a <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> instance. Like the name suggests a <code>MutableHttpRequest</code> can be mutated including the ability to add headers, customize the request body and so on. For example:</p>
 </div>
@@ -354,7 +352,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reading_json_responses">Reading JSON Responses</h4>
+<h4 id="_reading_json_responses"><a class="anchor" href="#_reading_json_responses"></a>Reading JSON Responses</h4>
 <div class="paragraph">
 <p>Typically with Microservices a message encoding format is used such as JSON. Micronaut&#8217;s HTTP client leverages Jackson for JSON parsing hence whatever type Jackson can decode can passed as a second argument to <code>retrieve</code>.</p>
 </div>
@@ -456,7 +454,7 @@ assertEquals(
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decoding_other_content_types">Decoding Other Content Types</h4>
+<h4 id="_decoding_other_content_types"><a class="anchor" href="#_decoding_other_content_types"></a>Decoding Other Content Types</h4>
 <div class="paragraph">
 <p>If the server you are communicating with uses a custom content type that is not JSON by default Micronaut&#8217;s HTTP client will not know how to decode this type.</p>
 </div>
@@ -465,7 +463,7 @@ assertEquals(
 </div>
 </div>
 <div class="sect3">
-<h4 id="_receiving_the_full_http_response">Receiving the Full HTTP Response</h4>
+<h4 id="_receiving_the_full_http_response"><a class="anchor" href="#_receiving_the_full_http_response"></a>Receiving the Full HTTP Response</h4>
 <div class="paragraph">
 <p>Sometimes, receiving just the object is not enough and you need information about the response. In this case, instead of <code>retrieve</code> you should use the <code>exchange</code> method:</p>
 </div>
@@ -512,8 +510,7 @@ assertEquals(
 </div>
 </div>
 
-
-<h2 id="clientPostRequests">7.1.2 Posting a Request Body</h2>
+<h2 id="clientPostRequests"><a class="anchor" href="#clientPostRequests"></a>7.1.2 Posting a Request Body</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/clientPostRequests.adoc"'>
@@ -611,7 +608,7 @@ assertEquals(
 </table>
 </div>
 <div class="sect1">
-<h2 id="_sending_json">Sending JSON</h2>
+<h2 id="_sending_json"><a class="anchor" href="#_sending_json"></a>Sending JSON</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The previous example sends plain text, if you wish send JSON you can simply pass the object you wish to encode as JSON, whether that be a map or a POJO. As long as Jackson is able to encode it.</p>
@@ -655,7 +652,7 @@ assertEquals(
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_a_uri_template">Using a URI Template</h2>
+<h2 id="_using_a_uri_template"><a class="anchor" href="#_using_a_uri_template"></a>Using a URI Template</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If some of the properties of the object need to be in the URI being posted to you can use a URI template.</p>
@@ -678,7 +675,7 @@ assertEquals(
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sending_form_data">Sending Form Data</h2>
+<h2 id="_sending_form_data"><a class="anchor" href="#_sending_form_data"></a>Sending Form Data</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can also encode a POJO or a map as regular form data instead of JSON. Just set the content type to <code>application/x-www-form-urlencoded</code> on the post request:</p>
@@ -699,8 +696,7 @@ assertEquals(
 </div>
 </div>
 
-
-<h2 id="clientUploads">7.1.3 Multipart Client Uploads</h2>
+<h2 id="clientUploads"><a class="anchor" href="#clientUploads"></a>7.1.3 Multipart Client Uploads</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/clientUploads.adoc"'>
@@ -768,8 +764,7 @@ MultipartBody requestBody = MultipartBody.builder()     <i class="conum" data-va
 </table>
 </div>
 
-
-<h2 id="clientStreaming">7.1.4 Streaming JSON over HTTP</h2>
+<h2 id="clientStreaming"><a class="anchor" href="#clientStreaming"></a>7.1.4 Streaming JSON over HTTP</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/clientStreaming.adoc"'>
@@ -928,8 +923,7 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 <p>Note neither the server or the client in the example above perform blocking I/O at any point.</p>
 </div>
 
-
-<h2 id="clientConfiguration">7.1.5 Configuring HTTP clients</h2>
+<h2 id="clientConfiguration"><a class="anchor" href="#clientConfiguration"></a>7.1.5 Configuring HTTP clients</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/clientConfiguration.adoc"'>
@@ -939,7 +933,7 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 
 
 <div class="sect2">
-<h3 id="_global_configuration_for_all_clients">Global Configuration for All Clients</h3>
+<h3 id="_global_configuration_for_all_clients"><a class="anchor" href="#_global_configuration_for_all_clients"></a>Global Configuration for All Clients</h3>
 <div class="paragraph">
 <p>The default HTTP client configuration is a <a href="#configurationProperties">Configuration Properties</a> called <a href="../api/io/micronaut/http/client/DefaultHttpClientConfiguration.html">DefaultHttpClientConfiguration</a> that allows configuring the default behaviour for all HTTP clients. For example, in <code>application.yml</code>:</p>
 </div>
@@ -957,7 +951,7 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_client_specific_configuration">Client Specific Configuration</h3>
+<h3 id="_client_specific_configuration"><a class="anchor" href="#_client_specific_configuration"></a>Client Specific Configuration</h3>
 <div class="paragraph">
 <p>If you wish to have a separate configuration per client then there a couple of options. You can configure <a href="#serviceDiscoveryManual">Service Discovery</a> manually in <code>application.yml</code> and apply per-client configuration:</p>
 </div>
@@ -1032,7 +1026,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_http_client_connection_pooling">Using HTTP Client Connection Pooling</h3>
+<h3 id="_using_http_client_connection_pooling"><a class="anchor" href="#_using_http_client_connection_pooling"></a>Using HTTP Client Connection Pooling</h3>
 <div class="paragraph">
 <p>If you have a client that needs to handle a significant number of requests then you can benefit from enabling HTTP client connection pooling. The following configuration will enable pooling for the <code>foo</code> client:</p>
 </div>
@@ -1068,8 +1062,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 
-
-<h2 id="lowLevelClientError">7.1.6 Error Responses</h2>
+<h2 id="lowLevelClientError"><a class="anchor" href="#lowLevelClientError"></a>7.1.6 Error Responses</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/lowLevelClientError.adoc"'>
@@ -1085,8 +1078,7 @@ RxHttpClient httpClient;</code></pre>
 <p>For blocking clients, the exception is thrown and should be caught and handled by the caller. For reactive clients, the exception is passed through the publisher as an error.</p>
 </div>
 
-
-<h2 id="bindErrors">7.1.7 Bind Errors</h2>
+<h2 id="bindErrors"><a class="anchor" href="#bindErrors"></a>7.1.7 Bind Errors</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/lowLevelHttpClient/bindErrors.adoc"'>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6 The HTTP Server 1.2.2.BUILD-SNAPSHOT</title>
+    <title>6 The HTTP Server 1.3.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6 The HTTP Server</h1>
 
-                    <p><strong>Version:</strong> 1.2.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -220,6 +220,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#https"><strong>6.26.3</strong><span>Securing the Server with HTTPS</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:10px"><a href="#dualProtocol"><strong>6.26.4</strong><span>Enabling HTTP and HTTPS</span></a>
+                    </div>
+                    
                     <div class="toc-item" style="margin-left:0px"><a href="#views"><strong>6.27</strong><span>Server Side View Rendering</span></a>
                     </div>
                     
@@ -233,8 +236,7 @@ function addJsClass() {
                 
 
                 
-
-<h1 id="httpServer">6 The HTTP Server</h1>
+<h1 id="httpServer"><a class="anchor" href="#httpServer"></a>6 The HTTP Server</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer.adoc"'>
@@ -351,8 +353,7 @@ class HelloController {
 </table>
 </div>
 
-
-<h2 id="runningServer">6.1 Running the Embedded Server</h2>
+<h2 id="runningServer"><a class="anchor" href="#runningServer"></a>6.1 Running the Embedded Server</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/runningServer.adoc"'>
@@ -525,8 +526,7 @@ Without explicit port configuration, the port will be 8080, unless the applicati
 </table>
 </div>
 
-
-<h2 id="runningSpecificPort">6.2 Running Server on a Specific Port</h2>
+<h2 id="runningSpecificPort"><a class="anchor" href="#runningSpecificPort"></a>6.2 Running Server on a Specific Port</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/runningSpecificPort.adoc"'>
@@ -568,8 +568,7 @@ This is also possible to be configured from an environment variable: <code>MICRO
 </div>
 </div>
 
-
-<h2 id="routing">6.3 HTTP Routing</h2>
+<h2 id="routing"><a class="anchor" href="#routing"></a>6.3 HTTP Routing</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/routing.adoc"'>
@@ -582,7 +581,7 @@ This is also possible to be configured from an environment variable: <code>MICRO
 <p>The <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> annotation used in the previous section is one of <a href="../api/io/micronaut/http/annotation/package-summary.html">several annotations</a> that allow you to control the construction of HTTP routes.</p>
 </div>
 <div class="sect1">
-<h2 id="_uri_paths">URI Paths</h2>
+<h2 id="_uri_paths"><a class="anchor" href="#_uri_paths"></a>URI Paths</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The value of the <code>@Controller</code> annotation is a <a href="https://tools.ietf.org/html/rfc6570">RFC-6570 URI template</a> you can therefore embed URI variables within the path using the syntax defined by the URI template specification.</p>
@@ -634,7 +633,7 @@ assertEquals("/hello/John", template.expand(  <i class="conum" data-value="2"></
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uri_path_variables">URI Path Variables</h2>
+<h2 id="_uri_path_variables"><a class="anchor" href="#_uri_path_variables"></a>URI Path Variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>URI variables can be referenced via method arguments. For example:</p>
@@ -817,7 +816,7 @@ void "/issues/show/{number} without number responds 404"() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uri_reserved_character_matching">URI Reserved Character Matching</h2>
+<h2 id="_uri_reserved_character_matching"><a class="anchor" href="#_uri_reserved_character_matching"></a>URI Reserved Character Matching</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default URI variables as defined by the <a href="https://tools.ietf.org/html/rfc6570">RFC-6570 URI template</a> spec cannot include reserved characters such as <code>/</code>, <code>?</code> etc.</p>
@@ -831,7 +830,7 @@ void "/issues/show/{number} without number responds 404"() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_routing_annotations">Routing Annotations</h2>
+<h2 id="_routing_annotations"><a class="anchor" href="#_routing_annotations"></a>Routing Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The previous example used the <a href="../api/io/micronaut/http/annotation/Get.html">@Get</a> annotation to add method that accepted HTTP <a href="../api/io/micronaut/http/HttpMethod.html#GET">GET</a> requests. The following tables summarizes the available annotations and how they map to the different HTTP methods:</p>
@@ -898,7 +897,7 @@ All of the method annotations default to <code>/</code>.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_building_routes_programmatically">Building Routes Programmatically</h2>
+<h2 id="_building_routes_programmatically"><a class="anchor" href="#_building_routes_programmatically"></a>Building Routes Programmatically</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you prefer to not use annotations and declare all of your routes in code then never fear, Micronaut has a flexible <a href="../api/io/micronaut/web/router/RouteBuilder.html">RouteBuilder</a> API that makes it a breeze to define routes programmatically.</p>
@@ -958,7 +957,7 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_route_compile_time_validation">Route Compile Time Validation</h2>
+<h2 id="_route_compile_time_validation"><a class="anchor" href="#_route_compile_time_validation"></a>Route Compile Time Validation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Micronaut supports validating route arguments at compile time with the validation library. To get started simply add the <code>validation</code> dependency to your build:</p>
@@ -1008,8 +1007,7 @@ To disable route compile time validation, set the system property <code>-Dmicron
 </div>
 </div>
 
-
-<h2 id="binding">6.4 Simple Request Binding</h2>
+<h2 id="binding"><a class="anchor" href="#binding"></a>6.4 Simple Request Binding</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/binding.adoc"'>
@@ -1022,7 +1020,7 @@ To disable route compile time validation, set the system property <code>-Dmicron
 <p>The examples in the previous section demonstrates how Micronaut allows you to bind method parameters from URI path variables.</p>
 </div>
 <div class="sect1">
-<h2 id="_binding_annotations">Binding Annotations</h2>
+<h2 id="_binding_annotations"><a class="anchor" href="#_binding_annotations"></a>Binding Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can customize the name of the variable bound with the <a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a> annotation which accepts a value which is the name of the URI variable or request parameter to bind from.</p>
@@ -1124,7 +1122,7 @@ public String hello(@Header String contentType) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bindable_types">Bindable Types</h2>
+<h2 id="_bindable_types"><a class="anchor" href="#_bindable_types"></a>Bindable Types</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Generally any type that can be converted from a String representation to a Java type via the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> API can be bound to.</p>
@@ -1175,7 +1173,7 @@ public String hello(@Format('dd/MM/yyy') @Header ZonedDateTime date) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_variables_resolution">Variables resolution</h2>
+<h2 id="_variables_resolution"><a class="anchor" href="#_variables_resolution"></a>Variables resolution</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Micronaut will try to populate method arguments in the following order:</p>
@@ -1203,8 +1201,7 @@ bind the method arguments from the body.</p>
 </div>
 </div>
 
-
-<h2 id="hostResolution">6.5 Host Resolution</h2>
+<h2 id="hostResolution"><a class="anchor" href="#hostResolution"></a>6.5 Host Resolution</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/hostResolution.adoc"'>
@@ -1283,8 +1280,7 @@ bind the method arguments from the body.</p>
 </tbody>
 </table>
 
-
-<h2 id="clientIpAddress">6.6 Client IP Address</h2>
+<h2 id="clientIpAddress"><a class="anchor" href="#clientIpAddress"></a>6.6 Client IP Address</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/clientIpAddress.adoc"'>
@@ -1319,8 +1315,7 @@ bind the method arguments from the body.</p>
 <p>The first priority header name can be configured with <code>micronaut.server.client-address-header</code>.</p>
 </div>
 
-
-<h2 id="requestResponse">6.7 The HttpRequest and HttpResponse</h2>
+<h2 id="requestResponse"><a class="anchor" href="#requestResponse"></a>6.7 The HttpRequest and HttpResponse</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/requestResponse.adoc"'>
@@ -1449,8 +1444,7 @@ Generally io.micronaut.http.context.ServerRequestContext[] is available within r
 </table>
 </div>
 
-
-<h2 id="statusAnnotation">6.8 Response Status</h2>
+<h2 id="statusAnnotation"><a class="anchor" href="#statusAnnotation"></a>6.8 Response Status</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/statusAnnotation.adoc"'>
@@ -1497,8 +1491,7 @@ public HttpStatus index() {
 </div>
 </div>
 
-
-<h2 id="producesAnnotation">6.9 Response Content-Type</h2>
+<h2 id="producesAnnotation"><a class="anchor" href="#producesAnnotation"></a>6.9 Response Content-Type</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/producesAnnotation.adoc"'>
@@ -1538,8 +1531,7 @@ public class TestController {
 </table>
 </div>
 
-
-<h2 id="consumesAnnotation">6.10 Accepted Request Content-Type</h2>
+<h2 id="consumesAnnotation"><a class="anchor" href="#consumesAnnotation"></a>6.10 Accepted Request Content-Type</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/consumesAnnotation.adoc"'>
@@ -1582,7 +1574,7 @@ class TestController {
 </table>
 </div>
 <div class="sect2">
-<h3 id="_customizing_processed_content_types">Customizing Processed Content Types</h3>
+<h3 id="_customizing_processed_content_types"><a class="anchor" href="#_customizing_processed_content_types"></a>Customizing Processed Content Types</h3>
 <div class="paragraph">
 <p>Normally the JSON parsing only happens if the content type is <code>application/json</code>. The other <a href="../api/io/micronaut/http/codec/MediaTypeCodec.html">MediaTypeCodec</a> classes behave in a similar manner that they have pre-defined content types they can process. To extend the list of media types that a given codec should process, you can provide configuration that will be stored in <a href="../api/io/micronaut/http/codec/CodecConfiguration.html">CodecConfiguration</a>:</p>
 </div>
@@ -1601,8 +1593,7 @@ class TestController {
 </div>
 </div>
 
-
-<h2 id="reactiveServer">6.11 Reactive HTTP Request Processing</h2>
+<h2 id="reactiveServer"><a class="anchor" href="#reactiveServer"></a>6.11 Reactive HTTP Request Processing</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/reactiveServer.adoc"'>
@@ -1633,8 +1624,7 @@ micronaut.executors.io.nThreads=75</code></pre>
 </div>
 </div>
 
-
-<h2 id="bodyAnnotation">6.11.1 Using the @Body Annotation</h2>
+<h2 id="bodyAnnotation"><a class="anchor" href="#bodyAnnotation"></a>6.11.1 Using the @Body Annotation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/reactiveServer/bodyAnnotation.adoc"'>
@@ -1732,8 +1722,7 @@ Single&lt;MutableHttpResponse&lt;String&gt;&gt; echoFlow(@Body Flowable&lt;Strin
 </table>
 </div>
 
-
-<h2 id="reactiveResponses">6.11.2 Reactive Responses</h2>
+<h2 id="reactiveResponses"><a class="anchor" href="#reactiveResponses"></a>6.11.2 Reactive Responses</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/reactiveServer/reactiveResponses.adoc"'>
@@ -1827,8 +1816,7 @@ When returning a Reactive type, the type of reactive type has an impact on the r
 </table>
 </div>
 
-
-<h2 id="jsonBinding">6.12 JSON Binding with Jackson</h2>
+<h2 id="jsonBinding"><a class="anchor" href="#jsonBinding"></a>6.12 JSON Binding with Jackson</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/jsonBinding.adoc"'>
@@ -1847,7 +1835,7 @@ When returning a Reactive type, the type of reactive type has an impact on the r
 <p>In order to do so in a non-blocking manner Micronaut builds on the <a href="https://github.com/FasterXML/jackson">Jackson</a> Asynchronous JSON parsing API and Netty such that the reading of incoming JSON is done in a non-blocking manner.</p>
 </div>
 <div class="sect1">
-<h2 id="_binding_using_reactive_frameworks">Binding using Reactive Frameworks</h2>
+<h2 id="_binding_using_reactive_frameworks"><a class="anchor" href="#_binding_using_reactive_frameworks"></a>Binding using Reactive Frameworks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>From a developer perspective however, you can generally just work with Plain Old Java Objects (POJOs) and can optionally use a Reactive framework such as RxJava or Reactor. The following is an example of a controller that reads and saves an incoming POJO in a non-blocking way from JSON:</p>
@@ -1899,7 +1887,7 @@ public class PersonController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_binding_using_completablefuture">Binding Using CompletableFuture</h2>
+<h2 id="_binding_using_completablefuture"><a class="anchor" href="#_binding_using_completablefuture"></a>Binding Using CompletableFuture</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The same method as the previous example can also be written with the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> API instead:</p>
@@ -1922,7 +1910,7 @@ public class PersonController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_binding_using_pojos">Binding using POJOs</h2>
+<h2 id="_binding_using_pojos"><a class="anchor" href="#_binding_using_pojos"></a>Binding using POJOs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Note however, that if your method does not do any blocking I/O then you can just as easily write:</p>
@@ -1957,7 +1945,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 <div class="sect1">
-<h2 id="_jackson_configuration">Jackson Configuration</h2>
+<h2 id="_jackson_configuration"><a class="anchor" href="#_jackson_configuration"></a>Jackson Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Jackson ObjectMapper can be configured through normal configuration with the <a href="../api/io/micronaut/jackson/JacksonConfiguration.html">JacksonConfiguration</a> class.</p>
@@ -2014,7 +2002,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_features">Features</h3>
+<h3 id="_features"><a class="anchor" href="#_features"></a>Features</h3>
 <div class="paragraph">
 <p>All features can be configured with their name as the key and a boolean to indicate enabled or disabled.</p>
 </div>
@@ -2068,7 +2056,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_support_for_code_jsonview_code">Support for <code>@JsonView</code></h3>
+<h3 id="_support_for_code_jsonview_code"><a class="anchor" href="#_support_for_code_jsonview_code"></a>Support for <code>@JsonView</code></h3>
 <div class="paragraph">
 <p>You can use the <code>@JsonView</code> annotation to controller methods if you set <code>jackson.json-view.enabled</code> to <code>true</code> in <code>application.yml</code>.</p>
 </div>
@@ -2077,7 +2065,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_beans">Beans</h3>
+<h3 id="_beans"><a class="anchor" href="#_beans"></a>Beans</h3>
 <div class="paragraph">
 <p>In addition to configuration, beans can be registered to customize Jackson. All beans that extend any of the following classes will be registered with the object mapper.</p>
 </div>
@@ -2102,7 +2090,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_service_loader">Service Loader</h3>
+<h3 id="_service_loader"><a class="anchor" href="#_service_loader"></a>Service Loader</h3>
 <div class="paragraph">
 <p>Any modules registered via the service loader will also be added to the default object mapper.</p>
 </div>
@@ -2110,8 +2098,7 @@ The output produced by Jackson can be customized in a variety of manners, from d
 </div>
 </div>
 
-
-<h2 id="datavalidation">6.13 Data Validation</h2>
+<h2 id="datavalidation"><a class="anchor" href="#datavalidation"></a>6.13 Data Validation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/datavalidation.adoc"'>
@@ -2347,8 +2334,7 @@ Bean injection is supported in custom constraints with the hibernate validator c
 </table>
 </div>
 
-
-<h2 id="staticResources">6.14 Serving Static Resources</h2>
+<h2 id="staticResources"><a class="anchor" href="#staticResources"></a>6.14 Serving Static Resources</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/staticResources.adoc"'>
@@ -2397,8 +2383,7 @@ Bean injection is supported in custom constraints with the hibernate validator c
 </tbody>
 </table>
 
-
-<h2 id="errorHandling">6.15 Error Handling</h2>
+<h2 id="errorHandling"><a class="anchor" href="#errorHandling"></a>6.15 Error Handling</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/errorHandling.adoc"'>
@@ -2411,7 +2396,7 @@ Bean injection is supported in custom constraints with the hibernate validator c
 <p>Sometimes with distributed applications, bad things happen. Having a good way to handle errors is important.</p>
 </div>
 <div class="sect1">
-<h2 id="_status_handlers">Status Handlers</h2>
+<h2 id="_status_handlers"><a class="anchor" href="#_status_handlers"></a>Status Handlers</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/http/annotation/Error.html">Error</a> annotation supports defining either an exception class or an HTTP status. Methods decorated with the annotation will be invoked as the result of other controller methods. The annotation also supports the notion of global and local, local being the default.</p>
@@ -2434,7 +2419,7 @@ When defining an error handler for an exception, you can specify the exception i
 </div>
 </div>
 <div class="sect1">
-<h2 id="_local_error_handling">Local Error Handling</h2>
+<h2 id="_local_error_handling"><a class="anchor" href="#_local_error_handling"></a>Local Error Handling</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For example the following method will handling JSON parse exceptions from Jackson for the scope of the declaring controller:</p>
@@ -2500,7 +2485,7 @@ public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <i class="c
 </div>
 </div>
 <div class="sect1">
-<h2 id="_global_error_handling">Global Error Handling</h2>
+<h2 id="_global_error_handling"><a class="anchor" href="#_global_error_handling"></a>Global Error Handling</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">Global error handler</div>
@@ -2577,7 +2562,7 @@ If an <code>@Error</code> annotation with the same parameter exists as global an
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exceptionhandler">ExceptionHandler</h2>
+<h2 id="_exceptionhandler"><a class="anchor" href="#_exceptionhandler"></a>ExceptionHandler</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Additionally you can implement a <a href="../api/io/micronaut/http/server/exceptions/ExceptionHandler.html">ExceptionHandler</a>; a generic hook for handling exceptions that occurs during the execution of an HTTP request.</p>
@@ -2599,6 +2584,19 @@ public class BookController {
     @Get("/stock/{isbn}")
     Integer stock(String isbn) {
         throw new OutOfStockException();
+    }
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get("/null-pointer")
+    Integer npe() {
+        throw new NullPointerException();
+    }
+
+    @Error(exception = NullPointerException.class)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Status(HttpStatus.MULTI_STATUS)
+    String npeHandler() {
+        return "NPE";
     }
 }</code></pre>
 </div>
@@ -2638,8 +2636,7 @@ An <code>@Error</code> annotation capturing an exception has precedence over an 
 </div>
 </div>
 
-
-<h2 id="apiVersioning">6.16 API Versioning</h2>
+<h2 id="apiVersioning"><a class="anchor" href="#apiVersioning"></a>6.16 API Versioning</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/apiVersioning.adoc"'>
@@ -2749,7 +2746,7 @@ class VersionedController {
 <p>If this is not enough you can also implement the <a href="../api/io/micronaut/web/router/version/resolution/RequestVersionResolver.html">RequestVersionResolver</a> interface which receives the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and can implement any strategy you choose.</p>
 </div>
 <div class="sect2">
-<h3 id="_default_version">Default Version</h3>
+<h3 id="_default_version"><a class="anchor" href="#_default_version"></a>Default Version</h3>
 <div class="paragraph">
 <p>It is possible to supply a default version through configuration.</p>
 </div>
@@ -2795,7 +2792,7 @@ class VersionedController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_versioning_client_requests">Versioning Client Requests</h3>
+<h3 id="_versioning_client_requests"><a class="anchor" href="#_versioning_client_requests"></a>Versioning Client Requests</h3>
 <div class="paragraph">
 <p>Micronaut&#8217;s <a href="#clientAnnotation">Declarative HTTP client</a> also supports automatic versioning of outgoing requests via the <a href="../api/io/micronaut/core/version/annotation/Version.html">@Version</a> annotation.</p>
 </div>
@@ -2946,8 +2943,7 @@ interface HelloClient {
 </div>
 </div>
 
-
-<h2 id="formData">6.17 Handling Form Data</h2>
+<h2 id="formData"><a class="anchor" href="#formData"></a>6.17 Handling Form Data</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/formData.adoc"'>
@@ -3006,8 +3002,7 @@ public HttpResponse&lt;Person&gt; save(String firstName, String lastName, Option
 <p>As you can see from the example above, this approach allows you to use features such as support for <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> types and restrict the parameters to be bound (When using POJOs you must be careful to use Jackson annotations to exclude properties that should not be bound).</p>
 </div>
 
-
-<h2 id="serverIO">6.18 Writing Response Data</h2>
+<h2 id="serverIO"><a class="anchor" href="#serverIO"></a>6.18 Writing Response Data</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverIO.adoc"'>
@@ -3017,7 +3012,7 @@ public HttpResponse&lt;Person&gt; save(String firstName, String lastName, Option
 
 
 <div class="sect2">
-<h3 id="_writing_data_without_blocking">Writing Data without Blocking</h3>
+<h3 id="_writing_data_without_blocking"><a class="anchor" href="#_writing_data_without_blocking"></a>Writing Data without Blocking</h3>
 <div class="paragraph">
 <p>Micronaut&#8217;s HTTP server supports writing data without blocking simply by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
 </div>
@@ -3062,7 +3057,7 @@ public HttpResponse&lt;Person&gt; save(String firstName, String lastName, Option
 </div>
 </div>
 <div class="sect2">
-<h3 id="_performing_blocking_i_o">Performing Blocking I/O</h3>
+<h3 id="_performing_blocking_i_o"><a class="anchor" href="#_performing_blocking_i_o"></a>Performing Blocking I/O</h3>
 <div class="paragraph">
 <p>In some cases you may wish to integrate with a library that does not support non-blocking I/O.</p>
 </div>
@@ -3150,7 +3145,7 @@ public class TemplateController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_404_responses">404 Responses</h3>
+<h3 id="_404_responses"><a class="anchor" href="#_404_responses"></a>404 Responses</h3>
 <div class="paragraph">
 <p>Often, you want to respond 404 (Not Found) when you don&#8217;t find an item in your persistence layer or in similar scenarios.</p>
 </div>
@@ -3200,8 +3195,7 @@ Responding with an empty <code>Publisher</code> or <code>Flowable</code> will re
 </div>
 </div>
 
-
-<h2 id="uploads">6.19 File Uploads</h2>
+<h2 id="uploads"><a class="anchor" href="#uploads"></a>6.19 File Uploads</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/uploads.adoc"'>
@@ -3223,7 +3217,7 @@ HttpResponse upload( ... )</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_route_arguments">Route Arguments</h2>
+<h2 id="_route_arguments"><a class="anchor" href="#_route_arguments"></a>Route Arguments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>How the files are received by your method is determined by the type of the arguments. Data can be received a chunk at a time or when an upload is completed.</p>
@@ -3241,7 +3235,7 @@ If the route argument name can&#8217;t or shouldn&#8217;t match the name of the 
 </table>
 </div>
 <div class="sect2">
-<h3 id="_chunk_data_types">Chunk Data Types</h3>
+<h3 id="_chunk_data_types"><a class="anchor" href="#_chunk_data_types"></a>Chunk Data Types</h3>
 <div class="paragraph">
 <p><a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a> is the data type used to represent a chunk of data received in a multipart request. There are methods on the <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a> interface to convert the data to a <code>byte[]</code>, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html">InputStream</a>, or a <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/ByteBuffer.html">ByteBuffer</a>.</p>
 </div>
@@ -3316,7 +3310,7 @@ public class UploadController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_whole_data_types">Whole Data Types</h3>
+<h3 id="_whole_data_types"><a class="anchor" href="#_whole_data_types"></a>Whole Data Types</h3>
 <div class="paragraph">
 <p>Route arguments that are not publishers will cause the route execution to be delayed until the upload has finished. The received data will attempt to be converted to the requested type. Conversions to a <code>String</code> or <code>byte[]</code> are supported by default. In addition, the file can be converted to a POJO if a media type codec has been registered that supports the media type of the file. A media type codec is included by default that allows conversion of JSON files to POJOs.</p>
 </div>
@@ -3368,10 +3362,10 @@ public class UploadController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_multiple_uploads">Multiple Uploads</h2>
+<h2 id="_multiple_uploads"><a class="anchor" href="#_multiple_uploads"></a>Multiple Uploads</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_different_names">Different Names</h3>
+<h3 id="_different_names"><a class="anchor" href="#_different_names"></a>Different Names</h3>
 <div class="paragraph">
 <p>If a multipart request supplies multiple uploads that each have a different part name, simply create an argument to your route that receives each part. For example:</p>
 </div>
@@ -3385,7 +3379,7 @@ public class UploadController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_same_name">Same Name</h3>
+<h3 id="_same_name"><a class="anchor" href="#_same_name"></a>Same Name</h3>
 <div class="paragraph">
 <p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
 </div>
@@ -3419,9 +3413,75 @@ HttpResponse upload(Publisher&lt;Publisher&lt;PartData&gt;&gt; files)</code></pr
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_whole_body_binding"><a class="anchor" href="#_whole_body_binding"></a>Whole Body Binding</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For the cases where the names of the parts of the request cannot be known ahead of time, or the entire body should be read, a special type can be used to indicate the entire body is desired.</p>
+</div>
+<div class="paragraph">
+<p>If a route has an argument of type <a href="../api/io/micronaut/http/server/multipart/MultipartBody.html">MultipartBody</a> (not to be confused with the class for the client) annotated with <a href="../api/io/micronaut/http/annotation/Body.html">@Body</a>, then each part of the request will be emitted through the argument. A <a href="../api/io/micronaut/http/server/multipart/MultipartBody.html">MultipartBody</a> is a publisher of <a href="../api/io/micronaut/http/multipart/CompletedPart.html">CompletedPart</a> instances.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
+import io.micronaut.http.annotation.*;
+import io.micronaut.http.multipart.StreamingFileUpload;
+import io.reactivex.Single;
+import org.reactivestreams.Publisher;
 
+import java.io.File;
+import io.micronaut.http.multipart.CompletedPart;
+import io.micronaut.http.server.multipart.MultipartBody;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
-<h2 id="transfers">6.20 File Transfers</h2>
+@Controller("/upload")
+public class UploadController {
+
+    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
+    public Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <i class="conum" data-value="2"></i><b>(2)</b>
+        return Single.create(emitter -&gt; {
+            body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
+                private Subscription s;
+
+                @Override
+                public void onSubscribe(Subscription s) {
+                    this.s = s;
+                    s.request(1);
+                }
+
+                @Override
+                public void onNext(CompletedPart completedPart) {
+                    String partName = completedPart.getName();
+                    if (completedPart instanceof CompletedFileUpload) {
+                        String originalFileName = ((CompletedFileUpload) completedPart).getFilename();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable t) {
+
+                }
+
+                @Override
+                public void onComplete() {
+                    emitter.onSuccess("Uploaded");
+                }
+            });
+        });
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<h2 id="transfers"><a class="anchor" href="#transfers"></a>6.20 File Transfers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/transfers.adoc"'>
@@ -3434,7 +3494,7 @@ HttpResponse upload(Publisher&lt;Publisher&lt;PartData&gt;&gt; files)</code></pr
 <p>Micronaut supports the sending of files to the client in a couple of easy ways.</p>
 </div>
 <div class="sect1">
-<h2 id="_sending_file_objects">Sending File Objects</h2>
+<h2 id="_sending_file_objects"><a class="anchor" href="#_sending_file_objects"></a>Sending File Objects</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It is possible to simply return a <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a> object from your controller method and the data will be returned to the client. The <code>Content-Type</code> header of file responses will be calculated based on the name of the file.</p>
@@ -3456,7 +3516,7 @@ public SystemFile download() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sending_an_inputstream">Sending an InputStream</h2>
+<h2 id="_sending_an_inputstream"><a class="anchor" href="#_sending_an_inputstream"></a>Sending an InputStream</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For cases where a reference to a <code>File</code> object is not possible (for example resources contained within JAR files), Micronaut supports transferring of input streams. To return a stream of data from the controller method, construct a <a href="../api/io/micronaut/http/server/types/files/StreamedFile.html">StreamedFile</a>.</p>
@@ -3502,7 +3562,7 @@ To use a custom data source to send data through an input stream, construct a <a
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cache_configuration">Cache Configuration</h2>
+<h2 id="_cache_configuration"><a class="anchor" href="#_cache_configuration"></a>Cache Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default file responses will include caching headers. The following options determine how the <code>Cache-Control</code> header is built.</p>
@@ -3556,8 +3616,7 @@ To use a custom data source to send data through an input stream, construct a <a
 </div>
 </div>
 
-
-<h2 id="filters">6.21 HTTP Filters</h2>
+<h2 id="filters"><a class="anchor" href="#filters"></a>6.21 HTTP Filters</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/filters.adoc"'>
@@ -3601,13 +3660,13 @@ To use a custom data source to send data through an input stream, construct a <a
 <p>To put these concepts into practise lets look at an example.</p>
 </div>
 <div class="sect1">
-<h2 id="_writing_a_filter">Writing a Filter</h2>
+<h2 id="_writing_a_filter"><a class="anchor" href="#_writing_a_filter"></a>Writing a Filter</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Consider a hypothetical use case whereby you wish to trace each request to the Micronaut "Hello World" example using some external system. The external system could be a database, a distributed tracing service and may require I/O operations.</p>
 </div>
 <div class="paragraph">
-<p>What you don&#8217;t want to do is block the underlying Netty event loop within your filter, instead you want to the filter to proceed with execution once any I/O is complete.</p>
+<p>What you don&#8217;t want to do is block the underlying Netty event loop within your filter, instead you want the filter to proceed with execution once any I/O is complete.</p>
 </div>
 <div class="paragraph">
 <p>As an example, consider the following example <code>TraceService</code> that uses RxJava to compose an I/O operation:</p>
@@ -3742,8 +3801,7 @@ The examples use RxJava, however you can use any reactive framework that support
 </div>
 </div>
 
-
-<h2 id="sessions">6.22 HTTP Sessions</h2>
+<h2 id="sessions"><a class="anchor" href="#sessions"></a>6.22 HTTP Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/sessions.adoc"'>
@@ -3769,7 +3827,7 @@ The examples use RxJava, however you can use any reactive framework that support
 </ul>
 </div>
 <div class="sect1">
-<h2 id="_enabling_sessions">Enabling Sessions</h2>
+<h2 id="_enabling_sessions"><a class="anchor" href="#_enabling_sessions"></a>Enabling Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To enable support for in-memory sessions you just need the <code>session</code> dependency:</p>
@@ -3791,7 +3849,7 @@ The examples use RxJava, however you can use any reactive framework that support
 </p>
 </div>
 <div class="sect2">
-<h3 id="_redis_sessions">Redis Sessions</h3>
+<h3 id="_redis_sessions"><a class="anchor" href="#_redis_sessions"></a>Redis Sessions</h3>
 <div class="paragraph">
 <p>If you wish to store <a href="../api/io/micronaut/session/Session.html">Session</a> instances in Redis you can do so with the <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide/#sessions">Micronaut Redis</a> module which includes detailed instructions.</p>
 </div>
@@ -3824,7 +3882,7 @@ micronaut:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_session_resolution">Configuring Session Resolution</h2>
+<h2 id="_configuring_session_resolution"><a class="anchor" href="#_configuring_session_resolution"></a>Configuring Session Resolution</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>How the <a href="../api/io/micronaut/session/Session.html">Session</a> is resolved can be configured with <a href="../api/io/micronaut/session/http/HttpSessionConfiguration.html">HttpSessionConfiguration</a>.</p>
@@ -3851,7 +3909,7 @@ micronaut:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_working_with_sessions">Working with Sessions</h2>
+<h2 id="_working_with_sessions"><a class="anchor" href="#_working_with_sessions"></a>Working with Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A <a href="../api/io/micronaut/session/Session.html">Session</a> object can be retrieved simply by declaring the <a href="../api/io/micronaut/session/Session.html">Session</a> in a controller method signature. For example consider the following controller:</p>
@@ -3927,7 +3985,7 @@ void clearCart(@Nullable Session session) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_session_clients">Session Clients</h2>
+<h2 id="_session_clients"><a class="anchor" href="#_session_clients"></a>Session Clients</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If the client is a web browser then sessions should just work if you have cookies is enabled. However for programmatic HTTP clients you need to make sure you propagate the session id between HTTP calls.</p>
@@ -3991,7 +4049,7 @@ cart = response.body()</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_sessionvalue">Using @SessionValue</h2>
+<h2 id="_using_sessionvalue"><a class="anchor" href="#_using_sessionvalue"></a>Using @SessionValue</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Rather than explicitly injecting the <a href="../api/io/micronaut/session/Session.html">Session</a> into a controller method you can instead use <a href="../api/io/micronaut/session/annotation/SessionValue.html">@SessionValue</a>. For example:</p>
@@ -4024,7 +4082,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 </div>
 </div>
 <div class="sect1">
-<h2 id="_session_events">Session Events</h2>
+<h2 id="_session_events"><a class="anchor" href="#_session_events"></a>Session Events</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can register <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> beans to listen for <a href="../api/io/micronaut/session/Session.html">Session</a> related events located in the <a href="../api/io/micronaut/session/event/package-summary.html">io.micronaut.session.event</a> package.</p>
@@ -4066,8 +4124,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 </div>
 </div>
 
-
-<h2 id="sse">6.23 Server Sent Events</h2>
+<h2 id="sse"><a class="anchor" href="#sse"></a>6.23 Server Sent Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/sse.adoc"'>
@@ -4190,8 +4247,7 @@ public class HeadlineController {
 <p>You can use the methods of the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> interface to customize the Server Sent Event data sent back including associating event ids, comments, retry timeouts etc.</p>
 </div>
 
-
-<h2 id="websocket">6.24 WebSocket Support</h2>
+<h2 id="websocket"><a class="anchor" href="#websocket"></a>6.24 WebSocket Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket.adoc"'>
@@ -4204,8 +4260,7 @@ public class HeadlineController {
 <p>Micronaut features dedicated support for creating WebSocket clients and servers. The <a href="../api/io/micronaut/websocket/annotation/package-summary.html">io.micronaut.websocket.annotation</a> package includes a set of annotations for defining both clients and servers.</p>
 </div>
 
-
-<h2 id="websocketServer">6.24.1 Using @ServerWebSocket</h2>
+<h2 id="websocketServer"><a class="anchor" href="#websocketServer"></a>6.24.1 Using @ServerWebSocket</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket/websocketServer.adoc"'>
@@ -4314,13 +4369,13 @@ A working example of WebSockets in action can be found in the <a href="https://g
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_the_onclose_method">The @OnClose Method</h3>
+<h3 id="_the_onclose_method"><a class="anchor" href="#_the_onclose_method"></a>The @OnClose Method</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/websocket/annotation/OnClose.html">@OnClose</a> method can also optionally receive a <a href="../api/io/micronaut/websocket/CloseReason.html">CloseReason</a>. The <code>@OnClose</code> method is invoked prior to the session closing.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_onmessage_method">The @OnMessage Method</h3>
+<h3 id="_the_onmessage_method"><a class="anchor" href="#_the_onmessage_method"></a>The @OnMessage Method</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/websocket/annotation/OnMessage.html">@OnMessage</a> method can define a parameter that is the message body. The parameter can be one of the following:</p>
 </div>
@@ -4342,13 +4397,13 @@ A working example of WebSockets in action can be found in the <a href="https://g
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_onerror_method">The @OnError Method</h3>
+<h3 id="_the_onerror_method"><a class="anchor" href="#_the_onerror_method"></a>The @OnError Method</h3>
 <div class="paragraph">
 <p>A method annotated with <a href="../api/io/micronaut/websocket/annotation/OnError.html">@OnError</a> can be added to implement custom error handling. The <code>@OnError</code> method can optionally define a parameter that receives the exception type that is to be handled. If no <code>@OnError</code> handling is present and a unrecoverable exception occurs the WebSocket is automatically closed.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_non_blocking_message_handling">Non-Blocking Message Handling</h3>
+<h3 id="_non_blocking_message_handling"><a class="anchor" href="#_non_blocking_message_handling"></a>Non-Blocking Message Handling</h3>
 <div class="paragraph">
 <p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
 </div>
@@ -4370,7 +4425,7 @@ public Publisher&lt;Message&gt; onMessage(
 </div>
 </div>
 <div class="sect2">
-<h3 id="_serverwebsocket_and_scopes">@ServerWebSocket and Scopes</h3>
+<h3 id="_serverwebsocket_and_scopes"><a class="anchor" href="#_serverwebsocket_and_scopes"></a>@ServerWebSocket and Scopes</h3>
 <div class="paragraph">
 <p>By default a unique <code>@ServerWebSocket</code> instance is created for each WebSocket connection. This allows you to retrieve the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> from the <code>@OnOpen</code> handler and assign it to a field of the  <code>@ServerWebSocket</code> instance.</p>
 </div>
@@ -4379,7 +4434,7 @@ public Publisher&lt;Message&gt; onMessage(
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sharing_sessions_with_the_http_session">Sharing Sessions with the HTTP Session</h3>
+<h3 id="_sharing_sessions_with_the_http_session"><a class="anchor" href="#_sharing_sessions_with_the_http_session"></a>Sharing Sessions with the HTTP Session</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> is by default backed by an in-memory map. If you add the the <code>session</code> module you can however share <a href="#sessions">sessions</a> between the HTTP server and the WebSocket server.</p>
 </div>
@@ -4418,7 +4473,7 @@ When sessions are backed by a persistent store such as Redis then after each mes
 </div>
 </div>
 <div class="sect2">
-<h3 id="_connection_timeouts">Connection Timeouts</h3>
+<h3 id="_connection_timeouts"><a class="anchor" href="#_connection_timeouts"></a>Connection Timeouts</h3>
 <div class="paragraph">
 <p>By default Micronaut will timeout idle connections that have no activity after 5 minutes. Normally this is not a problem as browsers will automatically reconnect WebSocket sessions, however you can control this behaviour by setting the <code>micronaut.server.idle-timeout</code> setting (a negative value will result no timeout):</p>
 </div>
@@ -4444,8 +4499,7 @@ When sessions are backed by a persistent store such as Redis then after each mes
 </div>
 </div>
 
-
-<h2 id="websocketClient">6.24.2 Using @ClientWebSocket</h2>
+<h2 id="websocketClient"><a class="anchor" href="#websocketClient"></a>6.24.2 Using @ClientWebSocket</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/websocket/websocketClient.adoc"'>
@@ -4617,8 +4671,7 @@ For illustration purposes we use <code>blockingFirst()</code> to obtain the clie
 </table>
 </div>
 
-
-<h2 id="serverEvents">6.25 Server Events</h2>
+<h2 id="serverEvents"><a class="anchor" href="#serverEvents"></a>6.25 Server Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverEvents.adoc"'>
@@ -4712,8 +4765,7 @@ public class MyBean {
 </div>
 </div>
 
-
-<h2 id="serverConfiguration">6.26 Configuring the HTTP Server</h2>
+<h2 id="serverConfiguration"><a class="anchor" href="#serverConfiguration"></a>6.26 Configuring the HTTP Server</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration.adoc"'>
@@ -4830,6 +4882,11 @@ public class MyBean {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the minimum size of a request body must be in order to be compressed. Default value (1024).</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the compression level (0-9). Default value (6).</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.use-native-transport</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to use netty&#8217;s native transport (epoll or kqueue) if available . Default value (false).</p></td>
@@ -4882,8 +4939,7 @@ public class MyBean {
 </p>
 </div>
 
-
-<h2 id="threadPools">6.26.1 Configuring Server Thread Pools</h2>
+<h2 id="threadPools"><a class="anchor" href="#threadPools"></a>6.26.1 Configuring Server Thread Pools</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/threadPools.adoc"'>
@@ -4937,8 +4993,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 <p>The above configuration will create a fixed thread pool with 75 threads.</p>
 </div>
 
-
-<h2 id="cors">6.26.2 Configuring CORS</h2>
+<h2 id="cors"><a class="anchor" href="#cors"></a>6.26.2 Configuring CORS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/cors.adoc"'>
@@ -4991,7 +5046,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 <p>When a CORS request is made, configurations are searched for allowed origins that are an exact match or match the request origin through a regular expression.</p>
 </div>
 <div class="sect1">
-<h2 id="_allowed_origins">Allowed Origins</h2>
+<h2 id="_allowed_origins"><a class="anchor" href="#_allowed_origins"></a>Allowed Origins</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To allow any origin for a given configuration, simply don&#8217;t include the <code>allowedOrigins</code> key in your configuration.</p>
@@ -5019,7 +5074,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_allowed_methods">Allowed Methods</h2>
+<h2 id="_allowed_methods"><a class="anchor" href="#_allowed_methods"></a>Allowed Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To allow any request method for a given configuration, simply don&#8217;t include the <code>allowedMethods</code> key in your configuration.</p>
@@ -5044,7 +5099,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_allowed_headers">Allowed Headers</h2>
+<h2 id="_allowed_headers"><a class="anchor" href="#_allowed_headers"></a>Allowed Headers</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To allow any request header for a given configuration, simply don&#8217;t include the <code>allowedHeaders</code> key in your configuration.</p>
@@ -5069,7 +5124,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exposed_headers">Exposed Headers</h2>
+<h2 id="_exposed_headers"><a class="anchor" href="#_exposed_headers"></a>Exposed Headers</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To configure the list of headers that are sent in the response to a CORS request through the <code>Access-Control-Expose-Headers</code> header, include a list of strings for the <code>exposedHeaders</code> key in your configuration. By default no headers are exposed.</p>
@@ -5091,7 +5146,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_allow_credentials">Allow Credentials</h2>
+<h2 id="_allow_credentials"><a class="anchor" href="#_allow_credentials"></a>Allow Credentials</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Credentials are allowed by default for CORS requests. To disallow credentials, simply set the <code>allowCredentials</code> option to <code>false</code>.</p>
@@ -5111,7 +5166,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_max_age">Max Age</h2>
+<h2 id="_max_age"><a class="anchor" href="#_max_age"></a>Max Age</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The default maximum age that preflight requests can be cached is 30 minutes. To change that behavior, specify a value in seconds.</p>
@@ -5131,7 +5186,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 <div class="sect1">
-<h2 id="_multiple_header_values">Multiple Header Values</h2>
+<h2 id="_multiple_header_values"><a class="anchor" href="#_multiple_header_values"></a>Multiple Header Values</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default when a header has multiple values, multiple headers will be sent each with a single value. It is possible to change the behavior to send a single header with the list of values comma separated by setting a configuration option.</p>
@@ -5147,8 +5202,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 
-
-<h2 id="https">6.26.3 Securing the Server with HTTPS</h2>
+<h2 id="https"><a class="anchor" href="#https"></a>6.26.3 Securing the Server with HTTPS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/https.adoc"'>
@@ -5209,7 +5263,7 @@ Keep in mind that this configuration will generate a warning on the browser.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_a_valid_x509_certificate">Using a valid x509 certificate</h2>
+<h2 id="_using_a_valid_x509_certificate"><a class="anchor" href="#_using_a_valid_x509_certificate"></a>Using a valid x509 certificate</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It is also possible to configure Micronaut to use an existing valid x509 certificate, for example one created with
@@ -5308,7 +5362,7 @@ browser but if we inspect the certificate we can check that it&#8217;s the one g
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_java_keystore_jks">Using Java Keystore (JKS)</h2>
+<h2 id="_using_java_keystore_jks"><a class="anchor" href="#_using_java_keystore_jks"></a>Using Java Keystore (JKS)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It is not recommended using this type of certificate because it is a proprietary format and it&#8217;s better to use a PKCS12
@@ -5379,8 +5433,44 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 </div>
 </div>
 
+<h2 id="dualProtocol"><a class="anchor" href="#dualProtocol"></a>6.26.4 Enabling HTTP and HTTPS</h2>
 
-<h2 id="views">6.27 Server Side View Rendering</h2>
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/dualProtocol.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut supports binding both HTTP and HTTPS out of the box. To enable
+dual protocol support, modify your configuration. For example with <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Dual Protocol Configuration Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    ssl:
+        enabled: true
+        buildSelfSigned: true <i class="conum" data-value="1"></i><b>(1)</b>
+    server:
+        dualProtocol : true <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>You will need to configure ssl for https to work. In this example we are just using self signed but see <a href="#https">Securing the Server with HTTPS</a> for other configurations</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>To enable http &amp; https is an opt-in feature, setting the dualProtocol flag enables that, by default Micronaut will only enable one or the other</td>
+</tr>
+</table>
+</div>
+
+<h2 id="views"><a class="anchor" href="#views"></a>6.27 Server Side View Rendering</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/views.adoc"'>
@@ -5396,8 +5486,7 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 <p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-views/latest/guide">Micronaut Views</a> for more information.</p>
 </div>
 
-
-<h2 id="openapi">6.28 OpenAPI / Swagger Support</h2>
+<h2 id="openapi"><a class="anchor" href="#openapi"></a>6.28 OpenAPI / Swagger Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/openapi.adoc"'>
@@ -5411,8 +5500,7 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 <a href="https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html">these instructions</a></p>
 </div>
 
-
-<h2 id="graphql">6.29 GraphQL Support</h2>
+<h2 id="graphql"><a class="anchor" href="#graphql"></a>6.29 GraphQL Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/graphql.adoc"'>

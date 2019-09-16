@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>17.5 Reloading 1.2.2.BUILD-SNAPSHOT</title>
+    <title>17.5 Reloading 1.3.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>17.5 Reloading</h1>
 
-                    <p><strong>Version:</strong> 1.2.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -140,8 +140,7 @@ function addJsClass() {
                 
 
                 
-
-<h2 id="reloading">17.5 Reloading</h2>
+<h2 id="reloading"><a class="anchor" href="#reloading"></a>17.5 Reloading</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading.adoc"'>
@@ -160,8 +159,7 @@ function addJsClass() {
 <p>However, if you wish to have your changes automatically reloaded Micronaut does support automatic restart or the use of third-party reloading agents.</p>
 </div>
 
-
-<h2 id="automaticRestart">17.5.1 Automatic Restart</h2>
+<h2 id="automaticRestart"><a class="anchor" href="#automaticRestart"></a>17.5.1 Automatic Restart</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/automaticRestart.adoc"'>
@@ -193,7 +191,7 @@ function addJsClass() {
 <p>Micronaut&#8217;s startup time is fast and automatic restart leads to a clean slate without potential hard to debug problems cropping up or memory leaks.</p>
 </div>
 <div class="sect2">
-<h3 id="_configuring_file_watch">Configuring File Watch</h3>
+<h3 id="_configuring_file_watch"><a class="anchor" href="#_configuring_file_watch"></a>Configuring File Watch</h3>
 <div class="paragraph">
 <p>The following demonstrates how to configure Micronaut to automatically stop the application if a change occurs to an external file.</p>
 </div>
@@ -239,7 +237,7 @@ The <code>micronaut.io.watch.paths</code> setting can be used for more than just
 </div>
 </div>
 <div class="sect2">
-<h3 id="_file_watch_and_mac_os_x">File Watch and Mac OS X</h3>
+<h3 id="_file_watch_and_mac_os_x"><a class="anchor" href="#_file_watch_and_mac_os_x"></a>File Watch and Mac OS X</h3>
 <div class="paragraph">
 <p>The native JVM implementation of the <code>WatchService</code> interface for Mac OS X using polling which is slow. To improve file watch performance add the following dependencies to your build if you are using OS X:</p>
 </div>
@@ -303,7 +301,7 @@ The <code>provided</code> scope is used to ensure the dependencies don&#8217;t g
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restarting_the_server">Restarting the Server</h3>
+<h3 id="_restarting_the_server"><a class="anchor" href="#_restarting_the_server"></a>Restarting the Server</h3>
 <div class="paragraph">
 <p>Once set to <code>true</code> the <code>micronaut.io.watch.restart</code> setting will stop  the server when a file changes, it is then up to an external process to restart the server. For example, with Gradle this can be achieved with a continuous build:</p>
 </div>
@@ -344,8 +342,7 @@ done</code></pre>
 </div>
 </div>
 
-
-<h2 id="jrebel">17.5.2 JRebel</h2>
+<h2 id="jrebel"><a class="anchor" href="#jrebel"></a>17.5.2 JRebel</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/jrebel.adoc"'>
@@ -378,7 +375,7 @@ done</code></pre>
 </table>
 </div>
 <div class="sect1">
-<h2 id="_install_configure_jrebel_agent">Install/configure JRebel Agent</h2>
+<h2 id="_install_configure_jrebel_agent"><a class="anchor" href="#_install_configure_jrebel_agent"></a>Install/configure JRebel Agent</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The simplest way to install JRebel is to download the "standalone" installation package from the <a href="https://zeroturnaround.com/software/jrebel/download">JRebel download page</a>. Unzip the downloaded file to a convenient location within your user&#8217;s directory - for example, <code>~/bin/jrebel</code></p>
@@ -429,7 +426,7 @@ done</code></pre>
 <p>Note the path to the appropriate agent, and add the value to your project build.</p>
 </div>
 <div class="sect2">
-<h3 id="_gradle">Gradle</h3>
+<h3 id="_gradle"><a class="anchor" href="#_gradle"></a>Gradle</h3>
 <div class="paragraph">
 <p>Add the path to <code>gradle.properties</code> (create the file if necessary), as the <code>rebelAgent</code> property.</p>
 </div>
@@ -456,7 +453,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven">Maven</h3>
+<h3 id="_maven"><a class="anchor" href="#_maven"></a>Maven</h3>
 <div class="paragraph">
 <p>Add the path to <code>pom.xml</code> as a build profile (if using the CLI feature, the profile <code>jrebel</code> is already provided - simply update the path to the agent JAR).</p>
 </div>
@@ -497,8 +494,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 </div>
 
-
-<h2 id="springloaded">17.5.3 Spring-Loaded</h2>
+<h2 id="springloaded"><a class="anchor" href="#springloaded"></a>17.5.3 Spring-Loaded</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/springloaded.adoc"'>
@@ -546,7 +542,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </table>
 </div>
 <div class="sect1">
-<h2 id="_configuration">Configuration</h2>
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Configuring Spring-Loaded requires the agent JAR file to be downloaded on your system, and configured to be loaded as a <code>javaagent</code> by the build tool (or IDE).</p>
@@ -595,8 +591,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 </div>
 </div>
 
-
-<h2 id="gradleReload">17.5.4 Reloading with Gradle</h2>
+<h2 id="gradleReload"><a class="anchor" href="#gradleReload"></a>17.5.4 Reloading with Gradle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/gradleReload.adoc"'>
@@ -624,8 +619,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 <p>The <code>classes</code> task will be rerun every time a source file is modified, allowing the reloading agent to pick up the change.</p>
 </div>
 
-
-<h2 id="ideReload">17.5.5 Reloading with an IDE</h2>
+<h2 id="ideReload"><a class="anchor" href="#ideReload"></a>17.5.5 Reloading with an IDE</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/ideReload.adoc"'>
@@ -638,13 +632,13 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 <p>If you are using a build tool such as Maven, which does not support automatic recompilation on file changes, you may choose to use your IDE to recompile classes in combination with a reloading agent (as configured in the above sections).</p>
 </div>
 <div class="sect2">
-<h3 id="_intellij">IntelliJ</h3>
+<h3 id="_intellij"><a class="anchor" href="#_intellij"></a>IntelliJ</h3>
 <div class="paragraph">
 <p>IntelliJ unfortunately does not have an automatic rebuild option that works for a running application. However, you can trigger a "rebuild" of the project with <code>CMD-F9</code> (Mac) or <code>CTRL-F9</code> (Windows).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_eclipse">Eclipse</h3>
+<h3 id="_eclipse"><a class="anchor" href="#_eclipse"></a>Eclipse</h3>
 <div class="paragraph">
 <p>Under the <code>Project</code> menu, check the <code>Build Automatically</code> option. This will trigger a recompilation of the project whenever file changes are saved to disk.</p>
 </div>
