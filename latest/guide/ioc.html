@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.2.2</title>
+    <title>3 Inversion of Control 1.2.3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.2.2</p>
+                    <p><strong>Version:</strong> 1.2.3</p>
                 </div>
 
                 
@@ -188,8 +188,7 @@ function addJsClass() {
                 
 
                 
-
-<h1 id="ioc">3 Inversion of Control</h1>
+<h1 id="ioc"><a class="anchor" href="#ioc"></a>3 Inversion of Control</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc.adoc"'>
@@ -244,10 +243,10 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.2" // <2>
-    compile "io.micronaut:micronaut-inject:1.2.2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.3" // <2>
+    compile "io.micronaut:micronaut-inject:1.2.3"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.2" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.3" // <3>
     ...
 }</code></pre>
 </div>
@@ -317,8 +316,7 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 </table>
 </div>
 
-
-<h2 id="beans">3.1 Defining Beans</h2>
+<h2 id="beans"><a class="anchor" href="#beans"></a>3.1 Defining Beans</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beans.adoc"'>
@@ -490,8 +488,7 @@ println(vehicle.start())</code></pre>
 </ul>
 </div>
 
-
-<h2 id="how">3.2 How Does it Work?</h2>
+<h2 id="how"><a class="anchor" href="#how"></a>3.2 How Does it Work?</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/how.adoc"'>
@@ -516,8 +513,7 @@ println(vehicle.start())</code></pre>
 <p>In addition, with Micronaut your application startup time and memory consumption is not bound to the size of your codebase in the same way as a framework that uses reflection. Reflection based IoC frameworks load and cache reflection data for every single field, method, and constructor in your code. Thus as your code grows in size so do your memory requirements, whilst with Micronaut this is not the case.</p>
 </div>
 
-
-<h2 id="beanContext">3.3 The BeanContext</h2>
+<h2 id="beanContext"><a class="anchor" href="#beanContext"></a>3.3 The BeanContext</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanContext.adoc"'>
@@ -533,8 +529,7 @@ println(vehicle.start())</code></pre>
 <p>It is also the point of initialization for Micronaut. Generally speaking however, you don&#8217;t have to interact directly with the <code>BeanContext</code> API and can simply use <code>javax.inject</code> annotations and the annotations defined within <a href="../api/io/micronaut/context/annotation/package-summary.html">io.micronaut.context.annotation</a> package for your dependency injection needs.</p>
 </div>
 
-
-<h2 id="types">3.4 Injectable Container Types</h2>
+<h2 id="types"><a class="anchor" href="#types"></a>3.4 Injectable Container Types</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/types.adoc"'>
@@ -601,8 +596,7 @@ A prototype bean will have one instance created per place the bean is injected. 
 </table>
 </div>
 
-
-<h2 id="qualifiers">3.5 Bean Qualifiers</h2>
+<h2 id="qualifiers"><a class="anchor" href="#qualifiers"></a>3.5 Bean Qualifiers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/qualifiers.adoc"'>
@@ -618,7 +612,7 @@ A prototype bean will have one instance created per place the bean is injected. 
 <p>Once again Micronaut leverages JSR-330 and the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> and <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotations to support this use case.</p>
 </div>
 <div class="sect1">
-<h2 id="_qualifying_by_name">Qualifying By Name</h2>
+<h2 id="_qualifying_by_name"><a class="anchor" href="#_qualifying_by_name"></a>Qualifying By Name</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To qualify by name you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation. For example, consider the following classes:</p>
@@ -776,7 +770,7 @@ constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</
 </div>
 </div>
 <div class="sect1">
-<h2 id="_qualifying_by_annotation">Qualifying By Annotation</h2>
+<h2 id="_qualifying_by_annotation"><a class="anchor" href="#_qualifying_by_annotation"></a>Qualifying By Annotation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In addition to being able to qualify by name, you can build your own qualifiers using the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Qualifier.html">Qualifier</a> annotation. For example, consider the following annotation:</p>
@@ -843,7 +837,7 @@ annotation class V8</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_primary_and_secondary_beans">Primary and Secondary Beans</h2>
+<h2 id="_primary_and_secondary_beans"><a class="anchor" href="#_primary_and_secondary_beans"></a>Primary and Secondary Beans</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="../api/io/micronaut/context/annotation/Primary.html">Primary</a> is a qualifier that indicates that a bean is the primary bean that should be selected in the case of multiple possible interface implementations.</p>
@@ -1042,8 +1036,7 @@ class TestController(val colorPicker: ColorPicker) { <b class="conum">(1)</b>
 </div>
 </div>
 
-
-<h2 id="scopes">3.6 Scopes</h2>
+<h2 id="scopes"><a class="anchor" href="#scopes"></a>3.6 Scopes</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes.adoc"'>
@@ -1056,8 +1049,7 @@ class TestController(val colorPicker: ColorPicker) { <b class="conum">(1)</b>
 <p>Micronaut features an extensible bean scoping mechanism based on JSR-330. The following default scopes are supported:</p>
 </div>
 
-
-<h2 id="builtInScopes">3.6.1 Built-In Scopes</h2>
+<h2 id="builtInScopes"><a class="anchor" href="#builtInScopes"></a>3.6.1 Built-In Scopes</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/builtInScopes.adoc"'>
@@ -1146,8 +1138,7 @@ If your bean fails to initialize in parallel then the application will be automa
 </table>
 </div>
 
-
-<h2 id="refreshable">3.6.2 Refreshable Scope</h2>
+<h2 id="refreshable"><a class="anchor" href="#refreshable"></a>3.6.2 Refreshable Scope</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/refreshable.adoc"'>
@@ -1258,8 +1249,7 @@ open class WeatherService {
 </div>
 </div>
 
-
-<h2 id="metaScopes">3.6.3 Scopes on Meta Annotations</h2>
+<h2 id="metaScopes"><a class="anchor" href="#metaScopes"></a>3.6.3 Scopes on Meta Annotations</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/metaScopes.adoc"'>
@@ -1388,8 +1378,7 @@ annotation class Driver</code></pre>
 </table>
 </div>
 
-
-<h2 id="factories">3.7 Bean Factories</h2>
+<h2 id="factories"><a class="anchor" href="#factories"></a>3.7 Bean Factories</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/factories.adoc"'>
@@ -1519,7 +1508,7 @@ To allow the resulting bean to participate in the application context shutdown p
 </table>
 </div>
 <div class="sect2">
-<h3 id="_nullability">Nullability</h3>
+<h3 id="_nullability"><a class="anchor" href="#_nullability"></a>Nullability</h3>
 <div class="paragraph">
 <p>Factory methods can return null to allow for beans to be created conditionally. The use of <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> should always be the preferred method to conditionally create beans and returning null from a factory method should only be done if using <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> is not possible.</p>
 </div>
@@ -1638,8 +1627,7 @@ class EngineFactory {
 </div>
 </div>
 
-
-<h2 id="conditionalBeans">3.8 Conditional Beans</h2>
+<h2 id="conditionalBeans"><a class="anchor" href="#conditionalBeans"></a>3.8 Conditional Beans</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/conditionalBeans.adoc"'>
@@ -1759,7 +1747,7 @@ public class JdbcBookService implements BookService {
 <p>If you have multiple beans that need to fulfill a given requirement before loading then you may want to consider a bean configuration group, as explained in the next section.</p>
 </div>
 <div class="sect1">
-<h2 id="_configuration_requirements">Configuration Requirements</h2>
+<h2 id="_configuration_requirements"><a class="anchor" href="#_configuration_requirements"></a>Configuration Requirements</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> annotation is very flexible and can be used for a variety of use cases. The following table summarizes some of the possibilities:</p>
@@ -1836,7 +1824,7 @@ public class JdbcBookService implements BookService {
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="_additional_notes_on_property_requirements">Additional Notes on Property Requirements.</h3>
+<h3 id="_additional_notes_on_property_requirements"><a class="anchor" href="#_additional_notes_on_property_requirements"></a>Additional Notes on Property Requirements.</h3>
 <div class="paragraph">
 <p>Adding a requirement on a property has some additional functionality. You can require the property to be a certain value, not be a certain value, and use a default in those checks if its not set.</p>
 </div>
@@ -1872,7 +1860,7 @@ public class JdbcBookService implements BookService {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_debugging_conditional_beans">Debugging Conditional Beans</h2>
+<h2 id="_debugging_conditional_beans"><a class="anchor" href="#_debugging_conditional_beans"></a>Debugging Conditional Beans</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you have multiple conditions and complex requirements it may become difficult to understand why a particular bean has not been loaded.</p>
@@ -1889,8 +1877,7 @@ public class JdbcBookService implements BookService {
 </div>
 </div>
 
-
-<h2 id="replaces">3.9 Bean Replacement</h2>
+<h2 id="replaces"><a class="anchor" href="#replaces"></a>3.9 Bean Replacement</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/replaces.adoc"'>
@@ -2020,7 +2007,7 @@ class MockBookService : BookService {
 </table>
 </div>
 <div class="sect2">
-<h3 id="_factory_replacement">Factory Replacement</h3>
+<h3 id="_factory_replacement"><a class="anchor" href="#_factory_replacement"></a>Factory Replacement</h3>
 <div class="paragraph">
 <p>The <code>@Replaces</code> annotation also supports a <code>factory</code> argument. That argument allows the replacement of factory beans in their entirety or specific types created by the factory.</p>
 </div>
@@ -2188,7 +2175,7 @@ class TextBookFactory {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_default_implementation">Default Implementation</h3>
+<h3 id="_default_implementation"><a class="anchor" href="#_default_implementation"></a>Default Implementation</h3>
 <div class="paragraph">
 <p>When exposing an API, it may be desirable for the default implementation of an interface to not be exposed as part of the public API. Doing so would prevent users from being able to replace the implementation because they would not be able to reference the class. The solution is to annotate the interface with <a href="../api/io/micronaut/context/annotation/DefaultImplementation.html">DefaultImplementation</a> to indicate which implementation should be replaced if a user creates a bean that <code>@Replaces(YourInterface.class)</code>.</p>
 </div>
@@ -2298,8 +2285,7 @@ class CustomResponseStrategy : ResponseStrategy</code></pre>
 </div>
 </div>
 
-
-<h2 id="beanConfigurations">3.10 Bean Configurations</h2>
+<h2 id="beanConfigurations"><a class="anchor" href="#beanConfigurations"></a>3.10 Bean Configurations</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanConfigurations.adoc"'>
@@ -2344,8 +2330,7 @@ package my.package</code></pre>
 <p>INFO: Java and Kotlin also support this functionality via <code>package-info.java</code>. Kotlin does not support a <code>package-info.kt</code> as of version 1.3.</p>
 </div>
 
-
-<h2 id="lifecycle">3.11 Life-Cycle Methods</h2>
+<h2 id="lifecycle"><a class="anchor" href="#lifecycle"></a>3.11 Life-Cycle Methods</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/lifecycle.adoc"'>
@@ -2355,7 +2340,7 @@ package my.package</code></pre>
 
 
 <div class="sect1">
-<h2 id="_when_the_context_starts">When The Context Starts</h2>
+<h2 id="_when_the_context_starts"><a class="anchor" href="#_when_the_context_starts"></a>When The Context Starts</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
@@ -2402,7 +2387,7 @@ class V8Engine implements Engine {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_when_the_context_closes">When The Context Closes</h2>
+<h2 id="_when_the_context_closes"><a class="anchor" href="#_when_the_context_closes"></a>When The Context Closes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
@@ -2498,8 +2483,7 @@ Just simply implementing the Closeable or AutoCloseable interfaces is not enough
 </div>
 </div>
 
-
-<h2 id="contextEvents">3.12 Context Events</h2>
+<h2 id="contextEvents"><a class="anchor" href="#contextEvents"></a>3.12 Context Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/contextEvents.adoc"'>
@@ -2512,7 +2496,7 @@ Just simply implementing the Closeable or AutoCloseable interfaces is not enough
 <p>Micronaut supports a general event system through the context. The <a href="../api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a> API is used to publish events and the <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> API is used to listen to events. The event system is not limited to the events that Micronaut publishes and can be used for custom events created by the users.</p>
 </div>
 <div class="sect2">
-<h3 id="_publishing_events">Publishing Events</h3>
+<h3 id="_publishing_events"><a class="anchor" href="#_publishing_events"></a>Publishing Events</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a> API supports events of any type, however all events that Micronaut publishes extend <a href="../api/io/micronaut/context/event/ApplicationEvent.html">ApplicationEvent</a>.</p>
 </div>
@@ -2611,7 +2595,7 @@ Publishing an event is <strong>synchronous</strong> by default! The <code>publis
 </div>
 </div>
 <div class="sect2">
-<h3 id="_listening_for_events">Listening for Events</h3>
+<h3 id="_listening_for_events"><a class="anchor" href="#_listening_for_events"></a>Listening for Events</h3>
 <div class="paragraph">
 <p>To listen to an event, register a bean that implements <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> where the generic type is the type of event the listener should be executed for.</p>
 </div>
@@ -2953,8 +2937,7 @@ class SampleEventListenerSpec : AnnotationSpec() {
 </div>
 </div>
 
-
-<h2 id="events">3.13 Bean Events</h2>
+<h2 id="events"><a class="anchor" href="#events"></a>3.13 Bean Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/events.adoc"'>
@@ -3146,8 +3129,7 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
 <p>The <a href="../api/io/micronaut/context/event/BeanCreatedEventListener.html">BeanCreatedEventListener</a> interface is more typically used to decorate or enhance a fully initialized bean by creating a proxy for example.</p>
 </div>
 
-
-<h2 id="introspection">3.14 Bean Introspection</h2>
+<h2 id="introspection"><a class="anchor" href="#introspection"></a>3.14 Bean Introspection</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/introspection.adoc"'>
@@ -3163,14 +3145,14 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
 <p>The <a href="../api/io/micronaut/core/beans/BeanIntrospector.html">BeanIntrospector</a> and <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> interfaces allow looking up bean introspections that allow you to instantiate and read/write bean properties without using reflection or caching reflective metadata which consumes excessive memory for large beans.</p>
 </div>
 <div class="sect2">
-<h3 id="_making_a_bean_available_for_introspection">Making a Bean Available for Introspection</h3>
+<h3 id="_making_a_bean_available_for_introspection"><a class="anchor" href="#_making_a_bean_available_for_introspection"></a>Making a Bean Available for Introspection</h3>
 <div class="paragraph">
 <p>Unlike the JDK&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html">Introspector</a> every class is not automatically available for introspection, to make a class available for introspection you must as a minimum enable Micronaut&#8217;s annotation processor (<code>micronaut-inject-java</code> for Java and Kotlin and <code>micronaut-inject-groovy</code> for Groovy) in your build and ensure you have a runtime time dependency on <code>micronaut-core</code>.</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.2'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.3'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3179,7 +3161,7 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.2.2&lt;/version&gt;
+        &lt;version&gt;1.2.3&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -3201,7 +3183,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.2'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.3'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3209,7 +3191,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.2.2&lt;/version&gt;
+    &lt;version&gt;1.2.3&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -3220,9 +3202,9 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <p>Once your build is configured you have a few ways to generate introspection data.</p>
 </div>
 <div class="sect3">
-<h4 id="_use_the_code_introspected_code_annotation">Use the <code>@Introspected</code> Annotation</h4>
+<h4 id="_use_the_code_introspected_code_annotation"><a class="anchor" href="#_use_the_code_introspected_code_annotation"></a>Use the <code>@Introspected</code> Annotation</h4>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation can be used on any class which you want to make available for introspecton, simply annotate the class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a>:</p>
+<p>The <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation can be used on any class which you want to make available for introspection, simply annotate the class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -3349,7 +3331,7 @@ data class Person(var name : String) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_use_the_code_introspected_code_annotation_on_a_configuration_class">Use the <code>@Introspected</code> Annotation on a Configuration Class</h4>
+<h4 id="_use_the_code_introspected_code_annotation_on_a_configuration_class"><a class="anchor" href="#_use_the_code_introspected_code_annotation_on_a_configuration_class"></a>Use the <code>@Introspected</code> Annotation on a Configuration Class</h4>
 <div class="paragraph">
 <p>If the class you wish to introspect is already compiled and not under your control an alternative option is to define a configuration class with the <code>classes</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation set.</p>
 </div>
@@ -3396,7 +3378,7 @@ You can also use the <code>packages</code> member of the <a href="../api/io/micr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_write_a_code_annotationmapper_code_to_introspect_existing_annotations">Write a <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
+<h4 id="_write_a_code_annotationmapper_code_to_introspect_existing_annotations"><a class="anchor" href="#_write_a_code_annotationmapper_code_to_introspect_existing_annotations"></a>Write a <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
 <div class="paragraph">
 <p>If there is an existing annotation that you wish to introspect by default you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>.</p>
 </div>
@@ -3418,7 +3400,7 @@ The <code>AnnotationMapper</code> should be on the annotation processor classpat
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_beanwrapper_api">The BeanWrapper API</h3>
+<h3 id="_the_beanwrapper_api"><a class="anchor" href="#_the_beanwrapper_api"></a>The BeanWrapper API</h3>
 <div class="paragraph">
 <p>A <a href="../api/io/micronaut/core/beans/BeanProperty.html">BeanProperty</a> provides raw access to read and write a property value for a given class and does not provide any automatic type conversion.</p>
 </div>
@@ -3476,7 +3458,7 @@ The <code>AnnotationMapper</code> should be on the annotation processor classpat
 </div>
 </div>
 <div class="sect2">
-<h3 id="_jackson_and_bean_introspection">Jackson and Bean Introspection</h3>
+<h3 id="_jackson_and_bean_introspection"><a class="anchor" href="#_jackson_and_bean_introspection"></a>Jackson and Bean Introspection</h3>
 <div class="paragraph">
 <p>You can enable bean introspection integration with Jackson for reflection-free JSON serialization and deserialization using the <code>jackson.bean-introspection-module</code> setting.</p>
 </div>
@@ -3516,8 +3498,7 @@ Currently only bean properties (private field with public getter/setter) are sup
 </div>
 </div>
 
-
-<h2 id="beanValidation">3.15 Bean Validation</h2>
+<h2 id="beanValidation"><a class="anchor" href="#beanValidation"></a>3.15 Bean Validation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/beanValidation.adoc"'>
@@ -3615,7 +3596,7 @@ Currently only bean properties (private field with public getter/setter) are sup
 </p>
 </div>
 <div class="sect2">
-<h3 id="_validating_bean_methods">Validating Bean Methods</h3>
+<h3 id="_validating_bean_methods"><a class="anchor" href="#_validating_bean_methods"></a>Validating Bean Methods</h3>
 <div class="paragraph">
 <p>You can validate methods of any class declared as a Micronaut bean simply by using the <code>javax.validation</code> annotation as arguments:</p>
 </div>
@@ -3767,7 +3748,7 @@ class PersonServiceSpec {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_data_classes">Validating Data Classes</h3>
+<h3 id="_validating_data_classes"><a class="anchor" href="#_validating_data_classes"></a>Validating Data Classes</h3>
 <div class="paragraph">
 <p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
 </div>
@@ -4003,7 +3984,7 @@ fun testThatPersonIsValid() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_configuration_properties">Validating Configuration Properties</h3>
+<h3 id="_validating_configuration_properties"><a class="anchor" href="#_validating_configuration_properties"></a>Validating Configuration Properties</h3>
 <div class="paragraph">
 <p>You can also validate the properties of classes that are annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> to ensure configuration is correct.</p>
 </div>
@@ -4021,7 +4002,7 @@ It is recommended that you annotate <a href="../api/io/micronaut/context/annotat
 </div>
 </div>
 <div class="sect2">
-<h3 id="_defining_additional_constraints">Defining Additional Constraints</h3>
+<h3 id="_defining_additional_constraints"><a class="anchor" href="#_defining_additional_constraints"></a>Defining Additional Constraints</h3>
 <div class="paragraph">
 <p>To define additional constraints you can define a new annotation, for example:</p>
 </div>
@@ -4270,7 +4251,7 @@ fun testCustomValidator() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_annotations_at_compilation_time">Validating Annotations at Compilation Time</h3>
+<h3 id="_validating_annotations_at_compilation_time"><a class="anchor" href="#_validating_annotations_at_compilation_time"></a>Validating Annotations at Compilation Time</h3>
 <div class="paragraph">
 <p>You can use Micronaut&#8217;s validator to validate annotation usages at compilation time. To do so you should include <code>micronaut-validation</code> in the annotation processor classpath:</p>
 </div>
@@ -4410,8 +4391,7 @@ class DurationPatternValidator : ConstraintValidator&lt;DurationPattern, CharSeq
 </div>
 </div>
 
-
-<h2 id="annotationMetadata">3.16 Bean Annotation Metadata</h2>
+<h2 id="annotationMetadata"><a class="anchor" href="#annotationMetadata"></a>3.16 Bean Annotation Metadata</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/annotationMetadata.adoc"'>
@@ -4467,7 +4447,7 @@ for(BeanDefinition definition : definitions) {
 <p>This approach is not recommended however, as it requires reflection and increases memory consumption due to the use of runtime created proxies and should be used as a last resort (for example if you need an instance of the annotation to integrate with a third party library).</p>
 </div>
 <div class="sect2">
-<h3 id="_aliasing_mapping_annotations">Aliasing / Mapping Annotations</h3>
+<h3 id="_aliasing_mapping_annotations"><a class="anchor" href="#_aliasing_mapping_annotations"></a>Aliasing / Mapping Annotations</h3>
 <div class="paragraph">
 <p>There are times when you may want to alias the value of an annotation member to the value of another annotation member. To do this you can use the <a href="../api/io/micronaut/context/annotation/AliasFor.html">@AliasFor</a> annotation to alias the value of one member to the value of another.</p>
 </div>
@@ -4587,8 +4567,7 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 </div>
 </div>
 
-
-<h2 id="springBeans">3.17 Micronaut Beans And Spring</h2>
+<h2 id="springBeans"><a class="anchor" href="#springBeans"></a>3.17 Micronaut Beans And Spring</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/springBeans.adoc"'>
@@ -4652,8 +4631,7 @@ class ByAnnotationTypeConfig {
 </div>
 </div>
 
-
-<h2 id="android">3.18 Android Support</h2>
+<h2 id="android"><a class="anchor" href="#android"></a>3.18 Android Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/android.adoc"'>
@@ -4669,7 +4647,7 @@ class ByAnnotationTypeConfig {
 <p>This allows you to use the same application framework for both your Android client and server implementation.</p>
 </div>
 <div class="sect1">
-<h2 id="_configuring_your_android_build">Configuring Your Android Build</h2>
+<h2 id="_configuring_your_android_build"><a class="anchor" href="#_configuring_your_android_build"></a>Configuring Your Android Build</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To get started you must add the Micronaut annotation processors to the processor classpath using the <code>annotationProcessor</code> dependency configuration.</p>
@@ -4682,8 +4660,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.2"
-    compileOnly "io.micronaut:micronaut-inject-java:1.2.2"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.3"
+    compileOnly "io.micronaut:micronaut-inject-java:1.2.3"
     ...
 }</code></pre>
 </div>
@@ -4720,7 +4698,7 @@ Micronaut <code>inject-java</code> dependency uses <a href="https://developer.an
 </div>
 </div>
 <div class="sect1">
-<h2 id="_enabling_dependency_injection">Enabling Dependency Injection</h2>
+<h2 id="_enabling_dependency_injection"><a class="anchor" href="#_enabling_dependency_injection"></a>Enabling Dependency Injection</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once you have configured the classpath correctly, the next step is start the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>

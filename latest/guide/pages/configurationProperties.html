@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.4 Configuration Properties 1.2.2</title>
+    <title>4.4 Configuration Properties 1.2.3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,14 +114,13 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.4 Configuration Properties</h1>
 
-                    <p><strong>Version:</strong> 1.2.2</p>
+                    <p><strong>Version:</strong> 1.2.3</p>
                 </div>
 
                 
 
                 
-
-<h2 id="configurationProperties">4.4 Configuration Properties</h2>
+<h2 id="configurationProperties"><a class="anchor" href="#configurationProperties"></a>4.4 Configuration Properties</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/configurationProperties.adoc"'>
@@ -396,7 +395,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <p>For example creating a subclass of <code>EngineConfig</code> with <code>@ConfigurationProperties('bar')</code> will resolve all properties under the path <code>my.engine.bar</code>.</p>
 </div>
 <div class="sect1">
-<h2 id="_property_type_conversion">Property Type Conversion</h2>
+<h2 id="_property_type_conversion"><a class="anchor" href="#_property_type_conversion"></a>Property Type Conversion</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When resolving properties Micronaut will use the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> bean to convert properties. You can register additional converters for types not supported by micronaut by defining beans that implement the <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> interface.</p>
@@ -405,7 +404,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <p>Micronaut features some built-in conversions that are useful, which are detailed below.</p>
 </div>
 <div class="sect2">
-<h3 id="_duration_conversion">Duration Conversion</h3>
+<h3 id="_duration_conversion"><a class="anchor" href="#_duration_conversion"></a>Duration Conversion</h3>
 <div class="paragraph">
 <p>Durations can be specified by appending the unit with a number. Supported units are <code>s</code>, <code>ms</code>, <code>m</code> etc. The following table summarizes examples:</p>
 </div>
@@ -466,7 +465,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_list_array_conversion">List / Array Conversion</h3>
+<h3 id="_list_array_conversion"><a class="anchor" href="#_list_array_conversion"></a>List / Array Conversion</h3>
 <div class="paragraph">
 <p>Lists and arrays can be specified in Java properties files as comma-separated values or in YAML using native YAML lists. The generic types are used to convert the values. For example in YAML:</p>
 </div>
@@ -514,7 +513,7 @@ List&lt;URL&gt; urls;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_readable_bytes">Readable Bytes</h3>
+<h3 id="_readable_bytes"><a class="anchor" href="#_readable_bytes"></a>Readable Bytes</h3>
 <div class="paragraph">
 <p>You can annotate any setter parameter with <a href="../api/io/micronaut/core/convert/format/ReadableBytes.html">@ReadableBytes</a> to allow the value to be set using a shorthand syntax for specifying bytes, kilobytes etc. For example the following is taken from <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a>:</p>
 </div>
@@ -562,7 +561,7 @@ List&lt;URL&gt; urls;</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_formatting_dates">Formatting Dates</h3>
+<h3 id="_formatting_dates"><a class="anchor" href="#_formatting_dates"></a>Formatting Dates</h3>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/core/convert/format/Format.html">@Format</a> annotation can be used on any setter to allow the date format to be specified when binding <code>javax.time</code> date objects.</p>
 </div>
@@ -578,7 +577,7 @@ List&lt;URL&gt; urls;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_builder">Configuration Builder</h2>
+<h2 id="_configuration_builder"><a class="anchor" href="#_configuration_builder"></a>Configuration Builder</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Many existing frameworks and tools already use builder-style classes to construct configuration.</p>
@@ -806,7 +805,7 @@ internal class EngineFactory {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mapformat">MapFormat</h2>
+<h2 id="_mapformat"><a class="anchor" href="#_mapformat"></a>MapFormat</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For some use cases it may be desirable to accept a map of arbitrary configuration properties that can be supplied to a bean, especially if the bean represents a third-party API where not all of the possible configuration properties are known by the developer. For example, a datasource may accept a map of configuration properties specific to a particular database driver, allowing the user to specify any desired options in the map without coding every single property explicitly.</p>
@@ -817,7 +816,10 @@ internal class EngineFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.convert.format.MapFormat;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+import javax.validation.constraints.Min;
+import java.util.Map;
+import io.micronaut.core.convert.format.MapFormat;
 
 @ConfigurationProperties("my.engine")
 public class EngineConfig {
@@ -847,7 +849,9 @@ public class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.format.MapFormat
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+import javax.validation.constraints.Min
+import io.micronaut.core.convert.format.MapFormat
 
 @ConfigurationProperties('my.engine')
 class EngineConfig {
@@ -864,7 +868,11 @@ class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@MapFormat Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@ConfigurationProperties("my.engine")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import javax.validation.constraints.Min
+import io.micronaut.core.convert.format.MapFormat
+
+@ConfigurationProperties("my.engine")
 class EngineConfig {
 
     @Min(1L)
