@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -99,17 +99,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html" title="class in io.micronaut.context">DefaultBeanResolutionContext</a></dd>
+<dd><a href="../../../io/micronaut/context/AbstractBeanResolutionContext.html" title="class in io.micronaut.context">AbstractBeanResolutionContext</a>, <a href="../../../io/micronaut/context/DefaultBeanResolutionContext.html" title="class in io.micronaut.context">DefaultBeanResolutionContext</a></dd>
 </dl>
 <hr>
 <br>
 <pre><a href="../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
 public interface <span class="typeNameLabel">BeanResolutionContext</span>
-extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</pre>
+extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="interface in io.micronaut.core.value">ValueResolver</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></pre>
 <div class="block">Represents the resolution context for a current resolve of a given bean.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -170,38 +170,58 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#close--">close</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getAttribute-java.lang.CharSequence-">getAttribute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getContext--">getContext</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getCurrentQualifier--">getCurrentQualifier</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getInFlightBean-io.micronaut.inject.BeanIdentifier-">getInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</code>
 <div class="block">Obtains an inflight bean for the given identifier.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/context/BeanResolutionContext.Path.html" title="interface in io.micronaut.context">BeanResolutionContext.Path</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#getRootDefinition--">getRootDefinition</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#nest--">nest</a></span>()</code>
+<div class="block">Trigger the next nested context state.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#removeAttribute-java.lang.CharSequence-">removeAttribute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;key)</code>
 <div class="block">Remove the attribute for the given key.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#setAttribute-java.lang.CharSequence-java.lang.Object-">setAttribute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;key,
             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Store a value within the context.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#setCurrentQualifier-io.micronaut.context.Qualifier-">setCurrentQualifier</a></span>(<a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;?&gt;&nbsp;qualifier)</code>
+<div class="block">Sets the current qualifier.</div>
 </td>
 </tr>
 </table>
@@ -226,6 +246,29 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="close--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>close</h4>
+<pre>void&nbsp;close()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="nest--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nest</h4>
+<pre>void&nbsp;nest()</pre>
+<div class="block">Trigger the next nested context state. Only once the outer most context is closed will it be cleared.</div>
+</li>
+</ul>
 <a name="getContext--">
 <!--   -->
 </a>
@@ -335,12 +378,14 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 <a name="getInFlightBean-io.micronaut.inject.BeanIdentifier-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getInFlightBean</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
 &lt;T&gt;&nbsp;T&nbsp;getInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</pre>
-<div class="block">Obtains an inflight bean for the given identifier.</div>
+<div class="block">Obtains an inflight bean for the given identifier. An "In Flight" bean is one that is currently being
+ created but has not finished construction and been registered as a singleton just yet. For example
+ in the case whereby a bean as a <code>PostConstruct</code> method that also triggers bean resolution of the same bean.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - The bean type</dd>
@@ -348,6 +393,35 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 <dd><code>beanIdentifier</code> - The bean identifier</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The bean</dd>
+</dl>
+</li>
+</ul>
+<a name="getCurrentQualifier--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCurrentQualifier</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+<a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;?&gt;&nbsp;getCurrentQualifier()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The current bean identifier</dd>
+</dl>
+</li>
+</ul>
+<a name="setCurrentQualifier-io.micronaut.context.Qualifier-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setCurrentQualifier</h4>
+<pre>void&nbsp;setCurrentQualifier(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                         <a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;?&gt;&nbsp;qualifier)</pre>
+<div class="block">Sets the current qualifier.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifier</code> - The qualifier</dd>
 </dl>
 </li>
 </ul>

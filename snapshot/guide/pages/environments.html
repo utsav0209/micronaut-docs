@@ -231,7 +231,7 @@ function addJsClass() {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    "test disable environment deduction via builder"() {
         val ctx = ApplicationContext.build().deduceEnvironment(false).start()
-        assertFalse(ctx.getEnvironment().getActiveNames().contains(Environment.TEST))
+        assertFalse(ctx.environment.activeNames.contains(Environment.TEST))
         ctx.close()
     }</code></pre>
 </div>

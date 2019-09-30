@@ -321,47 +321,39 @@ class StubIntroduction : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1
 <div class="listingblock multi-language-sample">
 <div class="title">StubExample</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
-public class StubIntroduction implements MethodInterceptor&lt;Object,Object&gt; { <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Stub
+public interface StubExample {
 
-    @Override
-    public Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        return context.getValue( <b class="conum">(2)</b>
-                Stub.class,
-                context.getReturnType().getType()
-        ).orElse(null); <b class="conum">(3)</b>
-    }
+    @Stub("10")
+    int getNumber();
+
+    LocalDateTime getDate();
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">StubExample</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
-class StubIntroduction implements MethodInterceptor&lt;Object,Object&gt; { <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Stub
+interface StubExample {
 
-    @Override
-    Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        return context.getValue( <b class="conum">(2)</b>
-                Stub.class,
-                context.getReturnType().getType()
-        ).orElse(null) <b class="conum">(3)</b>
-    }
+    @Stub("10")
+    int getNumber()
+
+    LocalDateTime getDate()
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">StubExample</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
-class StubIntroduction : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Stub
+interface StubExample {
 
-    override fun intercept(context: MethodInvocationContext&lt;Any, Any&gt;): Any? {
-        return context.getValue&lt;Any&gt;( <b class="conum">(2)</b>
-                Stub::class.java,
-                context.returnType.type
-        ).orElse(null) <b class="conum">(3)</b>
-    }
+    @get:Stub("10")
+    val number: Int
+
+    val date: LocalDateTime?
 }</code></pre>
 </div>
 </div>
