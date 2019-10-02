@@ -1006,6 +1006,24 @@ To disable route compile time validation, set the system property <code>-Dmicron
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_routing_non_standard_http_methods"><a class="anchor" href="#_routing_non_standard_http_methods"></a>Routing non-standard HTTP methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It may be necessary to support a non-standard HTTP method for a client or server. Specifications like <a href="https://tools.ietf.org/html/rfc4918">RFC-4918 Webdav</a> require additional methods like REPORT or LOCK for example. To support that use case the @CustomHttpMethod annotation can be used.</p>
+</div>
+<div class="listingblock">
+<div class="title">RoutingExample</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@CustomHttpMethod(method = "LOCK", value = "/{name}")
+String lock(String name)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The annotation can be used anywhere any of the standard method annotations can be used, including controllers and declarative http clients.</p>
+</div>
+</div>
+</div>
 
 <h2 id="binding"><a class="anchor" href="#binding"></a>6.4 Simple Request Binding</h2>
 
