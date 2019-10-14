@@ -15748,7 +15748,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Client("\${myapp.api.twitter.url}") @Inject httpClient: RxHttpClient</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@field:Client("\${myapp.api.twitter.url}") @Inject lateinit var httpClient: RxHttpClient</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -27209,10 +27209,8 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
   micronautVersion = '1.0.2.BUILD-SNAPSHOT'
 }
 repositories {
-  mavenLocal()
-  mavenCentral()
   jcenter() <i class="conum" data-value="1"></i><b>(1)</b>
-  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" } <i class="conum" data-value="2"></i><b>(2)</b>
+  maven { url "https://oss.jfrog.org/oss-snapshot-local" } <i class="conum" data-value="2"></i><b>(2)</b>
 }
 dependencyManagement {
   imports {
@@ -27225,11 +27223,11 @@ dependencyManagement {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Micronaut releases are available on jcenter</td>
+<td>Micronaut releases are available on JCenter and Maven Central</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Micronaut snapshots are available on sonatype</td>
+<td>Micronaut snapshots are available on JFrog OSS</td>
 </tr>
 </table>
 </div>
@@ -27252,8 +27250,8 @@ dependencyManagement {
       &lt;url&gt;https://jcenter.bintray.com&lt;/url&gt; <i class="conum" data-value="2"></i><b>(2)</b>
     &lt;/repository&gt;
     &lt;repository&gt;
-      &lt;id&gt;sonatype-snapshots&lt;/id&gt;
-      &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt; <i class="conum" data-value="3"></i><b>(3)</b>
+      &lt;id&gt;jfrog-snapshots&lt;/id&gt;
+      &lt;url&gt;https://oss.jfrog.org/oss-snapshot-local&lt;/url&gt; <i class="conum" data-value="3"></i><b>(3)</b>
     &lt;/repository&gt;
   &lt;/repositories&gt;
 
@@ -27281,11 +27279,11 @@ dependencyManagement {
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Micronaut releases are available on jcenter</td>
+<td>Micronaut releases are available on JCenter and Maven Central</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Micronaut snapshots are available on sonatype</td>
+<td>Micronaut snapshots are available on JFrog OSS Snapshots</td>
 </tr>
 </table>
 </div>
