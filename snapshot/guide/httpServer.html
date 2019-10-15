@@ -477,6 +477,7 @@ import javax.inject.Inject
 
 @MicronautTest
 class HelloControllerSpec {
+
     @Inject
     lateinit var server: EmbeddedServer <b class="conum">(1)</b>
 
@@ -890,6 +891,83 @@ void "/issues/show/{number} without number responds 404"() {
 </td>
 <td class="content">
 All of the method annotations default to <code>/</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_multiple_uris"><a class="anchor" href="#_multiple_uris"></a>Multiple URIs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each of the routing annotations support multiple URI templates. For each template, a route will be created. This feature is useful for example to change the path of the API and leaving the existing path as is for backwards compatibility. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Multiple URIs</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+@Controller("/hello")
+public class BackwardCompatibleController {
+
+    @Get(uris = {"/{name}", "/person/{name}"}) <b class="conum">(1)</b>
+    public String hello(String name) { <b class="conum">(2)</b>
+        return "Hello, " + name;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Multiple URIs</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/hello")
+class BackwardCompatibleController {
+
+    @Get(uris = ["/{name}", "/person/{name}"]) <b class="conum">(1)</b>
+    String hello(String name) { <b class="conum">(2)</b>
+        "Hello, " + name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Multiple URIs</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/hello")
+class BackwardCompatibleController {
+
+    @Get(uris = ["/{name}", "/person/{name}"]) <b class="conum">(1)</b>
+    fun hello(name: String): String { <b class="conum">(2)</b>
+        return "Hello, $name"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Specify multiple templates</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Bind to the template arguments as normal</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Route validation is more complicated with multiple templates. If a variable that would normally be required does not exist in all templates, then that variable is considered optional since it may not exist for every execution of the method.
 </td>
 </tr>
 </table>
