@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.24.2 Using @ClientWebSocket 1.2.4</title>
+    <title>6.24.2 Using @ClientWebSocket 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.24.2 Using @ClientWebSocket</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -151,18 +151,23 @@ RxWebSocketClient webSocketClient;</code></pre>
 <div class="paragraph">
 <p>For example consider the following implementation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
 import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
+import io.micronaut.websocket.annotation.ClientWebSocket;
+import io.micronaut.websocket.annotation.OnMessage;
+import io.micronaut.websocket.annotation.OnOpen;
 import io.reactivex.Single;
+
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Future;
 
-@ClientWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
-public abstract class ChatClientWebSocket implements AutoCloseable { <i class="conum" data-value="2"></i><b>(2)</b>
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+public abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
 
     private WebSocketSession session;
     private HttpRequest request;
@@ -171,7 +176,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;();
 
     @OnOpen
-    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
         this.topic = topic;
         this.username = username;
         this.session = session;
@@ -201,10 +206,66 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     @OnMessage
     public void onMessage(
             String message) {
-        replies.add(message); <i class="conum" data-value="4"></i><b>(4)</b>
+        replies.add(message); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
+
+    private WebSocketSession session
+    private HttpRequest request
+    private String topic
+    private String username
+    private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;()
+
+    @OnOpen
+    void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
     }
 
-}</code></pre>
+    String getTopic() {
+        topic
+    }
+
+    String getUsername() {
+        username
+    }
+
+    Collection&lt;String&gt; getReplies() {
+        replies
+    }
+
+    WebSocketSession getSession() {
+        session
+    }
+
+    HttpRequest getRequest() {
+        request
+    }
+
+    @OnMessage
+    void onMessage(
+            String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -237,7 +298,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
 </div>
 </div>
 <div class="paragraph">
-<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>:</p>
+<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a>:</p>
 </div>
 <div class="listingblock">
 <div class="title">WebSocket Send Methods</div>

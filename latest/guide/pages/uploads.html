@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.19 File Uploads 1.2.4</title>
+    <title>6.19 File Uploads 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.19 File Uploads</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -182,24 +182,32 @@ Data can only be retrieved from a <a href="../api/io/micronaut/http/multipart/Pa
 <div class="paragraph">
 <p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.http.multipart.StreamingFileUpload;
 import io.reactivex.Single;
 import org.reactivestreams.Publisher;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller("/upload")
 public class UploadController {
 
-    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
-    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) throws IOException { <i class="conum" data-value="2"></i><b>(2)</b>
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) throws IOException { <b class="conum">(2)</b>
         File tempFile = File.createTempFile(file.getFilename(), "temp");
-        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile); <i class="conum" data-value="3"></i><b>(3)</b>
-        return Single.fromPublisher(uploadPublisher)  <i class="conum" data-value="4"></i><b>(4)</b>
+        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile); <b class="conum">(3)</b>
+        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
             .map(success -&gt; {
                 if (success) {
                     return HttpResponse.ok("Uploaded");
@@ -208,6 +216,80 @@ public class UploadController {
                                        .body("Upload Failed");
                 }
             });
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.reactivex.Single
+import org.reactivestreams.Publisher
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
+        File tempFile = File.createTempFile(file.filename, "temp")
+        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
+        Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
+            .map({ success -&gt;
+                if (success) {
+                    HttpResponse.ok("Uploaded")
+                } else {
+                    HttpResponse.&lt;String&gt;status(HttpStatus.CONFLICT)
+                            .body("Upload Failed")
+                }
+            })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.reactivex.Single
+
+import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
+
+@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun upload(file: StreamingFileUpload): Single&lt;HttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
+        val tempFile = File.createTempFile(file.filename, "temp")
+        val uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
+        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
+                .map { success -&gt;
+                    if (success) {
+                        HttpResponse.ok("Uploaded")
+                    } else {
+                        HttpResponse.status&lt;String&gt;(HttpStatus.CONFLICT)
+                                .body("Upload Failed")
+                    }
+                }
     }
 
 }</code></pre>
@@ -242,25 +324,60 @@ public class UploadController {
 <div class="paragraph">
 <p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/CompletedFileUpload.html">CompletedFileUpload</a> has been created that has methods to retrieve the data of the file, but also has file information like the content type and file name.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.multipart.CompletedFileUpload;
-
-import java.io.IOException;
-import java.nio.file.*;
-
-@Controller("/upload")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/upload")
 public class UploadController {
 
-    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
-    public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <i class="conum" data-value="2"></i><b>(2)</b>
+    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
         try {
-            File tempFile = File.createTempFile(file.getFilename(), "temp"); <i class="conum" data-value="3"></i><b>(3)</b>
+            File tempFile = File.createTempFile(file.getFilename(), "temp"); <b class="conum">(3)</b>
             Path path = Paths.get(tempFile.getAbsolutePath());
-            Files.write(path, file.getBytes()); <i class="conum" data-value="3"></i><b>(3)</b>
+            Files.write(path, file.getBytes()); <b class="conum">(3)</b>
             return HttpResponse.ok("Uploaded");
         } catch (IOException exception) {
             return HttpResponse.badRequest("Upload Failed");
+        }
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
+            Path path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file.bytes)<b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (IOException exception) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/completed", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadCompleted(file: CompletedFileUpload): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
+        return try {
+            val tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
+            val path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file.bytes) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (exception: IOException) {
+            HttpResponse.badRequest("Upload Failed")
         }
     }
 

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.23 Server Sent Events 1.2.4</title>
+    <title>6.23 Server Sent Events 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.23 Server Sent Events</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -133,18 +133,18 @@ function addJsClass() {
 <p>The Micronaut HTTP server supports emitting <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server Sent Events (SSE)</a> using the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> API.</p>
 </div>
 <div class="paragraph">
-<p>To emit events from the server you simply return a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
+<p>To emit events from the server you simply return a Reactive Streams <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
 </div>
 <div class="paragraph">
 <p>Imagine for an example a event stream of news headlines, you may define a data class as follows:</p>
 </div>
-<div class="listingblock">
-<div class="title">Headline.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Headline {
+<pre class="highlight"><code class="language-java" data-lang="java">public class Headline {
     private String title;
     private String description;
 
@@ -173,13 +173,45 @@ function addJsClass() {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>To emit news headline events you can write a controller that returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class Headline {
+    String title;
+    String description;
+
+    Headline() {}
+
+    Headline(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+}</code></pre>
 </div>
-<div class="listingblock">
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Headline {
+    var title: String? = null
+    var description: String? = null
+
+    constructor() {}
+
+    constructor(title: String, description: String) {
+        this.title = title
+        this.description = description
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To emit news headline events you can write a controller that returns a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
 import io.micronaut.http.sse.Event;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
@@ -188,19 +220,91 @@ import org.reactivestreams.Publisher;
 public class HeadlineController {
 
     @Get
-    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <i class="conum" data-value="1"></i><b>(1)</b>
-        String[] versions = new String[]{"1.0", "2.0"}; <i class="conum" data-value="2"></i><b>(2)</b>
+    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
+        String[] versions = new String[]{"1.0", "2.0"}; <b class="conum">(2)</b>
 
-        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
+        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <b class="conum">(3)</b>
             if (i &lt; versions.length) {
-                emitter.onNext( <i class="conum" data-value="4"></i><b>(4)</b>
+                emitter.onNext( <b class="conum">(4)</b>
                     Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
                 );
             } else {
-                emitter.onComplete(); <i class="conum" data-value="5"></i><b>(5)</b>
+                emitter.onComplete(); <b class="conum">(5)</b>
             }
             return ++i;
         });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing Server Sent Events from a Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.sse.Event
+import io.reactivex.Emitter
+import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
+import org.reactivestreams.Publisher
+
+
+@Controller("/headlines")
+class HeadlineController {
+
+    @Get
+    Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
+        String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
+
+        def initialState = { -&gt; 0 }
+        def emitterFunction = { Integer i, Emitter emitter -&gt;  <b class="conum">(3)</b>
+            if (i &lt; versions.length) {
+                emitter.onNext( <b class="conum">(4)</b>
+                        Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                )
+            } else {
+                emitter.onComplete() <b class="conum">(5)</b>
+            }
+            return ++i
+        }
+
+        return Flowable.generate(initialState, emitterFunction as BiFunction&lt;Integer,Emitter&lt;Event&lt;Headline&gt;&gt;,Integer&gt;)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing Server Sent Events from a Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.sse.Event
+import io.reactivex.Emitter
+import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
+import org.reactivestreams.Publisher
+import java.util.concurrent.Callable
+
+
+@Controller("/headlines")
+class HeadlineController {
+
+    @Get
+    fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
+        val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
+
+        return Flowable.generate&lt;Event&lt;Headline&gt;, Int&gt;(Callable&lt;Int&gt;{ 0 }, BiFunction { <b class="conum">(3)</b>
+            i: Int, emitter: Emitter&lt;Event&lt;Headline&gt;&gt; -&gt;
+            var nextInt: Int = i
+            if (i &lt; versions.size) {
+                emitter.onNext( <b class="conum">(4)</b>
+                        Event.of&lt;Headline&gt;(Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                )
+            } else {
+                emitter.onComplete() <b class="conum">(5)</b>
+            }
+            ++nextInt
+        })
     }
 }</code></pre>
 </div>
@@ -209,7 +313,7 @@ public class HeadlineController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The controller method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
+<td>The controller method returns a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -217,7 +321,7 @@ public class HeadlineController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
+<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>

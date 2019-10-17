@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.2.6 Retry and Circuit Breaker 1.2.4</title>
+    <title>7.2.6 Retry and Circuit Breaker 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.2.6 Retry and Circuit Breaker</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -135,15 +135,27 @@ function addJsClass() {
 <div class="paragraph">
 <p>You can declare the <a href="../api/io/micronaut/retry/annotation/Retryable.html">@Retryable</a> or <a href="../api/io/micronaut/retry/annotation/CircuitBreaker.html">@CircuitBreaker</a> annotations on any <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> interface and the retry policy will be applied, for example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Declaring @Retryable</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/pets")
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/pets")
 @Retryable
 public interface PetClient extends PetOperations {
 
     @Override
     Single&lt;Pet&gt; save(String name, int age);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring @Retryable</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/pets")
+@Retryable
+interface PetClient extends PetOperations {
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age)
 }</code></pre>
 </div>
 </div>

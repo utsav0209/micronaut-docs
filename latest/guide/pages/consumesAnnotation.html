@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.10 Accepted Request Content-Type 1.2.4</title>
+    <title>6.10 Accepted Request Content-Type 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.10 Accepted Request Content-Type</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -130,22 +130,94 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>A Micronaut&#8217;s controller action consumes <code>application/json</code> by default. Nonetheless, you can support other <code>Content-Type</code> with the <code>@Consumes</code> annotation.</p>
+<p>A Micronaut&#8217;s controller action consumes <code>application/json</code> by default. Consuming other content types is supported with the <code>@Consumes</code> annotation, or the <code>consumes</code> member of any HTTP method annotation.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/test")
-class TestController {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
 
-    @Consumes([MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON]) <i class="conum" data-value="1"></i><b>(1)</b>
-    @Post("/multiple-consumes")
+@Controller("/consumes")
+public class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    public HttpResponse index() {
+        return HttpResponse.ok();
+    }
+
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) <b class="conum">(2)</b>
+    @Post("/multiple")
+    public HttpResponse multipleConsumes() {
+        return HttpResponse.ok();
+    }
+
+    @Post(value = "/member", consumes = MediaType.TEXT_PLAIN) <b class="conum">(3)</b>
+    public HttpResponse consumesMember() {
+        return HttpResponse.ok();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+@Controller("/consumes")
+class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    HttpResponse index() {
+        HttpResponse.ok()
+    }
+
+    @Consumes([MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON]) <b class="conum">(2)</b>
+    @Post("/multiple")
     HttpResponse multipleConsumes() {
         HttpResponse.ok()
     }
 
-    @Post <i class="conum" data-value="2"></i><b>(2)</b>
-    HttpResponse index() {
+    @Post(value = "/member", consumes = MediaType.TEXT_PLAIN) <b class="conum">(3)</b>
+    HttpResponse consumesMember() {
         HttpResponse.ok()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+@Controller("/consumes")
+class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    fun index(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
+    }
+
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON) <b class="conum">(2)</b>
+    @Post("/multiple")
+    fun multipleConsumes(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
+    }
+
+    @Post(value = "/member", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(3)</b>
+    fun consumesMember(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
     }
 }</code></pre>
 </div>
@@ -154,11 +226,15 @@ class TestController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>@Consumes</code> annotation takes a <code>String[]</code> of supported media types for an incoming request.</td>
+<td>By default, a controller&#8217;s action consumes request with <code>Content-Type</code> of type <code>application/json</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>By default, a controller&#8217;s action consumes request with <code>Content-Type</code> of type <code>application/json</code>.</td>
+<td><code>@Consumes</code> annotation takes a <code>String[]</code> of supported media types for an incoming request.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The consumes can also be specified with the <code>consumes</code> member of the method annotation.</td>
 </tr>
 </table>
 </div>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.21 HTTP Filters 1.2.4</title>
+    <title>6.21 HTTP Filters 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.21 HTTP Filters</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -175,28 +175,87 @@ function addJsClass() {
 <div class="paragraph">
 <p>As an example, consider the following example <code>TraceService</code> that uses RxJava to compose an I/O operation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">A TraceService Example using RxJava</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
+
 @Singleton
 public class TraceService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TraceService.class);
 
     Flowable&lt;Boolean&gt; trace(HttpRequest&lt;?&gt; request) {
-        return Flowable.fromCallable(() -&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+        return Flowable.fromCallable(() -&gt; { <b class="conum">(1)</b>
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Tracing request: " + request.getUri());
             }
-            // trace logic here, potentially performing I/O <i class="conum" data-value="2"></i><b>(2)</b>
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
             return true;
-        }).subscribeOn(Schedulers.io()); <i class="conum" data-value="3"></i><b>(3)</b>
+        }).subscribeOn(Schedulers.io()); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">A TraceService Example using RxJava</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.inject.Singleton
+
+@Singleton
+class TraceService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TraceService.class)
+
+    Flowable&lt;Boolean&gt; trace(HttpRequest&lt;?&gt; request) {
+        Flowable.fromCallable({ -&gt;  <b class="conum">(1)</b>
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Tracing request: " + request.getUri())
+            }
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
+            return true
+        }).subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">A TraceService Example using RxJava</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import org.slf4j.LoggerFactory
+
+import javax.inject.Singleton
+
+
+@Singleton
+class TraceService {
+
+    private val LOG = LoggerFactory.getLogger(TraceService::class.java)
+
+    internal fun trace(request: HttpRequest&lt;*&gt;): Flowable&lt;Boolean&gt; {
+        return Flowable.fromCallable {
+            <b class="conum">(1)</b>
+            if (LOG.isDebugEnabled) {
+                LOG.debug("Tracing request: " + request.uri)
+            }
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
+            true
+        }.subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -220,22 +279,62 @@ public class TraceService {
 <div class="paragraph">
 <p>You can then inject this implementation into your filter definition:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">An Example HttpServerFilter</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.*;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.*;
 import org.reactivestreams.Publisher;
 
-@Filter("/hello/**") <i class="conum" data-value="1"></i><b>(1)</b>
-public class TraceFilter implements HttpServerFilter { <i class="conum" data-value="2"></i><b>(2)</b>
+@Filter("/hello/**") <b class="conum">(1)</b>
+public class TraceFilter implements HttpServerFilter { <b class="conum">(2)</b>
     private final TraceService traceService;
 
-    public TraceFilter(TraceService traceService) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public TraceFilter(TraceService traceService) { <b class="conum">(3)</b>
         this.traceService = traceService;
     }
-    ...
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">An Example HttpServerFilter</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.filter.HttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
+import org.reactivestreams.Publisher
+
+@Filter("/hello/**") <b class="conum">(1)</b>
+class TraceFilter implements HttpServerFilter { <b class="conum">(2)</b>
+    private final TraceService traceService
+
+    TraceFilter(TraceService traceService) { <b class="conum">(3)</b>
+        this.traceService = traceService
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">An Example HttpServerFilter</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.filter.HttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
+import org.reactivestreams.Publisher
+
+
+@Filter("/hello/**") <b class="conum">(1)</b>
+class TraceFilter(<b class="conum">(2)</b>
+        private val traceService: TraceService)<b class="conum">(3)</b>
+    : HttpServerFilter {
+
 }</code></pre>
 </div>
 </div>
@@ -258,17 +357,43 @@ public class TraceFilter implements HttpServerFilter { <i class="conum" data-val
 <div class="paragraph">
 <p>The final step is write the <code>doFilter</code> implementation of the <a href="../api/io/micronaut/http/filter/HttpServerFilter.html">HttpServerFilter</a> interface.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">The doFilter implementation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Override
-public Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
-    return traceService.trace(request) <i class="conum" data-value="1"></i><b>(1)</b>
-                       .switchMap(aBoolean -&gt; chain.proceed(request)) <i class="conum" data-value="2"></i><b>(2)</b>
-                       .doOnNext(res -&gt; <i class="conum" data-value="3"></i><b>(3)</b>
-                            res.getHeaders().add("X-Trace-Enabled", "true")
-                       );
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        return traceService.trace(request) <b class="conum">(1)</b>
+                           .switchMap(aBoolean -&gt; chain.proceed(request)) <b class="conum">(2)</b>
+                           .doOnNext(res -&gt; <b class="conum">(3)</b>
+                                res.getHeaders().add("X-Trace-Enabled", "true")
+                           );
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">The doFilter implementation</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Override
+    Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        traceService.trace(request) <b class="conum">(1)</b>
+                           .switchMap({ aBoolean -&gt; chain.proceed(request) }) <b class="conum">(2)</b>
+                           .doOnNext({ res -&gt; <b class="conum">(3)</b>
+                               res.getHeaders().add("X-Trace-Enabled", "true")
+                           })
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">The doFilter implementation</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    override fun doFilter(request: HttpRequest&lt;*&gt;, chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
+        return traceService.trace(request) <b class="conum">(1)</b>
+                .switchMap { aBoolean -&gt; chain.proceed(request) } <b class="conum">(2)</b>
+                .doOnNext { res -&gt;
+                    <b class="conum">(3)</b>
+                    res.headers.add("X-Trace-Enabled", "true")
+                }
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">

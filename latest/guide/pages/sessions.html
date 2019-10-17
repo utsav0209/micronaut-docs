@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.22 HTTP Sessions 1.2.4</title>
+    <title>6.22 HTTP Sessions 1.2.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.22 HTTP Sessions</h1>
 
-                    <p><strong>Version:</strong> 1.2.4</p>
+                    <p><strong>Version:</strong> 1.2.5</p>
                 </div>
 
                 
@@ -233,10 +233,11 @@ micronaut:
 <div class="paragraph">
 <p>A <a href="../api/io/micronaut/session/Session.html">Session</a> object can be retrieved simply by declaring the <a href="../api/io/micronaut/session/Session.html">Session</a> in a controller method signature. For example consider the following controller:</p>
 </div>
-<div class="listingblock">
-<div class="title">ShoppingController.java</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
@@ -245,17 +246,74 @@ import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
 public class ShoppingController {
-    private static final String ATTR_CART = "cart"; <i class="conum" data-value="1"></i><b>(1)</b>
+    private static final String ATTR_CART = "cart"; <b class="conum">(1)</b>
 
     @Post("/cart/{name}")
-    Cart addItem(Session session, @NotBlank String name) { <i class="conum" data-value="2"></i><b>(2)</b>
-        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet(() -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
+    Cart addItem(Session session, @NotBlank String name) { <b class="conum">(2)</b>
+        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet(() -&gt; { <b class="conum">(3)</b>
             Cart newCart = new Cart();
-            session.put(ATTR_CART, newCart); <i class="conum" data-value="4"></i><b>(4)</b>
+            session.put(ATTR_CART, newCart); <b class="conum">(4)</b>
             return newCart;
         });
         cart.getItems().add(name);
         return cart;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.session.Session
+import io.micronaut.session.annotation.SessionValue
+
+import javax.annotation.Nullable
+import javax.validation.constraints.NotBlank
+
+@Controller("/shopping")
+class ShoppingController {
+    static final String ATTR_CART = "cart" <b class="conum">(1)</b>
+
+    @Post("/cart/{name}")
+    Cart addItem(Session session, @NotBlank String name) { <b class="conum">(2)</b>
+        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet({ -&gt;  <b class="conum">(3)</b>
+            Cart newCart = new Cart()
+            session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
+            newCart
+        })
+        cart.getItems().add(name)
+        cart
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.session.Session
+import io.micronaut.session.annotation.SessionValue
+
+
+@Controller("/shopping")
+class ShoppingController {
+
+    @Post("/cart/{name}")
+    internal fun addItem(session: Session, name: String): Cart { <b class="conum">(2)</b>
+        require(name.isNotBlank()) { "Name cannot be blank" }
+        val cart = session.get(ATTR_CART, Cart::class.java).orElseGet({
+            <b class="conum">(3)</b>
+            val newCart = Cart()
+            session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
+            newCart
+        })
+        cart.items.add(name)
+        return cart
     }
 
 }</code></pre>
@@ -287,15 +345,35 @@ public class ShoppingController {
 <div class="paragraph">
 <p>If you don&#8217;t want to create unnecessary sessions then you can declare the <a href="../api/io/micronaut/session/Session.html">Session</a> as <code>@Nullable</code> in which case a session will not be created and saved unnecessarily. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Nullable with Sessions</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post("/cart/clear")
-void clearCart(@Nullable Session session) {
-    if (session != null) {
-        session.remove(ATTR_CART);
-    }
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Post("/cart/clear")
+    void clearCart(@Nullable Session session) {
+        if (session != null) {
+            session.remove(ATTR_CART);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Nullable with Sessions</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Post("/cart/clear")
+    void clearCart(@Nullable Session session) {
+        if (session != null) {
+            session.remove(ATTR_CART)
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Nullable with Sessions</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Post("/cart/clear")
+    internal fun clearCart(session: Session?) {
+        session?.remove(ATTR_CART)
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -312,18 +390,39 @@ void clearCart(@Nullable Session session) {
 <div class="paragraph">
 <p>For example, when invoking the <code>viewCart</code> method of the <code>StoreController</code> in the previous example the HTTP client will receive by default a <code>AUTHORIZATION_INFO</code> header. The following example, using a Spock test, demonstrates this:</p>
 </div>
-<div class="listingblock">
-<div class="title">Retrieving the AUTHORIZATION_INFO header</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">when: "The shopping cart is retrieved"
-HttpResponse&lt;Cart&gt; response = httpClient.exchange(HttpRequest.GET('/shopping/cart'), Cart) <i class="conum" data-value="1"></i><b>(1)</b>
-                                        .blockingFirst()
-Cart cart = response.body()
+<pre class="highlight"><code class="language-java" data-lang="java">        HttpResponse&lt;Cart&gt; response = client.exchange(HttpRequest.GET("/shopping/cart"), Cart.class) <b class="conum">(1)</b>
+                                                .blockingFirst();
+        Cart cart = response.body();
 
-then: "The shopping cart is present as well as a session id header"
-response.header(HttpHeaders.AUTHORIZATION_INFO) != null <i class="conum" data-value="2"></i><b>(2)</b>
-cart != null
-cart.items.isEmpty()</code></pre>
+        assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)); <b class="conum">(2)</b>
+        assertNotNull(cart);
+        assertTrue(cart.getItems().isEmpty());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when: "The shopping cart is retrieved"
+        HttpResponse&lt;Cart&gt; response = httpClient.exchange(HttpRequest.GET('/shopping/cart'), Cart) <b class="conum">(1)</b>
+                                                .blockingFirst()
+        Cart cart = response.body()
+
+        then: "The shopping cart is present as well as a session id header"
+        response.header(HttpHeaders.AUTHORIZATION_INFO) != null <b class="conum">(2)</b>
+        cart != null
+        cart.items.isEmpty()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            var response = client.exchange(HttpRequest.GET&lt;Cart&gt;("/shopping/cart"), Cart::class.java) <b class="conum">(1)</b>
+                    .blockingFirst()
+            var cart = response.body()
+
+            assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)) <b class="conum">(2)</b>
+            assertNotNull(cart)
+            cart.items.isEmpty()</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -341,16 +440,37 @@ cart.items.isEmpty()</code></pre>
 <div class="paragraph">
 <p>You can then pass this <code>AUTHORIZATION_INFO</code> in subsequent requests to re-use the existing <a href="../api/io/micronaut/session/Session.html">Session</a>:</p>
 </div>
-<div class="listingblock">
-<div class="title">Sending the AUTHORIZATION_INFO header</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">        String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO); <b class="conum">(1)</b>
 
-response = httpClient.exchange(
-        HttpRequest.POST('/shopping/cart/Apple', "")
-                .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <i class="conum" data-value="2"></i><b>(2)</b>
-        .blockingFirst()
-cart = response.body()</code></pre>
+        response = client.exchange(
+                HttpRequest.POST("/shopping/cart/Apple", "")
+                        .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart.class) <b class="conum">(2)</b>
+                .blockingFirst();
+        cart = response.body();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
+
+        response = httpClient.exchange(
+                HttpRequest.POST('/shopping/cart/Apple', "")
+                        .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <b class="conum">(2)</b>
+                .blockingFirst()
+        cart = response.body()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
+
+            response = client.exchange(
+                    HttpRequest.POST("/shopping/cart/Apple", "")
+                            .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java) <b class="conum">(2)</b>
+                    .blockingFirst()
+            cart = response.body()</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -373,17 +493,44 @@ cart = response.body()</code></pre>
 <div class="paragraph">
 <p>Rather than explicitly injecting the <a href="../api/io/micronaut/session/Session.html">Session</a> into a controller method you can instead use <a href="../api/io/micronaut/session/annotation/SessionValue.html">@SessionValue</a>. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @SessionValue</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/cart")
-@SessionValue(ATTR_CART) <i class="conum" data-value="1"></i><b>(1)</b>
-Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="2"></i><b>(2)</b>
-    if (cart == null) {
-        cart = new Cart();
-    }
-    return cart;
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/cart")
+    @SessionValue(ATTR_CART) <b class="conum">(1)</b>
+    Cart viewCart(@SessionValue @Nullable Cart cart) { <b class="conum">(2)</b>
+        if (cart == null) {
+            cart = new Cart();
+        }
+        return cart;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @SessionValue</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/cart")
+    @SessionValue("cart") <b class="conum">(1)</b>
+    Cart viewCart(@SessionValue @Nullable Cart cart) { <b class="conum">(2)</b>
+        if (cart == null) {
+            cart = new Cart()
+        }
+        cart
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @SessionValue</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/cart")
+    @SessionValue(ATTR_CART) <b class="conum">(1)</b>
+    internal fun viewCart(@SessionValue cart: Cart?): Cart { <b class="conum">(2)</b>
+        var cart = cart
+        if (cart == null) {
+            cart = Cart()
+        }
+        return cart
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
