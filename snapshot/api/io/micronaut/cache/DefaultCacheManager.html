@@ -146,10 +146,18 @@ implements <a href="../../../io/micronaut/cache/CacheManager.html" title="interf
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/DefaultCacheManager.html#DefaultCacheManager-java.util.List-">DefaultCacheManager</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;caches)</code>
-<div class="block">Create default cache manager for the given caches.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../io/micronaut/cache/DefaultCacheManager.html#DefaultCacheManager-java.util.List-javax.inject.Provider-"><code>DefaultCacheManager(List, Provider)</code></a> instead.</span></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/DefaultCacheManager.html#DefaultCacheManager-java.util.List-javax.inject.Provider-">DefaultCacheManager</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;caches,
+                   <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject">Provider</a>&lt;<a href="../../../io/micronaut/cache/DynamicCacheManager.html" title="interface in io.micronaut.cache">DynamicCacheManager</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;dynamicCacheManager)</code>
+<div class="block">Create default cache manager for the given caches.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/DefaultCacheManager.html#DefaultCacheManager-io.micronaut.cache.SyncCache...-">DefaultCacheManager</a></span>(<a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;...&nbsp;caches)</code>
 <div class="block">Create default cache manager for the given caches.</div>
 </td>
@@ -207,12 +215,31 @@ implements <a href="../../../io/micronaut/cache/CacheManager.html" title="interf
 <ul class="blockList">
 <li class="blockList">
 <h4>DefaultCacheManager</h4>
-<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 public&nbsp;DefaultCacheManager(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;caches)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../io/micronaut/cache/DefaultCacheManager.html#DefaultCacheManager-java.util.List-javax.inject.Provider-"><code>DefaultCacheManager(List, Provider)</code></a> instead.</span></div>
 <div class="block">Create default cache manager for the given caches.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>caches</code> - List of synchronous cache implementations</dd>
+</dl>
+</li>
+</ul>
+<a name="DefaultCacheManager-java.util.List-javax.inject.Provider-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DefaultCacheManager</h4>
+<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
+public&nbsp;DefaultCacheManager(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;caches,
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                   <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject">Provider</a>&lt;<a href="../../../io/micronaut/cache/DynamicCacheManager.html" title="interface in io.micronaut.cache">DynamicCacheManager</a>&lt;<a href="../../../io/micronaut/cache/DefaultCacheManager.html" title="type parameter in DefaultCacheManager">C</a>&gt;&gt;&nbsp;dynamicCacheManager)</pre>
+<div class="block">Create default cache manager for the given caches.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>caches</code> - List of synchronous cache implementations</dd>
+<dd><code>dynamicCacheManager</code> - The dynamic cache manager</dd>
 </dl>
 </li>
 </ul>

@@ -7422,6 +7422,17 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <p>For example creating a subclass of <code>EngineConfig</code> with <code>@ConfigurationProperties('bar')</code> will resolve all properties under the path <code>my.engine.bar</code>.</p>
 </div>
 <div class="sect1">
+<h2 id="_includes_excludes"><a class="anchor" href="#_includes_excludes"></a>Includes / Excludes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For the cases where the configuration properties class is inheriting properties from a parent class, it may be desirable to exclude properties from the parent class. The <code>includes</code> and <code>excludes</code> members of the <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation allow for that functionality. The list applies to both local properties and inherited properties.</p>
+</div>
+<div class="paragraph">
+<p>The names supplied to the includes/excludes list should be the "property" name. For example if a setter method is injected, the property name is the de-capitalized setter name (<code>setConnectionTimeout</code> &#8594; <code>connectionTimeout</code>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_property_type_conversion"><a class="anchor" href="#_property_type_conversion"></a>Property Type Conversion</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -9688,6 +9699,14 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_cache_creation"><a class="anchor" href="#_dynamic_cache_creation"></a>Dynamic Cache Creation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For use cases where caches cannot be configured ahead of time, a <a href="../api/io/micronaut/cache/DynamicCacheManager.html">DynamicCacheManager</a> bean can be registered. When a cache is attempted to be retrieved that was not predefined, the dynamic cache manager will be invoked to return a cache. By default there is no dynamic cache manager configured, however other cache implementations may do so.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
