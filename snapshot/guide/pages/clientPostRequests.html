@@ -190,15 +190,36 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following example demonstrates how to send a simply <code>String</code> body:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a <code>String</code> body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
-        POST("/hello", "Hello John") <i class="conum" data-value="1"></i><b>(1)</b>
-            .contentType(MediaType.TEXT_PLAIN_TYPE)
-            .accept(MediaType.TEXT_PLAIN_TYPE), <i class="conum" data-value="2"></i><b>(2)</b>
-        String.class <i class="conum" data-value="3"></i><b>(3)</b>
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
+                POST("/hello", "Hello John") <b class="conum">(1)</b>
+                    .contentType(MediaType.TEXT_PLAIN_TYPE)
+                    .accept(MediaType.TEXT_PLAIN_TYPE), <b class="conum">(2)</b>
+                String.class <b class="conum">(3)</b>
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a <code>String</code> body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
+                POST("/hello", "Hello John") <b class="conum">(1)</b>
+                    .contentType(MediaType.TEXT_PLAIN_TYPE)
+                    .accept(MediaType.TEXT_PLAIN_TYPE), <b class="conum">(2)</b>
+                String.class <b class="conum">(3)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a <code>String</code> body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/hello", "Hello John") <b class="conum">(1)</b>
+                            .contentType(MediaType.TEXT_PLAIN_TYPE)
+                            .accept(MediaType.TEXT_PLAIN_TYPE), String::class.java <b class="conum">(3)</b>
+            )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -226,13 +247,30 @@ function addJsClass() {
 <div class="paragraph">
 <p>For example, the <code>Message</code> class from the previous section, you can create an instance and pass it to the <code>POST</code> method:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a JSON body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
-        POST("/greet", new Message("Hello John")), <i class="conum" data-value="1"></i><b>(1)</b>
-        Message.class <i class="conum" data-value="2"></i><b>(2)</b>
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                POST("/greet", new Message("Hello John")), <b class="conum">(1)</b>
+                Message.class <b class="conum">(2)</b>
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                POST("/greet", new Message("Hello John")), <b class="conum">(1)</b>
+                Message.class <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/greet", Message("Hello John")), Message::class.java <b class="conum">(2)</b>
+            )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -270,13 +308,31 @@ function addJsClass() {
 <div class="paragraph">
 <p>For example imagine you have a class <code>Book</code> that has a property called <code>title</code>. You can represent the <code>title</code> property in the URI template and then populate it from an instance of <code>Book</code>. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a JSON body with a URI template</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
-        POST("/amazon/book/{title}", new Book("The Stand")),
-        Book.class
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand")),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body with a URI template</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand")),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body with a URI template</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/amazon/book/{title}", Book("The Stand")),
+                    Book::class.java
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -290,14 +346,34 @@ function addJsClass() {
 <div class="paragraph">
 <p>You can also encode a POJO or a map as regular form data instead of JSON. Just set the content type to <code>application/x-www-form-urlencoded</code> on the post request:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a Form Data</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
-        POST("/amazon/book/{title}", new Book("The Stand"))
-        .contentType(MediaType.APPLICATION_FORM_URLENCODED),
-        Book.class
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a Form Data</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                Book.class
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a Form Data</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/amazon/book/{title}", Book("The Stand"))
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                    Book::class.java
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">

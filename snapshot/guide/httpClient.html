@@ -325,20 +325,50 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <div class="paragraph">
 <p>The following example shows how to use <code>retrieve</code> to execute an HTTP <code>GET</code> and receive the response body as a <code>String</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using retrieve</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String uri = UriBuilder.of("/hello/{name}")
-                       .expand(Collections.singletonMap("name", "John"))
-                       .toString();
-assertEquals("/hello/John", uri);
+<pre class="highlight"><code class="language-java" data-lang="java">        String uri = UriBuilder.of("/hello/{name}")
+                               .expand(Collections.singletonMap("name", "John"))
+                               .toString();
+        assertEquals("/hello/John", uri);
 
-String result = client.toBlocking().retrieve(uri);
+        String result = client.toBlocking().retrieve(uri);
 
-assertEquals(
-        "Hello John",
-        result
-);</code></pre>
+        assertEquals(
+                "Hello John",
+                result
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using retrieve</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        String uri = UriBuilder.of("/hello/{name}")
+                               .expand(Collections.singletonMap("name", "John"))
+                               .toString()
+        then:
+        "/hello/John" == uri
+
+        when:
+        String result = client.toBlocking().retrieve(uri)
+
+        then:
+        "Hello John" == result</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using retrieve</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val uri = UriBuilder.of("/hello/{name}")
+                    .expand(Collections.singletonMap("name", "John"))
+                    .toString()
+            uri shouldBe "/hello/John"
+
+            val result = client.toBlocking().retrieve(uri)
+
+            result shouldBe "Hello John"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -347,23 +377,61 @@ assertEquals(
 <div class="paragraph">
 <p>For example the following <code>@Controller</code> method calls another endpoint in a non-blocking manner:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using the HTTP client without blocking</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static io.micronaut.http.HttpRequest.*;
-
-import io.micronaut.http.HttpStatus;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
-import io.micronaut.http.client.*;
+import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Maybe;
 
-@Get("/hello/{name}")
-Maybe&lt;String&gt; hello(String name) { <i class="conum" data-value="1"></i><b>(1)</b>
-    return httpClient.retrieve( GET("/hello/" + name) )
-                     .firstElement(); <i class="conum" data-value="2"></i><b>(2)</b>
-}</code></pre>
+import static io.micronaut.http.HttpRequest.GET;
+
+    @Get("/hello/{name}")
+    Maybe&lt;String&gt; hello(String name) { <b class="conum">(1)</b>
+        return httpClient.retrieve( GET("/hello/" + name) )
+                         .firstElement(); <b class="conum">(2)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using the HTTP client without blocking</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.*
+import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Maybe
+
+import static io.micronaut.http.HttpRequest.GET
+
+    @Get("/hello/{name}")
+    Maybe&lt;String&gt; hello(String name) { <b class="conum">(1)</b>
+        return httpClient.retrieve( GET("/hello/" + name) )
+                         .firstElement() <b class="conum">(2)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using the HTTP client without blocking</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.*
+import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Maybe
+
+import io.micronaut.http.HttpRequest.GET
+
+    @Get("/hello/{name}")
+    internal fun hello(name: String): Maybe&lt;String&gt; { <b class="conum">(1)</b>
+        return httpClient.retrieve(GET&lt;Any&gt;("/hello/$name"))
+                .firstElement() <b class="conum">(2)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -436,13 +504,31 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 <div class="paragraph">
 <p>The previous example demonstrated using the static methods of the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> interface to construct a <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> instance. Like the name suggests a <code>MutableHttpRequest</code> can be mutated including the ability to add headers, customize the request body and so on. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Passing an HttpRequest to retrieve</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;String&gt; response = client.retrieve(
-        GET("/hello/John")
-        .header("X-My-Header", "SomeValue")
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;String&gt; response = client.retrieve(
+                GET("/hello/John")
+                .header("X-My-Header", "SomeValue")
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Passing an HttpRequest to retrieve</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;String&gt; response = client.retrieve(
+                GET("/hello/John")
+                .header("X-My-Header", "SomeValue")
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Passing an HttpRequest to retrieve</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val response = client.retrieve(
+                    GET&lt;Any&gt;("/hello/John")
+                            .header("X-My-Header", "SomeValue")
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -457,22 +543,41 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 <div class="paragraph">
 <p>For example consider the following <code>@Controller</code> method that returns a JSON response:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Returning JSON from a controller</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/greet/{name}")
-Message greet(String name) {
-    return new Message("Hello " + name);
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/greet/{name}")
+    Message greet(String name) {
+        return new Message("Hello " + name);
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Returning JSON from a controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/greet/{name}")
+    Message greet(String name) {
+        return new Message("Hello " + name)
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Returning JSON from a controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/greet/{name}")
+    internal fun greet(name: String): Message {
+        return Message("Hello $name")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The method above returns a POJO of type <code>Message</code> which looks like:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Message POJO</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import com.fasterxml.jackson.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Message {
     private final String text;
@@ -486,6 +591,37 @@ public class Message {
         return text;
     }
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Message POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+
+class Message {
+    private final String text
+
+    @JsonCreator
+    Message(@JsonProperty("text") String text) {
+        this.text = text
+    }
+
+    String getText() {
+        return text
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Message POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+
+
+class Message @JsonCreator
+constructor(@param:JsonProperty("text") val text: String)</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -503,24 +639,58 @@ Jackson annotations are used to map the constructor
 <div class="paragraph">
 <p>On the client end you can call this endpoint and decode the JSON into a map using the <code>retrieve</code> method as follows:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Decoding the response body to a Map</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;Map&gt; response = client.retrieve(
-        GET("/greet/John"), Map.class
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;Map&gt; response = client.retrieve(
+                GET("/greet/John"), Map.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a Map</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Map&gt; response = client.retrieve(
+                GET("/greet/John"), Map.class
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a Map</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            var response: Flowable&lt;Map&lt;*, *&gt;&gt; = client.retrieve(
+                    GET&lt;Any&gt;("/greet/John"), Map::class.java
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The above examples decodes the response into a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a>, representing the JSON. If you wish to customize the type of the key and string you can use the <code>Argument.of(..)</code> method:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Decoding the response body to a Map</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">response = client.retrieve(
-        GET("/greet/John"),
-        Argument.of(Map.class, String.class, String.class) <i class="conum" data-value="1"></i><b>(1)</b>
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        response = client.retrieve(
+                GET("/greet/John"),
+                Argument.of(Map.class, String.class, String.class) <b class="conum">(1)</b>
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a Map</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        response = client.retrieve(
+                GET("/greet/John"),
+                Argument.of(Map.class, String.class, String.class) <b class="conum">(1)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a Map</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            response = client.retrieve(
+                    GET&lt;Any&gt;("/greet/John"),
+                    Argument.of(Map::class.java, String::class.java, String::class.java) <b class="conum">(1)</b>
+            )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -534,17 +704,39 @@ Jackson annotations are used to map the constructor
 <div class="paragraph">
 <p>Whilst retrieving JSON as a map can be desirable, more often than not you will want to decode objects into Plain Old Java Objects (POJOs). To do that simply pass the type instead:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Decoding the response body to a POJO</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;Message&gt; response = client.retrieve(
-        GET("/greet/John"), Message.class
-);
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;Message&gt; response = client.retrieve(
+                GET("/greet/John"), Message.class
+        );
 
-assertEquals(
-        "Hello John",
-        response.blockingFirst().getText()
-);</code></pre>
+        assertEquals(
+                "Hello John",
+                response.blockingFirst().getText()
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Flowable&lt;Message&gt; response = client.retrieve(
+                GET("/greet/John"), Message.class
+        )
+
+        then:
+        "Hello John" == response.blockingFirst().getText()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Decoding the response body to a POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val response = client.retrieve(
+                    GET&lt;Any&gt;("/greet/John"), Message::class.java
+            )
+
+            response.blockingFirst().text shouldBe "Hello John"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -565,26 +757,60 @@ assertEquals(
 <div class="paragraph">
 <p>Sometimes, receiving just the object is not enough and you need information about the response. In this case, instead of <code>retrieve</code> you should use the <code>exchange</code> method:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Recieving the Full HTTP Response</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
-        GET("/greet/John"), Message.class <i class="conum" data-value="1"></i><b>(1)</b>
-);
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                GET("/greet/John"), Message.class <b class="conum">(1)</b>
+        );
 
-HttpResponse&lt;Message&gt; response = call.blockingFirst();
-Optional&lt;Message&gt; message = response.getBody(Message.class); <i class="conum" data-value="2"></i><b>(2)</b>
-// check the status
-assertEquals(
-        HttpStatus.OK,
-        response.getStatus() <i class="conum" data-value="3"></i><b>(3)</b>
-);
-// check the body
-assertTrue(message.isPresent());
-assertEquals(
-        "Hello John",
-        message.get().getText()
-);</code></pre>
+        HttpResponse&lt;Message&gt; response = call.blockingFirst();
+        Optional&lt;Message&gt; message = response.getBody(Message.class); <b class="conum">(2)</b>
+        // check the status
+        assertEquals(
+                HttpStatus.OK,
+                response.getStatus() <b class="conum">(3)</b>
+        );
+        // check the body
+        assertTrue(message.isPresent());
+        assertEquals(
+                "Hello John",
+                message.get().getText()
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Recieving the Full HTTP Response</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
+        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                GET("/greet/John"), Message.class <b class="conum">(1)</b>
+        )
+
+        HttpResponse&lt;Message&gt; response = call.blockingFirst();
+        Optional&lt;Message&gt; message = response.getBody(Message.class) <b class="conum">(2)</b>
+        // check the status
+        then:
+        HttpStatus.OK == response.getStatus() <b class="conum">(3)</b>
+        // check the body
+        message.isPresent()
+        "Hello John" == message.get().getText()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Recieving the Full HTTP Response</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    GET&lt;Any&gt;("/greet/John"), Message::class.java <b class="conum">(1)</b>
+            )
+
+            val response = call.blockingFirst()
+            val message = response.getBody(Message::class.java) <b class="conum">(2)</b>
+            // check the status
+            response.status shouldBe HttpStatus.OK <b class="conum">(3)</b>
+            // check the body
+            message.isPresent shouldBe true
+            message.get().text shouldBe "Hello John"</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -678,15 +904,36 @@ assertEquals(
 <div class="paragraph">
 <p>The following example demonstrates how to send a simply <code>String</code> body:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a <code>String</code> body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
-        POST("/hello", "Hello John") <i class="conum" data-value="1"></i><b>(1)</b>
-            .contentType(MediaType.TEXT_PLAIN_TYPE)
-            .accept(MediaType.TEXT_PLAIN_TYPE), <i class="conum" data-value="2"></i><b>(2)</b>
-        String.class <i class="conum" data-value="3"></i><b>(3)</b>
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
+                POST("/hello", "Hello John") <b class="conum">(1)</b>
+                    .contentType(MediaType.TEXT_PLAIN_TYPE)
+                    .accept(MediaType.TEXT_PLAIN_TYPE), <b class="conum">(2)</b>
+                String.class <b class="conum">(3)</b>
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a <code>String</code> body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;String&gt;&gt; call = client.exchange(
+                POST("/hello", "Hello John") <b class="conum">(1)</b>
+                    .contentType(MediaType.TEXT_PLAIN_TYPE)
+                    .accept(MediaType.TEXT_PLAIN_TYPE), <b class="conum">(2)</b>
+                String.class <b class="conum">(3)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a <code>String</code> body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/hello", "Hello John") <b class="conum">(1)</b>
+                            .contentType(MediaType.TEXT_PLAIN_TYPE)
+                            .accept(MediaType.TEXT_PLAIN_TYPE), String::class.java <b class="conum">(3)</b>
+            )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -714,13 +961,30 @@ assertEquals(
 <div class="paragraph">
 <p>For example, the <code>Message</code> class from the previous section, you can create an instance and pass it to the <code>POST</code> method:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a JSON body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
-        POST("/greet", new Message("Hello John")), <i class="conum" data-value="1"></i><b>(1)</b>
-        Message.class <i class="conum" data-value="2"></i><b>(2)</b>
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                POST("/greet", new Message("Hello John")), <b class="conum">(1)</b>
+                Message.class <b class="conum">(2)</b>
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
+                POST("/greet", new Message("Hello John")), <b class="conum">(1)</b>
+                Message.class <b class="conum">(2)</b>
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/greet", Message("Hello John")), Message::class.java <b class="conum">(2)</b>
+            )</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -758,13 +1022,31 @@ assertEquals(
 <div class="paragraph">
 <p>For example imagine you have a class <code>Book</code> that has a property called <code>title</code>. You can represent the <code>title</code> property in the URI template and then populate it from an instance of <code>Book</code>. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a JSON body with a URI template</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
-        POST("/amazon/book/{title}", new Book("The Stand")),
-        Book.class
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand")),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body with a URI template</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand")),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a JSON body with a URI template</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/amazon/book/{title}", Book("The Stand")),
+                    Book::class.java
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -778,14 +1060,34 @@ assertEquals(
 <div class="paragraph">
 <p>You can also encode a POJO or a map as regular form data instead of JSON. Just set the content type to <code>application/x-www-form-urlencoded</code> on the post request:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Sending a Form Data</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
-        POST("/amazon/book/{title}", new Book("The Stand"))
-        .contentType(MediaType.APPLICATION_FORM_URLENCODED),
-        Book.class
-);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                Book.class
+        );</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a Form Data</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
+                POST("/amazon/book/{title}", new Book("The Stand"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                Book.class
+        )</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Sending a Form Data</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
+                    POST("/amazon/book/{title}", Book("The Stand"))
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED),
+                    Book::class.java
+            )</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -809,21 +1111,21 @@ assertEquals(
 <div class="paragraph">
 <p>For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Creating the body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.client.multipart.MultipartBody
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        File file = new File(uploadDir, "data.txt")
+        file.text = "test file"
+        file.createNewFile()
 
-File file = ...
-MultipartBody requestBody = MultipartBody.builder()     <i class="conum" data-value="1"></i><b>(1)</b>
-        .addPart(                                       <i class="conum" data-value="2"></i><b>(2)</b>
-            "data",
-            file.name,
-            MediaType.TEXT_PLAIN_TYPE,
-            file
-        ).build()                                       <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+
+        MultipartBody requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                .addPart(                                       <b class="conum">(2)</b>
+                    "data",
+                    file.name,
+                    MediaType.TEXT_PLAIN_TYPE,
+                    file
+                ).build()                                       <b class="conum">(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -842,11 +1144,11 @@ MultipartBody requestBody = MultipartBody.builder()     <i class="conum" data-va
 </tr>
 </table>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">HttpRequest.POST("/multipart/upload", requestBody)       <i class="conum" data-value="1"></i><b>(1)</b>
-        .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
+                        .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -904,25 +1206,72 @@ MultipartBody requestBody = MultipartBody.builder()     <i class="conum" data-va
 <div class="paragraph">
 <p>In order to do JSON streaming you should on the server side declare a controller method that returns a <code>application/x-json-stream</code> of JSON objects. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Server</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.reactivex.Flowable;
 
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
-@Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>
-Flowable&lt;Headline&gt; streamHeadlines() {
-    return Flowable.fromCallable(() -&gt; {  <i class="conum" data-value="2"></i><b>(2)</b>
-        Headline headline = new Headline();
-        headline.setText("Latest Headline at " + ZonedDateTime.now());
-        return headline;
-    }).repeat(100) <i class="conum" data-value="3"></i><b>(3)</b>
-      .delay(1, TimeUnit.SECONDS); <i class="conum" data-value="4"></i><b>(4)</b>
-}</code></pre>
+    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines() {
+        return Flowable.fromCallable(() -&gt; {  <b class="conum">(2)</b>
+            Headline headline = new Headline();
+            headline.setText("Latest Headline at " + ZonedDateTime.now());
+            return headline;
+        }).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.reactivex.Flowable
+
+import java.time.ZonedDateTime
+import java.util.concurrent.TimeUnit
+
+    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines() {
+        Flowable.fromCallable({ <b class="conum">(2)</b>
+            Headline headline = new Headline()
+            headline.setText("Latest Headline at " + ZonedDateTime.now())
+            return headline
+        }).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.reactivex.Flowable
+
+import java.time.ZonedDateTime
+import java.util.concurrent.TimeUnit
+
+
+    @Get(value = "/headlines", produces = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    internal fun streamHeadlines(): Flowable&lt;Headline&gt; {
+        return Flowable.fromCallable {
+            <b class="conum">(2)</b>
+            val headline = Headline()
+            headline.text = "Latest Headline at " + ZonedDateTime.now()
+            headline
+        }.repeat(100) <b class="conum">(3)</b>
+                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -960,33 +1309,87 @@ The server does not have to be written in Micronaut, any server that supports JS
 <div class="paragraph">
 <p>Then on the client simply subscribe to the stream using <code>jsonStream</code> and every time the server emits a JSON object the client will decode and consume it:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Client</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class); <i class="conum" data-value="1"></i><b>(1)</b>
-CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;(); <i class="conum" data-value="2"></i><b>(2)</b>
-headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
-    @Override
-    public void onSubscribe(Subscription s) {
-        s.request(1); <i class="conum" data-value="3"></i><b>(3)</b>
-    }
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class); <b class="conum">(1)</b>
+        CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;(); <b class="conum">(2)</b>
+        headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
+            @Override
+            public void onSubscribe(Subscription s) {
+                s.request(1); <b class="conum">(3)</b>
+            }
 
-    @Override
-    public void onNext(Headline headline) {
-        System.out.println("Received Headline = " + headline.getText());
-        future.complete(headline); <i class="conum" data-value="4"></i><b>(4)</b>
-    }
+            @Override
+            public void onNext(Headline headline) {
+                System.out.println("Received Headline = " + headline.getText());
+                future.complete(headline); <b class="conum">(4)</b>
+            }
 
-    @Override
-    public void onError(Throwable t) {
-        future.completeExceptionally(t); <i class="conum" data-value="5"></i><b>(5)</b>
-    }
+            @Override
+            public void onError(Throwable t) {
+                future.completeExceptionally(t); <b class="conum">(5)</b>
+            }
 
-    @Override
-    public void onComplete() {
-        // no-op <i class="conum" data-value="6"></i><b>(6)</b>
-    }
-});</code></pre>
+            @Override
+            public void onComplete() {
+                // no-op <b class="conum">(6)</b>
+            }
+        });</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class) <b class="conum">(1)</b>
+        CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;() <b class="conum">(2)</b>
+        headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
+            @Override
+            void onSubscribe(Subscription s) {
+                s.request(1) <b class="conum">(3)</b>
+            }
+
+            @Override
+            void onNext(Headline headline) {
+                System.out.println("Received Headline = " + headline.getText())
+                future.complete(headline) <b class="conum">(4)</b>
+            }
+
+            @Override
+            void onError(Throwable t) {
+                future.completeExceptionally(t) <b class="conum">(5)</b>
+            }
+
+            @Override
+            void onComplete() {
+                // no-op <b class="conum">(6)</b>
+            }
+        })</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val headlineStream = client.jsonStream(GET&lt;Any&gt;("/streaming/headlines"), Headline::class.java) <b class="conum">(1)</b>
+            val future = CompletableFuture&lt;Headline&gt;() <b class="conum">(2)</b>
+            headlineStream.subscribe(object : Subscriber&lt;Headline&gt; {
+                override fun onSubscribe(s: Subscription) {
+                    s.request(1) <b class="conum">(3)</b>
+                }
+
+                override fun onNext(headline: Headline) {
+                    println("Received Headline = " + headline.text!!)
+                    future.complete(headline) <b class="conum">(4)</b>
+                }
+
+                override fun onError(t: Throwable) {
+                    future.completeExceptionally(t) <b class="conum">(5)</b>
+                }
+
+                override fun onComplete() {
+                    // no-op <b class="conum">(6)</b>
+                }
+            })</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1001,7 +1404,7 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Subscription.html">Subscription</a> is used to request a single item. You can use the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Subscription.html">Subscription</a> to regulate back pressure and demand.</td>
+<td>The <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Subscription.html">Subscription</a> is used to request a single item. You can use the <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Subscription.html">Subscription</a> to regulate back pressure and demand.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1188,9 +1591,9 @@ RxHttpClient httpClient;</code></pre>
 <div class="paragraph">
 <p>Often you want to consume an endpoint and bind to a POJO if the request is successful or bind to a different POJO if an error occurs. The following example shows how to invoke <code>exchange</code> with a success and error type.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/books")
 public class BooksController {
 
     @Get("/{isbn}")
@@ -1209,28 +1612,104 @@ public class BooksController {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "after an HttpClientException the response body can be bound to a POJO"() {
-    when:
-    client.toBlocking().exchange(HttpRequest.GET("/books/1680502395"),
-            Argument.of(Book), <i class="conum" data-value="1"></i><b>(1)</b>
-            Argument.of(CustomError)) <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/books")
+class BooksController {
 
-    then:
-    def e = thrown(HttpClientResponseException)
-    e.response.status == HttpStatus.UNAUTHORIZED
+    @Get("/{isbn}")
+    HttpResponse find(String isbn) {
+        if (isbn == "1680502395") {
+            Map&lt;String, Object&gt; m = new HashMap&lt;&gt;()
+            m.put("status", 401)
+            m.put("error", "Unauthorized")
+            m.put("message", "No message available")
+            m.put("path", "/books/"+isbn)
+            return HttpResponse.status(HttpStatus.UNAUTHORIZED).body(m)
 
-    when:
-    Optional&lt;CustomError&gt; jsonError = e.response.getBody(CustomError)
-
-    then:
-    jsonError.isPresent()
-    jsonError.get().status == 401
-    jsonError.get().error == 'Unauthorized'
-    jsonError.get().message == 'No message available'
-    jsonError.get().path == '/books/1680502395'
+        }
+        return HttpResponse.ok(new Book("1491950358", "Building Microservices"))
+    }
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/books")
+class BooksController {
+
+    @Get("/{isbn}")
+    fun find(isbn: String): HttpResponse&lt;*&gt; {
+        if (isbn == "1680502395") {
+            val m = HashMap&lt;String, Any&gt;()
+            m["status"] = 401
+            m["error"] = "Unauthorized"
+            m["message"] = "No message available"
+            m["path"] = "/books/$isbn"
+            return HttpResponse.status&lt;Any&gt;(HttpStatus.UNAUTHORIZED).body(m)
+
+        }
+        return HttpResponse.ok(Book("1491950358", "Building Microservices"))
+    }
+}</code></pre>
+</div>
+</div>
+<hr>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Test
+    public void afterAnHttpClientExceptionTheResponseBodyCanBeBoundToAPOJO() {
+        try {
+            client.toBlocking().exchange(HttpRequest.GET("/books/1680502395"),
+                    Argument.of(Book.class), <b class="conum">(1)</b>
+                    Argument.of(CustomError.class)); <b class="conum">(2)</b>
+        } catch (HttpClientResponseException e) {
+            assertEquals(HttpStatus.UNAUTHORIZED, e.getResponse().getStatus());
+            Optional&lt;CustomError&gt; jsonError = e.getResponse().getBody(CustomError.class);
+            assertTrue(jsonError.isPresent());
+            assertEquals(401, jsonError.get().status);
+            assertEquals("Unauthorized", jsonError.get().error);
+            assertEquals("No message available", jsonError.get().message);
+            assertEquals("/books/1680502395", jsonError.get().path);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "after an HttpClientException the response body can be bound to a POJO"() {
+        when:
+        client.toBlocking().exchange(HttpRequest.GET("/books/1680502395"),
+                Argument.of(Book), <b class="conum">(1)</b>
+                Argument.of(CustomError)) <b class="conum">(2)</b>
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        e.response.status == HttpStatus.UNAUTHORIZED
+
+        when:
+        Optional&lt;CustomError&gt; jsonError = e.response.getBody(CustomError)
+
+        then:
+        jsonError.isPresent()
+        jsonError.get().status == 401
+        jsonError.get().error == 'Unauthorized'
+        jsonError.get().message == 'No message available'
+        jsonError.get().path == '/books/1680502395'
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "after an httpclient exception the response body can be bound to a POJO" {
+            try {
+                client.toBlocking().exchange(HttpRequest.GET&lt;Any&gt;("/books/1680502395"),
+                        Argument.of(Book::class.java), <b class="conum">(1)</b>
+                        Argument.of(CustomError::class.java)) <b class="conum">(2)</b>
+            } catch (e: HttpClientResponseException) {
+                e.response.status shouldBe HttpStatus.UNAUTHORIZED
+            }
+        }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1264,10 +1743,10 @@ public class BooksController {
 <div class="paragraph">
 <p>Let&#8217;s start with a simple example. Given the following class:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Pet.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Pet {
+<pre class="highlight"><code class="language-java" data-lang="java">public class Pet {
     private String name;
     private int age;
 
@@ -1289,22 +1768,49 @@ public class BooksController {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Pet.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class Pet {
+    String name
+    int age
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can define a common interface for saving new <code>Pet</code> instances:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">PetOperations.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.Post;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Post;
 import io.micronaut.validation.Validated;
 import io.reactivex.Single;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Validated
 public interface PetOperations {
     @Post
     Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetOperations.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Post
+import io.micronaut.validation.Validated
+import io.reactivex.Single
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Validated
+interface PetOperations {
+    @Post
+    Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age)
 }</code></pre>
 </div>
 </div>
@@ -1324,14 +1830,14 @@ compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
 <div class="paragraph">
 <p>On the server-side of Micronaut you can implement the <code>PetOperations</code> interface:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">PetController.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.Controller;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Controller;
 import io.reactivex.Single;
 
 @Controller("/pets")
-class PetController implements PetOperations {
+public class PetController implements PetOperations {
 
     @Override
     public Single&lt;Pet&gt; save(String name, int age) {
@@ -1344,20 +1850,54 @@ class PetController implements PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetController.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.reactivex.Single
+
+@Controller("/pets")
+class PetController implements PetOperations {
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age) {
+        Pet pet = new Pet()
+        pet.setName(name)
+        pet.setAge(age)
+        // save to database or something
+        return Single.just(pet)
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can then define a declarative client in <code>src/test/java</code> that uses <code>@Client</code> to automatically, at compile time, implement a client:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">PetClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.client.annotation.Client;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
-@Client("/pets") <i class="conum" data-value="1"></i><b>(1)</b>
-public interface PetClient extends PetOperations { <i class="conum" data-value="2"></i><b>(2)</b>
+@Client("/pets") <b class="conum">(1)</b>
+public interface PetClient extends PetOperations { <b class="conum">(2)</b>
 
     @Override
-    Single&lt;Pet&gt; save(String name, int age); <i class="conum" data-value="3"></i><b>(3)</b>
+    Single&lt;Pet&gt; save(String name, int age); <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetClient.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+@Client("/pets") <b class="conum">(1)</b>
+interface PetClient extends PetOperations { <b class="conum">(2)</b>
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age) <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -1436,8 +1976,8 @@ Notice in the above example we override the <code>save</code> method. This is ne
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any type that implements the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any type that implements the <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> interface</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Flowable&lt;String&gt; hello()</code></p></td>
 </tr>
 <tr>
@@ -1446,8 +1986,8 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <td class="tableblock halign-left valign-top"><p class="tableblock">Single&lt;HttpResponse&lt;String&gt;&gt; hello()</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> implementation that emits a POJO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> implementation that emits a POJO</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Mono&lt;Book&gt; hello()</code></p></td>
 </tr>
 <tr>
@@ -1468,7 +2008,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 </tbody>
 </table>
 <div class="paragraph">
-<p>Generally, any reactive type that can be converted to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> interface is supported as a return type including (but not limited to) the reactive types defined by RxJava 1.x, RxJava 2.x and Reactor 3.x.</p>
+<p>Generally, any reactive type that can be converted to the <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> interface is supported as a return type including (but not limited to) the reactive types defined by RxJava 1.x, RxJava 2.x and Reactor 3.x.</p>
 </div>
 <div class="paragraph">
 <p>Returning <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> instances is also supported. Note that returning any other type <em>will result in a blocking request</em> and is not recommended other than for testing.</p>
@@ -1597,10 +2137,10 @@ Single&lt;Pet&gt; save(
 <div class="paragraph">
 <p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Flowable;
@@ -1609,9 +2149,43 @@ import reactor.core.publisher.Flux;
 @Client("/streaming")
 public interface HeadlineClient {
 
-    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>
-    Flowable&lt;Headline&gt; streamHeadlines(); <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines(); <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">HeadlineClient.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Flowable
+import reactor.core.publisher.Flux
+
+@Client("/streaming")
+interface HeadlineClient {
+
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines() <b class="conum">(2)</b>
+
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">HeadlineClient.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.reactivex.Flowable
+import reactor.core.publisher.Flux
+
+
+@Client("/streaming")
+interface HeadlineClient {
+
+    @Get(value = "/headlines", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    fun streamHeadlines(): Flowable&lt;Headline&gt;  <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1629,24 +2203,59 @@ public interface HeadlineClient {
 <div class="paragraph">
 <p>The following example shows how the previously defined <code>HeadlineClient</code> can be invoked from a JUnit test:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Streaming HeadlineClient</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Test
-public void testClientAnnotationStreaming() throws Exception {
-    try( EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer.class) ) {
-        HeadlineClient headlineClient = embeddedServer
-                                            .getApplicationContext()
-                                            .getBean(HeadlineClient.class); <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Test
+    public void testClientAnnotationStreaming() throws Exception {
+        try( EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer.class) ) {
+            HeadlineClient headlineClient = embeddedServer
+                                                .getApplicationContext()
+                                                .getBean(HeadlineClient.class); <b class="conum">(1)</b>
 
-        Maybe&lt;Headline&gt; firstHeadline = headlineClient.streamHeadlines().firstElement(); <i class="conum" data-value="2"></i><b>(2)</b>
+            Maybe&lt;Headline&gt; firstHeadline = headlineClient.streamHeadlines().firstElement(); <b class="conum">(2)</b>
 
-        Headline headline = firstHeadline.blockingGet(); <i class="conum" data-value="3"></i><b>(3)</b>
+            Headline headline = firstHeadline.blockingGet(); <b class="conum">(3)</b>
 
-        assertNotNull( headline );
-        assertTrue( headline.getText().startsWith("Latest Headline") );
-    }
-}</code></pre>
+            assertNotNull( headline );
+            assertTrue( headline.getText().startsWith("Latest Headline") );
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming HeadlineClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test client annotation streaming"() throws Exception {
+        when:
+        HeadlineClient headlineClient = embeddedServer.getApplicationContext()
+                                            .getBean(HeadlineClient.class) <b class="conum">(1)</b>
+
+        Maybe&lt;Headline&gt; firstHeadline = headlineClient.streamHeadlines().firstElement() <b class="conum">(2)</b>
+
+        Headline headline = firstHeadline.blockingGet() <b class="conum">(3)</b>
+
+        then:
+        null != headline
+        headline.getText().startsWith("Latest Headline")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming HeadlineClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test client annotation streaming" {
+            val headlineClient = embeddedServer
+                    .applicationContext
+                    .getBean(HeadlineClient::class.java) <b class="conum">(1)</b>
+
+            val firstHeadline = headlineClient.streamHeadlines().firstElement() <b class="conum">(2)</b>
+
+            val headline = firstHeadline.blockingGet() <b class="conum">(3)</b>
+
+            headline shouldNotBe null
+            headline.text shouldStartWith "Latest Headline"
+        }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1744,19 +2353,50 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/http/client/Client.html">@Client</a> annotation also supports consuming SSE streams. For example, consider the following controller method that produces a stream of SSE events:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>
-Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
-    return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <i class="conum" data-value="2"></i><b>(2)</b>
-        Headline headline = new Headline();
-        headline.setText("Latest Headline at " + ZonedDateTime.now());
-        emitter.next(Event.of(headline));
-        emitter.complete();
-    }).repeat(100) <i class="conum" data-value="3"></i><b>(3)</b>
-      .delayElements(Duration.ofSeconds(1)); <i class="conum" data-value="4"></i><b>(4)</b>
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
+            Headline headline = new Headline();
+            headline.setText("Latest Headline at " + ZonedDateTime.now());
+            emitter.next(Event.of(headline));
+            emitter.complete();
+        }).repeat(100) <b class="conum">(3)</b>
+          .delayElements(Duration.ofSeconds(1)); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">SSE Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
+            Headline headline = new Headline()
+            headline.setText("Latest Headline at " + ZonedDateTime.now())
+            emitter.next(Event.of(headline))
+            emitter.complete()
+        }.repeat(100) <b class="conum">(3)</b>
+         .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">SSE Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", produces = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
+    internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
+        return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
+            emitter -&gt;
+            val headline = Headline()
+            headline.text = "Latest Headline at " + ZonedDateTime.now()
+            emitter.next(Event.of(headline))
+            emitter.complete()
+        }.repeat(100) <b class="conum">(3)</b>
+                .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1785,14 +2425,36 @@ Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
 <div class="paragraph">
 <p>To define a client that consumes the events you simply have to define a method that processes <code>MediaType.TEXT_EVENT_STREAM</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">SSE Client</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/streaming/sse")
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/streaming/sse")
 public interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">SSE Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/streaming/sse")
+interface HeadlineClient {
+
+    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
+    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">SSE Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/streaming/sse")
+interface HeadlineClient {
+
+    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM])
+    fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt;
 }</code></pre>
 </div>
 </div>
@@ -1863,10 +2525,10 @@ The one exception to this rule is HTTP Not Found (404) responses. This exception
 <div class="paragraph">
 <p>The following example serves to illustrate this:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Defining Headers via Configuration</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/pets")
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/pets")
 @Header(name="X-Pet-Client", value="${pet.client.id}")
 public interface PetClient extends PetOperations {
 
@@ -1875,6 +2537,21 @@ public interface PetClient extends PetOperations {
 
     @Get("/{name}")
     Single&lt;Pet&gt; get(String name);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining Headers via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/pets")
+@Header(name="X-Pet-Client", value='${pet.client.id}')
+interface PetClient extends PetOperations {
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age)
+
+    @Get("/{name}")
+    Single&lt;Pet&gt; get(String name)
 }</code></pre>
 </div>
 </div>
@@ -1986,15 +2663,27 @@ If the customization offered by <code>JacksonFeatures</code> is not enough, you 
 <div class="paragraph">
 <p>You can declare the <a href="../api/io/micronaut/retry/annotation/Retryable.html">@Retryable</a> or <a href="../api/io/micronaut/retry/annotation/CircuitBreaker.html">@CircuitBreaker</a> annotations on any <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a> interface and the retry policy will be applied, for example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Declaring @Retryable</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/pets")
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/pets")
 @Retryable
 public interface PetClient extends PetOperations {
 
     @Override
     Single&lt;Pet&gt; save(String name, int age);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring @Retryable</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/pets")
+@Retryable
+interface PetClient extends PetOperations {
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age)
 }</code></pre>
 </div>
 </div>
@@ -2029,10 +2718,10 @@ public interface PetClient extends PetOperations {
 <div class="paragraph">
 <p>To illustrate this consider again the <code>PetOperations</code> interface declared earlier. You can define a <code>PetFallback</code> class that will be called in the case of failure:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Defining a Fallback</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Fallback
+<pre class="highlight"><code class="language-java" data-lang="java">@Fallback
 public class PetFallback implements PetOperations {
     @Override
     public Single&lt;Pet&gt; save(String name, int age) {
@@ -2040,6 +2729,21 @@ public class PetFallback implements PetOperations {
         pet.setAge(age);
         pet.setName(name);
         return Single.just(pet);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining a Fallback</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Fallback
+class PetFallback implements PetOperations {
+    @Override
+    public Single&lt;Pet&gt; save(String name, int age) {
+        Pet pet = new Pet()
+        pet.setAge(age)
+        pet.setName(name)
+        return Single.just(pet)
     }
 }</code></pre>
 </div>

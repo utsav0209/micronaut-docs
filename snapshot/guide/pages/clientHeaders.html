@@ -141,10 +141,10 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following example serves to illustrate this:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Defining Headers via Configuration</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client("/pets")
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/pets")
 @Header(name="X-Pet-Client", value="${pet.client.id}")
 public interface PetClient extends PetOperations {
 
@@ -153,6 +153,21 @@ public interface PetClient extends PetOperations {
 
     @Get("/{name}")
     Single&lt;Pet&gt; get(String name);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining Headers via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/pets")
+@Header(name="X-Pet-Client", value='${pet.client.id}')
+interface PetClient extends PetOperations {
+
+    @Override
+    Single&lt;Pet&gt; save(String name, int age)
+
+    @Get("/{name}")
+    Single&lt;Pet&gt; get(String name)
 }</code></pre>
 </div>
 </div>

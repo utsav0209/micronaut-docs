@@ -190,25 +190,71 @@ The <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> should b
 <div class="paragraph">
 <p>The following example implements the previous <code>MessageController</code> example using the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> objects:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Request and Response Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
-
-import static io.micronaut.http.HttpResponse.*; <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
 @Controller("/request")
 public class MessageController {
 
-    @Get("/hello") <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get("/hello") <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; hello(HttpRequest&lt;?&gt; request) {
+        String name = request.getParameters()
+                             .getFirst("name")
+                             .orElse("Nobody"); <b class="conum">(2)</b>
+
+        return HttpResponse.ok("Hello " + name + "!!")
+                 .header("X-My-Header", "Foo"); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Request and Response Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/request")
+class MessageController {
+
+    @Get("/hello") <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; hello(HttpRequest&lt;?&gt; request) {
         String name = request.getParameters()
                              .getFirst("name")
-                             .orElse("Nobody"); <i class="conum" data-value="3"></i><b>(3)</b>
+                             .orElse("Nobody") <b class="conum">(2)</b>
 
-        return ok("Hello " + name + "!!")
-                 .header("X-My-Header", "Foo"); <i class="conum" data-value="4"></i><b>(4)</b>
+        HttpResponse.ok("Hello " + name + "!!")
+                 .header("X-My-Header", "Foo") <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Request and Response Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/request")
+class MessageController {
+
+    @Get("/hello") <b class="conum">(1)</b>
+    fun hello(request: HttpRequest&lt;*&gt;): HttpResponse&lt;String&gt; {
+        val name = request.parameters
+                .getFirst("name")
+                .orElse("Nobody") <b class="conum">(2)</b>
+
+        return HttpResponse.ok("Hello $name!!")
+                .header("X-My-Header", "Foo") <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -217,24 +263,20 @@ public class MessageController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The factory methods of the <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> are statically imported</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The method is mapped to the URI <code>/hello</code> and accepts a <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is used to obtain the value of a query parameter called <code>name</code>.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>The <a href="../api/io/micronaut/http/HttpResponse.html#ok-T-">HttpResponse.ok(T)</a> method is used to return a <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> with a text body. A header called <code>X-My-Header</code> is also added to the response object.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is also availble from static context via io.micronaut.http.context.ServerRequestContext[].</p>
+<p><a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is also available from static context via <a href="../api/io/micronaut/http/context/ServerRequestContext.html">ServerRequestContext</a>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -243,7 +285,7 @@ public class MessageController {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Generally io.micronaut.http.context.ServerRequestContext[] is available within reactive flow, but recommended aproach is to propogate necessary state through lambdas.
+Generally <a href="../api/io/micronaut/http/context/ServerRequestContext.html">ServerRequestContext</a> is available within reactive flow, but the recommended approach is to propagate the necessary state through lambdas.
 </td>
 </tr>
 </table>

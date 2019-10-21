@@ -130,39 +130,13 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>The examples in the previous section demonstrates how Micronaut allows you to bind method parameters from URI path variables.</p>
+<p>The examples in the previous section demonstrates how Micronaut allows you to bind method parameters from URI path variables. This section will discuss how to bind arguments from other parts of the request.</p>
 </div>
 <div class="sect1">
 <h2 id="_binding_annotations"><a class="anchor" href="#_binding_annotations"></a>Binding Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can customize the name of the variable bound with the <a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a> annotation which accepts a value which is the name of the URI variable or request parameter to bind from.</p>
-</div>
-<div class="paragraph">
-<p>Also, in order to bind all request URI variables or request parameters to a command object, you can define URI route variable as <code>?pojo*</code>. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Binding Request parameters to POJO</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpStatus;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.validation.Validated;
-
-import javax.annotation.Nullable;
-import javax.validation.Valid;
-
-@Controller("/api")
-public class BookmarkController {
-
-@Get("/bookmarks/list{?paginationCommand*}")
-public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
-    return HttpStatus.OK;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In addition, there are other annotations within the <a href="../api/io/micronaut/http/annotation/package-summary.html">io.micronaut.http.annotation</a> package to bind from different sources.</p>
+<p>All of the binding annotations support customization of the name of the variable being bound from with their <code>name</code> member.</p>
 </div>
 <div class="paragraph">
 <p>The following table summarizes the annotations, their purpose and provides an example:</p>
@@ -184,12 +158,12 @@ public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Body.html">@Body</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allows to specify the parameter the body of the request should bind to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from the body of the request</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Body String body</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/CookieValue.html">@CookieValue</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Binds a parameter from a Cookie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds a parameter from a cookie</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@CookieValue String myCookie</code></p></td>
 </tr>
 <tr>
@@ -199,36 +173,174 @@ public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bindings from a request URI variable or request parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from a request query parameter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@QueryValue String myParam</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Part.html">@Part</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from a part of a multipart request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Part CompletedFileUpload file</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestAttribute.html">@RequestAttribute</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from an attribute of the request. Attributes are typically created in filters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestAttribute String myAttribute</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestAttribute.html">@PathVariable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from the path of the request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@PathVariable String id</code></p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
 <p>When a value is not specified to any binding annotation then the parameter name is used. In other words the following two methods are equivalent and both bind from a cookie called <code>myCookie</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String hello(@CookieValue("myCookie") String myCookie) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/cookieName")
+    public String cookieName(@CookieValue("myCookie") String myCookie) {
+        // ...
+    }
 
-String hello(@CookieValue String myCookie) {
-    ...
-}</code></pre>
+    @Get("/cookieInferred")
+    public String cookieInferred(@CookieValue String myCookie) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/cookieName")
+    String cookieName(@CookieValue("myCookie") String myCookie) {
+        // ...
+    }
+
+    @Get("/cookieInferred")
+    String cookieInferred(@CookieValue String myCookie) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/cookieName")
+    fun cookieName(@CookieValue("myCookie") myCookie: String): String {
+        // ...
+    }
+
+    @Get("/cookieInferred")
+    fun cookieInferred(@CookieValue myCookie: String): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Since Java doesn&#8217;t allow hyphens in variable names in the case of headers the following two definitions are equivalent:</p>
+<p>Because hyphens are not allowed in variable names it may be necessary to set the name in the annotation. The following two definitions are equivalent:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header("Content-Type") String contentType) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerName")
+    public String headerName(@Header("Content-Type") String contentType) {
+        // ...
+    }
 
-public String hello(@Header String contentType) {
-    ...
+    @Get("/headerInferred")
+    public String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerName")
+    String headerName(@Header("Content-Type") String contentType) {
+        // ...
+    }
+
+    @Get("/headerInferred")
+    String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerName")
+    fun headerName(@Header("Content-Type") contentType: String): String {
+        // ...
+    }
+
+    @Get("/headerInferred")
+    fun headerInferred(@Header contentType: String): String {
+        // ...
+    }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_binding_from_multiple_values"><a class="anchor" href="#_binding_from_multiple_values"></a>Binding from Multiple values</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Instead of binding from a single section of the request, it may be desirable to bind all query values for example to a POJO. This can be achieved by using the exploded operator (<code>?pojo*</code>) in the URI template. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+
+@Controller("/api")
+public class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
+        return HttpStatus.OK;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+import javax.annotation.Nullable
+import javax.validation.Valid
+
+@Controller("/api")
+class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
+        HttpStatus.OK
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.validation.Validated
+import javax.validation.Valid
+
+@Controller("/api")
+open class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    open fun list(@Valid paginationCommand: PaginationCommand): HttpStatus {
+        return HttpStatus.OK
+    }
 }</code></pre>
 </div>
 </div>
@@ -244,13 +356,30 @@ public String hello(@Header String contentType) {
 <p>This includes most common Java types, however additional <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> instances can be registered simply be creating <code>@Singleton</code> beans of type <code>TypeConverter</code>.</p>
 </div>
 <div class="paragraph">
-<p>The handling of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> deserves special mention. Consider for example the following example:</p>
+<p>The handling of nullability deserves special mention. Consider for example the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header String contentType) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerInferred")
+    public String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerInferred")
+    String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerInferred")
+    fun headerInferred(@Header contentType: String): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -259,28 +388,85 @@ public String hello(@Header String contentType) {
 <div class="paragraph">
 <p>If you wish for the <code>Content-Type</code> header to be optional, you can instead write:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header Optional&lt;String&gt; contentType) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerNullable")
+    public String headerNullable(@Nullable @Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerNullable")
+    String headerNullable(@Nullable @Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerNullable")
+    fun headerNullable(@Header contentType: String?): String? {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An empty <code>Optional</code> will be passed if the header is absent from the request.</p>
+<p>An null string will be passed if the header is absent from the request.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>java.util.Optional</code> can also be used, however that is discouraged for method parameters.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Additionally, any <code>DateTime</code> that conforms to <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#RFC_1123_DATE_TIME">RFC-1123</a> can be bound to a parameter, alternatively the format can be customized with the <a href="../api/io/micronaut/core/convert/format/Format.html">Format</a> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header ZonedDateTime date) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/date")
+    public String date(@Header ZonedDateTime date) {
+        // ...
+    }
 
-public String hello(@Format('dd/MM/yyy') @Header ZonedDateTime date) {
-    ...
-}</code></pre>
+    @Get("/dateFormat")
+    public String dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header ZonedDateTime date) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/date")
+    String date(@Header ZonedDateTime date) {
+        // ...
+    }
+
+    @Get("/dateFormat")
+    String dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header ZonedDateTime date) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/date")
+    fun date(@Header date: ZonedDateTime): String {
+        // ...
+    }
+
+    @Get("/dateFormat")
+    fun dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header date: ZonedDateTime): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 </div>

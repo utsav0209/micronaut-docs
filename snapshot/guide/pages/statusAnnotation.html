@@ -135,35 +135,85 @@ function addJsClass() {
 <div class="paragraph">
 <p>If the controller&#8217;s action responds a <code>HttpResponse</code> object, you can configure the status code for the response object with the <code>status</code> method.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get(produces = MediaType.TEXT_PLAIN)
-public HttpResponse index() {
-    return HttpResponse.status(HttpStatus.CREATED).body("success");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/http-response", produces = MediaType.TEXT_PLAIN)
+    public HttpResponse httpResponse() {
+        return HttpResponse.status(HttpStatus.CREATED).body("success");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/http-response", produces = MediaType.TEXT_PLAIN)
+    HttpResponse httpResponse() {
+        HttpResponse.status(HttpStatus.CREATED).body("success")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/http-response", produces = [MediaType.TEXT_PLAIN])
+    fun httpResponse(): HttpResponse&lt;String&gt; {
+        return HttpResponse.status&lt;String&gt;(HttpStatus.CREATED).body("success")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>You can also use the <code>@Status</code> annotation.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Status(HttpStatus.CREATED)
-@Get(produces = MediaType.TEXT_PLAIN)
-public String index() {
-    return "success";
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Status(HttpStatus.CREATED)
+    @Get(produces = MediaType.TEXT_PLAIN)
+    public String index() {
+        return "success";
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Status(HttpStatus.CREATED)
+    @Get(produces = MediaType.TEXT_PLAIN)
+    String index() {
+        return "success"
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED)
+    @Get(produces = [MediaType.TEXT_PLAIN])
+    fun index(): String {
+        return "success"
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or even respond a <code>HttpStatus</code></p>
+<p>or even respond with an <code>HttpStatus</code></p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get
-public HttpStatus index() {
-    return HttpStatus.CREATED;
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/http-status")
+    public HttpStatus httpStatus() {
+        return HttpStatus.CREATED;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/http-status")
+    HttpStatus httpStatus() {
+        HttpStatus.CREATED
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/http-status")
+    fun httpStatus(): HttpStatus {
+        return HttpStatus.CREATED
+    }</code></pre>
 </div>
 </div>
 

@@ -135,27 +135,74 @@ function addJsClass() {
 <div class="paragraph">
 <p>The following example demonstrates how to version an API:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Versioning an API</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.core.version.annotation.Version;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.version.annotation.Version;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
 @Controller("/versioned")
 class VersionedController {
 
-    @Version("1") <i class="conum" data-value="1"></i><b>(1)</b>
+    @Version("1") <b class="conum">(1)</b>
     @Get("/hello")
     String helloV1() {
         return "helloV1";
     }
 
-    @Version("2") <i class="conum" data-value="2"></i><b>(2)</b>
+    @Version("2") <b class="conum">(2)</b>
     @Get("/hello")
     String helloV2() {
         return "helloV2";
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Versioning an API</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/versioned")
+class VersionedController {
+
+    @Version("1") <b class="conum">(1)</b>
+    @Get("/hello")
+    String helloV1() {
+        "helloV1"
     }
-}</code></pre>
+
+    @Version("2") <b class="conum">(2)</b>
+    @Get("/hello")
+    String helloV2() {
+        "helloV2"
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Versioning an API</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+
+@Controller("/versioned")
+internal class VersionedController {
+
+    @Version("1") <b class="conum">(1)</b>
+    @Get("/hello")
+    fun helloV1(): String {
+        return "helloV1"
+    }
+
+    @Version("2") <b class="conum">(2)</b>
+    @Get("/hello")
+    fun helloV2(): String {
+        return "helloV2"
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">

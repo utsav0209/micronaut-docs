@@ -144,22 +144,61 @@ function addJsClass() {
 <div class="paragraph">
 <p>From a developer perspective however, you can generally just work with Plain Old Java Objects (POJOs) and can optionally use a Reactive framework such as RxJava or Reactor. The following is an example of a controller that reads and saves an incoming POJO in a non-blocking way from JSON:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using RxJava 2 to Read the JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/people")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
 public class PersonController {
 
-    Map&lt;String, Person&gt; inMemoryDatastore = new LinkedHashMap&lt;&gt;();
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
 
-    @Post
-    public Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <i class="conum" data-value="1"></i><b>(1)</b>
+    @Post("/saveReactive")
+    public Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <b class="conum">(1)</b>
         return person.map(p -&gt; {
-                    inMemoryDatastore.put(p.getFirstName(), p); <i class="conum" data-value="2"></i><b>(2)</b>
-                    return HttpResponse.created(p); <i class="conum" data-value="3"></i><b>(3)</b>
+                    inMemoryDatastore.put(p.getFirstName(), p); <b class="conum">(2)</b>
+                    return HttpResponse.created(p); <b class="conum">(3)</b>
                 }
         );
     }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post("/saveReactive")
+    Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <b class="conum">(1)</b>
+        person.map({ p -&gt;
+            inMemoryDatastore.put(p.getFirstName(), p) <b class="conum">(2)</b>
+            HttpResponse.created(p) <b class="conum">(3)</b>
+        })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post("/saveReactive")
+    fun save(@Body person: Single&lt;Person&gt;): Single&lt;HttpResponse&lt;Person&gt;&gt; { <b class="conum">(1)</b>
+        return person.map { p -&gt;
+            inMemoryDatastore[p.firstName] = p <b class="conum">(2)</b>
+            HttpResponse.created(p) <b class="conum">(3)</b>
+        }
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -196,15 +235,61 @@ public class PersonController {
 <div class="paragraph">
 <p>The same method as the previous example can also be written with the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> API instead:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using CompletableFuture to Read the JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
-    return person.thenApply(p -&gt; {
-                inMemoryDatastore.put(p.getFirstName(), p);
-                return HttpResponse.created(p);
-            }
-    );
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post("/saveFuture")
+    public CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
+        return person.thenApply(p -&gt; {
+                    inMemoryDatastore.put(p.getFirstName(), p);
+                    return HttpResponse.created(p);
+                }
+        );
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using CompletableFuture to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post("/saveFuture")
+    CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
+        person.thenApply({ p -&gt;
+            inMemoryDatastore.put(p.getFirstName(), p)
+            HttpResponse.created(p)
+        })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using CompletableFuture to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post("/saveFuture")
+    fun save(@Body person: CompletableFuture&lt;Person&gt;): CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; {
+        return person.thenApply { p -&gt;
+            inMemoryDatastore[p.firstName] = p
+            HttpResponse.created(p)
+        }
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -219,12 +304,54 @@ public class PersonController {
 <div class="paragraph">
 <p>Note however, that if your method does not do any blocking I/O then you can just as easily write:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Binding JSON POJOs</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public HttpResponse&lt;Person&gt; save(@Body Person person) {
-    inMemoryDatastore.put(person.getFirstName(), person);
-    return HttpResponse.created(person);
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post
+    public HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person);
+        return HttpResponse.created(person);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding JSON POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post
+    HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person)
+        HttpResponse.created(person)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding JSON POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post
+    fun save(@Body person: Person): HttpResponse&lt;Person&gt; {
+        inMemoryDatastore[person.firstName] = person
+        return HttpResponse.created(person)
+    }
+
 }</code></pre>
 </div>
 </div>

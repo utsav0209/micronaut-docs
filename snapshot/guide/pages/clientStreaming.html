@@ -162,25 +162,72 @@ function addJsClass() {
 <div class="paragraph">
 <p>In order to do JSON streaming you should on the server side declare a controller method that returns a <code>application/x-json-stream</code> of JSON objects. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Server</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.reactivex.Flowable;
 
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
-@Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <i class="conum" data-value="1"></i><b>(1)</b>
-Flowable&lt;Headline&gt; streamHeadlines() {
-    return Flowable.fromCallable(() -&gt; {  <i class="conum" data-value="2"></i><b>(2)</b>
-        Headline headline = new Headline();
-        headline.setText("Latest Headline at " + ZonedDateTime.now());
-        return headline;
-    }).repeat(100) <i class="conum" data-value="3"></i><b>(3)</b>
-      .delay(1, TimeUnit.SECONDS); <i class="conum" data-value="4"></i><b>(4)</b>
-}</code></pre>
+    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines() {
+        return Flowable.fromCallable(() -&gt; {  <b class="conum">(2)</b>
+            Headline headline = new Headline();
+            headline.setText("Latest Headline at " + ZonedDateTime.now());
+            return headline;
+        }).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.reactivex.Flowable
+
+import java.time.ZonedDateTime
+import java.util.concurrent.TimeUnit
+
+    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    Flowable&lt;Headline&gt; streamHeadlines() {
+        Flowable.fromCallable({ <b class="conum">(2)</b>
+            Headline headline = new Headline()
+            headline.setText("Latest Headline at " + ZonedDateTime.now())
+            return headline
+        }).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.reactivex.Flowable
+
+import java.time.ZonedDateTime
+import java.util.concurrent.TimeUnit
+
+
+    @Get(value = "/headlines", produces = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    internal fun streamHeadlines(): Flowable&lt;Headline&gt; {
+        return Flowable.fromCallable {
+            <b class="conum">(2)</b>
+            val headline = Headline()
+            headline.text = "Latest Headline at " + ZonedDateTime.now()
+            headline
+        }.repeat(100) <b class="conum">(3)</b>
+                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -218,33 +265,87 @@ The server does not have to be written in Micronaut, any server that supports JS
 <div class="paragraph">
 <p>Then on the client simply subscribe to the stream using <code>jsonStream</code> and every time the server emits a JSON object the client will decode and consume it:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Client</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class); <i class="conum" data-value="1"></i><b>(1)</b>
-CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;(); <i class="conum" data-value="2"></i><b>(2)</b>
-headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
-    @Override
-    public void onSubscribe(Subscription s) {
-        s.request(1); <i class="conum" data-value="3"></i><b>(3)</b>
-    }
+<pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class); <b class="conum">(1)</b>
+        CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;(); <b class="conum">(2)</b>
+        headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
+            @Override
+            public void onSubscribe(Subscription s) {
+                s.request(1); <b class="conum">(3)</b>
+            }
 
-    @Override
-    public void onNext(Headline headline) {
-        System.out.println("Received Headline = " + headline.getText());
-        future.complete(headline); <i class="conum" data-value="4"></i><b>(4)</b>
-    }
+            @Override
+            public void onNext(Headline headline) {
+                System.out.println("Received Headline = " + headline.getText());
+                future.complete(headline); <b class="conum">(4)</b>
+            }
 
-    @Override
-    public void onError(Throwable t) {
-        future.completeExceptionally(t); <i class="conum" data-value="5"></i><b>(5)</b>
-    }
+            @Override
+            public void onError(Throwable t) {
+                future.completeExceptionally(t); <b class="conum">(5)</b>
+            }
 
-    @Override
-    public void onComplete() {
-        // no-op <i class="conum" data-value="6"></i><b>(6)</b>
-    }
-});</code></pre>
+            @Override
+            public void onComplete() {
+                // no-op <b class="conum">(6)</b>
+            }
+        });</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class) <b class="conum">(1)</b>
+        CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;() <b class="conum">(2)</b>
+        headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
+            @Override
+            void onSubscribe(Subscription s) {
+                s.request(1) <b class="conum">(3)</b>
+            }
+
+            @Override
+            void onNext(Headline headline) {
+                System.out.println("Received Headline = " + headline.getText())
+                future.complete(headline) <b class="conum">(4)</b>
+            }
+
+            @Override
+            void onError(Throwable t) {
+                future.completeExceptionally(t) <b class="conum">(5)</b>
+            }
+
+            @Override
+            void onComplete() {
+                // no-op <b class="conum">(6)</b>
+            }
+        })</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val headlineStream = client.jsonStream(GET&lt;Any&gt;("/streaming/headlines"), Headline::class.java) <b class="conum">(1)</b>
+            val future = CompletableFuture&lt;Headline&gt;() <b class="conum">(2)</b>
+            headlineStream.subscribe(object : Subscriber&lt;Headline&gt; {
+                override fun onSubscribe(s: Subscription) {
+                    s.request(1) <b class="conum">(3)</b>
+                }
+
+                override fun onNext(headline: Headline) {
+                    println("Received Headline = " + headline.text!!)
+                    future.complete(headline) <b class="conum">(4)</b>
+                }
+
+                override fun onError(t: Throwable) {
+                    future.completeExceptionally(t) <b class="conum">(5)</b>
+                }
+
+                override fun onComplete() {
+                    // no-op <b class="conum">(6)</b>
+                }
+            })</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -259,7 +360,7 @@ headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Subscription.html">Subscription</a> is used to request a single item. You can use the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Subscription.html">Subscription</a> to regulate back pressure and demand.</td>
+<td>The <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Subscription.html">Subscription</a> is used to request a single item. You can use the <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Subscription.html">Subscription</a> to regulate back pressure and demand.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>

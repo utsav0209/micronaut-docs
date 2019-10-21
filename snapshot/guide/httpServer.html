@@ -420,7 +420,7 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest
-class HelloControllerSpec {
+public class HelloControllerSpec {
     @Inject
     EmbeddedServer server; <b class="conum">(1)</b>
 
@@ -605,15 +605,35 @@ Many other frameworks, including Spring, implement the URI template specificatio
 <div class="paragraph">
 <p>You can use this class explicitly within your application to build URIs. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using a UriTemplate</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">UriMatchTemplate template = UriMatchTemplate.of("/hello/{name}");
+<pre class="highlight"><code class="language-java" data-lang="java">        UriMatchTemplate template = UriMatchTemplate.of("/hello/{name}");
 
-assertTrue(template.match("/hello/John").isPresent()); <i class="conum" data-value="1"></i><b>(1)</b>
-assertEquals("/hello/John", template.expand(  <i class="conum" data-value="2"></i><b>(2)</b>
-        Collections.singletonMap("name", "John")
-));</code></pre>
+        assertTrue(template.match("/hello/John").isPresent()); <b class="conum">(1)</b>
+        assertEquals("/hello/John", template.expand(  <b class="conum">(2)</b>
+                Collections.singletonMap("name", "John")
+        ));</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a UriTemplate</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        given:
+        UriMatchTemplate template = UriMatchTemplate.of("/hello/{name}")
+
+        expect:
+        template.match("/hello/John").isPresent() <b class="conum">(1)</b>
+        template.expand(["name": "John"]) == "/hello/John" <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using a UriTemplate</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val template = UriMatchTemplate.of("/hello/{name}")
+
+        assertTrue(template.match("/hello/John").isPresent) <b class="conum">(1)</b>
+        assertEquals("/hello/John", template.expand(mapOf("name" to "John")))  <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -639,17 +659,53 @@ assertEquals("/hello/John", template.expand(  <i class="conum" data-value="2"></
 <div class="paragraph">
 <p>URI variables can be referenced via method arguments. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">URI Variables Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 
-@Controller("/issues") <i class="conum" data-value="1"></i><b>(1)</b>
+@Controller("/issues") <b class="conum">(1)</b>
 public class IssuesController {
 
-    @Get("/{number}") <i class="conum" data-value="2"></i><b>(2)</b>
-    String issue(@PathVariable Integer number) { <i class="conum" data-value="3"></i><b>(3)</b>
-        return "Issue # " + number + "!"; <i class="conum" data-value="4"></i><b>(4)</b>
+    @Get("/{number}") <b class="conum">(2)</b>
+    public String issue(@PathVariable Integer number) { <b class="conum">(3)</b>
+        return "Issue # " + number + "!"; <b class="conum">(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">URI Variables Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.PathVariable
+
+@Controller("/issues") <b class="conum">(1)</b>
+class IssuesController {
+
+    @Get("/{number}") <b class="conum">(2)</b>
+    String issue(@PathVariable Integer number) { <b class="conum">(3)</b>
+        "Issue # " + number + "!" <b class="conum">(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">URI Variables Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.PathVariable
+
+@Controller("/issues") <b class="conum">(1)</b>
+class IssuesController {
+
+    @Get("/{number}") <b class="conum">(2)</b>
+    fun issue(@PathVariable number: Int): String { <b class="conum">(3)</b>
+        return "Issue # $number!" <b class="conum">(4)</b>
     }
 }</code></pre>
 </div>
@@ -658,7 +714,7 @@ public class IssuesController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>@Controller</code> annotation is specified without an argument resulting in a base URI of <code>/issues</code></td>
+<td>The <code>@Controller</code> annotation is specified with a base URI of <code>/issues</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -675,22 +731,29 @@ public class IssuesController {
 </table>
 </div>
 <div class="paragraph">
-<p>Micronaut will map the URI <code>/issues/{number}</code> for the above controller. We can assert this is the case by writing a unit test, this time in Java and JUnit:</p>
+<p>Micronaut will map the URI <code>/issues/{number}</code> for the above controller. We can assert this is the case by writing a set of unit tests:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Testing URI Variables</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.ApplicationContext;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.client.HttpClient;
-import org.junit.*;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
-import static org.junit.Assert.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.testng.Assert;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class IssuesControllerTest {
+
     private static EmbeddedServer server;
     private static HttpClient client;
 
-    @BeforeClass <i class="conum" data-value="1"></i><b>(1)</b>
+    @BeforeClass <b class="conum">(1)</b>
     public static void setupServer() {
         server = ApplicationContext.run(EmbeddedServer.class);
         client = server
@@ -698,7 +761,7 @@ public class IssuesControllerTest {
                     .createBean(HttpClient.class, server.getURL());
     }
 
-    @AfterClass <i class="conum" data-value="1"></i><b>(1)</b>
+    @AfterClass <b class="conum">(2)</b>
     public static void stopServer() {
         if(server != null) {
             server.stop();
@@ -710,12 +773,121 @@ public class IssuesControllerTest {
 
     @Test
     public void testIssue() throws Exception {
-        String body = client.toBlocking().retrieve("/issues/12"); <i class="conum" data-value="2"></i><b>(2)</b>
+        String body = client.toBlocking().retrieve("/issues/12"); <b class="conum">(3)</b>
+
         assertNotNull(body);
-        assertEquals( <i class="conum" data-value="3"></i><b>(3)</b>
-                "Issue # 12!",
-                body
-        );
+        assertEquals("Issue # 12!", body); <b class="conum">(4)</b>
+    }
+
+    @Test
+    public void testShowWithInvalidInteger() {
+        HttpClientResponseException e =Assert.expectThrows(HttpClientResponseException.class, () -&gt;
+                client.toBlocking().exchange("/issues/hello"));
+
+        assertEquals(400, e.getStatus().getCode()); <b class="conum">(5)</b>
+    }
+
+    @Test
+    public void testIssueWithoutNumber() {
+        HttpClientResponseException e =Assert.expectThrows(HttpClientResponseException.class, () -&gt;
+                client.toBlocking().exchange("/issues/"));
+
+        assertEquals(404, e.getStatus().getCode()); <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Testing URI Variables</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.ApplicationContext
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.runtime.server.EmbeddedServer
+import spock.lang.AutoCleanup
+import spock.lang.Shared
+import spock.lang.Specification
+
+class IssuesControllerTest extends Specification {
+
+    @Shared
+    @AutoCleanup <b class="conum">(2)</b>
+    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer) <b class="conum">(1)</b>
+
+    @Shared
+    @AutoCleanup <b class="conum">(2)</b>
+    HttpClient client = HttpClient.create(embeddedServer.URL) <b class="conum">(1)</b>
+
+    void "test issue"() {
+        when:
+        String body = client.toBlocking().retrieve("/issues/12") <b class="conum">(3)</b>
+
+        then:
+        body != null
+        body == "Issue # 12!" <b class="conum">(4)</b>
+    }
+
+    void "/issues/{number} with an invalid Integer number responds 400"() {
+        when:
+        client.toBlocking().exchange("/issues/hello")
+
+        then:
+        HttpClientResponseException e = thrown(HttpClientResponseException)
+        e.status.code == 400 <b class="conum">(5)</b>
+    }
+
+    void "/issues/{number} without number responds 404"() {
+        when:
+        client.toBlocking().exchange("/issues/")
+
+        then:
+        HttpClientResponseException e = thrown(HttpClientResponseException)
+        e.status.code == 404 <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Testing URI Variables</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.runtime.server.EmbeddedServer
+import io.kotlintest.shouldBe
+import io.kotlintest.shouldNotBe
+import io.kotlintest.shouldThrow
+import io.kotlintest.specs.StringSpec
+import io.micronaut.http.client.RxHttpClient
+
+class IssuesControllerTest: StringSpec() {
+
+    val embeddedServer = autoClose( <b class="conum">(2)</b>
+            ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
+    )
+
+    val client = autoClose( <b class="conum">(2)</b>
+            embeddedServer.applicationContext.createBean(RxHttpClient::class.java, embeddedServer.getURL()) <b class="conum">(1)</b>
+    )
+
+    init {
+        "test issue" {
+            val body = client.toBlocking().retrieve("/issues/12") <b class="conum">(3)</b>
+
+            body shouldNotBe null
+            body shouldBe "Issue # 12!" <b class="conum">(4)</b>
+        }
+
+        "test issue with invalid integer" {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; { client.toBlocking().exchange&lt;Any&gt;("/issues/hello") }
+
+            e.status.code shouldBe 400 <b class="conum">(5)</b>
+        }
+
+        "test issue without number" {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; { client.toBlocking().exchange&lt;Any&gt;("/issues/") }
+
+            e.status.code shouldBe 404 <b class="conum">(6)</b>
+        }
     }
 }</code></pre>
 </div>
@@ -724,42 +896,29 @@ public class IssuesControllerTest {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>For JUnit you can write methods to start and stop the server for the scope of the test</td>
+<td>The embedded server and http client is being started</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The tests sends a request to the URI <code>/issues/12</code></td>
+<td>The server and client will be cleaned up after all of the tests have finished</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The tests sends a request to the URI <code>/issues/12</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>And then asserts the response is "Issue # 12"</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Another test asserts a 400 response is returned when an invalid number is sent in the URL</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Another test asserts a 404 response is returned when no number is provided in the URL. The variable being present is required in order for the route to be executed.</td>
+</tr>
 </table>
-</div>
-<div class="paragraph">
-<p>If you invoke the previous endpoint without the required URI variable or with an invalid type, Micronaut responds with the appropriate HTTP failure codes as illustrated in the following Spock tests that use the <a href="#httpClient">HTTP client</a>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Testing for Response Errors</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void "/issues/show/{number} with an invalid Integer number responds 400"() {
-    when:
-    client.toBlocking().exchange("/issues/hello")
-
-    then:
-    HttpClientResponseException e = thrown(HttpClientResponseException)
-    e.status.code == 400
-}
-
-void "/issues/show/{number} without number responds 404"() {
-    when:
-    client.toBlocking().exchange("/issues/")
-
-    then:
-    HttpClientResponseException e = thrown(HttpClientResponseException)
-    e.status.code == 404
-}</code></pre>
-</div>
 </div>
 <div class="paragraph">
 <p>Note that the URI template in the previous example requires that the <code>number</code> variable is specified. You can specify optional URI templates with the syntax: <code>/issues{/number}</code> and by annotating the <code>number</code> parameter with <code>@Nullable</code>.</p>
@@ -983,23 +1142,67 @@ Route validation is more complicated with multiple templates. If a variable that
 <div class="paragraph">
 <p>To start off with you should subclass <a href="../api/io/micronaut/web/router/DefaultRouteBuilder.html">DefaultRouteBuilder</a> and then simply inject the controller you wish to route to into the method and define your routes:</p>
 </div>
-<div class="listingblock">
-<div class="title">RouteBuilder Example</div>
+<div class="listingblock multi-language-sample">
+<div class="title">URI Variables Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.context.ExecutionHandleLocator;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.ExecutionHandleLocator;
 import io.micronaut.web.router.DefaultRouteBuilder;
-
-import javax.inject.*;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
-public class MyRoutes extends DefaultRouteBuilder { <i class="conum" data-value="1"></i><b>(1)</b>
+public class MyRoutes extends DefaultRouteBuilder { <b class="conum">(1)</b>
+
     public MyRoutes(ExecutionHandleLocator executionHandleLocator, UriNamingStrategy uriNamingStrategy) {
         super(executionHandleLocator, uriNamingStrategy);
     }
 
     @Inject
-    void issuesRoutes(IssuesController issuesController) { <i class="conum" data-value="2"></i><b>(2)</b>
-        GET("/show/{name}", issuesController, "issue", Integer.class); <i class="conum" data-value="3"></i><b>(3)</b>
+    void issuesRoutes(IssuesController issuesController) { <b class="conum">(2)</b>
+        GET("/issues/show/{number}", issuesController, "issue", Integer.class); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">URI Variables Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.web.router.GroovyRouteBuilder
+
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MyRoutes extends GroovyRouteBuilder { <b class="conum">(1)</b>
+
+    MyRoutes(ExecutionHandleLocator executionHandleLocator, UriNamingStrategy uriNamingStrategy, ConversionService&lt;?&gt; conversionService) {
+        super(executionHandleLocator, uriNamingStrategy, conversionService)
+    }
+
+    @Inject
+    void issuesRoutes(IssuesController issuesController) { <b class="conum">(2)</b>
+        GET("/issues/show/{number}", issuesController.&amp;issue) <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">URI Variables Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ExecutionHandleLocator
+import io.micronaut.web.router.DefaultRouteBuilder
+import io.micronaut.web.router.RouteBuilder
+
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MyRoutes(executionHandleLocator: ExecutionHandleLocator, uriNamingStrategy: RouteBuilder.UriNamingStrategy) :
+        DefaultRouteBuilder(executionHandleLocator, uriNamingStrategy) { <b class="conum">(1)</b>
+
+    @Inject
+    fun issuesRoutes(issuesController: IssuesController) { <b class="conum">(2)</b>
+        GET("/issues/show/{number}", issuesController, "issue", Int::class.java) <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -1012,11 +1215,11 @@ public class MyRoutes extends DefaultRouteBuilder { <i class="conum" data-value=
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Use <code>@Inject</code> to inject a method with the controllers you want to route to</td>
+<td>Use <code>@Inject</code> to inject a method with the controller you want to route to</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Use methods such as <a href="../api/io/micronaut/web/router/RouteBuilder.html#GET-java.lang.String-java.lang.Class-java.lang.String-java.lang.Class&#8230;&#8203;-">GET</a> to route to controller methods</td>
+<td>Use methods such as <a href="../api/io/micronaut/web/router/RouteBuilder.html#GET-java.lang.String-java.lang.Class-java.lang.String-java.lang.Class&#8230;&#8203;-">GET</a> to route to controller methods. Note that even though the issues controller is being used, the route has no knowledge of its <code>@Controller</code> annotation and thus the full path must be specified.</td>
 </tr>
 </table>
 </div>
@@ -1113,39 +1316,13 @@ String lock(String name)</code></pre>
 
 
 <div class="paragraph">
-<p>The examples in the previous section demonstrates how Micronaut allows you to bind method parameters from URI path variables.</p>
+<p>The examples in the previous section demonstrates how Micronaut allows you to bind method parameters from URI path variables. This section will discuss how to bind arguments from other parts of the request.</p>
 </div>
 <div class="sect1">
 <h2 id="_binding_annotations"><a class="anchor" href="#_binding_annotations"></a>Binding Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can customize the name of the variable bound with the <a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a> annotation which accepts a value which is the name of the URI variable or request parameter to bind from.</p>
-</div>
-<div class="paragraph">
-<p>Also, in order to bind all request URI variables or request parameters to a command object, you can define URI route variable as <code>?pojo*</code>. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Binding Request parameters to POJO</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpStatus;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.validation.Validated;
-
-import javax.annotation.Nullable;
-import javax.validation.Valid;
-
-@Controller("/api")
-public class BookmarkController {
-
-@Get("/bookmarks/list{?paginationCommand*}")
-public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
-    return HttpStatus.OK;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In addition, there are other annotations within the <a href="../api/io/micronaut/http/annotation/package-summary.html">io.micronaut.http.annotation</a> package to bind from different sources.</p>
+<p>All of the binding annotations support customization of the name of the variable being bound from with their <code>name</code> member.</p>
 </div>
 <div class="paragraph">
 <p>The following table summarizes the annotations, their purpose and provides an example:</p>
@@ -1167,12 +1344,12 @@ public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Body.html">@Body</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allows to specify the parameter the body of the request should bind to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from the body of the request</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Body String body</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/CookieValue.html">@CookieValue</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Binds a parameter from a Cookie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds a parameter from a cookie</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@CookieValue String myCookie</code></p></td>
 </tr>
 <tr>
@@ -1182,36 +1359,174 @@ public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bindings from a request URI variable or request parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from a request query parameter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@QueryValue String myParam</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Part.html">@Part</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from a part of a multipart request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Part CompletedFileUpload file</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestAttribute.html">@RequestAttribute</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from an attribute of the request. Attributes are typically created in filters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestAttribute String myAttribute</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestAttribute.html">@PathVariable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds from the path of the request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@PathVariable String id</code></p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
 <p>When a value is not specified to any binding annotation then the parameter name is used. In other words the following two methods are equivalent and both bind from a cookie called <code>myCookie</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String hello(@CookieValue("myCookie") String myCookie) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/cookieName")
+    public String cookieName(@CookieValue("myCookie") String myCookie) {
+        // ...
+    }
 
-String hello(@CookieValue String myCookie) {
-    ...
-}</code></pre>
+    @Get("/cookieInferred")
+    public String cookieInferred(@CookieValue String myCookie) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/cookieName")
+    String cookieName(@CookieValue("myCookie") String myCookie) {
+        // ...
+    }
+
+    @Get("/cookieInferred")
+    String cookieInferred(@CookieValue String myCookie) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/cookieName")
+    fun cookieName(@CookieValue("myCookie") myCookie: String): String {
+        // ...
+    }
+
+    @Get("/cookieInferred")
+    fun cookieInferred(@CookieValue myCookie: String): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Since Java doesn&#8217;t allow hyphens in variable names in the case of headers the following two definitions are equivalent:</p>
+<p>Because hyphens are not allowed in variable names it may be necessary to set the name in the annotation. The following two definitions are equivalent:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header("Content-Type") String contentType) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerName")
+    public String headerName(@Header("Content-Type") String contentType) {
+        // ...
+    }
 
-public String hello(@Header String contentType) {
-    ...
+    @Get("/headerInferred")
+    public String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerName")
+    String headerName(@Header("Content-Type") String contentType) {
+        // ...
+    }
+
+    @Get("/headerInferred")
+    String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerName")
+    fun headerName(@Header("Content-Type") contentType: String): String {
+        // ...
+    }
+
+    @Get("/headerInferred")
+    fun headerInferred(@Header contentType: String): String {
+        // ...
+    }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_binding_from_multiple_values"><a class="anchor" href="#_binding_from_multiple_values"></a>Binding from Multiple values</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Instead of binding from a single section of the request, it may be desirable to bind all query values for example to a POJO. This can be achieved by using the exploded operator (<code>?pojo*</code>) in the URI template. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+
+@Controller("/api")
+public class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    public HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
+        return HttpStatus.OK;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+import javax.annotation.Nullable
+import javax.validation.Valid
+
+@Controller("/api")
+class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    HttpStatus list(@Valid @Nullable PaginationCommand paginationCommand) {
+        HttpStatus.OK
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Request parameters to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.validation.Validated
+import javax.validation.Valid
+
+@Controller("/api")
+open class BookmarkController {
+
+    @Get("/bookmarks/list{?paginationCommand*}")
+    open fun list(@Valid paginationCommand: PaginationCommand): HttpStatus {
+        return HttpStatus.OK
+    }
 }</code></pre>
 </div>
 </div>
@@ -1227,13 +1542,30 @@ public String hello(@Header String contentType) {
 <p>This includes most common Java types, however additional <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> instances can be registered simply be creating <code>@Singleton</code> beans of type <code>TypeConverter</code>.</p>
 </div>
 <div class="paragraph">
-<p>The handling of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> deserves special mention. Consider for example the following example:</p>
+<p>The handling of nullability deserves special mention. Consider for example the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header String contentType) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerInferred")
+    public String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerInferred")
+    String headerInferred(@Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerInferred")
+    fun headerInferred(@Header contentType: String): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1242,28 +1574,85 @@ public String hello(@Header String contentType) {
 <div class="paragraph">
 <p>If you wish for the <code>Content-Type</code> header to be optional, you can instead write:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header Optional&lt;String&gt; contentType) {
-    ...
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/headerNullable")
+    public String headerNullable(@Nullable @Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/headerNullable")
+    String headerNullable(@Nullable @Header String contentType) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/headerNullable")
+    fun headerNullable(@Header contentType: String?): String? {
+        // ...
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An empty <code>Optional</code> will be passed if the header is absent from the request.</p>
+<p>An null string will be passed if the header is absent from the request.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>java.util.Optional</code> can also be used, however that is discouraged for method parameters.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Additionally, any <code>DateTime</code> that conforms to <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#RFC_1123_DATE_TIME">RFC-1123</a> can be bound to a parameter, alternatively the format can be customized with the <a href="../api/io/micronaut/core/convert/format/Format.html">Format</a> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public String hello(@Header ZonedDateTime date) {
-    ...
-}
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/date")
+    public String date(@Header ZonedDateTime date) {
+        // ...
+    }
 
-public String hello(@Format('dd/MM/yyy') @Header ZonedDateTime date) {
-    ...
-}</code></pre>
+    @Get("/dateFormat")
+    public String dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header ZonedDateTime date) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/date")
+    String date(@Header ZonedDateTime date) {
+        // ...
+    }
+
+    @Get("/dateFormat")
+    String dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header ZonedDateTime date) {
+        // ...
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/date")
+    fun date(@Header date: ZonedDateTime): String {
+        // ...
+    }
+
+    @Get("/dateFormat")
+    fun dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header date: ZonedDateTime): String {
+        // ...
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -1481,25 +1870,71 @@ The <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> should b
 <div class="paragraph">
 <p>The following example implements the previous <code>MessageController</code> example using the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> and <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> objects:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Request and Response Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
-
-import static io.micronaut.http.HttpResponse.*; <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
 @Controller("/request")
 public class MessageController {
 
-    @Get("/hello") <i class="conum" data-value="2"></i><b>(2)</b>
+    @Get("/hello") <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; hello(HttpRequest&lt;?&gt; request) {
+        String name = request.getParameters()
+                             .getFirst("name")
+                             .orElse("Nobody"); <b class="conum">(2)</b>
+
+        return HttpResponse.ok("Hello " + name + "!!")
+                 .header("X-My-Header", "Foo"); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Request and Response Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/request")
+class MessageController {
+
+    @Get("/hello") <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; hello(HttpRequest&lt;?&gt; request) {
         String name = request.getParameters()
                              .getFirst("name")
-                             .orElse("Nobody"); <i class="conum" data-value="3"></i><b>(3)</b>
+                             .orElse("Nobody") <b class="conum">(2)</b>
 
-        return ok("Hello " + name + "!!")
-                 .header("X-My-Header", "Foo"); <i class="conum" data-value="4"></i><b>(4)</b>
+        HttpResponse.ok("Hello " + name + "!!")
+                 .header("X-My-Header", "Foo") <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Request and Response Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/request")
+class MessageController {
+
+    @Get("/hello") <b class="conum">(1)</b>
+    fun hello(request: HttpRequest&lt;*&gt;): HttpResponse&lt;String&gt; {
+        val name = request.parameters
+                .getFirst("name")
+                .orElse("Nobody") <b class="conum">(2)</b>
+
+        return HttpResponse.ok("Hello $name!!")
+                .header("X-My-Header", "Foo") <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -1508,24 +1943,20 @@ public class MessageController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The factory methods of the <a href="../api/io/micronaut/http/HttpResponse.html">HttpResponse</a> are statically imported</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The method is mapped to the URI <code>/hello</code> and accepts a <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is used to obtain the value of a query parameter called <code>name</code>.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>The <a href="../api/io/micronaut/http/HttpResponse.html#ok-T-">HttpResponse.ok(T)</a> method is used to return a <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> with a text body. A header called <code>X-My-Header</code> is also added to the response object.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is also availble from static context via io.micronaut.http.context.ServerRequestContext[].</p>
+<p><a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> is also available from static context via <a href="../api/io/micronaut/http/context/ServerRequestContext.html">ServerRequestContext</a>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -1534,7 +1965,7 @@ public class MessageController {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Generally io.micronaut.http.context.ServerRequestContext[] is available within reactive flow, but recommended aproach is to propogate necessary state through lambdas.
+Generally <a href="../api/io/micronaut/http/context/ServerRequestContext.html">ServerRequestContext</a> is available within reactive flow, but the recommended approach is to propagate the necessary state through lambdas.
 </td>
 </tr>
 </table>
@@ -1555,35 +1986,85 @@ Generally io.micronaut.http.context.ServerRequestContext[] is available within r
 <div class="paragraph">
 <p>If the controller&#8217;s action responds a <code>HttpResponse</code> object, you can configure the status code for the response object with the <code>status</code> method.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get(produces = MediaType.TEXT_PLAIN)
-public HttpResponse index() {
-    return HttpResponse.status(HttpStatus.CREATED).body("success");
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/http-response", produces = MediaType.TEXT_PLAIN)
+    public HttpResponse httpResponse() {
+        return HttpResponse.status(HttpStatus.CREATED).body("success");
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/http-response", produces = MediaType.TEXT_PLAIN)
+    HttpResponse httpResponse() {
+        HttpResponse.status(HttpStatus.CREATED).body("success")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/http-response", produces = [MediaType.TEXT_PLAIN])
+    fun httpResponse(): HttpResponse&lt;String&gt; {
+        return HttpResponse.status&lt;String&gt;(HttpStatus.CREATED).body("success")
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>You can also use the <code>@Status</code> annotation.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Status(HttpStatus.CREATED)
-@Get(produces = MediaType.TEXT_PLAIN)
-public String index() {
-    return "success";
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Status(HttpStatus.CREATED)
+    @Get(produces = MediaType.TEXT_PLAIN)
+    public String index() {
+        return "success";
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Status(HttpStatus.CREATED)
+    @Get(produces = MediaType.TEXT_PLAIN)
+    String index() {
+        return "success"
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED)
+    @Get(produces = [MediaType.TEXT_PLAIN])
+    fun index(): String {
+        return "success"
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or even respond a <code>HttpStatus</code></p>
+<p>or even respond with an <code>HttpStatus</code></p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get
-public HttpStatus index() {
-    return HttpStatus.CREATED;
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/http-status")
+    public HttpStatus httpStatus() {
+        return HttpStatus.CREATED;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/http-status")
+    HttpStatus httpStatus() {
+        HttpStatus.CREATED
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/http-status")
+    fun httpStatus(): HttpStatus {
+        return HttpStatus.CREATED
+    }</code></pre>
 </div>
 </div>
 
@@ -1598,22 +2079,94 @@ public HttpStatus index() {
 
 <div class="paragraph">
 <p>A Micronaut&#8217;s controller action produces <code>application/json</code> by default.
-Nonetheless you can change the <code>Content-Type</code> of the response with the <code>@Produces</code> annotation.</p>
+Nonetheless you can change the <code>Content-Type</code> of the response with the <code>@Produces</code> annotation or the <code>produces</code> member of the HTTP method annotations.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/test")
-public class TestController {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Produces;
 
-    @Get
+@Controller("/produces")
+public class ProducesController {
+
+    @Get <b class="conum">(1)</b>
     public HttpResponse index() {
         return HttpResponse.ok().body("{\"msg\":\"This is JSON\"}");
     }
 
-    @Produces(MediaType.TEXT_HTML) <i class="conum" data-value="1"></i><b>(1)</b>
-    @Get("/html")
+    @Produces(MediaType.TEXT_HTML)
+    @Get("/html") <b class="conum">(2)</b>
     public String html() {
         return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;HTML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;";
+    }
+
+    @Get(value = "/xml", produces = MediaType.TEXT_XML) <b class="conum">(3)</b>
+    public String xml() {
+        return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;XML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Produces
+
+@Controller("/produces")
+class ProducesController {
+
+    @Get <b class="conum">(1)</b>
+    HttpResponse index() {
+        HttpResponse.ok().body("{\"msg\":\"This is JSON\"}")
+    }
+
+    @Produces(MediaType.TEXT_HTML) <b class="conum">(2)</b>
+    @Get("/html")
+    String html() {
+        "&lt;html&gt;&lt;title&gt;&lt;h1&gt;HTML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
+    }
+
+    @Get(value = "/xml", produces = MediaType.TEXT_XML) <b class="conum">(3)</b>
+    String xml() {
+        return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;XML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Produces
+
+@Controller("/produces")
+class ProducesController {
+
+    @Get <b class="conum">(1)</b>
+    fun index(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;().body("{\"msg\":\"This is JSON\"}")
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @Get("/html") <b class="conum">(2)</b>
+    fun html(): String {
+        return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;HTML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
+    }
+
+    @Get(value = "/xml", produces = [MediaType.TEXT_XML]) <b class="conum">(3)</b>
+    fun xml(): String {
+        return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;XML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
     }
 }</code></pre>
 </div>
@@ -1622,7 +2175,15 @@ public class TestController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The default content type is JSON</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Annotate a controller&#8217;s action with <code>@Produces</code> to change the response content type.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Setting the <code>produces</code> member of the method annotation also changes the content type.</td>
 </tr>
 </table>
 </div>
@@ -1637,22 +2198,94 @@ public class TestController {
 
 
 <div class="paragraph">
-<p>A Micronaut&#8217;s controller action consumes <code>application/json</code> by default. Nonetheless, you can support other <code>Content-Type</code> with the <code>@Consumes</code> annotation.</p>
+<p>A Micronaut&#8217;s controller action consumes <code>application/json</code> by default. Consuming other content types is supported with the <code>@Consumes</code> annotation, or the <code>consumes</code> member of any HTTP method annotation.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/test")
-class TestController {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
 
-    @Consumes([MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON]) <i class="conum" data-value="1"></i><b>(1)</b>
-    @Post("/multiple-consumes")
+@Controller("/consumes")
+public class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    public HttpResponse index() {
+        return HttpResponse.ok();
+    }
+
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) <b class="conum">(2)</b>
+    @Post("/multiple")
+    public HttpResponse multipleConsumes() {
+        return HttpResponse.ok();
+    }
+
+    @Post(value = "/member", consumes = MediaType.TEXT_PLAIN) <b class="conum">(3)</b>
+    public HttpResponse consumesMember() {
+        return HttpResponse.ok();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+@Controller("/consumes")
+class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    HttpResponse index() {
+        HttpResponse.ok()
+    }
+
+    @Consumes([MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON]) <b class="conum">(2)</b>
+    @Post("/multiple")
     HttpResponse multipleConsumes() {
         HttpResponse.ok()
     }
 
-    @Post <i class="conum" data-value="2"></i><b>(2)</b>
-    HttpResponse index() {
+    @Post(value = "/member", consumes = MediaType.TEXT_PLAIN) <b class="conum">(3)</b>
+    HttpResponse consumesMember() {
         HttpResponse.ok()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+@Controller("/consumes")
+class ConsumesController {
+
+    @Post <b class="conum">(1)</b>
+    fun index(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
+    }
+
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON) <b class="conum">(2)</b>
+    @Post("/multiple")
+    fun multipleConsumes(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
+    }
+
+    @Post(value = "/member", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(3)</b>
+    fun consumesMember(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok&lt;Any&gt;()
     }
 }</code></pre>
 </div>
@@ -1661,11 +2294,15 @@ class TestController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>@Consumes</code> annotation takes a <code>String[]</code> of supported media types for an incoming request.</td>
+<td>By default, a controller&#8217;s action consumes request with <code>Content-Type</code> of type <code>application/json</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>By default, a controller&#8217;s action consumes request with <code>Content-Type</code> of type <code>application/json</code>.</td>
+<td><code>@Consumes</code> annotation takes a <code>String[]</code> of supported media types for an incoming request.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The consumes can also be specified with the <code>consumes</code> member of the method annotation.</td>
 </tr>
 </table>
 </div>
@@ -1735,23 +2372,67 @@ micronaut.executors.io.nThreads=75</code></pre>
 <div class="paragraph">
 <p>The following example implements a simple echo server that echos the body sent in the request:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using the @Body annotation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.reactivex.Flowable;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
+
 import javax.validation.constraints.Size;
 
+    @Post(value = "/echo", consumes = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    String echo(@Size(max = 1024) @Body String text) { <b class="conum">(2)</b>
+        return text; <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using the @Body annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.reactivex.Flowable
+import io.reactivex.Single
+
+import javax.validation.constraints.Size
+
+    @Post(value = "/echo", consumes = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    String echo(@Size(max = 1024) @Body String text) { <b class="conum">(2)</b>
+        text <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using the @Body annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.reactivex.Flowable
+import io.reactivex.Single
+
+import javax.validation.constraints.Size
+
+
 @Controller("/receive")
-public class MessageController {
+open class MessageController {
 
-    @Post(value = "/echo", consumes = MediaType.TEXT_PLAIN) <i class="conum" data-value="1"></i><b>(1)</b>
-    String echo(@Size(max = 1024) @Body String text) { <i class="conum" data-value="2"></i><b>(2)</b>
-        return text; <i class="conum" data-value="3"></i><b>(3)</b>
+    @Post(value = "/echo", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    open fun echo(@Size(max = 1024) @Body text: String): String { <b class="conum">(2)</b>
+        return text <b class="conum">(3)</b>
     }
-
 }</code></pre>
 </div>
 </div>
@@ -1763,7 +2444,7 @@ public class MessageController {
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <a href="../api/io/micronaut/http/annotation/Body.html">Body</a> annotation is used with a <code>javax.validation.constraints.Size</code> that limits the size of the body to at most 1MB</td>
+<td>The <a href="../api/io/micronaut/http/annotation/Body.html">Body</a> annotation is used with a <code>javax.validation.constraints.Size</code> that limits the size of the body to at most 1MB. This constraint does <strong>not</strong> limit the amount of data read/buffered by the server.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1781,24 +2462,46 @@ public class MessageController {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The <code>micronaut.server.maxRequestSize</code> setting in <code>application.yml</code> will limit the size of the data (the default maximum request size is 10MB) if no <code>@Size</code> constraint is specified.
+The <code>micronaut.server.maxRequestSize</code> setting in <code>application.yml</code> will limit the size of the data (the default maximum request size is 10MB) read/buffered by the server. <code>@Size</code> is <strong>not</strong> a replacement for this setting.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Regardless of the limit, for a  large amount of data accumulating the data into a String in-memory may lead to memory strain on the server. A better approach is to include a Reactive library in your project (such as <code>RxJava 2.x</code>, <code>Reactor</code> or <code>Akka</code>) that supports the Reactive streams implementation and stream the data it becomes available:</p>
+<p>Regardless of the limit, for a large amount of data accumulating the data into a String in-memory may lead to memory strain on the server. A better approach is to include a Reactive library in your project (such as <code>RxJava 2.x</code>, <code>Reactor</code> or <code>Akka</code>) that supports the Reactive streams implementation and stream the data it becomes available:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using RxJava 2 to Read the request body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post(value = "/echo-flow", consumes = MediaType.TEXT_PLAIN) <i class="conum" data-value="1"></i><b>(1)</b>
-Single&lt;MutableHttpResponse&lt;String&gt;&gt; echoFlow(@Body Flowable&lt;String&gt; text) { <i class="conum" data-value="2"></i><b>(2)</b>
-    return text.collect(StringBuffer::new, StringBuffer::append) <i class="conum" data-value="3"></i><b>(3)</b>
-               .map(buffer -&gt;
-                    HttpResponse.ok(buffer.toString())
-               );
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Post(value = "/echo-flow", consumes = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    Single&lt;MutableHttpResponse&lt;String&gt;&gt; echoFlow(@Body Flowable&lt;String&gt; text) { <b class="conum">(2)</b>
+        return text.collect(StringBuffer::new, StringBuffer::append) <b class="conum">(3)</b>
+                   .map(buffer -&gt;
+                        HttpResponse.ok(buffer.toString())
+                   );
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the request body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Post(value = "/echo-flow", consumes = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    Single&lt;MutableHttpResponse&lt;String&gt;&gt; echoFlow(@Body Flowable&lt;String&gt; text) { <b class="conum">(2)</b>
+        return text.collect({ x -&gt; new StringBuffer()}, { StringBuffer sb, String s -&gt; sb.append(s)}) <b class="conum">(3)</b>
+                   .map({ buffer -&gt;
+                       HttpResponse.ok(buffer.toString())
+                   });
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the request body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Post(value = "/echo-flow", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    fun echoFlow(@Body text: Flowable&lt;String&gt;): Single&lt;MutableHttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
+        return text.collect&lt;StringBuffer&gt;({ StringBuffer() }, { obj, str -&gt; obj.append(str) }) <b class="conum">(3)</b>
+                .map { buffer -&gt; HttpResponse.ok(buffer.toString()) }
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1936,22 +2639,61 @@ When returning a Reactive type, the type of reactive type has an impact on the r
 <div class="paragraph">
 <p>From a developer perspective however, you can generally just work with Plain Old Java Objects (POJOs) and can optionally use a Reactive framework such as RxJava or Reactor. The following is an example of a controller that reads and saves an incoming POJO in a non-blocking way from JSON:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using RxJava 2 to Read the JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/people")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
 public class PersonController {
 
-    Map&lt;String, Person&gt; inMemoryDatastore = new LinkedHashMap&lt;&gt;();
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
 
-    @Post
-    public Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <i class="conum" data-value="1"></i><b>(1)</b>
+    @Post("/saveReactive")
+    public Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <b class="conum">(1)</b>
         return person.map(p -&gt; {
-                    inMemoryDatastore.put(p.getFirstName(), p); <i class="conum" data-value="2"></i><b>(2)</b>
-                    return HttpResponse.created(p); <i class="conum" data-value="3"></i><b>(3)</b>
+                    inMemoryDatastore.put(p.getFirstName(), p); <b class="conum">(2)</b>
+                    return HttpResponse.created(p); <b class="conum">(3)</b>
                 }
         );
     }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post("/saveReactive")
+    Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <b class="conum">(1)</b>
+        person.map({ p -&gt;
+            inMemoryDatastore.put(p.getFirstName(), p) <b class="conum">(2)</b>
+            HttpResponse.created(p) <b class="conum">(3)</b>
+        })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using RxJava 2 to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post("/saveReactive")
+    fun save(@Body person: Single&lt;Person&gt;): Single&lt;HttpResponse&lt;Person&gt;&gt; { <b class="conum">(1)</b>
+        return person.map { p -&gt;
+            inMemoryDatastore[p.firstName] = p <b class="conum">(2)</b>
+            HttpResponse.created(p) <b class="conum">(3)</b>
+        }
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -1988,15 +2730,61 @@ public class PersonController {
 <div class="paragraph">
 <p>The same method as the previous example can also be written with the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> API instead:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using CompletableFuture to Read the JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
-    return person.thenApply(p -&gt; {
-                inMemoryDatastore.put(p.getFirstName(), p);
-                return HttpResponse.created(p);
-            }
-    );
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post("/saveFuture")
+    public CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
+        return person.thenApply(p -&gt; {
+                    inMemoryDatastore.put(p.getFirstName(), p);
+                    return HttpResponse.created(p);
+                }
+        );
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using CompletableFuture to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post("/saveFuture")
+    CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
+        person.thenApply({ p -&gt;
+            inMemoryDatastore.put(p.getFirstName(), p)
+            HttpResponse.created(p)
+        })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using CompletableFuture to Read the JSON</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post("/saveFuture")
+    fun save(@Body person: CompletableFuture&lt;Person&gt;): CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; {
+        return person.thenApply { p -&gt;
+            inMemoryDatastore[p.firstName] = p
+            HttpResponse.created(p)
+        }
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -2011,12 +2799,54 @@ public class PersonController {
 <div class="paragraph">
 <p>Note however, that if your method does not do any blocking I/O then you can just as easily write:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Binding JSON POJOs</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public HttpResponse&lt;Person&gt; save(@Body Person person) {
-    inMemoryDatastore.put(person.getFirstName(), person);
-    return HttpResponse.created(person);
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post
+    public HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person);
+        return HttpResponse.created(person);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding JSON POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post
+    HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person)
+        HttpResponse.created(person)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding JSON POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post
+    fun save(@Body person: Person): HttpResponse&lt;Person&gt; {
+        inMemoryDatastore[person.firstName] = person
+        return HttpResponse.created(person)
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -2232,23 +3062,75 @@ The output produced by Jackson can be customized in a variety of manners, from d
 <div class="paragraph">
 <p>We can validate parameters using <code>javax.validation</code> annotations and the <a href="../api/io/micronaut/validation/Validated.html">Validated</a> annotation at the class level.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpResponse;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.validation.Validated;
+
 import javax.validation.constraints.NotBlank;
 import java.util.Collections;
 
-@Validated <i class="conum" data-value="1"></i><b>(1)</b>
+@Validated <b class="conum">(1)</b>
 @Controller("/email")
 public class EmailController {
 
     @Get("/send")
-    public HttpResponse send(@NotBlank String recipient, <i class="conum" data-value="2"></i><b>(2)</b>
-                             @NotBlank String subject) { <i class="conum" data-value="2"></i><b>(2)</b>
+    public HttpResponse send(@NotBlank String recipient, <b class="conum">(2)</b>
+                             @NotBlank String subject) { <b class="conum">(2)</b>
         return HttpResponse.ok(Collections.singletonMap("msg", "OK"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.validation.Validated;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Collections;
+
+@Validated <b class="conum">(1)</b>
+@Controller("/email")
+class EmailController {
+
+    @Get("/send")
+    HttpResponse send(@NotBlank String recipient, <b class="conum">(2)</b>
+                             @NotBlank String subject) { <b class="conum">(2)</b>
+        HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.validation.Validated
+
+import javax.validation.constraints.NotBlank
+import java.util.Collections
+
+
+@Validated <b class="conum">(1)</b>
+@Controller("/email")
+open class EmailController {
+
+    @Get("/send")
+    open fun send(@NotBlank recipient: String, <b class="conum">(2)</b>
+             @NotBlank subject: String): HttpResponse&lt;*&gt; { <b class="conum">(2)</b>
+        return HttpResponse.ok(Collections.singletonMap("msg", "OK"))
     }
 }</code></pre>
 </div>
@@ -2268,50 +3150,66 @@ public class EmailController {
 <div class="paragraph">
 <p>The validation behaviour is shown in the following test:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Example Test</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "invoking /email/send validates parameters"() {
-    when:
-    client.toBlocking().retrieve('/email/send?subject=Hi&amp;recipient=')
+<pre class="highlight"><code class="language-java" data-lang="java">    @Test
+    public void testParametersAreValidated() {
+        HttpClientResponseException e = Assertions.assertThrows(HttpClientResponseException.class, () -&gt;
+            client.toBlocking().exchange("/email/send?subject=Hi&amp;recipient="));
+        HttpResponse response = e.getResponse();
 
-    then:
-    def e = thrown(HttpClientResponseException)
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
 
-    when:
-    def response = e.response
+        response = client.toBlocking().exchange("/email/send?subject=Hi&amp;recipient=me@micronaut.example");
 
-    then:
-    response.status == HttpStatus.BAD_REQUEST
+        assertEquals(HttpStatus.OK, response.getStatus());
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "test parameter validation"() {
+        when:
+        client.toBlocking().exchange('/email/send?subject=Hi&amp;recipient=')
 
-    when:
-    client.toBlocking().retrieve('/email/send?subject=Hi&amp;recipient=me@micronaut.example')
+        then:
+        def e = thrown(HttpClientResponseException)
+        def response = e.response
+        response.status == HttpStatus.BAD_REQUEST
 
-    then:
-    noExceptionThrown()
-}</code></pre>
+        when:
+        response = client.toBlocking().exchange('/email/send?subject=Hi&amp;recipient=me@micronaut.example')
+
+        then:
+        response.status == HttpStatus.OK
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example Test</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test params are validated"() {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                client.toBlocking().exchange&lt;Any&gt;("/email/send?subject=Hi&amp;recipient=")
+            }
+            var response = e.response
+
+            response.status shouldBe HttpStatus.BAD_REQUEST
+
+            response = client.toBlocking().exchange&lt;Any&gt;("/email/send?subject=Hi&amp;recipient=me@micronaut.example")
+
+            response.status shouldBe HttpStatus.OK
+        }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Often, you may want to use POJOs as controller method parameters.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
- * Copyright 2017-2019 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package io.micronaut.docs.datavalidation.pogo;
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.datavalidation.pogo;
 
 import io.micronaut.core.annotation.Introspected;
 
@@ -2320,10 +3218,10 @@ import javax.validation.constraints.NotBlank;
 @Introspected
 public class Email {
 
-    @NotBlank <i class="conum" data-value="1"></i><b>(1)</b>
+    @NotBlank <b class="conum">(1)</b>
     String subject;
 
-    @NotBlank <i class="conum" data-value="1"></i><b>(1)</b>
+    @NotBlank <b class="conum">(1)</b>
     String recipient;
 
     public String getSubject() {
@@ -2344,6 +3242,44 @@ public class Email {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.datavalidation.pogo;
+
+import io.micronaut.core.annotation.Introspected;
+
+import javax.validation.constraints.NotBlank;
+
+@Introspected
+class Email {
+
+    @NotBlank <b class="conum">(1)</b>
+    String subject;
+
+    @NotBlank <b class="conum">(1)</b>
+    String recipient;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.datavalidation.pogo
+
+import io.micronaut.core.annotation.Introspected
+
+import javax.validation.constraints.NotBlank
+
+@Introspected
+open class Email {
+
+    @NotBlank <b class="conum">(1)</b>
+    var subject: String? = null
+
+    @NotBlank <b class="conum">(1)</b>
+    var recipient: String? = null
+}</code></pre>
+</div>
+</div>
 <div class="colist arabic">
 <table>
 <tr>
@@ -2355,24 +3291,75 @@ public class Email {
 <div class="paragraph">
 <p>You need to annotate your controller with <a href="../api/io/micronaut/validation/Validated.html">Validated</a>. Also, you need to annotate the binding POJO with <code>@Valid</code>.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpResponse;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.validation.Validated;
+
 import javax.validation.Valid;
 import java.util.Collections;
 
-@Validated <i class="conum" data-value="1"></i><b>(1)</b>
+@Validated <b class="conum">(1)</b>
 @Controller("/email")
 public class EmailController {
 
     @Post("/send")
-    public HttpResponse send(@Body @Valid Email email) { <i class="conum" data-value="2"></i><b>(2)</b>
+    public HttpResponse send(@Body @Valid Email email) { <b class="conum">(2)</b>
         return HttpResponse.ok(Collections.singletonMap("msg", "OK"));    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.validation.Validated;
+
+import javax.validation.Valid;
+import java.util.Collections;
+
+@Validated <b class="conum">(1)</b>
+@Controller("/email")
+class EmailController {
+
+    @Post("/send")
+    HttpResponse send(@Body @Valid Email email) { <b class="conum">(2)</b>
+        HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.validation.Validated
+
+import javax.validation.Valid
+import java.util.Collections
+
+
+@Validated <b class="conum">(1)</b>
+@Controller("/email")
+open class EmailController {
+
+    @Post("/send")
+    open fun send(@Body @Valid email: Email): HttpResponse&lt;*&gt; { <b class="conum">(2)</b>
+        return HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+    }
 }</code></pre>
 </div>
 </div>
@@ -2402,21 +3389,17 @@ public class EmailController {
 
     then:
     def e = thrown(HttpClientResponseException)
-
-    when:
     def response = e.response
-
-    then:
     response.status == HttpStatus.BAD_REQUEST
 
     when:
     email = new Email()
     email.subject = 'Hi'
     email.recipient = 'me@micronaut.example'
-    client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+    response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
 
     then:
-    noExceptionThrown()
+    response.status == HttpStatus.OK
 }</code></pre>
 </div>
 </div>
@@ -2523,17 +3506,43 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="paragraph">
 <p>For example the following method will handling JSON parse exceptions from Jackson for the scope of the declaring controller:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Local exception handler</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Error
-public HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseException jsonParseException) { <i class="conum" data-value="1"></i><b>(1)</b>
-    JsonError error = new JsonError("Invalid JSON: " + jsonParseException.getMessage()) <i class="conum" data-value="2"></i><b>(2)</b>
-            .link(Link.SELF, Link.of(request.getUri()));
+<pre class="highlight"><code class="language-java" data-lang="java">    @Error
+    public HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseException jsonParseException) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Invalid JSON: " + jsonParseException.getMessage()) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()));
 
-    return HttpResponse.&lt;JsonError&gt;status(HttpStatus.BAD_REQUEST, "Fix Your JSON")
-            .body(error); <i class="conum" data-value="3"></i><b>(3)</b>
-}</code></pre>
+        return HttpResponse.&lt;JsonError&gt;status(HttpStatus.BAD_REQUEST, "Fix Your JSON")
+                .body(error); <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Local exception handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error
+    HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseException jsonParseException) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Invalid JSON: " + jsonParseException.getMessage()) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()))
+
+        HttpResponse.&lt;JsonError&gt;status(HttpStatus.BAD_REQUEST, "Fix Your JSON")
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Local exception handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error
+    fun jsonError(request: HttpRequest&lt;*&gt;, jsonParseException: JsonParseException): HttpResponse&lt;JsonError&gt; { <b class="conum">(1)</b>
+        val error = JsonError("Invalid JSON: " + jsonParseException.message) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
+
+        return HttpResponse.status&lt;JsonError&gt;(HttpStatus.BAD_REQUEST, "Fix Your JSON")
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2552,17 +3561,43 @@ public HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseExc
 </tr>
 </table>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Local status handler</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Error(status = HttpStatus.NOT_FOUND)
-public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <i class="conum" data-value="1"></i><b>(1)</b>
-    JsonError error = new JsonError("Page Not Found") <i class="conum" data-value="2"></i><b>(2)</b>
-            .link(Link.SELF, Link.of(request.getUri()));
+<pre class="highlight"><code class="language-java" data-lang="java">    @Error(status = HttpStatus.NOT_FOUND)
+    public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()));
 
-    return HttpResponse.&lt;JsonError&gt;notFound()
-            .body(error); <i class="conum" data-value="3"></i><b>(3)</b>
-}</code></pre>
+        return HttpResponse.&lt;JsonError&gt;notFound()
+                .body(error); <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Local status handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(status = HttpStatus.NOT_FOUND)
+    HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()))
+
+        HttpResponse.&lt;JsonError&gt;notFound()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Local status handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error(status = HttpStatus.NOT_FOUND)
+    fun notFound(request: HttpRequest&lt;*&gt;): HttpResponse&lt;JsonError&gt; { <b class="conum">(1)</b>
+        val error = JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
+
+        return HttpResponse.notFound&lt;JsonError&gt;()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2586,17 +3621,43 @@ public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <i class="c
 <div class="sect1">
 <h2 id="_global_error_handling"><a class="anchor" href="#_global_error_handling"></a>Global Error Handling</h2>
 <div class="sectionbody">
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Global error handler</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Error(global = true) <i class="conum" data-value="1"></i><b>(1)</b>
-public HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
-    JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <i class="conum" data-value="2"></i><b>(2)</b>
-            .link(Link.SELF, Link.of(request.getUri()));
+<pre class="highlight"><code class="language-java" data-lang="java">    @Error <b class="conum">(1)</b>
+    public HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
+        JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()));
 
-    return HttpResponse.&lt;JsonError&gt;serverError()
-            .body(error); <i class="conum" data-value="3"></i><b>(3)</b>
-}</code></pre>
+        return HttpResponse.&lt;JsonError&gt;serverError()
+                .body(error); <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Global error handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error <b class="conum">(1)</b>
+    HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
+        JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()))
+
+        HttpResponse.&lt;JsonError&gt;serverError()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Global error handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error <b class="conum">(1)</b>
+    fun error(request: HttpRequest&lt;*&gt;, e: Throwable): HttpResponse&lt;JsonError&gt; {
+        val error = JsonError("Bad Things Happened: " + e.message) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
+
+        return HttpResponse.serverError&lt;JsonError&gt;()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2615,17 +3676,43 @@ public HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
 </tr>
 </table>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Global status handler</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Error(status = HttpStatus.NOT_FOUND, global = true)
-public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <i class="conum" data-value="1"></i><b>(1)</b>
-    JsonError error = new JsonError("Page Not Found") <i class="conum" data-value="2"></i><b>(2)</b>
-            .link(Link.SELF, Link.of(request.getUri()));
+<pre class="highlight"><code class="language-java" data-lang="java">    @Error(status = HttpStatus.NOT_FOUND)
+    public HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()));
 
-    return HttpResponse.&lt;JsonError&gt;notFound()
-            .body(error); <i class="conum" data-value="3"></i><b>(3)</b>
-}</code></pre>
+        return HttpResponse.&lt;JsonError&gt;notFound()
+                .body(error); <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Global status handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(status = HttpStatus.NOT_FOUND)
+    HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.getUri()))
+
+        HttpResponse.&lt;JsonError&gt;notFound()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Global status handler</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error(status = HttpStatus.NOT_FOUND)
+    fun notFound(request: HttpRequest&lt;*&gt;): HttpResponse&lt;JsonError&gt; { <b class="conum">(1)</b>
+        val error = JsonError("Person Not Found") <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
+
+        return HttpResponse.notFound&lt;JsonError&gt;()
+                .body(error) <b class="conum">(3)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2669,33 +3756,61 @@ If an <code>@Error</code> annotation with the same parameter exists as global an
 <div class="paragraph">
 <p>Imagine your e-commerce app throws an <code>OutOfStockException</code> when a book is out of stock:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class OutOfStockException extends RuntimeException {
+<pre class="highlight"><code class="language-java" data-lang="java">public class OutOfStockException extends RuntimeException {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class OutOfStockException extends RuntimeException {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class OutOfStockException : RuntimeException()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Along with <code>BookController</code>:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/books")
 public class BookController {
+
     @Produces(MediaType.TEXT_PLAIN)
     @Get("/stock/{isbn}")
     Integer stock(String isbn) {
         throw new OutOfStockException();
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/books")
+class BookController {
 
     @Produces(MediaType.TEXT_PLAIN)
-    @Get("/null-pointer")
-    Integer npe() {
-        throw new NullPointerException();
+    @Get("/stock/{isbn}")
+    Integer stock(String isbn) {
+        throw new OutOfStockException()
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/books")
+class BookController {
 
-    @Error(exception = NullPointerException.class)
     @Produces(MediaType.TEXT_PLAIN)
-    @Status(HttpStatus.MULTI_STATUS)
-    String npeHandler() {
-        return "NPE";
+    @Get("/stock/{isbn}")
+    internal fun stock(isbn: String): Int? {
+        throw OutOfStockException()
     }
 }</code></pre>
 </div>
@@ -2706,9 +3821,9 @@ public class BookController {
 <div class="paragraph">
 <p>If you want to respond 200 OK with 0 (stock level) as the response body when the <code>OutOfStockException</code> is thrown, you could register a <code>ExceptionHandler</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces
+<pre class="highlight"><code class="language-java" data-lang="java">@Produces
 @Singleton
 @Requires(classes = {OutOfStockException.class, ExceptionHandler.class})
 public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
@@ -2716,6 +3831,35 @@ public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStoc
     @Override
     public HttpResponse handle(HttpRequest request, OutOfStockException exception) {
         return HttpResponse.ok(0);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Produces
+@Singleton
+@Requires(classes = [OutOfStockException.class, ExceptionHandler.class])
+class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
+
+    @Override
+    HttpResponse handle(HttpRequest request, OutOfStockException exception) {
+        HttpResponse.ok(0)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Produces
+@Singleton
+@Requirements(
+        Requires(classes = [OutOfStockException::class, ExceptionHandler::class])
+)
+class OutOfStockExceptionHandler : ExceptionHandler&lt;OutOfStockException, HttpResponse&lt;*&gt;&gt; {
+
+    override fun handle(request: HttpRequest&lt;*&gt;, exception: OutOfStockException): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok(0)
     }
 }</code></pre>
 </div>
@@ -2750,27 +3894,74 @@ An <code>@Error</code> annotation capturing an exception has precedence over an 
 <div class="paragraph">
 <p>The following example demonstrates how to version an API:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Versioning an API</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.core.version.annotation.Version;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.version.annotation.Version;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
 @Controller("/versioned")
 class VersionedController {
 
-    @Version("1") <i class="conum" data-value="1"></i><b>(1)</b>
+    @Version("1") <b class="conum">(1)</b>
     @Get("/hello")
     String helloV1() {
         return "helloV1";
     }
 
-    @Version("2") <i class="conum" data-value="2"></i><b>(2)</b>
+    @Version("2") <b class="conum">(2)</b>
     @Get("/hello")
     String helloV2() {
         return "helloV2";
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Versioning an API</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/versioned")
+class VersionedController {
+
+    @Version("1") <b class="conum">(1)</b>
+    @Get("/hello")
+    String helloV1() {
+        "helloV1"
     }
-}</code></pre>
+
+    @Version("2") <b class="conum">(2)</b>
+    @Get("/hello")
+    String helloV2() {
+        "helloV2"
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Versioning an API</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.version.annotation.Version
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+
+@Controller("/versioned")
+internal class VersionedController {
+
+    @Version("1") <b class="conum">(1)</b>
+    @Get("/hello")
+    fun helloV1(): String {
+        return "helloV1"
+    }
+
+    @Version("2") <b class="conum">(2)</b>
+    @Get("/hello")
+    fun helloV2(): String {
+        return "helloV2"
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3060,13 +4251,54 @@ interface HelloClient {
 <div class="paragraph">
 <p>What this means in practise is that in order to bind regular form data the only change required to the previous JSON binding code is updating the <a href="../api/io/micronaut/http/MediaType.html">MediaType</a> consumed:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Binding Form Data to POJOs</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED)
-public HttpResponse&lt;Person&gt; save(@Body Person person) {
-    inMemoryDatastore.put(person.getFirstName(), person);
-    return HttpResponse.created(person);
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post
+    public HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person);
+        return HttpResponse.created(person);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Form Data to POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post
+    HttpResponse&lt;Person&gt; save(@Body Person person) {
+        inMemoryDatastore.put(person.getFirstName(), person)
+        HttpResponse.created(person)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Form Data to POJOs</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post
+    fun save(@Body person: Person): HttpResponse&lt;Person&gt; {
+        inMemoryDatastore[person.firstName] = person
+        return HttpResponse.created(person)
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -3085,15 +4317,60 @@ To avoid denial of service attacks, collection types and arrays created during b
 <div class="paragraph">
 <p>Alternatively, instead of using a POJO you can bind form data directly to method parameters (which works with JSON too!):</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Binding Form Data to Parameters</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED)
-public HttpResponse&lt;Person&gt; save(String firstName, String lastName, Optional&lt;Integer&gt; age) {
-    Person p = new Person(firstName, lastName);
-    age.ifPresent(p::setAge);
-    inMemoryDatastore.put(p.getFirstName(), p);
-    return HttpResponse.created(p);
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/people")
+public class PersonController {
+
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;();
+
+    @Post("/saveWithArgs")
+    public HttpResponse&lt;Person&gt; save(String firstName, String lastName, Optional&lt;Integer&gt; age) {
+        Person p = new Person(firstName, lastName);
+        age.ifPresent(p::setAge);
+        inMemoryDatastore.put(p.getFirstName(), p);
+        return HttpResponse.created(p);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Form Data to Parameters</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
+class PersonController {
+
+    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+
+    @Post("/saveWithArgs")
+    HttpResponse&lt;Person&gt; save(String firstName, String lastName, Optional&lt;Integer&gt; age) {
+        Person p = new Person(firstName, lastName)
+        age.ifPresent({ a -&gt; p.setAge(a)})
+        inMemoryDatastore.put(p.getFirstName(), p)
+        HttpResponse.created(p)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Form Data to Parameters</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/people")
+class PersonController {
+
+    internal var inMemoryDatastore: MutableMap&lt;String, Person&gt; = ConcurrentHashMap()
+
+    @Post("/saveWithArgs")
+    fun save(firstName: String, lastName: String, age: Optional&lt;Int&gt;): HttpResponse&lt;Person&gt; {
+        val p = Person(firstName, lastName)
+        age.ifPresent { p.age = it }
+        inMemoryDatastore[p.firstName] = p
+        return HttpResponse.created(p)
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -3181,15 +4458,16 @@ See the section on configuring <a href="#threadPools">Server Thread Pools</a> fo
 <div class="paragraph">
 <p>The following example demonstrates how to use this API with Groovy&#8217;s <code>SimpleTemplateEngine</code> to write a server side template:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Performing Blocking I/O</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import groovy.text.SimpleTemplateEngine;
+<pre class="highlight"><code class="language-java" data-lang="java">import groovy.text.SimpleTemplateEngine;
 import groovy.text.Template;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.http.server.exceptions.HttpServerException;
 
 @Controller("/template")
@@ -3199,12 +4477,12 @@ public class TemplateController {
     private final Template template;
 
     public TemplateController() {
-        template = initTemplate(); <i class="conum" data-value="1"></i><b>(1)</b>
+        template = initTemplate(); <b class="conum">(1)</b>
     }
 
     @Get(value = "/welcome", produces = MediaType.TEXT_PLAIN)
-    Writable render() { <i class="conum" data-value="2"></i><b>(2)</b>
-        return writer -&gt; template.make( <i class="conum" data-value="3"></i><b>(3)</b>
+    Writable render() { <b class="conum">(2)</b>
+        return writer -&gt; template.make( <b class="conum">(3)</b>
             CollectionUtils.mapOf(
                     "firstName", "Fred",
                     "lastName", "Flintstone"
@@ -3222,6 +4500,106 @@ public class TemplateController {
             throw new HttpServerException("Cannot create template");
         }
         return template;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Performing Blocking I/O</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import groovy.text.SimpleTemplateEngine;
+import groovy.text.Template;
+import io.micronaut.core.io.Writable;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.server.exceptions.HttpServerException;
+
+@Controller("/template")
+class TemplateController {
+
+    private final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
+    private final Template template
+
+    TemplateController() {
+        template = initTemplate() <b class="conum">(1)</b>
+    }
+
+    @Get(value = "/welcome", produces = MediaType.TEXT_PLAIN)
+    Writable render() { <b class="conum">(2)</b>
+        { writer -&gt;
+            template.make( <b class="conum">(3)</b>
+                    CollectionUtils.mapOf(
+                            "firstName", "Fred",
+                            "lastName", "Flintstone"
+                    )
+            ).writeTo(writer)
+        }
+    }
+
+    private Template initTemplate() {
+        Template template
+        try {
+            template = templateEngine.createTemplate(
+                    'Dear $firstName $lastName. Nice to meet you.'
+            )
+        } catch (Exception e) {
+            throw new HttpServerException("Cannot create template")
+        }
+        template
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Performing Blocking I/O</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import groovy.text.SimpleTemplateEngine
+import groovy.text.Template
+import io.micronaut.core.io.Writable
+import io.micronaut.core.util.CollectionUtils
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.server.exceptions.HttpServerException
+import java.io.Writer
+
+
+@Controller("/template")
+class TemplateController {
+
+    private val templateEngine = SimpleTemplateEngine()
+    private val template: Template
+
+    init {
+        template = initTemplate() <b class="conum">(1)</b>
+    }
+
+    @Get(value = "/welcome", produces = [MediaType.TEXT_PLAIN])
+    internal fun render(): Writable { <b class="conum">(2)</b>
+        return { writer: Writer -&gt;
+            val writable = template.make( <b class="conum">(3)</b>
+                    CollectionUtils.mapOf(
+                            "firstName", "Fred",
+                            "lastName", "Flintstone"
+                    )
+            )
+            writable.writeTo(writer)
+        } as Writable
+    }
+
+    private fun initTemplate(): Template {
+        val template: Template
+        try {
+            template = templateEngine.createTemplate(
+                    "Dear \$firstName \$lastName. Nice to meet you."
+            )
+        } catch (e: Exception) {
+            throw HttpServerException("Cannot create template")
+        }
+
+        return template
     }
 }</code></pre>
 </div>
@@ -3251,19 +4629,53 @@ public class TemplateController {
 <div class="paragraph">
 <p>See the following example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/books")
 public class BooksController {
 
     @Get("/stock/{isbn}")
     public Map stock(String isbn) {
-        return null; <i class="conum" data-value="1"></i><b>(1)</b>
+        return null; <b class="conum">(1)</b>
     }
 
     @Get("/maybestock/{isbn}")
     public Maybe&lt;Map&gt; maybestock(String isbn) {
-        return Maybe.empty(); <i class="conum" data-value="2"></i><b>(2)</b>
+        return Maybe.empty(); <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/books")
+class BooksController {
+
+    @Get("/stock/{isbn}")
+    Map stock(String isbn) {
+        null <b class="conum">(1)</b>
+    }
+
+    @Get("/maybestock/{isbn}")
+    Maybe&lt;Map&gt; maybestock(String isbn) {
+        Maybe.empty() <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/books")
+class BooksController {
+
+    @Get("/stock/{isbn}")
+    fun stock(isbn: String): Map&lt;*, *&gt;? {
+        return null <b class="conum">(1)</b>
+    }
+
+    @Get("/maybestock/{isbn}")
+    fun maybestock(isbn: String): Maybe&lt;Map&lt;*, *&gt;&gt; {
+        return Maybe.empty() <b class="conum">(2)</b>
     }
 }</code></pre>
 </div>
@@ -3356,24 +4768,33 @@ Data can only be retrieved from a <a href="../api/io/micronaut/http/multipart/Pa
 <div class="paragraph">
 <p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.http.multipart.StreamingFileUpload;
 import io.reactivex.Single;
-import org.reactivestreams.Publisher;
-
 import java.io.File;
+import org.reactivestreams.Publisher;
+import java.io.IOException;
 
 @Controller("/upload")
 public class UploadController {
 
-    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
-    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) throws IOException { <i class="conum" data-value="2"></i><b>(2)</b>
-        File tempFile = File.createTempFile(file.getFilename(), "temp");
-        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile); <i class="conum" data-value="3"></i><b>(3)</b>
-        return Single.fromPublisher(uploadPublisher)  <i class="conum" data-value="4"></i><b>(4)</b>
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
+        File tempFile;
+        try {
+            tempFile = File.createTempFile(file.getFilename(), "temp");
+        } catch (IOException e) {
+            return Single.error(e);
+        }
+        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile); <b class="conum">(3)</b>
+        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
             .map(success -&gt; {
                 if (success) {
                     return HttpResponse.ok("Uploaded");
@@ -3382,6 +4803,71 @@ public class UploadController {
                                        .body("Upload Failed");
                 }
             });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.reactivex.Single
+import org.reactivestreams.Publisher
+
+@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
+        File tempFile = File.createTempFile(file.filename, "temp")
+        Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
+        Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
+            .map({ success -&gt;
+                if (success) {
+                    HttpResponse.ok("Uploaded")
+                } else {
+                    HttpResponse.&lt;String&gt;status(HttpStatus.CONFLICT)
+                            .body("Upload Failed")
+                }
+            })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.reactivex.Single
+import java.io.File
+
+@Controller("/upload")
+class UploadController {
+
+    @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun upload(file: StreamingFileUpload): Single&lt;HttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
+        val tempFile = File.createTempFile(file.filename, "temp")
+        val uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
+        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
+                .map { success -&gt;
+                    if (success) {
+                        HttpResponse.ok("Uploaded")
+                    } else {
+                        HttpResponse.status&lt;String&gt;(HttpStatus.CONFLICT)
+                                .body("Upload Failed")
+                    }
+                }
     }
 
 }</code></pre>
@@ -3413,31 +4899,193 @@ public class UploadController {
 <div class="paragraph">
 <p>Route arguments that are not publishers will cause the route execution to be delayed until the upload has finished. The received data will attempt to be converted to the requested type. Conversions to a <code>String</code> or <code>byte[]</code> are supported by default. In addition, the file can be converted to a POJO if a media type codec has been registered that supports the media type of the file. A media type codec is included by default that allows conversion of JSON files to POJOs.</p>
 </div>
-<div class="paragraph">
-<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/CompletedFileUpload.html">CompletedFileUpload</a> has been created that has methods to retrieve the data of the file, but also has file information like the content type and file name.</p>
-</div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.multipart.CompletedFileUpload;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller("/upload")
-public class UploadController {
+public class BytesUploadController {
 
-    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
-    public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <i class="conum" data-value="2"></i><b>(2)</b>
+    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
         try {
-            File tempFile = File.createTempFile(file.getFilename(), "temp"); <i class="conum" data-value="3"></i><b>(3)</b>
+            File tempFile = File.createTempFile(fileName, "temp");
             Path path = Paths.get(tempFile.getAbsolutePath());
-            Files.write(path, file.getBytes()); <i class="conum" data-value="3"></i><b>(3)</b>
+            Files.write(path, file); <b class="conum">(3)</b>
             return HttpResponse.ok("Uploaded");
         } catch (IOException exception) {
             return HttpResponse.badRequest("Upload Failed");
         }
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
 
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class BytesUploadController {
+
+    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(fileName, "temp")
+            Path path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (IOException exception) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class BytesUploadController {
+
+    @Post(value = "/bytes", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadBytes(file: ByteArray, fileName: String): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
+        return try {
+            val tempFile = File.createTempFile(fileName, "temp")
+            val path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (exception: IOException) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/CompletedFileUpload.html">CompletedFileUpload</a> has been created that has methods to retrieve the data of the file, but also has file information like the content type and file name.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.multipart.CompletedFileUpload;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Controller("/upload")
+public class CompletedUploadController {
+
+    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(file.getFilename(), "temp"); <b class="conum">(3)</b>
+            Path path = Paths.get(tempFile.getAbsolutePath());
+            Files.write(path, file.getBytes()); <b class="conum">(3)</b>
+            return HttpResponse.ok("Uploaded");
+        } catch (IOException exception) {
+            return HttpResponse.badRequest("Upload Failed");
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class CompletedUploadController {
+
+    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
+            Path path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file.bytes) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (IOException exception) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+
+import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class CompletedUploadController {
+
+    @Post(value = "/completed", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadCompleted(file: CompletedFileUpload): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
+        return try {
+            val tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
+            val path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file.bytes) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (exception: IOException) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+
+    }
 }</code></pre>
 </div>
 </div>
@@ -3524,25 +5172,25 @@ HttpResponse upload(Publisher&lt;Publisher&lt;PartData&gt;&gt; files)</code></pr
 <div class="paragraph">
 <p>For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
-import io.micronaut.http.annotation.*;
-import io.micronaut.http.multipart.StreamingFileUpload;
-import io.reactivex.Single;
-import org.reactivestreams.Publisher;
-
-import java.io.File;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.http.multipart.CompletedPart;
 import io.micronaut.http.server.multipart.MultipartBody;
+import io.reactivex.Single;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 @Controller("/upload")
-public class UploadController {
+public class WholeBodyUploadController {
 
-    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <i class="conum" data-value="1"></i><b>(1)</b>
-    public Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <i class="conum" data-value="2"></i><b>(2)</b>
+    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
         return Single.create(emitter -&gt; {
             body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
                 private Subscription s;
@@ -3563,7 +5211,7 @@ public class UploadController {
 
                 @Override
                 public void onError(Throwable t) {
-
+                    emitter.onError(t);
                 }
 
                 @Override
@@ -3573,7 +5221,106 @@ public class UploadController {
             });
         });
     }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.CompletedPart
+import io.micronaut.http.server.multipart.MultipartBody
+import io.reactivex.Single
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 
+@Controller("/upload")
+class WholeBodyUploadController {
+
+    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
+        Single.&lt;String&gt;create({ emitter -&gt;
+            body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
+                private Subscription s
+
+                @Override
+                void onSubscribe(Subscription s) {
+                    this.s = s
+                    s.request(1)
+                }
+
+                @Override
+                void onNext(CompletedPart completedPart) {
+                    String partName = completedPart.name
+                    if (completedPart instanceof CompletedFileUpload) {
+                        String originalFileName = ((CompletedFileUpload) completedPart).filename
+                    }
+                }
+
+                @Override
+                void onError(Throwable t) {
+                    emitter.onError(t)
+                }
+
+                @Override
+                void onComplete() {
+                    emitter.onSuccess("Uploaded")
+                }
+            })
+        })
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.CompletedPart
+import io.micronaut.http.server.multipart.MultipartBody
+import io.reactivex.Single
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
+
+@Controller("/upload")
+class WholeBodyUploadController {
+
+    @Post(value = "/whole-body", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadBytes(@Body body: MultipartBody): Single&lt;String&gt; { <b class="conum">(2)</b>
+        return Single.create { emitter -&gt;
+            body.subscribe(object : Subscriber&lt;CompletedPart&gt; {
+                private var s: Subscription? = null
+
+                override fun onSubscribe(s: Subscription) {
+                    this.s = s
+                    s.request(1)
+                }
+
+                override fun onNext(completedPart: CompletedPart) {
+                    val partName = completedPart.name
+                    if (completedPart is CompletedFileUpload) {
+                        val originalFileName = completedPart.filename
+                    }
+                }
+
+                override fun onError(t: Throwable) {
+                    emitter.onError(t)
+                }
+
+                override fun onComplete() {
+                    emitter.onSuccess("Uploaded")
+                }
+            })
+        }
+    }
 }</code></pre>
 </div>
 </div>
@@ -3770,28 +5517,87 @@ To use a custom data source to send data through an input stream, construct a <a
 <div class="paragraph">
 <p>As an example, consider the following example <code>TraceService</code> that uses RxJava to compose an I/O operation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">A TraceService Example using RxJava</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
+
 @Singleton
 public class TraceService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TraceService.class);
 
     Flowable&lt;Boolean&gt; trace(HttpRequest&lt;?&gt; request) {
-        return Flowable.fromCallable(() -&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+        return Flowable.fromCallable(() -&gt; { <b class="conum">(1)</b>
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Tracing request: " + request.getUri());
             }
-            // trace logic here, potentially performing I/O <i class="conum" data-value="2"></i><b>(2)</b>
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
             return true;
-        }).subscribeOn(Schedulers.io()); <i class="conum" data-value="3"></i><b>(3)</b>
+        }).subscribeOn(Schedulers.io()); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">A TraceService Example using RxJava</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.inject.Singleton
+
+@Singleton
+class TraceService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TraceService.class)
+
+    Flowable&lt;Boolean&gt; trace(HttpRequest&lt;?&gt; request) {
+        Flowable.fromCallable({ -&gt;  <b class="conum">(1)</b>
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Tracing request: " + request.getUri())
+            }
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
+            return true
+        }).subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">A TraceService Example using RxJava</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import org.slf4j.LoggerFactory
+
+import javax.inject.Singleton
+
+
+@Singleton
+class TraceService {
+
+    private val LOG = LoggerFactory.getLogger(TraceService::class.java)
+
+    internal fun trace(request: HttpRequest&lt;*&gt;): Flowable&lt;Boolean&gt; {
+        return Flowable.fromCallable {
+            <b class="conum">(1)</b>
+            if (LOG.isDebugEnabled) {
+                LOG.debug("Tracing request: " + request.uri)
+            }
+            // trace logic here, potentially performing I/O <b class="conum">(2)</b>
+            true
+        }.subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -3815,22 +5621,62 @@ public class TraceService {
 <div class="paragraph">
 <p>You can then inject this implementation into your filter definition:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">An Example HttpServerFilter</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.*;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.*;
 import org.reactivestreams.Publisher;
 
-@Filter("/hello/**") <i class="conum" data-value="1"></i><b>(1)</b>
-public class TraceFilter implements HttpServerFilter { <i class="conum" data-value="2"></i><b>(2)</b>
+@Filter("/hello/**") <b class="conum">(1)</b>
+public class TraceFilter implements HttpServerFilter { <b class="conum">(2)</b>
     private final TraceService traceService;
 
-    public TraceFilter(TraceService traceService) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public TraceFilter(TraceService traceService) { <b class="conum">(3)</b>
         this.traceService = traceService;
     }
-    ...
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">An Example HttpServerFilter</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.filter.HttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
+import org.reactivestreams.Publisher
+
+@Filter("/hello/**") <b class="conum">(1)</b>
+class TraceFilter implements HttpServerFilter { <b class="conum">(2)</b>
+    private final TraceService traceService
+
+    TraceFilter(TraceService traceService) { <b class="conum">(3)</b>
+        this.traceService = traceService
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">An Example HttpServerFilter</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.filter.HttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
+import org.reactivestreams.Publisher
+
+
+@Filter("/hello/**") <b class="conum">(1)</b>
+class TraceFilter(<b class="conum">(2)</b>
+        private val traceService: TraceService)<b class="conum">(3)</b>
+    : HttpServerFilter {
+
 }</code></pre>
 </div>
 </div>
@@ -3853,17 +5699,43 @@ public class TraceFilter implements HttpServerFilter { <i class="conum" data-val
 <div class="paragraph">
 <p>The final step is write the <code>doFilter</code> implementation of the <a href="../api/io/micronaut/http/filter/HttpServerFilter.html">HttpServerFilter</a> interface.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">The doFilter implementation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Override
-public Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
-    return traceService.trace(request) <i class="conum" data-value="1"></i><b>(1)</b>
-                       .switchMap(aBoolean -&gt; chain.proceed(request)) <i class="conum" data-value="2"></i><b>(2)</b>
-                       .doOnNext(res -&gt; <i class="conum" data-value="3"></i><b>(3)</b>
-                            res.getHeaders().add("X-Trace-Enabled", "true")
-                       );
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        return traceService.trace(request) <b class="conum">(1)</b>
+                           .switchMap(aBoolean -&gt; chain.proceed(request)) <b class="conum">(2)</b>
+                           .doOnNext(res -&gt; <b class="conum">(3)</b>
+                                res.getHeaders().add("X-Trace-Enabled", "true")
+                           );
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">The doFilter implementation</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Override
+    Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        traceService.trace(request) <b class="conum">(1)</b>
+                           .switchMap({ aBoolean -&gt; chain.proceed(request) }) <b class="conum">(2)</b>
+                           .doOnNext({ res -&gt; <b class="conum">(3)</b>
+                               res.getHeaders().add("X-Trace-Enabled", "true")
+                           })
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">The doFilter implementation</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    override fun doFilter(request: HttpRequest&lt;*&gt;, chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
+        return traceService.trace(request) <b class="conum">(1)</b>
+                .switchMap { aBoolean -&gt; chain.proceed(request) } <b class="conum">(2)</b>
+                .doOnNext { res -&gt;
+                    <b class="conum">(3)</b>
+                    res.headers.add("X-Trace-Enabled", "true")
+                }
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4013,10 +5885,11 @@ micronaut:
 <div class="paragraph">
 <p>A <a href="../api/io/micronaut/session/Session.html">Session</a> object can be retrieved simply by declaring the <a href="../api/io/micronaut/session/Session.html">Session</a> in a controller method signature. For example consider the following controller:</p>
 </div>
-<div class="listingblock">
-<div class="title">ShoppingController.java</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
@@ -4025,17 +5898,74 @@ import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
 public class ShoppingController {
-    private static final String ATTR_CART = "cart"; <i class="conum" data-value="1"></i><b>(1)</b>
+    private static final String ATTR_CART = "cart"; <b class="conum">(1)</b>
 
     @Post("/cart/{name}")
-    Cart addItem(Session session, @NotBlank String name) { <i class="conum" data-value="2"></i><b>(2)</b>
-        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet(() -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
+    Cart addItem(Session session, @NotBlank String name) { <b class="conum">(2)</b>
+        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet(() -&gt; { <b class="conum">(3)</b>
             Cart newCart = new Cart();
-            session.put(ATTR_CART, newCart); <i class="conum" data-value="4"></i><b>(4)</b>
+            session.put(ATTR_CART, newCart); <b class="conum">(4)</b>
             return newCart;
         });
         cart.getItems().add(name);
         return cart;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.session.Session
+import io.micronaut.session.annotation.SessionValue
+
+import javax.annotation.Nullable
+import javax.validation.constraints.NotBlank
+
+@Controller("/shopping")
+class ShoppingController {
+    static final String ATTR_CART = "cart" <b class="conum">(1)</b>
+
+    @Post("/cart/{name}")
+    Cart addItem(Session session, @NotBlank String name) { <b class="conum">(2)</b>
+        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet({ -&gt;  <b class="conum">(3)</b>
+            Cart newCart = new Cart()
+            session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
+            newCart
+        })
+        cart.getItems().add(name)
+        cart
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.session.Session
+import io.micronaut.session.annotation.SessionValue
+
+
+@Controller("/shopping")
+class ShoppingController {
+
+    @Post("/cart/{name}")
+    internal fun addItem(session: Session, name: String): Cart { <b class="conum">(2)</b>
+        require(name.isNotBlank()) { "Name cannot be blank" }
+        val cart = session.get(ATTR_CART, Cart::class.java).orElseGet({
+            <b class="conum">(3)</b>
+            val newCart = Cart()
+            session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
+            newCart
+        })
+        cart.items.add(name)
+        return cart
     }
 
 }</code></pre>
@@ -4067,15 +5997,35 @@ public class ShoppingController {
 <div class="paragraph">
 <p>If you don&#8217;t want to create unnecessary sessions then you can declare the <a href="../api/io/micronaut/session/Session.html">Session</a> as <code>@Nullable</code> in which case a session will not be created and saved unnecessarily. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Nullable with Sessions</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post("/cart/clear")
-void clearCart(@Nullable Session session) {
-    if (session != null) {
-        session.remove(ATTR_CART);
-    }
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Post("/cart/clear")
+    void clearCart(@Nullable Session session) {
+        if (session != null) {
+            session.remove(ATTR_CART);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Nullable with Sessions</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Post("/cart/clear")
+    void clearCart(@Nullable Session session) {
+        if (session != null) {
+            session.remove(ATTR_CART)
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Nullable with Sessions</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Post("/cart/clear")
+    internal fun clearCart(session: Session?) {
+        session?.remove(ATTR_CART)
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4092,18 +6042,39 @@ void clearCart(@Nullable Session session) {
 <div class="paragraph">
 <p>For example, when invoking the <code>viewCart</code> method of the <code>StoreController</code> in the previous example the HTTP client will receive by default a <code>AUTHORIZATION_INFO</code> header. The following example, using a Spock test, demonstrates this:</p>
 </div>
-<div class="listingblock">
-<div class="title">Retrieving the AUTHORIZATION_INFO header</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">when: "The shopping cart is retrieved"
-HttpResponse&lt;Cart&gt; response = httpClient.exchange(HttpRequest.GET('/shopping/cart'), Cart) <i class="conum" data-value="1"></i><b>(1)</b>
-                                        .blockingFirst()
-Cart cart = response.body()
+<pre class="highlight"><code class="language-java" data-lang="java">        HttpResponse&lt;Cart&gt; response = client.exchange(HttpRequest.GET("/shopping/cart"), Cart.class) <b class="conum">(1)</b>
+                                                .blockingFirst();
+        Cart cart = response.body();
 
-then: "The shopping cart is present as well as a session id header"
-response.header(HttpHeaders.AUTHORIZATION_INFO) != null <i class="conum" data-value="2"></i><b>(2)</b>
-cart != null
-cart.items.isEmpty()</code></pre>
+        assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)); <b class="conum">(2)</b>
+        assertNotNull(cart);
+        assertTrue(cart.getItems().isEmpty());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        when: "The shopping cart is retrieved"
+        HttpResponse&lt;Cart&gt; response = httpClient.exchange(HttpRequest.GET('/shopping/cart'), Cart) <b class="conum">(1)</b>
+                                                .blockingFirst()
+        Cart cart = response.body()
+
+        then: "The shopping cart is present as well as a session id header"
+        response.header(HttpHeaders.AUTHORIZATION_INFO) != null <b class="conum">(2)</b>
+        cart != null
+        cart.items.isEmpty()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            var response = client.exchange(HttpRequest.GET&lt;Cart&gt;("/shopping/cart"), Cart::class.java) <b class="conum">(1)</b>
+                    .blockingFirst()
+            var cart = response.body()
+
+            assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)) <b class="conum">(2)</b>
+            assertNotNull(cart)
+            cart.items.isEmpty()</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4121,16 +6092,37 @@ cart.items.isEmpty()</code></pre>
 <div class="paragraph">
 <p>You can then pass this <code>AUTHORIZATION_INFO</code> in subsequent requests to re-use the existing <a href="../api/io/micronaut/session/Session.html">Session</a>:</p>
 </div>
-<div class="listingblock">
-<div class="title">Sending the AUTHORIZATION_INFO header</div>
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">        String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO); <b class="conum">(1)</b>
 
-response = httpClient.exchange(
-        HttpRequest.POST('/shopping/cart/Apple', "")
-                .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <i class="conum" data-value="2"></i><b>(2)</b>
-        .blockingFirst()
-cart = response.body()</code></pre>
+        response = client.exchange(
+                HttpRequest.POST("/shopping/cart/Apple", "")
+                        .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart.class) <b class="conum">(2)</b>
+                .blockingFirst();
+        cart = response.body();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
+
+        response = httpClient.exchange(
+                HttpRequest.POST('/shopping/cart/Apple', "")
+                        .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <b class="conum">(2)</b>
+                .blockingFirst()
+        cart = response.body()</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
+
+            response = client.exchange(
+                    HttpRequest.POST("/shopping/cart/Apple", "")
+                            .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java) <b class="conum">(2)</b>
+                    .blockingFirst()
+            cart = response.body()</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4153,17 +6145,44 @@ cart = response.body()</code></pre>
 <div class="paragraph">
 <p>Rather than explicitly injecting the <a href="../api/io/micronaut/session/Session.html">Session</a> into a controller method you can instead use <a href="../api/io/micronaut/session/annotation/SessionValue.html">@SessionValue</a>. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">Using @SessionValue</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/cart")
-@SessionValue(ATTR_CART) <i class="conum" data-value="1"></i><b>(1)</b>
-Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="2"></i><b>(2)</b>
-    if (cart == null) {
-        cart = new Cart();
-    }
-    return cart;
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get("/cart")
+    @SessionValue(ATTR_CART) <b class="conum">(1)</b>
+    Cart viewCart(@SessionValue @Nullable Cart cart) { <b class="conum">(2)</b>
+        if (cart == null) {
+            cart = new Cart();
+        }
+        return cart;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @SessionValue</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/cart")
+    @SessionValue("cart") <b class="conum">(1)</b>
+    Cart viewCart(@SessionValue @Nullable Cart cart) { <b class="conum">(2)</b>
+        if (cart == null) {
+            cart = new Cart()
+        }
+        cart
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @SessionValue</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/cart")
+    @SessionValue(ATTR_CART) <b class="conum">(1)</b>
+    internal fun viewCart(@SessionValue cart: Cart?): Cart { <b class="conum">(2)</b>
+        var cart = cart
+        if (cart == null) {
+            cart = Cart()
+        }
+        return cart
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4236,18 +6255,18 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 <p>The Micronaut HTTP server supports emitting <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server Sent Events (SSE)</a> using the <a href="../api/io/micronaut/http/sse/Event.html">Event</a> API.</p>
 </div>
 <div class="paragraph">
-<p>To emit events from the server you simply return a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
+<p>To emit events from the server you simply return a Reactive Streams <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> that emits objects of type <a href="../api/io/micronaut/http/sse/Event.html">Event</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> itself could publish events from a background task, via an event system or whatever.</p>
 </div>
 <div class="paragraph">
 <p>Imagine for an example a event stream of news headlines, you may define a data class as follows:</p>
 </div>
-<div class="listingblock">
-<div class="title">Headline.java</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Headline {
+<pre class="highlight"><code class="language-java" data-lang="java">public class Headline {
     private String title;
     private String description;
 
@@ -4276,13 +6295,45 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { <i class="conum" data-value="
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>To emit news headline events you can write a controller that returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class Headline {
+    String title;
+    String description;
+
+    Headline() {}
+
+    Headline(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+}</code></pre>
 </div>
-<div class="listingblock">
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Headline</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Headline {
+    var title: String? = null
+    var description: String? = null
+
+    constructor() {}
+
+    constructor(title: String, description: String) {
+        this.title = title
+        this.description = description
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To emit news headline events you can write a controller that returns a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a> instances using which ever Reactive library you prefer. The example below uses RxJava 2&#8217;s <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> via the <code>generate</code> method:</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
 import io.micronaut.http.sse.Event;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
@@ -4291,19 +6342,91 @@ import org.reactivestreams.Publisher;
 public class HeadlineController {
 
     @Get
-    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <i class="conum" data-value="1"></i><b>(1)</b>
-        String[] versions = new String[]{"1.0", "2.0"}; <i class="conum" data-value="2"></i><b>(2)</b>
+    public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
+        String[] versions = new String[]{"1.0", "2.0"}; <b class="conum">(2)</b>
 
-        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <i class="conum" data-value="3"></i><b>(3)</b>
+        return Flowable.generate(() -&gt; 0, (i, emitter) -&gt; { <b class="conum">(3)</b>
             if (i &lt; versions.length) {
-                emitter.onNext( <i class="conum" data-value="4"></i><b>(4)</b>
+                emitter.onNext( <b class="conum">(4)</b>
                     Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
                 );
             } else {
-                emitter.onComplete(); <i class="conum" data-value="5"></i><b>(5)</b>
+                emitter.onComplete(); <b class="conum">(5)</b>
             }
             return ++i;
         });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing Server Sent Events from a Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.sse.Event
+import io.reactivex.Emitter
+import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
+import org.reactivestreams.Publisher
+
+
+@Controller("/headlines")
+class HeadlineController {
+
+    @Get
+    Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
+        String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
+
+        def initialState = { -&gt; 0 }
+        def emitterFunction = { Integer i, Emitter emitter -&gt;  <b class="conum">(3)</b>
+            if (i &lt; versions.length) {
+                emitter.onNext( <b class="conum">(4)</b>
+                        Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                )
+            } else {
+                emitter.onComplete() <b class="conum">(5)</b>
+            }
+            return ++i
+        }
+
+        return Flowable.generate(initialState, emitterFunction as BiFunction&lt;Integer,Emitter&lt;Event&lt;Headline&gt;&gt;,Integer&gt;)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Publishing Server Sent Events from a Controller</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.sse.Event
+import io.reactivex.Emitter
+import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
+import org.reactivestreams.Publisher
+import java.util.concurrent.Callable
+
+
+@Controller("/headlines")
+class HeadlineController {
+
+    @Get
+    fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
+        val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
+
+        return Flowable.generate&lt;Event&lt;Headline&gt;, Int&gt;(Callable&lt;Int&gt;{ 0 }, BiFunction { <b class="conum">(3)</b>
+            i: Int, emitter: Emitter&lt;Event&lt;Headline&gt;&gt; -&gt;
+            var nextInt: Int = i
+            if (i &lt; versions.size) {
+                emitter.onNext( <b class="conum">(4)</b>
+                        Event.of&lt;Headline&gt;(Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                )
+            } else {
+                emitter.onComplete() <b class="conum">(5)</b>
+            }
+            ++nextInt
+        })
     }
 }</code></pre>
 </div>
@@ -4312,7 +6435,7 @@ public class HeadlineController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The controller method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
+<td>The controller method returns a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> of <a href="../api/io/micronaut/http/sse/Event.html">Event</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -4320,7 +6443,7 @@ public class HeadlineController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
+<td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> type&#8217;s <code>generate</code> method is used to generate a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a>. The <code>generate</code> method accepts an initial value and a lambda that accepts the value and a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a>.  Note that this example executes on the same thread as the controller action, but you could use <code>subscribeOn</code> or map and existing "hot" <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -4371,15 +6494,19 @@ public class HeadlineController {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/websocket/annotation/ServerWebSocket.html">@ServerWebSocket</a> annotation can be applied to any class that should map to a WebSocket URI. The following example is a simple chat WebSocket implementation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.websocket.WebSocketBroadcaster;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.websocket.WebSocketBroadcaster;
 import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
+import io.micronaut.websocket.annotation.OnClose;
+import io.micronaut.websocket.annotation.OnMessage;
+import io.micronaut.websocket.annotation.OnOpen;
+import io.micronaut.websocket.annotation.ServerWebSocket;
+
 import java.util.function.Predicate;
 
-@ServerWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
 public class ChatServerWebSocket {
     private WebSocketBroadcaster broadcaster;
 
@@ -4387,23 +6514,23 @@ public class ChatServerWebSocket {
         this.broadcaster = broadcaster;
     }
 
-    @OnOpen <i class="conum" data-value="2"></i><b>(2)</b>
+    @OnOpen <b class="conum">(2)</b>
     public void onOpen(String topic, String username, WebSocketSession session) {
         String msg = "[" + username + "] Joined!";
         broadcaster.broadcastSync(msg, isValid(topic, session));
     }
 
-    @OnMessage <i class="conum" data-value="3"></i><b>(3)</b>
+    @OnMessage <b class="conum">(3)</b>
     public void onMessage(
             String topic,
             String username,
             String message,
             WebSocketSession session) {
         String msg = "[" + username + "] " + message;
-        broadcaster.broadcastSync(msg, isValid(topic, session)); <i class="conum" data-value="4"></i><b>(4)</b>
+        broadcaster.broadcastSync(msg, isValid(topic, session)); <b class="conum">(4)</b>
     }
 
-    @OnClose <i class="conum" data-value="5"></i><b>(5)</b>
+    @OnClose <b class="conum">(5)</b>
     public void onClose(
             String topic,
             String username,
@@ -4414,6 +6541,57 @@ public class ChatServerWebSocket {
 
     private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
         return s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.OnClose
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.micronaut.websocket.annotation.ServerWebSocket
+
+import java.util.function.Predicate
+
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+class ChatServerWebSocket {
+    private WebSocketBroadcaster broadcaster
+
+    ChatServerWebSocket(WebSocketBroadcaster broadcaster) {
+        this.broadcaster = broadcaster
+    }
+
+    @OnOpen <b class="conum">(2)</b>
+    void onOpen(String topic, String username, WebSocketSession session) {
+        String msg = "[" + username + "] Joined!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    @OnMessage <b class="conum">(3)</b>
+     void onMessage(
+            String topic,
+            String username,
+            String message,
+            WebSocketSession session) {
+        String msg = "[" + username + "] " + message
+        broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
+    }
+
+    @OnClose <b class="conum">(5)</b>
+     void onClose(
+            String topic,
+            String username,
+            WebSocketSession session) {
+        String msg = "[" + username + "] Disconnected!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
+        return { s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null)) }
     }
 }</code></pre>
 </div>
@@ -4504,22 +6682,38 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="sect2">
 <h3 id="_non_blocking_message_handling"><a class="anchor" href="#_non_blocking_message_handling"></a>Non-Blocking Message Handling</h3>
 <div class="paragraph">
-<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
+<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@OnMessage
-public Publisher&lt;Message&gt; onMessage(
-        String topic,
-        String username,
-        Message message,
-        WebSocketSession session) {
+<pre class="highlight"><code class="language-java" data-lang="java">    @OnMessage
+    public Publisher&lt;Message&gt; onMessage(
+            String topic,
+            String username,
+            Message message,
+            WebSocketSession session) {
 
-    String text = "[" + username + "] " + message.getText();
-    Message newMessage = new Message(text);
-    return broadcaster.broadcast(newMessage, isValid(topic, session));
-}</code></pre>
+        String text = "[" + username + "] " + message.getText();
+        Message newMessage = new Message(text);
+        return broadcaster.broadcast(newMessage, isValid(topic, session));
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @OnMessage
+     Publisher&lt;Message&gt; onMessage(
+            String topic,
+            String username,
+            Message message,
+            WebSocketSession session) {
+
+        String text = "[" + username + "] " + message.getText()
+        Message newMessage = new Message(text)
+        broadcaster.broadcast(newMessage, isValid(topic, session))
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -4629,18 +6823,23 @@ RxWebSocketClient webSocketClient;</code></pre>
 <div class="paragraph">
 <p>For example consider the following implementation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
 import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
+import io.micronaut.websocket.annotation.ClientWebSocket;
+import io.micronaut.websocket.annotation.OnMessage;
+import io.micronaut.websocket.annotation.OnOpen;
 import io.reactivex.Single;
+
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Future;
 
-@ClientWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
-public abstract class ChatClientWebSocket implements AutoCloseable { <i class="conum" data-value="2"></i><b>(2)</b>
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+public abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
 
     private WebSocketSession session;
     private HttpRequest request;
@@ -4649,7 +6848,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;();
 
     @OnOpen
-    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
         this.topic = topic;
         this.username = username;
         this.session = session;
@@ -4679,10 +6878,66 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     @OnMessage
     public void onMessage(
             String message) {
-        replies.add(message); <i class="conum" data-value="4"></i><b>(4)</b>
+        replies.add(message); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
+
+    private WebSocketSession session
+    private HttpRequest request
+    private String topic
+    private String username
+    private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;()
+
+    @OnOpen
+    void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
     }
 
-}</code></pre>
+    String getTopic() {
+        topic
+    }
+
+    String getUsername() {
+        username
+    }
+
+    Collection&lt;String&gt; getReplies() {
+        replies
+    }
+
+    WebSocketSession getSession() {
+        session
+    }
+
+    HttpRequest getRequest() {
+        request
+    }
+
+    @OnMessage
+    void onMessage(
+            String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4715,7 +6970,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
 </div>
 </div>
 <div class="paragraph">
-<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>:</p>
+<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a>:</p>
 </div>
 <div class="listingblock">
 <div class="title">WebSocket Send Methods</div>

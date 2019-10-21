@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":18,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -157,7 +157,7 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -170,7 +170,7 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#close--">close</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
@@ -201,14 +201,14 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#nest--">nest</a></span>()</code>
-<div class="block">Trigger the next nested context state.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#removeAttribute-java.lang.CharSequence-">removeAttribute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;key)</code>
+<div class="block">Remove the attribute for the given key.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#removeAttribute-java.lang.CharSequence-">removeAttribute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;key)</code>
-<div class="block">Remove the attribute for the given key.</div>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/BeanResolutionContext.html#removeInFlightBean-io.micronaut.inject.BeanIdentifier-">removeInFlightBean</a></span>(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</code>
+<div class="block">Removes a bean that is in the process of being created.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -252,21 +252,11 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>close</h4>
-<pre>void&nbsp;close()</pre>
+<pre>default&nbsp;void&nbsp;close()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
 </dl>
-</li>
-</ul>
-<a name="nest--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>nest</h4>
-<pre>void&nbsp;nest()</pre>
-<div class="block">Trigger the next nested context state. Only once the outer most context is closed will it be cleared.</div>
 </li>
 </ul>
 <a name="getContext--">
@@ -372,6 +362,22 @@ extends <a href="../../../io/micronaut/core/value/ValueResolver.html" title="int
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>beanIdentifier</code> - The bean identifier</dd>
 <dd><code>instance</code> - The instance</dd>
+</dl>
+</li>
+</ul>
+<a name="removeInFlightBean-io.micronaut.inject.BeanIdentifier-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeInFlightBean</h4>
+<pre>&lt;T&gt;&nbsp;void&nbsp;removeInFlightBean(<a href="../../../io/micronaut/inject/BeanIdentifier.html" title="interface in io.micronaut.inject">BeanIdentifier</a>&nbsp;beanIdentifier)</pre>
+<div class="block">Removes a bean that is in the process of being created. This is used to store references to instances passed to <a href="../../../io/micronaut/context/BeanContext.html#inject-T-"><code>BeanContext.inject(Object)</code></a></div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - THe instance type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanIdentifier</code> - The bean identifier</dd>
 </dl>
 </li>
 </ul>

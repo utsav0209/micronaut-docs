@@ -156,15 +156,19 @@ function addJsClass() {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/websocket/annotation/ServerWebSocket.html">@ServerWebSocket</a> annotation can be applied to any class that should map to a WebSocket URI. The following example is a simple chat WebSocket implementation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.websocket.WebSocketBroadcaster;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.websocket.WebSocketBroadcaster;
 import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
+import io.micronaut.websocket.annotation.OnClose;
+import io.micronaut.websocket.annotation.OnMessage;
+import io.micronaut.websocket.annotation.OnOpen;
+import io.micronaut.websocket.annotation.ServerWebSocket;
+
 import java.util.function.Predicate;
 
-@ServerWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
 public class ChatServerWebSocket {
     private WebSocketBroadcaster broadcaster;
 
@@ -172,23 +176,23 @@ public class ChatServerWebSocket {
         this.broadcaster = broadcaster;
     }
 
-    @OnOpen <i class="conum" data-value="2"></i><b>(2)</b>
+    @OnOpen <b class="conum">(2)</b>
     public void onOpen(String topic, String username, WebSocketSession session) {
         String msg = "[" + username + "] Joined!";
         broadcaster.broadcastSync(msg, isValid(topic, session));
     }
 
-    @OnMessage <i class="conum" data-value="3"></i><b>(3)</b>
+    @OnMessage <b class="conum">(3)</b>
     public void onMessage(
             String topic,
             String username,
             String message,
             WebSocketSession session) {
         String msg = "[" + username + "] " + message;
-        broadcaster.broadcastSync(msg, isValid(topic, session)); <i class="conum" data-value="4"></i><b>(4)</b>
+        broadcaster.broadcastSync(msg, isValid(topic, session)); <b class="conum">(4)</b>
     }
 
-    @OnClose <i class="conum" data-value="5"></i><b>(5)</b>
+    @OnClose <b class="conum">(5)</b>
     public void onClose(
             String topic,
             String username,
@@ -199,6 +203,57 @@ public class ChatServerWebSocket {
 
     private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
         return s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.OnClose
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.micronaut.websocket.annotation.ServerWebSocket
+
+import java.util.function.Predicate
+
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+class ChatServerWebSocket {
+    private WebSocketBroadcaster broadcaster
+
+    ChatServerWebSocket(WebSocketBroadcaster broadcaster) {
+        this.broadcaster = broadcaster
+    }
+
+    @OnOpen <b class="conum">(2)</b>
+    void onOpen(String topic, String username, WebSocketSession session) {
+        String msg = "[" + username + "] Joined!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    @OnMessage <b class="conum">(3)</b>
+     void onMessage(
+            String topic,
+            String username,
+            String message,
+            WebSocketSession session) {
+        String msg = "[" + username + "] " + message
+        broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
+    }
+
+    @OnClose <b class="conum">(5)</b>
+     void onClose(
+            String topic,
+            String username,
+            WebSocketSession session) {
+        String msg = "[" + username + "] Disconnected!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
+        return { s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null)) }
     }
 }</code></pre>
 </div>
@@ -289,22 +344,38 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="sect2">
 <h3 id="_non_blocking_message_handling"><a class="anchor" href="#_non_blocking_message_handling"></a>Non-Blocking Message Handling</h3>
 <div class="paragraph">
-<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
+<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@OnMessage
-public Publisher&lt;Message&gt; onMessage(
-        String topic,
-        String username,
-        Message message,
-        WebSocketSession session) {
+<pre class="highlight"><code class="language-java" data-lang="java">    @OnMessage
+    public Publisher&lt;Message&gt; onMessage(
+            String topic,
+            String username,
+            Message message,
+            WebSocketSession session) {
 
-    String text = "[" + username + "] " + message.getText();
-    Message newMessage = new Message(text);
-    return broadcaster.broadcast(newMessage, isValid(topic, session));
-}</code></pre>
+        String text = "[" + username + "] " + message.getText();
+        Message newMessage = new Message(text);
+        return broadcaster.broadcast(newMessage, isValid(topic, session));
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @OnMessage
+     Publisher&lt;Message&gt; onMessage(
+            String topic,
+            String username,
+            Message message,
+            WebSocketSession session) {
+
+        String text = "[" + username + "] " + message.getText()
+        Message newMessage = new Message(text)
+        broadcaster.broadcast(newMessage, isValid(topic, session))
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -414,18 +485,23 @@ RxWebSocketClient webSocketClient;</code></pre>
 <div class="paragraph">
 <p>For example consider the following implementation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.http.HttpRequest;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpRequest;
 import io.micronaut.websocket.WebSocketSession;
-import io.micronaut.websocket.annotation.*;
+import io.micronaut.websocket.annotation.ClientWebSocket;
+import io.micronaut.websocket.annotation.OnMessage;
+import io.micronaut.websocket.annotation.OnOpen;
 import io.reactivex.Single;
+
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Future;
 
-@ClientWebSocket("/chat/{topic}/{username}") <i class="conum" data-value="1"></i><b>(1)</b>
-public abstract class ChatClientWebSocket implements AutoCloseable { <i class="conum" data-value="2"></i><b>(2)</b>
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+public abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
 
     private WebSocketSession session;
     private HttpRequest request;
@@ -434,7 +510,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;();
 
     @OnOpen
-    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <i class="conum" data-value="3"></i><b>(3)</b>
+    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
         this.topic = topic;
         this.username = username;
         this.session = session;
@@ -464,10 +540,66 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
     @OnMessage
     public void onMessage(
             String message) {
-        replies.add(message); <i class="conum" data-value="4"></i><b>(4)</b>
+        replies.add(message); <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
+
+    private WebSocketSession session
+    private HttpRequest request
+    private String topic
+    private String username
+    private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;()
+
+    @OnOpen
+    void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
     }
 
-}</code></pre>
+    String getTopic() {
+        topic
+    }
+
+    String getUsername() {
+        username
+    }
+
+    Collection&lt;String&gt; getReplies() {
+        replies
+    }
+
+    WebSocketSession getSession() {
+        session
+    }
+
+    HttpRequest getRequest() {
+        request
+    }
+
+    @OnMessage
+    void onMessage(
+            String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -500,7 +632,7 @@ public abstract class ChatClientWebSocket implements AutoCloseable { <i class="c
 </div>
 </div>
 <div class="paragraph">
-<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>:</p>
+<p>Note by returning <code>void</code> this tells Micronaut that the method is a blocking send. You can instead define methods that return either futures or a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a>:</p>
 </div>
 <div class="listingblock">
 <div class="title">WebSocket Send Methods</div>
