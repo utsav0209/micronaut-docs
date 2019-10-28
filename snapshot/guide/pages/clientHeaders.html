@@ -171,6 +171,20 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining Headers via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Header(name = "X-Pet-Client", value = "\${pet.client.id}")
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+
+    @Get("/{name}")
+    operator fun get(name: String): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The above example defines a <a href="../api/io/micronaut/http/annotation/Header.html">@Header</a> annotation on the <code>PetClient</code> interface that reads a property using property placeholder configuration called <code>pet.client.id</code>.</p>
 </div>

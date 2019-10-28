@@ -138,7 +138,32 @@ function addJsClass() {
 <div class="listingblock multi-language-sample">
 <div class="title">Creating the body</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">        File file = new File(uploadDir, "data.txt")
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.client.multipart.MultipartBody;
+
+            String toWrite = "test file";
+            File file = File.createTempFile("data", ".txt");
+            FileWriter writer = new FileWriter(file);
+            writer.write(toWrite);
+            writer.close();
+
+            MultipartBody requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                                       <b class="conum">(2)</b>
+                        "data",
+                        file.getName(),
+                        MediaType.TEXT_PLAIN_TYPE,
+                        file
+                    ).build()   ;                                    <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.micronaut.http.client.multipart.MultipartBody
+import org.reactivestreams.Publisher
+
+        File file = new File(uploadDir, "data.txt")
         file.text = "test file"
         file.createNewFile()
 
@@ -150,6 +175,26 @@ function addJsClass() {
                     MediaType.TEXT_PLAIN_TYPE,
                     file
                 ).build()                                       <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.multipart.MultipartBody
+
+            val toWrite = "test file"
+            val file = File.createTempFile("data", ".txt")
+            val writer = FileWriter(file)
+            writer.write(toWrite)
+            writer.close()
+
+            val requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                             <b class="conum">(2)</b>
+                            "data",
+                            file.name,
+                            MediaType.TEXT_PLAIN_TYPE,
+                            file
+                    ).build()                             <b class="conum">(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -171,8 +216,22 @@ function addJsClass() {
 <div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">                    HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
                         .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">                    HttpRequest.POST("/multipart/upload", requestBody)   <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">

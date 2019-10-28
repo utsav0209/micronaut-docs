@@ -159,6 +159,17 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring @Retryable</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Retryable
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>For more information on customizing retry, see the section on <a href="#retry">Retry Advice</a>.</p>
 </div>

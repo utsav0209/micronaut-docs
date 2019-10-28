@@ -3574,15 +3574,49 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when a bean is constructed then you can use the <code>javax.annotation.PostConstruct</code> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PostConstruct <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.annotation.PostConstruct; <b class="conum">(1)</b>
+import javax.inject.Singleton;
+
+@Singleton
+public class V8Engine implements Engine {
+    private int cylinders = 8;
+    private boolean initialized = false; <b class="conum">(2)</b>
+
+    public String start() {
+        if(!initialized) {
+            throw new IllegalStateException("Engine not initialized!");
+        }
+
+        return "Starting V8";
+    }
+
+    @Override
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public boolean isIntialized() {
+        return this.initialized;
+    }
+
+    @PostConstruct <b class="conum">(3)</b>
+    public void initialize() {
+        this.initialized = true;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PostConstruct <b class="conum">(1)</b>
 import javax.inject.Singleton
 
 @Singleton
 class V8Engine implements Engine {
     int cylinders = 8
-    boolean initialized = false <i class="conum" data-value="2"></i><b>(2)</b>
+    boolean initialized = false <b class="conum">(2)</b>
 
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
@@ -3590,9 +3624,34 @@ class V8Engine implements Engine {
         return "Starting V8"
     }
 
-    @PostConstruct <i class="conum" data-value="3"></i><b>(3)</b>
+    @PostConstruct <b class="conum">(3)</b>
     void initialize() {
         this.initialized = true
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PostConstruct
+import javax.inject.Singleton
+
+
+@Singleton
+class V8Engine : Engine {
+    override val cylinders = 8
+    var isIntialized = false
+        private set <b class="conum">(2)</b>
+
+    override fun start(): String {
+        check(isIntialized) { "Engine not initialized!" }
+
+        return "Starting V8"
+    }
+
+    @PostConstruct <b class="conum">(3)</b>
+    fun initialize() {
+        this.isIntialized = true
     }
 }</code></pre>
 </div>
@@ -3621,9 +3680,28 @@ class V8Engine implements Engine {
 <div class="paragraph">
 <p>If you wish for a particular method to be invoked when the context is closed then you can use the <code>javax.annotation.PreDestroy</code> annotation:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import javax.annotation.PreDestroy <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">import javax.annotation.PreDestroy; <b class="conum">(1)</b>
+import javax.inject.Singleton;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@Singleton
+public class PreDestroyBean implements AutoCloseable {
+
+    AtomicBoolean stopped = new AtomicBoolean(false);
+
+    @PreDestroy <b class="conum">(2)</b>
+    @Override
+    public void close() throws Exception {
+        stopped.compareAndSet(false, true);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PreDestroy <b class="conum">(1)</b>
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Singleton
 
@@ -3632,9 +3710,28 @@ class PreDestroyBean implements AutoCloseable {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    @PreDestroy <i class="conum" data-value="2"></i><b>(2)</b>
+    @PreDestroy <b class="conum">(2)</b>
     @Override
     void close() throws Exception {
+        stopped.compareAndSet(false, true)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy
+import javax.inject.Singleton
+import java.util.concurrent.atomic.AtomicBoolean
+
+@Singleton
+class PreDestroyBean : AutoCloseable {
+
+    internal var stopped = AtomicBoolean(false)
+
+    @PreDestroy <b class="conum">(2)</b>
+    @Throws(Exception::class)
+    override fun close() {
         stopped.compareAndSet(false, true)
     }
 }</code></pre>
@@ -3655,9 +3752,27 @@ class PreDestroyBean implements AutoCloseable {
 <div class="paragraph">
 <p>For factory beans, the <code>preDestroy</code> value in the <a href="../api/io/micronaut/context/annotation/Bean.html">Bean</a> annotation can be used to tell Micronaut which method to invoke.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.context.annotation.Bean
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Factory;
+
+import javax.inject.Singleton;
+
+@Factory
+public class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
+    @Singleton
+    public Connection connection() {
+        return new Connection();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 
 import javax.inject.Singleton
@@ -3665,20 +3780,72 @@ import javax.inject.Singleton
 @Factory
 class ConnectionFactory {
 
-    @Bean(preDestroy = "stop") <i class="conum" data-value="1"></i><b>(1)</b>
+    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
     @Singleton
     Connection connection() {
         new Connection()
     }
-}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
 
-import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Singleton
+
+@Factory
+class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") <b class="conum">(1)</b>
+    @Singleton
+    fun connection(): Connection {
+        return Connection()
+    }
+}</code></pre>
+</div>
+</div>
+<hr>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import java.util.concurrent.atomic.AtomicBoolean;
+
+public class Connection {
+
+    AtomicBoolean stopped = new AtomicBoolean(false);
+
+    public void stop() { <b class="conum">(2)</b>
+        stopped.compareAndSet(false, true);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import java.util.concurrent.atomic.AtomicBoolean
 
 class Connection {
 
     AtomicBoolean stopped = new AtomicBoolean(false)
 
-    void stop() { <i class="conum" data-value="2"></i><b>(2)</b>
+    void stop() { <b class="conum">(2)</b>
+        stopped.compareAndSet(false, true)
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import java.util.concurrent.atomic.AtomicBoolean
+
+class Connection {
+
+    internal var stopped = AtomicBoolean(false)
+
+    fun stop() { <b class="conum">(2)</b>
         stopped.compareAndSet(false, true)
     }
 
@@ -13249,29 +13416,73 @@ open class EmailController {
 <div class="paragraph">
 <p>The validation of POJOs is shown in the following test:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "invoking /email/send parse parameters in a POJO and validates"() {
-    when:
-    Email email = new Email()
-    email.subject = 'Hi'
-    email.recipient = ''
-    client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+<pre class="highlight"><code class="language-java" data-lang="java">    public void testPoJoValidation() {
+        HttpClientResponseException e = Assertions.assertThrows(HttpClientResponseException.class, () -&gt; {
+            Email email = new Email();
+            email.subject = "Hi";
+            email.recipient = "";
+            client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
+        });
+        HttpResponse response = e.getResponse();
 
-    then:
-    def e = thrown(HttpClientResponseException)
-    def response = e.response
-    response.status == HttpStatus.BAD_REQUEST
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
 
-    when:
-    email = new Email()
-    email.subject = 'Hi'
-    email.recipient = 'me@micronaut.example'
-    response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+        Email email = new Email();
+        email.subject = "Hi";
+        email.recipient = "me@micronaut.example";
+        response = client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
 
-    then:
-    response.status == HttpStatus.OK
-}</code></pre>
+        assertEquals(HttpStatus.OK, response.getStatus());
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "invoking /email/send parse parameters in a POJO and validates"() {
+        when:
+        Email email = new Email()
+        email.subject = 'Hi'
+        email.recipient = ''
+        client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        def response = e.response
+        response.status == HttpStatus.BAD_REQUEST
+
+        when:
+        email = new Email()
+        email.subject = 'Hi'
+        email.recipient = 'me@micronaut.example'
+        response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        response.status == HttpStatus.OK
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test poko validation"() {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                val email = Email()
+                email.subject = "Hi"
+                email.recipient = ""
+                client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+            }
+            var response = e.response
+
+            response.status shouldBe HttpStatus.BAD_REQUEST
+
+            val email = Email()
+            email.subject = "Hi"
+            email.recipient = "me@micronaut.example"
+            response = client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+
+            response.status shouldBe HttpStatus.OK
+        }</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -16467,6 +16678,52 @@ class ChatServerWebSocket {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.OnClose
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.micronaut.websocket.annotation.ServerWebSocket
+
+import java.util.function.Predicate
+
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+class ChatServerWebSocket(private val broadcaster: WebSocketBroadcaster) {
+
+    @OnOpen <b class="conum">(2)</b>
+    fun onOpen(topic: String, username: String, session: WebSocketSession) {
+        val msg = "[$username] Joined!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    @OnMessage <b class="conum">(3)</b>
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: String,
+            session: WebSocketSession) {
+        val msg = "[$username] $message"
+        broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
+    }
+
+    @OnClose <b class="conum">(5)</b>
+    fun onClose(
+            topic: String,
+            username: String,
+            session: WebSocketSession) {
+        val msg = "[$username] Disconnected!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    private fun isValid(topic: String, session: WebSocketSession): Predicate&lt;WebSocketSession&gt; {
+        return Predicate&lt;WebSocketSession&gt;{ s -&gt; (s !== session &amp;&amp; topic.equals(s.getUriVariables().get("topic", String::class.java, null), ignoreCase = true)) }
+    }
+}</code></pre>
+</div>
+</div>
 <div class="colist arabic">
 <table>
 <tr>
@@ -16584,6 +16841,22 @@ A working example of WebSockets in action can be found in the <a href="https://g
         String text = "[" + username + "] " + message.getText()
         Message newMessage = new Message(text)
         broadcaster.broadcast(newMessage, isValid(topic, session))
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @OnMessage
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: Message,
+            session: WebSocketSession): Publisher&lt;Message&gt; {
+
+        val text = "[" + username + "] " + message.text
+        val newMessage = Message(text)
+        return broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
 </div>
 </div>
@@ -16807,6 +17080,51 @@ abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(
     @OnMessage
     void onMessage(
             String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
+
+    var session: WebSocketSession? = null
+        private set
+    var request: HttpRequest&lt;*&gt;? = null
+        private set
+    var topic: String? = null
+        private set
+    var username: String? = null
+        private set
+    private val replies = ConcurrentLinkedQueue&lt;String&gt;()
+
+    @OnOpen
+    fun onOpen(topic: String, username: String, session: WebSocketSession, request: HttpRequest&lt;*&gt;) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
+    }
+
+    fun getReplies(): Collection&lt;String&gt; {
+        return replies
+    }
+
+    @OnMessage
+    fun onMessage(
+            message: String) {
         replies.add(message) <b class="conum">(4)</b>
     }</code></pre>
 </div>
@@ -18673,7 +18991,32 @@ Jackson annotations are used to map the constructor
 <div class="listingblock multi-language-sample">
 <div class="title">Creating the body</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">        File file = new File(uploadDir, "data.txt")
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.client.multipart.MultipartBody;
+
+            String toWrite = "test file";
+            File file = File.createTempFile("data", ".txt");
+            FileWriter writer = new FileWriter(file);
+            writer.write(toWrite);
+            writer.close();
+
+            MultipartBody requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                                       <b class="conum">(2)</b>
+                        "data",
+                        file.getName(),
+                        MediaType.TEXT_PLAIN_TYPE,
+                        file
+                    ).build()   ;                                    <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.micronaut.http.client.multipart.MultipartBody
+import org.reactivestreams.Publisher
+
+        File file = new File(uploadDir, "data.txt")
         file.text = "test file"
         file.createNewFile()
 
@@ -18685,6 +19028,26 @@ Jackson annotations are used to map the constructor
                     MediaType.TEXT_PLAIN_TYPE,
                     file
                 ).build()                                       <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.multipart.MultipartBody
+
+            val toWrite = "test file"
+            val file = File.createTempFile("data", ".txt")
+            val writer = FileWriter(file)
+            writer.write(toWrite)
+            writer.close()
+
+            val requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                             <b class="conum">(2)</b>
+                            "data",
+                            file.name,
+                            MediaType.TEXT_PLAIN_TYPE,
+                            file
+                    ).build()                             <b class="conum">(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -18706,8 +19069,22 @@ Jackson annotations are used to map the constructor
 <div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">                    HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
                         .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">                    HttpRequest.POST("/multipart/upload", requestBody)   <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -19336,6 +19713,15 @@ class BooksController {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Pet.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Pet {
+    var name: String? = null
+    var age: Int = 0
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can define a common interface for saving new <code>Pet</code> instances:</p>
 </div>
@@ -19370,6 +19756,24 @@ import javax.validation.constraints.NotBlank
 interface PetOperations {
     @Post
     Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetOperations.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Post
+import io.micronaut.validation.Validated
+import io.reactivex.Single
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+
+@Validated
+interface PetOperations {
+    @Post
+    fun save(@NotBlank name: String, @Min(1L) age: Int): Single&lt;Pet&gt;
 }</code></pre>
 </div>
 </div>
@@ -19429,6 +19833,26 @@ class PetController implements PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetController.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.reactivex.Single
+
+
+@Controller("/pets")
+open class PetController : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt; {
+        val pet = Pet()
+        pet.name = name
+        pet.age = age
+        // save to database or something
+        return Single.just(pet)
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can then define a declarative client in <code>src/test/java</code> that uses <code>@Client</code> to automatically, at compile time, implement a client:</p>
 </div>
@@ -19457,6 +19881,20 @@ interface PetClient extends PetOperations { <b class="conum">(2)</b>
 
     @Override
     Single&lt;Pet&gt; save(String name, int age) <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetClient.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+
+@Client("/pets") <b class="conum">(1)</b>
+interface PetClient : PetOperations { <b class="conum">(2)</b>
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;  <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -19598,7 +20036,7 @@ Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age);</code></pre>
 <div class="listingblock">
 <div class="title">Example Produced JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"name":"Dino", age:10}</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"name":"Dino", "age":10}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -20141,6 +20579,20 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining Headers via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Header(name = "X-Pet-Client", value = "\${pet.client.id}")
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+
+    @Get("/{name}")
+    operator fun get(name: String): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The above example defines a <a href="../api/io/micronaut/http/annotation/Header.html">@Header</a> annotation on the <code>PetClient</code> interface that reads a property using property placeholder configuration called <code>pet.client.id</code>.</p>
 </div>
@@ -20273,6 +20725,17 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring @Retryable</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Retryable
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>For more information on customizing retry, see the section on <a href="#retry">Retry Advice</a>.</p>
 </div>
@@ -20329,6 +20792,20 @@ class PetFallback implements PetOperations {
         Pet pet = new Pet()
         pet.setAge(age)
         pet.setName(name)
+        return Single.just(pet)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining a Fallback</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Fallback
+open class PetFallback : PetOperations {
+    override fun save(name: String, age: Int): Single&lt;Pet&gt; {
+        val pet = Pet()
+        pet.age = age
+        pet.name = name
         return Single.just(pet)
     }
 }</code></pre>
@@ -20479,29 +20956,79 @@ For information on how to customize the Hystrix thread pool, group and propertie
 <div class="paragraph">
 <p>To resolve this burden you can define a filter. The following is an example <code>BintrayService</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">class BintrayApi {
+<pre class="highlight"><code class="language-java" data-lang="java">class BintrayApi {
     public static final String URL = 'https://api.bintray.com'
 }
+
+@Singleton
+class BintrayService {
+    final RxHttpClient client;
+    final String org;
+
+    BintrayService(
+            @Client(BintrayApi.URL) RxHttpClient client,           <b class="conum">(1)</b>
+            @Value("${bintray.organization}") String org ) {
+        this.client = client;
+        this.org = org;
+    }
+
+    Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() {
+        return client.exchange(HttpRequest.GET("/repos/" + org), String.class); <b class="conum">(2)</b>
+    }
+
+    Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) {
+        return client.exchange(HttpRequest.GET("/repos/" + org + "/" + repo + "/packages"), String.class); <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class BintrayApi {
+    public static final String URL = 'https://api.bintray.com'
+}
+
 @Singleton
 class BintrayService {
     final RxHttpClient client
     final String org
 
     BintrayService(
-            @Client(BintrayApi.URL) RxHttpClient client,           <i class="conum" data-value="1"></i><b>(1)</b>
+            @Client(BintrayApi.URL) RxHttpClient client,           <b class="conum">(1)</b>
             @Value('${bintray.organization}') String org ) {
         this.client = client
         this.org = org
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() {
-        return client.exchange(HttpRequest.GET("/repos/$org"), String) <i class="conum" data-value="2"></i><b>(2)</b>
+        return client.exchange(HttpRequest.GET("/repos/$org"), String) <b class="conum">(2)</b>
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) {
-        return client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <i class="conum" data-value="2"></i><b>(2)</b>
+        return client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class BintrayApi {
+    public static final String URL = 'https://api.bintray.com'
+}
+
+@Singleton
+internal class BintrayService(
+        @param:Client(BintrayApi.URL) val client: RxHttpClient, <b class="conum">(1)</b>
+        @param:Value("\${bintray.organization}") val org: String) {
+
+    fun fetchRepositories(): Flowable&lt;HttpResponse&lt;String&gt;&gt; {
+        return client.exchange(HttpRequest.GET&lt;Any&gt;("/repos/$org"), String::class.java) <b class="conum">(2)</b>
+    }
+
+    fun fetchPackages(repo: String): Flowable&lt;HttpResponse&lt;String&gt;&gt; {
+        return client.exchange(HttpRequest.GET&lt;Any&gt;("/repos/$org/$repo/packages"), String::class.java) <b class="conum">(2)</b>
     }
 }</code></pre>
 </div>
@@ -20521,9 +21048,33 @@ class BintrayService {
 <div class="paragraph">
 <p>The Bintray API is secured. To authenticate you need to add an <code>Authorization</code> header for every request. You could modify <code>fetchRepositories</code> and <code>fetchPackages</code> methods to include the necessary HTTP Header for each request. Using a filter is much simpler though:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Filter('/repos/**') <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Filter("/repos/**") <b class="conum">(1)</b>
+class BintrayFilter implements HttpClientFilter {
+
+    final String username;
+    final String token;
+
+    BintrayFilter(
+            @Value("${bintray.username}") String username, <b class="conum">(2)</b>
+            @Value("${bintray.token}") String token ) { <b class="conum">(2)</b>
+        this.username = username;
+        this.token = token;
+    }
+
+    @Override
+    public Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        return chain.proceed(
+                request.basicAuth(username, token) <b class="conum">(3)</b>
+        );
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Filter('/repos/**') <b class="conum">(1)</b>
 class BintrayFilter implements HttpClientFilter {
 
 
@@ -20531,8 +21082,8 @@ class BintrayFilter implements HttpClientFilter {
     final String token
 
     BintrayFilter(
-            @Value('${bintray.username}') String username, <i class="conum" data-value="2"></i><b>(2)</b>
-            @Value('${bintray.token}') String token ) { <i class="conum" data-value="2"></i><b>(2)</b>
+            @Value('${bintray.username}') String username, <b class="conum">(2)</b>
+            @Value('${bintray.token}') String token ) { <b class="conum">(2)</b>
         this.username = username
         this.token = token
     }
@@ -20540,7 +21091,23 @@ class BintrayFilter implements HttpClientFilter {
     @Override
     Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
         return chain.proceed(
-                request.basicAuth(username, token) <i class="conum" data-value="3"></i><b>(3)</b>
+                request.basicAuth(username, token) <b class="conum">(3)</b>
+        )
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Filter("/repos/**") <b class="conum">(1)</b>
+internal class BintrayFilter(
+        @param:Value("\${bintray.username}") val username: String, <b class="conum">(2)</b>
+        @param:Value("\${bintray.token}") val token: String)<b class="conum">(2)</b>
+    : HttpClientFilter {
+
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
+        return chain.proceed(
+                request.basicAuth(username, token) <b class="conum">(3)</b>
         )
     }
 }</code></pre>
@@ -24252,12 +24819,39 @@ Hello, Fred</code></pre>
 <h2 id="_functionclient"><a class="anchor" href="#_functionclient"></a>FunctionClient</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation makes it very straightforward to invoke local or remotely deployed functions. For example, the following Groovy function can be accessed using the <code>MathClient</code> interface listed below it.</p>
+<p>The <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation makes it very straightforward to invoke local or remotely deployed functions. For example, given the following function:</p>
 </div>
-<div class="listingblock">
-<div class="title">MaxFunction.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import groovy.transform.Field
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.function.client.aws;
+
+import io.micronaut.function.FunctionBean;
+
+import java.util.function.Supplier;
+
+@FunctionBean("max")
+public class MaxFunction implements Supplier&lt;Integer&gt; {
+
+    private final MathService mathService;
+
+    public MaxFunction(MathService mathService) {
+        this.mathService = mathService;
+    }
+
+    @Override
+    public Integer get() {
+        return mathService.max();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.function.client.aws
+
+import groovy.transform.Field
 
 math.multiplier = 2
 @Field MathService mathService
@@ -24267,17 +24861,76 @@ Long max() {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.function.client.aws
+
+import io.micronaut.function.FunctionBean
+
+import java.util.function.Supplier
+
+@FunctionBean("max")
+class MaxFunction(private val mathService: MathService) : Supplier&lt;Int&gt; {
+
+    override fun get(): Int {
+        return mathService.max()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following client can be used to execute it.</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Using @FunctionClient to Discover Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+    @FunctionClient
+    interface MathClient {
+
+        Long max(); <b class="conum">(1)</b>
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @FunctionClient to Discover Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
 
-@FunctionClient
-static interface MathClient {
+    @FunctionClient
+    static interface MathClient {
 
-    Long max() <i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
+        Long max() <b class="conum">(1)</b>
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @FunctionClient to Discover Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+    @FunctionClient
+    internal interface MathClient {
+
+        fun max(): Long?  <b class="conum">(1)</b>
+
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -24291,10 +24944,37 @@ static interface MathClient {
 <div class="paragraph">
 <p>If you would like the names of the client interface and target function to be different, you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation to specify the target method name.</p>
 </div>
-<div class="listingblock">
-<div class="title">RoundFunction.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import groovy.transform.Field
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.function.client.aws;
+
+import io.micronaut.function.FunctionBean;
+
+import java.util.function.Function;
+
+@FunctionBean("round")
+public class RoundFunction implements Function&lt;Float, Integer&gt; {
+
+    private final MathService mathService;
+
+    public RoundFunction(MathService mathService) {
+        this.mathService = mathService;
+    }
+
+    @Override
+    public Integer apply(Float aFloat) {
+        return mathService.round(aFloat);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.function.client.aws
+
+import groovy.transform.Field
 
 math.multiplier = 2
 @Field MathService mathService
@@ -24304,29 +24984,90 @@ int round(float value) {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.function.client.aws
+
+import io.micronaut.function.FunctionBean
+
+import java.util.function.Function
+
+@FunctionBean("round")
+class RoundFunction(private val mathService: MathService) : Function&lt;Float, Int&gt; {
+
+    override fun apply(aFloat: Float): Int {
+        return mathService.round(aFloat)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The named annotation can be placed on the client as well.</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Named to customize target method</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+    @FunctionClient
+    interface MathClient {
+
+        @Named("round")
+        int rnd(float value);
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Named to customize target method</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
 
-@FunctionClient
-static interface MathClient {
+    @FunctionClient
+    static interface MathClient {
 
-    @Named("round")
-    int rnd(float value)
-}</code></pre>
+        @Named("round")
+        int rnd(float value)
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Named to customize target method</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+    @FunctionClient
+    internal interface MathClient {
+
+        @Named("round")
+        fun rnd(value: Float): Int
+
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Functions that only return a value are mapped to HTTP <code>GET</code> requests, whilst functions that accept an input require an HTTP <code>POST</code>.</p>
 </div>
 <div class="paragraph">
-<p>For a example, the following function can be accessed using the <code>IsbnValidatorClient</code> interface listed below.</p>
+<p>For a example, given the following function:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.FunctionBean;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.function.FunctionBean;
 import java.util.function.Function;
 
 @FunctionBean("isbn-validator")
@@ -24339,9 +25080,42 @@ public class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest,
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.client.FunctionClient;
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.FunctionBean
+import java.util.function.Function
+
+@FunctionBean("isbn-validator")
+class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    @Override
+    IsbnValidationResponse apply(IsbnValidationRequest request) {
+        return new IsbnValidationResponse()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.function.FunctionBean
+import java.util.function.Function
+
+
+@FunctionBean("isbn-validator")
+class IsbnValidatorFunction : Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    override fun apply(request: IsbnValidationRequest): IsbnValidationResponse {
+        return IsbnValidationResponse()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The function can be accessed using the <code>IsbnValidatorClient</code> interface listed below.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.function.client.FunctionClient;
 import io.micronaut.http.annotation.Body;
 import io.reactivex.Single;
 import javax.inject.Named;
@@ -24350,7 +25124,38 @@ import javax.inject.Named;
 public interface IsbnValidatorClient {
 
     @Named("isbn-validator")
-    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request); <i class="conum" data-value="1"></i><b>(1)</b>
+    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request); <b class="conum">(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient;
+import io.micronaut.http.annotation.Body;
+import io.reactivex.Single;
+import javax.inject.Named;
+
+@FunctionClient
+interface IsbnValidatorClient {
+
+    @Named("isbn-validator")
+    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request) <b class="conum">(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.annotation.Body
+import io.reactivex.Single
+import javax.inject.Named
+
+
+@FunctionClient
+interface IsbnValidatorClient {
+
+    @Named("isbn-validator")
+    fun validate(@Body request: IsbnValidationRequest): Single&lt;IsbnValidationResponse&gt;  <b class="conum">(1)</b>
 }</code></pre>
 </div>
 </div>
@@ -24370,22 +25175,73 @@ public interface IsbnValidatorClient {
 <div class="paragraph">
 <p><code>@FunctionClient</code> interfaces support RxJava constructs, so the above interfaces could be implemented as shown below:</p>
 </div>
-<div class="listingblock">
-<div class="title">RxMathClient.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+import io.reactivex.Single;
+
+import java.util.Collections;
+
+    @FunctionClient
+    interface RxMathClient {
+        Single&lt;Long&gt; max();
+
+        @Named("round")
+        Single&lt;Integer&gt; rnd(float value);
+
+        Single&lt;Long&gt; sum(Sum sum);
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
+
 import io.reactivex.Single
 
-@FunctionClient
-static interface RxMathClient {
-    Single&lt;Long&gt; max()
+    @FunctionClient
+    static interface RxMathClient {
+        Single&lt;Long&gt; max()
 
-    @Named("round")
-    Single&lt;Integer&gt; rnd(float value)
+        @Named("round")
+        Single&lt;Integer&gt; rnd(float value)
 
-    Single&lt;Long&gt; sum(Sum sum)
-}</code></pre>
+        Single&lt;Long&gt; sum(Sum sum)
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+import io.reactivex.Single
+
+
+    @FunctionClient
+    internal interface RxMathClient {
+        fun max(): Single&lt;Long&gt;
+
+        @Named("round")
+        fun rnd(value: Float): Single&lt;Int&gt;
+
+        fun sum(sum: Sum): Single&lt;Long&gt;
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -26453,7 +27309,7 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 
 
 <div class="paragraph">
-<p>An Endpoint can be created by annotating a class with the <a href="../api/io/micronaut/management/endpoint/annotation/Endpoint.html">Endpoint</a> annotation, and supplying it with (at minimum) an endpoint id.</p>
+<p>An Endpoint can be created by annotating a class with the <a href="../api/io/micronaut/management/endpoint/Endpoint.html">Endpoint</a> annotation, and supplying it with (at minimum) an endpoint id.</p>
 </div>
 <div class="listingblock">
 <div class="title">FooEndpoint.java</div>
@@ -26513,17 +27369,48 @@ class FooEndpoint {
 <div class="paragraph">
 <p>The following example <code>Endpoint</code> class will create an endpoint accessible at <code>/date</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
 @Endpoint(id = "date",
         prefix = "custom",
         defaultEnabled = true,
         defaultSensitive = false)
 class CurrentDateEndpoint {
-  //.. endpoint methods
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
 }</code></pre>
 </div>
 </div>
@@ -26556,15 +27443,15 @@ class CurrentDateEndpoint {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/annotation/Read.html">Read</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/Read.html">Read</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Responds to <code>GET</code> requests</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/annotation/Write.html">Write</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/Write.html">Write</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Responds to <code>POST</code> requests</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/annotation/Delete.html">Delete</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Responds to <code>DELETE</code> requests</p></td>
 </tr>
 </tbody>
@@ -26575,10 +27462,34 @@ class CurrentDateEndpoint {
 <div class="paragraph">
 <p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/annotation/Read.html">Read</a> annotation will cause it to respond to <code>GET</code> requests.</p>
 </div>
-<div class="listingblock">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+
+import io.micronaut.management.endpoint.annotation.Read;
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
+
+    private Date currentDate;
+
+    @Read
+    public Date currentDate() {
+        return currentDate;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+
 import io.micronaut.management.endpoint.annotation.Read
 
 @Endpoint(id = "date",
@@ -26593,6 +27504,27 @@ class CurrentDateEndpoint {
     Date currentDate() {
         return currentDate
     }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Read
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    private var currentDate: Date? = null
+
+    @Read
+    fun currentDate(): Date? {
+        return currentDate
+    }
+
 }</code></pre>
 </div>
 </div>
@@ -26607,27 +27539,20 @@ class CurrentDateEndpoint {
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/management/endpoint/annotation/Read.html">Read</a> annotation accepts an optional <code>produces</code> argument, which sets the media type returned from the method (default is <code>application/json</code>):</p>
+<p>The <a href="../api/io/micronaut/management/endpoint/Read.html">Read</a> annotation accepts an optional <code>produces</code> argument, which sets the media type returned from the method (default is <code>application/json</code>):</p>
 </div>
 <div class="listingblock">
 <div class="title">CurrentDateEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
-import io.micronaut.management.endpoint.annotation.Read
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=readImport, indent=0]
 
-@Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
-class CurrentDateEndpoint {
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassBegin, indent=0]
 
-    Date currentDate
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=currentDate, indent=4]
 
-    @Read(produces = MediaType.TEXT_PLAIN) <i class="conum" data-value="1"></i><b>(1)</b>
-    String currentDatePrefix(@Selector String prefix) {
-        return "${prefix}: ${currentDate}"
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=readArg, indent=4]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -26654,32 +27579,21 @@ the_date_is: Fri May 11 19:24:21 CDT</code></pre>
 <h2 id="_write_methods"><a class="anchor" href="#_write_methods"></a>Write Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/annotation/Write.html">Write</a> annotation will cause it to respond to <code>POST</code> requests.</p>
+<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation will cause it to respond to <code>POST</code> requests.</p>
 </div>
 <div class="listingblock">
 <div class="title">CurrentDateEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
-import io.micronaut.management.endpoint.annotation.Write
-import io.micronaut.http.MediaType
-import io.micronaut.management.endpoint.annotation.Selector
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=writeImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=mediaTypeImport, indent=0]
 
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassBegin, indent=0]
 
-@Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
-class CurrentDateEndpoint {
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=currentDate, indent=4]
 
-    Date currentDate
-
-    @Write
-    String reset() {
-        currentDate = new Date()
-
-        return "Current date reset"
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=simpleWrite, indent=4]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26693,27 +27607,21 @@ Current date reset</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/management/endpoint/annotation/Write.html">Write</a> annotation accepts an optional <code>consumes</code> argument, which sets the media type accepted by the method (default is <code>application/json</code>):</p>
+<p>The <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation accepts an optional <code>consumes</code> argument, which sets the media type accepted by the method (default is <code>application/json</code>):</p>
 </div>
 <div class="listingblock">
 <div class="title">MessageEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
-import io.micronaut.management.endpoint.annotation.Write
-import io.micronaut.http.MediaType
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=writeImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=mediaTypeImport, indent=0]
 
-@Endpoint(id = "message", defaultSensitive = false)
-class MessageEndpoint {
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassBegin, indent=0]
 
-    String message
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=message, indent=4]
 
-    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
-    String updateMessage(String newMessage) {  <i class="conum" data-value="1"></i><b>(1)</b>
-        message = newMessage
-
-        return "Message updated"
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=writeArg, indent=4]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26732,26 +27640,20 @@ Message updated</code></pre>
 <h2 id="_delete_methods"><a class="anchor" href="#_delete_methods"></a>Delete Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/annotation/Delete.html">Delete</a> annotation will cause it to respond to <code>DELETE</code> requests.</p>
+<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a> annotation will cause it to respond to <code>DELETE</code> requests.</p>
 </div>
 <div class="listingblock">
 <div class="title">MessageEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
-import io.micronaut.management.endpoint.annotation.Delete
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointImport, indent=0]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=deleteImport, indent=0]
 
-@Endpoint(id = "message", defaultSensitive = false)
-class MessageEndpoint {
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassBegin, indent=0]
 
-    String message
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=message, indent=4]
 
-    @Delete
-    String deleteMessage() {
-        message = null
-
-        return "Message deleted"
-    }
-}</code></pre>
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=simpleDelete, indent=4]
+Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">

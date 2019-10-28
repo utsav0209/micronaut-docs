@@ -234,6 +234,52 @@ class ChatServerWebSocket {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.OnClose
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.micronaut.websocket.annotation.ServerWebSocket
+
+import java.util.function.Predicate
+
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+class ChatServerWebSocket(private val broadcaster: WebSocketBroadcaster) {
+
+    @OnOpen <b class="conum">(2)</b>
+    fun onOpen(topic: String, username: String, session: WebSocketSession) {
+        val msg = "[$username] Joined!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    @OnMessage <b class="conum">(3)</b>
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: String,
+            session: WebSocketSession) {
+        val msg = "[$username] $message"
+        broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
+    }
+
+    @OnClose <b class="conum">(5)</b>
+    fun onClose(
+            topic: String,
+            username: String,
+            session: WebSocketSession) {
+        val msg = "[$username] Disconnected!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    private fun isValid(topic: String, session: WebSocketSession): Predicate&lt;WebSocketSession&gt; {
+        return Predicate&lt;WebSocketSession&gt;{ s -&gt; (s !== session &amp;&amp; topic.equals(s.getUriVariables().get("topic", String::class.java, null), ignoreCase = true)) }
+    }
+}</code></pre>
+</div>
+</div>
 <div class="colist arabic">
 <table>
 <tr>
@@ -351,6 +397,22 @@ A working example of WebSockets in action can be found in the <a href="https://g
         String text = "[" + username + "] " + message.getText()
         Message newMessage = new Message(text)
         broadcaster.broadcast(newMessage, isValid(topic, session))
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @OnMessage
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: Message,
+            session: WebSocketSession): Publisher&lt;Message&gt; {
+
+        val text = "[" + username + "] " + message.text
+        val newMessage = Message(text)
+        return broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
 </div>
 </div>

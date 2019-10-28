@@ -130,7 +130,7 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>An Endpoint can be created by annotating a class with the <a href="../api/io/micronaut/management/endpoint/annotation/Endpoint.html">Endpoint</a> annotation, and supplying it with (at minimum) an endpoint id.</p>
+<p>An Endpoint can be created by annotating a class with the <a href="../api/io/micronaut/management/endpoint/Endpoint.html">Endpoint</a> annotation, and supplying it with (at minimum) an endpoint id.</p>
 </div>
 <div class="listingblock">
 <div class="title">FooEndpoint.java</div>
@@ -190,17 +190,48 @@ class FooEndpoint {
 <div class="paragraph">
 <p>The following example <code>Endpoint</code> class will create an endpoint accessible at <code>/date</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
 @Endpoint(id = "date",
         prefix = "custom",
         defaultEnabled = true,
         defaultSensitive = false)
 class CurrentDateEndpoint {
-  //.. endpoint methods
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
 }</code></pre>
 </div>
 </div>
