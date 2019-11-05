@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7 The HTTP Client 1.2.5</title>
+    <title>7 The HTTP Client 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7 The HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -1115,7 +1115,32 @@ Jackson annotations are used to map the constructor
 <div class="listingblock multi-language-sample">
 <div class="title">Creating the body</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">        File file = new File(uploadDir, "data.txt")
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.client.multipart.MultipartBody;
+
+            String toWrite = "test file";
+            File file = File.createTempFile("data", ".txt");
+            FileWriter writer = new FileWriter(file);
+            writer.write(toWrite);
+            writer.close();
+
+            MultipartBody requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                                       <b class="conum">(2)</b>
+                        "data",
+                        file.getName(),
+                        MediaType.TEXT_PLAIN_TYPE,
+                        file
+                    ).build()   ;                                    <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
+import io.micronaut.http.client.multipart.MultipartBody
+import org.reactivestreams.Publisher
+
+        File file = new File(uploadDir, "data.txt")
         file.text = "test file"
         file.createNewFile()
 
@@ -1127,6 +1152,26 @@ Jackson annotations are used to map the constructor
                     MediaType.TEXT_PLAIN_TYPE,
                     file
                 ).build()                                       <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating the body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.multipart.MultipartBody
+
+            val toWrite = "test file"
+            val file = File.createTempFile("data", ".txt")
+            val writer = FileWriter(file)
+            writer.write(toWrite)
+            writer.close()
+
+            val requestBody = MultipartBody.builder()     <b class="conum">(1)</b>
+                    .addPart(                             <b class="conum">(2)</b>
+                            "data",
+                            file.name,
+                            MediaType.TEXT_PLAIN_TYPE,
+                            file
+                    ).build()                             <b class="conum">(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1148,8 +1193,22 @@ Jackson annotations are used to map the constructor
 <div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">                    HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
                         .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Creating a request</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">                    HttpRequest.POST("/multipart/upload", requestBody)   <b class="conum">(1)</b>
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1778,6 +1837,15 @@ class BooksController {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Pet.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Pet {
+    var name: String? = null
+    var age: Int = 0
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can define a common interface for saving new <code>Pet</code> instances:</p>
 </div>
@@ -1812,6 +1880,24 @@ import javax.validation.constraints.NotBlank
 interface PetOperations {
     @Post
     Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetOperations.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Post
+import io.micronaut.validation.Validated
+import io.reactivex.Single
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+
+@Validated
+interface PetOperations {
+    @Post
+    fun save(@NotBlank name: String, @Min(1L) age: Int): Single&lt;Pet&gt;
 }</code></pre>
 </div>
 </div>
@@ -1871,6 +1957,26 @@ class PetController implements PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetController.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.reactivex.Single
+
+
+@Controller("/pets")
+open class PetController : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt; {
+        val pet = Pet()
+        pet.name = name
+        pet.age = age
+        // save to database or something
+        return Single.just(pet)
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>You can then define a declarative client in <code>src/test/java</code> that uses <code>@Client</code> to automatically, at compile time, implement a client:</p>
 </div>
@@ -1899,6 +2005,20 @@ interface PetClient extends PetOperations { <b class="conum">(2)</b>
 
     @Override
     Single&lt;Pet&gt; save(String name, int age) <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">PetClient.java</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
+
+
+@Client("/pets") <b class="conum">(1)</b>
+interface PetClient : PetOperations { <b class="conum">(2)</b>
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;  <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -2040,7 +2160,7 @@ Single&lt;Pet&gt; save(@NotBlank String name, @Min(1L) int age);</code></pre>
 <div class="listingblock">
 <div class="title">Example Produced JSON</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"name":"Dino", age:10}</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"name":"Dino", "age":10}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2556,6 +2676,20 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining Headers via Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Header(name = "X-Pet-Client", value = "\${pet.client.id}")
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+
+    @Get("/{name}")
+    operator fun get(name: String): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The above example defines a <a href="../api/io/micronaut/http/annotation/Header.html">@Header</a> annotation on the <code>PetClient</code> interface that reads a property using property placeholder configuration called <code>pet.client.id</code>.</p>
 </div>
@@ -2688,6 +2822,17 @@ interface PetClient extends PetOperations {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Declaring @Retryable</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/pets")
+@Retryable
+interface PetClient : PetOperations {
+
+    override fun save(name: String, age: Int): Single&lt;Pet&gt;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>For more information on customizing retry, see the section on <a href="#retry">Retry Advice</a>.</p>
 </div>
@@ -2744,6 +2889,20 @@ class PetFallback implements PetOperations {
         Pet pet = new Pet()
         pet.setAge(age)
         pet.setName(name)
+        return Single.just(pet)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Defining a Fallback</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Fallback
+open class PetFallback : PetOperations {
+    override fun save(name: String, age: Int): Single&lt;Pet&gt; {
+        val pet = Pet()
+        pet.age = age
+        pet.name = name
         return Single.just(pet)
     }
 }</code></pre>
@@ -2894,29 +3053,79 @@ For information on how to customize the Hystrix thread pool, group and propertie
 <div class="paragraph">
 <p>To resolve this burden you can define a filter. The following is an example <code>BintrayService</code>:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">class BintrayApi {
+<pre class="highlight"><code class="language-java" data-lang="java">class BintrayApi {
     public static final String URL = 'https://api.bintray.com'
 }
+
+@Singleton
+class BintrayService {
+    final RxHttpClient client;
+    final String org;
+
+    BintrayService(
+            @Client(BintrayApi.URL) RxHttpClient client,           <b class="conum">(1)</b>
+            @Value("${bintray.organization}") String org ) {
+        this.client = client;
+        this.org = org;
+    }
+
+    Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() {
+        return client.exchange(HttpRequest.GET("/repos/" + org), String.class); <b class="conum">(2)</b>
+    }
+
+    Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) {
+        return client.exchange(HttpRequest.GET("/repos/" + org + "/" + repo + "/packages"), String.class); <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class BintrayApi {
+    public static final String URL = 'https://api.bintray.com'
+}
+
 @Singleton
 class BintrayService {
     final RxHttpClient client
     final String org
 
     BintrayService(
-            @Client(BintrayApi.URL) RxHttpClient client,           <i class="conum" data-value="1"></i><b>(1)</b>
+            @Client(BintrayApi.URL) RxHttpClient client,           <b class="conum">(1)</b>
             @Value('${bintray.organization}') String org ) {
         this.client = client
         this.org = org
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() {
-        return client.exchange(HttpRequest.GET("/repos/$org"), String) <i class="conum" data-value="2"></i><b>(2)</b>
+        return client.exchange(HttpRequest.GET("/repos/$org"), String) <b class="conum">(2)</b>
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) {
-        return client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <i class="conum" data-value="2"></i><b>(2)</b>
+        return client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <b class="conum">(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class BintrayApi {
+    public static final String URL = 'https://api.bintray.com'
+}
+
+@Singleton
+internal class BintrayService(
+        @param:Client(BintrayApi.URL) val client: RxHttpClient, <b class="conum">(1)</b>
+        @param:Value("\${bintray.organization}") val org: String) {
+
+    fun fetchRepositories(): Flowable&lt;HttpResponse&lt;String&gt;&gt; {
+        return client.exchange(HttpRequest.GET&lt;Any&gt;("/repos/$org"), String::class.java) <b class="conum">(2)</b>
+    }
+
+    fun fetchPackages(repo: String): Flowable&lt;HttpResponse&lt;String&gt;&gt; {
+        return client.exchange(HttpRequest.GET&lt;Any&gt;("/repos/$org/$repo/packages"), String::class.java) <b class="conum">(2)</b>
     }
 }</code></pre>
 </div>
@@ -2936,9 +3145,33 @@ class BintrayService {
 <div class="paragraph">
 <p>The Bintray API is secured. To authenticate you need to add an <code>Authorization</code> header for every request. You could modify <code>fetchRepositories</code> and <code>fetchPackages</code> methods to include the necessary HTTP Header for each request. Using a filter is much simpler though:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Filter('/repos/**') <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">@Filter("/repos/**") <b class="conum">(1)</b>
+class BintrayFilter implements HttpClientFilter {
+
+    final String username;
+    final String token;
+
+    BintrayFilter(
+            @Value("${bintray.username}") String username, <b class="conum">(2)</b>
+            @Value("${bintray.token}") String token ) { <b class="conum">(2)</b>
+        this.username = username;
+        this.token = token;
+    }
+
+    @Override
+    public Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        return chain.proceed(
+                request.basicAuth(username, token) <b class="conum">(3)</b>
+        );
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Filter('/repos/**') <b class="conum">(1)</b>
 class BintrayFilter implements HttpClientFilter {
 
 
@@ -2946,8 +3179,8 @@ class BintrayFilter implements HttpClientFilter {
     final String token
 
     BintrayFilter(
-            @Value('${bintray.username}') String username, <i class="conum" data-value="2"></i><b>(2)</b>
-            @Value('${bintray.token}') String token ) { <i class="conum" data-value="2"></i><b>(2)</b>
+            @Value('${bintray.username}') String username, <b class="conum">(2)</b>
+            @Value('${bintray.token}') String token ) { <b class="conum">(2)</b>
         this.username = username
         this.token = token
     }
@@ -2955,7 +3188,23 @@ class BintrayFilter implements HttpClientFilter {
     @Override
     Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
         return chain.proceed(
-                request.basicAuth(username, token) <i class="conum" data-value="3"></i><b>(3)</b>
+                request.basicAuth(username, token) <b class="conum">(3)</b>
+        )
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Filter("/repos/**") <b class="conum">(1)</b>
+internal class BintrayFilter(
+        @param:Value("\${bintray.username}") val username: String, <b class="conum">(2)</b>
+        @param:Value("\${bintray.token}") val token: String)<b class="conum">(2)</b>
+    : HttpClientFilter {
+
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
+        return chain.proceed(
+                request.basicAuth(username, token) <b class="conum">(3)</b>
         )
     }
 }</code></pre>

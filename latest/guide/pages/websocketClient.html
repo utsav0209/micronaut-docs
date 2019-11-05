@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.24.2 Using @ClientWebSocket 1.2.5</title>
+    <title>6.24.2 Using @ClientWebSocket 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.24.2 Using @ClientWebSocket</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -264,6 +264,51 @@ abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(
     @OnMessage
     void onMessage(
             String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
+
+    var session: WebSocketSession? = null
+        private set
+    var request: HttpRequest&lt;*&gt;? = null
+        private set
+    var topic: String? = null
+        private set
+    var username: String? = null
+        private set
+    private val replies = ConcurrentLinkedQueue&lt;String&gt;()
+
+    @OnOpen
+    fun onOpen(topic: String, username: String, session: WebSocketSession, request: HttpRequest&lt;*&gt;) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
+    }
+
+    fun getReplies(): Collection&lt;String&gt; {
+        return replies
+    }
+
+    @OnMessage
+    fun onMessage(
+            message: String) {
         replies.add(message) <b class="conum">(4)</b>
     }</code></pre>
 </div>

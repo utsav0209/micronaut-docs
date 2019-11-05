@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6 The HTTP Server 1.2.5</title>
+    <title>6 The HTTP Server 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6 The HTTP Server</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -3276,29 +3276,73 @@ open class EmailController {
 <div class="paragraph">
 <p>The validation of POJOs is shown in the following test:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "invoking /email/send parse parameters in a POJO and validates"() {
-    when:
-    Email email = new Email()
-    email.subject = 'Hi'
-    email.recipient = ''
-    client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+<pre class="highlight"><code class="language-java" data-lang="java">    public void testPoJoValidation() {
+        HttpClientResponseException e = Assertions.assertThrows(HttpClientResponseException.class, () -&gt; {
+            Email email = new Email();
+            email.subject = "Hi";
+            email.recipient = "";
+            client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
+        });
+        HttpResponse response = e.getResponse();
 
-    then:
-    def e = thrown(HttpClientResponseException)
-    def response = e.response
-    response.status == HttpStatus.BAD_REQUEST
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
 
-    when:
-    email = new Email()
-    email.subject = 'Hi'
-    email.recipient = 'me@micronaut.example'
-    response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+        Email email = new Email();
+        email.subject = "Hi";
+        email.recipient = "me@micronaut.example";
+        response = client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
 
-    then:
-    response.status == HttpStatus.OK
-}</code></pre>
+        assertEquals(HttpStatus.OK, response.getStatus());
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "invoking /email/send parse parameters in a POJO and validates"() {
+        when:
+        Email email = new Email()
+        email.subject = 'Hi'
+        email.recipient = ''
+        client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        def response = e.response
+        response.status == HttpStatus.BAD_REQUEST
+
+        when:
+        email = new Email()
+        email.subject = 'Hi'
+        email.recipient = 'me@micronaut.example'
+        response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        response.status == HttpStatus.OK
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test poko validation"() {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                val email = Email()
+                email.subject = "Hi"
+                email.recipient = ""
+                client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+            }
+            var response = e.response
+
+            response.status shouldBe HttpStatus.BAD_REQUEST
+
+            val email = Email()
+            email.subject = "Hi"
+            email.recipient = "me@micronaut.example"
+            response = client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+
+            response.status shouldBe HttpStatus.OK
+        }</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -6209,6 +6253,52 @@ class ChatServerWebSocket {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.OnClose
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.micronaut.websocket.annotation.ServerWebSocket
+
+import java.util.function.Predicate
+
+@ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+class ChatServerWebSocket(private val broadcaster: WebSocketBroadcaster) {
+
+    @OnOpen <b class="conum">(2)</b>
+    fun onOpen(topic: String, username: String, session: WebSocketSession) {
+        val msg = "[$username] Joined!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    @OnMessage <b class="conum">(3)</b>
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: String,
+            session: WebSocketSession) {
+        val msg = "[$username] $message"
+        broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
+    }
+
+    @OnClose <b class="conum">(5)</b>
+    fun onClose(
+            topic: String,
+            username: String,
+            session: WebSocketSession) {
+        val msg = "[$username] Disconnected!"
+        broadcaster.broadcastSync(msg, isValid(topic, session))
+    }
+
+    private fun isValid(topic: String, session: WebSocketSession): Predicate&lt;WebSocketSession&gt; {
+        return Predicate&lt;WebSocketSession&gt;{ s -&gt; (s !== session &amp;&amp; topic.equals(s.getUriVariables().get("topic", String::class.java, null), ignoreCase = true)) }
+    }
+}</code></pre>
+</div>
+</div>
 <div class="colist arabic">
 <table>
 <tr>
@@ -6326,6 +6416,22 @@ A working example of WebSockets in action can be found in the <a href="https://g
         String text = "[" + username + "] " + message.getText()
         Message newMessage = new Message(text)
         broadcaster.broadcast(newMessage, isValid(topic, session))
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @OnMessage
+    fun onMessage(
+            topic: String,
+            username: String,
+            message: Message,
+            session: WebSocketSession): Publisher&lt;Message&gt; {
+
+        val text = "[" + username + "] " + message.text
+        val newMessage = Message(text)
+        return broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
 </div>
 </div>
@@ -6549,6 +6655,51 @@ abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(
     @OnMessage
     void onMessage(
             String message) {
+        replies.add(message) <b class="conum">(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">WebSocket Chat Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.ClientWebSocket
+import io.micronaut.websocket.annotation.OnMessage
+import io.micronaut.websocket.annotation.OnOpen
+import io.reactivex.Single
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Future
+
+
+@ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
+abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
+
+    var session: WebSocketSession? = null
+        private set
+    var request: HttpRequest&lt;*&gt;? = null
+        private set
+    var topic: String? = null
+        private set
+    var username: String? = null
+        private set
+    private val replies = ConcurrentLinkedQueue&lt;String&gt;()
+
+    @OnOpen
+    fun onOpen(topic: String, username: String, session: WebSocketSession, request: HttpRequest&lt;*&gt;) { <b class="conum">(3)</b>
+        this.topic = topic
+        this.username = username
+        this.session = session
+        this.request = request
+    }
+
+    fun getReplies(): Collection&lt;String&gt; {
+        return replies
+    }
+
+    @OnMessage
+    fun onMessage(
+            message: String) {
         replies.add(message) <b class="conum">(4)</b>
     }</code></pre>
 </div>

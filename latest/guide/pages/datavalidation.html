@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.13 Data Validation 1.2.5</title>
+    <title>6.13 Data Validation 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.13 Data Validation</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -471,29 +471,73 @@ open class EmailController {
 <div class="paragraph">
 <p>The validation of POJOs is shown in the following test:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">def "invoking /email/send parse parameters in a POJO and validates"() {
-    when:
-    Email email = new Email()
-    email.subject = 'Hi'
-    email.recipient = ''
-    client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+<pre class="highlight"><code class="language-java" data-lang="java">    public void testPoJoValidation() {
+        HttpClientResponseException e = Assertions.assertThrows(HttpClientResponseException.class, () -&gt; {
+            Email email = new Email();
+            email.subject = "Hi";
+            email.recipient = "";
+            client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
+        });
+        HttpResponse response = e.getResponse();
 
-    then:
-    def e = thrown(HttpClientResponseException)
-    def response = e.response
-    response.status == HttpStatus.BAD_REQUEST
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
 
-    when:
-    email = new Email()
-    email.subject = 'Hi'
-    email.recipient = 'me@micronaut.example'
-    response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+        Email email = new Email();
+        email.subject = "Hi";
+        email.recipient = "me@micronaut.example";
+        response = client.toBlocking().exchange(HttpRequest.POST("/email/send", email));
 
-    then:
-    response.status == HttpStatus.OK
-}</code></pre>
+        assertEquals(HttpStatus.OK, response.getStatus());
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "invoking /email/send parse parameters in a POJO and validates"() {
+        when:
+        Email email = new Email()
+        email.subject = 'Hi'
+        email.recipient = ''
+        client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        def response = e.response
+        response.status == HttpStatus.BAD_REQUEST
+
+        when:
+        email = new Email()
+        email.subject = 'Hi'
+        email.recipient = 'me@micronaut.example'
+        response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
+
+        then:
+        response.status == HttpStatus.OK
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test poko validation"() {
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                val email = Email()
+                email.subject = "Hi"
+                email.recipient = ""
+                client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+            }
+            var response = e.response
+
+            response.status shouldBe HttpStatus.BAD_REQUEST
+
+            val email = Email()
+            email.subject = "Hi"
+            email.recipient = "me@micronaut.example"
+            response = client.toBlocking().exchange&lt;Email, Any&gt;(HttpRequest.POST("/email/send", email))
+
+            response.status shouldBe HttpStatus.OK
+        }</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">

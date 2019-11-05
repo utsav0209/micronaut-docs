@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>14.1.1 The Endpoint Annotation 1.2.5</title>
+    <title>14.1.1 The Endpoint Annotation 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>14.1.1 The Endpoint Annotation</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -190,17 +190,48 @@ class FooEndpoint {
 <div class="paragraph">
 <p>The following example <code>Endpoint</code> class will create an endpoint accessible at <code>/date</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
 @Endpoint(id = "date",
         prefix = "custom",
         defaultEnabled = true,
         defaultSensitive = false)
 class CurrentDateEndpoint {
-  //.. endpoint methods
+
+    //.. endpoint methods
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    //.. endpoint methods
+
 }</code></pre>
 </div>
 </div>

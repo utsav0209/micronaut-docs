@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>9 Serverless Functions 1.2.5</title>
+    <title>9 Serverless Functions 1.2.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>9 Serverless Functions</h1>
 
-                    <p><strong>Version:</strong> 1.2.5</p>
+                    <p><strong>Version:</strong> 1.2.6</p>
                 </div>
 
                 
@@ -1403,12 +1403,39 @@ Hello, Fred</code></pre>
 <h2 id="_functionclient"><a class="anchor" href="#_functionclient"></a>FunctionClient</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation makes it very straightforward to invoke local or remotely deployed functions. For example, the following Groovy function can be accessed using the <code>MathClient</code> interface listed below it.</p>
+<p>The <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation makes it very straightforward to invoke local or remotely deployed functions. For example, given the following function:</p>
 </div>
-<div class="listingblock">
-<div class="title">MaxFunction.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import groovy.transform.Field
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.function.client.aws;
+
+import io.micronaut.function.FunctionBean;
+
+import java.util.function.Supplier;
+
+@FunctionBean("max")
+public class MaxFunction implements Supplier&lt;Integer&gt; {
+
+    private final MathService mathService;
+
+    public MaxFunction(MathService mathService) {
+        this.mathService = mathService;
+    }
+
+    @Override
+    public Integer get() {
+        return mathService.max();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.function.client.aws
+
+import groovy.transform.Field
 
 math.multiplier = 2
 @Field MathService mathService
@@ -1418,17 +1445,76 @@ Long max() {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Max Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.function.client.aws
+
+import io.micronaut.function.FunctionBean
+
+import java.util.function.Supplier
+
+@FunctionBean("max")
+class MaxFunction(private val mathService: MathService) : Supplier&lt;Int&gt; {
+
+    override fun get(): Int {
+        return mathService.max()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following client can be used to execute it.</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Using @FunctionClient to Discover Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+    @FunctionClient
+    interface MathClient {
+
+        Long max(); <b class="conum">(1)</b>
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @FunctionClient to Discover Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
 
-@FunctionClient
-static interface MathClient {
+    @FunctionClient
+    static interface MathClient {
 
-    Long max() <i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
+        Long max() <b class="conum">(1)</b>
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @FunctionClient to Discover Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+    @FunctionClient
+    internal interface MathClient {
+
+        fun max(): Long?  <b class="conum">(1)</b>
+
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1442,10 +1528,37 @@ static interface MathClient {
 <div class="paragraph">
 <p>If you would like the names of the client interface and target function to be different, you can use the <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation to specify the target method name.</p>
 </div>
-<div class="listingblock">
-<div class="title">RoundFunction.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import groovy.transform.Field
+<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.function.client.aws;
+
+import io.micronaut.function.FunctionBean;
+
+import java.util.function.Function;
+
+@FunctionBean("round")
+public class RoundFunction implements Function&lt;Float, Integer&gt; {
+
+    private final MathService mathService;
+
+    public RoundFunction(MathService mathService) {
+        this.mathService = mathService;
+    }
+
+    @Override
+    public Integer apply(Float aFloat) {
+        return mathService.round(aFloat);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.function.client.aws
+
+import groovy.transform.Field
 
 math.multiplier = 2
 @Field MathService mathService
@@ -1455,29 +1568,90 @@ int round(float value) {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Round Function</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.function.client.aws
+
+import io.micronaut.function.FunctionBean
+
+import java.util.function.Function
+
+@FunctionBean("round")
+class RoundFunction(private val mathService: MathService) : Function&lt;Float, Int&gt; {
+
+    override fun apply(aFloat: Float): Int {
+        return mathService.round(aFloat)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The named annotation can be placed on the client as well.</p>
+</div>
+<div class="listingblock multi-language-sample">
 <div class="title">Using @Named to customize target method</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+    @FunctionClient
+    interface MathClient {
+
+        @Named("round")
+        int rnd(float value);
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Named to customize target method</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
 
-@FunctionClient
-static interface MathClient {
+    @FunctionClient
+    static interface MathClient {
 
-    @Named("round")
-    int rnd(float value)
-}</code></pre>
+        @Named("round")
+        int rnd(float value)
+
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @Named to customize target method</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+    @FunctionClient
+    internal interface MathClient {
+
+        @Named("round")
+        fun rnd(value: Float): Int
+
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Functions that only return a value are mapped to HTTP <code>GET</code> requests, whilst functions that accept an input require an HTTP <code>POST</code>.</p>
 </div>
 <div class="paragraph">
-<p>For a example, the following function can be accessed using the <code>IsbnValidatorClient</code> interface listed below.</p>
+<p>For a example, given the following function:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.FunctionBean;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.function.FunctionBean;
 import java.util.function.Function;
 
 @FunctionBean("isbn-validator")
@@ -1490,9 +1664,42 @@ public class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest,
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.client.FunctionClient;
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.FunctionBean
+import java.util.function.Function
+
+@FunctionBean("isbn-validator")
+class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    @Override
+    IsbnValidationResponse apply(IsbnValidationRequest request) {
+        return new IsbnValidationResponse()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.function.FunctionBean
+import java.util.function.Function
+
+
+@FunctionBean("isbn-validator")
+class IsbnValidatorFunction : Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
+
+    override fun apply(request: IsbnValidationRequest): IsbnValidationResponse {
+        return IsbnValidationResponse()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The function can be accessed using the <code>IsbnValidatorClient</code> interface listed below.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.function.client.FunctionClient;
 import io.micronaut.http.annotation.Body;
 import io.reactivex.Single;
 import javax.inject.Named;
@@ -1501,7 +1708,38 @@ import javax.inject.Named;
 public interface IsbnValidatorClient {
 
     @Named("isbn-validator")
-    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request); <i class="conum" data-value="1"></i><b>(1)</b>
+    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request); <b class="conum">(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient;
+import io.micronaut.http.annotation.Body;
+import io.reactivex.Single;
+import javax.inject.Named;
+
+@FunctionClient
+interface IsbnValidatorClient {
+
+    @Named("isbn-validator")
+    Single&lt;IsbnValidationResponse&gt; validate(@Body IsbnValidationRequest request) <b class="conum">(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.annotation.Body
+import io.reactivex.Single
+import javax.inject.Named
+
+
+@FunctionClient
+interface IsbnValidatorClient {
+
+    @Named("isbn-validator")
+    fun validate(@Body request: IsbnValidationRequest): Single&lt;IsbnValidationResponse&gt;  <b class="conum">(1)</b>
 }</code></pre>
 </div>
 </div>
@@ -1521,22 +1759,73 @@ public interface IsbnValidatorClient {
 <div class="paragraph">
 <p><code>@FunctionClient</code> interfaces support RxJava constructs, so the above interfaces could be implemented as shown below:</p>
 </div>
-<div class="listingblock">
-<div class="title">RxMathClient.groovy</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.function.client.FunctionClient;
+import org.junit.Test;
+
+import javax.inject.Named;
+import static org.junit.Assert.assertEquals;
+
+import io.reactivex.Single;
+
+import java.util.Collections;
+
+    @FunctionClient
+    interface RxMathClient {
+        Single&lt;Long&gt; max();
+
+        @Named("round")
+        Single&lt;Integer&gt; rnd(float value);
+
+        Single&lt;Long&gt; sum(Sum sum);
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.function.client.FunctionClient
 import javax.inject.Named
+
 import io.reactivex.Single
 
-@FunctionClient
-static interface RxMathClient {
-    Single&lt;Long&gt; max()
+    @FunctionClient
+    static interface RxMathClient {
+        Single&lt;Long&gt; max()
 
-    @Named("round")
-    Single&lt;Integer&gt; rnd(float value)
+        @Named("round")
+        Single&lt;Integer&gt; rnd(float value)
 
-    Single&lt;Long&gt; sum(Sum sum)
-}</code></pre>
+        Single&lt;Long&gt; sum(Sum sum)
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxMathClient</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.function.client.FunctionClient
+import io.micronaut.http.client.RxHttpClient
+import javax.inject.Named
+
+import io.reactivex.Single
+
+
+    @FunctionClient
+    internal interface RxMathClient {
+        fun max(): Single&lt;Long&gt;
+
+        @Named("round")
+        fun rnd(value: Float): Single&lt;Int&gt;
+
+        fun sum(sum: Sum): Single&lt;Long&gt;
+    }</code></pre>
 </div>
 </div>
 </div>
