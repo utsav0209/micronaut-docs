@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -186,23 +186,43 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#getExecutorService--">getExecutorService</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/OptionalInt.html?is-external=true" title="class or interface in java.util">OptionalInt</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#getMaxActiveSessions--">getMaxActiveSessions</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html?is-external=true" title="class or interface in java.time">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#getMaxInactiveInterval--">getMaxInactiveInterval</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#isPromptExpiration--">isPromptExpiration</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#setExecutorService-javax.inject.Provider-">setExecutorService</a></span>(<a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject">Provider</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&gt;&nbsp;executorService)</code>
+<div class="block">Set the executor service.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#setMaxActiveSessions-java.lang.Integer-">setMaxActiveSessions</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;maxActiveSessions)</code>
 <div class="block">Sets the maximum number of active sessions.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#setMaxInactiveInterval-java.time.Duration-">setMaxInactiveInterval</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html?is-external=true" title="class or interface in java.time">Duration</a>&nbsp;maxInactiveInterval)</code>
 <div class="block">Set the maximum inactive interval.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/session/SessionConfiguration.html#setPromptExpiration-boolean-">setPromptExpiration</a></span>(boolean&nbsp;promptExpiration)</code>
+<div class="block">Set if prompt expiration is enabled.</div>
 </td>
 </tr>
 </table>
@@ -324,7 +344,7 @@ public static final&nbsp;int DEFAULT_MAXINACTIVEINTERVAL_SECONDS</pre>
 <a name="setMaxInactiveInterval-java.time.Duration-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setMaxInactiveInterval</h4>
 <pre>public&nbsp;void&nbsp;setMaxInactiveInterval(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html?is-external=true" title="class or interface in java.time">Duration</a>&nbsp;maxInactiveInterval)</pre>
@@ -332,6 +352,62 @@ public static final&nbsp;int DEFAULT_MAXINACTIVEINTERVAL_SECONDS</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>maxInactiveInterval</code> - The max inactive interval</dd>
+</dl>
+</li>
+</ul>
+<a name="isPromptExpiration--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isPromptExpiration</h4>
+<pre>public&nbsp;boolean&nbsp;isPromptExpiration()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if prompt expiration is enabled.</dd>
+</dl>
+</li>
+</ul>
+<a name="setPromptExpiration-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPromptExpiration</h4>
+<pre>public&nbsp;void&nbsp;setPromptExpiration(boolean&nbsp;promptExpiration)</pre>
+<div class="block">Set if prompt expiration is enabled.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>promptExpiration</code> - if prompt expiration is enabled / disabled</dd>
+</dl>
+</li>
+</ul>
+<a name="getExecutorService--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getExecutorService</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a>&gt;&nbsp;getExecutorService()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The injected executor service</dd>
+</dl>
+</li>
+</ul>
+<a name="setExecutorService-javax.inject.Provider-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setExecutorService</h4>
+<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
+public&nbsp;void&nbsp;setExecutorService(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true" title="class or interface in javax.inject">@Named</a>(<a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true#value--" title="class or interface in javax.inject">value</a>="scheduled")
+                                       <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject">Provider</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&gt;&nbsp;executorService)</pre>
+<div class="block">Set the executor service.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executorService</code> - The executorService</dd>
 </dl>
 </li>
 </ul>

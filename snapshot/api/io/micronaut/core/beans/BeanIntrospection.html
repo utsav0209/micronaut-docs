@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":18,"i3":6,"i4":18,"i5":6,"i6":17,"i7":18,"i8":18,"i9":18,"i10":18,"i11":6,"i12":6};
+var methods = {"i0":6,"i1":6,"i2":18,"i3":6,"i4":18,"i5":6,"i6":17,"i7":18,"i8":18,"i9":18,"i10":18,"i11":6,"i12":6,"i13":18};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -246,6 +246,13 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDele
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#instantiate-boolean-java.lang.Object...-">instantiate</a></span>(boolean&nbsp;strictNullable,
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)</code>
+<div class="block">Instantiates an instance of the bean, throwing an exception is instantiation is not possible.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#instantiate-java.lang.Object...-">instantiate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)</code>
 <div class="block">Instantiates an instance of the bean, throwing an exception is instantiation is not possible.</div>
 </td>
@@ -346,11 +353,33 @@ extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataDele
 <li class="blockList">
 <h4>instantiate</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a>&nbsp;instantiate(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)
+default&nbsp;<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a>&nbsp;instantiate(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)
+                        throws <a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></pre>
+<div class="block">Instantiates an instance of the bean, throwing an exception is instantiation is not possible.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>arguments</code> - The arguments required to instantiate bean. Should match the types returned by <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getConstructorArguments--"><code>getConstructorArguments()</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An instance</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></code> - If the bean cannot be instantiated.</dd>
+</dl>
+</li>
+</ul>
+<a name="instantiate-boolean-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>instantiate</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" title="type parameter in BeanIntrospection">T</a>&nbsp;instantiate(boolean&nbsp;strictNullable,
+                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)
                 throws <a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></pre>
 <div class="block">Instantiates an instance of the bean, throwing an exception is instantiation is not possible.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>strictNullable</code> - If true, require null parameters to be annotated with a nullable annotation</dd>
 <dd><code>arguments</code> - The arguments required to instantiate bean. Should match the types returned by <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getConstructorArguments--"><code>getConstructorArguments()</code></a></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An instance</dd>
