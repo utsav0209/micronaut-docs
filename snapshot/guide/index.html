@@ -9538,7 +9538,7 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <p>By using one of the annotations the <a href="../api/io/micronaut/cache/interceptor/CacheInterceptor.html">CacheInterceptor</a> is activated which in the case of <code>@Cacheable</code> will cache the return result of the method.</p>
 </div>
 <div class="paragraph">
-<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emitted result will be cached.</p>
+<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emitted result will be cached.</p>
 </div>
 <div class="paragraph">
 <p>In addition if the underlying Cache implementation supports non-blocking cache operations then cache values will be read from the cache without blocking, resulting in the ability to implement completely non-blocking cache operations.</p>
@@ -12634,7 +12634,7 @@ The <code>micronaut.server.maxRequestSize</code> setting in <code>application.ym
 <p>The previous section introduced the notion of Reactive programming using RxJava 2.x and Micronaut.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut supports returning common reactive types such as <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> or <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html">Observable</a> (or the <code>Mono</code> type from Reactor 3.x), an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> from any controller method.</p>
+<p>Micronaut supports returning common reactive types such as <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> or <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html">Observable</a> (or the <code>Mono</code> type from Reactor 3.x), an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> from any controller method.</p>
 </div>
 <div class="paragraph">
 <p>The argument that is designated the body of the request using the <a href="../api/io/micronaut/http/annotation/Body.html">Body</a> annotation can also be a reactive type or a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a>.</p>
@@ -12676,8 +12676,8 @@ See the section on <a href="#threadPools">Configuring Thread Pools</a> for infor
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any type that implements the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any type that implements the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> interface</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Flowable&lt;String&gt; hello()</code></p></td>
 </tr>
 <tr>
@@ -14534,7 +14534,7 @@ class PersonController {
 <div class="sect2">
 <h3 id="_writing_data_without_blocking"><a class="anchor" href="#_writing_data_without_blocking"></a>Writing Data without Blocking</h3>
 <div class="paragraph">
-<p>Micronaut&#8217;s HTTP server supports writing data without blocking simply by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
+<p>Micronaut&#8217;s HTTP server supports writing data without blocking simply by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
 </div>
 <div class="paragraph">
 <p>The following table summarizes example return type signatures and the behaviour the server exhibits to handle each of them:</p>
@@ -14561,7 +14561,7 @@ class PersonController {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Publisher&lt;String&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits each chunk of content as a String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits each chunk of content as a String</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Flowable&lt;Book&gt;</code></p></td>
@@ -14570,10 +14570,10 @@ class PersonController {
 </tbody>
 </table>
 <div class="paragraph">
-<p>When returning reactive type the server will use a <code>Transfer-Encoding</code> of <code>chunked</code> and keep writing data until the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>'s <code>onComplete</code> method is called.</p>
+<p>When returning reactive type the server will use a <code>Transfer-Encoding</code> of <code>chunked</code> and keep writing data until the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>'s <code>onComplete</code> method is called.</p>
 </div>
 <div class="paragraph">
-<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item, without blocking, and then request the next item, thus controlling back pressure.</p>
+<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item, without blocking, and then request the next item, thus controlling back pressure.</p>
 </div>
 </div>
 <div class="sect2">
@@ -14907,10 +14907,10 @@ Data can only be retrieved from a <a href="../api/io/micronaut/http/multipart/Pa
 </table>
 </div>
 <div class="paragraph">
-<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
+<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
 </div>
 <div class="paragraph">
-<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
+<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Streaming file upload</div>
@@ -15029,11 +15029,11 @@ class UploadController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
+<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
+<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
 </tr>
 </table>
 </div>
@@ -15272,7 +15272,7 @@ class CompletedUploadController {
 <div class="sect2">
 <h3 id="_same_name"><a class="anchor" href="#_same_name"></a>Same Name</h3>
 <div class="paragraph">
-<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
+<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -15286,7 +15286,7 @@ class CompletedUploadController {
 <p>Any POJO assuming a media codec is found that supports the content type</p>
 </li>
 <li>
-<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
+<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
 </li>
 </ul>
 </div>
@@ -15644,7 +15644,7 @@ To use a custom data source to send data through an input stream, construct a <a
 <p>The <code>ServerFilterChain</code> interface contains a resolved chain of filters with the final entry in the chain being the matched route. The <a href="../api/io/micronaut/http/filter/ServerFilterChain.html#proceed-io.micronaut.http.HttpRequest-">ServerFilterChain.proceed(io.micronaut.http.HttpRequest)</a> method can be used to resume processing of the request.</p>
 </div>
 <div class="paragraph">
-<p>The <code>proceed(..)</code> method returns a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits the response that will be returned to the client. Implementors of filters can subscribe to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and mutate the emitted <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> object to modify the response prior to returning the response to the client.</p>
+<p>The <code>proceed(..)</code> method returns a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits the response that will be returned to the client. Implementors of filters can subscribe to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and mutate the emitted <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> object to modify the response prior to returning the response to the client.</p>
 </div>
 <div class="paragraph">
 <p>To put these concepts into practise lets look at an example.</p>
@@ -18196,7 +18196,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <p>The <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface forms the basis for the low-level API. This interfaces declares methods to help ease executing HTTP requests and receive responses.</p>
 </div>
 <div class="paragraph">
-<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
+<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
 </div>
 
 <h2 id="clientBasics"><a class="anchor" href="#clientBasics"></a>7.1.1 Sending your first HTTP request</h2>
@@ -20221,7 +20221,7 @@ Single&lt;Pet&gt; save(
 <div class="sect2">
 <h3 id="_streaming_json_with_client"><a class="anchor" href="#_streaming_json_with_client"></a>Streaming JSON with @Client</h3>
 <div class="paragraph">
-<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
+<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
@@ -20389,7 +20389,7 @@ interface HeadlineClient {
 <p>Micronaut&#8217;s client does however support streaming of both individual JSON objects via <code>application/x-json-stream</code> and also JSON arrays defined with <code>application/json</code>.</p>
 </div>
 <div class="paragraph">
-<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
+<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
 </div>
 </div>
 <div class="sect2">
@@ -21485,7 +21485,7 @@ void onServiceStarted(ServiceStartedEvent event) {
 <p>The <a href="../api/io/micronaut/discovery/config/ConfigurationClient.html">ConfigurationClient</a> interface has a single method called <code>getPropertySources</code> that can be implemented to read and resolve configuration from distributed sources.</p>
 </div>
 <div class="paragraph">
-<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
+<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation is <a href="../api/io/micronaut/discovery/config/DefaultCompositeConfigurationClient.html">DefaultCompositeConfigurationClient</a> which merges all registered <code>ConfigurationClient</code> beans into a single bean.</p>
@@ -22175,7 +22175,7 @@ add and retrieve values and decrypt them with the default key store for your acc
 </ul>
 </div>
 <div class="paragraph">
-<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
+<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <code>DiscoveryClient</code> interface is <a href="../api/io/micronaut/discovery/client/CachingCompositeDiscoveryClient.html">CachingCompositeDiscoveryClient</a> which merges all other <code>DiscoveryClient</code> beans into a single bean and provides caching of the results of the methods. The default behaviour is to cache for 30 seconds. This cache can be disabled in application configuration:</p>
@@ -23134,7 +23134,7 @@ You can override this configuration in production by specifying an environment v
 <p>The load balancing itself is handled by the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface which defines a  <a href="../api/io/micronaut/http/client/LoadBalancer.html#select--">LoadBalancer.select()</a> method that returns a <code>Publisher</code> that emits a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
+<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface is <a href="../api/io/micronaut/http/client/loadbalance/DiscoveryClientRoundRobinLoadBalancer.html">DiscoveryClientRoundRobinLoadBalancer</a>. You can replace this strategy for another implementation if you wish to customize how client side load balancing is handled in Micronaut since there are many different ways you may wish to optimize load balancing.</p>

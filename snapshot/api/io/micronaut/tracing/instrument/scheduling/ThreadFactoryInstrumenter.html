@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
- <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=io.opentracing.Tracer.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="tracing.instrument-threads",<a href="../../../../../io/micronaut/context/annotation/Requires.html#value--">value</a>="true",<a href="../../../../../io/micronaut/context/annotation/Requires.html#defaultValue--">defaultValue</a>="false")
+ <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper.class</a>) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="tracing.instrument-threads",<a href="../../../../../io/micronaut/context/annotation/Requires.html#value--">value</a>="true",<a href="../../../../../io/micronaut/context/annotation/Requires.html#defaultValue--">defaultValue</a>="false")
 public class <span class="typeNameLabel">ThreadFactoryInstrumenter</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventListener.html" title="interface in io.micronaut.context.event">BeanCreatedEventListener</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&gt;</pre>
@@ -141,7 +141,7 @@ implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventLi
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/scheduling/ThreadFactoryInstrumenter.html#ThreadFactoryInstrumenter-io.opentracing.Tracer-">ThreadFactoryInstrumenter</a></span>(io.opentracing.Tracer&nbsp;tracer)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/scheduling/ThreadFactoryInstrumenter.html#ThreadFactoryInstrumenter-io.micronaut.tracing.instrument.TracingWrapper-">ThreadFactoryInstrumenter</a></span>(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -189,17 +189,17 @@ implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventLi
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ThreadFactoryInstrumenter-io.opentracing.Tracer-">
+<a name="ThreadFactoryInstrumenter-io.micronaut.tracing.instrument.TracingWrapper-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ThreadFactoryInstrumenter</h4>
-<pre>public&nbsp;ThreadFactoryInstrumenter(io.opentracing.Tracer&nbsp;tracer)</pre>
+<pre>public&nbsp;ThreadFactoryInstrumenter(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>tracer</code> - The tracer</dd>
+<dd><code>tracingWrapper</code> - The tracingWrapper</dd>
 </dl>
 </li>
 </ul>

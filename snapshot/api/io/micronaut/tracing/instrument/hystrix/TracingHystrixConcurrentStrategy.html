@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <hr>
 <br>
-<pre><a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#classes--">classes</a>=com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=io.opentracing.Tracer.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#missingBeans--">missingBeans</a>=io.opentracing.noop.NoopTracer.class)
+<pre><a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#classes--">classes</a>=com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper.class</a>)
  <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">TracingHystrixConcurrentStrategy</span>
 extends com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy</pre>
@@ -141,7 +141,7 @@ extends com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy</pre
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/hystrix/TracingHystrixConcurrentStrategy.html#TracingHystrixConcurrentStrategy-io.opentracing.Tracer-com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy-">TracingHystrixConcurrentStrategy</a></span>(io.opentracing.Tracer&nbsp;tracer,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/hystrix/TracingHystrixConcurrentStrategy.html#TracingHystrixConcurrentStrategy-io.micronaut.tracing.instrument.TracingWrapper-com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy-">TracingHystrixConcurrentStrategy</a></span>(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper,
                                 com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy&nbsp;hystrixConcurrencyStrategy)</code>
 <div class="block">Creates enhanced <code>HystrixConcurrencyStrategy</code> for tracing.</div>
 </td>
@@ -209,20 +209,20 @@ extends com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy</pre
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="TracingHystrixConcurrentStrategy-io.opentracing.Tracer-com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy-">
+<a name="TracingHystrixConcurrentStrategy-io.micronaut.tracing.instrument.TracingWrapper-com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TracingHystrixConcurrentStrategy</h4>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Inject.html?is-external=true" title="class or interface in javax.inject">@Inject</a>
-public&nbsp;TracingHystrixConcurrentStrategy(io.opentracing.Tracer&nbsp;tracer,
+public&nbsp;TracingHystrixConcurrentStrategy(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper,
                                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
                                                 com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy&nbsp;hystrixConcurrencyStrategy)</pre>
 <div class="block">Creates enhanced <code>HystrixConcurrencyStrategy</code> for tracing.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>tracer</code> - For span creation and propagation across arbitrary transports</dd>
+<dd><code>tracingWrapper</code> - For wrapping callable</dd>
 <dd><code>hystrixConcurrencyStrategy</code> - Different behavior or implementations for concurrency related aspects of the system with default implementations</dd>
 </dl>
 </li>

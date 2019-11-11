@@ -112,11 +112,11 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
- <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=io.opentracing.Tracer.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="tracing.instrument-threads",<a href="../../../../../io/micronaut/context/annotation/Requires.html#value--">value</a>="true",<a href="../../../../../io/micronaut/context/annotation/Requires.html#defaultValue--">defaultValue</a>="false")
+ <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper.class</a>) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#property--">property</a>="tracing.instrument-threads",<a href="../../../../../io/micronaut/context/annotation/Requires.html#value--">value</a>="true",<a href="../../../../../io/micronaut/context/annotation/Requires.html#defaultValue--">defaultValue</a>="false")
 public class <span class="typeNameLabel">ExecutorServiceInstrumenter</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventListener.html" title="interface in io.micronaut.context.event">BeanCreatedEventListener</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&gt;</pre>
-<div class="block">Instruments runnable threads with <code>Tracer</code>.</div>
+<div class="block">Instruments runnable threads with <a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument"><code>TracingWrapper</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
@@ -162,7 +162,7 @@ implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventLi
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/scheduling/ExecutorServiceInstrumenter.html#ExecutorServiceInstrumenter-io.opentracing.Tracer-">ExecutorServiceInstrumenter</a></span>(io.opentracing.Tracer&nbsp;tracer)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/scheduling/ExecutorServiceInstrumenter.html#ExecutorServiceInstrumenter-io.micronaut.tracing.instrument.TracingWrapper-">ExecutorServiceInstrumenter</a></span>(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</code>
 <div class="block">Creates a new <a href="../../../../../io/micronaut/tracing/instrument/scheduling/ExecutorServiceInstrumenter.html" title="class in io.micronaut.tracing.instrument.scheduling"><code>ExecutorServiceInstrumenter</code></a>.</div>
 </td>
 </tr>
@@ -232,17 +232,17 @@ implements <a href="../../../../../io/micronaut/context/event/BeanCreatedEventLi
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ExecutorServiceInstrumenter-io.opentracing.Tracer-">
+<a name="ExecutorServiceInstrumenter-io.micronaut.tracing.instrument.TracingWrapper-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ExecutorServiceInstrumenter</h4>
-<pre>public&nbsp;ExecutorServiceInstrumenter(io.opentracing.Tracer&nbsp;tracer)</pre>
+<pre>public&nbsp;ExecutorServiceInstrumenter(<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</pre>
 <div class="block">Creates a new <a href="../../../../../io/micronaut/tracing/instrument/scheduling/ExecutorServiceInstrumenter.html" title="class in io.micronaut.tracing.instrument.scheduling"><code>ExecutorServiceInstrumenter</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>tracer</code> - The tracer</dd>
+<dd><code>tracingWrapper</code> - The tracingWrapper</dd>
 </dl>
 </li>
 </ul>

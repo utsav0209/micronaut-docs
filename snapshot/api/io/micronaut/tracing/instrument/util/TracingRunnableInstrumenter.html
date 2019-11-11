@@ -112,16 +112,16 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
- <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=io.opentracing.Tracer.class)
+ <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=io.opentracing.Tracer.class) <a href="../../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../../io/micronaut/context/annotation/Requires.html#beans--">beans</a>=<a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper.class</a>)
 public class <span class="typeNameLabel">TracingRunnableInstrumenter</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;, <a href="../../../../../io/micronaut/scheduling/instrument/RunnableInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">RunnableInstrumenter</a>, <a href="../../../../../io/micronaut/scheduling/instrument/ReactiveInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">ReactiveInstrumenter</a></pre>
-<div class="block">A function that instruments an existing Runnable with <a href="../../../../../io/micronaut/tracing/instrument/util/TracingRunnable.html" title="class in io.micronaut.tracing.instrument.util"><code>TracingRunnable</code></a>.</div>
+<div class="block">A function that instruments an existing <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> and <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a> with <a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument"><code>TracingWrapper</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>graemerocher</dd>
+<dd>graemerocher, dstepanov</dd>
 </dl>
 </li>
 </ul>
@@ -141,8 +141,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/util/TracingRunnableInstrumenter.html#TracingRunnableInstrumenter-io.opentracing.Tracer-">TracingRunnableInstrumenter</a></span>(io.opentracing.Tracer&nbsp;tracer)</code>
-<div class="block">Create a function that instrument an existing Runnable.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/tracing/instrument/util/TracingRunnableInstrumenter.html#TracingRunnableInstrumenter-io.opentracing.Tracer-io.micronaut.tracing.instrument.TracingWrapper-">TracingRunnableInstrumenter</a></span>(io.opentracing.Tracer&nbsp;tracer,
+                           <a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</code>
+<div class="block">Create a function that wraps an existing Runnable.</div>
 </td>
 </tr>
 </table>
@@ -205,17 +206,19 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="TracingRunnableInstrumenter-io.opentracing.Tracer-">
+<a name="TracingRunnableInstrumenter-io.opentracing.Tracer-io.micronaut.tracing.instrument.TracingWrapper-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TracingRunnableInstrumenter</h4>
-<pre>public&nbsp;TracingRunnableInstrumenter(io.opentracing.Tracer&nbsp;tracer)</pre>
-<div class="block">Create a function that instrument an existing Runnable.</div>
+<pre>public&nbsp;TracingRunnableInstrumenter(io.opentracing.Tracer&nbsp;tracer,
+                                   <a href="../../../../../io/micronaut/tracing/instrument/TracingWrapper.html" title="interface in io.micronaut.tracing.instrument">TracingWrapper</a>&nbsp;tracingWrapper)</pre>
+<div class="block">Create a function that wraps an existing Runnable.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>tracer</code> - For span creation and propagation across arbitrary transports</dd>
+<dd><code>tracer</code> - For detecting tracing</dd>
+<dd><code>tracingWrapper</code> - For wrapping runnable</dd>
 </dl>
 </li>
 </ul>

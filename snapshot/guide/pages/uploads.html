@@ -177,10 +177,10 @@ Data can only be retrieved from a <a href="../api/io/micronaut/http/multipart/Pa
 </table>
 </div>
 <div class="paragraph">
-<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
+<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
 </div>
 <div class="paragraph">
-<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
+<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Streaming file upload</div>
@@ -299,11 +299,11 @@ class UploadController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
+<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
+<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
 </tr>
 </table>
 </div>
@@ -542,7 +542,7 @@ class CompletedUploadController {
 <div class="sect2">
 <h3 id="_same_name"><a class="anchor" href="#_same_name"></a>Same Name</h3>
 <div class="paragraph">
-<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
+<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -556,7 +556,7 @@ class CompletedUploadController {
 <p>Any POJO assuming a media codec is found that supports the content type</p>
 </li>
 <li>
-<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
+<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
 </li>
 </ul>
 </div>
