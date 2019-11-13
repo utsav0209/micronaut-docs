@@ -322,6 +322,238 @@ data class Person(var name : String) {
 </div>
 </div>
 <div class="sect3">
+<h4 id="_constructor_methods"><a class="anchor" href="#_constructor_methods"></a>Constructor Methods</h4>
+<div class="paragraph">
+<p>For classes with multiple constructors, it is possible to inform Micronaut which constructor should be used to instantiate the class. Apply the <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation to which constructor to be used.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Vehicle {
+
+    private final String make;
+    private final String model;
+    private final int axels;
+
+    public Vehicle(String make, String model) {
+        this(make, model, 2);
+    }
+
+    @Creator <b class="conum">(1)</b>
+    public Vehicle(String make, String model, int axels) {
+        this.make = make;
+        this.model = model;
+        this.axels = axels;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getAxels() {
+        return axels;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle {
+
+    private final String make
+    private final String model
+    private final int axels
+
+    Vehicle(String make, String model) {
+        this(make, model, 2)
+    }
+
+    @Creator <b class="conum">(1)</b>
+    Vehicle(String make, String model, int axels) {
+        this.make = make
+        this.model = model
+        this.axels = axels
+    }
+
+    String getMake() {
+        make
+    }
+
+    String getModel() {
+        model
+    }
+
+    int getAxels() {
+        axels
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle @Creator constructor(val make: String, val model: String, val axels: Int) { <b class="conum">(1)</b>
+
+    constructor(make: String, model: String) : this(make, model, 2) {}
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation is used to denote which constructor should be used</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This class has no default constructor so calls to instantiate without arguments will throw an <a href="../api/io/micronaut/core/reflect/exception/InstantiationException.html">InstantiationException</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_static_creator_methods"><a class="anchor" href="#_static_creator_methods"></a>Static Creator Methods</h4>
+<div class="paragraph">
+<p>For the use case of static methods being used to instantiate the class, the <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation can be applied to those methods to allow for the introspection to execute the method.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Business {
+
+    private String name;
+
+    private Business(String name) {
+        this.name = name;
+    }
+
+    @Creator <b class="conum">(1)</b>
+    public static Business forName(String name) {
+        return new Business(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business {
+
+    private String name
+
+    private Business(String name) {
+        this.name = name
+    }
+
+    @Creator <b class="conum">(1)</b>
+    static Business forName(String name) {
+        new Business(name)
+    }
+
+    String getName() {
+        name
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business private constructor(val name: String) {
+    companion object {
+
+        @Creator <b class="conum">(1)</b>
+        fun forName(name: String): Business {
+            return Business(name)
+        }
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation is applied to the static method which will be used to instantiate the class</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+There can be multiple "creator" methods annotated. If one exists without arguments, that will be used as the default construction method. The first method with arguments will be used as the primary construction method.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_enums"><a class="anchor" href="#_enums"></a>Enums</h4>
+<div class="paragraph">
+<p>It is possible to introspect enums as well. Simply add the annotation to the enum and it can be constructed through the standard <code>valueOf</code> method.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_use_the_code_introspected_code_annotation_on_a_configuration_class"><a class="anchor" href="#_use_the_code_introspected_code_annotation_on_a_configuration_class"></a>Use the <code>@Introspected</code> Annotation on a Configuration Class</h4>
 <div class="paragraph">
 <p>If the class you wish to introspect is already compiled and not under your control an alternative option is to define a configuration class with the <code>classes</code> member of the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation set.</p>
