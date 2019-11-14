@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18};
+var methods = {"i0":18,"i1":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -163,6 +163,16 @@ extends <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interf
 <div class="block">Validates the bean with the validator factory if present.</div>
 </td>
 </tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default &lt;V&gt;&nbsp;void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/ValidatedBeanDefinition.html#validateBeanArgument-io.micronaut.context.BeanResolutionContext-io.micronaut.inject.InjectionPoint-io.micronaut.core.type.Argument-int-V-">validateBeanArgument</a></span>(<a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext,
+                    <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>&nbsp;injectionPoint,
+                    <a href="../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;V&gt;&nbsp;argument,
+                    int&nbsp;index,
+                    V&nbsp;value)</code>
+<div class="block">Validates the given bean after it has been constructor.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.BeanDefinition">
@@ -225,7 +235,7 @@ extends <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interf
 </a><a name="validate-io.micronaut.context.BeanResolutionContext-T-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>validate</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/inject/ValidatedBeanDefinition.html" title="type parameter in ValidatedBeanDefinition">T</a>&nbsp;validate(<a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext,
@@ -237,6 +247,39 @@ extends <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interf
 <dd><code>instance</code> - The instance</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The instance</dd>
+</dl>
+</li>
+</ul>
+<a name="validateBeanArgument-io.micronaut.context.BeanResolutionContext-io.micronaut.inject.InjectionPoint-io.micronaut.core.type.Argument-int-java.lang.Object-">
+<!--   -->
+</a><a name="validateBeanArgument-io.micronaut.context.BeanResolutionContext-io.micronaut.inject.InjectionPoint-io.micronaut.core.type.Argument-int-V-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>validateBeanArgument</h4>
+<pre>default&nbsp;&lt;V&gt;&nbsp;void&nbsp;validateBeanArgument(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                      <a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext,
+                                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                      <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>&nbsp;injectionPoint,
+                                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                      <a href="../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;V&gt;&nbsp;argument,
+                                      int&nbsp;index,
+                                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                      V&nbsp;value)
+                               throws <a href="../../../io/micronaut/context/exceptions/BeanInstantiationException.html" title="class in io.micronaut.context.exceptions">BeanInstantiationException</a></pre>
+<div class="block">Validates the given bean after it has been constructor.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>V</code> - The value type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>resolutionContext</code> - The resolution context</dd>
+<dd><code>injectionPoint</code> - The injection point</dd>
+<dd><code>argument</code> - The argument</dd>
+<dd><code>index</code> - The argument index</dd>
+<dd><code>value</code> - The value</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../io/micronaut/context/exceptions/BeanInstantiationException.html" title="class in io.micronaut.context.exceptions">BeanInstantiationException</a></code> - if the bean is invalid</dd>
 </dl>
 </li>
 </ul>

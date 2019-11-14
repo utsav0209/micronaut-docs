@@ -195,7 +195,9 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-eachBean"><a href="#eachBean"><strong>4.7</strong><span>Using @EachBean to Drive Configuration</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-jmx"><a href="#jmx"><strong>4.8</strong><span>JMX Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-immutableConfig"><a href="#immutableConfig"><strong>4.8</strong><span>Immutable Configuration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-jmx"><a href="#jmx"><strong>4.9</strong><span>JMX Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-aop"><a href="#aop"><strong>5</strong><span>Aspect Oriented Programming</span></a></div>
         
@@ -611,6 +613,12 @@
 
 <div class="paragraph">
 <p>Micronaut 1.3.0.BUILD-SNAPSHOT includes the following changes:</p>
+</div>
+<div class="sect2">
+<h3 id="_immutable_code_configurationproperties_code_and_code_eachproperty_code"><a class="anchor" href="#_immutable_code_configurationproperties_code_and_code_eachproperty_code"></a>Immutable <code>@ConfigurationProperties</code> and <code>@EachProperty</code></h3>
+<div class="paragraph">
+<p>Support for immutable <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> has been added by annotating the constructor of any configuration class with <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a>. See the docummentation on <a href="#immutableConfig">Immutable Configuration</a> for more information.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_requires_os"><a class="anchor" href="#_requires_os"></a>@Requires OS</h3>
@@ -7629,7 +7637,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
         ApplicationContext applicationContext = ApplicationContext.run(map, "test");
 
         Vehicle vehicle = applicationContext.getBean(Vehicle.class);
-        DefaultGroovyMethods.println(this, vehicle.start());</code></pre>
+        System.out.println(vehicle.start());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -7652,7 +7660,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
         val applicationContext = ApplicationContext.run(map, "test")
 
         val vehicle = applicationContext.getBean(Vehicle::class.java)
-        DefaultGroovyMethods.println(this, vehicle.start())</code></pre>
+        println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8853,7 +8861,272 @@ class DataSourceFactory {
 </table>
 </div>
 
-<h2 id="jmx"><a class="anchor" href="#jmx"></a>4.8 JMX Support</h2>
+<h2 id="immutableConfig"><a class="anchor" href="#immutableConfig"></a>4.8 Immutable Configuration</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/immutableConfig.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since 1.3, Micronaut supports the definition of immutable configuration by specifying the <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation on a constructor of a <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> or ann.context.annotation.EachProperty[] bean.</p>
+</div>
+<div class="paragraph">
+<p>An example of an immutable configuration class can be seen below:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.*;
+import io.micronaut.core.bind.annotation.Bindable;
+import javax.annotation.Nullable;
+import javax.validation.constraints.*;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+public class EngineConfig {
+
+    private final String manufacturer;
+    private final int cylinders;
+    private final CrankShaft crankShaft;
+
+    @ConfigurationInject <b class="conum">(2)</b>
+    public EngineConfig(
+            @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, <b class="conum">(3)</b>
+            @Min(1L) int cylinders, <b class="conum">(4)</b>
+            @NotNull CrankShaft crankShaft) {
+        this.manufacturer = manufacturer;
+        this.cylinders = cylinders;
+        this.crankShaft = crankShaft;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public CrankShaft getCrankShaft() {
+        return crankShaft;
+    }
+
+    @ConfigurationProperties("crank-shaft")
+    public static class CrankShaft { <b class="conum">(5)</b>
+        private final Double rodLength; <b class="conum">(6)</b>
+
+        @ConfigurationInject
+        public CrankShaft(@Nullable Double rodLength) {
+            this.rodLength = rodLength;
+        }
+
+        public Optional&lt;Double&gt; getRodLength() {
+            return Optional.ofNullable(rodLength);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.*
+import io.micronaut.core.bind.annotation.Bindable
+import javax.annotation.Nullable
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+class EngineConfig {
+
+    private final String manufacturer
+    private final int cylinders
+    private final CrankShaft crankShaft
+
+    @ConfigurationInject <b class="conum">(2)</b>
+    EngineConfig(
+                  @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, <b class="conum">(3)</b>
+                  @Min(1L) int cylinders, <b class="conum">(4)</b>
+                  @NotNull CrankShaft crankShaft) {
+        this.manufacturer = manufacturer
+        this.cylinders = cylinders
+        this.crankShaft = crankShaft
+    }
+
+    String getManufacturer() {
+        return manufacturer
+    }
+
+    int getCylinders() {
+        return cylinders
+    }
+
+    CrankShaft getCrankShaft() {
+        return crankShaft
+    }
+
+    @ConfigurationProperties("crank-shaft")
+    static class CrankShaft { <b class="conum">(5)</b>
+        private final Double rodLength <b class="conum">(6)</b>
+
+        @ConfigurationInject
+        CrankShaft(@Nullable Double rodLength) {
+            this.rodLength = rodLength
+        }
+
+        Optional&lt;Double&gt; getRodLength() {
+            return Optional.ofNullable(rodLength)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.*
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+import java.util.Optional
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+data class EngineConfig @ConfigurationInject <b class="conum">(2)</b>
+    constructor(
+        @Bindable(defaultValue = "Ford") @NotBlank <b class="conum">(3)</b>
+        val manufacturer: String,
+        @Min(1L) <b class="conum">(4)</b>
+        val cylinders: Int,
+        @NotNull val crankShaft: CrankShaft) {
+
+    @ConfigurationProperties("crank-shaft")
+    data class CrankShaft @ConfigurationInject
+    constructor(<b class="conum">(5)</b>
+            private val rodLength: Double? <b class="conum">(6)</b>
+    ) {
+
+        fun getRodLength(): Optional&lt;Double&gt; {
+            return Optional.ofNullable(rodLength)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation takes the configuration prefix</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a>  annotation is defined on the constructor</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>You can use <a href="../api/io/micronaut/core/bind/annotation/Bindable.html">@Bindable</a> to set a default value if you want</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Validation annotations can be used too</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>You can nest immutable configuration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Optional configuration can be indicated with <code>@Nullable</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation provides a hint to Micronaut to prioritize binding values from configuration instead of injecting beans.</p>
+</div>
+<div class="paragraph">
+<p>There are a few exceptions to this rule. Micronaut will not perform configuration binding for a parameter if one of these conditions is met:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The parameter is annotated with <code>@Value</code> (explicit binding)</p>
+</li>
+<li>
+<p>The parameter is annotated with <code>@Property</code> (explicit binding)</p>
+</li>
+<li>
+<p>The parameter is annotated with <code>@Parameter</code> (parameterized bean handling)</p>
+</li>
+<li>
+<p>The type of the parameter is annotated with a bean scope (such as <code>@Singleton</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once you have prepared a type safe configuration it can simply be injected into your objects like any other bean:</p>
+</div>
+
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Inject the <code>EngineConfig</code> bean</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use the configuration properties</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Configuration values can then be supplied when running the application. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Supply Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        ApplicationContext applicationContext = ApplicationContext.run(CollectionUtils.mapOf(
+                "my.engine.cylinders", "8",
+                "my.engine.crank-shaft.rod-length", "7.0"
+        ));
+
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+        System.out.println(vehicle.start());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Supply Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        ApplicationContext applicationContext = ApplicationContext.run(
+                "my.engine.cylinders": "8",
+                "my.engine.crank-shaft.rod-length": "7.0"
+        )
+
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class)
+        System.out.println(vehicle.start())</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Supply Configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val map = mapOf(
+                "my.engine.cylinders" to "8",
+                "my.engine.crank-shaft.rod-length" to "7.0"
+        )
+        val applicationContext = ApplicationContext.run(map)
+
+        val vehicle = applicationContext.getBean(Vehicle::class.java)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example prints: <code>"Ford Engine Starting V8 [rodLength=7B.0]"</code></p>
+</div>
+
+<h2 id="jmx"><a class="anchor" href="#jmx"></a>4.9 JMX Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/config/jmx.adoc"'>
