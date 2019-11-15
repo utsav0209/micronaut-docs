@@ -130,7 +130,135 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>Since 1.3, Micronaut supports the definition of immutable configuration by specifying the <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation on a constructor of a <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> or ann.context.annotation.EachProperty[] bean.</p>
+<p>Since 1.3, Micronaut supports the definition of immutable configuration.</p>
+</div>
+<div class="paragraph">
+<p>There are two ways to define immutable configuration. The preferred way is to define an interface that is annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a>. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.bind.annotation.Bindable;
+import javax.validation.constraints.*;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+public interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer();
+
+    @Min(1L)
+    int getCylinders();
+
+    @NotNull
+    CrankShaft getCrankShaft(); <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength(); <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer()
+
+    @Min(1L)
+    int getCylinders()
+
+    @NotNull
+    CrankShaft getCrankShaft() <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    static interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength() <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+import java.util.Optional
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @get:Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @get:NotBlank <b class="conum">(3)</b>
+    val manufacturer: String
+
+    @get:Min(1L)
+    val cylinders: Int
+
+    @get:NotNull
+    val crankShaft: CrankShaft <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        val rodLength: Double? <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation takes the configuration prefix and is declared on an interface</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>You can use <a href="../api/io/micronaut/core/bind/annotation/Bindable.html">@Bindable</a> to set a default value if you want</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Validation annotations can be used too</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>You can also specify references to other <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> beans.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>You can nest immutable configuration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Optional configuration can be indicated by returning an <code>Optional</code> or specifying <code>@Nullable</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In this case what Micronaut does is provide a compilation time produced implementation that delegates all getters to call the <code>getProperty(..)</code> method of the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> interface.</p>
+</div>
+<div class="paragraph">
+<p>This has the advantage that is the configuration is refreshed then the injected interface will automatically see the new values.</p>
+</div>
+<div class="paragraph">
+<p>Note that if you try to specify any other method other than a getter a compilation error will occur.</p>
+</div>
+<div class="paragraph">
+<p>An alternative way to implement immutable configuration is to define a class and use the <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation on a constructor of a <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> or <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> bean.</p>
 </div>
 <div class="paragraph">
 <p>An example of an immutable configuration class can be seen below:</p>
