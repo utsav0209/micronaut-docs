@@ -8990,13 +8990,22 @@ interface EngineConfig {
 </table>
 </div>
 <div class="paragraph">
-<p>In this case what Micronaut does is provide a compilation time produced implementation that delegates all getters to call the <code>getProperty(..)</code> method of the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> interface.</p>
+<p>In this case what Micronaut does is provide a compilation time implementation that delegates all getters to call the <code>getProperty(..)</code> method of the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> interface.</p>
 </div>
 <div class="paragraph">
-<p>This has the advantage that is the configuration is refreshed then the injected interface will automatically see the new values.</p>
+<p>This has the advantage that if the application&#8217;s configuration is <a href="#refreshable">refreshed</a> (for example by invoking the <code>/refresh</code> endpoint) then the injected interface will automatically see the new values.</p>
 </div>
-<div class="paragraph">
-<p>Note that if you try to specify any other method other than a getter a compilation error will occur.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you try to specify any other abstract method other than a getter a compilation error will occur (default methods are supported).
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>An alternative way to implement immutable configuration is to define a class and use the <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation on a constructor of a <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> or <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> bean.</p>
@@ -9175,6 +9184,18 @@ data class EngineConfig @ConfigurationInject <b class="conum">(2)</b>
 </div>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a> annotation provides a hint to Micronaut to prioritize binding values from configuration instead of injecting beans.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Using this approach if you want the configuration to be refreshable then you must add the <a href="../api/io/micronaut/runtime/context/scope/Refreshable.html">@Refreshable</a> annotation to the class as well. This allows the bean to be re-created in the case of a <a href="#refreshable">runtime configuration refresh event</a>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>There are a few exceptions to this rule. Micronaut will not perform configuration binding for a parameter if one of these conditions is met:</p>
@@ -22345,7 +22366,7 @@ You can alter the path searched for by setting <code>consul.client.config.path</
 </div>
 </div>
 <div class="paragraph">
-<p>If you know define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
+<p>If you now define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
 </div>
 </div>
 </div>
