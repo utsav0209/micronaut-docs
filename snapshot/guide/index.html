@@ -13345,6 +13345,18 @@ The <code>micronaut.server.maxRequestSize</code> setting in <code>application.ym
 </tr>
 </table>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Body arguments of types that do not require conversion will cause Micronaut to skip decoding of the request!
+</td>
+</tr>
+</table>
+</div>
 
 <h2 id="reactiveResponses"><a class="anchor" href="#reactiveResponses"></a>6.11.2 Reactive Responses</h2>
 
@@ -31866,6 +31878,12 @@ dependencyManagement {
 <ul>
 <li>
 <p>The order of the configuration files provided by <code>MICRONAUT_CONFIG_FILES</code> or <code>micronaut.config.files</code> was overriding system properties and environment variables. The files are now ordered between the environment and configuration files which means they will no longer override environment variables or system properties. In addition which file within the list had priority was non deterministic. Later files now have precedence over earlier files in the list.</p>
+</li>
+<li>
+<p>Routes that are binding to a body type that is a String, byte[], or ByteBuffer will no longer be decoded and the raw body will be bound directly to the argument. Because decoding is no longer happening, if a body is sent that is considered invalid according to the content type of the request, it will be bound to the body argument anyway. This is different than previous behavior where an exception would be thrown if the body was invalid.</p>
+</li>
+<li>
+<p>Concrete types are now preferred when creating a class hierarchy. The most common case where this will have an impact is converters. Converters that match super classes of the target type will be preferred over converters that match an interface that the target type implements.</p>
 </li>
 </ul>
 </div>
