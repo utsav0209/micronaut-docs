@@ -211,9 +211,114 @@ function addJsClass() {
 <p>Micronaut 1.3.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_data_integration"><a class="anchor" href="#_micronaut_data_integration"></a>Micronaut Data Integration</h3>
+<div class="paragraph">
+<p>Micronaut Data has been added to the <code>micronaut-bom</code> and you can now use the CLI to create Micronaut Data projects:</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting up Micronaut Data JPA</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
+$ mn create-app myapp --features data-hibernate-jpa</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Setting up Micronaut Data JDBC</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
+$ mn create-app myapp --features data-jdbc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_immutable_code_configurationproperties_code_and_code_eachproperty_code"><a class="anchor" href="#_immutable_code_configurationproperties_code_and_code_eachproperty_code"></a>Immutable <code>@ConfigurationProperties</code> and <code>@EachProperty</code></h3>
 <div class="paragraph">
 <p>Support for immutable <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> has been added by annotating the constructor of any configuration class with <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a>. See the docummentation on <a href="#immutableConfig">Immutable Configuration</a> for more information.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.bind.annotation.Bindable;
+import javax.validation.constraints.*;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+public interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer();
+
+    @Min(1L)
+    int getCylinders();
+
+    @NotNull
+    CrankShaft getCrankShaft(); <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength(); <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer()
+
+    @Min(1L)
+    int getCylinders()
+
+    @NotNull
+    CrankShaft getCrankShaft() <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    static interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength() <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+import java.util.Optional
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @get:Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @get:NotBlank <b class="conum">(3)</b>
+    val manufacturer: String
+
+    @get:Min(1L)
+    val cylinders: Int
+
+    @get:NotNull
+    val crankShaft: CrankShaft <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        val rodLength: Double? <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -229,6 +334,12 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>The module is also no longer regarded as experimental.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_views_1_3_update"><a class="anchor" href="#_micronaut_views_1_3_update"></a>Micronaut Views 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut Views has been updated to and now features a new <a href="https://micronaut-projects.github.io/micronaut-views/1.3.x/guide/#soy">view renderer for Soy (Closure Templates)</a>. Thanks to <a href="https://github.com/sgammon">Sam Gammon</a> for this contribution.</p>
 </div>
 </div>
 <div class="sect2">
@@ -260,11 +371,24 @@ function addJsClass() {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> annotation now has support for disabling beans based on the current operating system.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(os=Family.LINUX)</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_basic_auth_binding_support"><a class="anchor" href="#_basic_auth_binding_support"></a>Basic Auth binding support</h3>
 <div class="paragraph">
 <p>In the client and server, an argument of type <a href="../api/io/micronaut/http/BasicAuth.html">BasicAuth</a> can be used to generate or parse a basic authorization header.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post("/login")
+String login(BasicAuth basicAuth) {
+    ...
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
