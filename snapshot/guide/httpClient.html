@@ -1903,6 +1903,18 @@ interface PetOperations {
 <div class="paragraph">
 <p>Note how the interface uses Micronaut&#8217;s HTTP annotations which are usable on both the server and client side. Also, as you can see you can use <code>javax.validation</code> constraints to validate arguments.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Be aware that some annotations, such as <a href="../api/io/micronaut/http/client/annotation/Produces.html">Produces</a> and <a href="../api/io/micronaut/http/client/annotation/Consumes.html">Consumes</a>, have different semantics between server and client side usage. For example, <code>@Produces</code> on a controller method (server sude) indicates how the method&#8217;s <strong>return value</strong> is formatted, while <code>@Produces</code> on a client indicates how the method&#8217;s <strong>parameters</strong> are formatted when sent to the server. While this may seem a little confusing at first, it is actually logical considering the different semantics between a server producing/consuming vs a client: A server consumes an argument and <strong>returns</strong> a response to the client, whereas a client consumes an argument and <strong>sends</strong> output to a server.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> and <code>hibernate-validator</code> dependencies on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
