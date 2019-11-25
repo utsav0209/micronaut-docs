@@ -356,7 +356,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
@@ -371,7 +371,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
             Headline headline = new Headline()
@@ -386,7 +386,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", produces = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
         return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
             emitter -&gt;
