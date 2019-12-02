@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>14.1.2 Endpoint Methods 1.2.6</title>
+    <title>14.1.2 Endpoint Methods 1.2.7</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>14.1.2 Endpoint Methods</h1>
 
-                    <p><strong>Version:</strong> 1.2.6</p>
+                    <p><strong>Version:</strong> 1.2.7</p>
                 </div>
 
                 
@@ -245,17 +245,8 @@ class CurrentDateEndpoint {
 <p>The <a href="../api/io/micronaut/management/endpoint/Read.html">Read</a> annotation accepts an optional <code>produces</code> argument, which sets the media type returned from the method (default is <code>application/json</code>):</p>
 </div>
 <div class="listingblock">
-<div class="title">CurrentDateEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=readImport, indent=0]
-
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassBegin, indent=0]
-
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=currentDate, indent=4]
-
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=readArg, indent=4]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">snippet::io.micronaut.docs.server.endpoint.CurrentDateEndpoint[tags="endpointImport, readImport, endpointClassBegin, currentDate, readArg, endpointClassEnd", indent=0, title="CurrentDateEndpoint.groovy"]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -284,19 +275,76 @@ the_date_is: Fri May 11 19:24:21 CDT</code></pre>
 <div class="paragraph">
 <p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation will cause it to respond to <code>POST</code> requests.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">CurrentDateEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=writeImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=mediaTypeImport, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassBegin, indent=0]
+import io.micronaut.management.endpoint.annotation.Read;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=currentDate, indent=4]
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=simpleWrite, indent=4]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/CurrentDateEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
+    private Date currentDate;
+
+    @Write
+    public String reset() {
+        currentDate = new Date();
+
+        return "Current date reset";
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Read
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    Date currentDate
+
+    @Write
+    String reset() {
+        currentDate = new Date()
+
+        return "Current date reset"
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Read
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    private var currentDate: Date? = null
+
+    @Write
+    fun reset(): String {
+        currentDate = Date()
+
+        return "Current date reset"
+    }
+
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -312,19 +360,76 @@ Current date reset</code></pre>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation accepts an optional <code>consumes</code> argument, which sets the media type accepted by the method (default is <code>application/json</code>):</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=writeImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=mediaTypeImport, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassBegin, indent=0]
+import io.micronaut.management.endpoint.annotation.Write;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=message, indent=4]
+import io.micronaut.http.MediaType;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=writeArg, indent=4]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
+@Endpoint(id = "message", defaultSensitive = false)
+public class MessageEndpoint {
+
+    String message;
+
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
+    public String updateMessage(String newMessage) {
+        this.message = newMessage;
+
+        return "Message updated";
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MessageEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Write
+
+import io.micronaut.http.MediaType
+
+@Endpoint(id = "message", defaultSensitive = false)
+class MessageEndpoint {
+
+    String message
+
+    @Write(consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
+    String updateMessage(String newMessage) {  <b class="conum">(1)</b>
+        message = newMessage
+
+        return "Message updated"
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MessageEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Write
+
+import io.micronaut.http.MediaType
+
+@Endpoint(id = "message", defaultSensitive = false)
+class MessageEndpoint {
+
+    internal var message: String? = null
+
+    @Write(consumes = [MediaType.APPLICATION_FORM_URLENCODED], produces = [MediaType.TEXT_PLAIN])
+    fun updateMessage(newMessage: String): String {  <b class="conum">(1)</b>
+        this.message = newMessage
+
+        return "Message updated"
+    }
+
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -345,18 +450,70 @@ Message updated</code></pre>
 <div class="paragraph">
 <p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a> annotation will cause it to respond to <code>DELETE</code> requests.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint.groovy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointImport, indent=0]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=deleteImport, indent=0]
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassBegin, indent=0]
+import io.micronaut.management.endpoint.annotation.Delete;
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=message, indent=4]
+@Endpoint(id = "message", defaultSensitive = false)
+public class MessageEndpoint {
 
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=simpleDelete, indent=4]
-Unresolved directive in &lt;stdin&gt; - include::test-suite/src/test/groovy/io/micronaut/docs/server/endpoints/MessageEndpoint.groovy[tags=endpointClassEnd, indent=0]</code></pre>
+    String message;
+
+    @Delete
+    public String deleteMessage() {
+        this.message = null;
+
+        return "Message deleted";
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MessageEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Delete
+
+@Endpoint(id = "message", defaultSensitive = false)
+class MessageEndpoint {
+
+    String message
+
+    @Delete
+    String deleteMessage() {
+        message = null
+
+        return "Message deleted"
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">MessageEndpoint.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Delete
+
+@Endpoint(id = "message", defaultSensitive = false)
+class MessageEndpoint {
+
+    internal var message: String? = null
+
+    @Delete
+    fun deleteMessage(): String {
+        this.message = null
+
+        return "Message deleted"
+    }
+
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">

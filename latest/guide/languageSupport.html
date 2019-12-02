@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13 Language Support 1.2.6</title>
+    <title>13 Language Support 1.2.7</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13 Language Support</h1>
 
-                    <p><strong>Version:</strong> 1.2.6</p>
+                    <p><strong>Version:</strong> 1.2.7</p>
                 </div>
 
                 
@@ -1063,10 +1063,10 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 19.0.0 with SDKman</div>
+<div class="title">Installing GraalVM 19.2.1 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.0.0-grl
-$ sdk use java 19.0.0-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.2.1-grl
+$ sdk use java 19.2.1-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1082,14 +1082,14 @@ $ sdk use java 19.0.0-grl</code></pre>
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image --no-server -cp build/libs/hello-world-0.1.jar</code></pre>
+$ native-image --no-server -cp build/libs/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Maven</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package
-$ native-image --no-server -cp target/hello-world-0.1.jar</code></pre>
+$ native-image --no-server -cp target/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 </div>
@@ -1199,8 +1199,7 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server \ <i class="conum" data-value="1"></i><b>(1)</b>
-             --class-path build/libs/hello-world-0.1-all.jar \ <i class="conum" data-value="2"></i><b>(2)</b>
-             -H:ReflectionConfigurationFiles=reflect.json  <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+             --class-path build/libs/hello-world-0.1-all.jar <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1212,10 +1211,6 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>class-path</code> argument is used to refer to the Micronaut shaded JAR</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>-H:ReflectionConfigurationFiles</code> option points GraalVM to any additional <code>reflect.json</code> files needed to run the application. Multiple comma-separated files can be specified.</td>
 </tr>
 </table>
 </div>
