@@ -834,25 +834,10 @@ eureka:
 
 
 <div class="paragraph">
-<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery. The <a href="https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables">strategy for Service Discovery in Kubernetes</a> is pretty simple in that for each Pod, Kubernetes will expose environment variables in the format <code>[SERVICE_NAME]_SERVICE_HOST</code> and <code>[SERVICE_NAME]_SERVICE_PORT</code>.</p>
+<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery and Distributed Configuration.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut features a <a href="../api/io/micronaut/discovery/kubernetes/KubernetesDiscoveryClient.html">KubernetesDiscoveryClient</a> that simply looks at the environment variables and translates those into the available services.</p>
-</div>
-<div class="paragraph">
-<p>For example given a service exposed as <code>HELLO_WORLD_SERVICE_HOST</code> to your application, you can declare clients that will be automatically discovered using:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using @Client to Discover Services</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client(id = "hello-world")
-interface HelloClient{
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Since Kubernetes itself assumes responsibility for tasks such as health checks, load balancing and so on there is no need to send <a href="../api/io/micronaut/health/HeartbeatEvent.html">HeartbeatEvent</a> instances and so on.</p>
+<p>Micronaut have a first-class integration with Kubernetes. Check the <a href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html">Micronaut Kubernetes documentation</a> for more details.</p>
 </div>
 
 <h2 id="serviceDiscoveryRoute53"><a class="anchor" href="#serviceDiscoveryRoute53"></a>8.2.4 AWS Route 53 Support</h2>
