@@ -2527,8 +2527,8 @@ The <code>micronaut.server.maxRequestSize</code> setting in <code>application.ym
 <div class="title">Using RxJava 2 to Read the request body</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Post(value = "/echo-flow", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
-    fun echoFlow(@Body text: Flowable&lt;String&gt;): Single&lt;MutableHttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
-        return text.collect&lt;StringBuffer&gt;({ StringBuffer() }, { obj, str -&gt; obj.append(str) }) <b class="conum">(3)</b>
+    open fun echoFlow(@Body text: Flowable&lt;String&gt;): Single&lt;MutableHttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
+        return text.collect({ StringBuffer() }, { obj, str -&gt; obj.append(str) }) <b class="conum">(3)</b>
                 .map { buffer -&gt; HttpResponse.ok(buffer.toString()) }
     }</code></pre>
 </div>

@@ -183,7 +183,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colFirst"><code><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/AnnotationUtils.html#getAnnotationMetadata-javax.lang.model.element.Element-javax.lang.model.element.Element-">getAnnotationMetadata</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;parent,
                      <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;element)</code>
-<div class="block">Get the annotation metadata for the given element.</div>
+<div class="block">Get the annotation metadata for the given element and the given parent.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -437,7 +437,10 @@ public&nbsp;<a href="../../../../io/micronaut/inject/annotation/AnnotatedElement
 <h4>getAnnotationMetadata</h4>
 <pre>public&nbsp;<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;getAnnotationMetadata(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;parent,
                                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;element)</pre>
-<div class="block">Get the annotation metadata for the given element.</div>
+<div class="block">Get the annotation metadata for the given element and the given parent.
+ This method is used for cases when you need to combine annotation metadata for
+ two elements, for example a JavaBean property where the field and the method metadata
+ need to be combined.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>parent</code> - The parent</dd>

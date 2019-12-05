@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":9,"i5":9,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,6 +215,16 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassFileWriter.
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataWriter.html#instantiateNewMetadataHierarchy-org.objectweb.asm.Type-org.objectweb.asm.ClassWriter-org.objectweb.asm.commons.GeneratorAdapter-io.micronaut.inject.annotation.AnnotationMetadataHierarchy-java.util.Map-">instantiateNewMetadataHierarchy</a></span>(org.objectweb.asm.Type&nbsp;owningType,
+                               org.objectweb.asm.ClassWriter&nbsp;classWriter,
+                               org.objectweb.asm.commons.GeneratorAdapter&nbsp;generatorAdapter,
+                               <a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataHierarchy.html" title="class in io.micronaut.inject.annotation">AnnotationMetadataHierarchy</a>&nbsp;hierarchy,
+                               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,org.objectweb.asm.commons.GeneratorAdapter&gt;&nbsp;loadTypeMethods)</code>
+<div class="block">Writes out the byte code necessary to instantiate the given <a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataHierarchy.html" title="class in io.micronaut.inject.annotation"><code>AnnotationMetadataHierarchy</code></a>.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataWriter.html#writeAnnotationDefaults-io.micronaut.inject.annotation.DefaultAnnotationMetadata-org.objectweb.asm.ClassWriter-org.objectweb.asm.Type-java.util.Map-">writeAnnotationDefaults</a></span>(<a href="../../../../io/micronaut/inject/annotation/DefaultAnnotationMetadata.html" title="class in io.micronaut.inject.annotation">DefaultAnnotationMetadata</a>&nbsp;annotationMetadata,
                        org.objectweb.asm.ClassWriter&nbsp;classWriter,
                        org.objectweb.asm.Type&nbsp;owningType,
@@ -222,7 +232,17 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassFileWriter.
 <div class="block">Writes out the byte code necessary to instantiate the given <a href="../../../../io/micronaut/inject/annotation/DefaultAnnotationMetadata.html" title="class in io.micronaut.inject.annotation"><code>DefaultAnnotationMetadata</code></a>.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataWriter.html#writeAnnotationDefaults-org.objectweb.asm.Type-org.objectweb.asm.ClassWriter-org.objectweb.asm.commons.GeneratorAdapter-io.micronaut.inject.annotation.DefaultAnnotationMetadata-java.util.Map-">writeAnnotationDefaults</a></span>(org.objectweb.asm.Type&nbsp;owningType,
+                       org.objectweb.asm.ClassWriter&nbsp;classWriter,
+                       org.objectweb.asm.commons.GeneratorAdapter&nbsp;staticInit,
+                       <a href="../../../../io/micronaut/inject/annotation/DefaultAnnotationMetadata.html" title="class in io.micronaut.inject.annotation">DefaultAnnotationMetadata</a>&nbsp;annotationMetadata,
+                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,org.objectweb.asm.commons.GeneratorAdapter&gt;&nbsp;loadTypeMethods)</code>
+<div class="block">Write annotation defaults into the given static init block.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataWriter.html#writeTo-java.io.OutputStream-">writeTo</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;outputStream)</code>
 <div class="block">Write the class to the output stream, such a JavaFileObject created from a java annotation processor Filer object.</div>
@@ -368,10 +388,33 @@ public static&nbsp;void&nbsp;instantiateNewMetadata(org.objectweb.asm.Type&nbsp;
 </dl>
 </li>
 </ul>
+<a name="instantiateNewMetadataHierarchy-org.objectweb.asm.Type-org.objectweb.asm.ClassWriter-org.objectweb.asm.commons.GeneratorAdapter-io.micronaut.inject.annotation.AnnotationMetadataHierarchy-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>instantiateNewMetadataHierarchy</h4>
+<pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
+public static&nbsp;void&nbsp;instantiateNewMetadataHierarchy(org.objectweb.asm.Type&nbsp;owningType,
+                                                             org.objectweb.asm.ClassWriter&nbsp;classWriter,
+                                                             org.objectweb.asm.commons.GeneratorAdapter&nbsp;generatorAdapter,
+                                                             <a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataHierarchy.html" title="class in io.micronaut.inject.annotation">AnnotationMetadataHierarchy</a>&nbsp;hierarchy,
+                                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,org.objectweb.asm.commons.GeneratorAdapter&gt;&nbsp;loadTypeMethods)</pre>
+<div class="block">Writes out the byte code necessary to instantiate the given <a href="../../../../io/micronaut/inject/annotation/AnnotationMetadataHierarchy.html" title="class in io.micronaut.inject.annotation"><code>AnnotationMetadataHierarchy</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>owningType</code> - The owning type</dd>
+<dd><code>classWriter</code> - The declaring class writer</dd>
+<dd><code>generatorAdapter</code> - The generator adapter</dd>
+<dd><code>hierarchy</code> - The annotation metadata</dd>
+<dd><code>loadTypeMethods</code> - The generated load type methods</dd>
+</dl>
+</li>
+</ul>
 <a name="writeAnnotationDefaults-io.micronaut.inject.annotation.DefaultAnnotationMetadata-org.objectweb.asm.ClassWriter-org.objectweb.asm.Type-java.util.Map-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>writeAnnotationDefaults</h4>
 <pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
@@ -386,6 +429,29 @@ public static&nbsp;void&nbsp;writeAnnotationDefaults(<a href="../../../../io/mic
 <dd><code>classWriter</code> - The class writer</dd>
 <dd><code>owningType</code> - The owning type</dd>
 <dd><code>loadTypeMethods</code> - The generated load type methods</dd>
+</dl>
+</li>
+</ul>
+<a name="writeAnnotationDefaults-org.objectweb.asm.Type-org.objectweb.asm.ClassWriter-org.objectweb.asm.commons.GeneratorAdapter-io.micronaut.inject.annotation.DefaultAnnotationMetadata-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>writeAnnotationDefaults</h4>
+<pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
+public static&nbsp;void&nbsp;writeAnnotationDefaults(org.objectweb.asm.Type&nbsp;owningType,
+                                                     org.objectweb.asm.ClassWriter&nbsp;classWriter,
+                                                     org.objectweb.asm.commons.GeneratorAdapter&nbsp;staticInit,
+                                                     <a href="../../../../io/micronaut/inject/annotation/DefaultAnnotationMetadata.html" title="class in io.micronaut.inject.annotation">DefaultAnnotationMetadata</a>&nbsp;annotationMetadata,
+                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,org.objectweb.asm.commons.GeneratorAdapter&gt;&nbsp;loadTypeMethods)</pre>
+<div class="block">Write annotation defaults into the given static init block.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>owningType</code> - The owning type</dd>
+<dd><code>classWriter</code> - The class writer</dd>
+<dd><code>staticInit</code> - The staitc init</dd>
+<dd><code>annotationMetadata</code> - The annotation metadata</dd>
+<dd><code>loadTypeMethods</code> - The load type methods</dd>
 </dl>
 </li>
 </ul>
