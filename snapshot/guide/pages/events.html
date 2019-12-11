@@ -311,6 +311,18 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/event/BeanCreatedEventListener.html">BeanCreatedEventListener</a> interface is more typically used to decorate or enhance a fully initialized bean by creating a proxy for example.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Bean event listeners are initialized <strong>before</strong> type converters. If your event listener relies on type conversion either by relying on a configuration properties bean or by any other mechanism, you may see errors related to type conversion.
+</td>
+</tr>
+</table>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
