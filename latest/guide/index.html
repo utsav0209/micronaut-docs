@@ -521,7 +521,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.2.7</p>
+        <p><strong>Version:</strong> 1.2.8</p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -606,7 +606,13 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.2.7 includes the following changes:</p>
+<p>Micronaut 1.2.8 includes the following changes:</p>
+</div>
+<div class="sect2">
+<h3 id="_support_for_graalvm_19_3_0"><a class="anchor" href="#_support_for_graalvm_19_3_0"></a>Support for GraalVM 19.3.0</h3>
+<div class="paragraph">
+<p>Micronaut now supports creating native-images using GraalVM 19.3.0 for both JDK 8 and JDK 11.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_native_bean_validation_support"><a class="anchor" href="#_native_bean_validation_support"></a>Native Bean Validation Support</h3>
@@ -863,7 +869,7 @@
 <p>Micronaut Test <code>1.0.4</code> &#8594; <code>1.1.0</code></p>
 </li>
 <li>
-<p>Netty <code>4.1.30.Final</code> &#8594; <code>4.1.38.Final</code></p>
+<p>Netty <code>4.1.30.Final</code> &#8594; <code>4.1.43.Final</code></p>
 </li>
 <li>
 <p>Neo4j Driver <code>1.7.2</code> &#8594; <code>1.7.5</code></p>
@@ -964,7 +970,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.2.7</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.2.8</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1756,10 +1762,10 @@ class HelloClientSpec {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.7" // <2>
-    compile "io.micronaut:micronaut-inject:1.2.7"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.8" // <2>
+    compile "io.micronaut:micronaut-inject:1.2.8"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.7" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.8" // <3>
     ...
 }</code></pre>
 </div>
@@ -4808,6 +4814,18 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/context/event/BeanCreatedEventListener.html">BeanCreatedEventListener</a> interface is more typically used to decorate or enhance a fully initialized bean by creating a proxy for example.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Bean event listeners are initialized <strong>before</strong> type converters. If your event listener relies on type conversion either by relying on a configuration properties bean or by any other mechanism, you may see errors related to type conversion.
+</td>
+</tr>
+</table>
+</div>
 
 <h2 id="introspection"><a class="anchor" href="#introspection"></a>3.14 Bean Introspection</h2>
 
@@ -4832,7 +4850,7 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.7'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.8'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4841,7 +4859,7 @@ class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.2.7&lt;/version&gt;
+        &lt;version&gt;1.2.8&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -4863,7 +4881,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.7'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.8'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4871,7 +4889,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.2.7&lt;/version&gt;
+    &lt;version&gt;1.2.8&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -6340,8 +6358,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.7"
-    compileOnly "io.micronaut:micronaut-inject-java:1.2.7"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.8"
+    compileOnly "io.micronaut:micronaut-inject-java:1.2.8"
     ...
 }</code></pre>
 </div>
@@ -7712,7 +7730,7 @@ List&lt;URL&gt; urls;</code></pre>
 <p>With the above in place you can set <code>micronaut.http.client.max-content-length</code> using the following values:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. @ReadabyeBytes Conversion</caption>
+<caption class="title">Table 2. @ReadableBytes Conversion</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26704,6 +26722,18 @@ Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java 
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app hello-world --features graal-native-image</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Kotlin use <code>graal-native-image-kotlin</code> feature.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The <code>graal-native-image</code> feature adds three important items:</p>
 </div>
@@ -26787,10 +26817,10 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 19.2.1 with SDKman</div>
+<div class="title">Installing GraalVM 19.3.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.2.1-grl
-$ sdk use java 19.2.1-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 19.3.0.r8-grl # or 19.3.0.r11-grl if you want to use JDK 11
+$ sdk use java 19.3.0.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
