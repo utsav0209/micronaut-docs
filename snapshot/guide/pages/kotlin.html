@@ -130,6 +130,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#kotlinretainparamnames"><strong>13.3</strong><span>Kotlin and Retaining Parameter Names</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#coroutines"><strong>13.4</strong><span>Coroutines Support</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -359,6 +362,98 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 	}
 }</code></pre>
 </div>
+</div>
+
+<h2 id="coroutines"><a class="anchor" href="#coroutines"></a>13.3.4 Coroutines Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/kotlin/coroutines.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Kotlin coroutines allow you to create asynchronous applications with imperative style code. A Micronaut&#8217;s controller
+action can be a <code>suspend</code> function:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Controller suspend function example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/simple")
+    suspend fun simple(): String { <b class="conum">(1)</b>
+        return "Hello"
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The function is marked as <code>suspend</code>, though in reality it won&#8217;t be suspended.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Controller suspend function example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/delayed")
+    suspend fun delayed(): String { <b class="conum">(1)</b>
+        delay(1) <b class="conum">(2)</b>
+        return "Delayed"
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The function is marked as <code>suspend</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>delay</code> is called to make sure that a function is suspended and the response is returned from a different thread.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Controller suspend function example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED) <b class="conum">(1)</b>
+    @Get("/status")
+    suspend fun status(): Unit {
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>suspend</code> function also works when all we want is to return a status.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Controller suspend function example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED)
+    @Get("/statusDelayed")
+    suspend fun statusDelayed(): Unit {
+        delay(1)
+    }</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Due to the way Kotlin compiler generates bytecode for coroutines they are currently <a href="https://github.com/oracle/graal/issues/366">unsuppoprted</a> out-of-the-box in GraalVM. There is, however, a <a href="https://github.com/HewlettPackard/kraal">workaround</a> for this problem.
+</td>
+</tr>
+</table>
 </div>
 
 

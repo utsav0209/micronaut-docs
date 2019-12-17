@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -169,6 +169,10 @@ implements org.objectweb.asm.Opcodes</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#METHOD_IS_ABSTRACT">METHOD_IS_ABSTRACT</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected static org.objectweb.asm.commons.Method</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#METHOD_IS_SUSPEND">METHOD_IS_SUSPEND</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected org.objectweb.asm.Type</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#methodType">methodType</a></span></code>&nbsp;</td>
 </tr>
@@ -208,18 +212,20 @@ implements org.objectweb.asm.Opcodes</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-io.micronaut.core.annotation.AnnotationMetadata-">ExecutableMethodWriter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;beanFullClassName,
-                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodClassName,
-                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodProxyShortName,
-                      boolean&nbsp;isInterface,
-                      <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-io.micronaut.core.annotation.AnnotationMetadata-">ExecutableMethodWriter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;beanFullClassName,
                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodClassName,
                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodProxyShortName,
                       boolean&nbsp;isInterface,
+                      boolean&nbsp;isSuspend,
+                      <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-boolean-io.micronaut.core.annotation.AnnotationMetadata-">ExecutableMethodWriter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;beanFullClassName,
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodClassName,
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodProxyShortName,
+                      boolean&nbsp;isInterface,
                       boolean&nbsp;isAbstract,
+                      boolean&nbsp;isSuspend,
                       <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</code>&nbsp;</td>
 </tr>
 </table>
@@ -270,16 +276,20 @@ implements org.objectweb.asm.Opcodes</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#isAbstract--">isAbstract</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#isSuspend--">isSuspend</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#makeInner-java.lang.String-org.objectweb.asm.ClassWriter-">makeInner</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outerName,
          org.objectweb.asm.ClassWriter&nbsp;outerClassWriter)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#makeStaticInner-java.lang.String-org.objectweb.asm.ClassWriter-">makeStaticInner</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;parentInternalName,
                org.objectweb.asm.ClassWriter&nbsp;classWriter)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html#visitMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-">visitMethod</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;declaringType,
            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;returnType,
@@ -361,6 +371,15 @@ implements org.objectweb.asm.Opcodes</pre>
 <pre>protected static final&nbsp;org.objectweb.asm.commons.Method METHOD_IS_ABSTRACT</pre>
 </li>
 </ul>
+<a name="METHOD_IS_SUSPEND">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>METHOD_IS_SUSPEND</h4>
+<pre>protected static final&nbsp;org.objectweb.asm.commons.Method METHOD_IS_SUSPEND</pre>
+</li>
+</ul>
 <a name="METHOD_GET_TARGET">
 <!--   -->
 </a>
@@ -387,7 +406,7 @@ implements org.objectweb.asm.Opcodes</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-io.micronaut.core.annotation.AnnotationMetadata-">
+<a name="ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-io.micronaut.core.annotation.AnnotationMetadata-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -397,6 +416,7 @@ implements org.objectweb.asm.Opcodes</pre>
                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodClassName,
                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodProxyShortName,
                               boolean&nbsp;isInterface,
+                              boolean&nbsp;isSuspend,
                               <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -404,11 +424,12 @@ implements org.objectweb.asm.Opcodes</pre>
 <dd><code>methodClassName</code> - The method class name</dd>
 <dd><code>methodProxyShortName</code> - The method proxy short name</dd>
 <dd><code>isInterface</code> - Whether is an interface</dd>
+<dd><code>isSuspend</code> - Whether the method is Kotlin suspend function</dd>
 <dd><code>annotationMetadata</code> - The annotation metadata</dd>
 </dl>
 </li>
 </ul>
-<a name="ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-io.micronaut.core.annotation.AnnotationMetadata-">
+<a name="ExecutableMethodWriter-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-boolean-io.micronaut.core.annotation.AnnotationMetadata-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -419,6 +440,7 @@ implements org.objectweb.asm.Opcodes</pre>
                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodProxyShortName,
                               boolean&nbsp;isInterface,
                               boolean&nbsp;isAbstract,
+                              boolean&nbsp;isSuspend,
                               <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -427,6 +449,7 @@ implements org.objectweb.asm.Opcodes</pre>
 <dd><code>methodProxyShortName</code> - The method proxy short name</dd>
 <dd><code>isInterface</code> - Whether is an interface</dd>
 <dd><code>isAbstract</code> - Whether the method is abstract</dd>
+<dd><code>isSuspend</code> - Whether the method is Kotlin suspend function</dd>
 <dd><code>annotationMetadata</code> - The annotation metadata</dd>
 </dl>
 </li>
@@ -449,6 +472,19 @@ implements org.objectweb.asm.Opcodes</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Is the method abstract.</dd>
+</dl>
+</li>
+</ul>
+<a name="isSuspend--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSuspend</h4>
+<pre>public&nbsp;boolean&nbsp;isSuspend()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Is the method suspend.</dd>
 </dl>
 </li>
 </ul>
