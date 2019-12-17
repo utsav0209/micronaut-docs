@@ -279,7 +279,7 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="listingblock multi-language-sample">
 <div class="title">Global error handler</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">    @Error <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Error(global = true) <b class="conum">(1)</b>
     public HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
         JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <b class="conum">(2)</b>
                 .link(Link.SELF, Link.of(request.getUri()));
@@ -292,7 +292,7 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="listingblock multi-language-sample">
 <div class="title">Global error handler</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(global = true) <b class="conum">(1)</b>
     HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
         JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <b class="conum">(2)</b>
                 .link(Link.SELF, Link.of(request.getUri()))
@@ -305,7 +305,7 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="listingblock multi-language-sample">
 <div class="title">Global error handler</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error(global = true) <b class="conum">(1)</b>
     fun error(request: HttpRequest&lt;*&gt;, e: Throwable): HttpResponse&lt;JsonError&gt; {
         val error = JsonError("Bad Things Happened: " + e.message) <b class="conum">(2)</b>
                 .link(Link.SELF, Link.of(request.uri))
