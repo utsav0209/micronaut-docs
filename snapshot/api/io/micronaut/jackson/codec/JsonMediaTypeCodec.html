@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/jackson/codec/JsonStreamMediaTypeCodec.html" title="class in io.micronaut.jackson.codec"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -98,7 +98,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">io.micronaut.jackson.codec.JacksonMediaTypeCodec</a></li>
+<li>
+<ul class="inheritance">
 <li>io.micronaut.jackson.codec.JsonMediaTypeCodec</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -115,14 +120,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
+<pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true" title="class or interface in javax.inject">@Named</a>(<a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html?is-external=true#value--" title="class or interface in javax.inject">value</a>="json")
+ <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">JsonMediaTypeCodec</span>
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></pre>
+extends <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a></pre>
 <div class="block">A <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec"><code>MediaTypeCodec</code></a> for JSON and Jackson.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>1.0</dd>
+<dd>1.0.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Graeme Rocher</dd>
 </dl>
@@ -149,6 +154,13 @@ implements <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#CONFIGURATION_QUALIFIER">CONFIGURATION_QUALIFIER</a></span></code>&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.io.micronaut.jackson.codec.JacksonMediaTypeCodec">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;io.micronaut.jackson.codec.<a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a></h3>
+<code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#additionalTypes">additionalTypes</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#applicationConfiguration">applicationConfiguration</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#codecConfiguration">codecConfiguration</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#mediaType">mediaType</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#objectMapper">objectMapper</a></code></li>
+</ul>
 </li>
 </ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -183,68 +195,19 @@ implements <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" tit
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-io.micronaut.core.io.buffer.ByteBuffer-">decode</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-      <a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer">ByteBuffer</a>&lt;?&gt;&nbsp;buffer)</code>
-<div class="block">Decode the given type from the given buffer.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.io.InputStream-">decode</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;inputStream)</code>
-<div class="block">Decode the given type from the given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a>.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-com.fasterxml.jackson.databind.JsonNode-">decode</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-      com.fasterxml.jackson.databind.JsonNode&nbsp;node)</code>
-<div class="block">Decodes the given JSON node.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.lang.String-">decode</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;data)</code>
-<div class="block">Decode the given type from the given bytes.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#encode-T-">encode</a></span>(T&nbsp;object)</code>
-<div class="block">Encode the given type returning the object as a byte[].</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer">ByteBuffer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#encode-T-io.micronaut.core.io.buffer.ByteBufferFactory-">encode</a></span>(T&nbsp;object,
-      <a href="../../../../io/micronaut/core/io/buffer/ByteBufferFactory.html" title="interface in io.micronaut.core.io.buffer">ByteBufferFactory</a>&nbsp;allocator)</code>
-<div class="block">Encode the given type returning the object as a <a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer"><code>ByteBuffer</code></a>.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#encode-T-java.io.OutputStream-">encode</a></span>(T&nbsp;object,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;outputStream)</code>
-<div class="block">Encode the given type to the given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#getMediaTypes--">getMediaTypes</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>com.fasterxml.jackson.databind.ObjectMapper</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#getObjectMapper--">getObjectMapper</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#supportsType-java.lang.Class-">supportsType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</code>
-<div class="block">Whether the codec can decode the given type.</div>
+<td class="colFirst"><code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/codec/JsonMediaTypeCodec.html#cloneWithFeatures-io.micronaut.jackson.codec.JacksonFeatures-">cloneWithFeatures</a></span>(<a href="../../../../io/micronaut/jackson/codec/JacksonFeatures.html" title="class in io.micronaut.jackson.codec">JacksonFeatures</a>&nbsp;jacksonFeatures)</code>
+<div class="block">Create a new codec with the provided features.</div>
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.jackson.codec.JacksonMediaTypeCodec">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;io.micronaut.jackson.codec.<a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a></h3>
+<code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-io.micronaut.core.io.buffer.ByteBuffer-">decode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.io.InputStream-">decode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-com.fasterxml.jackson.databind.JsonNode-">decode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.lang.String-">decode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#encode-T-">encode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#encode-T-io.micronaut.core.io.buffer.ByteBufferFactory-">encode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#encode-T-java.io.OutputStream-">encode</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#getMediaTypes--">getMediaTypes</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#getObjectMapper--">getObjectMapper</a>, <a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#supportsType-java.lang.Class-">supportsType</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -320,232 +283,22 @@ implements <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" tit
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getObjectMapper--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getObjectMapper</h4>
-<pre>public&nbsp;com.fasterxml.jackson.databind.ObjectMapper&nbsp;getObjectMapper()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The object mapper</dd>
-</dl>
-</li>
-</ul>
-<a name="supportsType-java.lang.Class-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>supportsType</h4>
-<pre>public&nbsp;boolean&nbsp;supportsType(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;type)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#supportsType-java.lang.Class-">MediaTypeCodec</a></code></span></div>
-<div class="block">Whether the codec can decode the given type.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#supportsType-java.lang.Class-">supportsType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - The type</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if it can</dd>
-</dl>
-</li>
-</ul>
-<a name="getMediaTypes--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMediaTypes</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/http/MediaType.html" title="class in io.micronaut.http">MediaType</a>&gt;&nbsp;getMediaTypes()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#getMediaTypes--">getMediaTypes</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The media type of the codec</dd>
-</dl>
-</li>
-</ul>
-<a name="decode-io.micronaut.core.type.Argument-java.io.InputStream-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;decode(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;inputStream)
-             throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.io.InputStream-">MediaTypeCodec</a></code></span></div>
-<div class="block">Decode the given type from the given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.io.InputStream-">decode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The generic type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - The type</dd>
-<dd><code>inputStream</code> - The input stream</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded result</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be decoded</dd>
-</dl>
-</li>
-</ul>
-<a name="decode-io.micronaut.core.type.Argument-com.fasterxml.jackson.databind.JsonNode-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;decode(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-                    com.fasterxml.jackson.databind.JsonNode&nbsp;node)
-             throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block">Decodes the given JSON node.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The generic type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - The type</dd>
-<dd><code>node</code> - The Json Node</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded object</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When object cannot be decoded</dd>
-</dl>
-</li>
-</ul>
-<a name="decode-io.micronaut.core.type.Argument-io.micronaut.core.io.buffer.ByteBuffer-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;decode(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-                    <a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer">ByteBuffer</a>&lt;?&gt;&nbsp;buffer)
-             throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-io.micronaut.core.io.buffer.ByteBuffer-">MediaTypeCodec</a></code></span></div>
-<div class="block">Decode the given type from the given buffer. Implementations optimized to handle <a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer"><code>ByteBuffer</code></a> instances
- should override this method.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-io.micronaut.core.io.buffer.ByteBuffer-">decode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The decoded type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - The type</dd>
-<dd><code>buffer</code> - the buffer</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded result</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be decoded</dd>
-</dl>
-</li>
-</ul>
-<a name="decode-io.micronaut.core.type.Argument-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;decode(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;type,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;data)
-             throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.lang.String-">MediaTypeCodec</a></code></span></div>
-<div class="block">Decode the given type from the given bytes.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#decode-io.micronaut.core.type.Argument-java.lang.String-">decode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The decoded type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - The type</dd>
-<dd><code>data</code> - The data as a string</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded result</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be decoded</dd>
-</dl>
-</li>
-</ul>
-<a name="encode-java.lang.Object-java.io.OutputStream-">
-<!--   -->
-</a><a name="encode-T-java.io.OutputStream-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>encode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;void&nbsp;encode(T&nbsp;object,
-                       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;outputStream)
-                throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-java.io.OutputStream-">MediaTypeCodec</a></code></span></div>
-<div class="block">Encode the given type to the given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-java.io.OutputStream-">encode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The generic type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>object</code> - The object to encode</dd>
-<dd><code>outputStream</code> - The output stream</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be encoded</dd>
-</dl>
-</li>
-</ul>
-<a name="encode-java.lang.Object-">
-<!--   -->
-</a><a name="encode-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>encode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;byte[]&nbsp;encode(T&nbsp;object)
-                  throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-">MediaTypeCodec</a></code></span></div>
-<div class="block">Encode the given type returning the object as a byte[].</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-">encode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The generic type</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>object</code> - The object to encode</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded result</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be encoded</dd>
-</dl>
-</li>
-</ul>
-<a name="encode-java.lang.Object-io.micronaut.core.io.buffer.ByteBufferFactory-">
-<!--   -->
-</a><a name="encode-T-io.micronaut.core.io.buffer.ByteBufferFactory-">
+<a name="cloneWithFeatures-io.micronaut.jackson.codec.JacksonFeatures-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>encode</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer">ByteBuffer</a>&nbsp;encode(T&nbsp;object,
-                             <a href="../../../../io/micronaut/core/io/buffer/ByteBufferFactory.html" title="interface in io.micronaut.core.io.buffer">ByteBufferFactory</a>&nbsp;allocator)
-                      throws <a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-io.micronaut.core.io.buffer.ByteBufferFactory-">MediaTypeCodec</a></code></span></div>
-<div class="block">Encode the given type returning the object as a <a href="../../../../io/micronaut/core/io/buffer/ByteBuffer.html" title="interface in io.micronaut.core.io.buffer"><code>ByteBuffer</code></a>.</div>
+<h4>cloneWithFeatures</h4>
+<pre>public&nbsp;<a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a>&nbsp;cloneWithFeatures(<a href="../../../../io/micronaut/jackson/codec/JacksonFeatures.html" title="class in io.micronaut.jackson.codec">JacksonFeatures</a>&nbsp;jacksonFeatures)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#cloneWithFeatures-io.micronaut.jackson.codec.JacksonFeatures-">JacksonMediaTypeCodec</a></code></span></div>
+<div class="block">Create a new codec with the provided features.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html#encode-T-io.micronaut.core.io.buffer.ByteBufferFactory-">encode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" title="interface in io.micronaut.http.codec">MediaTypeCodec</a></code></dd>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - The generic type</dd>
+<dd><code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html#cloneWithFeatures-io.micronaut.jackson.codec.JacksonFeatures-">cloneWithFeatures</a></code>&nbsp;in class&nbsp;<code><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec">JacksonMediaTypeCodec</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>object</code> - The object to encode</dd>
-<dd><code>allocator</code> - The allocator</dd>
+<dd><code>jacksonFeatures</code> - The jackson features</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The decoded result</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/codec/CodecException.html" title="class in io.micronaut.http.codec">CodecException</a></code> - When the result cannot be encoded</dd>
+<dd>The new codec</dd>
 </dl>
 </li>
 </ul>
@@ -576,7 +329,7 @@ implements <a href="../../../../io/micronaut/http/codec/MediaTypeCodec.html" tit
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/jackson/codec/JacksonMediaTypeCodec.html" title="class in io.micronaut.jackson.codec"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/jackson/codec/JsonStreamMediaTypeCodec.html" title="class in io.micronaut.jackson.codec"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
