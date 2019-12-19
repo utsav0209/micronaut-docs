@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Aspect Oriented Programming 1.3.0.BUILD-SNAPSHOT</title>
+    <title>5 Aspect Oriented Programming 1.3.0.TEST</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Aspect Oriented Programming</h1>
 
-                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.TEST</p>
                 </div>
 
                 
@@ -1164,9 +1164,64 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.DefaultCacheConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.record-stats</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether record stats is enabled. Default value ({@value #DEFAULT_RECORD_STATS}).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value ({@value #DEFAULT_TESTMODE}).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -1693,9 +1748,54 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
             core-pool-size: 30</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.scheduling.executor.UserExecutorConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.scheduling.executor.UserExecutorConfiguration" href="#io.micronaut.scheduling.executor.UserExecutorConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html">UserExecutorConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.n-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/scheduling/executor/ExecutorType.html">ExecutorType</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the executor type. Default value (<a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.parallelism</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the parallelism for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#WORK_STEALING">WORK_STEALING</a>. Default value (Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.core-pool-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the core pool size for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.thread-factory-class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the thread factory class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.number-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED">FIXED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">

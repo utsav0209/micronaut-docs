@@ -529,7 +529,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
+        <p><strong>Version:</strong> 1.3.0.TEST</p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -614,7 +614,7 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.3.0.BUILD-SNAPSHOT includes the following changes:</p>
+<p>Micronaut 1.3.0.TEST includes the following changes:</p>
 </div>
 <div class="sect2">
 <h3 id="_support_for_graalvm_19_3_0"><a class="anchor" href="#_support_for_graalvm_19_3_0"></a>Support for GraalVM 19.3.0</h3>
@@ -983,7 +983,7 @@ String login(BasicAuth basicAuth) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.0.BUILD-SNAPSHOT</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.0.TEST</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1824,10 +1824,10 @@ class HelloClientSpec {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:micronaut-inject:1.3.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.TEST" // <2>
+    compile "io.micronaut:micronaut-inject:1.3.0.TEST"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.BUILD-SNAPSHOT" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.TEST" // <3>
     ...
 }</code></pre>
 </div>
@@ -4920,7 +4920,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.0.BUILD-SNAPSHOT'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.0.TEST'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4929,7 +4929,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.3.0.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;1.3.0.TEST&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -4951,7 +4951,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.0.BUILD-SNAPSHOT'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.0.TEST'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4959,7 +4959,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.3.0.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;1.3.0.TEST&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -6660,8 +6660,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:1.3.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0.TEST"
+    compileOnly "io.micronaut:micronaut-inject-java:1.3.0.TEST"
     ...
 }</code></pre>
 </div>
@@ -10537,9 +10537,64 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.DefaultCacheConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.record-stats</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether record stats is enabled. Default value ({@value #DEFAULT_RECORD_STATS}).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value ({@value #DEFAULT_TESTMODE}).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -11066,9 +11121,54 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
             core-pool-size: 30</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.scheduling.executor.UserExecutorConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.scheduling.executor.UserExecutorConfiguration" href="#io.micronaut.scheduling.executor.UserExecutorConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html">UserExecutorConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.n-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/scheduling/executor/ExecutorType.html">ExecutorType</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the executor type. Default value (<a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.parallelism</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the parallelism for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#WORK_STEALING">WORK_STEALING</a>. Default value (Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.core-pool-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the core pool size for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#SCHEDULED">SCHEDULED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.thread-factory-class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the thread factory class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.executors.*.number-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for <a href="../api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED">FIXED</a>. Default value (2 * Number of processors available to the Java virtual machine).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -12682,9 +12782,44 @@ bind the method arguments from the body.</p>
 <div class="paragraph">
 <p>The behavior of which headers to pull the relevant data can be changed with the following configuration:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration" href="#io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/HttpServerConfiguration.HostResolutionConfiguration.html">HttpServerConfiguration$HostResolutionConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.host-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.protocol-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the protocol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-in-host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True if the host header supports a port</p></td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="clientIpAddress"><a class="anchor" href="#clientIpAddress"></a>6.6 Client IP Address</h2>
 
@@ -14408,9 +14543,39 @@ Bean injection is supported in custom constraints with the hibernate validator c
 <div class="paragraph">
 <p>See the information below for available configuration options:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.web.router.resource.StaticResourceConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.web.router.resource.StaticResourceConfiguration" href="#io.micronaut.web.router.resource.StaticResourceConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/web/router/resource/StaticResourceConfiguration.html">StaticResourceConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether this specific mapping is enabled. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.paths</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of paths either starting with <code>classpath:</code> or <code>file:</code>. You can serve files from anywhere on disk or the classpath. For example to serve static resources from <code>src/main/resources/public</code>, you would use <code>classpath:public</code> as the path.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.mapping</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path resources should be served from. Uses ant path matching. Default value ("/**").</p></td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="errorHandling"><a class="anchor" href="#errorHandling"></a>6.15 Error Handling</h2>
 
@@ -15115,9 +15280,34 @@ interface HelloClient {
 <div class="paragraph">
 <p>The default behaviour for how the version is sent for each call can be configured with <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a>:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration" href="#io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request header names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.parameters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request query parameter names.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>For example to use <code>Accept-Version</code> as the header name:</p>
 </div>
@@ -16335,12 +16525,52 @@ To use a custom data source to send data through an input stream, construct a <a
 <div class="paragraph">
 <p>By default file responses will include caching headers. The following options determine how the <code>Cache-Control</code> header is built.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration.adoc[]</p>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration" href="#io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.html">FileTypeHandlerConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-seconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache Seconds. Default value (60).</p></td>
+</tr>
+</tbody>
+</table>
+<a id="io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration" href="#io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html">FileTypeHandlerConfiguration$CacheControlConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-control.public</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the cache control is public. Default value (false)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -18158,9 +18388,84 @@ public class MyBean {
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration" href="#io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html">NettyHttpServerConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.child-options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the Netty child worker options.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the channel options.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-initial-line-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum initial line length for the HTTP request. Default value (4096).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-header-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum size of any one header. Default value (8192).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-chunk-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum size of any single request chunk. Default value (8192).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.chunked-supported</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether chunked transfer encoding is supported. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.validate-headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to validate incoming headers. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.initial-buffer-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the initial buffer size. Default value (128).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.log-level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.netty.handler.logging.LogLevel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the Netty log level.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-threshold</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the minimum size of a request body must be in order to be compressed. Default value (1024).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the compression level (0-9). Default value (6).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.use-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to use netty&#8217;s native transport (epoll or kqueue) if available . Default value (false).</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The <code>use-native-transport</code> option also requires the relevant netty dependency to take effect. The native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
 </div>
@@ -22421,14 +22726,150 @@ vault:
             enabled: true</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.vault.config.VaultClientConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.discovery.vault.config.VaultClientConfiguration" href="#io.micronaut.discovery.vault.config.VaultClientConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/vault/config/VaultClientConfiguration.html">VaultClientConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the Vault Server Uri. Default value ("http://locahost:8200").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the Vault authentication token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.kv-version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/vault/config/VaultClientConfiguration.VaultKvVersion.html">VaultClientConfiguration$VaultKvVersion</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the version of the Vault Secret engine. V1 or V2. Default value (V2).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.secret-engine-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the name of the Vault Secret engine name. Default value ("secret").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.fail-fast</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set to true an exception will be thrown if configuration is not found
+ for the application or any of its environments. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.ssl-configuration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/ssl/SslConfiguration.html">SslConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.exception-on-error-status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.logger-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.follow-redirects</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.default-charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.channel-options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.shutdown-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.read-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.read-idle-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.connect-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.connect-ttl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.num-of-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.thread-factory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Class</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.max-content-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.Proxy$Type</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.SocketAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.proxy-selector</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.net.ProxySelector</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Micronaut will use the configured <code>micronaut.application.name</code> to lookup property sources for the application from Vault.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Resolution Precedence</caption>
+<caption class="title">Table 2. Configuration Resolution Precedence</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -22534,9 +22975,40 @@ compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</c
         enabled: true</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration" href="#io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/aws/parameterstore/AWSParameterStoreConfiguration.html">AWSParameterStoreConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.use-secure-parameters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use auto-decryption via MKS for SecureString parameters. Default value ({@value DEFAULT_SECURE}).
+ If set to false, you will not get unencrypted values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.root-hierarchy-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The the root hierarchy on the parameter store. Default value ("/" + PREFIX + "/").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable or disable distributed configuration with AWS Parameter Store. Default value (false).</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>You can configure shared properties by going into the AWS Console &#8594; System Manager &#8594; Parameter Store</p>
 </div>
@@ -22547,7 +23019,7 @@ compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</c
 <p>You can make environment specific configurations as well by including the environment name after an underscore <code>_</code>. For example if your <code>micronaut.application.name</code> setting is set to <code>helloworld</code> then providing configuration values under <code>helloworld_test</code> will be applied only to the <code>test</code> environment.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Resolution Precedence</caption>
+<caption class="title">Table 2. Configuration Resolution Precedence</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -23058,9 +23530,179 @@ eureka:
          port: 9090                 # optional, exposed eureka instance port, useful in docker bridged network environments</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration" href="#io.micronaut.discovery.eureka.EurekaConfiguration$EurekaRegistrationConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/eureka/EurekaConfiguration.EurekaRegistrationConfiguration.html">EurekaConfiguration$EurekaRegistrationConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.instance-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.asg-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.home-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/LeaseInfo.html">LeaseInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.country-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status-page-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-health-check-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.data-center-info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/DataCenterInfo.html">DataCenterInfo</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/eureka/client/v2/InstanceInfo.Status.html">InstanceInfo$Status</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.app-group-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.ip-addr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.secure-vip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.registration-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.eviction-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.service-up-timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.duration-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.lease-info.renewal-interval-in-secs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.prefer-ip-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.fail-fast</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.deregister</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.retry-delay</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>eureka.client.registration.health-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6 The HTTP Server 1.3.0.BUILD-SNAPSHOT</title>
+    <title>6 The HTTP Server 1.3.0.TEST</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6 The HTTP Server</h1>
 
-                    <p><strong>Version:</strong> 1.3.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.0.TEST</p>
                 </div>
 
                 
@@ -1755,9 +1755,44 @@ bind the method arguments from the body.</p>
 <div class="paragraph">
 <p>The behavior of which headers to pull the relevant data can be changed with the following configuration:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration" href="#io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/HttpServerConfiguration.HostResolutionConfiguration.html">HttpServerConfiguration$HostResolutionConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.host-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.protocol-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the protocol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-in-host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True if the host header supports a port</p></td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="clientIpAddress"><a class="anchor" href="#clientIpAddress"></a>6.6 Client IP Address</h2>
 
@@ -3481,9 +3516,39 @@ Bean injection is supported in custom constraints with the hibernate validator c
 <div class="paragraph">
 <p>See the information below for available configuration options:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.web.router.resource.StaticResourceConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.web.router.resource.StaticResourceConfiguration" href="#io.micronaut.web.router.resource.StaticResourceConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/web/router/resource/StaticResourceConfiguration.html">StaticResourceConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether this specific mapping is enabled. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.paths</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of paths either starting with <code>classpath:</code> or <code>file:</code>. You can serve files from anywhere on disk or the classpath. For example to serve static resources from <code>src/main/resources/public</code>, you would use <code>classpath:public</code> as the path.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.router.static-resources.*.mapping</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path resources should be served from. Uses ant path matching. Default value ("/**").</p></td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="errorHandling"><a class="anchor" href="#errorHandling"></a>6.15 Error Handling</h2>
 
@@ -4188,9 +4253,34 @@ interface HelloClient {
 <div class="paragraph">
 <p>The default behaviour for how the version is sent for each call can be configured with <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a>:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration" href="#io.micronaut.http.client.interceptor.configuration.DefaultClientVersioningConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html">DefaultClientVersioningConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request header names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.http.client.versioning.default.parameters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of request query parameter names.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>For example to use <code>Accept-Version</code> as the header name:</p>
 </div>
@@ -5408,12 +5498,52 @@ To use a custom data source to send data through an input stream, construct a <a
 <div class="paragraph">
 <p>By default file responses will include caching headers. The following options determine how the <code>Cache-Control</code> header is built.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration.adoc[]</p>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration" href="#io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.html">FileTypeHandlerConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-seconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache Seconds. Default value (60).</p></td>
+</tr>
+</tbody>
+</table>
+<a id="io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration" href="#io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html">FileTypeHandlerConfiguration$CacheControlConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-control.public</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the cache control is public. Default value (false)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -7231,9 +7361,84 @@ public class MyBean {
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration" href="#io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html">NettyHttpServerConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.child-options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the Netty child worker options.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the channel options.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-initial-line-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum initial line length for the HTTP request. Default value (4096).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-header-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum size of any one header. Default value (8192).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.max-chunk-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum size of any single request chunk. Default value (8192).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.chunked-supported</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether chunked transfer encoding is supported. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.validate-headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to validate incoming headers. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.initial-buffer-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the initial buffer size. Default value (128).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.log-level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.netty.handler.logging.LogLevel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the Netty log level.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-threshold</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the minimum size of a request body must be in order to be compressed. Default value (1024).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.compression-level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the compression level (0-9). Default value (6).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.use-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to use netty&#8217;s native transport (epoll or kqueue) if available . Default value (false).</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The <code>use-native-transport</code> option also requires the relevant netty dependency to take effect. The native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
 </div>
