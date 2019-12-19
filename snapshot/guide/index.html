@@ -623,6 +623,12 @@
 </div>
 </div>
 <div class="sect2">
+<h3 id="_startup_and_memory_usage_optimizations"><a class="anchor" href="#_startup_and_memory_usage_optimizations"></a>Startup and Memory Usage Optimizations</h3>
+<div class="paragraph">
+<p>Startup performance and memory usage (20%) have been improved.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_data_integration"><a class="anchor" href="#_micronaut_data_integration"></a>Micronaut Data Integration</h3>
 <div class="paragraph">
 <p>Micronaut Data has been added to the <code>micronaut-bom</code> and you can now use the CLI to create Micronaut Data projects:</p>
@@ -640,6 +646,15 @@ $ mn create-app myapp --features data-hibernate-jpa</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
 $ mn create-app myapp --features data-jdbc</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initial_support_for_kotlin_coroutines_and_flow"><a class="anchor" href="#_initial_support_for_kotlin_coroutines_and_flow"></a>Initial Support for Kotlin Coroutines and Flow</h3>
+<div class="paragraph">
+<p>Initial support for Kotlin Coroutines and the <code>Flow</code> type has been added when used as the return type of controller methods.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to <a href="https://github.com/konrad-kaminski">Konrad Kamiński</a> for this contribution.</p>
 </div>
 </div>
 <div class="sect2">
@@ -737,6 +752,15 @@ interface EngineConfig {
 <h3 id="_new_micronaut_cache_modules"><a class="anchor" href="#_new_micronaut_cache_modules"></a>New Micronaut Cache Modules</h3>
 <div class="paragraph">
 <p><a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#introduction">Micronaut Cache</a> has been updated to support <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#hazelcast">Hazelcast</a> and <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#ehcache">Ehcache</a> as additional Cache providers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_micronaut_jackson_xml_module"><a class="anchor" href="#_new_micronaut_jackson_xml_module"></a>New Micronaut Jackson XML Module</h3>
+<div class="paragraph">
+<p>Support for parsing and serializing to XML has been added with a new <a href="https://github.com/micronaut-projects/micronaut-jackson-xml">Jackson XML module</a>.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to <a href="https://github.com/svishnyakoff">Sergey</a> for this contribution.</p>
 </div>
 </div>
 <div class="sect2">
@@ -27280,6 +27304,81 @@ action can be a <code>suspend</code> function:</p>
     }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You can also use <code>Flow</code> type for streaming server and client. A streaming controller can return <code>Flow</code>, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server with Flow</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlinesWithFlow", processes = [MediaType.APPLICATION_JSON_STREAM])
+    internal fun streamHeadlinesWithFlow(): Flow&lt;Headline&gt; = <b class="conum">(1)</b>
+        flow { <b class="conum">(2)</b>
+            repeat(100) { <b class="conum">(3)</b>
+                with (Headline()) {
+                    text = "Latest Headline at " + ZonedDateTime.now()
+                    emit(this) <b class="conum">(4)</b>
+                    delay(1_000) <b class="conum">(5)</b>
+                }
+            }
+        }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A method <code>streamHeadlinesWithFlow</code> is defined that produces <code>application/x-json-stream</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>Flow</code> is created using <code>flow</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This <code>Flow</code> will emit 100 messages</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Emitting will happend with <code>emit</code> <code>suspend</code> function</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>There will be a 1 second <em>delay</em> between messages</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A streaming client can simply return a <code>Flow</code>, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming client with Flow</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import kotlinx.coroutines.flow.Flow
+
+
+@Client("/streaming")
+interface HeadlineFlowClient {
+
+    @Get(value = "/headlinesWithFlow", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    fun streamFlow(): Flow&lt;Headline&gt; <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@Get</code> method is defined as processing responses of type <code>APPLICATION_JSON_STREAM</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>Flow</code> is used as the return type</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -27287,7 +27386,7 @@ action can be a <code>suspend</code> function:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Due to the way Kotlin compiler generates bytecode for coroutines they are currently <a href="https://github.com/oracle/graal/issues/366">unsuppoprted</a> out-of-the-box in GraalVM. There is, however, a <a href="https://github.com/HewlettPackard/kraal">workaround</a> for this problem.
+Due to the way Kotlin compiler generates bytecode for coroutines they are currently <a href="https://github.com/oracle/graal/issues/366">unsupported</a> out-of-the-box in GraalVM. There is, however, a <a href="https://github.com/HewlettPackard/kraal">workaround</a> for this problem.
 </td>
 </tr>
 </table>

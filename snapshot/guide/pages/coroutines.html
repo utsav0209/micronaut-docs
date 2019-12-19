@@ -199,6 +199,81 @@ action can be a <code>suspend</code> function:</p>
     }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You can also use <code>Flow</code> type for streaming server and client. A streaming controller can return <code>Flow</code>, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming JSON on the Server with Flow</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlinesWithFlow", processes = [MediaType.APPLICATION_JSON_STREAM])
+    internal fun streamHeadlinesWithFlow(): Flow&lt;Headline&gt; = <b class="conum">(1)</b>
+        flow { <b class="conum">(2)</b>
+            repeat(100) { <b class="conum">(3)</b>
+                with (Headline()) {
+                    text = "Latest Headline at " + ZonedDateTime.now()
+                    emit(this) <b class="conum">(4)</b>
+                    delay(1_000) <b class="conum">(5)</b>
+                }
+            }
+        }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A method <code>streamHeadlinesWithFlow</code> is defined that produces <code>application/x-json-stream</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>Flow</code> is created using <code>flow</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This <code>Flow</code> will emit 100 messages</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Emitting will happend with <code>emit</code> <code>suspend</code> function</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>There will be a 1 second <em>delay</em> between messages</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A streaming client can simply return a <code>Flow</code>, for example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Streaming client with Flow</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import kotlinx.coroutines.flow.Flow
+
+
+@Client("/streaming")
+interface HeadlineFlowClient {
+
+    @Get(value = "/headlinesWithFlow", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    fun streamFlow(): Flow&lt;Headline&gt; <b class="conum">(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@Get</code> method is defined as processing responses of type <code>APPLICATION_JSON_STREAM</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A <code>Flow</code> is used as the return type</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -206,7 +281,7 @@ action can be a <code>suspend</code> function:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Due to the way Kotlin compiler generates bytecode for coroutines they are currently <a href="https://github.com/oracle/graal/issues/366">unsuppoprted</a> out-of-the-box in GraalVM. There is, however, a <a href="https://github.com/HewlettPackard/kraal">workaround</a> for this problem.
+Due to the way Kotlin compiler generates bytecode for coroutines they are currently <a href="https://github.com/oracle/graal/issues/366">unsupported</a> out-of-the-box in GraalVM. There is, however, a <a href="https://github.com/HewlettPackard/kraal">workaround</a> for this problem.
 </td>
 </tr>
 </table>
