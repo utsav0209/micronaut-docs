@@ -834,6 +834,12 @@ String login(BasicAuth basicAuth) {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_client_filter_matching_by_annotation"><a class="anchor" href="#_client_filter_matching_by_annotation"></a>Client Filter Matching By Annotation</h3>
+<div class="paragraph">
+<p>Micronaut HTTP clients and client filters can now be matched by the presence of an annotation. Previously only URL matching was supported. See <a href="#_filter_matching_by_annotation">the documentation</a> to get started.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_dependency_upgrades"><a class="anchor" href="#_dependency_upgrades"></a>Dependency Upgrades</h3>
 <div class="paragraph">
 <p>Required Third Party Dependencies:</p>
@@ -22174,6 +22180,189 @@ internal class BintrayFilter(
 <div class="paragraph">
 <p>Now, whenever you invoke the <code>bintrayService.fetchRepositories()</code> method, the <code>Authorization</code> HTTP header is included in the request.</p>
 </div>
+<div class="sect2">
+<h3 id="_filter_matching_by_annotation"><a class="anchor" href="#_filter_matching_by_annotation"></a>Filter Matching By Annotation</h3>
+<div class="paragraph">
+<p>For cases where a filter should be applied to a client, regardless of the URL, filters can be matched by the presence of an annotation applied to both the filter and the client. Given the following client:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+public interface BasicAuthClient {
+
+    @Get
+    String getMessage();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+interface BasicAuthClient {
+
+    @Get
+    String getMessage()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+interface BasicAuthClient {
+
+    @Get
+    fun getMessage(): String
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@BasicAuth</code> annotation is applied to the client</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following filter will filter the client requests:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.filter.ClientFilterChain;
+import io.micronaut.http.filter.HttpClientFilter;
+import org.reactivestreams.Publisher;
+
+import javax.inject.Singleton;
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+public class BasicAuthClientFilter implements HttpClientFilter {
+
+    @Override
+    public Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        return chain.proceed(request.basicAuth("user", "pass"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.filter.ClientFilterChain
+import io.micronaut.http.filter.HttpClientFilter
+import org.reactivestreams.Publisher
+
+import javax.inject.Singleton
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+class BasicAuthClientFilter implements HttpClientFilter {
+
+    @Override
+    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        chain.proceed(request.basicAuth("user", "pass"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.filter.ClientFilterChain
+import io.micronaut.http.filter.HttpClientFilter
+import org.reactivestreams.Publisher
+
+import javax.inject.Singleton
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+class BasicAuthClientFilter : HttpClientFilter {
+
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
+        return chain.proceed(request.basicAuth("user", "pass"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The same annotation, <code>@BasicAuth</code>, is applied to the filter</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Normally the <code>@Filter</code> annotation makes filters singletons by default. Because the <code>@Filter</code> annotation is not used, the desired scope must be applied</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>@BasicAuth</code> annotation is just an example and can be replaced with your own custom annotation.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.FilterMatcher;
+
+import java.lang.annotation.*;
+
+@FilterMatcher <b class="conum">(1)</b>
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.PARAMETER})
+public @interface BasicAuth {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.FilterMatcher
+
+import java.lang.annotation.*
+
+@FilterMatcher <b class="conum">(1)</b>
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target([ElementType.TYPE, ElementType.PARAMETER])
+@interface BasicAuth {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.FilterMatcher
+
+@FilterMatcher <b class="conum">(1)</b>
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.VALUE_PARAMETER)
+annotation class BasicAuth</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The only requirement for custom annotations is that the <a href="../api/io/micronaut/http/annotation/HttpFilterStereotype.html">@HttpFilterStereotype</a> annotation must be present</td>
+</tr>
+</table>
+</div>
+</div>
 
 <h2 id="clientSample"><a class="anchor" href="#clientSample"></a>7.4 HTTP Client Sample</h2>
 
@@ -28949,7 +29138,8 @@ Current date reset</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.management.endpoint.annotation.Endpoint;
 
 import io.micronaut.management.endpoint.annotation.Write;
 
@@ -28997,7 +29187,8 @@ class MessageEndpoint {
 <div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.management.endpoint.annotation.Endpoint
 
 import io.micronaut.management.endpoint.annotation.Write
 
@@ -29039,7 +29230,8 @@ Message updated</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.management.endpoint.annotation.Endpoint;
 
 import io.micronaut.management.endpoint.annotation.Delete;
 
@@ -29083,7 +29275,8 @@ class MessageEndpoint {
 <div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.management.endpoint.annotation.Endpoint
 
 import io.micronaut.management.endpoint.annotation.Delete
 
