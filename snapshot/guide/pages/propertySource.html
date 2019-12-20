@@ -519,6 +519,22 @@ To maintain a fast startup time, it is recommended to use this feature as sparin
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_controlling_log_levels_with_properties"><a class="anchor" href="#_controlling_log_levels_with_properties"></a>Controlling Log Levels with Properties</h3>
+<div class="paragraph">
+<p>Log levels can be configured via properties defined in <code>application.yml</code> (and environment variables) with the <code>log.level</code> prefix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">log:
+    levels:
+        foo.bar: ERROR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the ability to control log levels via config is controlled via the <a href="../api/io/micronaut/logging/LoggingSystem.html">LoggingSystem</a> interface. Currently Micronaut ships with a single implementation that allows setting log levels for the Logback library. If another library is chosen you should provide a bean that implements this interface.</p>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

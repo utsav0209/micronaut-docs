@@ -749,6 +749,19 @@ interface EngineConfig {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_ability_to_configure_log_levels_via_properties"><a class="anchor" href="#_ability_to_configure_log_levels_via_properties"></a>Ability to Configure Log Levels via Properties</h3>
+<div class="paragraph">
+<p>Log levels can now be configured via properties defined in <code>application.yml</code> (and environment variables) with the <code>log.level</code> prefix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">log:
+    levels:
+        foo.bar: ERROR</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_new_micronaut_cache_modules"><a class="anchor" href="#_new_micronaut_cache_modules"></a>New Micronaut Cache Modules</h3>
 <div class="paragraph">
 <p><a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#introduction">Micronaut Cache</a> has been updated to support <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#hazelcast">Hazelcast</a> and <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#ehcache">Ehcache</a> as additional Cache providers.</p>
@@ -6796,7 +6809,7 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 
 
 <div class="paragraph">
-<p>The application environment is modelled by the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> interface, which allows specifying one or many unique environment names when creating an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>
+<p>The application environment is modelled by the api:context.env.Environment interface, which allows specifying one or many unique environment names when creating an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Initializing the Environment</div>
@@ -6831,7 +6844,7 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 </div>
 </div>
 <div class="paragraph">
-<p>The active environment names serve the purpose of allowing loading different configuration files depending on the environment and also using the <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> annotation to conditionally load beans or bean <a href="../api/io/micronaut/context/annotation/Configuration.html">@Configuration</a> packages.</p>
+<p>The active environment names serve the purpose of allowing loading different configuration files depending on the environment and also using the <a href="../api/io/micronaut//context/annotation/Requires.html">@Requires</a> annotation to conditionally load beans or bean <a href="../api/io/micronaut//context/annotation/Configuration.html">@Configuration</a> packages.</p>
 </div>
 <div class="paragraph">
 <p>In addition, Micronaut will attempt to detect the current environments. For example within a Spock or JUnit test the <a href="../api/io/micronaut/context/env/Environment.html#TEST">TEST</a> environment will be automatically active.</p>
@@ -7302,6 +7315,22 @@ To maintain a fast startup time, it is recommended to use this feature as sparin
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controlling_log_levels_with_properties"><a class="anchor" href="#_controlling_log_levels_with_properties"></a>Controlling Log Levels with Properties</h3>
+<div class="paragraph">
+<p>Log levels can be configured via properties defined in <code>application.yml</code> (and environment variables) with the <code>log.level</code> prefix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">log:
+    levels:
+        foo.bar: ERROR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the ability to control log levels via config is controlled via the <a href="../api/io/micronaut/logging/LoggingSystem.html">LoggingSystem</a> interface. Currently Micronaut ships with a single implementation that allows setting log levels for the Logback library. If another library is chosen you should provide a bean that implements this interface.</p>
 </div>
 </div>
 
