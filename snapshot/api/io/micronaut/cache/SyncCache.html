@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":18,"i5":18,"i6":6,"i7":6,"i8":6,"i9":6};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":18,"i5":18,"i6":6,"i7":6,"i8":6,"i9":18,"i10":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -207,6 +207,13 @@ extends <a href="../../../io/micronaut/cache/Cache.html" title="interface in io.
 </td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>default &lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/SyncCache.html#putIfAbsent-java.lang.Object-java.util.function.Supplier-">putIfAbsent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;value)</code>
+<div class="block">Cache the supplied value using the specified key if it is not already present.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/SyncCache.html#putIfAbsent-java.lang.Object-T-">putIfAbsent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
            T&nbsp;value)</code>
@@ -306,6 +313,29 @@ extends <a href="../../../io/micronaut/cache/Cache.html" title="interface in io.
 <dd><code>value</code> - the value to be associated with the specified key</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An optional of the existing value or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a> if the specified value parameter was cached</dd>
+</dl>
+</li>
+</ul>
+<a name="putIfAbsent-java.lang.Object-java.util.function.Supplier-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>putIfAbsent</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+default&nbsp;&lt;T&gt;&nbsp;T&nbsp;putIfAbsent(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;value)</pre>
+<div class="block"><p>Cache the supplied value using the specified key if it is not already present.</p></div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The concrete type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - the key with which the specified value is to be associated</dd>
+<dd><code>value</code> - the value supplier to be associated with the specified key</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An optional of the existing value or the new value returned by the supplier</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -208,6 +208,13 @@ implements <a href="../../../io/micronaut/cache/SyncCache.html" title="interface
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/AbstractMapBasedSyncCache.html#putIfAbsent-java.lang.Object-java.util.function.Supplier-">putIfAbsent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;value)</code>
+<div class="block">Cache the supplied value using the specified key if it is not already present.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/cache/AbstractMapBasedSyncCache.html#putIfAbsent-java.lang.Object-T-">putIfAbsent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
            T&nbsp;value)</code>
@@ -368,6 +375,32 @@ public&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/ja
 <dd><code>value</code> - the value to be associated with the specified key</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An optional of the existing value or <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a> if the specified value parameter was cached</dd>
+</dl>
+</li>
+</ul>
+<a name="putIfAbsent-java.lang.Object-java.util.function.Supplier-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>putIfAbsent</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+public&nbsp;&lt;T&gt;&nbsp;T&nbsp;putIfAbsent(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+                                  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;T&gt;&nbsp;value)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/cache/SyncCache.html#putIfAbsent-java.lang.Object-java.util.function.Supplier-">SyncCache</a></code></span></div>
+<div class="block"><p>Cache the supplied value using the specified key if it is not already present.</p></div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/cache/SyncCache.html#putIfAbsent-java.lang.Object-java.util.function.Supplier-">putIfAbsent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/cache/SyncCache.html" title="interface in io.micronaut.cache">SyncCache</a>&lt;<a href="../../../io/micronaut/cache/AbstractMapBasedSyncCache.html" title="type parameter in AbstractMapBasedSyncCache">C</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The concrete type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - the key with which the specified value is to be associated</dd>
+<dd><code>value</code> - the value supplier to be associated with the specified key</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An optional of the existing value or the new value returned by the supplier</dd>
 </dl>
 </li>
 </ul>
