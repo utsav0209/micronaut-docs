@@ -181,18 +181,36 @@ extends <a href="../../../../io/micronaut/core/async/processor/SingleThreadedBuf
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor--">JacksonProcessor</a></span>()</code>
-<div class="block">Construct with default JSON factory.</div>
+<div class="block">Default constructor.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor-com.fasterxml.jackson.databind.DeserializationConfig-">JacksonProcessor</a></span>(com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</code>
+<div class="block">Construct with default JSON factory.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-">JacksonProcessor</a></span>(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory)</code>
 <div class="block">Construct with given JSON factory.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-boolean-">JacksonProcessor</a></span>(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory,
                 boolean&nbsp;streamArray)</code>
 <div class="block">Creates a new JacksonProcessor.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-boolean-com.fasterxml.jackson.databind.DeserializationConfig-">JacksonProcessor</a></span>(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory,
+                boolean&nbsp;streamArray,
+                com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</code>
+<div class="block">Creates a new JacksonProcessor.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/parser/JacksonProcessor.html#JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-com.fasterxml.jackson.databind.DeserializationConfig-">JacksonProcessor</a></span>(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory,
+                com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</code>
+<div class="block">Construct with given JSON factory.</div>
 </td>
 </tr>
 </table>
@@ -269,6 +287,25 @@ extends <a href="../../../../io/micronaut/core/async/processor/SingleThreadedBuf
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-boolean-com.fasterxml.jackson.databind.DeserializationConfig-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JacksonProcessor</h4>
+<pre>public&nbsp;JacksonProcessor(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory,
+                        boolean&nbsp;streamArray,
+                        <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                        com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</pre>
+<div class="block">Creates a new JacksonProcessor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jsonFactory</code> - The JSON factory</dd>
+<dd><code>streamArray</code> - Whether arrays should be streamed</dd>
+<dd><code>deserializationConfig</code> - The jackson deserialization configuration</dd>
+</dl>
+</li>
+</ul>
 <a name="JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-boolean-">
 <!--   -->
 </a>
@@ -282,6 +319,23 @@ extends <a href="../../../../io/micronaut/core/async/processor/SingleThreadedBuf
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>jsonFactory</code> - The JSON factory</dd>
 <dd><code>streamArray</code> - Whether arrays should be streamed</dd>
+</dl>
+</li>
+</ul>
+<a name="JacksonProcessor-com.fasterxml.jackson.core.JsonFactory-com.fasterxml.jackson.databind.DeserializationConfig-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JacksonProcessor</h4>
+<pre>public&nbsp;JacksonProcessor(com.fasterxml.jackson.core.JsonFactory&nbsp;jsonFactory,
+                        com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</pre>
+<div class="block">Construct with given JSON factory.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jsonFactory</code> - To configure and construct reader (aka parser, <code>JsonParser</code>)
+                    and writer (aka generator, <code>JsonGenerator</code>) instances.</dd>
+<dd><code>deserializationConfig</code> - The jackson deserialization configuration</dd>
 </dl>
 </li>
 </ul>
@@ -300,6 +354,20 @@ extends <a href="../../../../io/micronaut/core/async/processor/SingleThreadedBuf
 </dl>
 </li>
 </ul>
+<a name="JacksonProcessor-com.fasterxml.jackson.databind.DeserializationConfig-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JacksonProcessor</h4>
+<pre>public&nbsp;JacksonProcessor(com.fasterxml.jackson.databind.DeserializationConfig&nbsp;deserializationConfig)</pre>
+<div class="block">Construct with default JSON factory.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>deserializationConfig</code> - The jackson deserialization configuration</dd>
+</dl>
+</li>
+</ul>
 <a name="JacksonProcessor--">
 <!--   -->
 </a>
@@ -307,7 +375,7 @@ extends <a href="../../../../io/micronaut/core/async/processor/SingleThreadedBuf
 <li class="blockList">
 <h4>JacksonProcessor</h4>
 <pre>public&nbsp;JacksonProcessor()</pre>
-<div class="block">Construct with default JSON factory.</div>
+<div class="block">Default constructor.</div>
 </li>
 </ul>
 </li>
