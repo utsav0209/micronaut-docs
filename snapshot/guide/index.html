@@ -13448,7 +13448,7 @@ class ConsumesController {
 <p>As mentioned previously, Micronaut is built on Netty which is designed around an Event loop model and non-blocking I/O.</p>
 </div>
 <div class="paragraph">
-<p>Although it is recommended to follow a non-blocking approach, in particular when making remote calls to other microservices, Micronaut acknowledges the fact that in real world scenarios developers encounter situations where the need arises to interface with blocking APIs and, in order to facilitate this, features blocking operation detection.</p>
+<p>Although it is recommended to follow a non-blocking approach, in particular when making remote calls to other microservices, Micronaut acknowledges the fact that in real world scenarios developers encounter situations where the need arises to interface with blocking APIs and, in order to facilitate this, features automatic thread selection based on the return type of the method.</p>
 </div>
 <div class="paragraph">
 <p>If your controller method returns a non-blocking type such as an RxJava <code>Observable</code> or a <code>CompletableFuture</code> then Micronaut will use the Event loop thread to subscribe to the result.</p>
@@ -13456,14 +13456,45 @@ class ConsumesController {
 <div class="paragraph">
 <p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a preconfigured I/O thread pool.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This means effectively that if you write a method that uses <code>Single.fromCallable(..)</code> and block within the body of the callable you may unknowingly block the Netty event loop thread and when writing such logic <strong>you must</strong> also invoke <code>Single.subscribeOn(..)</code> to ensure the event loop thread is not blocked.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>This thread pool by default is a caching, unbound thread pool. However, you may wish to configure the nature of the thread pool. For example the following configuration will configure the I/O thread pool as a fixed thread pool with 75 threads (similar to what a traditional blocking server such as Tomcat uses in the thread per connection model):</p>
+<p>The I/O thread pool by default is a caching, unbound thread pool. However, you may wish to configure the nature of the thread pool to avoid exhausting resources in applications that perform a lot of blocking I/O under high load.</p>
+</div>
+<div class="paragraph">
+<p>For example the following configuration will configure the I/O thread pool as a fixed thread pool with 75 threads (similar to what a traditional blocking server such as Tomcat uses in the thread per connection model):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut.executors.io.type=fixed
-micronaut.executors.io.nThreads=75</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    executors:
+        io:
+            type: fixed
+            nThreads: 75</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>If automatic thread selection is undesirable for your application you can either annotate the controller or method with <a href="../api/io/micronaut/core/annotation/NonBlocking.html">@NonBlocking</a> in which case all operations of the controller will run on the event loop or alternatively you can completely disable automatic thread selection by setting the <code>micronaut.server.thread-selection</code> to one of the values in the <a href="../api/io/micronaut/scheduling/executor/ThreadSelection.html">ThreadSelection</a> enum. For example the following configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    server:
+        thread-selection: MANUAL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will perform no thread selection and run all operations on the Netty event loop thread. It is then up to the developer to ensure logic that includes blocking I/O is scheduled on another thread by, for example, using RxJava&#8217;s <code>subscribeOn(..)</code> facility or the <a href="../api/io/micronaut/scheduling/annotation/Async.html">@Async</a> annotation (amongst other options).</p>
 </div>
 
 <h2 id="bodyAnnotation"><a class="anchor" href="#bodyAnnotation"></a>6.11.1 Using the @Body Annotation</h2>
