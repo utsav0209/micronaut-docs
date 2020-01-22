@@ -1228,7 +1228,10 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <h2 id="_dynamic_cache_creation"><a class="anchor" href="#_dynamic_cache_creation"></a>Dynamic Cache Creation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For use cases where caches cannot be configured ahead of time, a <a href="../api/io/micronaut/cache/DynamicCacheManager.html">DynamicCacheManager</a> bean can be registered. When a cache is attempted to be retrieved that was not predefined, the dynamic cache manager will be invoked to return a cache. By default there is no dynamic cache manager configured, however other cache implementations may do so.</p>
+<p>For use cases where caches cannot be configured ahead of time, a <a href="../api/io/micronaut/cache/DynamicCacheManager.html">DynamicCacheManager</a> bean can be registered. When a cache is attempted to be retrieved that was not predefined, the dynamic cache manager will be invoked to return a cache.</p>
+</div>
+<div class="paragraph">
+<p>By default, if there is no other dynamic cache manager defined in the application, Micronaut registers an instance of <a href="../api/io/micronaut/cache/DefaultDynamicCacheManager.html">DefaultDynamicCacheManager</a> that will create Caffeine caches with default values.</p>
 </div>
 </div>
 </div>
