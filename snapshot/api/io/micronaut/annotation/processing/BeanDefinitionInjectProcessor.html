@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -116,8 +116,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing">@SupportedAnnotationTypes</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true#value--" title="class or interface in javax.annotation.processing">value</a>="*")
- <a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
+<pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedOptions.html?is-external=true" title="class or interface in javax.annotation.processing">@SupportedOptions</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedOptions.html?is-external=true#value--" title="class or interface in javax.annotation.processing">value</a>={"micronaut.processing.incremental","micronaut.processing.annotations"})
 public class <span class="typeNameLabel">BeanDefinitionInjectProcessor</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></pre>
 <div class="block"><p>The core annotation processor used to generate bean definitions and power AOP for Micronaut.</p>
@@ -175,6 +175,18 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Messager.html?is-external=true" title="class or interface in javax.annotation.processing">Messager</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#messager">messager</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#MICRONAUT_PROCESSING_ANNOTATIONS">MICRONAUT_PROCESSING_ANNOTATIONS</a></span></code>
+<div class="block">Annotation processor option used to add additional annotation patterns to process.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#MICRONAUT_PROCESSING_INCREMENTAL">MICRONAUT_PROCESSING_INCREMENTAL</a></span></code>
+<div class="block">Annotation processor option used to activate incremental processing.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../io/micronaut/annotation/processing/ModelUtils.html" title="class in io.micronaut.annotation.processing">ModelUtils</a></code></td>
@@ -244,17 +256,27 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#getSupportedOptions--">getSupportedOptions</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#getSupportedAnnotationTypes--">getSupportedAnnotationTypes</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#getSupportedOptions--">getSupportedOptions</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/SourceVersion.html?is-external=true" title="class or interface in javax.lang.model">SourceVersion</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#getSupportedSourceVersion--">getSupportedSourceVersion</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#init-javax.annotation.processing.ProcessingEnvironment-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;processingEnv)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#isIncremental-javax.annotation.processing.ProcessingEnvironment-">isIncremental</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;processingEnv)</code>
+<div class="block">Whether incremental compilation is enabled.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#note-javax.lang.model.element.Element-java.lang.String-java.lang.Object...-">note</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;e,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
@@ -262,19 +284,19 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <div class="block">Produce a compile note for the given element and message.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#note-java.lang.String-java.lang.Object...-">note</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>
 <div class="block">Produce a compile note for the given element and message.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#process-java.util.Set-javax.annotation.processing.RoundEnvironment-">process</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotations,
        <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;roundEnv)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#warning-javax.lang.model.element.Element-java.lang.String-java.lang.Object...-">warning</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;e,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
@@ -282,7 +304,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <div class="block">Produce a compile warning for the given element and message.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html#warning-java.lang.String-java.lang.Object...-">warning</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>
@@ -295,7 +317,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;javax.annotation.processing.<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getCompletions-javax.lang.model.element.Element-javax.lang.model.element.AnnotationMirror-javax.lang.model.element.ExecutableElement-java.lang.String-" title="class or interface in javax.annotation.processing">getCompletions</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedAnnotationTypes--" title="class or interface in javax.annotation.processing">getSupportedAnnotationTypes</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#isInitialized--" title="class or interface in javax.annotation.processing">isInitialized</a></code></li>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getCompletions-javax.lang.model.element.Element-javax.lang.model.element.AnnotationMirror-javax.lang.model.element.ExecutableElement-java.lang.String-" title="class or interface in javax.annotation.processing">getCompletions</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#isInitialized--" title="class or interface in javax.annotation.processing">isInitialized</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -318,6 +340,34 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="MICRONAUT_PROCESSING_INCREMENTAL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MICRONAUT_PROCESSING_INCREMENTAL</h4>
+<pre>protected static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> MICRONAUT_PROCESSING_INCREMENTAL</pre>
+<div class="block">Annotation processor option used to activate incremental processing.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.annotation.processing.BeanDefinitionInjectProcessor.MICRONAUT_PROCESSING_INCREMENTAL">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="MICRONAUT_PROCESSING_ANNOTATIONS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MICRONAUT_PROCESSING_ANNOTATIONS</h4>
+<pre>protected static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> MICRONAUT_PROCESSING_ANNOTATIONS</pre>
+<div class="block">Annotation processor option used to add additional annotation patterns to process.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.annotation.processing.BeanDefinitionInjectProcessor.MICRONAUT_PROCESSING_ANNOTATIONS">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
 <a name="messager">
 <!--   -->
 </a>
@@ -446,21 +496,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 </dl>
 </li>
 </ul>
-<a name="getSupportedOptions--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getSupportedOptions</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getSupportedOptions()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#getSupportedOptions--" title="class or interface in javax.annotation.processing">getSupportedOptions</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedOptions--" title="class or interface in javax.annotation.processing">getSupportedOptions</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
-</dl>
-</li>
-</ul>
 <a name="process-java.util.Set-javax.annotation.processing.RoundEnvironment-">
 <!--   -->
 </a>
@@ -489,6 +524,36 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#getSupportedSourceVersion--" title="class or interface in javax.annotation.processing">getSupportedSourceVersion</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedSourceVersion--" title="class or interface in javax.annotation.processing">getSupportedSourceVersion</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getSupportedOptions--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSupportedOptions</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getSupportedOptions()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#getSupportedOptions--" title="class or interface in javax.annotation.processing">getSupportedOptions</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedOptions--" title="class or interface in javax.annotation.processing">getSupportedOptions</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getSupportedAnnotationTypes--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSupportedAnnotationTypes</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getSupportedAnnotationTypes()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#getSupportedAnnotationTypes--" title="class or interface in javax.annotation.processing">getSupportedAnnotationTypes</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedAnnotationTypes--" title="class or interface in javax.annotation.processing">getSupportedAnnotationTypes</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -581,7 +646,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <a name="note-java.lang.String-java.lang.Object...-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>note</h4>
 <pre>protected final&nbsp;void&nbsp;note(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
@@ -591,6 +656,23 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/proc
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>msg</code> - The message</dd>
 <dd><code>args</code> - The string format args</dd>
+</dl>
+</li>
+</ul>
+<a name="isIncremental-javax.annotation.processing.ProcessingEnvironment-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isIncremental</h4>
+<pre>protected&nbsp;boolean&nbsp;isIncremental(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;processingEnv)</pre>
+<div class="block">Whether incremental compilation is enabled.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>processingEnv</code> - The processing environment.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if it is</dd>
 </dl>
 </li>
 </ul>
