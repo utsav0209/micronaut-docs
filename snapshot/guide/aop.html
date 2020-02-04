@@ -461,13 +461,14 @@ open class NotNullExample {
 
     @Test
     public void testNotNull() {
-        ApplicationContext applicationContext = ApplicationContext.run();
-        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+        try (ApplicationContext applicationContext = ApplicationContext.run()) {
+            NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Null parameter [taskName] not allowed");
+            thrown.expect(IllegalArgumentException.class);
+            thrown.expectMessage("Null parameter [taskName] not allowed");
 
-        exampleBean.doWork(null);
+            exampleBean.doWork(null);
+        }
     }</code></pre>
 </div>
 </div>
@@ -484,6 +485,9 @@ open class NotNullExample {
         then:
         IllegalArgumentException ex = thrown()
         ex.message == 'Null parameter [taskName] not allowed'
+
+        cleanup:
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -499,6 +503,7 @@ open class NotNullExample {
             exampleBean.doWork(null)
         }
         exception.message shouldBe "Null parameter [taskName] not allowed"
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -907,10 +912,10 @@ interface StubExample {
 <div class="listingblock multi-language-sample">
 <div class="title">Testing Introduction Advice</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">        StubExample stubExample = applicationContext.getBean(StubExample.class);
+<pre class="highlight"><code class="language-java" data-lang="java">            StubExample stubExample = applicationContext.getBean(StubExample.class);
 
-        assertEquals(10, stubExample.getNumber());
-        assertNull(stubExample.getDate());</code></pre>
+            assertEquals(10, stubExample.getNumber());
+            assertNull(stubExample.getDate());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">

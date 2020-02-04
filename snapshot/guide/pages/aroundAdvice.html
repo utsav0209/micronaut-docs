@@ -397,13 +397,14 @@ open class NotNullExample {
 
     @Test
     public void testNotNull() {
-        ApplicationContext applicationContext = ApplicationContext.run();
-        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+        try (ApplicationContext applicationContext = ApplicationContext.run()) {
+            NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Null parameter [taskName] not allowed");
+            thrown.expect(IllegalArgumentException.class);
+            thrown.expectMessage("Null parameter [taskName] not allowed");
 
-        exampleBean.doWork(null);
+            exampleBean.doWork(null);
+        }
     }</code></pre>
 </div>
 </div>
@@ -420,6 +421,9 @@ open class NotNullExample {
         then:
         IllegalArgumentException ex = thrown()
         ex.message == 'Null parameter [taskName] not allowed'
+
+        cleanup:
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -435,6 +439,7 @@ open class NotNullExample {
             exampleBean.doWork(null)
         }
         exception.message shouldBe "Null parameter [taskName] not allowed"
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>

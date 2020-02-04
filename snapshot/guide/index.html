@@ -2079,20 +2079,22 @@ class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+<pre class="highlight"><code class="language-java" data-lang="java">final BeanContext context = BeanContext.run();
+Vehicle vehicle = context.getBean(Vehicle.class);
 System.out.println(vehicle.start());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
-                             .getBean(Vehicle)
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">def context = BeanContext.run()
+Vehicle vehicle = context.getBean(Vehicle)
 println( vehicle.start() )</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val context = BeanContext.run()
+val vehicle = context.getBean(Vehicle::class.java)
 println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -4435,12 +4437,14 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        assertEquals(1, listener.getInvocationCounter());
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            assertEquals(1, listener.getInvocationCounter());
+        }
+
     }
 
 }</code></pre>
@@ -4480,6 +4484,9 @@ class SampleEventListenerSpec extends Specification {
 
         then:
         listener.invocationCounter == 1
+
+        cleanup:
+        context.close()
     }
 }</code></pre>
 </div>
@@ -4514,6 +4521,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
         listener.invocationCounter.shouldBe(0)
         emitter.publishSampleEvent()
         listener.invocationCounter.shouldBe(1)
+
+        context.close()
     }
 }</code></pre>
 </div>
@@ -4626,12 +4635,13 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        }
     }
 
 }</code></pre>
@@ -4676,6 +4686,10 @@ class SampleEventListenerSpec extends Specification {
         new PollingConditions().eventually {
             listener.invocationCounter.get() == 1
         }
+
+        cleanup:
+        context.close()
+
     }
 }</code></pre>
 </div>
@@ -4724,6 +4738,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
             println("Current value of counter: " + listener.invocationCounter.get())
             listener.invocationCounter.get().shouldBe(1)
         }
+
+        context.close()
     }
 }</code></pre>
 </div>
@@ -9900,13 +9916,14 @@ open class NotNullExample {
 
     @Test
     public void testNotNull() {
-        ApplicationContext applicationContext = ApplicationContext.run();
-        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+        try (ApplicationContext applicationContext = ApplicationContext.run()) {
+            NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Null parameter [taskName] not allowed");
+            thrown.expect(IllegalArgumentException.class);
+            thrown.expectMessage("Null parameter [taskName] not allowed");
 
-        exampleBean.doWork(null);
+            exampleBean.doWork(null);
+        }
     }</code></pre>
 </div>
 </div>
@@ -9923,6 +9940,9 @@ open class NotNullExample {
         then:
         IllegalArgumentException ex = thrown()
         ex.message == 'Null parameter [taskName] not allowed'
+
+        cleanup:
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -9938,6 +9958,7 @@ open class NotNullExample {
             exampleBean.doWork(null)
         }
         exception.message shouldBe "Null parameter [taskName] not allowed"
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -10346,10 +10367,10 @@ interface StubExample {
 <div class="listingblock multi-language-sample">
 <div class="title">Testing Introduction Advice</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">        StubExample stubExample = applicationContext.getBean(StubExample.class);
+<pre class="highlight"><code class="language-java" data-lang="java">            StubExample stubExample = applicationContext.getBean(StubExample.class);
 
-        assertEquals(10, stubExample.getNumber());
-        assertNull(stubExample.getDate());</code></pre>
+            assertEquals(10, stubExample.getNumber());
+            assertNull(stubExample.getDate());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">

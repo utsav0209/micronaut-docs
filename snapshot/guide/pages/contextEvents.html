@@ -266,12 +266,14 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        assertEquals(1, listener.getInvocationCounter());
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            assertEquals(1, listener.getInvocationCounter());
+        }
+
     }
 
 }</code></pre>
@@ -311,6 +313,9 @@ class SampleEventListenerSpec extends Specification {
 
         then:
         listener.invocationCounter == 1
+
+        cleanup:
+        context.close()
     }
 }</code></pre>
 </div>
@@ -345,6 +350,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
         listener.invocationCounter.shouldBe(0)
         emitter.publishSampleEvent()
         listener.invocationCounter.shouldBe(1)
+
+        context.close()
     }
 }</code></pre>
 </div>
@@ -457,12 +464,13 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        }
     }
 
 }</code></pre>
@@ -507,6 +515,10 @@ class SampleEventListenerSpec extends Specification {
         new PollingConditions().eventually {
             listener.invocationCounter.get() == 1
         }
+
+        cleanup:
+        context.close()
+
     }
 }</code></pre>
 </div>
@@ -555,6 +567,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
             println("Current value of counter: " + listener.invocationCounter.get())
             listener.invocationCounter.get().shouldBe(1)
         }
+
+        context.close()
     }
 }</code></pre>
 </div>

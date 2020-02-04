@@ -252,20 +252,22 @@ class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+<pre class="highlight"><code class="language-java" data-lang="java">final BeanContext context = BeanContext.run();
+Vehicle vehicle = context.getBean(Vehicle.class);
 System.out.println(vehicle.start());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
-                             .getBean(Vehicle)
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">def context = BeanContext.run()
+Vehicle vehicle = context.getBean(Vehicle)
 println( vehicle.start() )</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val context = BeanContext.run()
+val vehicle = context.getBean(Vehicle::class.java)
 println(vehicle.start())</code></pre>
 </div>
 </div>
