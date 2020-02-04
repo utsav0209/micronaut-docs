@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">io.micronaut.inject</div>
-<h2 title="Interface FieldInjectionPoint" class="title">Interface FieldInjectionPoint&lt;T&gt;</h2>
+<h2 title="Interface FieldInjectionPoint" class="title">Interface FieldInjectionPoint&lt;B,T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,16 +99,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>B</code> - The bean type that declares the injection point</dd>
 <dd><code>T</code> - The field component type</dd>
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../io/micronaut/core/annotation/AnnotatedElement.html" title="interface in io.micronaut.core.annotation">AnnotatedElement</a>, <a href="../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>, <a href="../../../io/micronaut/core/naming/Named.html" title="interface in io.micronaut.core.naming">Named</a></dd>
+<dd><a href="../../../io/micronaut/core/annotation/AnnotatedElement.html" title="interface in io.micronaut.core.annotation">AnnotatedElement</a>, <a href="../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a>, <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>&lt;B&gt;, <a href="../../../io/micronaut/core/naming/Named.html" title="interface in io.micronaut.core.naming">Named</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">FieldInjectionPoint&lt;T&gt;</span>
-extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>, <a href="../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../io/micronaut/core/annotation/AnnotatedElement.html" title="interface in io.micronaut.core.annotation">AnnotatedElement</a></pre>
+<pre>public interface <span class="typeNameLabel">FieldInjectionPoint&lt;B,T&gt;</span>
+extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interface in io.micronaut.inject">InjectionPoint</a>&lt;B&gt;, <a href="../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>, <a href="../../../io/micronaut/core/annotation/AnnotatedElement.html" title="interface in io.micronaut.core.annotation">AnnotatedElement</a></pre>
 <div class="block">Defines an injection point for a field.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -142,7 +143,9 @@ extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interf
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/FieldInjectionPoint.html#getField--">getField</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/FieldInjectionPoint.html#getField--">getField</a></span>()</code>
+<div class="block">Resolves the underlying field.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
@@ -155,7 +158,9 @@ extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interf
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/inject/FieldInjectionPoint.html#set-T-java.lang.Object-">set</a></span>(<a href="../../../io/micronaut/inject/FieldInjectionPoint.html" title="type parameter in FieldInjectionPoint">T</a>&nbsp;instance,
-   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>&nbsp;</td>
+   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Sets the value of the field.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -208,6 +213,8 @@ extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interf
 <li class="blockList">
 <h4>getField</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a>&nbsp;getField()</pre>
+<div class="block">Resolves the underlying field. Note that this method will cause reflection
+ metadata to be initialized and should be avoided.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The target field</dd>
@@ -237,6 +244,8 @@ extends <a href="../../../io/micronaut/inject/InjectionPoint.html" title="interf
 <h4>set</h4>
 <pre>void&nbsp;set(<a href="../../../io/micronaut/inject/FieldInjectionPoint.html" title="type parameter in FieldInjectionPoint">T</a>&nbsp;instance,
          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Sets the value of the field. Note that this method will cause reflection
+ metadata to be initialized and should be avoided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>instance</code> - the instance</dd>
