@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.1 Using the Low-Level HTTP Client 1.2.10</title>
+    <title>7.1 Using the Low-Level HTTP Client 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.1 Using the Low-Level HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -159,7 +159,7 @@ function addJsClass() {
 <p>The <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface forms the basis for the low-level API. This interfaces declares methods to help ease executing HTTP requests and receive responses.</p>
 </div>
 <div class="paragraph">
-<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
+<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
 </div>
 
 <h2 id="clientBasics"><a class="anchor" href="#clientBasics"></a>7.1.1 Sending your first HTTP request</h2>
@@ -328,7 +328,6 @@ import io.micronaut.http.client.annotation.Client
 import io.reactivex.Maybe
 
 import io.micronaut.http.HttpRequest.GET
-
 
     @Get("/hello/{name}")
     internal fun hello(name: String): Maybe&lt;String&gt; { <b class="conum">(1)</b>
@@ -1179,7 +1178,7 @@ import io.reactivex.Flowable;
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
-    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() {
         return Flowable.fromCallable(() -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
@@ -1201,7 +1200,7 @@ import io.reactivex.Flowable
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
-    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() {
         Flowable.fromCallable({ <b class="conum">(2)</b>
             Headline headline = new Headline()
@@ -1224,7 +1223,7 @@ import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 
-    @Get(value = "/headlines", produces = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flowable&lt;Headline&gt; {
         return Flowable.fromCallable {
             <b class="conum">(2)</b>

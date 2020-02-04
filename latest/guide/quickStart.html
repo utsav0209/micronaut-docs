@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2 Quick Start 1.2.10</title>
+    <title>2 Quick Start 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2 Quick Start</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -130,10 +130,13 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:10px"><a href="#installHomebrew"><strong>2.1.2</strong><span>Install with Homebrew</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#installWindows"><strong>2.1.3</strong><span>Install through Binary on Windows</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#installMacPorts"><strong>2.1.3</strong><span>Install with MacPorts</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#buildSource"><strong>2.1.4</strong><span>Building from Source</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#installWindows"><strong>2.1.4</strong><span>Install through Binary on Windows</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#buildSource"><strong>2.1.5</strong><span>Building from Source</span></a>
                     </div>
                     
                     <div class="toc-item" style="margin-left:0px"><a href="#creatingServer"><strong>2.2</strong><span>Creating a Server Application</span></a>
@@ -214,7 +217,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.2.10</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -272,7 +275,47 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installWindows"><a class="anchor" href="#installWindows"></a>2.1.3 Install through Binary on Windows</h2>
+<h2 id="installMacPorts"><a class="anchor" href="#installMacPorts"></a>2.1.3 Install with MacPorts</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/quickStart/buildCLI/installMacPorts.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Before installing it is recommended to sync the latest Portfiles.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port sync</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to install Micronaut, run following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port install micronaut</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more information about MacPorts usage on their <a href="https://www.macports.org">homepage</a>.</p>
+</div>
+<div class="paragraph">
+<p>You should now be able to run the Micronaut CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="installWindows"><a class="anchor" href="#installWindows"></a>2.1.4 Install through Binary on Windows</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/quickStart/buildCLI/installWindows.adoc"'>
@@ -309,7 +352,7 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="buildSource"><a class="anchor" href="#buildSource"></a>2.1.4 Building from Source</h2>
+<h2 id="buildSource"><a class="anchor" href="#buildSource"></a>2.1.5 Building from Source</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/quickStart/buildCLI/buildSource.adoc"'>
@@ -415,7 +458,7 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </table>
 </div>
 <div class="paragraph">
-<p>The previous command will create a new Java application in a directory called <code>hello-world</code> featuring a Gradle a build. The application can be run with <code>./gradlew run</code>:</p>
+<p>The previous command will create a new Java application in a directory called <code>hello-world</code> featuring a Gradle build. The application can be run with <code>./gradlew run</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -637,20 +680,28 @@ Micronaut requires Eclipse IDE 4.9 or above
 <div class="paragraph">
 <p>Micronaut can be setup within Visual Studio Code. You will need to first install the The <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack">Java Extension Pack</a>.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Visual Studio Code support currently only works for Maven builds.
+You can also optionally install <a href="https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-spring-boot">STS</a> to enable code completion for <code>application.yml</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Once the extension pack is installed follow the same setup steps as Eclipse above or if you have setup <a href="https://code.visualstudio.com/docs/setup/mac">terminal integration</a> just type <code>code .</code> in any project directory and the project will be automatically setup.</p>
+<p>If you are using Gradle prior to opening the project in VSC you should run the following command from a terminal window:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew eclipse</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the extension pack is installed and if you have setup <a href="https://code.visualstudio.com/docs/setup/mac">terminal integration</a> just type <code>code .</code> in any project directory and the project will be automatically setup.</p>
 </div>
 </div>
 </div>
@@ -739,6 +790,7 @@ import javax.inject.Inject
 
 @MicronautTest
 class HelloControllerSpec {
+
     @Inject
     lateinit var server: EmbeddedServer <b class="conum">(1)</b>
 

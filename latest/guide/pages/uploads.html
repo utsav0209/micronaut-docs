@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.19 File Uploads 1.2.10</title>
+    <title>6.19 File Uploads 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.19 File Uploads</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -177,35 +177,36 @@ Data can only be retrieved from a <a href="../api/io/micronaut/http/multipart/Pa
 </table>
 </div>
 <div class="paragraph">
-<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
+<p>Route arguments of type <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a> will be treated as only intended to receive a single file and each chunk of the received file will be sent downstream. If the generic type is something other than <a href="../api/io/micronaut/http/multipart/PartData.html">PartData</a>, conversion will be attempted using Micronaut&#8217;s conversion service. Conversions to <code>String</code> and <code>byte[]</code> are supported by default.</p>
 </div>
 <div class="paragraph">
-<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
+<p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html">StreamingFileUpload</a> has been created that is a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher&lt;PartData&gt;</a>, but also has file information like the content type and file name.</p>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.http.multipart.StreamingFileUpload;
 import io.reactivex.Single;
-import org.reactivestreams.Publisher;
-
 import java.io.File;
+import org.reactivestreams.Publisher;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller("/upload")
 public class UploadController {
 
     @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
-    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) throws IOException { <b class="conum">(2)</b>
-        File tempFile = File.createTempFile(file.getFilename(), "temp");
+    public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
+        File tempFile;
+        try {
+            tempFile = File.createTempFile(file.getFilename(), "temp");
+        } catch (IOException e) {
+            return Single.error(e);
+        }
         Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile); <b class="conum">(3)</b>
         return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
             .map(success -&gt; {
@@ -217,25 +218,20 @@ public class UploadController {
                 }
             });
     }
-
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.multipart.CompletedFileUpload
 import io.micronaut.http.multipart.StreamingFileUpload
 import io.reactivex.Single
 import org.reactivestreams.Publisher
-
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 
 @Controller("/upload")
 class UploadController {
@@ -259,20 +255,16 @@ class UploadController {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">Streaming file upload</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.multipart.CompletedFileUpload
 import io.micronaut.http.multipart.StreamingFileUpload
 import io.reactivex.Single
-
 import java.io.File
-import java.io.IOException
-import java.nio.file.Files
-import java.nio.file.Paths
 
 @Controller("/upload")
 class UploadController {
@@ -307,11 +299,11 @@ class UploadController {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
+<td>The <a href="../api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-java.lang.String-">StreamingFileUpload.transferTo(java.lang.String)</a> method is used to transfer the file to the server. The method returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
+<td>The returned <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> subscribes to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and outputs a response once the upload is complete, without blocking.</td>
 </tr>
 </table>
 </div>
@@ -321,13 +313,118 @@ class UploadController {
 <div class="paragraph">
 <p>Route arguments that are not publishers will cause the route execution to be delayed until the upload has finished. The received data will attempt to be converted to the requested type. Conversions to a <code>String</code> or <code>byte[]</code> are supported by default. In addition, the file can be converted to a POJO if a media type codec has been registered that supports the media type of the file. A media type codec is included by default that allows conversion of JSON files to POJOs.</p>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Controller("/upload")
+public class BytesUploadController {
+
+    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(fileName, "temp");
+            Path path = Paths.get(tempFile.getAbsolutePath());
+            Files.write(path, file); <b class="conum">(3)</b>
+            return HttpResponse.ok("Uploaded");
+        } catch (IOException exception) {
+            return HttpResponse.badRequest("Upload Failed");
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class BytesUploadController {
+
+    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
+        try {
+            File tempFile = File.createTempFile(fileName, "temp")
+            Path path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (IOException exception) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Receiving a byte array</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+
+import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class BytesUploadController {
+
+    @Post(value = "/bytes", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadBytes(file: ByteArray, fileName: String): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
+        return try {
+            val tempFile = File.createTempFile(fileName, "temp")
+            val path = Paths.get(tempFile.absolutePath)
+            Files.write(path, file) <b class="conum">(3)</b>
+            HttpResponse.ok("Uploaded")
+        } catch (exception: IOException) {
+            HttpResponse.badRequest("Upload Failed")
+        }
+
+    }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>If requirements dictate you must have knowledge about the metadata of the file being received, a special class called <a href="../api/io/micronaut/http/multipart/CompletedFileUpload.html">CompletedFileUpload</a> has been created that has methods to retrieve the data of the file, but also has file information like the content type and file name.</p>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/upload")
-public class UploadController {
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.multipart.CompletedFileUpload;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Controller("/upload")
+public class CompletedUploadController {
 
     @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
     public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
@@ -340,34 +437,56 @@ public class UploadController {
             return HttpResponse.badRequest("Upload Failed");
         }
     }
-
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/upload")
-class UploadController {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class CompletedUploadController {
 
     @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
             Path path = Paths.get(tempFile.absolutePath)
-            Files.write(path, file.bytes)<b class="conum">(3)</b>
+            Files.write(path, file.bytes) <b class="conum">(3)</b>
             HttpResponse.ok("Uploaded")
         } catch (IOException exception) {
             HttpResponse.badRequest("Upload Failed")
         }
     }
-
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title">File upload with metadata</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/upload")
-class UploadController {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+
+import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+@Controller("/upload")
+class CompletedUploadController {
 
     @Post(value = "/completed", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
     fun uploadCompleted(file: CompletedFileUpload): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
@@ -379,8 +498,8 @@ class UploadController {
         } catch (exception: IOException) {
             HttpResponse.badRequest("Upload Failed")
         }
-    }
 
+    }
 }</code></pre>
 </div>
 </div>
@@ -423,7 +542,7 @@ class UploadController {
 <div class="sect2">
 <h3 id="_same_name"><a class="anchor" href="#_same_name"></a>Same Name</h3>
 <div class="paragraph">
-<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
+<p>To handle receiving multiple parts with the same part name, the argument must be a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>. When used in one of the following ways, the publisher will emit one item per file found with the specified name. The publisher must accept one of the following types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -437,7 +556,7 @@ class UploadController {
 <p>Any POJO assuming a media codec is found that supports the content type</p>
 </li>
 <li>
-<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
+<p>Another <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that accepts one of the chunked data types described above</p>
 </li>
 </ul>
 </div>
@@ -451,6 +570,172 @@ HttpResponse upload(Publisher&lt;CompletedFileUpload&gt; files)
 HttpResponse upload(Publisher&lt;MyObject&gt; files)
 HttpResponse upload(Publisher&lt;Publisher&lt;PartData&gt;&gt; files)</code></pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_whole_body_binding"><a class="anchor" href="#_whole_body_binding"></a>Whole Body Binding</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For the cases where the names of the parts of the request cannot be known ahead of time, or the entire body should be read, a special type can be used to indicate the entire body is desired.</p>
+</div>
+<div class="paragraph">
+<p>If a route has an argument of type <a href="../api/io/micronaut/http/server/multipart/MultipartBody.html">MultipartBody</a> (not to be confused with the class for the client) annotated with <a href="../api/io/micronaut/http/annotation/Body.html">@Body</a>, then each part of the request will be emitted through the argument. A <a href="../api/io/micronaut/http/server/multipart/MultipartBody.html">MultipartBody</a> is a publisher of <a href="../api/io/micronaut/http/multipart/CompletedPart.html">CompletedPart</a> instances.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.multipart.CompletedFileUpload;
+import io.micronaut.http.multipart.CompletedPart;
+import io.micronaut.http.server.multipart.MultipartBody;
+import io.reactivex.Single;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+@Controller("/upload")
+public class WholeBodyUploadController {
+
+    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    public Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
+        return Single.create(emitter -&gt; {
+            body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
+                private Subscription s;
+
+                @Override
+                public void onSubscribe(Subscription s) {
+                    this.s = s;
+                    s.request(1);
+                }
+
+                @Override
+                public void onNext(CompletedPart completedPart) {
+                    String partName = completedPart.getName();
+                    if (completedPart instanceof CompletedFileUpload) {
+                        String originalFileName = ((CompletedFileUpload) completedPart).getFilename();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    emitter.onError(t);
+                }
+
+                @Override
+                public void onComplete() {
+                    emitter.onSuccess("Uploaded");
+                }
+            });
+        });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.CompletedPart
+import io.micronaut.http.server.multipart.MultipartBody
+import io.reactivex.Single
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
+
+@Controller("/upload")
+class WholeBodyUploadController {
+
+    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
+        Single.&lt;String&gt;create({ emitter -&gt;
+            body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
+                private Subscription s
+
+                @Override
+                void onSubscribe(Subscription s) {
+                    this.s = s
+                    s.request(1)
+                }
+
+                @Override
+                void onNext(CompletedPart completedPart) {
+                    String partName = completedPart.name
+                    if (completedPart instanceof CompletedFileUpload) {
+                        String originalFileName = ((CompletedFileUpload) completedPart).filename
+                    }
+                }
+
+                @Override
+                void onError(Throwable t) {
+                    emitter.onError(t)
+                }
+
+                @Override
+                void onComplete() {
+                    emitter.onSuccess("Uploaded")
+                }
+            })
+        })
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding to the entire multipart body</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.CompletedPart
+import io.micronaut.http.server.multipart.MultipartBody
+import io.reactivex.Single
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
+
+@Controller("/upload")
+class WholeBodyUploadController {
+
+    @Post(value = "/whole-body", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    fun uploadBytes(@Body body: MultipartBody): Single&lt;String&gt; { <b class="conum">(2)</b>
+        return Single.create { emitter -&gt;
+            body.subscribe(object : Subscriber&lt;CompletedPart&gt; {
+                private var s: Subscription? = null
+
+                override fun onSubscribe(s: Subscription) {
+                    this.s = s
+                    s.request(1)
+                }
+
+                override fun onNext(completedPart: CompletedPart) {
+                    val partName = completedPart.name
+                    if (completedPart is CompletedFileUpload) {
+                        val originalFileName = completedPart.filename
+                    }
+                }
+
+                override fun onError(t: Throwable) {
+                    emitter.onError(t)
+                }
+
+                override fun onComplete() {
+                    emitter.onSuccess("Uploaded")
+                }
+            })
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </div>

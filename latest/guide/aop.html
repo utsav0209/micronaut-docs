@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Aspect Oriented Programming 1.2.10</title>
+    <title>5 Aspect Oriented Programming 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Aspect Oriented Programming</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -175,7 +175,7 @@ function addJsClass() {
 </ul>
 </div>
 <div class="paragraph">
-<p>In modern Java applications declaring advice typically takes the form of an annotation. The most well-known annotation advice in the Java world is probably <code>@Transactional</code> which is used to demarcate transaction boundries in Spring and Grails applications.</p>
+<p>In modern Java applications declaring advice typically takes the form of an annotation. The most well-known annotation advice in the Java world is probably <code>@Transactional</code> which is used to demarcate transaction boundaries in Spring and Grails applications.</p>
 </div>
 <div class="paragraph">
 <p>The disadvantage of traditional approaches to AOP is the heavy reliance on runtime proxy creation and reflection, which slows application performance, makes debugging harder and increases memory consumption.</p>
@@ -461,13 +461,14 @@ open class NotNullExample {
 
     @Test
     public void testNotNull() {
-        ApplicationContext applicationContext = ApplicationContext.run();
-        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
+        try (ApplicationContext applicationContext = ApplicationContext.run()) {
+            NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class);
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Null parameter [taskName] not allowed");
+            thrown.expect(IllegalArgumentException.class);
+            thrown.expectMessage("Null parameter [taskName] not allowed");
 
-        exampleBean.doWork(null);
+            exampleBean.doWork(null);
+        }
     }</code></pre>
 </div>
 </div>
@@ -484,6 +485,9 @@ open class NotNullExample {
         then:
         IllegalArgumentException ex = thrown()
         ex.message == 'Null parameter [taskName] not allowed'
+
+        cleanup:
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -499,6 +503,7 @@ open class NotNullExample {
             exampleBean.doWork(null)
         }
         exception.message shouldBe "Null parameter [taskName] not allowed"
+        applicationContext.close()
     }</code></pre>
 </div>
 </div>
@@ -765,7 +770,7 @@ annotation class Stub(val value: String = "")</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <a href="../api/io/micronaut/context/annotation/Type.html">Type</a> annotation is used to refer to the implementor of the advise. In this case <code>StubIntroduction</code></td>
+<td>The <a href="../api/io/micronaut/context/annotation/Type.html">Type</a> annotation is used to refer to the implementor of the advice. In this case <code>StubIntroduction</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -907,10 +912,10 @@ interface StubExample {
 <div class="listingblock multi-language-sample">
 <div class="title">Testing Introduction Advice</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">        StubExample stubExample = applicationContext.getBean(StubExample.class);
+<pre class="highlight"><code class="language-java" data-lang="java">            StubExample stubExample = applicationContext.getBean(StubExample.class);
 
-        assertEquals(10, stubExample.getNumber());
-        assertNull(stubExample.getDate());</code></pre>
+            assertEquals(10, stubExample.getNumber());
+            assertNull(stubExample.getDate());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1121,7 +1126,7 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <p>By using one of the annotations the <a href="../api/io/micronaut/cache/interceptor/CacheInterceptor.html">CacheInterceptor</a> is activated which in the case of <code>@Cacheable</code> will cache the return result of the method.</p>
 </div>
 <div class="paragraph">
-<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emitted result will be cached.</p>
+<p>If the return type of the method is a non-blocking type (either <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> or an instance of <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emitted result will be cached.</p>
 </div>
 <div class="paragraph">
 <p>In addition if the underlying Cache implementation supports non-blocking cache operations then cache values will be read from the cache without blocking, resulting in the ability to implement completely non-blocking cache operations.</p>
@@ -1140,7 +1145,7 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     caches:
         my-cache:
-            maximumSize: 20</code></pre>
+            maximum-size: 20</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1155,7 +1160,7 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <td class="content">
 <div class="title">Naming Caches</div>
 <div class="paragraph">
-<p>Names of caches under <code>micronaut.caches</code> should be defined in kebab case (lowercase and hyphen seperated), if camel case is used the names are normalized to kebab case. So for example specifing <code>myCache</code> will become <code>my-cache</code>. The kebab case form should be used when referencing caches in the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> annotation, like <code>@Cacheable("my-cache-name")</code>.</p>
+<p>Names of caches under <code>micronaut.caches</code> should be defined in kebab case (lowercase and hyphen seperated), if camel case is used the names are normalized to kebab case. So for example specifing <code>myCache</code> will become <code>my-cache</code>. The kebab case form should be used when referencing caches in the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> annotation.</p>
 </div>
 </td>
 </tr>
@@ -1225,30 +1230,22 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_caching_with_redis"><a class="anchor" href="#_caching_with_redis"></a>Caching with Redis</h2>
+<h2 id="_dynamic_cache_creation"><a class="anchor" href="#_dynamic_cache_creation"></a>Dynamic Cache Creation</h2>
 <div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>redis-lettuce</code> feature to configure Redis/Lettuce in your project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features redis-lettuce</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
+<p>For use cases where caches cannot be configured ahead of time, a <a href="../api/io/micronaut/cache/DynamicCacheManager.html">DynamicCacheManager</a> bean can be registered. When a cache is attempted to be retrieved that was not predefined, the dynamic cache manager will be invoked to return a cache.</p>
 </div>
 <div class="paragraph">
-<p>If you wish to use Redis to cache results the <a href="https://micronaut-projects.github.io/micronaut-redis/snapshot/guide/#cache">Micronaut Redis</a> module provides a <a href="../api/io/micronaut/cache/CacheManager.html">CacheManager</a> implementation that allows using Redis as a backing cache.</p>
+<p>By default, if there is no other dynamic cache manager defined in the application, Micronaut registers an instance of <a href="../api/io/micronaut/cache/DefaultDynamicCacheManager.html">DefaultDynamicCacheManager</a> that will create Caffeine caches with default values.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_other_cache_implementations"><a class="anchor" href="#_other_cache_implementations"></a>Other Cache Implementations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Check the <a href="https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html">Micronaut Cache</a> project for more
+information.</p>
 </div>
 </div>
 </div>

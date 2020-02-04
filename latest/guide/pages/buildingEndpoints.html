@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>14.1 Creating Endpoints 1.2.10</title>
+    <title>14.1 Creating Endpoints 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>14.1 Creating Endpoints</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -389,9 +389,81 @@ class CurrentDateEndpoint {
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/management/endpoint/Read.html">Read</a> annotation accepts an optional <code>produces</code> argument, which sets the media type returned from the method (default is <code>application/json</code>):</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">snippet::io.micronaut.docs.server.endpoint.CurrentDateEndpoint[tags="endpointImport, readImport, endpointClassBegin, currentDate, readArg, endpointClassEnd", indent=0, title="CurrentDateEndpoint.groovy"]</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+
+import io.micronaut.management.endpoint.annotation.Read;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.management.endpoint.annotation.Selector;
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+public class CurrentDateEndpoint {
+
+    private Date currentDate;
+
+    @Read(produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    public String currentDatePrefix(@Selector String prefix) {
+        return prefix + ": " + currentDate;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Read
+
+import io.micronaut.http.MediaType
+import io.micronaut.management.endpoint.annotation.Selector
+
+
+@Endpoint(id = "date",
+        prefix = "custom",
+        defaultEnabled = true,
+        defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    Date currentDate
+
+    @Read(produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    String currentDatePrefix(@Selector String prefix) {
+        return "${prefix}: ${currentDate}"
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">CurrentDateEndpoint</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+
+import io.micronaut.management.endpoint.annotation.Read
+
+import io.micronaut.http.MediaType
+import io.micronaut.management.endpoint.annotation.Selector
+
+
+@Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
+class CurrentDateEndpoint {
+
+    private var currentDate: Date? = null
+
+    @Read(produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    fun currentDatePrefix(@Selector prefix: String): String {
+        return "$prefix: $currentDate"
+    }
+
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -421,11 +493,14 @@ the_date_is: Fri May 11 19:24:21 CDT</code></pre>
 <p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation will cause it to respond to <code>POST</code> requests.</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
 
-import io.micronaut.management.endpoint.annotation.Read;
+import io.micronaut.management.endpoint.annotation.Write;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.management.endpoint.annotation.Selector;
 
 @Endpoint(id = "date",
         prefix = "custom",
@@ -446,11 +521,15 @@ public class CurrentDateEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
-import io.micronaut.management.endpoint.annotation.Read
+import io.micronaut.management.endpoint.annotation.Write
+
+import io.micronaut.http.MediaType
+import io.micronaut.management.endpoint.annotation.Selector
+
 
 @Endpoint(id = "date",
         prefix = "custom",
@@ -471,11 +550,15 @@ class CurrentDateEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">CurrentDateEndpoint.groovy</div>
+<div class="title">CurrentDateEndpoint</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
 
-import io.micronaut.management.endpoint.annotation.Read
+import io.micronaut.management.endpoint.annotation.Write
+
+import io.micronaut.http.MediaType
+import io.micronaut.management.endpoint.annotation.Selector
+
 
 @Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
 class CurrentDateEndpoint {
@@ -506,9 +589,10 @@ Current date reset</code></pre>
 <p>The <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation accepts an optional <code>consumes</code> argument, which sets the media type accepted by the method (default is <code>application/json</code>):</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.management.endpoint.annotation.Endpoint;
 
 import io.micronaut.management.endpoint.annotation.Write;
 
@@ -530,7 +614,7 @@ public class MessageEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
@@ -554,9 +638,10 @@ class MessageEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.management.endpoint.annotation.Endpoint
 
 import io.micronaut.management.endpoint.annotation.Write
 
@@ -596,9 +681,10 @@ Message updated</code></pre>
 <p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a> annotation will cause it to respond to <code>DELETE</code> requests.</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.management.endpoint.annotation.Endpoint;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.management.endpoint.annotation.Endpoint;
 
 import io.micronaut.management.endpoint.annotation.Delete;
 
@@ -618,7 +704,7 @@ public class MessageEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
@@ -640,9 +726,10 @@ class MessageEndpoint {
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">MessageEndpoint.groovy</div>
+<div class="title">MessageEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.management.endpoint.annotation.Endpoint
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.management.endpoint.annotation.Endpoint
 
 import io.micronaut.management.endpoint.annotation.Delete
 

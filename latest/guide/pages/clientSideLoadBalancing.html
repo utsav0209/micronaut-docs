@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8.3 Client Side Load Balancing 1.2.10</title>
+    <title>8.3 Client Side Load Balancing 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.3 Client Side Load Balancing</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -147,7 +147,7 @@ function addJsClass() {
 <p>The load balancing itself is handled by the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface which defines a  <a href="../api/io/micronaut/http/client/LoadBalancer.html#select--">LoadBalancer.select()</a> method that returns a <code>Publisher</code> that emits a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
+<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface is <a href="../api/io/micronaut/http/client/loadbalance/DiscoveryClientRoundRobinLoadBalancer.html">DiscoveryClientRoundRobinLoadBalancer</a>. You can replace this strategy for another implementation if you wish to customize how client side load balancing is handled in Micronaut since there are many different ways you may wish to optimize load balancing.</p>

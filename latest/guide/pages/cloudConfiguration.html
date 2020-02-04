@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8.1 Cloud Configuration 1.2.10</title>
+    <title>8.1 Cloud Configuration 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.1 Cloud Configuration</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -362,7 +362,7 @@ void onServiceStarted(ServiceStartedEvent event) {
 <p>The <a href="../api/io/micronaut/discovery/config/ConfigurationClient.html">ConfigurationClient</a> interface has a single method called <code>getPropertySources</code> that can be implemented to read and resolve configuration from distributed sources.</p>
 </div>
 <div class="paragraph">
-<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
+<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation is <a href="../api/io/micronaut/discovery/config/DefaultCompositeConfigurationClient.html">DefaultCompositeConfigurationClient</a> which merges all registered <code>ConfigurationClient</code> beans into a single bean.</p>
@@ -518,7 +518,7 @@ You can alter the path searched for by setting <code>consul.client.config.path</
 </div>
 </div>
 <div class="paragraph">
-<p>If you know define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
+<p>If you now define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
 </div>
 </div>
 </div>
@@ -668,6 +668,11 @@ vault:
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.ssl-configuration</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/ssl/SslConfiguration.html">SslConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.exception-on-error-status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>

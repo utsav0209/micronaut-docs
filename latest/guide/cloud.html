@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8 Cloud Native Features 1.2.10</title>
+    <title>8 Cloud Native Features 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8 Cloud Native Features</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -442,7 +442,7 @@ void onServiceStarted(ServiceStartedEvent event) {
 <p>The <a href="../api/io/micronaut/discovery/config/ConfigurationClient.html">ConfigurationClient</a> interface has a single method called <code>getPropertySources</code> that can be implemented to read and resolve configuration from distributed sources.</p>
 </div>
 <div class="paragraph">
-<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
+<p>The <code>getPropertySources</code> returns a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits zero or many <a href="../api/io/micronaut/context/env/PropertySource.html">PropertySource</a> instances.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation is <a href="../api/io/micronaut/discovery/config/DefaultCompositeConfigurationClient.html">DefaultCompositeConfigurationClient</a> which merges all registered <code>ConfigurationClient</code> beans into a single bean.</p>
@@ -598,7 +598,7 @@ You can alter the path searched for by setting <code>consul.client.config.path</
 </div>
 </div>
 <div class="paragraph">
-<p>If you know define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
+<p>If you now define a <code>@Value("${foo.bar}")</code> or call <code>environment.getProperty(..)</code> the value <code>myvalue</code> will be resolved from Consul.</p>
 </div>
 </div>
 </div>
@@ -748,6 +748,11 @@ vault:
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.ssl-configuration</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/ssl/SslConfiguration.html">SslConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vault.client.exception-on-error-status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -1132,7 +1137,7 @@ add and retrieve values and decrypt them with the default key store for your acc
 </ul>
 </div>
 <div class="paragraph">
-<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
+<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <code>DiscoveryClient</code> interface is <a href="../api/io/micronaut/discovery/client/CachingCompositeDiscoveryClient.html">CachingCompositeDiscoveryClient</a> which merges all other <code>DiscoveryClient</code> beans into a single bean and provides caching of the results of the methods. The default behaviour is to cache for 30 seconds. This cache can be disabled in application configuration:</p>
@@ -1729,25 +1734,10 @@ eureka:
 
 
 <div class="paragraph">
-<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery. The <a href="https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables">strategy for Service Discovery in Kubernetes</a> is pretty simple in that for each Pod, Kubernetes will expose environment variables in the format <code>[SERVICE_NAME]_SERVICE_HOST</code> and <code>[SERVICE_NAME]_SERVICE_PORT</code>.</p>
+<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery and Distributed Configuration.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut features a <a href="../api/io/micronaut/discovery/kubernetes/KubernetesDiscoveryClient.html">KubernetesDiscoveryClient</a> that simply looks at the environment variables and translates those into the available services.</p>
-</div>
-<div class="paragraph">
-<p>For example given a service exposed as <code>HELLO_WORLD_SERVICE_HOST</code> to your application, you can declare clients that will be automatically discovered using:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using @Client to Discover Services</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client(id = "hello-world")
-interface HelloClient{
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Since Kubernetes itself assumes responsibility for tasks such as health checks, load balancing and so on there is no need to send <a href="../api/io/micronaut/health/HeartbeatEvent.html">HeartbeatEvent</a> instances and so on.</p>
+<p>Micronaut have a first-class integration with Kubernetes. Check the <a href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html">Micronaut Kubernetes documentation</a> for more details.</p>
 </div>
 
 <h2 id="serviceDiscoveryRoute53"><a class="anchor" href="#serviceDiscoveryRoute53"></a>8.2.4 AWS Route 53 Support</h2>
@@ -2091,7 +2081,7 @@ You can override this configuration in production by specifying an environment v
 <p>The load balancing itself is handled by the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface which defines a  <a href="../api/io/micronaut/http/client/LoadBalancer.html#select--">LoadBalancer.select()</a> method that returns a <code>Publisher</code> that emits a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a>.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
+<p>The <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned because the process for selecting a <a href="../api/io/micronaut/discovery/ServiceInstance.html">ServiceInstance</a> may result in a network operation depending on the <a href="#serviceDiscovery">Service Discovery</a> strategy employed.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> interface is <a href="../api/io/micronaut/http/client/loadbalance/DiscoveryClientRoundRobinLoadBalancer.html">DiscoveryClientRoundRobinLoadBalancer</a>. You can replace this strategy for another implementation if you wish to customize how client side load balancing is handled in Micronaut since there are many different ways you may wish to optimize load balancing.</p>

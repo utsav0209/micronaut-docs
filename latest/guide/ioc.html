@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Inversion of Control 1.2.10</title>
+    <title>3 Inversion of Control 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -243,10 +243,10 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.10" // <2>
-    compile "io.micronaut:micronaut-inject:1.2.10"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0" // <2>
+    compile "io.micronaut:micronaut-inject:1.3.0"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.2.10" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.0" // <3>
     ...
 }</code></pre>
 </div>
@@ -448,20 +448,22 @@ class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">Vehicle vehicle = BeanContext.run().getBean(Vehicle.class);
+<pre class="highlight"><code class="language-java" data-lang="java">final BeanContext context = BeanContext.run();
+Vehicle vehicle = context.getBean(Vehicle.class);
 System.out.println(vehicle.start());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">Vehicle vehicle = BeanContext.run()
-                             .getBean(Vehicle)
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">def context = BeanContext.run()
+Vehicle vehicle = context.getBean(Vehicle)
 println( vehicle.start() )</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val vehicle = BeanContext.run().getBean(Vehicle::class.java)
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val context = BeanContext.run()
+val vehicle = context.getBean(Vehicle::class.java)
 println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -1821,6 +1823,14 @@ public class JdbcBookService implements BookService {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Requires the presence of one of more classpath resources</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(resources="classpath:myFile.properties")</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the current operating system to be in the list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(os={Requires.Family.WINDOWS})</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the current operating system to <strong>not</strong> be in the list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(notOs={Requires.Family.WINDOWS})</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect2">
@@ -2796,12 +2806,14 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        assertEquals(1, listener.getInvocationCounter());
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            assertEquals(1, listener.getInvocationCounter());
+        }
+
     }
 
 }</code></pre>
@@ -2841,6 +2853,9 @@ class SampleEventListenerSpec extends Specification {
 
         then:
         listener.invocationCounter == 1
+
+        cleanup:
+        context.close()
     }
 }</code></pre>
 </div>
@@ -2875,6 +2890,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
         listener.invocationCounter.shouldBe(0)
         emitter.publishSampleEvent()
         listener.invocationCounter.shouldBe(1)
+
+        context.close()
     }
 }</code></pre>
 </div>
@@ -2987,12 +3004,13 @@ public class SampleEventListenerSpec {
 
     @Test
     public void testEventListenerIsNotified() {
-        ApplicationContext context = ApplicationContext.run();
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
-        SampleEventListener listener = context.getBean(SampleEventListener.class);
-        assertEquals(0, listener.getInvocationCounter());
-        emitter.publishSampleEvent();
-        await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            await().atMost(10, SECONDS).until(listener::getInvocationCounter, equalTo(1));
+        }
     }
 
 }</code></pre>
@@ -3037,6 +3055,10 @@ class SampleEventListenerSpec extends Specification {
         new PollingConditions().eventually {
             listener.invocationCounter.get() == 1
         }
+
+        cleanup:
+        context.close()
+
     }
 }</code></pre>
 </div>
@@ -3085,6 +3107,8 @@ class SampleEventListenerSpec : AnnotationSpec() {
             println("Current value of counter: " + listener.invocationCounter.get())
             listener.invocationCounter.get().shouldBe(1)
         }
+
+        context.close()
     }
 }</code></pre>
 </div>
@@ -3183,7 +3207,7 @@ public class EngineInitializer implements BeanInitializedEventListener&lt;Engine
     public EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
         EngineFactory engineFactory = event.getBean();
         engineFactory.setRodLength(6.6);<b class="conum">(5)</b>
-        return ((EngineFactory) (event.getBean()));
+        return engineFactory;
     }
 }</code></pre>
 </div>
@@ -3331,7 +3355,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.2.10'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3340,7 +3364,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.2.10&lt;/version&gt;
+        &lt;version&gt;1.3.0&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -3362,7 +3386,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.2.10'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.0'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3370,7 +3394,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.2.10&lt;/version&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -3507,6 +3531,238 @@ data class Person(var name : String) {
 <td>.. and the <code>get</code> method used to retrieve the property value</td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_constructor_methods"><a class="anchor" href="#_constructor_methods"></a>Constructor Methods</h4>
+<div class="paragraph">
+<p>For classes with multiple constructors, it is possible to inform Micronaut which constructor should be used to instantiate the class. Apply the <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation to which constructor to be used.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Vehicle {
+
+    private final String make;
+    private final String model;
+    private final int axels;
+
+    public Vehicle(String make, String model) {
+        this(make, model, 2);
+    }
+
+    @Creator <b class="conum">(1)</b>
+    public Vehicle(String make, String model, int axels) {
+        this.make = make;
+        this.model = model;
+        this.axels = axels;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getAxels() {
+        return axels;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle {
+
+    private final String make
+    private final String model
+    private final int axels
+
+    Vehicle(String make, String model) {
+        this(make, model, 2)
+    }
+
+    @Creator <b class="conum">(1)</b>
+    Vehicle(String make, String model, int axels) {
+        this.make = make
+        this.model = model
+        this.axels = axels
+    }
+
+    String getMake() {
+        make
+    }
+
+    String getModel() {
+        model
+    }
+
+    int getAxels() {
+        axels
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle @Creator constructor(val make: String, val model: String, val axels: Int) { <b class="conum">(1)</b>
+
+    constructor(make: String, model: String) : this(make, model, 2) {}
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation is used to denote which constructor should be used</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This class has no default constructor so calls to instantiate without arguments will throw an <a href="../api/io/micronaut/core/reflect/exception/InstantiationException.html">InstantiationException</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_static_creator_methods"><a class="anchor" href="#_static_creator_methods"></a>Static Creator Methods</h4>
+<div class="paragraph">
+<p>For the use case of static methods being used to instantiate the class, the <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation can be applied to those methods to allow for the introspection to execute the method.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Business {
+
+    private String name;
+
+    private Business(String name) {
+        this.name = name;
+    }
+
+    @Creator <b class="conum">(1)</b>
+    public static Business forName(String name) {
+        return new Business(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business {
+
+    private String name
+
+    private Business(String name) {
+        this.name = name
+    }
+
+    @Creator <b class="conum">(1)</b>
+    static Business forName(String name) {
+        new Business(name)
+    }
+
+    String getName() {
+        name
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business private constructor(val name: String) {
+    companion object {
+
+        @Creator <b class="conum">(1)</b>
+        fun forName(name: String): Business {
+            return Business(name)
+        }
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/core/annotation/Creator.html">@Creator</a> annotation is applied to the static method which will be used to instantiate the class</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+There can be multiple "creator" methods annotated. If one exists without arguments, that will be used as the default construction method. The first method with arguments will be used as the primary construction method.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_enums"><a class="anchor" href="#_enums"></a>Enums</h4>
+<div class="paragraph">
+<p>It is possible to introspect enums as well. Simply add the annotation to the enum and it can be constructed through the standard <code>valueOf</code> method.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4699,7 +4955,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <p>As an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
 </div>
 <div class="listingblock">
-<div class="title">PermitAllAnnotationMapper Mapper Example</div>
+<div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
     @Nonnull
@@ -4839,8 +5095,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.2.10"
-    compileOnly "io.micronaut:micronaut-inject-java:1.2.10"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0"
+    compileOnly "io.micronaut:micronaut-inject-java:1.3.0"
     ...
 }</code></pre>
 </div>

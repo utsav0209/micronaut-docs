@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>8.2 Service Discovery 1.2.10</title>
+    <title>8.2 Service Discovery 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.2 Service Discovery</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -237,7 +237,7 @@ function addJsClass() {
 </ul>
 </div>
 <div class="paragraph">
-<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
+<p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
 </div>
 <div class="paragraph">
 <p>The default implementation of the <code>DiscoveryClient</code> interface is <a href="../api/io/micronaut/discovery/client/CachingCompositeDiscoveryClient.html">CachingCompositeDiscoveryClient</a> which merges all other <code>DiscoveryClient</code> beans into a single bean and provides caching of the results of the methods. The default behaviour is to cache for 30 seconds. This cache can be disabled in application configuration:</p>
@@ -834,25 +834,10 @@ eureka:
 
 
 <div class="paragraph">
-<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery. The <a href="https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables">strategy for Service Discovery in Kubernetes</a> is pretty simple in that for each Pod, Kubernetes will expose environment variables in the format <code>[SERVICE_NAME]_SERVICE_HOST</code> and <code>[SERVICE_NAME]_SERVICE_PORT</code>.</p>
+<p>Kubernetes is a container runtime which has a whole bunch of features including integrated Service Discovery and Distributed Configuration.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut features a <a href="../api/io/micronaut/discovery/kubernetes/KubernetesDiscoveryClient.html">KubernetesDiscoveryClient</a> that simply looks at the environment variables and translates those into the available services.</p>
-</div>
-<div class="paragraph">
-<p>For example given a service exposed as <code>HELLO_WORLD_SERVICE_HOST</code> to your application, you can declare clients that will be automatically discovered using:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using @Client to Discover Services</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Client(id = "hello-world")
-interface HelloClient{
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Since Kubernetes itself assumes responsibility for tasks such as health checks, load balancing and so on there is no need to send <a href="../api/io/micronaut/health/HeartbeatEvent.html">HeartbeatEvent</a> instances and so on.</p>
+<p>Micronaut have a first-class integration with Kubernetes. Check the <a href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html">Micronaut Kubernetes documentation</a> for more details.</p>
 </div>
 
 <h2 id="serviceDiscoveryRoute53"><a class="anchor" href="#serviceDiscoveryRoute53"></a>8.2.4 AWS Route 53 Support</h2>

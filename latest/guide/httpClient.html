@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7 The HTTP Client 1.2.10</title>
+    <title>7 The HTTP Client 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7 The HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -257,7 +257,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <p>The <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface forms the basis for the low-level API. This interfaces declares methods to help ease executing HTTP requests and receive responses.</p>
 </div>
 <div class="paragraph">
-<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
+<p>The majority of the methods in the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface returns Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances, which is not always the most useful interface to work against, hence a sub-interface called <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> is included that provides a variation of the <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> interface that returns RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> types.</p>
 </div>
 
 <h2 id="clientBasics"><a class="anchor" href="#clientBasics"></a>7.1.1 Sending your first HTTP request</h2>
@@ -426,7 +426,6 @@ import io.micronaut.http.client.annotation.Client
 import io.reactivex.Maybe
 
 import io.micronaut.http.HttpRequest.GET
-
 
     @Get("/hello/{name}")
     internal fun hello(name: String): Maybe&lt;String&gt; { <b class="conum">(1)</b>
@@ -1277,7 +1276,7 @@ import io.reactivex.Flowable;
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
-    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() {
         return Flowable.fromCallable(() -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
@@ -1299,7 +1298,7 @@ import io.reactivex.Flowable
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
-    @Get(value = "/headlines", produces = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() {
         Flowable.fromCallable({ <b class="conum">(2)</b>
             Headline headline = new Headline()
@@ -1322,7 +1321,7 @@ import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 
-    @Get(value = "/headlines", produces = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flowable&lt;Headline&gt; {
         return Flowable.fromCallable {
             <b class="conum">(2)</b>
@@ -1904,6 +1903,18 @@ interface PetOperations {
 <div class="paragraph">
 <p>Note how the interface uses Micronaut&#8217;s HTTP annotations which are usable on both the server and client side. Also, as you can see you can use <code>javax.validation</code> constraints to validate arguments.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Be aware that some annotations, such as <a href="../api/io/micronaut/http/client/annotation/Produces.html">Produces</a> and <a href="../api/io/micronaut/http/client/annotation/Consumes.html">Consumes</a>, have different semantics between server and client side usage. For example, <code>@Produces</code> on a controller method (server side) indicates how the method&#8217;s <strong>return value</strong> is formatted, while <code>@Produces</code> on a client indicates how the method&#8217;s <strong>parameters</strong> are formatted when sent to the server. While this may seem a little confusing at first, it is actually logical considering the different semantics between a server producing/consuming vs a client: A server consumes an argument and <strong>returns</strong> a response to the client, whereas a client consumes an argument and <strong>sends</strong> output to a server.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> and <code>hibernate-validator</code> dependencies on your classpath. For example in <code>build.gradle</code>:</p>
 </div>
@@ -2191,7 +2202,7 @@ Single&lt;Pet&gt; save(
 </table>
 </div>
 <div class="paragraph">
-<p>The following table summarizes the parameter annotations, their purpose and provides an example:</p>
+<p>The following table summarizes the parameter annotations, their purpose, and provides an example:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Parameter Binding Annotations</caption>
@@ -2226,7 +2237,7 @@ Single&lt;Pet&gt; save(
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Allows customizing the name of the URI parameter to bind from</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@QueryValue('userAge') Integer age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@QueryValue("userAge") Integer age</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/PathVariable.html">@PathVariable</a></p></td>
@@ -2240,6 +2251,33 @@ Single&lt;Pet&gt; save(
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="_type_based_binding_parameters"><a class="anchor" href="#_type_based_binding_parameters"></a>Type Based Binding Parameters</h4>
+<div class="paragraph">
+<p>Some parameters are recognized by their type instead of their annotation. The following table summarizes the parameter types, their purpose, and provides an example:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/BasicAuth.html">BasicAuth</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows binding of basic authorization credentials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BasicAuth basicAuth</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 <h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.2.2 Streaming with @Client</h2>
 
@@ -2256,7 +2294,7 @@ Single&lt;Pet&gt; save(
 <div class="sect2">
 <h3 id="_streaming_json_with_client"><a class="anchor" href="#_streaming_json_with_client"></a>Streaming JSON with @Client</h3>
 <div class="paragraph">
-<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
+<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
@@ -2424,7 +2462,7 @@ interface HeadlineClient {
 <p>Micronaut&#8217;s client does however support streaming of both individual JSON objects via <code>application/x-json-stream</code> and also JSON arrays defined with <code>application/json</code>.</p>
 </div>
 <div class="paragraph">
-<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
+<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2477,7 +2515,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
@@ -2492,7 +2530,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
             Headline headline = new Headline()
@@ -2507,7 +2545,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", produces = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
         return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
             emitter -&gt;
@@ -3228,6 +3266,189 @@ internal class BintrayFilter(
 </div>
 <div class="paragraph">
 <p>Now, whenever you invoke the <code>bintrayService.fetchRepositories()</code> method, the <code>Authorization</code> HTTP header is included in the request.</p>
+</div>
+<div class="sect2">
+<h3 id="_filter_matching_by_annotation"><a class="anchor" href="#_filter_matching_by_annotation"></a>Filter Matching By Annotation</h3>
+<div class="paragraph">
+<p>For cases where a filter should be applied to a client, regardless of the URL, filters can be matched by the presence of an annotation applied to both the filter and the client. Given the following client:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+public interface BasicAuthClient {
+
+    @Get
+    String getMessage();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+interface BasicAuthClient {
+
+    @Get
+    String getMessage()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+
+@BasicAuth <b class="conum">(1)</b>
+@Client("/message")
+interface BasicAuthClient {
+
+    @Get
+    fun getMessage(): String
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@BasicAuth</code> annotation is applied to the client</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following filter will filter the client requests:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.filter.ClientFilterChain;
+import io.micronaut.http.filter.HttpClientFilter;
+import org.reactivestreams.Publisher;
+
+import javax.inject.Singleton;
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+public class BasicAuthClientFilter implements HttpClientFilter {
+
+    @Override
+    public Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        return chain.proceed(request.basicAuth("user", "pass"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.filter.ClientFilterChain
+import io.micronaut.http.filter.HttpClientFilter
+import org.reactivestreams.Publisher
+
+import javax.inject.Singleton
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+class BasicAuthClientFilter implements HttpClientFilter {
+
+    @Override
+    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+        chain.proceed(request.basicAuth("user", "pass"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.filter.ClientFilterChain
+import io.micronaut.http.filter.HttpClientFilter
+import org.reactivestreams.Publisher
+
+import javax.inject.Singleton
+
+@BasicAuth <b class="conum">(1)</b>
+@Singleton <b class="conum">(2)</b>
+class BasicAuthClientFilter : HttpClientFilter {
+
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
+        return chain.proceed(request.basicAuth("user", "pass"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The same annotation, <code>@BasicAuth</code>, is applied to the filter</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Normally the <code>@Filter</code> annotation makes filters singletons by default. Because the <code>@Filter</code> annotation is not used, the desired scope must be applied</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>@BasicAuth</code> annotation is just an example and can be replaced with your own custom annotation.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.FilterMatcher;
+
+import java.lang.annotation.*;
+
+@FilterMatcher <b class="conum">(1)</b>
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.PARAMETER})
+public @interface BasicAuth {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.FilterMatcher
+
+import java.lang.annotation.*
+
+@FilterMatcher <b class="conum">(1)</b>
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target([ElementType.TYPE, ElementType.PARAMETER])
+@interface BasicAuth {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.FilterMatcher
+
+@FilterMatcher <b class="conum">(1)</b>
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.VALUE_PARAMETER)
+annotation class BasicAuth</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The only requirement for custom annotations is that the <a href="../api/io/micronaut/http/annotation/HttpFilterStereotype.html">@HttpFilterStereotype</a> annotation must be present</td>
+</tr>
+</table>
+</div>
 </div>
 
 <h2 id="clientSample"><a class="anchor" href="#clientSample"></a>7.4 HTTP Client Sample</h2>

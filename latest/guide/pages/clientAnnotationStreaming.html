@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.2.2 Streaming with @Client 1.2.10</title>
+    <title>7.2.2 Streaming with @Client 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.2.2 Streaming with @Client</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -135,7 +135,7 @@ function addJsClass() {
 <div class="sect2">
 <h3 id="_streaming_json_with_client"><a class="anchor" href="#_streaming_json_with_client"></a>Streaming JSON with @Client</h3>
 <div class="paragraph">
-<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
+<p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
@@ -303,7 +303,7 @@ interface HeadlineClient {
 <p>Micronaut&#8217;s client does however support streaming of both individual JSON objects via <code>application/x-json-stream</code> and also JSON arrays defined with <code>application/json</code>.</p>
 </div>
 <div class="paragraph">
-<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.2-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
+<p>If the server returns <code>application/json</code> and a non-single <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> is returned (such as an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or a Reactor <code>Flux</code>) then the client with stream the array elements as they become available.</p>
 </div>
 </div>
 <div class="sect2">
@@ -356,7 +356,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
@@ -371,7 +371,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", produces = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
             Headline headline = new Headline()
@@ -386,7 +386,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", produces = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
         return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
             emitter -&gt;

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.4 Configuration Properties 1.2.10</title>
+    <title>4.4 Configuration Properties 1.3.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.4 Configuration Properties</h1>
 
-                    <p><strong>Version:</strong> 1.2.10</p>
+                    <p><strong>Version:</strong> 1.3.0</p>
                 </div>
 
                 
@@ -359,7 +359,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
         ApplicationContext applicationContext = ApplicationContext.run(map, "test");
 
         Vehicle vehicle = applicationContext.getBean(Vehicle.class);
-        DefaultGroovyMethods.println(this, vehicle.start());</code></pre>
+        System.out.println(vehicle.start());</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -382,7 +382,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
         val applicationContext = ApplicationContext.run(map, "test")
 
         val vehicle = applicationContext.getBean(Vehicle::class.java)
-        DefaultGroovyMethods.println(this, vehicle.start())</code></pre>
+        println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -393,6 +393,17 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 </div>
 <div class="paragraph">
 <p>For example creating a subclass of <code>EngineConfig</code> with <code>@ConfigurationProperties('bar')</code> will resolve all properties under the path <code>my.engine.bar</code>.</p>
+</div>
+<div class="sect1">
+<h2 id="_includes_excludes"><a class="anchor" href="#_includes_excludes"></a>Includes / Excludes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For the cases where the configuration properties class is inheriting properties from a parent class, it may be desirable to exclude properties from the parent class. The <code>includes</code> and <code>excludes</code> members of the <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation allow for that functionality. The list applies to both local properties and inherited properties.</p>
+</div>
+<div class="paragraph">
+<p>The names supplied to the includes/excludes list should be the "property" name. For example if a setter method is injected, the property name is the de-capitalized setter name (<code>setConnectionTimeout</code> &#8594; <code>connectionTimeout</code>).</p>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="_property_type_conversion"><a class="anchor" href="#_property_type_conversion"></a>Property Type Conversion</h2>
@@ -568,7 +579,7 @@ List&lt;URL&gt; urls;</code></pre>
 <div class="listingblock">
 <div class="title">Using <code>@Format</code> for Dates</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMyDate(@Format("yy-mm-dd") LocalDate date) {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void setMyDate(@Format("yyyy-MM-dd") LocalDate date) {
     this.myDate = date;
 }</code></pre>
 </div>
