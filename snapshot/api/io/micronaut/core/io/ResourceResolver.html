@@ -223,7 +223,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>ResourceResolver</h4>
-<pre>public&nbsp;ResourceResolver(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>public&nbsp;ResourceResolver(@NonNull
                         <a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>[]&nbsp;resourceLoaders)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -237,7 +237,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>ResourceResolver</h4>
-<pre>public&nbsp;ResourceResolver(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>public&nbsp;ResourceResolver(@NonNull
                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;resourceLoaders)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -269,8 +269,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getLoader</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;&lt;T extends <a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getLoader(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;&lt;T extends <a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getLoader(@NonNull
                                                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;resolverType)</pre>
 <div class="block">Searches resource loaders for one that matches or is a subclass of the specified type.</div>
 <dl>
@@ -289,8 +289,8 @@ public&nbsp;&lt;T extends <a href="../../../../io/micronaut/core/io/ResourceLoad
 <ul class="blockList">
 <li class="blockList">
 <h4>getSupportingLoader</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;getSupportingLoader(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;getSupportingLoader(@NonNull
                                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;prefix)</pre>
 <div class="block">Searches resource loaders for one that supports the given prefix.</div>
 <dl>
@@ -307,8 +307,8 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockList">
 <li class="blockList">
 <h4>getLoaderForBasePath</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;getLoaderForBasePath(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&gt;&nbsp;getLoaderForBasePath(@NonNull
                                                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;basePath)</pre>
 <div class="block">Searches resource loaders for one that supports the given path. If found, create a new loader with the
  context of the base path.</div>
@@ -326,8 +326,8 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceAsStream</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&gt;&nbsp;getResourceAsStream(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&gt;&nbsp;getResourceAsStream(@NonNull
                                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <div class="block">Searches resource loaders for one that supports the given path. If found, return the resource stream.</div>
 <dl>
@@ -344,8 +344,8 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockList">
 <li class="blockList">
 <h4>getResource</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;getResource(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;getResource(@NonNull
                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <div class="block">Searches resource loaders for one that supports the given path. If found, return the resource URL.</div>
 <dl>
@@ -362,8 +362,8 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getResources</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;getResources(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;getResources(@NonNull
                                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <div class="block">Searches resource loaders for one that supports the given path. If found, return a stream of matching resources.</div>
 <dl>

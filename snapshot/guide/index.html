@@ -622,6 +622,18 @@
 <p>For the situations when the host of a client call is variable, it is no longer required to pass a service id or URL to <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a>. If no host is provided at the time of a request, a <a href="../api/io/micronaut/http/client/exceptions/NoHostException.html">NoHostException</a> will be thrown.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"><a class="anchor" href="#_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"></a>Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
+<div class="paragraph">
+<p>In Micronaut 1.x the Google distributed JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) was used to specify <code>@Nullable</code> and <code>@NonNull</code> on interfaces of the Micronaut API using the annotations contained within the <code>javax.annotation</code> package.</p>
+</div>
+<div class="paragraph">
+<p>Due to the fact that JSR-305 has been cancelled and that this dependency has potential licensing issues (by using the <code>javax</code> namespace) as well as problems with the cross packages on Java 9+ with the module system Micronaut 2.x switches to the <code>spotbugs-annotations</code> module provided by the <a href="https://spotbugs.github.io/">SpotBugs project</a>.</p>
+</div>
+<div class="paragraph">
+<p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
+</div>
+</div>
 
 <h1 id="quickStart"><a class="anchor" href="#quickStart"></a>2 Quick Start</h1>
 
@@ -6221,16 +6233,17 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
-import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -6238,16 +6251,17 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
-import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
@@ -6418,7 +6432,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
-    @Nonnull
+    @NonNull
     @Override
     public String getName() {
         return "javax.persistence.Entity";
@@ -9160,7 +9174,7 @@ If you try to specify any other abstract method other than a getter a compilatio
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.*;
 import io.micronaut.core.bind.annotation.Bindable;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.validation.constraints.*;
 import java.util.Optional;
 
@@ -12424,7 +12438,7 @@ String lock(String name)</code></pre>
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
@@ -16967,7 +16981,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
@@ -32683,6 +32697,12 @@ dependencyManagement {
 </div>
 <div class="paragraph">
 <p>In Micronaut 2.x and above this is no longer the case and if you need an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> generated you should add the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation to any custom AOP advice you specify otherwise the method will not be available via the <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> interface (using for example the <a href="../api/io/micronaut/BeanDefinition/getExecutableMethods.html">getExecutableMethods</a> method).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"><a class="anchor" href="#_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"></a>Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
+<div class="paragraph">
+<p>The JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) is no longer a dependency (replaced by <code>spotbugs-annotations</code>). If you need this library you will need to add it manually.</p>
 </div>
 </div>
 <div class="sect2">

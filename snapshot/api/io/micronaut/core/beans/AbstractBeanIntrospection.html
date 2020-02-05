@@ -366,9 +366,9 @@ implements <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractBeanIntrospection</h4>
-<pre>protected&nbsp;AbstractBeanIntrospection(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>protected&nbsp;AbstractBeanIntrospection(@NonNull
                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>&gt;&nbsp;beanType,
-                                    <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                                    @Nullable
                                     <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata,
                                     int&nbsp;propertyCount)</pre>
 <div class="block">Base class for bean instrospections.</div>
@@ -394,10 +394,10 @@ implements <a href="../../../../io/micronaut/core/beans/BeanIntrospection.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>getIndexedProperty</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getIndexedProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getIndexedProperty(@NonNull
                                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType,
-                                                                    <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                                                    @NonNull
                                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;annotationValue)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperty-java.lang.Class-java.lang.String-">BeanIntrospection</a></code></span></div>
 <div class="block">Get all the bean properties annotated for the given type.</div>
@@ -420,7 +420,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockList">
 <li class="blockList">
 <h4>instantiate</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
 public&nbsp;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>&nbsp;instantiate(boolean&nbsp;strictNullable,
                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;arguments)
                        throws <a href="../../../../io/micronaut/core/reflect/exception/InstantiationException.html" title="class in io.micronaut.core.reflect.exception">InstantiationException</a></pre>
@@ -445,8 +445,8 @@ public&nbsp;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospecti
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getProperty(@NonNull
                                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getProperty-java.lang.String-">BeanIntrospection</a></code></span></div>
 <div class="block">Obtain a property by name.</div>
@@ -466,8 +466,8 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockList">
 <li class="blockList">
 <h4>getIndexedProperties</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getIndexedProperties(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getIndexedProperties(@NonNull
                                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getIndexedProperties-java.lang.Class-">BeanIntrospection</a></code></span></div>
 <div class="block">Get all the bean properties annotated for the given annotation type. If the annotation is <a href="../../../../io/micronaut/core/annotation/Introspected.html#indexed--"><code>Introspected.indexed()</code></a> by the given annotation,
@@ -507,7 +507,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collect
 <ul class="blockList">
 <li class="blockList">
 <h4>getBeanProperties</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;getBeanProperties()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -523,7 +523,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collect
 <ul class="blockList">
 <li class="blockList">
 <h4>getBeanType</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>&gt;&nbsp;getBeanType()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/beans/BeanIntrospection.html#getBeanType--">BeanIntrospection</a></code></span></div>
 <div class="block">The bean type.</div>
@@ -559,7 +559,7 @@ protected abstract&nbsp;<a href="../../../../io/micronaut/core/beans/AbstractBea
 <li class="blockList">
 <h4>addProperty</h4>
 <pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
-protected final&nbsp;void&nbsp;addProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected final&nbsp;void&nbsp;addProperty(@NonNull
                                            <a href="../../../../io/micronaut/core/beans/BeanProperty.html" title="interface in io.micronaut.core.beans">BeanProperty</a>&lt;<a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html" title="type parameter in AbstractBeanIntrospection">T</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;property)</pre>
 <div class="block">Adds a property at a particular index of the internal array passed to the constructor. Used by
  generated byte code for subclasses and not for public consumption.</div>
@@ -576,9 +576,9 @@ protected final&nbsp;void&nbsp;addProperty(<a href="https://docs.oracle.com/java
 <li class="blockList">
 <h4>indexProperty</h4>
 <pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
-protected final&nbsp;void&nbsp;indexProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected final&nbsp;void&nbsp;indexProperty(@NonNull
                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType,
-                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             @NonNull
                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</pre>
 <div class="block">Used to produce an index for particular annotation type. Method referenced by generated byte code and
  not for public consumption. Should be called after <a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html#addProperty-io.micronaut.core.beans.BeanProperty-"><code>addProperty(BeanProperty)</code></a> if required.</div>
@@ -596,11 +596,11 @@ protected final&nbsp;void&nbsp;indexProperty(<a href="https://docs.oracle.com/ja
 <li class="blockList">
 <h4>indexProperty</h4>
 <pre><a href="../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
-protected final&nbsp;void&nbsp;indexProperty(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+protected final&nbsp;void&nbsp;indexProperty(@NonNull
                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType,
-                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             @NonNull
                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
-                                             <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                                             @NonNull
                                              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;annotationValue)</pre>
 <div class="block">Used to produce an index for particular annotation type. Method referenced by generated byte code and
  not for public consumption. Should be called after <a href="../../../../io/micronaut/core/beans/AbstractBeanIntrospection.html#addProperty-io.micronaut.core.beans.BeanProperty-"><code>addProperty(BeanProperty)</code></a> if required.</div>

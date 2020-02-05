@@ -312,7 +312,7 @@ implements <a href="../../../../../io/micronaut/inject/ast/ClassElement.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.core.annotation.<a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html" title="interface in io.micronaut.core.annotation">AnnotatedElement</a></h3>
-<code><a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isDeclaredNullable--">isDeclaredNullable</a>, <a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isNullable--">isNullable</a></code></li>
+<code><a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isDeclaredNonNull--">isDeclaredNonNull</a>, <a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isDeclaredNullable--">isDeclaredNullable</a>, <a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isNonNull--">isNonNull</a>, <a href="../../../../../io/micronaut/core/annotation/AnnotatedElement.html#isNullable--">isNullable</a></code></li>
 </ul>
 </li>
 </ul>
@@ -359,8 +359,8 @@ implements <a href="../../../../../io/micronaut/inject/ast/ClassElement.html" ti
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeArguments</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&gt;&nbsp;getTypeArguments(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&gt;&nbsp;getTypeArguments(@NonNull
                                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getTypeArguments-java.lang.String-">ClassElement</a></code></span></div>
 <div class="block">Get the type arguments for the given type name.</div>
@@ -465,7 +465,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getFields</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>&gt;&nbsp;getFields(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>&gt;&nbsp;getFields(@NonNull
                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../io/micronaut/inject/ast/ElementModifier.html" title="enum in io.micronaut.inject.ast">ElementModifier</a>&gt;&gt;&nbsp;modifierFilter)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields-java.util.function.Predicate-">ClassElement</a></code></span></div>
 <div class="block">Return fields contained with the given modifiers include / exclude rules.</div>
@@ -561,7 +561,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getPrimaryConstructor</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a>&gt;&nbsp;getPrimaryConstructor()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPrimaryConstructor--">ClassElement</a></code></span></div>
 <div class="block">Find and return a single primary constructor. If more than constructor candidate exists, then return empty unless a
@@ -598,7 +598,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optiona
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTypeArguments</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+<pre>@NonNull
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&gt;&nbsp;getTypeArguments()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>

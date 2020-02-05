@@ -4938,16 +4938,17 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
-import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -4955,16 +4956,17 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
-import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
@@ -5135,7 +5137,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
-    @Nonnull
+    @NonNull
     @Override
     public String getName() {
         return "javax.persistence.Entity";
