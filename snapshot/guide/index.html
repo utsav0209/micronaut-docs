@@ -529,7 +529,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+        <p><strong>Version:</strong> 1.3.1.BUILD-SNAPSHOT</p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -614,24 +614,360 @@
 
 
 <div class="paragraph">
-<p>Micronaut 2.0.0.BUILD-SNAPSHOT includes the following changes:</p>
+<p>Micronaut 1.3.1.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_clients_with_no_base_path"><a class="anchor" href="#_clients_with_no_base_path"></a>Clients With No Base Path</h3>
+<h3 id="_support_for_graalvm_19_3_1"><a class="anchor" href="#_support_for_graalvm_19_3_1"></a>Support for GraalVM 19.3.1</h3>
 <div class="paragraph">
-<p>For the situations when the host of a client call is variable, it is no longer required to pass a service id or URL to <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a>. If no host is provided at the time of a request, a <a href="../api/io/micronaut/http/client/exceptions/NoHostException.html">NoHostException</a> will be thrown.</p>
+<p>Micronaut now supports creating native-images using GraalVM 19.3.1 for both JDK 8 and JDK 11.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"><a class="anchor" href="#_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"></a>Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
+<h3 id="_startup_and_memory_usage_optimizations"><a class="anchor" href="#_startup_and_memory_usage_optimizations"></a>Startup and Memory Usage Optimizations</h3>
 <div class="paragraph">
-<p>In Micronaut 1.x the Google distributed JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) was used to specify <code>@Nullable</code> and <code>@NonNull</code> on interfaces of the Micronaut API using the annotations contained within the <code>javax.annotation</code> package.</p>
+<p>Startup performance and memory usage (20%) have been improved.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_data_integration"><a class="anchor" href="#_micronaut_data_integration"></a>Micronaut Data Integration</h3>
+<div class="paragraph">
+<p>Micronaut Data has been added to the <code>micronaut-bom</code> and you can now use the CLI to create Micronaut Data projects:</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting up Micronaut Data JPA</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
+$ mn create-app myapp --features data-hibernate-jpa</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Setting up Micronaut Data JDBC</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
+$ mn create-app myapp --features data-jdbc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initial_support_for_kotlin_coroutines_and_flow"><a class="anchor" href="#_initial_support_for_kotlin_coroutines_and_flow"></a>Initial Support for Kotlin Coroutines and Flow</h3>
+<div class="paragraph">
+<p>Initial support for Kotlin Coroutines and the <code>Flow</code> type has been added when used as the return type of controller methods.</p>
 </div>
 <div class="paragraph">
-<p>Due to the fact that JSR-305 has been cancelled and that this dependency has potential licensing issues (by using the <code>javax</code> namespace) as well as problems with the cross packages on Java 9+ with the module system Micronaut 2.x switches to the <code>spotbugs-annotations</code> module provided by the <a href="https://spotbugs.github.io/">SpotBugs project</a>.</p>
+<p>Thanks to <a href="https://github.com/konrad-kaminski">Konrad Kamiński</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_immutable_code_configurationproperties_code_and_code_eachproperty_code"><a class="anchor" href="#_immutable_code_configurationproperties_code_and_code_eachproperty_code"></a>Immutable <code>@ConfigurationProperties</code> and <code>@EachProperty</code></h3>
+<div class="paragraph">
+<p>Support for immutable <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> has been added by annotating the constructor of any configuration class with <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a>. See the documentation on <a href="#immutableConfig">Immutable Configuration</a> for more information.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.bind.annotation.Bindable;
+import javax.validation.constraints.*;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+public interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer();
+
+    @Min(1L)
+    int getCylinders();
+
+    @NotNull
+    CrankShaft getCrankShaft(); <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength(); <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @NotBlank <b class="conum">(3)</b>
+    String getManufacturer()
+
+    @Min(1L)
+    int getCylinders()
+
+    @NotNull
+    CrankShaft getCrankShaft() <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    static interface CrankShaft { <b class="conum">(5)</b>
+        Optional&lt;Double&gt; getRodLength() <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@ConfigurationProperties Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import javax.validation.constraints.*
+import java.util.Optional
+
+
+@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
+interface EngineConfig {
+
+    @get:Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
+    @get:NotBlank <b class="conum">(3)</b>
+    val manufacturer: String
+
+    @get:Min(1L)
+    val cylinders: Int
+
+    @get:NotNull
+    val crankShaft: CrankShaft <b class="conum">(4)</b>
+
+    @ConfigurationProperties("crank-shaft")
+    interface CrankShaft { <b class="conum">(5)</b>
+        val rodLength: Double? <b class="conum">(6)</b>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ability_to_configure_log_levels_via_properties"><a class="anchor" href="#_ability_to_configure_log_levels_via_properties"></a>Ability to Configure Log Levels via Properties</h3>
+<div class="paragraph">
+<p>Log levels can now be configured via properties defined in <code>application.yml</code> (and environment variables) with the <code>log.level</code> prefix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logger:
+    levels:
+        foo.bar: ERROR</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_micronaut_cache_modules"><a class="anchor" href="#_new_micronaut_cache_modules"></a>New Micronaut Cache Modules</h3>
+<div class="paragraph">
+<p><a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#introduction">Micronaut Cache</a> has been updated to support <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#hazelcast">Hazelcast</a> and <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#ehcache">Ehcache</a> as additional Cache providers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_micronaut_jackson_xml_module"><a class="anchor" href="#_new_micronaut_jackson_xml_module"></a>New Micronaut Jackson XML Module</h3>
+<div class="paragraph">
+<p>Support for parsing and serializing to XML has been added with a new <a href="https://github.com/micronaut-projects/micronaut-jackson-xml">Jackson XML module</a>.</p>
 </div>
 <div class="paragraph">
-<p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.xml:micronaut-jackson-xml'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.xml&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jackson-xml&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Thanks to <a href="https://github.com/svishnyakoff">Sergey</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_openapi_swagger_1_3_update"><a class="anchor" href="#_micronaut_openapi_swagger_1_3_update"></a>Micronaut OpenAPI (Swagger) 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut OpenAPI has been updated with loads of improvements including the ability to <a href="https://micronaut-projects.github.io/micronaut-openapi/1.3.x/guide/index.html#openApiViews">automatically generate UIs for Swagger output</a> as part of your application. Thanks to <a href="https://github.com/croudet">croudet</a> for this contribution awesome contribution.</p>
+</div>
+<div class="paragraph">
+<p>The module is also no longer regarded as experimental.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_views_1_3_update"><a class="anchor" href="#_micronaut_views_1_3_update"></a>Micronaut Views 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut Views has been updated to and now features a new <a href="https://micronaut-projects.github.io/micronaut-views/1.3.x/guide/#soy">view renderer for Soy (Closure Templates)</a>. Thanks to <a href="https://github.com/sgammon">Sam Gammon</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_sql_1_3_update"><a class="anchor" href="#_micronaut_sql_1_3_update"></a>Micronaut SQL 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut SQL includes the latest versions of Hibernate and adds support for the Vert.x MySQL and Postgres Clients. Thank you to <a href="https://github.com/shenzhou-6">shenzhou-6</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_micrometer_1_3_update"><a class="anchor" href="#_micronaut_micrometer_1_3_update"></a>Micronaut Micrometer 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut Micrometer has been updated to support Micrometer 1.3.1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_kafka_1_4_update"><a class="anchor" href="#_micronaut_kafka_1_4_update"></a>Micronaut Kafka 1.4 Update</h3>
+<div class="paragraph">
+<p>Micronaut Kafka 1.4 has been updated to support Kafka 2.4.0</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_neo4j_1_3_update"><a class="anchor" href="#_micronaut_neo4j_1_3_update"></a>Micronaut Neo4j 1.3 Update</h3>
+<div class="paragraph">
+<p>Micronaut Neo4j 1.3 has been updated to support Neo4j Java Driver 1.7.5. In additional a new <code>2.0.0</code> version is available that supports Neo4j Java Driver 4.x line which is the latest version (in order to maintain semantic versioning the default is still 1.3 since the latest version includes changes to package names). See the <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/">Micronaut Neo4j Documentation</a> for more information.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_grpc_1_1_update"><a class="anchor" href="#_micronaut_grpc_1_1_update"></a>Micronaut GRPC 1.1 Update</h3>
+<div class="paragraph">
+<p>Micronaut GRPC has been updated to the latest versions of GRPC and Protobuf.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_requires_os"><a class="anchor" href="#_requires_os"></a>@Requires OS</h3>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> annotation now has support for disabling beans based on the current operating system.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(os=Family.LINUX)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_auth_binding_support"><a class="anchor" href="#_basic_auth_binding_support"></a>Basic Auth binding support</h3>
+<div class="paragraph">
+<p>In the client and server, an argument of type <a href="../api/io/micronaut/http/BasicAuth.html">BasicAuth</a> can be used to generate or parse a basic authorization header.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post("/login")
+String login(BasicAuth basicAuth) {
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_certificate"><a class="anchor" href="#_request_certificate"></a>Request Certificate</h3>
+<div class="paragraph">
+<p>For SSL requests, the certificate is now available as a request attribute. See <a href="../api/io/micronaut/http/HttpRequest.html#getCertificate--">HttpRequest#getCertificate</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_client_filter_matching_by_annotation"><a class="anchor" href="#_client_filter_matching_by_annotation"></a>Client Filter Matching By Annotation</h3>
+<div class="paragraph">
+<p>Micronaut HTTP clients and client filters can now be matched by the presence of an annotation. Previously only URL matching was supported. See <a href="#_filter_matching_by_annotation">the documentation</a> to get started.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dependency_upgrades"><a class="anchor" href="#_dependency_upgrades"></a>Dependency Upgrades</h3>
+<div class="paragraph">
+<p>Required Third Party Dependencies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ASM <code>7.0</code> &#8594; <code>7.2</code></p>
+</li>
+<li>
+<p>Caffeine <code>2.5.6</code> &#8594; <code>2.8.0</code></p>
+</li>
+<li>
+<p>Jackson <code>2.9.9</code> &#8594; <code>2.10.1</code></p>
+</li>
+<li>
+<p>Reactive Streams <code>1.0.2</code> &#8594; <code>1.0.3</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Optional Third Party Dependencies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Micrometer <code>1.2.1</code> &#8594; <code>1.3.1</code></p>
+</li>
+<li>
+<p>Mongo Reactive Driver <code>1.11.0</code> &#8594; <code>1.13.0</code></p>
+</li>
+<li>
+<p>Neo4j Java Driver <code>1.7.2</code> &#8594; <code>1.7.5</code></p>
+</li>
+<li>
+<p>Jaeger <code>0.35.5</code> &#8594; <code>1.0.0</code></p>
+</li>
+<li>
+<p>Kafka <code>2.3.0</code> &#8594; <code>2.4.0</code></p>
+</li>
+<li>
+<p>Spring <code>5.1.8</code> &#8594; <code>5.2.3</code></p>
+</li>
+<li>
+<p>Zipkin/Brave <code>5.6.5</code> &#8594; <code>5.9.0</code></p>
+</li>
+<li>
+<p>Groovy <code>2.5.7</code> &#8594; <code>2.5.8</code></p>
+</li>
+<li>
+<p>Gradle <code>5.5</code> &#8594; <code>Gradle 6.1</code> (for new applications)</p>
+</li>
+<li>
+<p>Hibernate Core <code>5.4.6.Final</code> &#8594; <code>5.4.10.Final</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Modules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Micronaut GRPC <code>1.0.1</code> &#8594; <code>1.1.1</code></p>
+</li>
+<li>
+<p>Micronaut Kafka <code>1.2.0</code> &#8594; <code>1.4.0</code></p>
+</li>
+<li>
+<p>Micronaut Micrometer <code>1.2.1</code> &#8594; <code>1.3.0</code></p>
+</li>
+<li>
+<p>Micronaut MongoDB <code>1.1.0</code> &#8594; <code>1.2.0</code></p>
+</li>
+<li>
+<p>Micronaut MongoDB <code>1.1.0</code> &#8594; <code>1.3.0</code></p>
+</li>
+<li>
+<p>Micronaut Neo4j <code>1.1.0</code> &#8594; <code>1.3.0</code></p>
+</li>
+<li>
+<p>Micronaut OpenAPI <code>1.2.0</code> &#8594; <code>1.3.0</code></p>
+</li>
+<li>
+<p>Micronaut Redis <code>1.1.0</code> &#8594; <code>1.2.0</code></p>
+</li>
+<li>
+<p>Micronaut SQL <code>1.2.3</code> &#8594; <code>1.3.0</code></p>
+</li>
+<li>
+<p>Micronaut Views <code>1.2.0</code> &#8594; <code>1.3.0</code></p>
+</li>
+</ul>
 </div>
 </div>
 
@@ -697,7 +1033,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 2.0.0.BUILD-SNAPSHOT</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.1.BUILD-SNAPSHOT</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1538,10 +1874,10 @@ class HelloClientSpec {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:micronaut-inject:2.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.1.BUILD-SNAPSHOT" // <2>
+    compile "io.micronaut:micronaut-inject:1.3.1.BUILD-SNAPSHOT"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.1.BUILD-SNAPSHOT" // <3>
     ...
 }</code></pre>
 </div>
@@ -2921,183 +3257,6 @@ class EngineFactory {
     }
 }</code></pre>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_injection_point"><a class="anchor" href="#_injection_point"></a>Injection Point</h3>
-<div class="paragraph">
-<p>A common use case with factories is to take advantage of annotation metadata from the point at which an object is injected such that behaviour can be modified based on said metadata.</p>
-</div>
-<div class="paragraph">
-<p>Consider an annotation such as the following:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Documented
-@Retention(RUNTIME)
-@Target(ElementType.PARAMETER)
-public @interface Cylinders {
-    int value() default 8;
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Documented
-@Retention(RUNTIME)
-@Target(ElementType.PARAMETER)
-@interface Cylinders {
-    int value() default 8
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.VALUE_PARAMETER)
-annotation class Cylinders(val value: Int = 8)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above annotation could be used to customize the type of engine we want to inject into a vehicle at the point at which the injection point is defined:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
-class Vehicle {
-    private final Engine engine;
-    Vehicle(@Cylinders(6) Engine engine) {
-        this.engine = engine;
-    }
-
-    String start() {
-        return engine.start();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
-class Vehicle {
-    private final Engine engine
-    Vehicle(@Cylinders(6) Engine engine) {
-        this.engine = engine
-    }
-
-    String start() {
-        return engine.start()
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
-internal class Vehicle(@param:Cylinders(6) private val engine: Engine) {
-    fun start(): String {
-        return engine.start()
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above <code>Vehicle</code> class specifies an annotation value of <code>@Cylinders(6)</code> indicating an <code>Engine</code> of six cylinders is needed.</p>
-</div>
-<div class="paragraph">
-<p>To implement this use case you can define a factory that accepts the <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a> instance which can be used to analyze the annotation values defined:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Factory
-class EngineFactory {
-
-    @Prototype
-    Engine v8Engine(InjectionPoint&lt;?&gt; injectionPoint, CrankShaft crankShaft) { <b class="conum">(1)</b>
-        final int cylinders = injectionPoint
-                .getAnnotationMetadata()
-                .intValue(Cylinders.class).orElse(8); <b class="conum">(2)</b>
-        switch (cylinders) { <b class="conum">(3)</b>
-            case 6:
-                return new V6Engine(crankShaft);
-            case 8:
-                return new V8Engine(crankShaft);
-            default:
-                throw new IllegalArgumentException("Unsupported number of cylinders specified: " + cylinders);
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory
-class EngineFactory {
-
-    @Prototype
-    Engine v8Engine(InjectionPoint&lt;?&gt; injectionPoint, CrankShaft crankShaft) { <b class="conum">(1)</b>
-        final int cylinders = injectionPoint
-                .getAnnotationMetadata()
-                .intValue(Cylinders.class).orElse(8) <b class="conum">(2)</b>
-        switch (cylinders) { <b class="conum">(3)</b>
-            case 6:
-                return new V6Engine(crankShaft)
-            case 8:
-                return new V8Engine(crankShaft)
-            default:
-                throw new IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
-internal class EngineFactory {
-
-    @Prototype
-    fun v8Engine(injectionPoint: InjectionPoint&lt;*&gt;, crankShaft: CrankShaft): Engine { <b class="conum">(1)</b>
-        val cylinders = injectionPoint
-                .annotationMetadata
-                .intValue(Cylinders::class.java).orElse(8) <b class="conum">(2)</b>
-        return when (cylinders) { <b class="conum">(3)</b>
-            6 -&gt; V6Engine(crankShaft)
-            8 -&gt; V8Engine(crankShaft)
-            else -&gt; throw IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The factory method defines a parameter of type <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The annotation metadata is used to obtain the value of the <code>@Cylinder</code> annotation</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The value is used to construct an engine, throwing an exception if an engine cannot be constructed.</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is important to note that the factory is declared as <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</a> scope so that the method is invoked for each injection point. If the <code>V8Engine</code> and <code>V6Engine</code> types are required to be singletons then the factory should use a map to ensure the objects are only constructed once.
-</td>
-</tr>
-</table>
 </div>
 </div>
 
@@ -4827,7 +4986,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.1.BUILD-SNAPSHOT'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4836,7 +4995,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;1.3.1.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -4858,7 +5017,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:2.0.0.BUILD-SNAPSHOT'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.1.BUILD-SNAPSHOT'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4866,7 +5025,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.0.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;1.3.1.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -6233,17 +6392,16 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
+import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @NonNull ConstraintValidatorContext context) {
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -6251,17 +6409,16 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
-import edu.umd.cs.findbugs.annotations.Nullable
-import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
+import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @NonNull ConstraintValidatorContext context) {
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
@@ -6432,7 +6589,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
-    @NonNull
+    @Nonnull
     @Override
     public String getName() {
         return "javax.persistence.Entity";
@@ -6569,8 +6726,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.1.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:1.3.1.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>
@@ -8893,128 +9050,6 @@ constructor(@param:Parameter val name: String) {
 </tr>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_list_based_binding"><a class="anchor" href="#_list_based_binding"></a>List Based Binding</h3>
-<div class="paragraph">
-<p>The default behavior of <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> is to bind from a map style of configuration where the key is the named qualifier of the bean and the value is the data to bind from. For cases where map style configuration doesn&#8217;t make sense, it is possible to inform Micronaut the class should be bound from a list. Simply set the <code>list</code> member on the annotation to true.</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package io.micronaut.docs.config.env;
-
-import io.micronaut.context.annotation.EachProperty;
-import io.micronaut.context.annotation.Parameter;
-import io.micronaut.core.order.Ordered;
-
-import java.time.Duration;
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-public class RateLimitsConfiguration implements Ordered { <b class="conum">(2)</b>
-
-    private final Integer index;
-    private Duration period;
-    private Integer limit;
-
-    RateLimitsConfiguration(@Parameter Integer index) { <b class="conum">(3)</b>
-        this.index = index;
-    }
-
-    @Override
-    public int getOrder() {
-        return index;
-    }
-
-    public Duration getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(Duration period) {
-        this.period = period;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">package io.micronaut.docs.config.env
-
-import io.micronaut.context.annotation.EachProperty
-import io.micronaut.context.annotation.Parameter
-import io.micronaut.core.order.Ordered
-
-import java.time.Duration
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-class RateLimitsConfiguration implements Ordered { <b class="conum">(2)</b>
-
-    private final Integer index
-    Duration period
-    Integer limit
-
-    RateLimitsConfiguration(@Parameter Integer index) { <b class="conum">(3)</b>
-        this.index = index
-    }
-
-    @Override
-    int getOrder() {
-        index
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">package io.micronaut.docs.config.env
-
-import io.micronaut.context.annotation.EachProperty
-import io.micronaut.context.annotation.Parameter
-import io.micronaut.core.order.Ordered
-import java.time.Duration
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-class RateLimitsConfiguration
-    constructor(@param:Parameter private val index: Int) <b class="conum">(3)</b>
-    : Ordered { <b class="conum">(2)</b>
-
-    var period: Duration? = null
-    var limit: Int? = null
-
-    override fun getOrder(): Int {
-        return index
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>list</code> member of the annotation is set to true</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Implement <code>Ordered</code> if order matters when retrieving the beans</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The index is injected into the constructor</td>
-</tr>
-</table>
-</div>
-</div>
 
 <h2 id="eachBean"><a class="anchor" href="#eachBean"></a>4.7 Using @EachBean to Drive Configuration</h2>
 
@@ -9296,7 +9331,7 @@ If you try to specify any other abstract method other than a getter a compilatio
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.*;
 import io.micronaut.core.bind.annotation.Bindable;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import javax.annotation.Nullable;
 import javax.validation.constraints.*;
 import java.util.Optional;
 
@@ -12560,7 +12595,7 @@ String lock(String name)</code></pre>
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
@@ -17103,7 +17138,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
@@ -32810,79 +32845,166 @@ dependencyManagement {
 
 
 <div class="paragraph">
-<p>This section will document breaking changes between Micronaut 1.0 and Micronaut 2.0</p>
+<p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
 </div>
-<div class="sect2">
-<h3 id="_executable_no_longer_stereotype_of_around"><a class="anchor" href="#_executable_no_longer_stereotype_of_around"></a>@Executable No Longer Stereotype of @Around</h3>
+<div class="sect3">
+<h4 id="_1_3_0"><a class="anchor" href="#_1_3_0"></a>1.3.0</h4>
 <div class="paragraph">
-<p>In Micronaut 1.x the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation was a meta-annotation specified on the <a href="../api/io/micronaut/aop/Around.html">@Around</a> and <a href="../api/io/micronaut/aop/Introduction.html">@Introduction</a> annotations. This meant that an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> reference was generated for every usage of AOP advice which consumed additional memory unnecessarily.</p>
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>The order of the configuration files provided by <code>MICRONAUT_CONFIG_FILES</code> or <code>micronaut.config.files</code> was overriding system properties and environment variables. The files are now ordered between the environment and configuration files which means they will no longer override environment variables or system properties. In addition which file within the list had priority was non deterministic. Later files now have precedence over earlier files in the list.</p>
+</li>
+<li>
+<p>Routes that are binding to a body type that is a String, byte[], or ByteBuffer will no longer be decoded and the raw body will be bound directly to the argument. Because decoding is no longer happening, if a body is sent that is considered invalid according to the content type of the request, it will be bound to the body argument anyway. This is different than previous behavior where an exception would be thrown if the body was invalid.</p>
+</li>
+<li>
+<p>Concrete types are now preferred when creating a class hierarchy. The most common case where this will have an impact is converters. Converters that match super classes of the target type will be preferred over converters that match an interface that the target type implements.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_2_0"><a class="anchor" href="#_1_2_0"></a>1.2.0</h4>
 <div class="paragraph">
-<p>In Micronaut 2.x and above this is no longer the case and if you need an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> generated you should add the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation to any custom AOP advice you specify otherwise the method will not be available via the <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> interface (using for example the <a href="../api/io/micronaut/BeanDefinition/getExecutableMethods.html">getExecutableMethods</a> method).</p>
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"><a class="anchor" href="#_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations"></a>Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
-<div class="paragraph">
-<p>The JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) is no longer a dependency (replaced by <code>spotbugs-annotations</code>). If you need this library you will need to add it manually.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_events_renamed"><a class="anchor" href="#_events_renamed"></a>Events Renamed</h3>
-<div class="paragraph">
-<p>The following events were renamed to avoid confusion with other events of similar names:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Old Name</th>
-<th class="tableblock halign-left valign-top">New Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.discovery.event.ServiceStartedEvent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceReadyEvent.html">ServiceReadyEvent</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.discovery.event.ServiceShutdownEvent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceStoppedEvent.html">ServiceStoppedEvent</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_source_retention_annotations_no_longer_retained_in_runtime_metadata"><a class="anchor" href="#_source_retention_annotations_no_longer_retained_in_runtime_metadata"></a>Source Retention Annotations No Longer Retained in Runtime Metadata</h3>
-<div class="paragraph">
-<p>In Micronaut 1.x annotations specified as source retention were still retained in the <a href="../api/io/micronaut/core/annotation/AnnotationMetadata.html">AnnotationMetadata</a> interface. As of Micronaut 2.x this is no longer the case with source retention annotations only available within the compiler APIs.</p>
-</div>
-<div class="paragraph">
-<p>If you wish to retain a particular source level annotation when upgrading you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationTransformer.html">AnnotationTransformer</a> that alters the <code>RetentionPolicy</code> of the annotation.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_iterable_beans_no_longer_have_an_implicit_primary"><a class="anchor" href="#_iterable_beans_no_longer_have_an_implicit_primary"></a>Iterable Beans No Longer Have An Implicit Primary</h3>
-<div class="paragraph">
-<p>In Micronaut 1.x injecting a single instance of an iterable bean without qualifiers would inject the first bean. An iterable bean is typically anything annotated with <code>@EachProperty</code> or <code>@EachBean</code>. Those beans typically are referenced from configuration. The first bean in this context is the first item in configuration that matches what the annotation expects.</p>
-</div>
-<div class="paragraph">
-<p>For example if you created a bean with <code>@EachProperty("cars")</code>, then specified the following in your config:</p>
-</div>
-<div class="listingblock">
+<div class="ulist">
+<ul>
+<li>
+<p>The AWS distributed configuration through systems manager property store supported the notion of <code>key=value</code> in the value section of the configuration. This functionality has been removed because it did not consider properties that contain an <code>=</code> but are not in the format of <code>key=value</code>.</p>
+</li>
+<li>
+<p>The return of reactive types with a generic of <code>Void</code> has been changed from always returning a 404 status to returning a 200, or whatever status is defined in the <code>@Status</code> annotation. This includes <code>CompletionStage</code>, RxJava2, and Reactor types. The change was made to be consistent with the behavior of methods that return <code>void</code>.</p>
+</li>
+<li>
+<p>Extending a <code>@ConfigurationProperties</code> class that contains a <code>@ConfigurationBuilder</code> only allowed the builder to be configured through the child&#8217;s class prefix instead of the parent&#8217;s. This was a bug because the behavior is different compared to any other property on the parent class. Previously the <code>parent.child.address</code> prefix would have been used to configure the <code>address</code> builder on the child class. With this change <code>parent.address</code> will be used.</p>
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">cars:
-    ford:
-        cylinders: 8
-    subaru:
-        cylinders: 4</code></pre>
+<pre>@ConfigurationProperties("parent")
+class Parent {
+    @ConfigurationBuilder(configurationPrefix = "address")
+    ...
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@ConfigurationProperties("child")
+class Child extends Parent {
+}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_1_0"><a class="anchor" href="#_1_1_0"></a>1.1.0</h4>
+<div class="paragraph">
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/io/micronaut/session/http/HttpSessionConfiguration.html">HttpSessionConfiguration</a> default value for <code>cookiePath</code> is <code>/</code>. The change was necessary for cookies to function normally.</p>
+</li>
+<li>
+<p>The <a href="../api/io/micronaut/security/token/jwt/render/AccessRefreshToken.html">AccessRefreshToken</a> API has been changed to  include <code>tokenType</code> and <code>expiresIn</code>. This change was necessary to comply with the token response <a href="https://tools.ietf.org/html/rfc6749#section-4.1.4.html">RFC 6749</a>.</p>
+</li>
+<li>
+<p>Route binding behavior for a request argument with a generic type has changed. For routes that take in an <code>HttpRequest&lt;SomeType&gt;</code>, an <code>UnsatisfiedRouteException</code> will be thrown if no body is found in the request. To restore the previous behavior, remove the generic type from the argument.</p>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest&lt;Author&gt; request) //requires the body to be present</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest request) //the body will not be read (same as 1.0.x)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc3"><a class="anchor" href="#_1_0_0_rc3"></a>1.0.0.RC3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to manage dependencies. If you are upgrading rename all references modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
+</li>
+<li>
+<p>Methods for JWT signature generation have been removed from <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>. Those beans should be used in microservices where you need only signature verification and not generation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable a RSA or EC JWT signature generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc2"><a class="anchor" href="#_1_0_0_rc2"></a>1.0.0.RC2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.security.authentication.Authenticator::authenticate</code> method signature has changed from:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(UsernamePasswordCredentials credentials)</code></p>
+</div>
+<div class="paragraph">
+<p>to:</p>
+</div>
+<div class="paragraph">
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(AuthenticationRequest authenticationRequest)</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc1"><a class="anchor" href="#_1_0_0_rc1"></a>1.0.0.RC1</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The default port if no port is specified is now port 8080 instead of a random port, except in the test environment. A random port can be obtained by setting the port to -1.</p>
+</li>
+<li>
+<p>The configuration for static resource has been changed to allow multiple mappings, each with their own set of paths. This will allow accessing resources at multiple URLs. Previously the configuration might have looked like:</p>
+<div class="literalblock">
+<div class="content">
+<pre>micronaut:
+    router:
+        static:
+            resources:
+                enabled: true
+                mapping: /static/**
+                paths:
+                  - classpath:static</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requesting a single instance of that bean would result in the "ford" instance being injected. Because that behavior is surprising and inconsistent with other types of beans, that is no longer the case and a <code>NonUniqueBeanException</code> will be thrown.</p>
+<p>And now the equivalent configuration would be:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>micronaut:
+    router:
+        static-resources:
+            default:
+                enabled: true
+                mapping: /static/**
+                paths:
+                  - classpath:static</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The word <code>default</code> in that example is arbitrary and can be replaced with any name that is appropriate to describe the category of resources that will be served.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -32891,34 +33013,148 @@ dependencyManagement {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-This change does not apply to an explicit primary defined in the annotation (<code>@EachProperty(value = "cars", primary = "ford")</code>), nor requesting the instance by a qualifier (<code>@Named("ford") CarConfig carConfig</code>).
+Notice the change from <code>static.resources</code> to <code>static-resources</code>.
 </td>
 </tr>
 </table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_invalid_configuration_file_locations"><a class="anchor" href="#_invalid_configuration_file_locations"></a>Invalid Configuration File Locations</h3>
-<div class="paragraph">
-<p>Specifying a file with <code>micronaut.config.files</code>, either through the system property or environment variable, that does not exist or cannot be read will now result in the application failing to startup. In previous versions of Micronaut a warning would be logged and the file would be ignored.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graal_dependency"><a class="anchor" href="#_graal_dependency"></a>Graal Dependency</h3>
-<div class="paragraph">
-<p>The old Graal group name <code>com.oracle.substratevm</code> is no longer part of the Micronaut BOM.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_propertysourceloader_changes"><a class="anchor" href="#_propertysourceloader_changes"></a>PropertySourceLoader Changes</h3>
-<div class="paragraph">
-<p>Some default interface methods are no longer default and require implementation.</p>
+</li>
+<li>
+<p>The CLI feature for Netflix Archaius was incorrectly named <code>netflix-archius</code>. The feature has now been renamed to reflect the correct name, <code>netflix-archaius</code>.</p>
+</li>
+<li>
+<p>The intercept url map security rule now no longer considers the query part of the request when determining if the request matches. Previously <code>/?value=true</code> would <strong>not</strong> match <code>/</code>.</p>
+</li>
+<li>
+<p>Several APIs surrounding route URI matching and template parsing have changed to allow more information to be retrieved from the parsing process.</p>
+</li>
+<li>
+<p>The following packages have been renamed:</p>
+<div class="literalblock">
+<div class="content">
+<pre>io.micronaut.http.server.binding -&gt; io.micronaut.http.bind</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_deprecation_removal"><a class="anchor" href="#_deprecation_removal"></a>Deprecation Removal</h3>
-<div class="paragraph">
-<p>Most if not all deprecated classes and methods have been removed.</p>
+</li>
+<li>
+<p>The following annotations have been moved to new locations:</p>
+<div class="literalblock">
+<div class="content">
+<pre>io.micronaut.http.client.Client -&gt; io.micronaut.http.client.annotation.Client
+io.micronaut.security.Secured -&gt; io.micronaut.security.annotation.Secured</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The jackson deserialization features ACCEPT_SINGLE_VALUE_AS_ARRAY and UNWRAP_SINGLE_VALUE_ARRAYS are now enabled by default. To revert to the previous behavior, see the section on <a href="#_jackson_configuration">Jackson Configuration</a> for information on how to customize deserialization features.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_m4"><a class="anchor" href="#_1_0_0_m4"></a>1.0.0.M4</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Libraries compiled against earlier versions of Micronaut are not binary compatible with this release.</p>
+</li>
+<li>
+<p>The Java module names generated in previous versions were invalid because they contained a <code>-</code>. Module names with dashes were converted to an underscore. For example: <code>io.micronaut.inject-java</code> &#8594; <code>io.micronaut.inject_java</code>.</p>
+</li>
+<li>
+<p>The annotation metadata API has been changed to no longer use reflective proxies for annotations. The methods that used to return the proxies now return an <code>AnnotationValue</code> that contains all of the data that existed in the proxy. The methods to create the proxies now exist under <code>synthesize..</code>.</p>
+</li>
+<li>
+<p>Many classes no longer implement <code>AnnotatedElement</code>.</p>
+</li>
+<li>
+<p><code>AnnotationUtil</code> has seen significant changes and is now marked as an internal class.</p>
+</li>
+<li>
+<p><code>BeanContext.getBeanRegistrations</code> has been renamed to <code>BeanContext.getActiveBeanRegistrations</code>.</p>
+</li>
+<li>
+<p>Endpoint annotations have moved packages: <code>io.micronaut.management.endpoint</code> &#8594; <code>io.micronaut.management.endpoint.annotation</code>.</p>
+</li>
+<li>
+<p>Endpoint method arguments were previously included in the route URI by default. Now endpoint arguments are <strong>not</strong> included in the route URI by default. An annotation, <code>@Selector</code> has been added to indicate an endpoint argument <strong>should</strong> be included in the URI.</p>
+</li>
+<li>
+<p>The <code>@Controller</code> annotation now requires a value. Previously a convention was used to determine the URI.</p>
+</li>
+<li>
+<p>The <code>HttpMethodMapping</code> annotations (<code>@Get</code>, <code>@Put</code>, etc) have changed their default behavior. They no longer use a convention based off the method name if the URI was not provided. The URI is still not required, however it now defaults to <code>/</code>. The new default means the method will be accessible from the controller URI.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_m3"><a class="anchor" href="#_1_0_0_m3"></a>1.0.0.M3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The contract for <code>io.micronaut.http.codec.MediaTypeCodec</code> has changed to support multiple media types.</p>
+</li>
+<li>
+<p>To reduce confusion around <code>@Parameter</code>, it can no longer be used to denote an argument should be bound from the request url. Its sole purpose is defining arguments for parameterized beans. Use <code>@QueryValue</code> instead.</p>
+</li>
+<li>
+<p>The health endpoint will now only report details when the user is authenticated. To revert to the previous behavior, set <code>endpoints.health.detailsVisible: ANONYMOUS</code>.</p>
+</li>
+<li>
+<p>The CLI options have been standardized to use two leading dashes for long options (like <code>--stacktrace</code>) and one for shortcuts (like <code>-h</code>). That means that some options no longer work. For example, this command used to work with M2: <code>create-app -lang groovy myapp</code>. From M3, you will see this error: <code>Could not convert 'ang' to SupportedLanguage for option '--lang'</code>. Specifying either <code>-l LANG</code> or <code>--lang LANG</code> works as expected.</p>
+</li>
+<li>
+<p>The following packages have been renamed:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.configurations.ribbon</code> &#8594; <code>io.micronaut.configuration.ribbon</code></p>
+</li>
+<li>
+<p><code>io.micronaut.configurations.hystrix</code> &#8594; <code>io.micronaut.configuration.hystrix</code></p>
+</li>
+<li>
+<p><code>io.micronaut.configurations.aws</code> &#8594; <code>io.micronaut.configuration.aws</code></p>
+</li>
+<li>
+<p><code>io.micronaut.http.netty.buffer</code> &#8594; <code>io.micronaut.buffer.netty</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The default Consul configuration prefix has been changed to reflect changes in the latest version of Consul. Previously a leading slash was expected and the default value was <code>/config/</code>. The new default value is <code>config/</code>. To restore the previous behavior, set <code>consul.client.config.path = /config/</code></p>
+</li>
+<li>
+<p>The <code>session</code> module will now serialize POJOs to JSON using Jackson by default instead of Java Serialization. This change is because Java serialization will be removed and deprecated in a future version of the JDK.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_m2"><a class="anchor" href="#_1_0_0_m2"></a>1.0.0.M2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The constructor signature for DefaultHttpClient has changed to include an extra argument. This change should not impact existing uses.</p>
+</li>
+<li>
+<p>Libraries compiled against M1 are not binary compatible with M2.</p>
+</li>
+<li>
+<p>For Java 9+ automatic module name has been set to <code>&lt;groupId&gt;.&lt;name&gt;</code>. Previously if you have been using the "inject-java" module, the module is now named "io.micronaut.inject-java".</p>
+</li>
+<li>
+<p>When an HttpClientResponseException is thrown, the body of the response will be set to the exception message for responses with a text media type. Previously the status description was returned.</p>
+</li>
+<li>
+<p>Mongo configurations were updated to a new version of the driver (3.6.1 &#8594; 3.7.1), which may break existing uses. See their <a href="http://mongodb.github.io/mongo-java-driver/3.7/upgrading/">upgrading</a> page for more information.</p>
+</li>
+<li>
+<p>The <code>router</code> configuration key was changed to be <code>micronaut.router</code>. Static resource configuration is affected by this change. Please update your configuration: <code>router.static.resources</code> &#8594; <code>micronaut.router.static.resources</code>.</p>
+</li>
+</ul>
 </div>
 </div>
 
