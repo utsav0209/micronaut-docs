@@ -239,8 +239,9 @@ implements <a href="../../../../../io/micronaut/http/server/netty/HttpContentPro
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/AbstractHttpContentProcessor.html#fireExceedsLength-long-long-">fireExceedsLength</a></span>(long&nbsp;receivedLength,
-                 long&nbsp;expected)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/server/netty/AbstractHttpContentProcessor.html#fireExceedsLength-long-long-io.netty.buffer.ByteBufHolder-">fireExceedsLength</a></span>(long&nbsp;receivedLength,
+                 long&nbsp;expected,
+                 io.netty.buffer.ByteBufHolder&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
@@ -431,18 +432,20 @@ implements <a href="../../../../../io/micronaut/http/server/netty/HttpContentPro
 </dl>
 </li>
 </ul>
-<a name="fireExceedsLength-long-long-">
+<a name="fireExceedsLength-long-long-io.netty.buffer.ByteBufHolder-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>fireExceedsLength</h4>
 <pre>protected&nbsp;void&nbsp;fireExceedsLength(long&nbsp;receivedLength,
-                                 long&nbsp;expected)</pre>
+                                 long&nbsp;expected,
+                                 io.netty.buffer.ByteBufHolder&nbsp;message)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>receivedLength</code> - The length of the content received</dd>
 <dd><code>expected</code> - The expected length of the content</dd>
+<dd><code>message</code> - The message to release</dd>
 </dl>
 </li>
 </ul>
