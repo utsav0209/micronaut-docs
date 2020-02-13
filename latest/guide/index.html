@@ -529,7 +529,7 @@
         <h1>Micronaut</h1>
         <p></p>
         <p>Natively Cloud Native</p>
-        <p><strong>Version:</strong> 1.3.0</p>
+        <p><strong>Version:</strong> 1.3.1</p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -614,7 +614,7 @@
 
 
 <div class="paragraph">
-<p>Micronaut 1.3.0 includes the following changes:</p>
+<p>Micronaut 1.3.1 includes the following changes:</p>
 </div>
 <div class="sect2">
 <h3 id="_support_for_graalvm_19_3_1"><a class="anchor" href="#_support_for_graalvm_19_3_1"></a>Support for GraalVM 19.3.1</h3>
@@ -746,6 +746,34 @@ interface EngineConfig {
     }
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation takes the configuration prefix and is declared on an interface</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>You can use <a href="../api/io/micronaut/core/bind/annotation/Bindable.html">@Bindable</a> to set a default value if you want</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Validation annotations can be used too</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>You can also specify references to other <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> beans.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>You can nest immutable configuration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Optional configuration can be indicated by returning an <code>Optional</code> or specifying <code>@Nullable</code></td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -1033,7 +1061,7 @@ String login(BasicAuth basicAuth) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1286,6 +1314,18 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 <div class="paragraph">
 <p>If you have created a Maven based project, use <code>./mvnw compile exec:exec</code> instead.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Windows the ./ before commands is not needed
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>By default the Micronaut HTTP server is configured to run on port 8080. See the section <a href="#runningSpecificPort">Running Server on a Specific Port</a> in the user guide for more options.</p>
 </div>
@@ -1357,8 +1397,8 @@ class HelloController {
 </table>
 </div>
 <div class="paragraph">
-<p>If you are using Java, place the previous file in <code>src/main/java/hello/world</code>.
-If you are using Groovy, place the previous file in <code>src/main/groovy/hello/world</code>.
+<p>If you are using Java, place the previous file in <code>src/main/java/hello/world</code>.<br>
+If you are using Groovy, place the previous file in <code>src/main/groovy/hello/world</code>.<br>
 If you are using Kotlin, place the previous file in <code>src/main/kotlin/hello/world</code>.</p>
 </div>
 <div class="paragraph">
@@ -1874,10 +1914,10 @@ class HelloClientSpec {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0" // <2>
-    compile "io.micronaut:micronaut-inject:1.3.0"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.1" // <2>
+    compile "io.micronaut:micronaut-inject:1.3.1"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.0" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.1" // <3>
     ...
 }</code></pre>
 </div>
@@ -4986,7 +5026,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.0'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-inject-java:1.3.1'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4995,7 +5035,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;1.3.0&lt;/version&gt;
+        &lt;version&gt;1.3.1&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -5017,7 +5057,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.0'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">runtime <span class="hljs-string">'io.micronaut:micronaut-core:1.3.1'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5025,7 +5065,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;1.3.0&lt;/version&gt;
+    &lt;version&gt;1.3.1&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -6726,8 +6766,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.0"
-    compileOnly "io.micronaut:micronaut-inject-java:1.3.0"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.1"
+    compileOnly "io.micronaut:micronaut-inject-java:1.3.1"
     ...
 }</code></pre>
 </div>
@@ -28531,7 +28571,7 @@ $ ./docker-build.sh</code></pre>
 <p>A GraalVM official image will build the native image.</p>
 </li>
 <li>
-<p>A typical dockerfile structure will build the final image which in smaller due to layering.</p>
+<p>A typical dockerfile structure will build the final image which is smaller due to layering.</p>
 </li>
 </ol>
 </div>
@@ -32862,6 +32902,16 @@ dependencyManagement {
 </li>
 <li>
 <p>Concrete types are now preferred when creating a class hierarchy. The most common case where this will have an impact is converters. Converters that match super classes of the target type will be preferred over converters that match an interface that the target type implements.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_2_9"><a class="anchor" href="#_1_2_9"></a>1.2.9</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The data format was changed for multiline server sent event data payloads to conform to the specification. Previously multiline data did not have the required <code>data:</code> prefix on each line and now it does.</p>
 </li>
 </ul>
 </div>
