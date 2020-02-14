@@ -2,6 +2,15 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
     <title>6.22 HTTP Sessions 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
@@ -146,15 +155,16 @@ function addJsClass() {
 </ul>
 </div>
 <div class="sect1">
-<h2 id="_enabling_sessions"><a class="anchor" href="#_enabling_sessions"></a>Enabling Sessions</h2>
+<h2 id="_enabling_sessions">Enabling Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To enable support for in-memory sessions you just need the <code>session</code> dependency:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-session'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-session")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -168,7 +178,7 @@ function addJsClass() {
 </p>
 </div>
 <div class="sect2">
-<h3 id="_redis_sessions"><a class="anchor" href="#_redis_sessions"></a>Redis Sessions</h3>
+<h3 id="_redis_sessions">Redis Sessions</h3>
 <div class="paragraph">
 <p>If you wish to store <a href="../api/io/micronaut/session/Session.html">Session</a> instances in Redis you can do so with the <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide/#sessions">Micronaut Redis</a> module which includes detailed instructions.</p>
 </div>
@@ -201,7 +211,7 @@ micronaut:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_session_resolution"><a class="anchor" href="#_configuring_session_resolution"></a>Configuring Session Resolution</h2>
+<h2 id="_configuring_session_resolution">Configuring Session Resolution</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>How the <a href="../api/io/micronaut/session/Session.html">Session</a> is resolved can be configured with <a href="../api/io/micronaut/session/http/HttpSessionConfiguration.html">HttpSessionConfiguration</a>.</p>
@@ -228,7 +238,7 @@ micronaut:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_working_with_sessions"><a class="anchor" href="#_working_with_sessions"></a>Working with Sessions</h2>
+<h2 id="_working_with_sessions">Working with Sessions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A <a href="../api/io/micronaut/session/Session.html">Session</a> object can be retrieved simply by declaring the <a href="../api/io/micronaut/session/Session.html">Session</a> in a controller method signature. For example consider the following controller:</p>
@@ -382,7 +392,7 @@ class ShoppingController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_session_clients"><a class="anchor" href="#_session_clients"></a>Session Clients</h2>
+<h2 id="_session_clients">Session Clients</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If the client is a web browser then sessions should just work if you have cookies is enabled. However for programmatic HTTP clients you need to make sure you propagate the session id between HTTP calls.</p>
@@ -488,7 +498,7 @@ class ShoppingController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_sessionvalue"><a class="anchor" href="#_using_sessionvalue"></a>Using @SessionValue</h2>
+<h2 id="_using_sessionvalue">Using @SessionValue</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Rather than explicitly injecting the <a href="../api/io/micronaut/session/Session.html">Session</a> into a controller method you can instead use <a href="../api/io/micronaut/session/annotation/SessionValue.html">@SessionValue</a>. For example:</p>
@@ -548,7 +558,7 @@ class ShoppingController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_session_events"><a class="anchor" href="#_session_events"></a>Session Events</h2>
+<h2 id="_session_events">Session Events</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can register <a href="../api/io/micronaut/context/event/ApplicationEventListener.html">ApplicationEventListener</a> beans to listen for <a href="../api/io/micronaut/session/Session.html">Session</a> related events located in the <a href="../api/io/micronaut/session/event/package-summary.html">io.micronaut.session.event</a> package.</p>

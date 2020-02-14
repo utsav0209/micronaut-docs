@@ -2,6 +2,15 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
     <title>18.3 Common Problems 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
@@ -131,19 +140,19 @@ function addJsClass() {
 <p>The following section covers common problems folks stumble upon when using Micronaut.</p>
 </div>
 <div class="sect3">
-<h4 id="_dependency_injection_is_not_working"><a class="anchor" href="#_dependency_injection_is_not_working"></a>Dependency injection is not working</h4>
+<h4 id="_dependency_injection_is_not_working">Dependency injection is not working</h4>
 <div class="paragraph">
 <p>The most common reason that Dependency Injection fails to work is when you either don&#8217;t have the appropriate annotation processor configured or your IDE is incorrectly configured. See the section on <a href="#languageSupport">Language Support</a> for how to get setup in your language.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_a_nosuchmethoderror_occurs_loading_beans_groovy"><a class="anchor" href="#_a_nosuchmethoderror_occurs_loading_beans_groovy"></a>A NoSuchMethodError occurs loading beans (Groovy)</h4>
+<h4 id="_a_nosuchmethoderror_occurs_loading_beans_groovy">A NoSuchMethodError occurs loading beans (Groovy)</h4>
 <div class="paragraph">
 <p>Groovy by default imports the <code>groovy.lang</code> package which includes a class called <code>@Singleton</code> that is an AST transformation that makes your class a singleton (adding a private constructor and static retrieval method). This annotation is easily confused with the <code>javax.inject.Singleton</code> annotation used to define singleton beans in Micronaut. Make sure you are using the correct annotation in your Groovy classes.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_it_is_taking_much_longer_to_start_my_application_than_it_should_nix_os"><a class="anchor" href="#_it_is_taking_much_longer_to_start_my_application_than_it_should_nix_os"></a>It is taking much longer to start my application than it should (*nix OS)</h4>
+<h4 id="_it_is_taking_much_longer_to_start_my_application_than_it_should_nix_os">It is taking much longer to start my application than it should (*nix OS)</h4>
 <div class="paragraph">
 <p>This is likely due to a bug that has to do with executions of <code>java.net.InetAddress.getLocalHost()</code> causing a long delay. The solution is to edit your <code>/etc/hosts</code> file to add an entry that contains your host name. To find your host name, simply enter <code>hostname</code> in the terminal and the value will be output. Then edit your <code>/etc/hosts</code> file to add or change entries like the example below, replacing <code>&lt;hostname&gt;</code> with your host name.</p>
 </div>

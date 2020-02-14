@@ -2,6 +2,15 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
     <title>9.3 Deploying Functions 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
@@ -170,8 +179,9 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-aws'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-aws")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -189,8 +199,9 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-groovy'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-groovy")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -204,7 +215,7 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 </p>
 </div>
 <div class="sect1">
-<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
+<h2 id="_configuration">Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Configuration properties specific to AWS Lambda environments can be supplied in an <code>application-aws</code> configuration file in <code>src/main/resources</code>.</p>
@@ -219,13 +230,13 @@ Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/ind
 </div>
 </div>
 <div class="sect1">
-<h2 id="_manual_deployment"><a class="anchor" href="#_manual_deployment"></a>Manual Deployment</h2>
+<h2 id="_manual_deployment">Manual Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can deploy your function to AWS Lambda manually by building and uploading an executable JAR file. Various build plugins offer this capability.</p>
 </div>
 <div class="sect2">
-<h3 id="_gradle_shadow_plugin"><a class="anchor" href="#_gradle_shadow_plugin"></a>Gradle Shadow plugin</h3>
+<h3 id="_gradle_shadow_plugin">Gradle Shadow plugin</h3>
 <div class="paragraph">
 <p>The <a href="https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow">Gradle Shadow</a> plugin provides a <code>shadowJar</code> task to generate a self-contained executable JAR file, which is suitable for AWS Lambda deployments.</p>
 </div>
@@ -267,7 +278,7 @@ shadowJar {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven_shade_plugin"><a class="anchor" href="#_maven_shade_plugin"></a>Maven Shade plugin</h3>
+<h3 id="_maven_shade_plugin">Maven Shade plugin</h3>
 <div class="paragraph">
 <p>The <a href="https://maven.apache.org/plugins/maven-shade-plugin/">Maven Shade</a> plugin will generate an executable JAR file for Maven projects. For further details, consult the <a href="https://docs.aws.amazon.com/lambda/latest/dg/java-create-jar-pkg-maven-no-ide.html">AWS Lambda Documentation.</a></p>
 </div>
@@ -316,7 +327,7 @@ shadowJar {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_gradle_aws_plugin"><a class="anchor" href="#_gradle_aws_plugin"></a>Gradle AWS Plugin</h2>
+<h2 id="_gradle_aws_plugin">Gradle AWS Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For Gradle projects, deployment can be made even more straightforward using the <a href="https://github.com/classmethod/gradle-aws-plugin">Gradle AWS Plugin</a>. This plugin provides a <code>deploy</code> task which can push your function to AWS Lambda directly, as well as a <code>AWSLambdaInvokeTask</code> which can be used to invoke your function when it is deployed.</p>

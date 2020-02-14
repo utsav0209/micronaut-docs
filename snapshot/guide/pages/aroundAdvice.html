@@ -2,6 +2,15 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
     <title>5.1 Around Advice 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
@@ -133,7 +142,7 @@ function addJsClass() {
 <p>The most common type of advice you may want to apply is "Around" advice, which essentially allows you to decorate a methods behaviour.</p>
 </div>
 <div class="sect1">
-<h2 id="_writing_around_advice"><a class="anchor" href="#_writing_around_advice"></a>Writing Around Advice</h2>
+<h2 id="_writing_around_advice">Writing Around Advice</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The first step to defining Around advice is to implement a <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a>. For example the following interceptor disallows parameters with <code>null</code> values:</p>
@@ -458,7 +467,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_proxy_generation"><a class="anchor" href="#_customizing_proxy_generation"></a>Customizing Proxy Generation</h2>
+<h2 id="_customizing_proxy_generation">Customizing Proxy Generation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The default behaviour of the <a href="../api/io/micronaut/aop/Around.html">Around</a> annotation is to generate a proxy at compile time that is a subclass of the class being proxied. In other words, in the previous example a compile time subclass of the <code>NotNullExample</code> class will be produced where methods that are proxied are decorated with interceptor handling and the original behaviour is invoked via a call to <code>super</code>.</p>
@@ -482,7 +491,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_aop_advice_on_factory_beans"><a class="anchor" href="#_aop_advice_on_factory_beans"></a>AOP Advice on @Factory Beans</h2>
+<h2 id="_aop_advice_on_factory_beans">AOP Advice on @Factory Beans</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The semantics of AOP advice when applied to <a href="#factories">Bean Factories</a> differs to regular beans, with the following rules applying:</p>
