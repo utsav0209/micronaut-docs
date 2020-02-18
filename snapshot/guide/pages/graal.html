@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>13.4 Micronaut for GraalVM 2.0.0.BUILD-SNAPSHOT</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>13.4 Micronaut for GraalVM 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13.4 Micronaut for GraalVM</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.2.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -147,7 +156,7 @@ function addJsClass() {
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>nativeimage</code> tool</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_experimental_status"><a class="anchor" href="#_experimental_status"></a>Experimental Status</h3>
+<h3 id="_experimental_status">Experimental Status</h3>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -165,7 +174,7 @@ Although GraalVM <code>19.0.0</code> is the first Production ready release the s
 </div>
 </div>
 <div class="sect2">
-<h3 id="_getting_started"><a class="anchor" href="#_getting_started"></a>Getting Started</h3>
+<h3 id="_getting_started">Getting Started</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -193,7 +202,7 @@ Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java 
 
 
 <div class="sect2">
-<h3 id="_getting_started_with_micronaut_and_graal"><a class="anchor" href="#_getting_started_with_micronaut_and_graal"></a>Getting Started with Micronaut and Graal</h3>
+<h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
 <div class="paragraph">
 <p>To get started creating a Microservice that can be compiled into a native image, use the <code>graal-native-image</code> feature when creating the application with the CLI:</p>
 </div>
@@ -246,7 +255,7 @@ Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java 
 </table>
 </div>
 <div class="sect3">
-<h4 id="_building_a_native_image_using_docker"><a class="anchor" href="#_building_a_native_image_using_docker"></a>Building a Native Image Using Docker</h4>
+<h4 id="_building_a_native_image_using_docker">Building a Native Image Using Docker</h4>
 <div class="paragraph">
 <p>To build your native image using Docker simply run:</p>
 </div>
@@ -281,7 +290,7 @@ $ ./docker-build.sh</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_building_a_native_image_without_using_docker"><a class="anchor" href="#_building_a_native_image_without_using_docker"></a>Building a Native Image Without Using Docker</h4>
+<h4 id="_building_a_native_image_without_using_docker">Building a Native Image Without Using Docker</h4>
 <div class="paragraph">
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using SDKman:</p>
 </div>
@@ -324,7 +333,7 @@ $ native-image --no-server -cp target/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_micronaut_and_graal"><a class="anchor" href="#_understanding_micronaut_and_graal"></a>Understanding Micronaut and Graal</h3>
+<h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
 <div class="paragraph">
 <p>Micronaut itself does not rely on reflection or dynamic classloading so works automatically with GraalVM native, however certain third party libraries used by Micronaut may require additional input about uses of reflection.</p>
 </div>
@@ -333,11 +342,13 @@ $ native-image --no-server -cp target/hello-world-0.1-all.jar</code></pre>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-graal'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-graal")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
     &lt;path&gt;
@@ -386,7 +397,7 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_adding_additional_classes_for_reflective_access"><a class="anchor" href="#_adding_additional_classes_for_reflective_access"></a>Adding Additional Classes for Reflective Access</h3>
+<h3 id="_adding_additional_classes_for_reflective_access">Adding Additional Classes for Reflective Access</h3>
 <div class="paragraph">
 <p>To inform Micronaut of additional classes that should be included in the generated <code>reflect.json</code> file at compilation time you can either annotate a class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
 </div>
@@ -420,7 +431,7 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generating_native_images"><a class="anchor" href="#_generating_native_images"></a>Generating Native Images</h3>
+<h3 id="_generating_native_images">Generating Native Images</h3>
 <div class="paragraph">
 <p>GraalVM&#8217;s <code>native-image</code> command is used to generate native images. You can use this command manually to generate your native image. An example can be seen below.</p>
 </div>
@@ -468,25 +479,25 @@ If you wish to provide your own <code>reflect.json</code> you can add one to <co
 
 
 <div class="sect3">
-<h4 id="_how_does_micronaut_manage_to_run_on_graalvm"><a class="anchor" href="#_how_does_micronaut_manage_to_run_on_graalvm"></a>How does Micronaut manage to run on GraalVM?</h4>
+<h4 id="_how_does_micronaut_manage_to_run_on_graalvm">How does Micronaut manage to run on GraalVM?</h4>
 <div class="paragraph">
 <p>Micronaut features a Dependency Injection and Aspect-Oriented Programming runtime that uses no reflection. This makes it easier for Micronaut applications to run on GraalVM since there are <a href="https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md">limitations</a> particularly around <a href="https://github.com/oracle/graal/blob/master/substratevm/REFLECTION.md">reflection</a> on SubstrateVM.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_how_can_i_make_a_micronaut_application_that_uses_picocli_run_on_graalvm"><a class="anchor" href="#_how_can_i_make_a_micronaut_application_that_uses_picocli_run_on_graalvm"></a>How can I make a Micronaut application that uses picocli run on GraalVM?</h4>
+<h4 id="_how_can_i_make_a_micronaut_application_that_uses_picocli_run_on_graalvm">How can I make a Micronaut application that uses picocli run on GraalVM?</h4>
 <div class="paragraph">
 <p>Picocli provides a <code>picocli-codegen</code> module with a tool for generating a GraalVM reflection configuration file. The tool can be run <a href="https://picocli.info/picocli-on-graalvm.html">manually</a> or automatically as part of the build. The module&#8217;s <a href="https://github.com/remkop/picocli/tree/master/picocli-codegen">README</a> has usage instructions with code snippets for configuring Gradle and Maven to generate a <code>cli-reflect.json</code> file automatically as part of the build. Add the generated file to the <code>-H:ReflectionConfigurationFiles</code> option when running the <code>native-image</code> tool.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_what_about_other_third_party_libraries"><a class="anchor" href="#_what_about_other_third_party_libraries"></a>What about other Third-Party Libraries?</h4>
+<h4 id="_what_about_other_third_party_libraries">What about other Third-Party Libraries?</h4>
 <div class="paragraph">
 <p>Micronaut cannot guarantee that third-party libraries work on GraalVM SubstrateVM, that is down to each individual library to implement support.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_i_get_a_class_xxx_is_instantiated_reflectively_exception_what_do_i_do"><a class="anchor" href="#_i_get_a_class_xxx_is_instantiated_reflectively_exception_what_do_i_do"></a>I Get a "Class XXX is instantiated reflectively&#8230;&#8203;" Exception. What do I do?</h4>
+<h4 id="_i_get_a_class_xxx_is_instantiated_reflectively_exception_what_do_i_do">I Get a "Class XXX is instantiated reflectively&#8230;&#8203;" Exception. What do I do?</h4>
 <div class="paragraph">
 <p>If you get an error such as:</p>
 </div>

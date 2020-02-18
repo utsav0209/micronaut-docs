@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>6.3 HTTP Routing 2.0.0.BUILD-SNAPSHOT</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>6.3 HTTP Routing 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.3 HTTP Routing</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.2.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -133,7 +142,7 @@ function addJsClass() {
 <p>The <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> annotation used in the previous section is one of <a href="../api/io/micronaut/http/annotation/package-summary.html">several annotations</a> that allow you to control the construction of HTTP routes.</p>
 </div>
 <div class="sect1">
-<h2 id="_uri_paths"><a class="anchor" href="#_uri_paths"></a>URI Paths</h2>
+<h2 id="_uri_paths">URI Paths</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The value of the <code>@Controller</code> annotation is a <a href="https://tools.ietf.org/html/rfc6570">RFC-6570 URI template</a> you can therefore embed URI variables within the path using the syntax defined by the URI template specification.</p>
@@ -205,7 +214,7 @@ Many other frameworks, including Spring, implement the URI template specificatio
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uri_path_variables"><a class="anchor" href="#_uri_path_variables"></a>URI Path Variables</h2>
+<h2 id="_uri_path_variables">URI Path Variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>URI variables can be referenced via method arguments. For example:</p>
@@ -527,7 +536,7 @@ class IssuesControllerTest: StringSpec() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uri_reserved_character_matching"><a class="anchor" href="#_uri_reserved_character_matching"></a>URI Reserved Character Matching</h2>
+<h2 id="_uri_reserved_character_matching">URI Reserved Character Matching</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default URI variables as defined by the <a href="https://tools.ietf.org/html/rfc6570">RFC-6570 URI template</a> spec cannot include reserved characters such as <code>/</code>, <code>?</code> etc.</p>
@@ -541,7 +550,7 @@ class IssuesControllerTest: StringSpec() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_routing_annotations"><a class="anchor" href="#_routing_annotations"></a>Routing Annotations</h2>
+<h2 id="_routing_annotations">Routing Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The previous example used the <a href="../api/io/micronaut/http/annotation/Get.html">@Get</a> annotation to add method that accepted HTTP <a href="../api/io/micronaut/http/HttpMethod.html#GET">GET</a> requests. The following tables summarizes the available annotations and how they map to the different HTTP methods:</p>
@@ -608,7 +617,7 @@ All of the method annotations default to <code>/</code>.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_multiple_uris"><a class="anchor" href="#_multiple_uris"></a>Multiple URIs</h2>
+<h2 id="_multiple_uris">Multiple URIs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Each of the routing annotations support multiple URI templates. For each template, a route will be created. This feature is useful for example to change the path of the API and leaving the existing path as is for backwards compatibility. For example:</p>
@@ -685,7 +694,7 @@ Route validation is more complicated with multiple templates. If a variable that
 </div>
 </div>
 <div class="sect1">
-<h2 id="_building_routes_programmatically"><a class="anchor" href="#_building_routes_programmatically"></a>Building Routes Programmatically</h2>
+<h2 id="_building_routes_programmatically">Building Routes Programmatically</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you prefer to not use annotations and declare all of your routes in code then never fear, Micronaut has a flexible <a href="../api/io/micronaut/web/router/RouteBuilder.html">RouteBuilder</a> API that makes it a breeze to define routes programmatically.</p>
@@ -789,7 +798,7 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_route_compile_time_validation"><a class="anchor" href="#_route_compile_time_validation"></a>Route Compile Time Validation</h2>
+<h2 id="_route_compile_time_validation">Route Compile Time Validation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Micronaut supports validating route arguments at compile time with the validation library. To get started simply add the <code>validation</code> dependency to your build:</p>
@@ -839,7 +848,7 @@ To disable route compile time validation, set the system property <code>-Dmicron
 </div>
 </div>
 <div class="sect1">
-<h2 id="_routing_non_standard_http_methods"><a class="anchor" href="#_routing_non_standard_http_methods"></a>Routing non-standard HTTP methods</h2>
+<h2 id="_routing_non_standard_http_methods">Routing non-standard HTTP methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It may be necessary to support a non-standard HTTP method for a client or server. Specifications like <a href="https://tools.ietf.org/html/rfc4918">RFC-4918 Webdav</a> require additional methods like REPORT or LOCK for example. To support that use case the @CustomHttpMethod annotation can be used.</p>
