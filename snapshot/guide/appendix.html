@@ -415,6 +415,64 @@ dependencyManagement {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_several_typeconverters_are_no_longer_beans"><a class="anchor" href="#_several_typeconverters_are_no_longer_beans"></a>Several TypeConverters Are No Longer Beans</h3>
+<div class="paragraph">
+<p>Many <code>TypeConverter</code> instances that were previously beans are no longer beans and are deprecated including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/io/micronaut/http/MediaTypeConverter.html">MediaTypeConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/convext/converters/StringToClassConverter.html">StringToClassConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/convext/converters/StringArrayToClassArrayConverter.html">StringArrayToClassArrayConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/http/client/converters/SocketAddressConverter.html">SocketAddressConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/reactive/reactor/converters/PublisherToMonoConverter.html">PublisherToMonoConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/reactive/reactor/converters/PublisherToFluxConverter.html">PublisherToFluxConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/reactive/reactor/converters/ObjectToFluxConverter.html">ObjectToFluxConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/reactive/reactor/converters/ObjectToMonoConverter.html">ObjectToMonoConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/JsonNodeToObjectConverter.html">JsonNodeToObjectConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/MapToObjectConverter.html">MapToObjectConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/ObjectToJsonNodeConverter.html">ObjectToJsonNodeConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/ArrayNodeToArrayConverter.html">ArrayNodeToArrayConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/ArrayNodeToIterableConverter.html">ArrayNodeToIterableConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/jackson/convert/ObjectNodeToConvertibleValuesConverter.html">ObjectNodeToConvertibleValuesConverter</a></p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/runtime/http/converters/HttpStatusConverter.html">HttpStatusConverter</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These should not be injected directly but instead used through the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> API.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_executable_no_longer_stereotype_of_around"><a class="anchor" href="#_executable_no_longer_stereotype_of_around"></a>@Executable No Longer Stereotype of @Around</h3>
 <div class="paragraph">
 <p>In Micronaut 1.x the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation was a meta-annotation specified on the <a href="../api/io/micronaut/aop/Around.html">@Around</a> and <a href="../api/io/micronaut/aop/Introduction.html">@Introduction</a> annotations. This meant that an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> reference was generated for every usage of AOP advice which consumed additional memory unnecessarily.</p>
