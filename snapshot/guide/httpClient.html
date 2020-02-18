@@ -2,16 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-82213539-2');
-    </script>
-    <title>7 The HTTP Client 1.3.2.BUILD-SNAPSHOT</title>
+    <title>7 The HTTP Client 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7 The HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.3.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -235,9 +226,8 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-http-client")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-http-client'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -280,7 +270,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 
 
 <div class="sect3">
-<h4 id="_obtaining_a_httpclient">Obtaining a HttpClient</h4>
+<h4 id="_obtaining_a_httpclient"><a class="anchor" href="#_obtaining_a_httpclient"></a>Obtaining a HttpClient</h4>
 <div class="paragraph">
 <p>There are a few ways by which you can obtain a reference to a <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a>. The most common way is using the <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation. For example:</p>
 </div>
@@ -325,7 +315,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 </div>
 </div>
 <div class="sect3">
-<h4 id="_performing_an_http_get">Performing an HTTP GET</h4>
+<h4 id="_performing_an_http_get"><a class="anchor" href="#_performing_an_http_get"></a>Performing an HTTP GET</h4>
 <div class="paragraph">
 <p>Generally there are two methods of interest when working with the <code>HttpClient</code>. The first method is called <code>retrieve</code>, which will execute an HTTP request and return the body in whichever type you request (by default a <code>String</code>) as an RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a>.</p>
 </div>
@@ -470,7 +460,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_debugging_tracing_the_http_client">Debugging / Tracing the HTTP Client</h4>
+<h4 id="_debugging_tracing_the_http_client"><a class="anchor" href="#_debugging_tracing_the_http_client"></a>Debugging / Tracing the HTTP Client</h4>
 <div class="paragraph">
 <p>To debug the requests being sent and received from the HTTP client you can enable tracing logging via your <code>logback.xml</code> file:</p>
 </div>
@@ -482,7 +472,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_client_specific_debugging_tracing">Client Specific Debugging / Tracing</h4>
+<h4 id="_client_specific_debugging_tracing"><a class="anchor" href="#_client_specific_debugging_tracing"></a>Client Specific Debugging / Tracing</h4>
 <div class="paragraph">
 <p>To enable client-specific logging you could configure the default logger for all HTTP clients. And, you could also configure different loggers for different clients using <a href="#_client_specific_configuration">Client Specific Configuration</a>. For example, in <code>application.yml</code>:</p>
 </div>
@@ -510,7 +500,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_customizing_the_http_request">Customizing the HTTP Request</h4>
+<h4 id="_customizing_the_http_request"><a class="anchor" href="#_customizing_the_http_request"></a>Customizing the HTTP Request</h4>
 <div class="paragraph">
 <p>The previous example demonstrated using the static methods of the <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> interface to construct a <a href="../api/io/micronaut/http/MutableHttpRequest.html">MutableHttpRequest</a> instance. Like the name suggests a <code>MutableHttpRequest</code> can be mutated including the ability to add headers, customize the request body and so on. For example:</p>
 </div>
@@ -546,7 +536,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reading_json_responses">Reading JSON Responses</h4>
+<h4 id="_reading_json_responses"><a class="anchor" href="#_reading_json_responses"></a>Reading JSON Responses</h4>
 <div class="paragraph">
 <p>Typically with Microservices a message encoding format is used such as JSON. Micronaut&#8217;s HTTP client leverages Jackson for JSON parsing hence whatever type Jackson can decode can passed as a second argument to <code>retrieve</code>.</p>
 </div>
@@ -754,7 +744,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decoding_other_content_types">Decoding Other Content Types</h4>
+<h4 id="_decoding_other_content_types"><a class="anchor" href="#_decoding_other_content_types"></a>Decoding Other Content Types</h4>
 <div class="paragraph">
 <p>If the server you are communicating with uses a custom content type that is not JSON by default Micronaut&#8217;s HTTP client will not know how to decode this type.</p>
 </div>
@@ -763,7 +753,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="sect3">
-<h4 id="_receiving_the_full_http_response">Receiving the Full HTTP Response</h4>
+<h4 id="_receiving_the_full_http_response"><a class="anchor" href="#_receiving_the_full_http_response"></a>Receiving the Full HTTP Response</h4>
 <div class="paragraph">
 <p>Sometimes, receiving just the object is not enough and you need information about the response. In this case, instead of <code>retrieve</code> you should use the <code>exchange</code> method:</p>
 </div>
@@ -963,7 +953,7 @@ Jackson annotations are used to map the constructor
 </table>
 </div>
 <div class="sect1">
-<h2 id="_sending_json">Sending JSON</h2>
+<h2 id="_sending_json"><a class="anchor" href="#_sending_json"></a>Sending JSON</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The previous example sends plain text, if you wish send JSON you can simply pass the object you wish to encode as JSON, whether that be a map or a POJO. As long as Jackson is able to encode it.</p>
@@ -1024,7 +1014,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_a_uri_template">Using a URI Template</h2>
+<h2 id="_using_a_uri_template"><a class="anchor" href="#_using_a_uri_template"></a>Using a URI Template</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If some of the properties of the object need to be in the URI being posted to you can use a URI template.</p>
@@ -1065,7 +1055,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sending_form_data">Sending Form Data</h2>
+<h2 id="_sending_form_data"><a class="anchor" href="#_sending_form_data"></a>Sending Form Data</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can also encode a POJO or a map as regular form data instead of JSON. Just set the content type to <code>application/x-www-form-urlencoded</code> on the post request:</p>
@@ -1503,7 +1493,7 @@ The server does not have to be written in Micronaut, any server that supports JS
 
 
 <div class="sect2">
-<h3 id="_global_configuration_for_all_clients">Global Configuration for All Clients</h3>
+<h3 id="_global_configuration_for_all_clients"><a class="anchor" href="#_global_configuration_for_all_clients"></a>Global Configuration for All Clients</h3>
 <div class="paragraph">
 <p>The default HTTP client configuration is a <a href="#configurationProperties">Configuration Properties</a> called <a href="../api/io/micronaut/http/client/DefaultHttpClientConfiguration.html">DefaultHttpClientConfiguration</a> that allows configuring the default behaviour for all HTTP clients. For example, in <code>application.yml</code>:</p>
 </div>
@@ -1521,7 +1511,7 @@ The server does not have to be written in Micronaut, any server that supports JS
 </div>
 </div>
 <div class="sect2">
-<h3 id="_client_specific_configuration">Client Specific Configuration</h3>
+<h3 id="_client_specific_configuration"><a class="anchor" href="#_client_specific_configuration"></a>Client Specific Configuration</h3>
 <div class="paragraph">
 <p>If you wish to have a separate configuration per client then there a couple of options. You can configure <a href="#serviceDiscoveryManual">Service Discovery</a> manually in <code>application.yml</code> and apply per-client configuration:</p>
 </div>
@@ -1596,7 +1586,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_http_client_connection_pooling">Using HTTP Client Connection Pooling</h3>
+<h3 id="_using_http_client_connection_pooling"><a class="anchor" href="#_using_http_client_connection_pooling"></a>Using HTTP Client Connection Pooling</h3>
 <div class="paragraph">
 <p>If you have a client that needs to handle a significant number of requests then you can benefit from enabling HTTP client connection pooling. The following configuration will enable pooling for the <code>foo</code> client:</p>
 </div>
@@ -1629,6 +1619,96 @@ RxHttpClient httpClient;</code></pre>
 </div>
 <div class="paragraph">
 <p>See the API for <a href="../api/io/micronaut/http/client/HttpClientConfiguration.ConnectionPoolConfiguration.html">ConnectionPoolConfiguration</a> for details on available options to configure the pool.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_event_loop_groups"><a class="anchor" href="#_configuring_event_loop_groups"></a>Configuring Event Loop Groups</h3>
+<div class="paragraph">
+<p>By default Micronaut will share a common Netty <code>EventLoopGroup</code> for worker threads and all HTTP clients threads.</p>
+</div>
+<div class="paragraph">
+<p>This common <code>EventLoopGroup</code> can be configured via the <code>micronaut.netty.event-loops.default</code> property:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring The Default Event Loop</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    netty:
+        event-loops:
+            default:
+                num-threads: 10
+                prefer-native-transport: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also use the <code>micronaut.netty.event-loops</code> setting to configure one or more additional event loops. The following table summarizes the properties:</p>
+</div>
+<a id="io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration" href="#io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html">DefaultEventLoopGroupConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.num-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.io-ratio</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.prefer-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.executor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example, if your interactions with an HTTP client involve CPU intensive work it may be worthwhile configuring a separate <code>EventLoopGroup</code> for one or all clients.</p>
+</div>
+<div class="paragraph">
+<p>The following example configures an additional event loop group called "other" that uses 10 threads:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring Additional Event Loops</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    netty:
+        event-loops:
+            other:
+                num-threads: 10
+                prefer-native-transport: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once an additional event loop has been configured you can alter the HTTP client configuration to use the newly defined event loop group:</p>
+</div>
+<div class="listingblock">
+<div class="title">Altering the Event Loop Group used by Clients</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    http:
+        client:
+            event-loop-group: other</code></pre>
+</div>
 </div>
 </div>
 
@@ -2262,7 +2342,7 @@ Single&lt;Pet&gt; save(
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_type_based_binding_parameters">Type Based Binding Parameters</h4>
+<h4 id="_type_based_binding_parameters"><a class="anchor" href="#_type_based_binding_parameters"></a>Type Based Binding Parameters</h4>
 <div class="paragraph">
 <p>Some parameters are recognized by their type instead of their annotation. The following table summarizes the parameter types, their purpose, and provides an example:</p>
 </div>
@@ -2302,7 +2382,7 @@ Single&lt;Pet&gt; save(
 <p>The <a href="../api/io/micronaut/http/client/Client.html">@Client</a> annotation can also handle streaming HTTP responses.</p>
 </div>
 <div class="sect2">
-<h3 id="_streaming_json_with_client">Streaming JSON with @Client</h3>
+<h3 id="_streaming_json_with_client"><a class="anchor" href="#_streaming_json_with_client"></a>Streaming JSON with @Client</h3>
 <div class="paragraph">
 <p>For example to write a client that streams data from the controller defined in the <a href="#clientStreaming">JSON Streaming</a> section of the documentation you can simply define a client that returns an unbound <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> such as a RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html">Flowable</a> or Reactor <code>Flux</code>:</p>
 </div>
@@ -2445,7 +2525,7 @@ interface HeadlineClient {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_streaming_clients_and_response_types">Streaming Clients and Response Types</h3>
+<h3 id="_streaming_clients_and_response_types"><a class="anchor" href="#_streaming_clients_and_response_types"></a>Streaming Clients and Response Types</h3>
 <div class="paragraph">
 <p>The example defined in the previous section expects the server to respond with a stream of JSON objects and the content type to be <code>application/x-json-stream</code>. For example:</p>
 </div>
@@ -2476,7 +2556,7 @@ interface HeadlineClient {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_streaming_clients_and_read_timeout">Streaming Clients and Read Timeout</h3>
+<h3 id="_streaming_clients_and_read_timeout"><a class="anchor" href="#_streaming_clients_and_read_timeout"></a>Streaming Clients and Read Timeout</h3>
 <div class="paragraph">
 <p>When streaming responses from servers, the underlying HTTP client will not apply the default <code>readTimeout</code> setting (which defaults to 10 seconds) of the <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a> since the delay between reads for streaming responses may differ from normal reads.</p>
 </div>
@@ -2500,7 +2580,7 @@ interface HeadlineClient {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_streaming_server_sent_events">Streaming Server Sent Events</h3>
+<h3 id="_streaming_server_sent_events"><a class="anchor" href="#_streaming_server_sent_events"></a>Streaming Server Sent Events</h3>
 <div class="paragraph">
 <p>Micronaut features a native client for Server Sent Events (SSE) defined by the interface <a href="../api/io/micronaut/http/client/sse/SseClient.html">SseClient</a>.</p>
 </div>
@@ -2686,7 +2766,7 @@ The one exception to this rule is HTTP Not Found (404) responses. This exception
 <p>Customizing the request headers deserves special mention as there are several ways that can be accomplished.</p>
 </div>
 <div class="sect1">
-<h2 id="_populating_headers_using_configuration">Populating Headers Using Configuration</h2>
+<h2 id="_populating_headers_using_configuration"><a class="anchor" href="#_populating_headers_using_configuration"></a>Populating Headers Using Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/http/annotation/Header.html">@Header</a> annotation can be declared at the type level and is repeatable such that it is possible to drive the request headers sent via configuration using annotation metadata.</p>
@@ -2758,7 +2838,7 @@ interface PetClient : PetOperations {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_populating_headers_using_an_client_filter">Populating Headers using an Client Filter</h2>
+<h2 id="_populating_headers_using_an_client_filter"><a class="anchor" href="#_populating_headers_using_an_client_filter"></a>Populating Headers using an Client Filter</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Alternatively if you need the ability to dynamically populate headers an alternative is to use a <a href="#clientFilter">Client Filter</a>.</p>
@@ -3017,7 +3097,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_the_hystrixcommand_annotation">Using the @HystrixCommand Annotation</h2>
+<h2 id="_using_the_hystrixcommand_annotation"><a class="anchor" href="#_using_the_hystrixcommand_annotation"></a>Using the @HystrixCommand Annotation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>With the above dependency declared you can annotate any method (including methods defined on <code>@Client</code> interfaces) with the <a href="../api/io/micronaut/configuration/hystrix/annotation/HystrixCommand.html">@HystrixCommand</a> annotation and it will wrap the methods execution in a Hystrix command. For example:</p>
@@ -3061,7 +3141,7 @@ For information on how to customize the Hystrix thread pool, group and propertie
 </div>
 </div>
 <div class="sect1">
-<h2 id="_enabling_hystrix_stream_dashboard">Enabling Hystrix Stream &amp; Dashboard</h2>
+<h2 id="_enabling_hystrix_stream_dashboard"><a class="anchor" href="#_enabling_hystrix_stream_dashboard"></a>Enabling Hystrix Stream &amp; Dashboard</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can enable a Server Sent Event stream to feed into the <a href="https://github.com/Netflix-Skunkworks/hystrix-dashboard">Hystrix Dashboard</a> by setting the <code>hystrix.stream.enabled</code> setting to <code>true</code> in <code>application.yml</code>:</p>
@@ -3278,7 +3358,7 @@ internal class BintrayFilter(
 <p>Now, whenever you invoke the <code>bintrayService.fetchRepositories()</code> method, the <code>Authorization</code> HTTP header is included in the request.</p>
 </div>
 <div class="sect2">
-<h3 id="_filter_matching_by_annotation">Filter Matching By Annotation</h3>
+<h3 id="_filter_matching_by_annotation"><a class="anchor" href="#_filter_matching_by_annotation"></a>Filter Matching By Annotation</h3>
 <div class="paragraph">
 <p>For cases where a filter should be applied to a client, regardless of the URL, filters can be matched by the presence of an annotation applied to both the filter and the client. Given the following client:</p>
 </div>
