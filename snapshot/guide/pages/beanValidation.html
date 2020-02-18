@@ -2,16 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-82213539-2');
-    </script>
-    <title>3.15 Bean Validation 1.3.2.BUILD-SNAPSHOT</title>
+    <title>3.15 Bean Validation 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.15 Bean Validation</h1>
 
-                    <p><strong>Version:</strong> 1.3.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -143,9 +134,8 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-validation")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -213,9 +203,8 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-validator")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut.configuration:micronaut-hibernate-validator'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -229,7 +218,7 @@ function addJsClass() {
 </p>
 </div>
 <div class="sect2">
-<h3 id="_validating_bean_methods">Validating Bean Methods</h3>
+<h3 id="_validating_bean_methods"><a class="anchor" href="#_validating_bean_methods"></a>Validating Bean Methods</h3>
 <div class="paragraph">
 <p>You can validate methods of any class declared as a Micronaut bean simply by using the <code>javax.validation</code> annotation as arguments:</p>
 </div>
@@ -381,7 +370,7 @@ class PersonServiceSpec {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_data_classes">Validating Data Classes</h3>
+<h3 id="_validating_data_classes"><a class="anchor" href="#_validating_data_classes"></a>Validating Data Classes</h3>
 <div class="paragraph">
 <p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
 </div>
@@ -617,7 +606,7 @@ fun testThatPersonIsValid() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_configuration_properties">Validating Configuration Properties</h3>
+<h3 id="_validating_configuration_properties"><a class="anchor" href="#_validating_configuration_properties"></a>Validating Configuration Properties</h3>
 <div class="paragraph">
 <p>You can also validate the properties of classes that are annotated with <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> to ensure configuration is correct.</p>
 </div>
@@ -635,7 +624,7 @@ It is recommended that you annotate <a href="../api/io/micronaut/context/annotat
 </div>
 </div>
 <div class="sect2">
-<h3 id="_defining_additional_constraints">Defining Additional Constraints</h3>
+<h3 id="_defining_additional_constraints"><a class="anchor" href="#_defining_additional_constraints"></a>Defining Additional Constraints</h3>
 <div class="paragraph">
 <p>To define additional constraints you can define a new annotation, for example:</p>
 </div>
@@ -884,19 +873,17 @@ fun testCustomValidator() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_validating_annotations_at_compilation_time">Validating Annotations at Compilation Time</h3>
+<h3 id="_validating_annotations_at_compilation_time"><a class="anchor" href="#_validating_annotations_at_compilation_time"></a>Validating Annotations at Compilation Time</h3>
 <div class="paragraph">
 <p>You can use Micronaut&#8217;s validator to validate annotation usages at compilation time. To do so you should include <code>micronaut-validation</code> in the annotation processor classpath:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-validation")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">annotationProcessor <span class="hljs-string">'io.micronaut:micronaut-validation'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
     &lt;path&gt;
@@ -961,16 +948,17 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
-import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -978,16 +966,17 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
-import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
