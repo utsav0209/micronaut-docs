@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7.1.5 Configuring HTTP clients 2.0.0.BUILD-SNAPSHOT</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>7.1.5 Configuring HTTP clients 1.3.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>7.1.5 Configuring HTTP clients</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.2.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -130,7 +139,7 @@ function addJsClass() {
 
 
 <div class="sect2">
-<h3 id="_global_configuration_for_all_clients"><a class="anchor" href="#_global_configuration_for_all_clients"></a>Global Configuration for All Clients</h3>
+<h3 id="_global_configuration_for_all_clients">Global Configuration for All Clients</h3>
 <div class="paragraph">
 <p>The default HTTP client configuration is a <a href="#configurationProperties">Configuration Properties</a> called <a href="../api/io/micronaut/http/client/DefaultHttpClientConfiguration.html">DefaultHttpClientConfiguration</a> that allows configuring the default behaviour for all HTTP clients. For example, in <code>application.yml</code>:</p>
 </div>
@@ -148,7 +157,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_client_specific_configuration"><a class="anchor" href="#_client_specific_configuration"></a>Client Specific Configuration</h3>
+<h3 id="_client_specific_configuration">Client Specific Configuration</h3>
 <div class="paragraph">
 <p>If you wish to have a separate configuration per client then there a couple of options. You can configure <a href="#serviceDiscoveryManual">Service Discovery</a> manually in <code>application.yml</code> and apply per-client configuration:</p>
 </div>
@@ -223,7 +232,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_http_client_connection_pooling"><a class="anchor" href="#_using_http_client_connection_pooling"></a>Using HTTP Client Connection Pooling</h3>
+<h3 id="_using_http_client_connection_pooling">Using HTTP Client Connection Pooling</h3>
 <div class="paragraph">
 <p>If you have a client that needs to handle a significant number of requests then you can benefit from enabling HTTP client connection pooling. The following configuration will enable pooling for the <code>foo</code> client:</p>
 </div>
@@ -256,96 +265,6 @@ RxHttpClient httpClient;</code></pre>
 </div>
 <div class="paragraph">
 <p>See the API for <a href="../api/io/micronaut/http/client/HttpClientConfiguration.ConnectionPoolConfiguration.html">ConnectionPoolConfiguration</a> for details on available options to configure the pool.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuring_event_loop_groups"><a class="anchor" href="#_configuring_event_loop_groups"></a>Configuring Event Loop Groups</h3>
-<div class="paragraph">
-<p>By default Micronaut will share a common Netty <code>EventLoopGroup</code> for worker threads and all HTTP clients threads.</p>
-</div>
-<div class="paragraph">
-<p>This common <code>EventLoopGroup</code> can be configured via the <code>micronaut.netty.event-loops.default</code> property:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring The Default Event Loop</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    netty:
-        event-loops:
-            default:
-                num-threads: 10
-                prefer-native-transport: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can also use the <code>micronaut.netty.event-loops</code> setting to configure one or more additional event loops. The following table summarizes the properties:</p>
-</div>
-<a id="io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration" href="#io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html">DefaultEventLoopGroupConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.num-threads</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.io-ratio</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.prefer-native-transport</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.executor</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>For example, if your interactions with an HTTP client involve CPU intensive work it may be worthwhile configuring a separate <code>EventLoopGroup</code> for one or all clients.</p>
-</div>
-<div class="paragraph">
-<p>The following example configures an additional event loop group called "other" that uses 10 threads:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring Additional Event Loops</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    netty:
-        event-loops:
-            other:
-                num-threads: 10
-                prefer-native-transport: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once an additional event loop has been configured you can alter the HTTP client configuration to use the newly defined event loop group:</p>
-</div>
-<div class="listingblock">
-<div class="title">Altering the Event Loop Group used by Clients</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    http:
-        client:
-            event-loop-group: other</code></pre>
-</div>
 </div>
 </div>
 
