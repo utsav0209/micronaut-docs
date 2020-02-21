@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>9.4 Calling Functions with FunctionClient 1.3.1</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>9.4 Calling Functions with FunctionClient 1.3.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -114,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>9.4 Calling Functions with FunctionClient</h1>
 
-                    <p><strong>Version:</strong> 1.3.1</p>
+                    <p><strong>Version:</strong> 1.3.2</p>
                 </div>
 
                 
@@ -134,8 +143,9 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-function-client'</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-client")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -170,7 +180,7 @@ function addJsClass() {
 <p>In addition, the <code>function-client</code> works together with Micronaut&#8217;s <a href="#serviceDiscovery">Service Discovery</a> functionality, identifying any functions that are registered with the current service discovery provider and making them available to the client application.</p>
 </div>
 <div class="sect1">
-<h2 id="_functionclient"><a class="anchor" href="#_functionclient"></a>FunctionClient</h2>
+<h2 id="_functionclient">FunctionClient</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation makes it very straightforward to invoke local or remotely deployed functions. For example, given the following function:</p>
@@ -524,7 +534,7 @@ interface IsbnValidatorClient {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reactive_functionclients"><a class="anchor" href="#_reactive_functionclients"></a>Reactive FunctionClients</h2>
+<h2 id="_reactive_functionclients">Reactive FunctionClients</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>@FunctionClient</code> interfaces support RxJava constructs, so the above interfaces could be implemented as shown below:</p>
@@ -601,13 +611,13 @@ import io.reactivex.Single
 </div>
 </div>
 <div class="sect1">
-<h2 id="_remote_functions"><a class="anchor" href="#_remote_functions"></a>Remote Functions</h2>
+<h2 id="_remote_functions">Remote Functions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once functions have been deployed to a cloud provider, you can specify endpoints in your client configuration. Micronaut will then create <code>FunctionDefinitions</code> for these remote functions, allowing you to access them through <code>FunctionClient</code> interfaces just as you would with local functions.</p>
 </div>
 <div class="sect2">
-<h3 id="_aws_lambda"><a class="anchor" href="#_aws_lambda"></a>AWS Lambda</h3>
+<h3 id="_aws_lambda">AWS Lambda</h3>
 <div class="paragraph">
 <p>The configuration key path <code>aws.lambda.functions</code> can be used to specify function endpoints in an AWS Lambda environment.</p>
 </div>
