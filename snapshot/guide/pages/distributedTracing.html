@@ -2,16 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-82213539-2');
-    </script>
-    <title>8.4 Distributed Tracing 1.3.3.BUILD-SNAPSHOT</title>
+    <title>8.4 Distributed Tracing 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.4 Distributed Tracing</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -163,9 +154,8 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-tracing")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-tracing'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -179,7 +169,7 @@ function addJsClass() {
 </p>
 </div>
 <div class="sect1">
-<h2 id="_tracing_annotations">Tracing Annotations</h2>
+<h2 id="_tracing_annotations"><a class="anchor" href="#_tracing_annotations"></a>Tracing Annotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/tracing/annotation/package-summary.html">io.micronaut.tracing.annotation</a> package contains annotations that can be declared on methods to create new spans or continue existing spans.</p>
@@ -238,7 +228,7 @@ class HelloService {
 </table>
 </div>
 <div class="sect2">
-<h3 id="_tracing_instrumentation">Tracing Instrumentation</h3>
+<h3 id="_tracing_instrumentation"><a class="anchor" href="#_tracing_instrumentation"></a>Tracing Instrumentation</h3>
 <div class="paragraph">
 <p>In addition to explicit tracing tags, Micronaut includes a number of instrumentations to ensure that the Span context is propagated between threads and across Microservice boundaries.</p>
 </div>
@@ -249,7 +239,7 @@ class HelloService {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tracing_beans">Tracing Beans</h2>
+<h2 id="_tracing_beans"><a class="anchor" href="#_tracing_beans"></a>Tracing Beans</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If the Tracing annotations and existing instrumentations are not enough, Micronaut&#8217;s tracing integration registers a <code>io.opentracing.Tracer</code> bean that can be injected into any class and exposes the Open Tracing API.</p>
@@ -273,7 +263,7 @@ class HelloService {
 <p><a href="https://zipkin.io">Zipkin</a> is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data.</p>
 </div>
 <div class="sect1">
-<h2 id="_running_zipkin">Running Zipkin</h2>
+<h2 id="_running_zipkin"><a class="anchor" href="#_running_zipkin"></a>Running Zipkin</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The quickest way to get up and started with Zipkin is with Docker:</p>
@@ -290,7 +280,7 @@ class HelloService {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sending_traces_to_zipkin">Sending Traces to Zipkin</h2>
+<h2 id="_sending_traces_to_zipkin"><a class="anchor" href="#_sending_traces_to_zipkin"></a>Sending Traces to Zipkin</h2>
 <div class="sectionbody">
 <div class="admonitionblock tip">
 <table>
@@ -349,7 +339,7 @@ Or alternatively if you have the Micronaut CLI installed you can configure Zipki
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_the_zipkin_sender">Customizing the Zipkin Sender</h2>
+<h2 id="_customizing_the_zipkin_sender"><a class="anchor" href="#_customizing_the_zipkin_sender"></a>Customizing the Zipkin Sender</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order to send spans you need to configure a Zipkin sender. You can configure a <a href="../api/io/micronaut/tracing/brave/sender/HttpClientSender.html">HttpClientSender</a> that sends Spans asynchronously using Micronaut&#8217;s native HTTP client using the <code>tracing.zipkin.http.url</code> setting:</p>
@@ -397,7 +387,7 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zipkin_configuration">Zipkin Configuration</h2>
+<h2 id="_zipkin_configuration"><a class="anchor" href="#_zipkin_configuration"></a>Zipkin Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are many configuration options available for the Brave client that sends Spans to Zipkin and they are generally exposed via the <a href="../api/io/micronaut/tracing/brave/BraveTracerConfiguration.html">BraveTracerConfiguration</a> class. You can refer to the javadoc for all the available options.</p>
@@ -435,7 +425,7 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 <p><a href="https://www.jaegertracing.io">Jaeger</a> is another distributed tracing system developed at Uber that is more or less the reference implementation for <a href="http://opentracing.io">Open Tracing</a>.</p>
 </div>
 <div class="sect1">
-<h2 id="_running_jaeger">Running Jaeger</h2>
+<h2 id="_running_jaeger"><a class="anchor" href="#_running_jaeger"></a>Running Jaeger</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The easiest way to get started with Jaeger is to run Jaeger via Docker:</p>
@@ -463,7 +453,7 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sending_traces_to_jaeger">Sending Traces to Jaeger</h2>
+<h2 id="_sending_traces_to_jaeger"><a class="anchor" href="#_sending_traces_to_jaeger"></a>Sending Traces to Jaeger</h2>
 <div class="sectionbody">
 <div class="admonitionblock tip">
 <table>
@@ -523,7 +513,7 @@ Or alternatively if you have the Micronaut CLI installed you can configure Jaege
 </div>
 </div>
 <div class="sect1">
-<h2 id="_jaeger_configuration">Jaeger Configuration</h2>
+<h2 id="_jaeger_configuration"><a class="anchor" href="#_jaeger_configuration"></a>Jaeger Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are many configuration options available for the Jaeger client that sends Spans to Jaeger and they are generally exposed via the <a href="../api/io/micronaut/tracing/jaeger/JaegerConfiguration.html">JaegerConfiguration</a> class. You can refer to the javadoc for all the available options.</p>

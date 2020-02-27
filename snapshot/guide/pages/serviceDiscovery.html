@@ -2,16 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-82213539-2');
-    </script>
-    <title>8.2 Service Discovery 1.3.3.BUILD-SNAPSHOT</title>
+    <title>8.2 Service Discovery 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +114,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.2 Service Discovery</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -215,9 +206,8 @@ function addJsClass() {
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-discovery-client")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-discovery-client'</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -290,7 +280,7 @@ function addJsClass() {
 <p><a href="https://www.consul.io">Consul</a> is a popular Service Discovery and Distributed Configuration server provided by HashiCorp. Micronaut features a native non-blocking <a href="../api/io/micronaut/discovery/consul/client/v1/ConsulClient.html">ConsulClient</a> that is built using Micronaut&#8217;s support for <a href="#clientAnnotation">Declarative HTTP Clients</a>.</p>
 </div>
 <div class="sect1">
-<h2 id="_starting_consul">Starting Consul</h2>
+<h2 id="_starting_consul"><a class="anchor" href="#_starting_consul"></a>Starting Consul</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The quickest way to start using Consul is via Docker:</p>
@@ -313,7 +303,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_auto_registering_with_consul">Auto Registering with Consul</h2>
+<h2 id="_auto_registering_with_consul"><a class="anchor" href="#_auto_registering_with_consul"></a>Auto Registering with Consul</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To register a Micronaut application with Consul simply add the necessary <a href="../api/io/micronaut/discovery/consul/ConsulConfiguration.html">ConsulConfiguration</a>. A minimal example can be seen below:</p>
@@ -388,7 +378,7 @@ Running multiple instances of a service may require an additional configuration 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_consul_service_registration">Customizing Consul Service Registration</h2>
+<h2 id="_customizing_consul_service_registration"><a class="anchor" href="#_customizing_consul_service_registration"></a>Customizing Consul Service Registration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/discovery/consul/ConsulConfiguration.html">ConsulConfiguration</a> class features a range of customization options for altering how an instance registers with Consul. You can customize the tags, the retry attempts, the fail fast behaviour and so on.</p>
@@ -423,7 +413,7 @@ consul:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_discovery_services_from_consul">Discovery Services from Consul</h2>
+<h2 id="_discovery_services_from_consul"><a class="anchor" href="#_discovery_services_from_consul"></a>Discovery Services from Consul</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To discovery other services you could manually interact with the <a href="../api/io/micronaut/discovery/DiscoveryClient.html">DiscoveryClient</a>, however typically instead you use the <a href="#clientAnnotation">Client Annotation</a> to declare how an HTTP client maps to a service.</p>
@@ -457,7 +447,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_consul_health_checks">Consul Health Checks</h2>
+<h2 id="_consul_health_checks"><a class="anchor" href="#_consul_health_checks"></a>Consul Health Checks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default when registering with Consul Micronaut will register a <a href="https://www.consul.io/docs/agent/checks.html">TTL check</a>. A TTL check basically means that if the application does not send a heartbeat back to Consul after a period of time the service is put in a failing state.</p>
@@ -490,7 +480,7 @@ RxHttpClient httpClient;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_controlling_ip_host_registration">Controlling IP/Host Registration</h2>
+<h2 id="_controlling_ip_host_registration"><a class="anchor" href="#_controlling_ip_host_registration"></a>Controlling IP/Host Registration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Occasionally, depending on the deployment environment you may wish to expose the IP address and not the host name, since by default Micronaut will register with Consul with either the value of the <code>HOST</code> environment variable or the value configured via <code>micronaut.server.host</code>.</p>
@@ -548,7 +538,7 @@ RxHttpClient httpClient;</code></pre>
 <p>Micronaut features a native non-blocking <a href="../api/io/micronaut/discovery/eureka/client/v2/EurekaClient.html">EurekaClient</a> as part of the <code>discovery-client</code> module that does not require any additional third-party dependencies and is built using Micronaut&#8217;s support for <a href="#clientAnnotation">Declarative HTTP Clients</a>.</p>
 </div>
 <div class="sect1">
-<h2 id="_starting_eureka">Starting Eureka</h2>
+<h2 id="_starting_eureka"><a class="anchor" href="#_starting_eureka"></a>Starting Eureka</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The quickest way to start a Eureka server is to use to use <a href="https://spring.io/guides/gs/service-registration-and-discovery/#initial">Spring Boot&#8217;s Eureka starters</a>.</p>
@@ -568,7 +558,7 @@ As of this writing the official Docker images for Eureka are significantly out-o
 </div>
 </div>
 <div class="sect1">
-<h2 id="_auto_registering_with_eureka">Auto Registering with Eureka</h2>
+<h2 id="_auto_registering_with_eureka"><a class="anchor" href="#_auto_registering_with_eureka"></a>Auto Registering with Eureka</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The process to register a Micronaut application with Eureka is very similar to with Consul, as seen in the previous section, simply add the necessary <a href="../api/io/micronaut/discovery/eureka/EurekaConfiguration.html">EurekaConfiguration</a>. A minimal example can be seen below:</p>
@@ -589,7 +579,7 @@ eureka:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_eureka_service_registration">Customizing Eureka Service Registration</h2>
+<h2 id="_customizing_eureka_service_registration"><a class="anchor" href="#_customizing_eureka_service_registration"></a>Customizing Eureka Service Registration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can customize various aspects of registration with Eureka using the <a href="../api/io/micronaut/discovery/eureka/EurekaConfiguration.html">EurekaConfiguration</a>. Notice that <code>EurekaConfiguration</code> extends <a href="../api/io/micronaut/discovery/client/DiscoveryClientConfiguration.html">DiscoveryClientConfiguration</a>  which in turn extends <a href="../api/io/micronaut/http/client/HttpClientConfiguration.html">HttpClientConfiguration</a> allowing you to customize the settings for the Eureka client, including read timeout, proxy configuration and so on.</p>
@@ -793,7 +783,7 @@ eureka:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_eureka_basic_authentication">Eureka Basic Authentication</h2>
+<h2 id="_eureka_basic_authentication"><a class="anchor" href="#_eureka_basic_authentication"></a>Eureka Basic Authentication</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can customize the Eureka credentials in the URI you specify to in <code>defaultZone</code>.</p>
@@ -815,7 +805,7 @@ eureka:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_eureka_health_checks">Eureka Health Checks</h2>
+<h2 id="_eureka_health_checks"><a class="anchor" href="#_eureka_health_checks"></a>Eureka Health Checks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Like Consul, the <a href="../api/io/micronaut/discovery/eureka/registration/EurekaAutoRegistration.html">EurekaAutoRegistration</a> will send <a href="../api/io/micronaut/health/HeartbeatEvent.html">HeartbeatEvent</a> instances with the <a href="../api/io/micronaut/health/HealthStatus.html">HealthStatus</a> of the Micronaut application to Eureka.</p>
@@ -826,7 +816,7 @@ eureka:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_secure_communication_with_eureka">Secure Communication with Eureka</h2>
+<h2 id="_secure_communication_with_eureka"><a class="anchor" href="#_secure_communication_with_eureka"></a>Secure Communication with Eureka</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you wish to configure HTTPS and have clients discovery Eureka instances and communicate over HTTPS then you should set the <code>eureka.client.discovery.use-secure-port</code> option to <code>true</code> to ensure that service communication happens over HTTPS and also configure <a href="#https">HTTPS</a> appropriately for each instance.</p>
@@ -964,7 +954,7 @@ List&lt;ServiceInstance&gt; instances = Flowable.fromPublisher(discoveryClient.g
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_the_namespace">Creating the Namespace</h4>
+<h4 id="_creating_the_namespace"><a class="anchor" href="#_creating_the_namespace"></a>Creating the Namespace</h4>
 <div class="paragraph">
 <p>Namespaces are similar to a regular Route53 hosted zone, and they appear in the Route53 console but the console doesn&#8217;t support
  modifying them. You must use the AWS-CLI at this time for any Service Discovery functionality.</p>
@@ -999,7 +989,7 @@ $ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_the_service_dns_records">Creating the Service &amp; DNS Records</h4>
+<h4 id="_creating_the_service_dns_records"><a class="anchor" href="#_creating_the_service_dns_records"></a>Creating the Service &amp; DNS Records</h4>
 <div class="paragraph">
 <p>The next step is creating the Service and DNS records.</p>
 </div>
@@ -1038,11 +1028,11 @@ $ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_up_the_configuration_in_micronaut">Setting up the configuration in Micronaut</h4>
+<h4 id="_setting_up_the_configuration_in_micronaut"><a class="anchor" href="#_setting_up_the_configuration_in_micronaut"></a>Setting up the configuration in Micronaut</h4>
 
 </div>
 <div class="sect3">
-<h4 id="_auto_naming_registration">Auto Naming Registration</h4>
+<h4 id="_auto_naming_registration"><a class="anchor" href="#_auto_naming_registration"></a>Auto Naming Registration</h4>
 <div class="paragraph">
 <p>You will need to add the configuration to make your applications register with Route 53 Auto-discovery:</p>
 </div>
@@ -1060,7 +1050,7 @@ $ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io
 </div>
 </div>
 <div class="sect3">
-<h4 id="_discovery_client_configuration">Discovery Client Configuration</h4>
+<h4 id="_discovery_client_configuration"><a class="anchor" href="#_discovery_client_configuration"></a>Discovery Client Configuration</h4>
 <div class="listingblock">
 <div class="title">Discovery Properties</div>
 <div class="content">
@@ -1086,7 +1076,7 @@ Publisher&lt;List&lt;String&gt;&gt; getServiceIds()</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_integration_tests">Integration Tests</h4>
+<h4 id="_integration_tests"><a class="anchor" href="#_integration_tests"></a>Integration Tests</h4>
 <div class="paragraph">
 <p>If you set the environment variable AWS_SUBNET_ID and have credentials configured in your home directory that are valid (in <code>~/.aws/credentials</code>)
 you can run the integration tests. You will still need a domain hosted on route53 as well. This test will create a t2.nano instance, a namespace, service, and register that instance to service discovery.
