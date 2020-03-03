@@ -688,6 +688,40 @@ This change does not apply to an explicit primary defined in the annotation (<co
 <p><code>@Retryable</code> and <code>@CircuitBreaker</code> in previous versions of Micronaut resolved <code>includes</code> and <code>excludes</code> explicitly. Any exception thrown had to exactly match one of the exceptions specified. This has been changed to now also include subclasses of the exception types specified.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_messagesource_api_changes">MessageSource API Changes</h3>
+<div class="paragraph">
+<p>The semantics of the <code>getMessage</code> method have been changed to also interpolate the message with any provided variables. In previous versions of Micronaut, the raw message was returned from the bundle. To support reading the raw message, a new method <code>getRawMessage</code> has been added.</p>
+</div>
+<div class="paragraph">
+<p>In addition, escaping of messages with single quotes is now implemented in accordance with the standard Java <a href="https://docs.oracle.com/javase/8/docs/api/java/text/MessageFormat.html">MessageFormat</a> class. Messages that contain a single quote will now need escaping in order for the quote to output as it did previously. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.message=We love Micronaut's documentation</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Would now be output as <code>We love Micronauts documentation</code>. To achieve the desired result, escape the single quote with another single quote.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.message=We love Micronaut''s documentation</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This change also applies to messages in custom constraint annotations, which interpolate the message via the message source api.
+</td>
+</tr>
+</table>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
