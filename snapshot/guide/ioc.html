@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3 Inversion of Control 2.0.0.BUILD-SNAPSHOT</title>
+    <title>3 Inversion of Control 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -252,10 +252,10 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:micronaut-inject:2.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.3.BUILD-SNAPSHOT" // <2>
+    compile "io.micronaut:micronaut-inject:1.3.3.BUILD-SNAPSHOT"
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <3>
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:1.3.3.BUILD-SNAPSHOT" // <3>
     ...
 }</code></pre>
 </div>
@@ -1128,7 +1128,7 @@ The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</
 <p>Additional scopes can be added by defining a <code>@Singleton</code> bean that implements the <a href="../api/io/micronaut/context/scope/CustomScope.html">CustomScope</a> interface.</p>
 </div>
 <div class="paragraph">
-<p>Note that with Micronaut when starting a <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> by default <code>@Singleton</code> scoped beans are created lazily and on demand. This is by design and to optimize startup time.</p>
+<p>Note that with Micronaut when starting an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> by default <code>@Singleton</code> scoped beans are created lazily and on demand. This is by design and to optimize startup time.</p>
 </div>
 <div class="paragraph">
 <p>If this presents a problem for your use case you have the option of using the <a href="../api/io/micronaut/context/annotation/Context.html">@Context</a> annotation which binds the lifecycle of your object to the lifecycle of the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>. In other words when the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> is started your bean will be created.</p>
@@ -1348,7 +1348,7 @@ class Foo {}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you wish for the scope to be overridable you should instead using the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
+<p>If you wish for the scope to be overridable you should instead use the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Using @DefaultScope</div>
@@ -1637,183 +1637,6 @@ class EngineFactory {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_injection_point">Injection Point</h3>
-<div class="paragraph">
-<p>A common use case with factories is to take advantage of annotation metadata from the point at which an object is injected such that behaviour can be modified based on said metadata.</p>
-</div>
-<div class="paragraph">
-<p>Consider an annotation such as the following:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Documented
-@Retention(RUNTIME)
-@Target(ElementType.PARAMETER)
-public @interface Cylinders {
-    int value() default 8;
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Documented
-@Retention(RUNTIME)
-@Target(ElementType.PARAMETER)
-@interface Cylinders {
-    int value() default 8
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.VALUE_PARAMETER)
-annotation class Cylinders(val value: Int = 8)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above annotation could be used to customize the type of engine we want to inject into a vehicle at the point at which the injection point is defined:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
-class Vehicle {
-    private final Engine engine;
-    Vehicle(@Cylinders(6) Engine engine) {
-        this.engine = engine;
-    }
-
-    String start() {
-        return engine.start();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
-class Vehicle {
-    private final Engine engine
-    Vehicle(@Cylinders(6) Engine engine) {
-        this.engine = engine
-    }
-
-    String start() {
-        return engine.start()
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
-internal class Vehicle(@param:Cylinders(6) private val engine: Engine) {
-    fun start(): String {
-        return engine.start()
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above <code>Vehicle</code> class specifies an annotation value of <code>@Cylinders(6)</code> indicating an <code>Engine</code> of six cylinders is needed.</p>
-</div>
-<div class="paragraph">
-<p>To implement this use case you can define a factory that accepts the <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a> instance which can be used to analyze the annotation values defined:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Factory
-class EngineFactory {
-
-    @Prototype
-    Engine v8Engine(InjectionPoint&lt;?&gt; injectionPoint, CrankShaft crankShaft) { <b class="conum">(1)</b>
-        final int cylinders = injectionPoint
-                .getAnnotationMetadata()
-                .intValue(Cylinders.class).orElse(8); <b class="conum">(2)</b>
-        switch (cylinders) { <b class="conum">(3)</b>
-            case 6:
-                return new V6Engine(crankShaft);
-            case 8:
-                return new V8Engine(crankShaft);
-            default:
-                throw new IllegalArgumentException("Unsupported number of cylinders specified: " + cylinders);
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory
-class EngineFactory {
-
-    @Prototype
-    Engine v8Engine(InjectionPoint&lt;?&gt; injectionPoint, CrankShaft crankShaft) { <b class="conum">(1)</b>
-        final int cylinders = injectionPoint
-                .getAnnotationMetadata()
-                .intValue(Cylinders.class).orElse(8) <b class="conum">(2)</b>
-        switch (cylinders) { <b class="conum">(3)</b>
-            case 6:
-                return new V6Engine(crankShaft)
-            case 8:
-                return new V8Engine(crankShaft)
-            default:
-                throw new IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Factory
-internal class EngineFactory {
-
-    @Prototype
-    fun v8Engine(injectionPoint: InjectionPoint&lt;*&gt;, crankShaft: CrankShaft): Engine { <b class="conum">(1)</b>
-        val cylinders = injectionPoint
-                .annotationMetadata
-                .intValue(Cylinders::class.java).orElse(8) <b class="conum">(2)</b>
-        return when (cylinders) { <b class="conum">(3)</b>
-            6 -&gt; V6Engine(crankShaft)
-            8 -&gt; V8Engine(crankShaft)
-            else -&gt; throw IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The factory method defines a parameter of type <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The annotation metadata is used to obtain the value of the <code>@Cylinder</code> annotation</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The value is used to construct an engine, throwing an exception if an engine cannot be constructed.</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is important to note that the factory is declared as <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</a> scope so that the method is invoked for each injection point. If the <code>V8Engine</code> and <code>V6Engine</code> types are required to be singletons then the factory should use a map to ensure the objects are only constructed once.
-</td>
-</tr>
-</table>
-</div>
-</div>
 
 <h2 id="conditionalBeans"><a class="anchor" href="#conditionalBeans"></a>3.8 Conditional Beans</h2>
 
@@ -2002,19 +1825,19 @@ public class JdbcBookService implements BookService {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(missingProperty="data-source.url")</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the presence of one of more files in the file system</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Require the presence of one or more files in the file system</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(resources="file:/path/to/file")</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the presence of one of more classpath resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Require the presence of one or more classpath resources</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(resources="classpath:myFile.properties")</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the current operating system to be in the list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Require the current operating system to be in the list</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(os={Requires.Family.WINDOWS})</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the current operating system to <strong>not</strong> be in the list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Require the current operating system to <strong>not</strong> be in the list</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Requires(notOs={Requires.Family.WINDOWS})</code></p></td>
 </tr>
 </tbody>
@@ -2086,7 +1909,7 @@ public class JdbcBookService implements BookService {
 <p>One significant difference between Micronaut&#8217;s Dependency Injection system and Spring is the way beans can be replaced.</p>
 </div>
 <div class="paragraph">
-<p>In a Spring application, beans have names and can effectively be overridden simply by creating a bean with the same name, regardless of the type of the bean. Spring also has the notion of bean registration order, hence in Spring Boot you have <code>@AutoConfigureBefore</code> and <code>@AutoConfigureAfter</code> the control how beans override each other.</p>
+<p>In a Spring application, beans have names and can effectively be overridden simply by creating a bean with the same name, regardless of the type of the bean. Spring also has the notion of bean registration order, hence in Spring Boot you have <code>@AutoConfigureBefore</code> and <code>@AutoConfigureAfter</code> that control how beans override each other.</p>
 </div>
 <div class="paragraph">
 <p>This strategy leads to difficult to debug problems, for example:</p>
@@ -3542,7 +3365,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:1.3.3.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3552,7 +3375,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;1.3.3.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -3575,7 +3398,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.0.0.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:1.3.3.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3583,7 +3406,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.0.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;1.3.3.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -4002,7 +3825,7 @@ You can also use the <code>packages</code> member of the <a href="../api/io/micr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_write_a_code_annotationmapper_code_to_introspect_existing_annotations">Write a <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
+<h4 id="_write_an_code_annotationmapper_code_to_introspect_existing_annotations">Write an <code>AnnotationMapper</code> to Introspect Existing Annotations</h4>
 <div class="paragraph">
 <p>If there is an existing annotation that you wish to introspect by default you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>.</p>
 </div>
@@ -4169,7 +3992,7 @@ Currently only bean properties (private field with public getter/setter) are sup
 <p>XML-based configuration</p>
 </li>
 <li>
-<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> to define custom constraints, which supports validating annotations as compilation time.</p>
+<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> (io.micronaut.validation.validator.constraints.ConstraintValidator) to define custom constraints, which supports validating annotations as compilation time.</p>
 </li>
 </ul>
 </div>
@@ -4376,7 +4199,7 @@ class PersonServiceSpec {
 <div class="sect2">
 <h3 id="_validating_data_classes">Validating Data Classes</h3>
 <div class="paragraph">
-<p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or if the class is external be imported by the <code>@Introspected</code> annotation.</p>
+<p>If you wish to validate data classes, such as POJOs and so on, typically used in JSON interchange, the class must be annotated with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> (see the previous section on <a href="#introspection">Bean Introspection</a>) or, if the class is external, be imported by the <code>@Introspected</code> annotation.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -4466,7 +4289,7 @@ void testThatPersonIsValidWithValidator() {
     person.setName("");
     person.setAge(10);
 
-    final Set&lt;ConstraintViolation&lt;Person&gt;&gt; constraintViolations = validator.validate(person);
+    final Set&lt;ConstraintViolation&lt;Person&gt;&gt; constraintViolations = validator.validate(person);  <b class="conum">(1)</b>
 
     assertEquals(2, constraintViolations.size()); <b class="conum">(2)</b>
 }</code></pre>
@@ -4493,7 +4316,7 @@ lateinit var validator: Validator
 @Test
 fun testThatPersonIsValidWithValidator() {
     val person = Person("", 10)
-    val constraintViolations = validator.validate(person)
+    val constraintViolations = validator.validate(person)  <b class="conum">(1)</b>
 
     assertEquals(2, constraintViolations.size) <b class="conum">(2)</b>
 }</code></pre>
@@ -4842,7 +4665,7 @@ open class HolidayService {
 void testCustomValidator() {
     final ConstraintViolationException exception =
             assertThrows(ConstraintViolationException.class, () -&gt;
-                    holidayService.startHoliday("Fred", "junk")
+                    holidayService.startHoliday("Fred", "junk")   <b class="conum">(1)</b>
             );
 
     assertEquals("startHoliday.duration: invalid duration (junk)", exception.getMessage()); <b class="conum">(2)</b>
@@ -4869,11 +4692,23 @@ lateinit var holidayService: HolidayService
 @Test
 fun testCustomValidator() {
     val exception = assertThrows(ConstraintViolationException::class.java
-    ) { holidayService.startHoliday("Fred", "junk") }
+    ) { holidayService.startHoliday("Fred", "junk") }   <b class="conum">(1)</b>
 
     assertEquals("startHoliday.duration: invalid duration (junk)", exception.message) <b class="conum">(2)</b>
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A validated method is invoked</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>THe constraint violations are verified</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -4954,17 +4789,16 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
+import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @NonNull ConstraintValidatorContext context) {
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -4972,17 +4806,16 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
-import edu.umd.cs.findbugs.annotations.Nullable
-import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
+import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @NonNull ConstraintValidatorContext context) {
+            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @Nonnull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
@@ -5153,7 +4986,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 <div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
-    @NonNull
+    @Nonnull
     @Override
     public String getName() {
         return "javax.persistence.Entity";
@@ -5290,8 +5123,8 @@ class ByAnnotationTypeConfig {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.3.3.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:1.3.3.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>

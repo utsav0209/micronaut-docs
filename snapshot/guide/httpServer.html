@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>6 The HTTP Server 2.0.0.BUILD-SNAPSHOT</title>
+    <title>6 The HTTP Server 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6 The HTTP Server</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -1488,7 +1488,7 @@ String lock(String name)</code></pre>
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
@@ -6078,7 +6078,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
@@ -7539,13 +7539,8 @@ public class MyBean {
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="_using_native_transports">Using Native Transports</h3>
 <div class="paragraph">
-<p>The native Netty transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
-</div>
-<div class="paragraph">
-<p>To enable native transports first add a necessarily dependency:</p>
+<p>The <code>use-native-transport</code> option also requires the relevant netty dependency to take effect. The native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
 </div>
 <div class="paragraph">
 <p>For macOS:</p>
@@ -7590,20 +7585,6 @@ public class MyBean {
 </div>
 </div>
 </p>
-</div>
-<div class="paragraph">
-<p>Then configure the default event loop group to prefer native transports:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring The Default Event Loop to Prefer Native Transports</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    netty:
-        event-loops:
-            default:
-                prefer-native-transport: true</code></pre>
-</div>
-</div>
 </div>
 
 <h2 id="threadPools"><a class="anchor" href="#threadPools"></a>6.26.1 Configuring Server Thread Pools</h2>
