@@ -167,10 +167,10 @@ for(BeanDefinition definition : definitions) {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will find all <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> annotated with <code>@Controller</code> regardless whether <code>@Controller</code> is used directly or inherited via an annotation stereotype.</p>
+<p>The above example will find all <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> 's annotated with <code>@Controller</code> regardless whether <code>@Controller</code> is used directly or inherited via an annotation stereotype.</p>
 </div>
 <div class="paragraph">
-<p>Note that the <code>getAnnotation</code> method and the variations of the method return a <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> type and not a Java annotation. This is by design, and you should generally try to work with this API when reading annotation values, the reason being that synthesizing a proxy implementation is worse from a performance and memory consumption perspective.</p>
+<p>Note that the <code>getAnnotation</code> method and the variations of the method return an <a href="../api/io/micronaut/core/annotation/AnnotationValue.html">AnnotationValue</a> type and not a Java annotation. This is by design, and you should generally try to work with this API when reading annotation values, the reason being that synthesizing a proxy implementation is worse from a performance and memory consumption perspective.</p>
 </div>
 <div class="paragraph">
 <p>If you absolutely require a reference to an annotation instance you can use the <code>synthesize</code> method, which will create a runtime proxy that implements the annotation interface:</p>
@@ -227,7 +227,7 @@ for(BeanDefinition definition : definitions) {
 <p>With these aliases in place, regardless whether you define <code>@Client("foo")</code> or <code>@Client(id="foo")</code> both the <code>value</code> and <code>id</code> members are always set, making it much easier to parse and deal with the annotation.</p>
 </div>
 <div class="paragraph">
-<p>If you do not have control over the annotation then another approach is to use a <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>. To create a <code>AnnotationMapper</code> you must following the following steps:</p>
+<p>If you do not have control over the annotation then another approach is to use an <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a>. To create an <code>AnnotationMapper</code> you must perform the following steps:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -255,7 +255,7 @@ Because <code>AnnotationMapper</code> implementations need to be on the annotati
 </table>
 </div>
 <div class="paragraph">
-<p>As an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
+<p>The following is an example the  <code>AnnotationMapper</code> that improves the introspection capabilities of JPA entities</p>
 </div>
 <div class="listingblock">
 <div class="title">EntityIntrospectedAnnotationMapper Mapper Example</div>
