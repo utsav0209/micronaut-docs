@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":17,"i3":17,"i4":17,"i5":17,"i6":17};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":17,"i4":17,"i5":17,"i6":17,"i7":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -147,45 +147,51 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation--">afterInvocation</a></span>()</code>
-<div class="block">After call.</div>
+<div class="block">After call defaults to not enforcing cleanup.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation-boolean-">afterInvocation</a></span>(boolean&nbsp;cleanup)</code>
+<div class="block">After call.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#beforeInvocation--">beforeInvocation</a></span>()</code>
 <div class="block">Before call.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#combine-java.util.Collection-">combine</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a>&gt;&nbsp;invocationInstrumenters)</code>
 <div class="block">Combines multiple instrumenters into one.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#instrument-java.util.concurrent.Callable-java.util.Collection-">instrument</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable,
           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a>&gt;&nbsp;invocationInstrumenters)</code>
 <div class="block">Wrappers <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a> with instrumentation invocations.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#instrument-java.util.concurrent.Callable-io.micronaut.scheduling.instrument.InvocationInstrumenter-">instrument</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable,
           <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a>&nbsp;invocationInstrumenter)</code>
 <div class="block">Wrappers <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a> with instrumentation invocations.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#instrument-java.lang.Runnable-java.util.Collection-">instrument</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a>&gt;&nbsp;invocationInstrumenters)</code>
 <div class="block">Wrappers <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> with instrumentation invocations.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#instrument-java.lang.Runnable-io.micronaut.scheduling.instrument.InvocationInstrumenter-">instrument</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
           <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenter</a>&nbsp;invocationInstrumenter)</code>
@@ -235,14 +241,28 @@ var activeTableTab = "activeTableTab";
 <div class="block">Before call.</div>
 </li>
 </ul>
+<a name="afterInvocation-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>afterInvocation</h4>
+<pre>void&nbsp;afterInvocation(boolean&nbsp;cleanup)</pre>
+<div class="block">After call.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>cleanup</code> - Whether to enforce cleanup</dd>
+</dl>
+</li>
+</ul>
 <a name="afterInvocation--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>afterInvocation</h4>
-<pre>void&nbsp;afterInvocation()</pre>
-<div class="block">After call.</div>
+<pre>default&nbsp;void&nbsp;afterInvocation()</pre>
+<div class="block">After call defaults to not enforcing cleanup.</div>
 </li>
 </ul>
 <a name="combine-java.util.Collection-">
