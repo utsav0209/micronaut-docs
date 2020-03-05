@@ -375,7 +375,7 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="sect2">
 <h3 id="_non_blocking_message_handling">Non-Blocking Message Handling</h3>
 <div class="paragraph">
-<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
+<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketBroadcaster.html">WebSocketBroadcaster</a> interface which blocks until the broadcast is complete. A similar <code>sendSync</code> method exists in <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> to send a message to a single receiver in a blocking manner. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">Future</a> from each WebSocket handler method. For example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
@@ -424,6 +424,15 @@ A working example of WebSockets in action can be found in the <a href="https://g
         return broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The example above uses <code>broadcast</code>, which creates an instance of <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> and returns the value to Micronaut.
+Micronaut will then take care of sending the message asynchronously based on the Publisher interface.
+The similar <code>send</code> method can be used to send a single message asynchronously via Micronaut return value.</p>
+</div>
+<div class="paragraph">
+<p>For sending messages asynchronously outside Micronaut annotated handler methods, you can use <code>broadcastAsync</code> and <code>sendAsync</code> methods in their respective <a href="../api/io/micronaut/websocket/WebSocketBroadcaster.html">WebSocketBroadcaster</a> and <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interfaces.
+For blocking sends, the <code>broadcastSync</code> and <code>sendSync</code> methods can be used.</p>
 </div>
 </div>
 <div class="sect2">

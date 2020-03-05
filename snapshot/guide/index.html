@@ -428,17 +428,29 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-java"><a href="#java"><strong>13.1</strong><span>Micronaut for Java</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-java9"><a href="#java9"><strong>13.1.1</strong><span>Using Micronaut with Java 9+</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-incrementalannotationgradle"><a href="#incrementalannotationgradle"><strong>13.1.2</strong><span>Incremental Annotation Processing with Gradle</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-lombok"><a href="#lombok"><strong>13.1.3</strong><span>Using Project Lombok</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-ide"><a href="#ide"><strong>13.1.4</strong><span>Configuring an IDE</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-retainparameternames"><a href="#retainparameternames"><strong>13.1.5</strong><span>Retaining Parameter Names</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-groovy"><a href="#groovy"><strong>13.2</strong><span>Micronaut for Groovy</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-kotlin"><a href="#kotlin"><strong>13.3</strong><span>Micronaut for Kotlin</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-kaptintellij"><a href="#kaptintellij"><strong>13.3.1</strong><span>Kotlin, Kapt and IntelliJ</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-openandaop"><a href="#openandaop"><strong>13.3.2</strong><span>Kotlin and AOP Advice</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-gradlekapt"><a href="#gradlekapt"><strong>13.3.2</strong><span>Incremental Annotation Processing with Gradle and Kapt</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-kotlinretainparamnames"><a href="#kotlinretainparamnames"><strong>13.3.3</strong><span>Kotlin and Retaining Parameter Names</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-openandaop"><a href="#openandaop"><strong>13.3.3</strong><span>Kotlin and AOP Advice</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-coroutines"><a href="#coroutines"><strong>13.3.4</strong><span>Coroutines Support</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-kotlinretainparamnames"><a href="#kotlinretainparamnames"><strong>13.3.4</strong><span>Kotlin and Retaining Parameter Names</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-coroutines"><a href="#coroutines"><strong>13.3.5</strong><span>Coroutines Support</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>13.4</strong><span>Micronaut for GraalVM</span></a></div>
         
@@ -18083,7 +18095,7 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="sect2">
 <h3 id="_non_blocking_message_handling">Non-Blocking Message Handling</h3>
 <div class="paragraph">
-<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interface which blocks until the broadcast is complete. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <code>Future</code> from each WebSocket handler method. For example:</p>
+<p>The previous example uses the <code>broadcastSync</code> method of the <a href="../api/io/micronaut/websocket/WebSocketBroadcaster.html">WebSocketBroadcaster</a> interface which blocks until the broadcast is complete. A similar <code>sendSync</code> method exists in <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> to send a message to a single receiver in a blocking manner. You can however implement non-blocking WebSocket servers by instead returning a <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> or a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">Future</a> from each WebSocket handler method. For example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">WebSocket Chat Example</div>
@@ -18132,6 +18144,15 @@ A working example of WebSockets in action can be found in the <a href="https://g
         return broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The example above uses <code>broadcast</code>, which creates an instance of <a href="https://docs.oracle.com/javase/8/docs/api/org/reactivestreams/Publisher.html">Publisher</a> and returns the value to Micronaut.
+Micronaut will then take care of sending the message asynchronously based on the Publisher interface.
+The similar <code>send</code> method can be used to send a single message asynchronously via Micronaut return value.</p>
+</div>
+<div class="paragraph">
+<p>For sending messages asynchronously outside Micronaut annotated handler methods, you can use <code>broadcastAsync</code> and <code>sendAsync</code> methods in their respective <a href="../api/io/micronaut/websocket/WebSocketBroadcaster.html">WebSocketBroadcaster</a> and <a href="../api/io/micronaut/websocket/WebSocketSession.html">WebSocketSession</a> interfaces.
+For blocking sends, the <code>broadcastSync</code> and <code>sendSync</code> methods can be used.</p>
 </div>
 </div>
 <div class="sect2">
@@ -18442,6 +18463,15 @@ abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
 </div>
 <div class="paragraph">
 <p>The above example defines a send method that returns an <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">WebSocket Send Methods</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public abstract java.util.concurrent.Future&lt;String&gt; sendAsync(String message);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example defines a send method that executes asynchronously and returns a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html">Future</a> to access the results.</p>
 </div>
 <div class="paragraph">
 <p>Once you have defined a client class you can connect to the client socket and start sending messages:</p>
@@ -27696,9 +27726,16 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 <div class="paragraph">
 <p>The major advantage here is that you pay a slight cost at compile time, but at runtime Micronaut is largely reflection-free, fast and consumes very little memory.</p>
 </div>
-<div class="sect1">
-<h2 id="_using_micronaut_with_java_9">Using Micronaut with Java 9+</h2>
-<div class="sectionbody">
+
+<h2 id="java9"><a class="anchor" href="#java9"></a>13.1.1 Using Micronaut with Java 9+</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/java9.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
 <p>Micronaut is built with Java 8, however works fine with Java 9/10 and above as well. The classes that Micronaut generates sit alongside existing classes within the same package, hence do not violate anything regarding the Java module system.</p>
 </div>
@@ -27732,11 +27769,16 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 </div>
 </div>
 </div>
+
+<h2 id="incrementalannotationgradle"><a class="anchor" href="#incrementalannotationgradle"></a>13.1.2 Incremental Annotation Processing with Gradle</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/incrementalannotationgradle.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_incremental_annotation_processing_with_gradle">Incremental Annotation Processing with Gradle</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
 <p>Micronaut supports <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_annotation_processing">Gradle incremental annotation processing</a> which helps speed up builds by compiling only classes that have changed avoiding a full recompilation.</p>
 </div>
@@ -27769,11 +27811,16 @@ If you do not enable processing for custom annotations you define these annotati
 </tr>
 </table>
 </div>
+
+<h2 id="lombok"><a class="anchor" href="#lombok"></a>13.1.3 Using Project Lombok</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/lombok.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_using_project_lombok">Using Project Lombok</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
 <p><a href="https://projectlombok.org">Project Lombok</a> is a popular java library that adds a number of useful AST transformations to the Java language via annotation processors.</p>
 </div>
@@ -27825,11 +27872,16 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </tr>
 </table>
 </div>
+
+<h2 id="ide"><a class="anchor" href="#ide"></a>13.1.4 Configuring an IDE</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/ide.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_an_ide">Configuring an IDE</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
 <p>You can use any IDE to develop Micronaut applications, if you depend on your configured build tool (Gradle or Maven) to build the application.</p>
 </div>
@@ -27839,11 +27891,16 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 <div class="paragraph">
 <p>See the section on <a href="#ideSetup">IDE Setup</a> in the Quick start for more information on how to configure IntelliJ or Eclipse.</p>
 </div>
+
+<h2 id="retainparameternames"><a class="anchor" href="#retainparameternames"></a>13.1.5 Retaining Parameter Names</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/retainparameternames.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_retaining_parameter_names">Retaining Parameter Names</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
 <p>By default with Java, the parameter name data for method parameters is not retained at compile time. This can be a problem for Micronaut if you do not define parameter names explicitly and depend on an external JAR that is already compiled.</p>
 </div>
@@ -27878,8 +27935,6 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compileJava.options.compilerArgs += '-parameters'</code></pre>
-</div>
-</div>
 </div>
 </div>
 
@@ -28359,7 +28414,46 @@ class HelloController {
 </div>
 </div>
 
-<h2 id="openandaop"><a class="anchor" href="#openandaop"></a>13.3.2 Kotlin and AOP Advice</h2>
+<h2 id="gradlekapt"><a class="anchor" href="#gradlekapt"></a>13.3.2 Incremental Annotation Processing with Gradle and Kapt</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/kotlin/gradlekapt.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To enable gradle incremental annotation processing with Kapt the arguments as specified <a href="#incrementalannotationgradle">Incremental Annotation Processing with Gradle</a> must be sent to Kapt</p>
+</div>
+<div class="paragraph">
+<p>The following example demonstrates how to enable and configure incremental annotation processing for annotations you have defined under the <code>com.example</code> and <code>io.example</code> packages:</p>
+</div>
+<div class="listingblock">
+<div class="title">Enabling Incremental Annotation Processing in Kapt</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">kapt {
+    arguments {
+        arg("micronaut.processing.incremental", true)
+        arg("micronaut.processing.annotations", "com.example.*,io.example.*")
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you do not enable processing for custom annotations you define these annotations will simple be ignored by Micronaut which may break your application.
+</td>
+</tr>
+</table>
+</div>
+
+<h2 id="openandaop"><a class="anchor" href="#openandaop"></a>13.3.3 Kotlin and AOP Advice</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/kotlin/openandaop.adoc"'>
@@ -28416,7 +28510,7 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 </table>
 </div>
 
-<h2 id="kotlinretainparamnames"><a class="anchor" href="#kotlinretainparamnames"></a>13.3.3 Kotlin and Retaining Parameter Names</h2>
+<h2 id="kotlinretainparamnames"><a class="anchor" href="#kotlinretainparamnames"></a>13.3.4 Kotlin and Retaining Parameter Names</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/kotlin/kotlinretainparamnames.adoc"'>
@@ -28443,7 +28537,7 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 </div>
 </div>
 
-<h2 id="coroutines"><a class="anchor" href="#coroutines"></a>13.3.4 Coroutines Support</h2>
+<h2 id="coroutines"><a class="anchor" href="#coroutines"></a>13.3.5 Coroutines Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/kotlin/coroutines.adoc"'>
