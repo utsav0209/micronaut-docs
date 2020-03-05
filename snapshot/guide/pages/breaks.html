@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>18.4 Breaking Changes 2.0.0.BUILD-SNAPSHOT</title>
+    <title>18.4 Breaking Changes 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -121,7 +121,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>18.4 Breaking Changes</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -137,292 +137,176 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>This section will document breaking changes between Micronaut 1.0 and Micronaut 2.0</p>
+<p>This section will document breaking changes that may happen during milestone or release candidate releases, as well as major releases eg (1.x.x &#8594; 2.x.x).</p>
 </div>
-<div class="sect2">
-<h3 id="_thread_pool_selection_now_manual">Thread Pool Selection Now Manual</h3>
+<div class="sect3">
+<h4 id="_1_3_0">1.3.0</h4>
 <div class="paragraph">
-<p>In Micronaut 1.x, Micronaut would attempt to automatically deduce the thread pool to use based on the return type of the controller method.</p>
-</div>
-<div class="paragraph">
-<p>This approach caused some confusion and created a false association between reactive types and blocking operations.</p>
-</div>
-<div class="paragraph">
-<p>Micronaut 2.x now leaves it up to the user to specify the thread pool to schedule operations on, including blocking operations.</p>
-</div>
-<div class="paragraph">
-<p>If you are upgrading from Micronaut 1.x and have a controller that executes blocking I/O operations (such as JDBC or JPA) it is recommended that you add the <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation to schedule the blocking operations on a different thread.</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Using @ScheduleOn</div>
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
-import io.micronaut.scheduling.TaskExecutors;
-import io.micronaut.scheduling.annotation.ScheduleOn;
-
-@Controller("/scheduleOn/people")
-public class PersonController {
-
-    private final PersonService personService;
-
-    PersonController(
-            PersonService personService) {
-        this.personService = personService;
-    }
-
-    @Get("/{name}")
-    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
-    Person byName(String name) {
-        return personService.findByName(name);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Using @ScheduleOn</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
-import io.micronaut.scheduling.TaskExecutors
-import io.micronaut.scheduling.annotation.ScheduleOn
-
-@Controller("/scheduleOn/people")
-class PersonController {
-
-    private final PersonService personService
-
-    PersonController(
-            PersonService personService) {
-        this.personService = personService
-    }
-
-    @Get("/{name}")
-    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
-    Person byName(String name) {
-        return personService.findByName(name)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">Using @ScheduleOn</div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
-import io.micronaut.scheduling.TaskExecutors
-import io.micronaut.scheduling.annotation.ScheduleOn
-
-@Controller("/scheduleOn/people")
-class PersonController (private val personService: PersonService) {
-    @Get("/{name}")
-    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
-    fun byName(name: String): Person {
-        return personService.findByName(name)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation is used to schedule the operation on the I/O thread pool</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you wish to return to the previous behaviour as defined in Micronaut 1.x you can set <code>micronaut.server.thread-selection</code> to <code>AUTO</code> in configuration.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_heartbeat_events_no_longer_published_if_no_discovery_clients_present">Heartbeat Events No Longer Published if no Discovery Clients present</h3>
-<div class="paragraph">
-<p>A <a href="../api/io/micronaut/health/HeartbeatEvent.html">HeartbeatEvent</a> is no longer published automatically if there are no <a href="../api/io/micronaut/discovery/DiscoveryClient.html">DiscoveryClient</a> instances present.</p>
-</div>
-<div class="paragraph">
-<p>This behaviour can be changed by setting <code>micronaut.heartbeat.enabled</code> to <code>true</code> explicitly in configuration.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_several_typeconverters_are_no_longer_beans">Several TypeConverters Are No Longer Beans</h3>
-<div class="paragraph">
-<p>Many <code>TypeConverter</code> instances that were previously beans are no longer beans and are deprecated including:</p>
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="../api/io/micronaut/http/MediaTypeConverter.html">MediaTypeConverter</a></p>
+<p>The order of the configuration files provided by <code>MICRONAUT_CONFIG_FILES</code> or <code>micronaut.config.files</code> was overriding system properties and environment variables. The files are now ordered between the environment and configuration files which means they will no longer override environment variables or system properties. In addition which file within the list had priority was non deterministic. Later files now have precedence over earlier files in the list.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/convext/converters/StringToClassConverter.html">StringToClassConverter</a></p>
+<p>Routes that are binding to a body type that is a String, byte[], or ByteBuffer will no longer be decoded and the raw body will be bound directly to the argument. Because decoding is no longer happening, if a body is sent that is considered invalid according to the content type of the request, it will be bound to the body argument anyway. This is different than previous behavior where an exception would be thrown if the body was invalid.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/convext/converters/StringArrayToClassArrayConverter.html">StringArrayToClassArrayConverter</a></p>
+<p>Concrete types are now preferred when creating a class hierarchy. The most common case where this will have an impact is converters. Converters that match super classes of the target type will be preferred over converters that match an interface that the target type implements.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_2_9">1.2.9</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The data format was changed for multiline server sent event data payloads to conform to the specification. Previously multiline data did not have the required <code>data:</code> prefix on each line and now it does.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_2_0">1.2.0</h4>
+<div class="paragraph">
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The AWS distributed configuration through systems manager property store supported the notion of <code>key=value</code> in the value section of the configuration. This functionality has been removed because it did not consider properties that contain an <code>=</code> but are not in the format of <code>key=value</code>.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/http/client/converters/SocketAddressConverter.html">SocketAddressConverter</a></p>
+<p>The return of reactive types with a generic of <code>Void</code> has been changed from always returning a 404 status to returning a 200, or whatever status is defined in the <code>@Status</code> annotation. This includes <code>CompletionStage</code>, RxJava2, and Reactor types. The change was made to be consistent with the behavior of methods that return <code>void</code>.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/reactive/reactor/converters/PublisherToMonoConverter.html">PublisherToMonoConverter</a></p>
+<p>Extending a <code>@ConfigurationProperties</code> class that contains a <code>@ConfigurationBuilder</code> only allowed the builder to be configured through the child&#8217;s class prefix instead of the parent&#8217;s. This was a bug because the behavior is different compared to any other property on the parent class. Previously the <code>parent.child.address</code> prefix would have been used to configure the <code>address</code> builder on the child class. With this change <code>parent.address</code> will be used.</p>
+<div class="literalblock">
+<div class="content">
+<pre>@ConfigurationProperties("parent")
+class Parent {
+    @ConfigurationBuilder(configurationPrefix = "address")
+    ...
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@ConfigurationProperties("child")
+class Child extends Parent {
+}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_1_0">1.1.0</h4>
+<div class="paragraph">
+<p>The following changes could potentially be considered to be breaking changes, however the likelihood of any negative impact is low.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/io/micronaut/session/http/HttpSessionConfiguration.html">HttpSessionConfiguration</a> default value for <code>cookiePath</code> is <code>/</code>. The change was necessary for cookies to function normally.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/reactive/reactor/converters/PublisherToFluxConverter.html">PublisherToFluxConverter</a></p>
+<p>The <a href="../api/io/micronaut/security/token/jwt/render/AccessRefreshToken.html">AccessRefreshToken</a> API has been changed to  include <code>tokenType</code> and <code>expiresIn</code>. This change was necessary to comply with the token response <a href="https://tools.ietf.org/html/rfc6749#section-4.1.4.html">RFC 6749</a>.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/reactive/reactor/converters/ObjectToFluxConverter.html">ObjectToFluxConverter</a></p>
+<p>Route binding behavior for a request argument with a generic type has changed. For routes that take in an <code>HttpRequest&lt;SomeType&gt;</code>, an <code>UnsatisfiedRouteException</code> will be thrown if no body is found in the request. To restore the previous behavior, remove the generic type from the argument.</p>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest&lt;Author&gt; request) //requires the body to be present</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public String hello(HttpRequest request) //the body will not be read (same as 1.0.x)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc3">1.0.0.RC3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>All Micronaut modules have been renamed to include <code>micronaut-</code> prefix to make it easier to manage dependencies. If you are upgrading rename all references modules. Example <code>bom</code> &#8594; <code>micronaut-bom</code>, <code>inject</code> &#8594; <code>micronaut-inject</code> etc.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/reactive/reactor/converters/ObjectToMonoConverter.html">ObjectToMonoConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/JsonNodeToObjectConverter.html">JsonNodeToObjectConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/MapToObjectConverter.html">MapToObjectConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/ObjectToJsonNodeConverter.html">ObjectToJsonNodeConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/ArrayNodeToArrayConverter.html">ArrayNodeToArrayConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/ArrayNodeToIterableConverter.html">ArrayNodeToIterableConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/jackson/convert/ObjectNodeToConvertibleValuesConverter.html">ObjectNodeToConvertibleValuesConverter</a></p>
-</li>
-<li>
-<p><a href="../api/io/micronaut/runtime/http/converters/HttpStatusConverter.html">HttpStatusConverter</a></p>
+<p>Methods for JWT signature generation have been removed from <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureConfiguration.html">RSASignatureConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureConfiguration.html">ECSignatureConfiguration</a>. Those beans should be used in microservices where you need only signature verification and not generation.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These should not be injected directly but instead used through the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> API.</p>
+<p>To enable a RSA or EC JWT signature generation, you need to have in your app a bean of type <a href="../api/io/micronaut/security/token/jwt/signature/rsa/RSASignatureGeneratorConfiguration.html">RSASignatureGeneratorConfiguration</a> or
+<a href="../api/io/micronaut/security/token/jwt/signature/ec/ECSignatureGeneratorConfiguration.html">ECSignatureGeneratorConfiguration</a>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_executable_no_longer_stereotype_of_around">@Executable No Longer Stereotype of @Around</h3>
+<div class="sect3">
+<h4 id="_1_0_0_rc2">1.0.0.RC2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.security.authentication.Authenticator::authenticate</code> method signature has changed from:</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>In Micronaut 1.x the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation was a meta-annotation specified on the <a href="../api/io/micronaut/aop/Around.html">@Around</a> and <a href="../api/io/micronaut/aop/Introduction.html">@Introduction</a> annotations. This meant that an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> reference was generated for every usage of AOP advice which consumed additional memory unnecessarily.</p>
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(UsernamePasswordCredentials credentials)</code></p>
 </div>
 <div class="paragraph">
-<p>In Micronaut 2.x and above this is no longer the case and if you need an <a href="../api/io/micronaut/inject/ExecutableMethod.html">ExecutableMethod</a> generated you should add the <a href="../api/io/micronaut/context/annotation/Executable.html">@Executable</a> annotation to any custom AOP advice you specify otherwise the method will not be available via the <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> interface (using for example the <a href="../api/io/micronaut/BeanDefinition/getExecutableMethods.html">getExecutableMethods</a> method).</p>
+<p>to:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations">Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
 <div class="paragraph">
-<p>The JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) is no longer a dependency (replaced by <code>spotbugs-annotations</code>). If you need this library you will need to add it manually.</p>
+<p><code>public Publisher&lt;AuthenticationResponse&gt; authenticate(AuthenticationRequest authenticationRequest)</code></p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_events_renamed">Events Renamed</h3>
-<div class="paragraph">
-<p>The following events were renamed to avoid confusion with other events of similar names:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Old Name</th>
-<th class="tableblock halign-left valign-top">New Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.discovery.event.ServiceStartedEvent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceReadyEvent.html">ServiceReadyEvent</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.discovery.event.ServiceShutdownEvent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceStoppedEvent.html">ServiceStoppedEvent</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_new_package_for_netty_specific_classes_of_http_client">New Package for Netty Specific Classes of HTTP Client</h3>
-<div class="paragraph">
-<p>The HTTP client implementation classes including <a href="../api/io/micronaut/http/client/netty/DefaultHttpClient.html">DefaultHttpClient</a> (considered internal in Micronaut 1.x) have been moved to a sub-package called <code>io.micronaut.http.client.netty</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_http_clients_no_longer_named_beans">HTTP Clients No Longer Named Beans</h3>
-<div class="paragraph">
-<p>HTTP clients declared with <code>micronaut.http.services</code> (see <a href="#serviceDiscoveryManual">Manual Service Discovery Configuration</a>) are no longer named beans in the context and cannot be injected with <code>javax.inject.Named</code>, for example given the configuration:</p>
-</div>
-<div class="listingblock">
-<div class="title">Manually configuring services</div>
+<div class="sect3">
+<h4 id="_1_0_0_rc1">1.0.0.RC1</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The default port if no port is specified is now port 8080 instead of a random port, except in the test environment. A random port can be obtained by setting the port to -1.</p>
+</li>
+<li>
+<p>The configuration for static resource has been changed to allow multiple mappings, each with their own set of paths. This will allow accessing resources at multiple URLs. Previously the configuration might have looked like:</p>
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    http:
-        services:
-            foo:
-                urls:
-                    - http://foo1
-                    - http://foo2</code></pre>
+<pre>micronaut:
+    router:
+        static:
+            resources:
+                enabled: true
+                mapping: /static/**
+                paths:
+                  - classpath:static</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can lon longer inject an HTTP client with <code>@Named("foo")</code>:</p>
+<p>And now the equivalent configuration would be:</p>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject
-@Named("foo")
-RxHttpClient httpClient;</code></pre>
+<pre>micronaut:
+    router:
+        static-resources:
+            default:
+                enabled: true
+                mapping: /static/**
+                paths:
+                  - classpath:static</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Instead you should always use <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject
-@Client("foo")
-RxHttpClient httpClient;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_source_retention_annotations_no_longer_retained_in_runtime_metadata">Source Retention Annotations No Longer Retained in Runtime Metadata</h3>
-<div class="paragraph">
-<p>In Micronaut 1.x annotations specified as source retention were still retained in the <a href="../api/io/micronaut/core/annotation/AnnotationMetadata.html">AnnotationMetadata</a> interface. As of Micronaut 2.x this is no longer the case with source retention annotations only available within the compiler APIs.</p>
-</div>
-<div class="paragraph">
-<p>If you wish to retain a particular source level annotation when upgrading you can write an <a href="../api/io/micronaut/inject/annotation/AnnotationTransformer.html">AnnotationTransformer</a> that alters the <code>RetentionPolicy</code> of the annotation.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_iterable_beans_no_longer_have_an_implicit_primary">Iterable Beans No Longer Have An Implicit Primary</h3>
-<div class="paragraph">
-<p>In Micronaut 1.x injecting a single instance of an iterable bean without qualifiers would inject the first bean. An iterable bean is typically anything annotated with <code>@EachProperty</code> or <code>@EachBean</code>. Those beans typically are referenced from configuration. The first bean in this context is the first item in configuration that matches what the annotation expects.</p>
-</div>
-<div class="paragraph">
-<p>For example if you created a bean with <code>@EachProperty("cars")</code>, then specified the following in your config:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">cars:
-    ford:
-        cylinders: 8
-    subaru:
-        cylinders: 4</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requesting a single instance of that bean would result in the "ford" instance being injected. Because that behavior is surprising and inconsistent with other types of beans, that is no longer the case and a <code>NonUniqueBeanException</code> will be thrown.</p>
+<p>The word <code>default</code> in that example is arbitrary and can be replaced with any name that is appropriate to describe the category of resources that will be served.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -431,122 +315,148 @@ RxHttpClient httpClient;</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-This change does not apply to an explicit primary defined in the annotation (<code>@EachProperty(value = "cars", primary = "ford")</code>), nor requesting the instance by a qualifier (<code>@Named("ford") CarConfig carConfig</code>).
+Notice the change from <code>static.resources</code> to <code>static-resources</code>.
 </td>
 </tr>
 </table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_invalid_configuration_file_locations">Invalid Configuration File Locations</h3>
-<div class="paragraph">
-<p>Specifying a file with <code>micronaut.config.files</code>, either through the system property or environment variable, that does not exist or cannot be read will now result in the application failing to startup. In previous versions of Micronaut a warning would be logged and the file would be ignored.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_graal_dependency">Graal Dependency</h3>
-<div class="paragraph">
-<p>The old Graal group name <code>com.oracle.substratevm</code> is no longer part of the Micronaut BOM.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_propertysourceloader_changes">PropertySourceLoader Changes</h3>
-<div class="paragraph">
-<p>Some default interface methods are no longer default and require implementation.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deprecation_removal">Deprecation Removal</h3>
-<div class="paragraph">
-<p>Most if not all deprecated classes and methods have been removed.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_map_property_binding">Map Property Binding</h3>
-<div class="paragraph">
-<p>In Micronaut 1.x <code>java.util.Map</code> properties being bound from config were inconsistently bound as either a nested or flat. Now maps are bound as nested by default and the <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat</a> annotation&#8217;s default value for <code>transformation</code> has been changed to reflect that.</p>
-</div>
-<div class="paragraph">
-<p>For example given the config:</p>
-</div>
-<div class="listingblock">
+</li>
+<li>
+<p>The CLI feature for Netflix Archaius was incorrectly named <code>netflix-archius</code>. The feature has now been renamed to reflect the correct name, <code>netflix-archaius</code>.</p>
+</li>
+<li>
+<p>The intercept url map security rule now no longer considers the query part of the request when determining if the request matches. Previously <code>/?value=true</code> would <strong>not</strong> match <code>/</code>.</p>
+</li>
+<li>
+<p>Several APIs surrounding route URI matching and template parsing have changed to allow more information to be retrieved from the parsing process.</p>
+</li>
+<li>
+<p>The following packages have been renamed:</p>
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">persons:
-  joe:
-    age: 30
-  sally:
-    age: 25</code></pre>
+<pre>io.micronaut.http.server.binding -&gt; io.micronaut.http.bind</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>A map property injected via <code>@Property(name ="persons")</code> may have been injected flat or nested depending on a couple factors.</p>
-</div>
-<div class="listingblock">
-<div class="title">Flat</div>
+</li>
+<li>
+<p>The following annotations have been moved to new locations:</p>
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"joe.age": 30, "sally.age": 25}</code></pre>
+<pre>io.micronaut.http.client.Client -&gt; io.micronaut.http.client.annotation.Client
+io.micronaut.security.Secured -&gt; io.micronaut.security.annotation.Secured</pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">Nested</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"joe": {"age": 30}, "sally": {"age": 25}}</code></pre>
+</li>
+<li>
+<p>The jackson deserialization features ACCEPT_SINGLE_VALUE_AS_ARRAY and UNWRAP_SINGLE_VALUE_ARRAYS are now enabled by default. To revert to the previous behavior, see the section on <a href="#_jackson_configuration">Jackson Configuration</a> for information on how to customize deserialization features.</p>
+</li>
+</ul>
 </div>
 </div>
-<div class="paragraph">
-<p>To bind to a map with flat keys, add the <a href="../api/io/micronaut/core/convert/format/MapFormat.html">@MapFormat</a> annotation and set the <code>transformation</code> member.</p>
+<div class="sect3">
+<h4 id="_1_0_0_m4">1.0.0.M4</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Libraries compiled against earlier versions of Micronaut are not binary compatible with this release.</p>
+</li>
+<li>
+<p>The Java module names generated in previous versions were invalid because they contained a <code>-</code>. Module names with dashes were converted to an underscore. For example: <code>io.micronaut.inject-java</code> &#8594; <code>io.micronaut.inject_java</code>.</p>
+</li>
+<li>
+<p>The annotation metadata API has been changed to no longer use reflective proxies for annotations. The methods that used to return the proxies now return an <code>AnnotationValue</code> that contains all of the data that existed in the proxy. The methods to create the proxies now exist under <code>synthesize..</code>.</p>
+</li>
+<li>
+<p>Many classes no longer implement <code>AnnotatedElement</code>.</p>
+</li>
+<li>
+<p><code>AnnotationUtil</code> has seen significant changes and is now marked as an internal class.</p>
+</li>
+<li>
+<p><code>BeanContext.getBeanRegistrations</code> has been renamed to <code>BeanContext.getActiveBeanRegistrations</code>.</p>
+</li>
+<li>
+<p>Endpoint annotations have moved packages: <code>io.micronaut.management.endpoint</code> &#8594; <code>io.micronaut.management.endpoint.annotation</code>.</p>
+</li>
+<li>
+<p>Endpoint method arguments were previously included in the route URI by default. Now endpoint arguments are <strong>not</strong> included in the route URI by default. An annotation, <code>@Selector</code> has been added to indicate an endpoint argument <strong>should</strong> be included in the URI.</p>
+</li>
+<li>
+<p>The <code>@Controller</code> annotation now requires a value. Previously a convention was used to determine the URI.</p>
+</li>
+<li>
+<p>The <code>HttpMethodMapping</code> annotations (<code>@Get</code>, <code>@Put</code>, etc) have changed their default behavior. They no longer use a convention based off the method name if the URI was not provided. The URI is still not required, however it now defaults to <code>/</code>. The new default means the method will be accessible from the controller URI.</p>
+</li>
+</ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_graalvm_bom_entry">GraalVM BOM Entry</h3>
-<div class="paragraph">
-<p>The no longer used group for Graal is no longer part of the bom. While upgrading if you depend on Graal you may see <code>Could not find com.oracle.substratevm:svm:.</code>. To resolve the issue, change the dependency group to <code>org.graalvm.nativeimage</code>.</p>
+<div class="sect3">
+<h4 id="_1_0_0_m3">1.0.0.M3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The contract for <code>io.micronaut.http.codec.MediaTypeCodec</code> has changed to support multiple media types.</p>
+</li>
+<li>
+<p>To reduce confusion around <code>@Parameter</code>, it can no longer be used to denote an argument should be bound from the request url. Its sole purpose is defining arguments for parameterized beans. Use <code>@QueryValue</code> instead.</p>
+</li>
+<li>
+<p>The health endpoint will now only report details when the user is authenticated. To revert to the previous behavior, set <code>endpoints.health.detailsVisible: ANONYMOUS</code>.</p>
+</li>
+<li>
+<p>The CLI options have been standardized to use two leading dashes for long options (like <code>--stacktrace</code>) and one for shortcuts (like <code>-h</code>). That means that some options no longer work. For example, this command used to work with M2: <code>create-app -lang groovy myapp</code>. From M3, you will see this error: <code>Could not convert 'ang' to SupportedLanguage for option '--lang'</code>. Specifying either <code>-l LANG</code> or <code>--lang LANG</code> works as expected.</p>
+</li>
+<li>
+<p>The following packages have been renamed:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.micronaut.configurations.ribbon</code> &#8594; <code>io.micronaut.configuration.ribbon</code></p>
+</li>
+<li>
+<p><code>io.micronaut.configurations.hystrix</code> &#8594; <code>io.micronaut.configuration.hystrix</code></p>
+</li>
+<li>
+<p><code>io.micronaut.configurations.aws</code> &#8594; <code>io.micronaut.configuration.aws</code></p>
+</li>
+<li>
+<p><code>io.micronaut.http.netty.buffer</code> &#8594; <code>io.micronaut.buffer.netty</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The default Consul configuration prefix has been changed to reflect changes in the latest version of Consul. Previously a leading slash was expected and the default value was <code>/config/</code>. The new default value is <code>config/</code>. To restore the previous behavior, set <code>consul.client.config.path = /config/</code></p>
+</li>
+<li>
+<p>The <code>session</code> module will now serialize POJOs to JSON using Jackson by default instead of Java Serialization. This change is because Java serialization will be removed and deprecated in a future version of the JDK.</p>
+</li>
+</ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_cookie_configuration">Cookie Configuration</h3>
-<div class="paragraph">
-<p>The <code>getCookieMaxAge</code> method has been changed to return a <code>java.time.Duration</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_code_retryable_code_and_code_circuitbreaker_code_exception_handling"><code>@Retryable</code> and <code>@CircuitBreaker</code> Exception Handling</h3>
-<div class="paragraph">
-<p><code>@Retryable</code> and <code>@CircuitBreaker</code> in previous versions of Micronaut resolved <code>includes</code> and <code>excludes</code> explicitly. Any exception thrown had to exactly match one of the exceptions specified. This has been changed to now also include subclasses of the exception types specified.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_messagesource_api_changes">MessageSource API Changes</h3>
-<div class="paragraph">
-<p>The semantics of the <code>getMessage</code> method have been changed to also interpolate the message with any provided variables. In previous versions of Micronaut, the raw message was returned from the bundle. To support reading the raw message, a new method <code>getRawMessage</code> has been added.</p>
-</div>
-<div class="paragraph">
-<p>In addition, escaping of messages with single quotes is now implemented in accordance with the standard Java <a href="https://docs.oracle.com/javase/8/docs/api/java/text/MessageFormat.html">MessageFormat</a> class. Messages that contain a single quote will now need escaping in order for the quote to output as it did previously. For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.message=We love Micronaut's documentation</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Would now be output as <code>We love Micronauts documentation</code>. To achieve the desired result, escape the single quote with another single quote.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">my.message=We love Micronaut''s documentation</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This change also applies to messages in custom constraint annotations, which interpolate the message via the message source api.
-</td>
-</tr>
-</table>
+<div class="sect3">
+<h4 id="_1_0_0_m2">1.0.0.M2</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The constructor signature for DefaultHttpClient has changed to include an extra argument. This change should not impact existing uses.</p>
+</li>
+<li>
+<p>Libraries compiled against M1 are not binary compatible with M2.</p>
+</li>
+<li>
+<p>For Java 9+ automatic module name has been set to <code>&lt;groupId&gt;.&lt;name&gt;</code>. Previously if you have been using the "inject-java" module, the module is now named "io.micronaut.inject-java".</p>
+</li>
+<li>
+<p>When an HttpClientResponseException is thrown, the body of the response will be set to the exception message for responses with a text media type. Previously the status description was returned.</p>
+</li>
+<li>
+<p>Mongo configurations were updated to a new version of the driver (3.6.1 &#8594; 3.7.1), which may break existing uses. See their <a href="http://mongodb.github.io/mongo-java-driver/3.7/upgrading/">upgrading</a> page for more information.</p>
+</li>
+<li>
+<p>The <code>router</code> configuration key was changed to be <code>micronaut.router</code>. Static resource configuration is affected by this change. Please update your configuration: <code>router.static.resources</code> &#8594; <code>micronaut.router.static.resources</code>.</p>
+</li>
+</ul>
 </div>
 </div>
 

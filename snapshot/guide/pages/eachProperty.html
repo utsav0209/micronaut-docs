@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>4.6 Using @EachProperty to Drive Configuration 2.0.0.BUILD-SNAPSHOT</title>
+    <title>4.6 Using @EachProperty to Drive Configuration 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.6 Using @EachProperty to Drive Configuration</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -323,173 +323,6 @@ constructor(@param:Parameter val name: String) {
 <td>Individual beans can be achieved by using the <code>byName</code> qualifier.</td>
 </tr>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_list_based_binding">List Based Binding</h3>
-<div class="paragraph">
-<p>The default behavior of <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a> is to bind from a map style of configuration where the key is the named qualifier of the bean and the value is the data to bind from. For cases where map style configuration doesn&#8217;t make sense, it is possible to inform Micronaut the class should be bound from a list. Simply set the <code>list</code> member on the annotation to true.</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">/*
- * Copyright 2017-2020 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package io.micronaut.docs.config.env;
-
-import io.micronaut.context.annotation.EachProperty;
-import io.micronaut.context.annotation.Parameter;
-import io.micronaut.core.order.Ordered;
-
-import java.time.Duration;
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-public class RateLimitsConfiguration implements Ordered { <b class="conum">(2)</b>
-
-    private final Integer index;
-    private Duration period;
-    private Integer limit;
-
-    RateLimitsConfiguration(@Parameter Integer index) { <b class="conum">(3)</b>
-        this.index = index;
-    }
-
-    @Override
-    public int getOrder() {
-        return index;
-    }
-
-    public Duration getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(Duration period) {
-        this.period = period;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">/*
- * Copyright 2017-2020 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package io.micronaut.docs.config.env
-
-import io.micronaut.context.annotation.EachProperty
-import io.micronaut.context.annotation.Parameter
-import io.micronaut.core.order.Ordered
-
-import java.time.Duration
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-class RateLimitsConfiguration implements Ordered { <b class="conum">(2)</b>
-
-    private final Integer index
-    Duration period
-    Integer limit
-
-    RateLimitsConfiguration(@Parameter Integer index) { <b class="conum">(3)</b>
-        this.index = index
-    }
-
-    @Override
-    int getOrder() {
-        index
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@EachProperty List Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">/*
- * Copyright 2017-2020 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package io.micronaut.docs.config.env
-
-import io.micronaut.context.annotation.EachProperty
-import io.micronaut.context.annotation.Parameter
-import io.micronaut.core.order.Ordered
-import java.time.Duration
-
-@EachProperty(value = "ratelimits", list = true) <b class="conum">(1)</b>
-class RateLimitsConfiguration
-    constructor(@param:Parameter private val index: Int) <b class="conum">(3)</b>
-    : Ordered { <b class="conum">(2)</b>
-
-    var period: Duration? = null
-    var limit: Int? = null
-
-    override fun getOrder(): Int {
-        return index
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>list</code> member of the annotation is set to true</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Implement <code>Ordered</code> if order matters when retrieving the beans</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The index is injected into the constructor</td>
-</tr>
-</table>
-</div>
 </div>
 
 
