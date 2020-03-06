@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>1 Introduction 1.3.3.BUILD-SNAPSHOT</title>
+    <title>1 Introduction 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -121,7 +121,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>1 Introduction</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -217,389 +217,33 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>Micronaut 1.3.3.BUILD-SNAPSHOT includes the following changes:</p>
+<p>Micronaut 2.0.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_support_for_graalvm_20_0_0">Support for GraalVM 20.0.0</h3>
+<h3 id="_event_loop_group_improvements">Event Loop Group Improvements</h3>
 <div class="paragraph">
-<p>Micronaut supports creating native-images using GraalVM 20.0.0 for both JDK 8 and JDK 11.</p>
+<p>Micronaut 2.0 uses a new shared default Netty <code>EventLoopGroup</code> for server worker threads and client request threads. This reduces context switching and improves resource utilization.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_startup_and_memory_usage_optimizations">Startup and Memory Usage Optimizations</h3>
 <div class="paragraph">
-<p>Startup performance and memory usage (20%) have been improved.</p>
+<p>See the <a href="#clientConfiguration">HTTP Client Configuration</a> section for information on how to configure the default <code>EventLoopGroup</code> and add additional `EventLoopGroup&#8217;s that are configured per client.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_micronaut_data_integration">Micronaut Data Integration</h3>
+<h3 id="_clients_with_no_base_path">Clients With No Base Path</h3>
 <div class="paragraph">
-<p>Micronaut Data has been added to the <code>micronaut-bom</code> and you can now use the CLI to create Micronaut Data projects:</p>
-</div>
-<div class="listingblock">
-<div class="title">Setting up Micronaut Data JPA</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
-$ mn create-app myapp --features data-hibernate-jpa</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Setting up Micronaut Data JDBC</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># add --build maven for maven
-$ mn create-app myapp --features data-jdbc</code></pre>
-</div>
+<p>For the situations when the host of a client call is variable, it is no longer required to pass a service id or URL to <a href="../api/io/micronaut/http/client/annotation/Client.html">@Client</a>. If no host is provided at the time of a request, a <a href="../api/io/micronaut/http/client/exceptions/NoHostException.html">NoHostException</a> will be thrown.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_initial_support_for_kotlin_coroutines_and_flow">Initial Support for Kotlin Coroutines and Flow</h3>
+<h3 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations">Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h3>
 <div class="paragraph">
-<p>Initial support for Kotlin Coroutines and the <code>Flow</code> type has been added when used as the return type of controller methods.</p>
-</div>
-<div class="paragraph">
-<p>Thanks to <a href="https://github.com/konrad-kaminski">Konrad Kamiński</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_immutable_code_configurationproperties_code_and_code_eachproperty_code">Immutable <code>@ConfigurationProperties</code> and <code>@EachProperty</code></h3>
-<div class="paragraph">
-<p>Support for immutable <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> has been added by annotating the constructor of any configuration class with <a href="../api/io/micronaut/context/annotation/ConfigurationInject.html">@ConfigurationInject</a>. See the documentation on <a href="#immutableConfig">Immutable Configuration</a> for more information.</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@ConfigurationProperties Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.ConfigurationProperties;
-import io.micronaut.core.bind.annotation.Bindable;
-import javax.validation.constraints.*;
-import java.util.Optional;
-
-@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
-public interface EngineConfig {
-
-    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
-    @NotBlank <b class="conum">(3)</b>
-    String getManufacturer();
-
-    @Min(1L)
-    int getCylinders();
-
-    @NotNull
-    CrankShaft getCrankShaft(); <b class="conum">(4)</b>
-
-    @ConfigurationProperties("crank-shaft")
-    interface CrankShaft { <b class="conum">(5)</b>
-        Optional&lt;Double&gt; getRodLength(); <b class="conum">(6)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@ConfigurationProperties Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
-import io.micronaut.core.bind.annotation.Bindable
-import javax.validation.constraints.*
-
-
-@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
-interface EngineConfig {
-
-    @Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
-    @NotBlank <b class="conum">(3)</b>
-    String getManufacturer()
-
-    @Min(1L)
-    int getCylinders()
-
-    @NotNull
-    CrankShaft getCrankShaft() <b class="conum">(4)</b>
-
-    @ConfigurationProperties("crank-shaft")
-    static interface CrankShaft { <b class="conum">(5)</b>
-        Optional&lt;Double&gt; getRodLength() <b class="conum">(6)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">@ConfigurationProperties Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
-import io.micronaut.core.bind.annotation.Bindable
-import javax.validation.constraints.*
-import java.util.Optional
-
-
-@ConfigurationProperties("my.engine") <b class="conum">(1)</b>
-interface EngineConfig {
-
-    @get:Bindable(defaultValue = "Ford") <b class="conum">(2)</b>
-    @get:NotBlank <b class="conum">(3)</b>
-    val manufacturer: String
-
-    @get:Min(1L)
-    val cylinders: Int
-
-    @get:NotNull
-    val crankShaft: CrankShaft <b class="conum">(4)</b>
-
-    @ConfigurationProperties("crank-shaft")
-    interface CrankShaft { <b class="conum">(5)</b>
-        val rodLength: Double? <b class="conum">(6)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> annotation takes the configuration prefix and is declared on an interface</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>You can use <a href="../api/io/micronaut/core/bind/annotation/Bindable.html">@Bindable</a> to set a default value if you want</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Validation annotations can be used too</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>You can also specify references to other <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> beans.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>You can nest immutable configuration</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Optional configuration can be indicated by returning an <code>Optional</code> or specifying <code>@Nullable</code></td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ability_to_configure_log_levels_via_properties">Ability to Configure Log Levels via Properties</h3>
-<div class="paragraph">
-<p>Log levels can now be configured via properties defined in <code>application.yml</code> (and environment variables) with the <code>log.level</code> prefix:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logger:
-    levels:
-        foo.bar: ERROR</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_new_micronaut_cache_modules">New Micronaut Cache Modules</h3>
-<div class="paragraph">
-<p><a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#introduction">Micronaut Cache</a> has been updated to support <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#hazelcast">Hazelcast</a> and <a href="https://micronaut-projects.github.io/micronaut-cache/1.0.x/guide/#ehcache">Ehcache</a> as additional Cache providers.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_new_micronaut_jackson_xml_module">New Micronaut Jackson XML Module</h3>
-<div class="paragraph">
-<p>Support for parsing and serializing to XML has been added with a new <a href="https://github.com/micronaut-projects/micronaut-jackson-xml">Jackson XML module</a>.</p>
+<p>In Micronaut 1.x the Google distributed JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) was used to specify <code>@Nullable</code> and <code>@NonNull</code> on interfaces of the Micronaut API using the annotations contained within the <code>javax.annotation</code> package.</p>
 </div>
 <div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.xml:micronaut-jackson-xml")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.xml&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-jackson-xml&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
+<p>Due to the fact that JSR-305 has been cancelled and that this dependency has potential licensing issues (by using the <code>javax</code> namespace) as well as problems with the cross packages on Java 9+ with the module system Micronaut 2.x switches to the <code>spotbugs-annotations</code> module provided by the <a href="https://spotbugs.github.io/">SpotBugs project</a>.</p>
 </div>
 <div class="paragraph">
-<p>Thanks to <a href="https://github.com/svishnyakoff">Sergey</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_openapi_swagger_1_3_update">Micronaut OpenAPI (Swagger) 1.3 Update</h3>
-<div class="paragraph">
-<p>Micronaut OpenAPI has been updated with loads of improvements including the ability to <a href="https://micronaut-projects.github.io/micronaut-openapi/1.3.x/guide/index.html#openApiViews">automatically generate UIs for Swagger output</a> as part of your application. Thanks to <a href="https://github.com/croudet">croudet</a> for this contribution awesome contribution.</p>
-</div>
-<div class="paragraph">
-<p>The module is also no longer regarded as experimental.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_views_1_3_update">Micronaut Views 1.3 Update</h3>
-<div class="paragraph">
-<p>Micronaut Views has been updated to and now features a new <a href="https://micronaut-projects.github.io/micronaut-views/1.3.x/guide/#soy">view renderer for Soy (Closure Templates)</a>. Thanks to <a href="https://github.com/sgammon">Sam Gammon</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_sql_1_3_update">Micronaut SQL 1.3 Update</h3>
-<div class="paragraph">
-<p>Micronaut SQL includes the latest versions of Hibernate and adds support for the Vert.x MySQL and Postgres Clients. Thank you to <a href="https://github.com/shenzhou-6">shenzhou-6</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_micrometer_1_3_update">Micronaut Micrometer 1.3 Update</h3>
-<div class="paragraph">
-<p>Micronaut Micrometer has been updated to support Micrometer 1.3.1.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_kafka_1_4_update">Micronaut Kafka 1.4 Update</h3>
-<div class="paragraph">
-<p>Micronaut Kafka 1.4 has been updated to support Kafka 2.4.0</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_neo4j_1_3_update">Micronaut Neo4j 1.3 Update</h3>
-<div class="paragraph">
-<p>Micronaut Neo4j 1.3 has been updated to support Neo4j Java Driver 1.7.5. In additional a new <code>2.0.0</code> version is available that supports Neo4j Java Driver 4.x line which is the latest version (in order to maintain semantic versioning the default is still 1.3 since the latest version includes changes to package names). See the <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/">Micronaut Neo4j Documentation</a> for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_grpc_1_1_update">Micronaut GRPC 1.1 Update</h3>
-<div class="paragraph">
-<p>Micronaut GRPC has been updated to the latest versions of GRPC and Protobuf.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_requires_os">@Requires OS</h3>
-<div class="paragraph">
-<p>The <a href="../api/io/micronaut/context/annotation/Requires.html">@Requires</a> annotation now has support for disabling beans based on the current operating system.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(os=Family.LINUX)</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_basic_auth_binding_support">Basic Auth binding support</h3>
-<div class="paragraph">
-<p>In the client and server, an argument of type <a href="../api/io/micronaut/http/BasicAuth.html">BasicAuth</a> can be used to generate or parse a basic authorization header.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Post("/login")
-String login(BasicAuth basicAuth) {
-    ...
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_request_certificate">Request Certificate</h3>
-<div class="paragraph">
-<p>For SSL requests, the certificate is now available as a request attribute. See <a href="../api/io/micronaut/http/HttpRequest.html#getCertificate--">HttpRequest#getCertificate</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_client_filter_matching_by_annotation">Client Filter Matching By Annotation</h3>
-<div class="paragraph">
-<p>Micronaut HTTP clients and client filters can now be matched by the presence of an annotation. Previously only URL matching was supported. See <a href="#_filter_matching_by_annotation">the documentation</a> to get started.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_dependency_upgrades">Dependency Upgrades</h3>
-<div class="paragraph">
-<p>Required Third Party Dependencies:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>ASM <code>7.0</code> &#8594; <code>7.2</code></p>
-</li>
-<li>
-<p>Caffeine <code>2.5.6</code> &#8594; <code>2.8.0</code></p>
-</li>
-<li>
-<p>Jackson <code>2.9.9</code> &#8594; <code>2.10.1</code></p>
-</li>
-<li>
-<p>Reactive Streams <code>1.0.2</code> &#8594; <code>1.0.3</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Optional Third Party Dependencies:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Micrometer <code>1.2.1</code> &#8594; <code>1.3.1</code></p>
-</li>
-<li>
-<p>Mongo Reactive Driver <code>1.11.0</code> &#8594; <code>1.13.0</code></p>
-</li>
-<li>
-<p>Neo4j Java Driver <code>1.7.2</code> &#8594; <code>1.7.5</code></p>
-</li>
-<li>
-<p>Jaeger <code>0.35.5</code> &#8594; <code>1.0.0</code></p>
-</li>
-<li>
-<p>Kafka <code>2.3.0</code> &#8594; <code>2.4.0</code></p>
-</li>
-<li>
-<p>Spring <code>5.1.8</code> &#8594; <code>5.2.3</code></p>
-</li>
-<li>
-<p>Zipkin/Brave <code>5.6.5</code> &#8594; <code>5.9.0</code></p>
-</li>
-<li>
-<p>Groovy <code>2.5.7</code> &#8594; <code>2.5.8</code></p>
-</li>
-<li>
-<p>Gradle <code>5.5</code> &#8594; <code>Gradle 6.1</code> (for new applications)</p>
-</li>
-<li>
-<p>Hibernate Core <code>5.4.6.Final</code> &#8594; <code>5.4.10.Final</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Modules:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Micronaut GRPC <code>1.0.1</code> &#8594; <code>1.1.1</code></p>
-</li>
-<li>
-<p>Micronaut Kafka <code>1.2.0</code> &#8594; <code>1.4.0</code></p>
-</li>
-<li>
-<p>Micronaut Micrometer <code>1.2.1</code> &#8594; <code>1.3.0</code></p>
-</li>
-<li>
-<p>Micronaut MongoDB <code>1.1.0</code> &#8594; <code>1.2.0</code></p>
-</li>
-<li>
-<p>Micronaut MongoDB <code>1.1.0</code> &#8594; <code>1.3.0</code></p>
-</li>
-<li>
-<p>Micronaut Neo4j <code>1.1.0</code> &#8594; <code>1.3.0</code></p>
-</li>
-<li>
-<p>Micronaut OpenAPI <code>1.2.0</code> &#8594; <code>1.3.0</code></p>
-</li>
-<li>
-<p>Micronaut Redis <code>1.1.0</code> &#8594; <code>1.2.0</code></p>
-</li>
-<li>
-<p>Micronaut SQL <code>1.2.3</code> &#8594; <code>1.3.0</code></p>
-</li>
-<li>
-<p>Micronaut Views <code>1.2.0</code> &#8594; <code>1.3.0</code></p>
-</li>
-</ul>
+<p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
 </div>
 </div>
 
