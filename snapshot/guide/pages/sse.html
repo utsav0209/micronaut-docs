@@ -224,14 +224,14 @@ function addJsClass() {
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.sse.Event;
 import io.micronaut.scheduling.TaskExecutors;
-import io.micronaut.scheduling.annotation.ScheduleOn;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
 @Controller("/headlines")
 public class HeadlineController {
 
-    @ScheduleOn(TaskExecutors.IO)
+    @ExecuteOn(TaskExecutors.IO)
     @Get(produces = MediaType.TEXT_EVENT_STREAM)
     public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = new String[]{"1.0", "2.0"}; <b class="conum">(2)</b>
@@ -257,7 +257,7 @@ public class HeadlineController {
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
 import io.micronaut.scheduling.TaskExecutors
-import io.micronaut.scheduling.annotation.ScheduleOn
+import io.micronaut.scheduling.annotation.ExecuteOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -267,7 +267,7 @@ import org.reactivestreams.Publisher
 @Controller("/headlines")
 class HeadlineController {
 
-    @ScheduleOn(TaskExecutors.IO)
+    @ExecuteOn(TaskExecutors.IO)
     @Get(produces = MediaType.TEXT_EVENT_STREAM)
     Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
@@ -297,7 +297,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
 import io.micronaut.scheduling.TaskExecutors
-import io.micronaut.scheduling.annotation.ScheduleOn
+import io.micronaut.scheduling.annotation.ExecuteOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -308,7 +308,7 @@ import java.util.concurrent.Callable
 @Controller("/headlines")
 class HeadlineController {
 
-    @ScheduleOn(TaskExecutors.IO)
+    @ExecuteOn(TaskExecutors.IO)
     @Get(produces = [MediaType.TEXT_EVENT_STREAM])
     fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
         val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
@@ -360,7 +360,7 @@ class HeadlineController {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You typically want to schedule SSE event streams on a separate executor. The previous example uses <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> to schedule the stream on the I/O executor.
+You typically want to schedule SSE event streams on a separate executor. The previous example uses <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> to execute the stream on the I/O executor.
 </td>
 </tr>
 </table>

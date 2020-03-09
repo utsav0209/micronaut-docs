@@ -148,7 +148,7 @@ function addJsClass() {
 <p>The argument that is designated the body of the request using the <a href="../api/io/micronaut/http/annotation/Body.html">Body</a> annotation can also be a reactive type or a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a>.</p>
 </div>
 <div class="paragraph">
-<p>When returning a reactive type Micronaut will subscribe to the returned reactive type on the same thread as the request (A Netty Event Loop thread). It is therefore important that if you perform any blocking operations you offload those operations to an appropriately configured thread pool for example, using RxJava&#8217;s <code>subscribeOn(..)</code> facility or <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a>.</p>
+<p>When returning a reactive type Micronaut will subscribe to the returned reactive type on the same thread as the request (A Netty Event Loop thread). It is therefore important that if you perform any blocking operations you offload those operations to an appropriately configured thread pool for example, using RxJava&#8217;s <code>subscribeOn(..)</code> facility or <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
