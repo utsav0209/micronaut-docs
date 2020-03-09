@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>6 The HTTP Server 1.3.3.BUILD-SNAPSHOT</title>
+    <title>6 The HTTP Server 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6 The HTTP Server</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -1488,7 +1488,7 @@ String lock(String name)</code></pre>
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.validation.Valid;
 
 @Controller("/api")
@@ -2375,36 +2375,16 @@ class ConsumesController {
 
 
 <div class="paragraph">
-<p>As mentioned previously, Micronaut is built on Netty which is designed around an Event loop model and non-blocking I/O.</p>
+<p>As mentioned previously, Micronaut is built on Netty which is designed around an Event loop model and non-blocking I/O. Micronaut will execute code defined in <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> beans in the same thread as the request thread (an Event Loop thread).</p>
 </div>
 <div class="paragraph">
-<p>Although it is recommended to follow a non-blocking approach, in particular when making remote calls to other microservices, Micronaut acknowledges the fact that in real world scenarios developers encounter situations where the need arises to interface with blocking APIs and, in order to facilitate this, features automatic thread selection based on the return type of the method.</p>
-</div>
-<div class="paragraph">
-<p>If your controller method returns a non-blocking type such as an RxJava <code>Observable</code> or a <code>CompletableFuture</code> then Micronaut will use the Event loop thread to subscribe to the result.</p>
-</div>
-<div class="paragraph">
-<p>If however you return any other type then Micronaut will execute your <code>@Controller</code> method in a preconfigured I/O thread pool.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-This means effectively that if you write a method that uses <code>Single.fromCallable(..)</code> and block within the body of the callable you may unknowingly block the Netty event loop thread and when writing such logic <strong>you must</strong> also invoke <code>Single.subscribeOn(..)</code> to ensure the event loop thread is not blocked.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The I/O thread pool by default is a caching, unbound thread pool. However, you may wish to configure the nature of the thread pool to avoid exhausting resources in applications that perform a lot of blocking I/O under high load.</p>
+<p>This makes it critical that if you do any blocking I/O operations (for example interactions with Hibernate/JPA or JDBC) that you offload those tasks to a separate thread pool that does not block the Event loop.</p>
 </div>
 <div class="paragraph">
 <p>For example the following configuration will configure the I/O thread pool as a fixed thread pool with 75 threads (similar to what a traditional blocking server such as Tomcat uses in the thread per connection model):</p>
 </div>
 <div class="listingblock">
+<div class="title">Configuring the IO thread pool</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     executors:
@@ -2414,17 +2394,208 @@ This means effectively that if you write a method that uses <code>Single.fromCal
 </div>
 </div>
 <div class="paragraph">
-<p>If automatic thread selection is undesirable for your application you can either annotate the controller or method with <a href="../api/io/micronaut/core/annotation/NonBlocking.html">@NonBlocking</a> in which case all operations of the controller will run on the event loop or alternatively you can completely disable automatic thread selection by setting the <code>micronaut.server.thread-selection</code> to one of the values in the <a href="../api/io/micronaut/scheduling/executor/ThreadSelection.html">ThreadSelection</a> enum. For example the following configuration:</p>
+<p>To use this thread pool in a <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> bean you have a number of options. The simplest option is to use the <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation which can be declared at the type or method level to indicate which configured thread pool you wish to run the method or methods of the controller on:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ScheduleOn</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    server:
-        thread-selection: MANUAL</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ScheduleOn;
+
+@Controller("/scheduleOn/people")
+public class PersonController {
+
+    private final PersonService personService;
+
+    PersonController(
+            PersonService personService) {
+        this.personService = personService;
+    }
+
+    @Get("/{name}")
+    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    Person byName(String name) {
+        return personService.findByName(name);
+    }
+}</code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ScheduleOn</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ScheduleOn
+
+@Controller("/scheduleOn/people")
+class PersonController {
+
+    private final PersonService personService
+
+    PersonController(
+            PersonService personService) {
+        this.personService = personService
+    }
+
+    @Get("/{name}")
+    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    Person byName(String name) {
+        return personService.findByName(name)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ScheduleOn</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ScheduleOn
+
+@Controller("/scheduleOn/people")
+class PersonController (private val personService: PersonService) {
+    @Get("/{name}")
+    @ScheduleOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    fun byName(name: String): Person {
+        return personService.findByName(name)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation is used to schedule the operation on the I/O thread pool</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Will perform no thread selection and run all operations on the Netty event loop thread. It is then up to the developer to ensure logic that includes blocking I/O is scheduled on another thread by, for example, using RxJava&#8217;s <code>subscribeOn(..)</code> facility or the <a href="../api/io/micronaut/scheduling/annotation/Async.html">@Async</a> annotation (amongst other options).</p>
+<p>The value of the <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation can be any named executor defined under <code>micronaut.executors</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Generally speaking for database operations you will want a thread pool configured that matches maximum number of connections you have specified in the database connection pool.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>An alternative to the <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> annotation is to use the facility provided by the reactive library you have chosen. RxJava for example features a <code>subscribeOn</code> method which allows you to alter which thread executes user code. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxJava subscribeOn Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.reactivex.*;
+import io.reactivex.schedulers.Schedulers;
+import javax.inject.Named;
+import java.util.concurrent.ExecutorService;
+
+@Controller("/subscribeOn/people")
+public class PersonController {
+
+    private final Scheduler scheduler;
+    private final PersonService personService;
+
+    PersonController(
+            @Named(TaskExecutors.IO) ExecutorService executorService, <b class="conum">(1)</b>
+            PersonService personService) {
+        this.scheduler = Schedulers.from(executorService);
+        this.personService = personService;
+    }
+
+    @Get("/{name}")
+    Single&lt;Person&gt; byName(String name) {
+        return Single.fromCallable(() -&gt;
+                personService.findByName(name) <b class="conum">(2)</b>
+        ).subscribeOn(scheduler); <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxJava subscribeOn Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.reactivex.*
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Named
+import java.util.concurrent.ExecutorService
+
+@Controller("/subscribeOn/people")
+class PersonController {
+
+    private final Scheduler scheduler
+    private final PersonService personService
+
+    PersonController(
+            @Named(TaskExecutors.IO) ExecutorService executorService, <b class="conum">(1)</b>
+            PersonService personService) {
+        this.scheduler = Schedulers.from(executorService)
+        this.personService = personService
+    }
+
+    @Get("/{name}")
+    Single&lt;Person&gt; byName(String name) {
+        return Single.fromCallable({ -&gt; <b class="conum">(2)</b>
+            personService.findByName(name)
+        }).subscribeOn(scheduler) <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">RxJava subscribeOn Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.reactivex.*
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.ExecutorService
+import javax.inject.Named
+
+@Controller("/subscribeOn/people")
+class PersonController internal constructor(
+        @Named(TaskExecutors.IO) executorService: ExecutorService, <b class="conum">(1)</b>
+        val personService: PersonService) {
+    private val scheduler: Scheduler
+
+    init {
+        scheduler = Schedulers.from(executorService)
+    }
+
+    @Get("/{name}")
+    fun byName(name: String): Single&lt;Person&gt; {
+        return Single.fromCallable { personService.findByName(name) } <b class="conum">(2)</b>
+                .subscribeOn(scheduler) <b class="conum">(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The configured I/O executor service is injected</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>RxJava&#8217;s <code>fromCallable</code> method is used to wrap the blocking operation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>RxJava&#8217;s <code>subscribeOn</code> method is used to schedule the operation on the I/O thread pool</td>
+</tr>
+</table>
 </div>
 
 <h2 id="bodyAnnotation"><a class="anchor" href="#bodyAnnotation"></a>6.11.1 Using the @Body Annotation</h2>
@@ -2622,10 +2793,7 @@ Body arguments of types that do not require conversion will cause Micronaut to s
 <p>The argument that is designated the body of the request using the <a href="../api/io/micronaut/http/annotation/Body.html">Body</a> annotation can also be a reactive type or a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut also uses these types to influence which thread pool to execute the method on. If the request is considered non-blocking (because it returns a non-blocking type) then the Netty event loop thread will be used to execute the method.</p>
-</div>
-<div class="paragraph">
-<p>If the method is considered blocking then the method is executed on the I/O thread pool, which Micronaut creates at startup.</p>
+<p>When returning a reactive type Micronaut will subscribe to the returned reactive type on the same thread as the request (A Netty Event Loop thread). It is therefore important that if you perform any blocking operations you offload those operations to an appropriately configured thread pool for example, using RxJava&#8217;s <code>subscribeOn(..)</code> facility or <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2879,7 +3047,7 @@ class PersonController {
 <h2 id="_binding_using_pojos">Binding using POJOs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Note however, that if your method does not do any blocking I/O then you can just as easily write:</p>
+<p>Note however you can just as easily write:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Binding JSON POJOs</div>
@@ -2933,10 +3101,7 @@ class PersonController {
 </div>
 </div>
 <div class="paragraph">
-<p>Micronaut will still using non-blocking I/O to read the JSON and only execute your method once the data has been read.</p>
-</div>
-<div class="paragraph">
-<p>In other words, as a rule reactive types should be used when you plan to do further downstream I/O operations in which case they can greatly simplify composing operations.</p>
+<p>Micronaut will only execute your method once the data has been read in a non-blocking manner.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -4560,9 +4725,9 @@ class PersonController {
 
 
 <div class="sect2">
-<h3 id="_writing_data_without_blocking">Writing Data without Blocking</h3>
+<h3 id="_reactively_writing_response_data">Reactively Writing Response Data</h3>
 <div class="paragraph">
-<p>Micronaut&#8217;s HTTP server supports writing data without blocking simply by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
+<p>Micronaut&#8217;s HTTP server supports writing chunks of response data by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
 </div>
 <div class="paragraph">
 <p>The following table summarizes example return type signatures and the behaviour the server exhibits to handle each of them:</p>
@@ -4601,7 +4766,19 @@ class PersonController {
 <p>When returning reactive type the server will use a <code>Transfer-Encoding</code> of <code>chunked</code> and keep writing data until the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>'s <code>onComplete</code> method is called.</p>
 </div>
 <div class="paragraph">
-<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item, without blocking, and then request the next item, thus controlling back pressure.</p>
+<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item and then request the next item, controlling back pressure.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is up to the implementation of the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> to schedule any blocking I/O work that may be done as a result of subscribing to the publisher.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -4610,7 +4787,7 @@ class PersonController {
 <p>In some cases you may wish to integrate with a library that does not support non-blocking I/O.</p>
 </div>
 <div class="paragraph">
-<p>In this you can return a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object from any controller method. The <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> has various signatures that allowing writing to traditional blocking streams like <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html">Writer</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html">OutputStream</a>.</p>
+<p>In this case you can return a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object from any controller method. The <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> has various signatures that allowing writing to traditional blocking streams like <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html">Writer</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html">OutputStream</a>.</p>
 </div>
 <div class="paragraph">
 <p>When returning a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object the blocking I/O operation will be shifted to the I/O thread pool so that the Netty event loop is not blocked.</p>
@@ -4957,7 +5134,7 @@ import java.io.IOException;
 @Controller("/upload")
 public class UploadController {
 
-    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     public Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
         File tempFile;
         try {
@@ -4994,7 +5171,7 @@ import org.reactivestreams.Publisher
 @Controller("/upload")
 class UploadController {
 
-    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
         File tempFile = File.createTempFile(file.filename, "temp")
         Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
@@ -5027,7 +5204,7 @@ import java.io.File
 @Controller("/upload")
 class UploadController {
 
-    @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA], produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     fun upload(file: StreamingFileUpload): Single&lt;HttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
         val tempFile = File.createTempFile(file.filename, "temp")
         val uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
@@ -5088,7 +5265,9 @@ import java.nio.file.Paths;
 @Controller("/upload")
 public class BytesUploadController {
 
-    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/bytes",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     public HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(fileName, "temp");
@@ -5117,7 +5296,9 @@ import java.nio.file.Paths
 @Controller("/upload")
 class BytesUploadController {
 
-    @Post(value = "/bytes", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/bytes",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(fileName, "temp")
@@ -5148,7 +5329,9 @@ import java.nio.file.Paths
 @Controller("/upload")
 class BytesUploadController {
 
-    @Post(value = "/bytes", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    @Post(value = "/bytes",
+            consumes = [MediaType.MULTIPART_FORM_DATA],
+            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadBytes(file: ByteArray, fileName: String): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
         return try {
             val tempFile = File.createTempFile(fileName, "temp")
@@ -5184,7 +5367,9 @@ import java.nio.file.Paths;
 @Controller("/upload")
 public class CompletedUploadController {
 
-    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/completed",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     public HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(file.getFilename(), "temp"); <b class="conum">(3)</b>
@@ -5214,7 +5399,9 @@ import java.nio.file.Paths
 @Controller("/upload")
 class CompletedUploadController {
 
-    @Post(value = "/completed", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/completed",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
@@ -5246,7 +5433,9 @@ import java.nio.file.Paths
 @Controller("/upload")
 class CompletedUploadController {
 
-    @Post(value = "/completed", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    @Post(value = "/completed",
+            consumes = [MediaType.MULTIPART_FORM_DATA],
+            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadCompleted(file: CompletedFileUpload): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
         return try {
             val tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
@@ -5361,7 +5550,9 @@ import org.reactivestreams.Subscription;
 @Controller("/upload")
 public class WholeBodyUploadController {
 
-    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/whole-body",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     public Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
         return Single.create(emitter -&gt; {
             body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
@@ -5413,7 +5604,9 @@ import org.reactivestreams.Subscription
 @Controller("/upload")
 class WholeBodyUploadController {
 
-    @Post(value = "/whole-body", consumes = MediaType.MULTIPART_FORM_DATA) <b class="conum">(1)</b>
+    @Post(value = "/whole-body",
+            consumes = MediaType.MULTIPART_FORM_DATA,
+            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
         Single.&lt;String&gt;create({ emitter -&gt;
             body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
@@ -5465,7 +5658,9 @@ import org.reactivestreams.Subscription
 @Controller("/upload")
 class WholeBodyUploadController {
 
-    @Post(value = "/whole-body", consumes = [MediaType.MULTIPART_FORM_DATA]) <b class="conum">(1)</b>
+    @Post(value = "/whole-body",
+            consumes = [MediaType.MULTIPART_FORM_DATA],
+            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadBytes(@Body body: MultipartBody): Single&lt;String&gt; { <b class="conum">(2)</b>
         return Single.create { emitter -&gt;
             body.subscribe(object : Subscriber&lt;CompletedPart&gt; {
@@ -6078,7 +6273,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.validation.constraints.NotBlank;
 
 @Controller("/shopping")
@@ -6518,15 +6713,19 @@ class ShoppingController {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.*;
 import io.micronaut.http.sse.Event;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ScheduleOn;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
 @Controller("/headlines")
 public class HeadlineController {
 
-    @Get
+    @ScheduleOn(TaskExecutors.IO)
+    @Get(produces = MediaType.TEXT_EVENT_STREAM)
     public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = new String[]{"1.0", "2.0"}; <b class="conum">(2)</b>
 
@@ -6550,6 +6749,8 @@ public class HeadlineController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ScheduleOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -6559,7 +6760,8 @@ import org.reactivestreams.Publisher
 @Controller("/headlines")
 class HeadlineController {
 
-    @Get
+    @ScheduleOn(TaskExecutors.IO)
+    @Get(produces = MediaType.TEXT_EVENT_STREAM)
     Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
 
@@ -6583,9 +6785,12 @@ class HeadlineController {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ScheduleOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -6596,7 +6801,8 @@ import java.util.concurrent.Callable
 @Controller("/headlines")
 class HeadlineController {
 
-    @Get
+    @ScheduleOn(TaskExecutors.IO)
+    @Get(produces = [MediaType.TEXT_EVENT_STREAM])
     fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
         val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
 
@@ -6637,6 +6843,18 @@ class HeadlineController {
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onComplete</code> method is used to indicate when to finish sending server sent events.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You typically want to schedule SSE event streams on a separate executor. The previous example uses <a href="../api/io/micronaut/scheduling/annotation/ScheduleOn.html">@ScheduleOn</a> to schedule the stream on the I/O executor.
+</td>
 </tr>
 </table>
 </div>
@@ -7557,8 +7775,13 @@ public class MyBean {
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="_using_native_transports">Using Native Transports</h3>
 <div class="paragraph">
-<p>The <code>use-native-transport</code> option also requires the relevant netty dependency to take effect. The native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
+<p>The native Netty transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to the NIO based transport.</p>
+</div>
+<div class="paragraph">
+<p>To enable native transports first add a necessarily dependency:</p>
 </div>
 <div class="paragraph">
 <p>For macOS:</p>
@@ -7603,6 +7826,20 @@ public class MyBean {
 </div>
 </div>
 </p>
+</div>
+<div class="paragraph">
+<p>Then configure the default event loop group to prefer native transports:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring The Default Event Loop to Prefer Native Transports</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    netty:
+        event-loops:
+            default:
+                prefer-native-transport: true</code></pre>
+</div>
+</div>
 </div>
 
 <h2 id="threadPools"><a class="anchor" href="#threadPools"></a>6.26.1 Configuring Server Thread Pools</h2>
