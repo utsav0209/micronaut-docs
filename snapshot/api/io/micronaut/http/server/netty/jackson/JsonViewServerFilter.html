@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,6 +195,10 @@ implements <a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.
  which allows to mutate the outgoing HTTP response.</div>
 </td>
 </tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/jackson/JsonViewServerFilter.html#getOrder--">getOrder</a></span>()</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -209,13 +213,6 @@ implements <a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.http.filter.<a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.html" title="interface in io.micronaut.http.filter">HttpServerFilter</a></h3>
 <code><a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.html#doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.FilterChain-">doFilter</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.order.Ordered">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;io.micronaut.core.order.<a href="../../../../../../io/micronaut/core/order/Ordered.html" title="interface in io.micronaut.core.order">Ordered</a></h3>
-<code><a href="../../../../../../io/micronaut/core/order/Ordered.html#getOrder--">getOrder</a></code></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +277,7 @@ implements <a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.
 <a name="doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.ServerFilterChain-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>doFilter</h4>
 <pre>public&nbsp;<a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams">Publisher</a>&lt;<a href="../../../../../../io/micronaut/http/MutableHttpResponse.html" title="interface in io.micronaut.http">MutableHttpResponse</a>&lt;?&gt;&gt;&nbsp;doFilter(<a href="../../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
@@ -298,6 +295,21 @@ implements <a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.
 <dd>A <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html?is-external=true" title="class or interface in org.reactivestreams"><code>Publisher</code></a> that emits a <a href="../../../../../../io/micronaut/http/MutableHttpResponse.html" title="interface in io.micronaut.http"><code>MutableHttpResponse</code></a></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../io/micronaut/http/filter/HttpServerFilter.html#doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.FilterChain-"><code>HttpServerFilter.doFilter(HttpRequest, FilterChain)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="getOrder--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getOrder</h4>
+<pre>public&nbsp;int&nbsp;getOrder()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/core/order/Ordered.html#getOrder--">getOrder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/core/order/Ordered.html" title="interface in io.micronaut.core.order">Ordered</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The order of the object. Defaults to zero (no order).</dd>
 </dl>
 </li>
 </ul>
