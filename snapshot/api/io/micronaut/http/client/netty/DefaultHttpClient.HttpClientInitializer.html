@@ -104,7 +104,7 @@ var activeTableTab = "activeTableTab";
 <li>io.netty.channel.ChannelInboundHandlerAdapter</li>
 <li>
 <ul class="inheritance">
-<li>io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</li>
+<li>io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</li>
 <li>
 <ul class="inheritance">
 <li>io.micronaut.http.client.netty.DefaultHttpClient.HttpClientInitializer</li>
@@ -131,7 +131,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>protected class <span class="typeNameLabel">DefaultHttpClient.HttpClientInitializer</span>
-extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre>
+extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</pre>
 <div class="block">Initializes the HTTP client channel.</div>
 </li>
 </ul>
@@ -168,11 +168,12 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/DefaultHttpClient.HttpClientInitializer.html#HttpClientInitializer-io.netty.handler.ssl.SslContext-java.lang.String-int-boolean-boolean-">HttpClientInitializer</a></span>(io.netty.handler.ssl.SslContext&nbsp;sslContext,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/DefaultHttpClient.HttpClientInitializer.html#HttpClientInitializer-io.netty.handler.ssl.SslContext-java.lang.String-int-boolean-boolean-java.util.function.Consumer-">HttpClientInitializer</a></span>(io.netty.handler.ssl.SslContext&nbsp;sslContext,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;host,
                      int&nbsp;port,
                      boolean&nbsp;stream,
-                     boolean&nbsp;acceptsEvents)</code>&nbsp;</td>
+                     boolean&nbsp;acceptsEvents,
+                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;io.netty.channel.ChannelHandlerContext&gt;&nbsp;contextConsumer)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -197,7 +198,7 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/DefaultHttpClient.HttpClientInitializer.html#initChannel-io.netty.channel.Channel-">initChannel</a></span>(io.netty.channel.Channel&nbsp;ch)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/DefaultHttpClient.HttpClientInitializer.html#initChannel-io.netty.channel.socket.SocketChannel-">initChannel</a></span>(io.netty.channel.socket.SocketChannel&nbsp;ch)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -242,7 +243,7 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="HttpClientInitializer-io.netty.handler.ssl.SslContext-java.lang.String-int-boolean-boolean-">
+<a name="HttpClientInitializer-io.netty.handler.ssl.SslContext-java.lang.String-int-boolean-boolean-java.util.function.Consumer-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -252,7 +253,8 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;host,
                                 int&nbsp;port,
                                 boolean&nbsp;stream,
-                                boolean&nbsp;acceptsEvents)</pre>
+                                boolean&nbsp;acceptsEvents,
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;io.netty.channel.ChannelHandlerContext&gt;&nbsp;contextConsumer)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>sslContext</code> - The ssl context</dd>
@@ -260,6 +262,7 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
 <dd><code>port</code> - The port</dd>
 <dd><code>stream</code> - Whether is stream</dd>
 <dd><code>acceptsEvents</code> - Whether an event stream is accepted</dd>
+<dd><code>contextConsumer</code> - The context consumer</dd>
 </dl>
 </li>
 </ul>
@@ -271,16 +274,16 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</pre
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="initChannel-io.netty.channel.Channel-">
+<a name="initChannel-io.netty.channel.socket.SocketChannel-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>initChannel</h4>
-<pre>protected&nbsp;void&nbsp;initChannel(io.netty.channel.Channel&nbsp;ch)</pre>
+<pre>protected&nbsp;void&nbsp;initChannel(io.netty.channel.socket.SocketChannel&nbsp;ch)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>initChannel</code>&nbsp;in class&nbsp;<code>io.netty.channel.ChannelInitializer&lt;io.netty.channel.Channel&gt;</code></dd>
+<dd><code>initChannel</code>&nbsp;in class&nbsp;<code>io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ch</code> - The channel</dd>
 </dl>

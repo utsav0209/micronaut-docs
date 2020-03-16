@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,7 +142,8 @@ implements <a href="../../../../../../io/micronaut/http/server/netty/ssl/ServerS
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/ssl/SelfSignedSslBuilder.html#SelfSignedSslBuilder-io.micronaut.http.ssl.ServerSslConfiguration-io.micronaut.core.io.ResourceResolver-">SelfSignedSslBuilder</a></span>(<a href="../../../../../../io/micronaut/http/ssl/ServerSslConfiguration.html" title="class in io.micronaut.http.ssl">ServerSslConfiguration</a>&nbsp;ssl,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/ssl/SelfSignedSslBuilder.html#SelfSignedSslBuilder-io.micronaut.http.server.HttpServerConfiguration-io.micronaut.http.ssl.ServerSslConfiguration-io.micronaut.core.io.ResourceResolver-">SelfSignedSslBuilder</a></span>(<a href="../../../../../../io/micronaut/http/server/HttpServerConfiguration.html" title="class in io.micronaut.http.server">HttpServerConfiguration</a>&nbsp;serverConfiguration,
+                    <a href="../../../../../../io/micronaut/http/ssl/ServerSslConfiguration.html" title="class in io.micronaut.http.ssl">ServerSslConfiguration</a>&nbsp;ssl,
                     <a href="../../../../../../io/micronaut/core/io/ResourceResolver.html" title="class in io.micronaut.core.io">ResourceResolver</a>&nbsp;resourceResolver)</code>&nbsp;</td>
 </tr>
 </table>
@@ -169,6 +170,11 @@ implements <a href="../../../../../../io/micronaut/http/server/netty/ssl/ServerS
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/ssl/SelfSignedSslBuilder.html#build-io.micronaut.http.ssl.SslConfiguration-">build</a></span>(<a href="../../../../../../io/micronaut/http/ssl/SslConfiguration.html" title="class in io.micronaut.http.ssl">SslConfiguration</a>&nbsp;ssl)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;io.netty.handler.ssl.SslContext&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/ssl/SelfSignedSslBuilder.html#build-io.micronaut.http.ssl.SslConfiguration-io.micronaut.http.HttpVersion-">build</a></span>(<a href="../../../../../../io/micronaut/http/ssl/SslConfiguration.html" title="class in io.micronaut.http.ssl">SslConfiguration</a>&nbsp;ssl,
+     <a href="../../../../../../io/micronaut/http/HttpVersion.html" title="enum in io.micronaut.http">HttpVersion</a>&nbsp;httpVersion)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../io/micronaut/http/ssl/ServerSslConfiguration.html" title="class in io.micronaut.http.ssl">ServerSslConfiguration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/http/server/netty/ssl/SelfSignedSslBuilder.html#getSslConfiguration--">getSslConfiguration</a></span>()</code>&nbsp;</td>
 </tr>
@@ -201,16 +207,18 @@ implements <a href="../../../../../../io/micronaut/http/server/netty/ssl/ServerS
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SelfSignedSslBuilder-io.micronaut.http.ssl.ServerSslConfiguration-io.micronaut.core.io.ResourceResolver-">
+<a name="SelfSignedSslBuilder-io.micronaut.http.server.HttpServerConfiguration-io.micronaut.http.ssl.ServerSslConfiguration-io.micronaut.core.io.ResourceResolver-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SelfSignedSslBuilder</h4>
-<pre>public&nbsp;SelfSignedSslBuilder(<a href="../../../../../../io/micronaut/http/ssl/ServerSslConfiguration.html" title="class in io.micronaut.http.ssl">ServerSslConfiguration</a>&nbsp;ssl,
+<pre>public&nbsp;SelfSignedSslBuilder(<a href="../../../../../../io/micronaut/http/server/HttpServerConfiguration.html" title="class in io.micronaut.http.server">HttpServerConfiguration</a>&nbsp;serverConfiguration,
+                            <a href="../../../../../../io/micronaut/http/ssl/ServerSslConfiguration.html" title="class in io.micronaut.http.ssl">ServerSslConfiguration</a>&nbsp;ssl,
                             <a href="../../../../../../io/micronaut/core/io/ResourceResolver.html" title="class in io.micronaut.core.io">ResourceResolver</a>&nbsp;resourceResolver)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>serverConfiguration</code> - The server configuration</dd>
 <dd><code>ssl</code> - The SSL configuration</dd>
 <dd><code>resourceResolver</code> - The resource resolver</dd>
 </dl>
@@ -257,7 +265,7 @@ implements <a href="../../../../../../io/micronaut/http/server/netty/ssl/ServerS
 <a name="build-io.micronaut.http.ssl.SslConfiguration-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>build</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;io.netty.handler.ssl.SslContext&gt;&nbsp;build(<a href="../../../../../../io/micronaut/http/ssl/SslConfiguration.html" title="class in io.micronaut.http.ssl">SslConfiguration</a>&nbsp;ssl)</pre>
@@ -266,6 +274,25 @@ implements <a href="../../../../../../io/micronaut/http/server/netty/ssl/ServerS
 <dd><code><a href="../../../../../../io/micronaut/http/ssl/SslBuilder.html#build-io.micronaut.http.ssl.SslConfiguration-">build</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/http/ssl/SslBuilder.html" title="class in io.micronaut.http.ssl">SslBuilder</a>&lt;io.netty.handler.ssl.SslContext&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ssl</code> - The ssl configuration</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Builds the SSL configuration wrapped inside an optional</dd>
+</dl>
+</li>
+</ul>
+<a name="build-io.micronaut.http.ssl.SslConfiguration-io.micronaut.http.HttpVersion-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>build</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;io.netty.handler.ssl.SslContext&gt;&nbsp;build(<a href="../../../../../../io/micronaut/http/ssl/SslConfiguration.html" title="class in io.micronaut.http.ssl">SslConfiguration</a>&nbsp;ssl,
+                                                       <a href="../../../../../../io/micronaut/http/HttpVersion.html" title="enum in io.micronaut.http">HttpVersion</a>&nbsp;httpVersion)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/http/ssl/SslBuilder.html#build-io.micronaut.http.ssl.SslConfiguration-io.micronaut.http.HttpVersion-">build</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/http/ssl/SslBuilder.html" title="class in io.micronaut.http.ssl">SslBuilder</a>&lt;io.netty.handler.ssl.SslContext&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ssl</code> - The ssl configuration</dd>
+<dd><code>httpVersion</code> - The http version</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Builds the SSL configuration wrapped inside an optional</dd>
 </dl>
