@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/jackson/env/CloudFoundryVcapServicesPropertySourceLoader.html" title="class in io.micronaut.jackson.env"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html" title="class in io.micronaut.jackson.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -118,6 +118,10 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../../io/micronaut/context/env/PropertySourceLoader.html" title="interface in io.micronaut.context.env">PropertySourceLoader</a>, <a href="../../../../io/micronaut/context/env/PropertySourceLocator.html" title="interface in io.micronaut.context.env">PropertySourceLocator</a>, <a href="../../../../io/micronaut/context/env/PropertySourceReader.html" title="interface in io.micronaut.context.env">PropertySourceReader</a>, <a href="../../../../io/micronaut/core/order/Ordered.html" title="interface in io.micronaut.core.order">Ordered</a>, <a href="../../../../io/micronaut/core/util/Toggleable.html" title="interface in io.micronaut.core.util">Toggleable</a></dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../io/micronaut/jackson/env/CloudFoundryVcapApplicationPropertySourceLoader.html" title="class in io.micronaut.jackson.env">CloudFoundryVcapApplicationPropertySourceLoader</a>, <a href="../../../../io/micronaut/jackson/env/CloudFoundryVcapServicesPropertySourceLoader.html" title="class in io.micronaut.jackson.env">CloudFoundryVcapServicesPropertySourceLoader</a></dd>
 </dl>
 <hr>
 <br>
@@ -212,10 +216,14 @@ extends <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/env/EnvJsonPropertySourceLoader.html#getEnvValue--">getEnvValue</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/env/EnvJsonPropertySourceLoader.html#getEnvValueAsStream--">getEnvValueAsStream</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/env/EnvJsonPropertySourceLoader.html#getOrder--">getOrder</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/jackson/env/EnvJsonPropertySourceLoader.html#readInput-io.micronaut.core.io.ResourceLoader-java.lang.String-">readInput</a></span>(<a href="../../../../io/micronaut/core/io/ResourceLoader.html" title="interface in io.micronaut.core.io">ResourceLoader</a>&nbsp;resourceLoader,
          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fileName)</code>&nbsp;</td>
@@ -226,14 +234,14 @@ extends <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.h
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.jackson.env.<a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html" title="class in io.micronaut.jackson.env">JsonPropertySourceLoader</a></h3>
-<code><a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html#getExtensions--">getExtensions</a>, <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html#processInput-java.lang.String-java.io.InputStream-java.util.Map-">processInput</a></code></li>
+<code><a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html#getExtensions--">getExtensions</a>, <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html#processInput-java.lang.String-java.io.InputStream-java.util.Map-">processInput</a>, <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html#readJsonAsMap-java.io.InputStream-">readJsonAsMap</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.context.env.AbstractPropertySourceLoader">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.context.env.<a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html" title="class in io.micronaut.context.env">AbstractPropertySourceLoader</a></h3>
-<code><a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#load-java.lang.String-io.micronaut.core.io.ResourceLoader-">load</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#loadEnv-java.lang.String-io.micronaut.core.io.ResourceLoader-io.micronaut.context.env.ActiveEnvironment-">loadEnv</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#processMap-java.util.Map-java.util.Map-java.lang.String-">processMap</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#read-java.lang.String-java.io.InputStream-">read</a></code></li>
+<code><a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#createPropertySource-java.lang.String-java.util.Map-int-">createPropertySource</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#load-java.lang.String-io.micronaut.core.io.ResourceLoader-">load</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#loadEnv-java.lang.String-io.micronaut.core.io.ResourceLoader-io.micronaut.context.env.ActiveEnvironment-">loadEnv</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#processMap-java.util.Map-java.util.Map-java.lang.String-">processMap</a>, <a href="../../../../io/micronaut/context/env/AbstractPropertySourceLoader.html#read-java.lang.String-java.io.InputStream-">read</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -352,6 +360,20 @@ extends <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.h
 </dl>
 </li>
 </ul>
+<a name="getEnvValueAsStream--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEnvValueAsStream</h4>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&gt;&nbsp;getEnvValueAsStream()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The JSON as input stream stored in the environment variables
+ <tt>SPRING_APPLICATION_JSON</tt> or <tt>MICRONAUT_APPLICATION_JSON</tt>.</dd>
+</dl>
+</li>
+</ul>
 <a name="getEnvValue--">
 <!--   -->
 </a>
@@ -393,7 +415,7 @@ extends <a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.h
 </div>
 <div class="subNav">
 <ul class="navList">
-<li>Prev&nbsp;Class</li>
+<li><a href="../../../../io/micronaut/jackson/env/CloudFoundryVcapServicesPropertySourceLoader.html" title="class in io.micronaut.jackson.env"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/jackson/env/JsonPropertySourceLoader.html" title="class in io.micronaut.jackson.env"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
