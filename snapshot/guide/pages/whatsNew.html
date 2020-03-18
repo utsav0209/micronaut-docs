@@ -149,6 +149,18 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_threading_model_and_event_loop_group_improvements">Threading Model and Event Loop Group Improvements</h3>
+<div class="paragraph">
+<p>Micronaut 2.0 uses a new shared default Netty <code>EventLoopGroup</code> for server worker threads and client request threads. This reduces context switching and improves resource utilization.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="#clientConfiguration">HTTP Client Configuration</a> section for information on how to configure the default <code>EventLoopGroup</code> and add additional `EventLoopGroup&#8217;s that are configured per client.</p>
+</div>
+<div class="paragraph">
+<p>In addition, as of Micronaut 2.0 all operations are by default executed on the <code>EventLoop</code> and users can optionally use the new <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> annotation to specify a named executor to execute an operation on if required (for example to offload blocking operations such as interactions with JPA/JDBC to a specific thread pool).</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_servlet">Micronaut Servlet</h3>
 <div class="paragraph">
 <p>Micronaut now includes support for creating <a href="https://github.com/micronaut-projects/micronaut-servlet">Servlet applications</a> and users can use the command line to create an application that targets popular Servlet containers:</p>
@@ -201,15 +213,6 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </div>
 </div>
 <div class="sect2">
-<h3 id="_event_loop_group_improvements">Event Loop Group Improvements</h3>
-<div class="paragraph">
-<p>Micronaut 2.0 uses a new shared default Netty <code>EventLoopGroup</code> for server worker threads and client request threads. This reduces context switching and improves resource utilization.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="#clientConfiguration">HTTP Client Configuration</a> section for information on how to configure the default <code>EventLoopGroup</code> and add additional `EventLoopGroup&#8217;s that are configured per client.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_http_client_improvements">HTTP Client Improvements</h3>
 <div class="paragraph">
 <p>It is no longer necessary to use <code>@Client(..)</code> to inject a default <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> instance. You can now inject the default client simply with:</p>
@@ -235,11 +238,30 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
 </div>
 <div class="sect3">
+<h4 id="_micronaut_sql_2_0_0_upgrade">Micronaut SQL 2.0.0 Upgrade</h4>
+<div class="paragraph">
+<p>Micronaut SQL has been improved to default to Micronaut transaction management (making Spring management optional) and includes <a href="https://micronaut-projects.github.io/micronaut-sql/2.0.x/guide/#jdbi">support for Jdbi</a> (Thanks to <a href="https://github.com/drmaas">Dan Maas</a> for this contirubtion).</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_module_upgrades">Module Upgrades</h4>
 <div class="ulist">
 <ul>
 <li>
 <p>Micronaut Neo4j - <code>1.3.0</code> &#8594; <code>2.0.0</code></p>
+</li>
+<li>
+<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.0.0.M1</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependency_upgrades">Dependency Upgrades</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.12.Final</code></p>
 </li>
 </ul>
 </div>

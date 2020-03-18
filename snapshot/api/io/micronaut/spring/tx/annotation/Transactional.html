@@ -90,6 +90,9 @@
 <ul class="blockList">
 <li class="blockList">
 <hr>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use Spring's <code>Transactional</code> directly or switch to Micronaut Data's <code>TransactionalAdvice</code></span></div>
+</div>
 <br>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE" title="class or interface in java.lang.annotation">TYPE</a>})
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
@@ -97,6 +100,7 @@
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
  <a href="../../../../../io/micronaut/aop/Around.html" title="annotation in io.micronaut.aop">@Around</a>
  <a href="../../../../../io/micronaut/context/annotation/Type.html" title="annotation in io.micronaut.context.annotation">@Type</a>(<a href="../../../../../io/micronaut/context/annotation/Type.html#value--">value</a>=<a href="../../../../../io/micronaut/spring/tx/annotation/TransactionInterceptor.html" title="class in io.micronaut.spring.tx.annotation">TransactionInterceptor.class</a>)
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 public @interface <span class="memberNameLabel">Transactional</span></pre>
 <div class="block">Describes transaction attributes on a method or class. This is a variation of Spring's
  <code>Transactional</code> that uses Micronaut AOP
@@ -145,12 +149,14 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code>org.springframework.transaction.annotation.Isolation</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#isolation--">isolation</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The transaction isolation level.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#noRollbackFor--">noRollbackFor</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Classes</code></a>, which must be
  subclasses of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, indicating which exception types must
  <b>not</b> cause a transaction rollback.</div>
@@ -159,6 +165,7 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#noRollbackForClassName--">noRollbackForClassName</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception names (for exceptions which must be a
  subclass of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>) indicating which exception types must <b>not</b>
  cause a transaction rollback.</div>
@@ -167,18 +174,21 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <tr class="rowColor">
 <td class="colFirst"><code>org.springframework.transaction.annotation.Propagation</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#propagation--">propagation</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The transaction propagation type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#readOnly--">readOnly</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block"><code>true</code> if the transaction is read-only.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#rollbackFor--">rollbackFor</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>classes</code></a>, which must be
  subclasses of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, indicating which exception types must cause
  a transaction rollback.</div>
@@ -187,6 +197,7 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#rollbackForClassName--">rollbackForClassName</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception names (for exceptions which must be a
  subclass of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>), indicating which exception types must cause
  a transaction rollback.</div>
@@ -195,18 +206,21 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#timeout--">timeout</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The timeout for this transaction.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#transactionManager--">transactionManager</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">A <em>qualifier</em> value for the specified transaction.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#value--">value</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Alias for <a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#transactionManager--"><code>transactionManager()</code></a>.</div>
 </td>
 </tr>
@@ -234,6 +248,7 @@ public @interface <span class="memberNameLabel">Transactional</span></pre>
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="transactionManager")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Alias for <a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#transactionManager--"><code>transactionManager()</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -259,6 +274,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="value")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;transactionManager</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">A <em>qualifier</em> value for the specified transaction.
  <p>May be used to determine the target transaction manager,
  matching the qualifier value (or the bean name) of a specific
@@ -290,6 +306,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="propagation")
 public abstract&nbsp;org.springframework.transaction.annotation.Propagation&nbsp;propagation</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The transaction propagation type.
  <p>Defaults to <code>Propagation.REQUIRED</code>.</div>
 <dl>
@@ -316,6 +333,7 @@ public abstract&nbsp;org.springframework.transaction.annotation.Propagation&nbsp
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="isolation")
 public abstract&nbsp;org.springframework.transaction.annotation.Isolation&nbsp;isolation</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The transaction isolation level.
  <p>Defaults to <code>Isolation.DEFAULT</code>.</div>
 <dl>
@@ -342,6 +360,7 @@ public abstract&nbsp;org.springframework.transaction.annotation.Isolation&nbsp;i
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="timeout")
 public abstract&nbsp;int&nbsp;timeout</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">The timeout for this transaction.
  <p>Defaults to the default timeout of the underlying transaction system.</div>
 <dl>
@@ -368,6 +387,7 @@ public abstract&nbsp;int&nbsp;timeout</pre>
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="readOnly")
 public abstract&nbsp;boolean&nbsp;readOnly</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block"><code>true</code> if the transaction is read-only.
  <p>Defaults to <code>false</code>.
  <p>This just serves as a hint for the actual transaction subsystem;
@@ -399,6 +419,7 @@ public abstract&nbsp;boolean&nbsp;readOnly</pre>
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="rollbackFor")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;[]&nbsp;rollbackFor</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>classes</code></a>, which must be
  subclasses of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, indicating which exception types must cause
  a transaction rollback.
@@ -434,6 +455,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="rollbackForClassName")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;rollbackForClassName</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception names (for exceptions which must be a
  subclass of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>), indicating which exception types must cause
  a transaction rollback.
@@ -473,6 +495,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="rollbackOn")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;[]&nbsp;noRollbackFor</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Classes</code></a>, which must be
  subclasses of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, indicating which exception types must
  <b>not</b> cause a transaction rollback.
@@ -505,6 +528,7 @@ public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lan
 <pre><a href="../../../../../io/micronaut/context/annotation/AliasFor.html" title="annotation in io.micronaut.context.annotation">@AliasFor</a>(<a href="../../../../../io/micronaut/context/annotation/AliasFor.html#annotation--">annotation</a>=org.springframework.transaction.annotation.Transactional.class,
           <a href="../../../../../io/micronaut/context/annotation/AliasFor.html#member--">member</a>="noRollbackForClassName")
 public abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;noRollbackForClassName</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Defines zero (0) or more exception names (for exceptions which must be a
  subclass of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>) indicating which exception types must <b>not</b>
  cause a transaction rollback.
