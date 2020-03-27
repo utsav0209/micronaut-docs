@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -163,22 +163,28 @@ implements <a href="../../../../io/micronaut/http/bind/RequestBinderRegistry.htm
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>&lt;T,ST&gt;&nbsp;void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/bind/DefaultRequestBinderRegistry.html#addRequestArgumentBinder-io.micronaut.core.bind.ArgumentBinder-">addRequestArgumentBinder</a></span>(<a href="../../../../io/micronaut/core/bind/ArgumentBinder.html" title="interface in io.micronaut.core.bind">ArgumentBinder</a>&lt;T,ST&gt;&nbsp;binder)</code>
+<div class="block">Adds a request argument binder to the registry.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/core/bind/ArgumentBinder.html" title="interface in io.micronaut.core.bind">ArgumentBinder</a>&lt;T,<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/bind/DefaultRequestBinderRegistry.html#findArgumentBinder-io.micronaut.core.type.Argument-io.micronaut.http.HttpRequest-">findArgumentBinder</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;argument,
                   <a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;source)</code>
 <div class="block">Locate an <a href="../../../../io/micronaut/core/bind/ArgumentBinder.html" title="interface in io.micronaut.core.bind"><code>ArgumentBinder</code></a> for the given argument and source type.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;<a href="../../../../io/micronaut/http/bind/binders/RequestArgumentBinder.html" title="interface in io.micronaut.http.bind.binders">RequestArgumentBinder</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/bind/DefaultRequestBinderRegistry.html#findBinder-io.micronaut.core.type.Argument-java.lang.Class-">findBinder</a></span>(<a href="../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&lt;T&gt;&nbsp;argument,
           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationType)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/bind/DefaultRequestBinderRegistry.html#registerDefaultAnnotationBinders-java.util.Map-">registerDefaultAnnotationBinders</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;,<a href="../../../../io/micronaut/http/bind/binders/RequestArgumentBinder.html" title="interface in io.micronaut.http.bind.binders">RequestArgumentBinder</a>&gt;&nbsp;byAnnotation)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/bind/DefaultRequestBinderRegistry.html#registerDefaultConverters-io.micronaut.core.convert.ConversionService-">registerDefaultConverters</a></span>(<a href="../../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;&nbsp;conversionService)</code>
 <div class="block">Registers a default converter.</div>
@@ -245,6 +251,26 @@ public&nbsp;DefaultRequestBinderRegistry(<a href="../../../../io/micronaut/core/
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="addRequestArgumentBinder-io.micronaut.core.bind.ArgumentBinder-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addRequestArgumentBinder</h4>
+<pre>public&nbsp;&lt;T,ST&gt;&nbsp;void&nbsp;addRequestArgumentBinder(<a href="../../../../io/micronaut/core/bind/ArgumentBinder.html" title="interface in io.micronaut.core.bind">ArgumentBinder</a>&lt;T,ST&gt;&nbsp;binder)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/bind/ArgumentBinderRegistry.html#addRequestArgumentBinder-io.micronaut.core.bind.ArgumentBinder-">ArgumentBinderRegistry</a></code></span></div>
+<div class="block">Adds a request argument binder to the registry.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/core/bind/ArgumentBinderRegistry.html#addRequestArgumentBinder-io.micronaut.core.bind.ArgumentBinder-">addRequestArgumentBinder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/bind/ArgumentBinderRegistry.html" title="interface in io.micronaut.core.bind">ArgumentBinderRegistry</a>&lt;<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The argument type</dd>
+<dd><code>ST</code> - The source type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>binder</code> - The binder</dd>
+</dl>
+</li>
+</ul>
 <a name="findArgumentBinder-io.micronaut.core.type.Argument-io.micronaut.http.HttpRequest-">
 <!--   -->
 </a>
