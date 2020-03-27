@@ -677,7 +677,6 @@ Single&lt;Pet&gt; save(
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Flowable;
-import reactor.core.publisher.Flux;
 
 @Client("/streaming")
 public interface HeadlineClient {
@@ -693,7 +692,6 @@ public interface HeadlineClient {
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
-import reactor.core.publisher.Flux
 
 @Client("/streaming")
 interface HeadlineClient {
@@ -711,7 +709,6 @@ interface HeadlineClient {
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
-import reactor.core.publisher.Flux
 
 
 @Client("/streaming")
@@ -890,14 +887,14 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
-        return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        return Flowable.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
             headline.setText("Latest Headline at " + ZonedDateTime.now());
-            emitter.next(Event.of(headline));
-            emitter.complete();
-        }).repeat(100) <b class="conum">(3)</b>
-          .delayElements(Duration.ofSeconds(1)); <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline));
+            emitter.onComplete();
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS); <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -905,14 +902,14 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
-        Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        Flowable.&lt;Event&lt;Headline&gt;&gt;create( { emitter -&gt; <b class="conum">(2)</b>
             Headline headline = new Headline()
             headline.setText("Latest Headline at " + ZonedDateTime.now())
-            emitter.next(Event.of(headline))
-            emitter.complete()
-        }.repeat(100) <b class="conum">(3)</b>
-         .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline))
+            emitter.onComplete()
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+         .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -920,15 +917,15 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
-    internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
-        return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
+    internal fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt; {
+        return Flowable.create&lt;Event&lt;Headline&gt;&gt;( {  <b class="conum">(2)</b>
             emitter -&gt;
             val headline = Headline()
             headline.text = "Latest Headline at " + ZonedDateTime.now()
-            emitter.next(Event.of(headline))
-            emitter.complete()
-        }.repeat(100) <b class="conum">(3)</b>
-                .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline))
+            emitter.onComplete()
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -965,7 +962,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 public interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines();
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines();
 }</code></pre>
 </div>
 </div>
@@ -976,7 +973,7 @@ public interface HeadlineClient {
 interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
 }</code></pre>
 </div>
 </div>
@@ -987,7 +984,7 @@ interface HeadlineClient {
 interface HeadlineClient {
 
     @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM])
-    fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt;
+    fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt;
 }</code></pre>
 </div>
 </div>
