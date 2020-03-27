@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,14 +107,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a></dd>
+<dd><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="interface in io.micronaut.http.filter">HttpFilterResolver</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>,<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&gt;, <a href="../../../../io/micronaut/http/filter/HttpServerFilterResolver.html" title="interface in io.micronaut.http.filter">HttpServerFilterResolver</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&gt;, <a href="../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a></dd>
 </dl>
 <hr>
 <br>
 <pre><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html?is-external=true" title="class or interface in javax.inject">@Singleton</a>
 public class <span class="typeNameLabel">DefaultRouter</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a></pre>
+implements <a href="../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router">Router</a>, <a href="../../../../io/micronaut/http/filter/HttpServerFilterResolver.html" title="interface in io.micronaut.http.filter">HttpServerFilterResolver</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&gt;</pre>
 <div class="block"><p>The default <a href="../../../../io/micronaut/web/router/Router.html" title="interface in io.micronaut.web.router"><code>Router</code></a> implementation. This implementation does not perform any additional caching of
  route discovery.</p></div>
 <dl>
@@ -129,6 +129,21 @@ implements <a href="../../../../io/micronaut/web/router/Router.html" title="inte
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested.classes.inherited.from.class.io.micronaut.http.filter.HttpFilterResolver">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;io.micronaut.http.filter.<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="interface in io.micronaut.http.filter">HttpFilterResolver</a></h3>
+<code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="type parameter in HttpFilterResolver.FilterEntry">F</a>&gt;</code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -246,39 +261,52 @@ implements <a href="../../../../io/micronaut/web/router/Router.html" title="inte
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#getExposedPorts--">getExposedPorts</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#resolveFilterEntries-io.micronaut.web.router.RouteMatch-">resolveFilterEntries</a></span>(<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&nbsp;context)</code>
+<div class="block">Resolves the initial list of filters</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">resolveFilters</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&gt;&nbsp;filterEntries)</code>
+<div class="block">Returns which filters should apply for the given request.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#route-java.lang.Class-io.micronaut.http.HttpStatus-">route</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;originatingClass,
      <a href="../../../../io/micronaut/http/HttpStatus.html" title="enum in io.micronaut.http">HttpStatus</a>&nbsp;status)</code>
 <div class="block">Found a <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router"><code>RouteMatch</code></a> for the given <a href="../../../../io/micronaut/http/HttpStatus.html" title="enum in io.micronaut.http"><code>HttpStatus</code></a> code.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#route-java.lang.Class-java.lang.Throwable-">route</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&nbsp;originatingClass,
      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;error)</code>
 <div class="block">Match a route to an error.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>&lt;T,R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#route-io.micronaut.http.HttpMethod-java.lang.CharSequence-">route</a></span>(<a href="../../../../io/micronaut/http/HttpMethod.html" title="enum in io.micronaut.http">HttpMethod</a>&nbsp;httpMethod,
      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;uri)</code>
 <div class="block">Finds the first possible route for the given HTTP method and URI.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#route-io.micronaut.http.HttpStatus-">route</a></span>(<a href="../../../../io/micronaut/http/HttpStatus.html" title="enum in io.micronaut.http">HttpStatus</a>&nbsp;status)</code>
 <div class="block">Found a <a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router"><code>RouteMatch</code></a> for the given <a href="../../../../io/micronaut/http/HttpStatus.html" title="enum in io.micronaut.http"><code>HttpStatus</code></a> code.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;R&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#route-java.lang.Throwable-">route</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;error)</code>
 <div class="block">Match a route to an error.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../../io/micronaut/web/router/UriRoute.html" title="interface in io.micronaut.web.router">UriRoute</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/web/router/DefaultRouter.html#uriRoutes--">uriRoutes</a></span>()</code>
 <div class="block">Returns all UriRoutes.</div>
@@ -753,7 +781,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.ht
 <a name="findAny-java.lang.CharSequence-io.micronaut.http.HttpRequest-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>findAny</h4>
 <pre>@NonNull
@@ -774,6 +802,46 @@ public&nbsp;&lt;T,R&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/
 <dd><code>context</code> - The optional <a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http"><code>HttpRequest</code></a> context information to apply <a href="../../../../io/micronaut/web/router/filter/RouteMatchFilter.html" title="interface in io.micronaut.web.router.filter"><code>RouteMatchFilter</code></a>.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A stream of route matches</dd>
+</dl>
+</li>
+</ul>
+<a name="resolveFilterEntries-io.micronaut.web.router.RouteMatch-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveFilterEntries</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&gt;&nbsp;resolveFilterEntries(<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&nbsp;context)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilterEntries-T-">HttpFilterResolver</a></code></span></div>
+<div class="block">Resolves the initial list of filters</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilterEntries-T-">resolveFilterEntries</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="interface in io.micronaut.http.filter">HttpFilterResolver</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>,<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - The context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The filters</dd>
+</dl>
+</li>
+</ul>
+<a name="resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>resolveFilters</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&nbsp;resolveFilters(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&gt;&nbsp;filterEntries)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">HttpFilterResolver</a></code></span></div>
+<div class="block">Returns which filters should apply for the given request.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">resolveFilters</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="interface in io.micronaut.http.filter">HttpFilterResolver</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>,<a href="../../../../io/micronaut/web/router/RouteMatch.html" title="interface in io.micronaut.web.router">RouteMatch</a>&lt;?&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The request</dd>
+<dd><code>filterEntries</code> - the filter entries</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The list of filters</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
+var methods = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/http/filter/HttpServerFilter.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/http/filter/HttpFilterResolver.html" target="_top">Frames</a></li>
@@ -72,7 +72,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -91,25 +91,34 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">io.micronaut.http.filter</div>
-<h2 title="Interface HttpFilterResolver" class="title">Interface HttpFilterResolver</h2>
+<h2 title="Interface HttpFilterResolver" class="title">Interface HttpFilterResolver&lt;F extends <a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>,T extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>F</code> - The filter type</dd>
+<dd><code>T</code> - The resolution context type</dd>
+</dl>
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../io/micronaut/http/filter/HttpClientFilterResolver.html" title="interface in io.micronaut.http.filter">HttpClientFilterResolver</a>&lt;T&gt;, <a href="../../../../io/micronaut/http/filter/HttpServerFilterResolver.html" title="interface in io.micronaut.http.filter">HttpServerFilterResolver</a>&lt;T&gt;</dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../io/micronaut/http/client/filter/HttpClientFilterResolver.html" title="class in io.micronaut.http.client.filter">HttpClientFilterResolver</a></dd>
+<dd><a href="../../../../io/micronaut/http/client/filter/DefaultHttpClientFilterResolver.html" title="class in io.micronaut.http.client.filter">DefaultHttpClientFilterResolver</a>, <a href="../../../../io/micronaut/web/router/DefaultRouter.html" title="class in io.micronaut.web.router">DefaultRouter</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">HttpFilterResolver</span></pre>
+<pre>public interface <span class="typeNameLabel">HttpFilterResolver&lt;F extends <a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>,T extends <a href="../../../../io/micronaut/core/annotation/AnnotationMetadataProvider.html" title="interface in io.micronaut.core.annotation">AnnotationMetadataProvider</a>&gt;</span></pre>
 <div class="block">A contract for resolving filters for a given request.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.3.0</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>James Kleeh</dd>
+<dd>James Kleeh, graemerocher</dd>
 </dl>
 </li>
 </ul>
@@ -117,6 +126,27 @@ var activeTableTab = "activeTableTab";
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Interface and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="type parameter in HttpFilterResolver.FilterEntry">F</a>&gt;</span></code>
+<div class="block">A resolved filter entry.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -130,8 +160,15 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilters-io.micronaut.http.HttpRequest-">resolveFilters</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilterEntries-T-">resolveFilterEntries</a></span>(<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">T</a>&nbsp;context)</code>
+<div class="block">Resolves the initial list of filters</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html#resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">resolveFilters</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;&gt;&nbsp;filterEntries)</code>
 <div class="block">Returns which filters should apply for the given request.</div>
 </td>
 </tr>
@@ -150,17 +187,39 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="resolveFilters-io.micronaut.http.HttpRequest-">
+<a name="resolveFilterEntries-io.micronaut.core.annotation.AnnotationMetadataProvider-">
+<!--   -->
+</a><a name="resolveFilterEntries-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveFilterEntries</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;&gt;&nbsp;resolveFilterEntries(<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">T</a>&nbsp;context)</pre>
+<div class="block">Resolves the initial list of filters</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - The context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The filters</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0</dd>
+</dl>
+</li>
+</ul>
+<a name="resolveFilters-io.micronaut.http.HttpRequest-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>resolveFilters</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter">HttpFilter</a>&gt;&nbsp;resolveFilters(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;&nbsp;resolveFilters(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter">HttpFilterResolver.FilterEntry</a>&lt;<a href="../../../../io/micronaut/http/filter/HttpFilterResolver.html" title="type parameter in HttpFilterResolver">F</a>&gt;&gt;&nbsp;filterEntries)</pre>
 <div class="block">Returns which filters should apply for the given request.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>request</code> - The request</dd>
+<dd><code>filterEntries</code> - the filter entries</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The list of filters</dd>
 </dl>
@@ -194,7 +253,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/http/filter/HttpFilter.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/http/filter/HttpServerFilter.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/http/filter/HttpFilterResolver.FilterEntry.html" title="interface in io.micronaut.http.filter"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/http/filter/HttpFilterResolver.html" target="_top">Frames</a></li>
@@ -218,7 +277,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

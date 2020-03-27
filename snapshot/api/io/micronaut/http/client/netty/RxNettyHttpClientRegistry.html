@@ -112,6 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="../../../../../io/micronaut/context/annotation/Factory.html" title="annotation in io.micronaut.context.annotation">@Factory</a>
+ <a href="../../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
 public class <span class="typeNameLabel">RxNettyHttpClientRegistry</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="../../../../../io/micronaut/http/client/RxHttpClientRegistry.html" title="interface in io.micronaut.http.client">RxHttpClientRegistry</a></pre>
@@ -140,7 +141,8 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/RxNettyHttpClientRegistry.html#RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">RxNettyHttpClientRegistry</a></span>(<a href="../../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;defaultHttpClientConfiguration,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/RxNettyHttpClientRegistry.html#RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">RxNettyHttpClientRegistry</a></span>(<a href="../../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;defaultHttpClientConfiguration,
+                         <a href="../../../../../io/micronaut/http/filter/HttpClientFilterResolver.html" title="interface in io.micronaut.http.filter">HttpClientFilterResolver</a>&nbsp;httpClientFilterResolver,
                          <a href="../../../../../io/micronaut/http/client/LoadBalancerResolver.html" title="interface in io.micronaut.http.client">LoadBalancerResolver</a>&nbsp;loadBalancerResolver,
                          <a href="../../../../../io/micronaut/http/client/netty/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.netty.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
@@ -228,13 +230,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">
+<a name="RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RxNettyHttpClientRegistry</h4>
 <pre>public&nbsp;RxNettyHttpClientRegistry(<a href="../../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;defaultHttpClientConfiguration,
+                                 <a href="../../../../../io/micronaut/http/filter/HttpClientFilterResolver.html" title="interface in io.micronaut.http.filter">HttpClientFilterResolver</a>&nbsp;httpClientFilterResolver,
                                  <a href="../../../../../io/micronaut/http/client/LoadBalancerResolver.html" title="interface in io.micronaut.http.client">LoadBalancerResolver</a>&nbsp;loadBalancerResolver,
                                  <a href="../../../../../io/micronaut/http/client/netty/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.netty.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
@@ -246,6 +249,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoClos
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>defaultHttpClientConfiguration</code> - The default HTTP client configuration</dd>
+<dd><code>httpClientFilterResolver</code> - The HTTP client filter resolver</dd>
 <dd><code>loadBalancerResolver</code> - The load balancer resolver</dd>
 <dd><code>nettyClientSslBuilder</code> - The client SSL builder</dd>
 <dd><code>threadFactory</code> - The thread factory</dd>

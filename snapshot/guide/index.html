@@ -150,6 +150,8 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-builtInScopes"><a href="#builtInScopes"><strong>3.6.1</strong><span>Built-In Scopes</span></a></div>
         
+        <div class="toc-item" style="margin-left:30px" id="toc-item-eagerInit"><a href="#eagerInit"><strong>3.6.1.1</strong><span>Eager Initialization of Singletons</span></a></div>
+        
         <div class="toc-item" style="margin-left:20px" id="toc-item-refreshable"><a href="#refreshable"><strong>3.6.2</strong><span>Refreshable Scope</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-metaScopes"><a href="#metaScopes"><strong>3.6.3</strong><span>Scopes on Meta Annotations</span></a></div>
@@ -923,7 +925,7 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <div class="sect3">
 <h4 id="_micronaut_sql_2_0_0_upgrade">Micronaut SQL 2.0.0 Upgrade</h4>
 <div class="paragraph">
-<p>Micronaut SQL has been improved to default to Micronaut transaction management (making Spring management optional) and includes <a href="https://micronaut-projects.github.io/micronaut-sql/2.0.x/guide/#jdbi">support for Jdbi</a> (Thanks to <a href="https://github.com/drmaas">Dan Maas</a> for this contirubtion).</p>
+<p>Micronaut SQL has been improved to default to Micronaut transaction management (making Spring management optional) and includes <a href="https://micronaut-projects.github.io/micronaut-sql/2.0.x/guide/#jdbi">support for Jdbi</a> (Thanks to <a href="https://github.com/drmaas">Dan Maas</a> for this contribution).</p>
 </div>
 </div>
 <div class="sect3">
@@ -1875,15 +1877,15 @@ class HelloClientSpec {
 <div class="title">Configuring Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-  id "net.ltgt.apt" version "0.18" // <1>
+  id "net.ltgt.apt" version "0.21" // <1>
 }
 
 ...
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <2>
-    compile "io.micronaut:micronaut-inject:2.0.0.BUILD-SNAPSHOT"
+    annotationProcessor("io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT") // <2>
+    implementation("io.micronaut:micronaut-inject:2.0.0.BUILD-SNAPSHOT")
     ...
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT" // <3>
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.0.0.BUILD-SNAPSHOT") // <3>
     ...
 }</code></pre>
 </div>
@@ -1892,7 +1894,7 @@ dependencies {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Apply the Annotation Processing plugin</td>
+<td>Apply net.ltgt.apt Gradle plugin which makes it easier/safer to use Java annotation processors</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -2395,13 +2397,19 @@ constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">Named</a> annotation is used to indicate the <code>V8Engine</code> implementation is required</td>
+<td>The <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">javax.inject.Named</a> annotation is used to indicate the <code>V8Engine</code> implementation is required</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>Calling the start method prints: <code>"Starting V8"</code></td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Micronaut is capable of injecting <code>V8Engine</code> in the previous example, because:</p>
+</div>
+<div class="paragraph">
+<p><code>@Named</code> qualifier value (<code>v8</code>) + type being injected simple name (<code>Engine</code>) == (case insensitive) == The simple name of a bean of type <code>Engine</code> (<code>V8Engine</code>)</p>
 </div>
 <div class="paragraph">
 <p>You can also declare <a href="https://docs.oracle.com/javaee/6/api/javax/inject/Named.html">@Named</a> at the class level of a bean to explicitly define the name of the bean.</p>
@@ -2773,6 +2781,88 @@ The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</
 <td class="content">
 If your bean fails to initialize in parallel then the application will be automatically shutdown.
 </td>
+</tr>
+</table>
+</div>
+
+<h2 id="eagerInit"><a class="anchor" href="#eagerInit"></a>3.6.1.1 Eager Initialization of Singletons</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/ioc/scopes/builtInScopes/eagerInit.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Eager initialization of <code>@Singleton</code> beans maybe desirable in certain scenarios, such as on AWS Lambda where more CPU resources are assigned to Lamdba construction than execution.</p>
+</div>
+<div class="paragraph">
+<p>You can specify whether you want to initialize eagerly <code>@Singleton</code> scoped beans using the <a href="../api/io/micronaut/context/scope/ApplicationContextBuilder.html">ApplicationContextBuilder</a> interface:</p>
+</div>
+<div class="listingblock">
+<div class="title">Enabling Eager Initialization of Singletons</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.build(args)
+            .eagerInitSingletons(true) <i class="conum" data-value="1"></i><b>(1)</b>
+            .mainClass(Application.class)
+            .start();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting eager init to true initializes all singletons</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you use Micronaut in environments such as <a href="#serverlessFunctions">Serverless Functions</a>, you will not have an Application class and instead you extend a Micronaut provided class. In those cases, Micronaut provides methods which you can override to enhance the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Override of newApplicationContextBuilder()</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyFunctionHandler extends MicronautRequestHandler&lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&gt; {
+...
+    @Nonnull
+    @Override
+    protected ApplicationContextBuilder newApplicationContextBuilder() {
+        ApplicationContextBuilder builder = super.newApplicationContextBuilder();
+        builder.eagerInitSingletons(true);
+        return builder;
+    }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="../api/io/micronaut/context/annotation/ConfigurationReader.html">@ConfigurationReader</a> beans such as <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a>  or <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> are singleton beans. If you want to eager init configuration, but keep other <code>@Singleton</code> scoped beans creation lazy, use <code>eagerInitConfiguration</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Enabling Eager Initialization of Configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.build(args)
+            .eagerInitConfiguration(true) <i class="conum" data-value="1"></i><b>(1)</b>
+            .mainClass(Application.class)
+            .start();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting eager init to true initializes all configuration reader beans.</td>
 </tr>
 </table>
 </div>
@@ -19188,11 +19278,11 @@ RxHttpClient client;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Emitted when the server shuts down</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceStartedEvent.html">ServiceStartedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceReadyEvent.html">ServiceReadyEvent</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Emitted after all <a href="../api/io/micronaut/runtime/server/event/ServerStartupEvent.html">ServerStartupEvent</a> listeners have been executed and exposes the <a href="../api/io/micronaut/runtime/server/EmbeddedServerInstance.html">EmbeddedServerInstance</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceShutdownEvent.html">ServiceShutdownEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/discovery/event/ServiceStoppedEvent.html">ServiceStoppedEvent</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Emitted after all <a href="../api/io/micronaut/runtime/server/event/ServerShutdownEvent.html">ServerShutdownEvent</a> listeners have been executed and exposes the <a href="../api/io/micronaut/runtime/server/EmbeddedServerInstance.html">EmbeddedServerInstance</a></p></td>
 </tr>
 </tbody>
@@ -23635,16 +23725,16 @@ Flowable.fromPublisher(
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/runtime/server/EmbeddedServerInstance.html">EmbeddedServerInstance</a> is available through event listeners that listen for the <a href="../api/io/micronaut/discovery/event/ServiceStartedEvent.html">ServiceStartedEvent</a>. The <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation makes it easy to listen for the event inside one of your existing beans.</p>
+<p>The <a href="../api/io/micronaut/runtime/server/EmbeddedServerInstance.html">EmbeddedServerInstance</a> is available through event listeners that listen for the <a href="../api/io/micronaut/discovery/event/ServiceReadyEvent.html">ServiceReadyEvent</a>. The <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation makes it easy to listen for the event inside one of your existing beans.</p>
 </div>
 <div class="paragraph">
-<p>To obtain metadata for the locally running server use an <a href="#events">EventListener</a> for the <a href="../api/io/micronaut/discovery/event/ServiceStartedEvent.html">ServiceStartedEvent</a>:</p>
+<p>To obtain metadata for the locally running server use an <a href="#events">EventListener</a> for the <a href="../api/io/micronaut/discovery/event/ServiceReadyEvent.html">ServiceReadyEvent</a>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Obtaining Metadata for a Local Server</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@EventListener
-void onServiceStarted(ServiceStartedEvent event) {
+void onServiceStarted(ServiceReadyEvent event) {
     ServiceInstance serviceInstance = event.getSource()
     ConvertibleValues&lt;String&gt; metadata = serviceInstance.metadata
 }</code></pre>
