@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -179,6 +179,12 @@ implements <a href="../../../../io/micronaut/core/value/PropertyResolver.html" t
 <div class="block">Resolve the given property for the given name, type and generic type arguments.</div>
 </td>
 </tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/core/value/MapPropertyResolver.html#getPropertyEntries-java.lang.String-">getPropertyEntries</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Returns a collection of properties entries under the given key.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -297,7 +303,7 @@ implements <a href="../../../../io/micronaut/core/value/PropertyResolver.html" t
 <a name="getProperty-java.lang.String-io.micronaut.core.convert.ArgumentConversionContext-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getProperty</h4>
 <pre>public&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;T&gt;&nbsp;getProperty(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
@@ -316,6 +322,36 @@ implements <a href="../../../../io/micronaut/core/value/PropertyResolver.html" t
 <dd><code>conversionContext</code> - The conversion context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An optional containing the property value if it exists</dd>
+</dl>
+</li>
+</ul>
+<a name="getPropertyEntries-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getPropertyEntries</h4>
+<pre>@NonNull
+public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getPropertyEntries(@NonNull
+                                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/core/value/PropertyResolver.html#getPropertyEntries-java.lang.String-">PropertyResolver</a></code></span></div>
+<div class="block">Returns a collection of properties entries under the given key. For example given the following keys:
+
+ <pre>
+
+ <code>datasource.default.url=localhost
+ datasource.another.url=someother</code>
+ </pre>
+
+ Calling <code>getPropertyEntries(String)</code> with a value of <code>datasource</code> will result in a collection
+ containing <code>default</code> and <code>other</code>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/core/value/PropertyResolver.html#getPropertyEntries-java.lang.String-">getPropertyEntries</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/core/value/PropertyResolver.html" title="interface in io.micronaut.core.value">PropertyResolver</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name to resolve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The property entries.</dd>
 </dl>
 </li>
 </ul>
