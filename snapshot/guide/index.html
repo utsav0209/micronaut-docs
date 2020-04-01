@@ -10519,7 +10519,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Cacheable("my-cache")
+<pre class="highlight"><code class="language-java" data-lang="java">@Timed
 @Factory
 public class MyFactory {
 
@@ -10533,7 +10533,7 @@ public class MyFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Cacheable("my-cache")
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Timed
 @Factory
 class MyFactory {
 
@@ -10547,7 +10547,7 @@ class MyFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Cacheable("my-cache")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Timed
 @Factory
 open class MyFactory {
 
@@ -10559,7 +10559,7 @@ open class MyFactory {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will cache creation of <code>MyBean</code> bean, according to the semantics defined by the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> cache configuration.</p>
+<p>The above example will log the time it takes to create the <code>MyBean</code> bean.</p>
 </div>
 <div class="paragraph">
 <p>Now consider this example:</p>
@@ -10571,7 +10571,7 @@ open class MyFactory {
 public class MyFactory {
 
     @Prototype
-    @Cacheable("my-cache")
+    @Timed
     public MyBean myBean() {
         return new MyBean();
     }
@@ -10585,7 +10585,7 @@ public class MyFactory {
 class MyFactory {
 
     @Prototype
-    @Cacheable("my-cache")
+    @Timed
     MyBean myBean() {
         return new MyBean()
     }
@@ -10599,7 +10599,7 @@ class MyFactory {
 open class MyFactory {
 
     @Prototype
-    @Cacheable("my-cache")
+    @Timed
     open fun myBean(): MyBean {
         return MyBean()
     }
@@ -10607,7 +10607,7 @@ open class MyFactory {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will cache all of the public methods of the <code>MyBean</code> bean, but not the bean creation.</p>
+<p>The above example will log the time it takes to execute all of the public methods of the <code>MyBean</code> bean, but not the bean creation.</p>
 </div>
 <div class="paragraph">
 <p>The rationale for this behaviour is that you may at times wish to apply advice to a factory and at other times apply advice to the bean produced by the factory.</p>
@@ -11123,64 +11123,9 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.record-stats</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether record stats is enabled. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value (false).</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.DefaultCacheConfiguration.adoc[]</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -24519,7 +24464,7 @@ add and retrieve values and decrypt them with the default key store for your acc
 <p>Both methods return <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> instances since the operation to retrieve service ID information may result in a blocking network call depending on the underlying implementation.</p>
 </div>
 <div class="paragraph">
-<p>The default implementation of the <code>DiscoveryClient</code> interface is <a href="../api/io/micronaut/discovery/client/CachingCompositeDiscoveryClient.html">CachingCompositeDiscoveryClient</a> which merges all other <code>DiscoveryClient</code> beans into a single bean and provides caching of the results of the methods. The default behaviour is to cache for 30 seconds. This cache can be disabled in application configuration:</p>
+<p>If you are using Micronaut&#8217;s cache module, the default implementation of the <code>DiscoveryClient</code> interface is <a href="../api/io/micronaut/discovery/client/CachingCompositeDiscoveryClient.html">CachingCompositeDiscoveryClient</a> which merges all other <code>DiscoveryClient</code> beans into a single bean and provides caching of the results of the methods. The default behaviour is to cache for 30 seconds. This cache can be disabled in application configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">Disabling the Discovery Client Cache</div>
@@ -34193,6 +34138,18 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_cache_moved_out_of_runtime">Micronaut Cache Moved Out Of Runtime</h3>
+<div class="paragraph">
+<p>The <code>micronaut-runtime</code> module in Micronaut 1.x included support for caching AOP with the <code>@Cache</code> annotation. The core caching library and a default implementation based on caffeine were included.</p>
+</div>
+<div class="paragraph">
+<p>If you are using the caffeine backed cache support, you must add a dependency to continue doing so. Add <code>io.micronaut.cache:micronaut-cache-caffeine</code> to your build to maintain the existing functionality. The new caffeine cache module no longer uses the internal shadowed caffeine version and declares its own normal dependency on caffeine. You may need to exclude the transitive dependency in order to prevent conflicts with other versions that may be being pulled in.</p>
+</div>
+<div class="paragraph">
+<p>The management endpoint for caches is no longer included by default in the <code>micronaut-management</code> module. If you would like to use the caches endpoint, add a dependency on <code>io.micronaut.cache:micronaut-cache-management</code>.</p>
 </div>
 </div>
 <div class="sect2">

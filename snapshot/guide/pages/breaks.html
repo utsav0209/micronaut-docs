@@ -242,6 +242,18 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_cache_moved_out_of_runtime">Micronaut Cache Moved Out Of Runtime</h3>
+<div class="paragraph">
+<p>The <code>micronaut-runtime</code> module in Micronaut 1.x included support for caching AOP with the <code>@Cache</code> annotation. The core caching library and a default implementation based on caffeine were included.</p>
+</div>
+<div class="paragraph">
+<p>If you are using the caffeine backed cache support, you must add a dependency to continue doing so. Add <code>io.micronaut.cache:micronaut-cache-caffeine</code> to your build to maintain the existing functionality. The new caffeine cache module no longer uses the internal shadowed caffeine version and declares its own normal dependency on caffeine. You may need to exclude the transitive dependency in order to prevent conflicts with other versions that may be being pulled in.</p>
+</div>
+<div class="paragraph">
+<p>The management endpoint for caches is no longer included by default in the <code>micronaut-management</code> module. If you would like to use the caches endpoint, add a dependency on <code>io.micronaut.cache:micronaut-cache-management</code>.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_support_for_rxjava_1_x_removed_from_core">Support for RxJava 1.x Removed from Core</h3>
 <div class="paragraph">
 <p>RxJava 1.x support is no longer included in core by default. You can re-enable suppot by adding the following dependency:</p>
