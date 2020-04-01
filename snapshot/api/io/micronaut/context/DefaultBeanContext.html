@@ -578,8 +578,9 @@ implements <a href="../../../io/micronaut/context/BeanContext.html" title="inter
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanContext.html#initializeContext-java.util.List-java.util.List-">initializeContext</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;contextScopeBeans,
-                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;processedBeans)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanContext.html#initializeContext-java.util.List-java.util.List-java.util.List-">initializeContext</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;contextScopeBeans,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;processedBeans,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;parallelBeans)</code>
 <div class="block">Initialize the context with the given <a href="../../../io/micronaut/context/annotation/Context.html" title="annotation in io.micronaut.context.annotation"><code>Context</code></a> scope beans.</div>
 </td>
 </tr>
@@ -615,7 +616,7 @@ implements <a href="../../../io/micronaut/context/BeanContext.html" title="inter
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanContext.html#processParallelBeans--">processParallelBeans</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/DefaultBeanContext.html#processParallelBeans-java.util.List-">processParallelBeans</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;parallelBeans)</code>
 <div class="block">Processes parallel bean definitions.</div>
 </td>
 </tr>
@@ -2205,7 +2206,7 @@ protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iter
 <div class="block">Initialize the event listeners.</div>
 </li>
 </ul>
-<a name="initializeContext-java.util.List-java.util.List-">
+<a name="initializeContext-java.util.List-java.util.List-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -2214,12 +2215,15 @@ protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iter
 <pre>protected&nbsp;void&nbsp;initializeContext(@NonNull
                                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;contextScopeBeans,
                                  @NonNull
-                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;processedBeans)</pre>
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;processedBeans,
+                                 @NonNull
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;parallelBeans)</pre>
 <div class="block">Initialize the context with the given <a href="../../../io/micronaut/context/annotation/Context.html" title="annotation in io.micronaut.context.annotation"><code>Context</code></a> scope beans.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>contextScopeBeans</code> - The context scope beans</dd>
 <dd><code>processedBeans</code> - The beans that require <a href="../../../io/micronaut/context/processor/ExecutableMethodProcessor.html" title="interface in io.micronaut.context.processor"><code>ExecutableMethodProcessor</code></a> handling</dd>
+<dd><code>parallelBeans</code> - The parallel bean definitions</dd>
 </dl>
 </li>
 </ul>
@@ -2366,14 +2370,18 @@ protected&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/inject/BeanDefiniti
 </dl>
 </li>
 </ul>
-<a name="processParallelBeans--">
+<a name="processParallelBeans-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>processParallelBeans</h4>
-<pre>protected&nbsp;void&nbsp;processParallelBeans()</pre>
+<pre>protected&nbsp;void&nbsp;processParallelBeans(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;parallelBeans)</pre>
 <div class="block">Processes parallel bean definitions.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parallelBeans</code> - The parallel beans</dd>
+</dl>
 </li>
 </ul>
 <a name="getAttributes--">
