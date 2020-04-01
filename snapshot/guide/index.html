@@ -526,11 +526,9 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.5.2</strong><span>JRebel</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-springloaded"><a href="#springloaded"><strong>17.5.3</strong><span>Spring-Loaded</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.3</strong><span>Recompiling with Gradle</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.4</strong><span>Reloading with Gradle</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.5</strong><span>Reloading with an IDE</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.4</strong><span>Recompiling with an IDE</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-proxy"><a href="#proxy"><strong>17.6</strong><span>Proxy Configuration</span></a></div>
         
@@ -724,6 +722,45 @@ protected DefaultHttpClient httpClient(InjectionPoint&lt;?&gt; injectionPoint) {
 </div>
 <div class="paragraph">
 <p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_improvements">Build Improvements</h3>
+<div class="sect3">
+<h4 id="_new_maven_parent_pom">New Maven Parent POM</h4>
+<div class="paragraph">
+<p>Micronaut now provides a new parent POM that can be used in Maven projects to get setup quickly:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using the Maven Parent POM</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml"><parent>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>2.0.0.BUILD-SNAPSHOT</version>
+</parent></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_new_maven_plugin">New Maven Plugin</h4>
+<div class="paragraph">
+<p>The parent POM mentioned above supplies a new Micronaut Maven Plugin that enables automatic application restart during development. Just run the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw mn:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whenever you make a change to a class file the server will restart automatically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gradle_6_3_update">Gradle 6.3 Update</h4>
+<div class="paragraph">
+<p>For Gradle users who create new applications Gradle 6.3 is used which is compatible with JDK 14.</p>
 </div>
 </div>
 </div>
@@ -1284,7 +1321,7 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </div>
 </div>
 <div class="paragraph">
-<p>If you have created a Maven based project, use <code>./mvnw compile exec:exec</code> instead.</p>
+<p>If you have created a Maven based project, use <code>./mvnw mn:run</code> instead.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -32497,7 +32534,7 @@ create-app [NAME]
 <div class="listingblock">
 <div class="title">Starting a Maven project</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw compile exec:exec</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw mn:run</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -32650,7 +32687,7 @@ and an associated test which will instantiate the command and verify that it can
 <div class="listingblock">
 <div class="title">Starting a Maven project</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw compile exec:exec</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw mn:run</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -33429,27 +33466,30 @@ It creates an associated test that will run the application and verify that a co
 <p>Micronaut&#8217;s startup time is fast and automatic restart leads to a clean slate without potential hard to debug problems cropping up or memory leaks.</p>
 </div>
 <div class="sect2">
-<h3 id="_configuring_file_watch">Configuring File Watch</h3>
+<h3 id="_maven_restart">Maven Restart</h3>
 <div class="paragraph">
-<p>The following demonstrates how to configure Micronaut to automatically stop the application if a change occurs to an external file.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can create a new application with the <code>file-watch</code> feature already configured using the CLI with the command <code>mn create-app myapp --features file-watch</code>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>First configure your <code>application.yml</code> file to enable file watch:</p>
+<p>To have automatic application restarts with Maven use the Micronaut Maven plugin (including by default when creating new Maven projects) and run the following command:</p>
 </div>
 <div class="listingblock">
-<div class="title">Configuring File Watch</div>
+<div class="title">Using the Micronaut Maven Plugin</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw mn:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Every time you change a class Micronaut&#8217;s plugin will automatically restart the server.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gradle_restart">Gradle Restart</h3>
+<div class="paragraph">
+<p>For Gradle restart yoou can create a new application with the <code>file-watch</code> feature already configured using the CLI with the command <code>mn create-app myapp --features file-watch</code></p>
+</div>
+<div class="paragraph">
+<p>This essentially introduces the following configuration to <code>application.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">File Watch Configuration</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     io:
@@ -33472,6 +33512,18 @@ The <code>micronaut.io.watch.paths</code> setting can be used for more than just
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Once this is in place to have Gradle automatically restart on any change add run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using Gradle for Automatic Restart</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew run --continuous</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Every time you make a change to class or resources Gradle will recompile and restart the application.</p>
 </div>
 </div>
 <div class="sect2">
@@ -33536,47 +33588,6 @@ The <code>provided</code> scope is used to ensure the dependencies don&#8217;t g
 </td>
 </tr>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_restarting_the_server">Restarting the Server</h3>
-<div class="paragraph">
-<p>Once set to <code>true</code> the <code>micronaut.io.watch.restart</code> setting will stop  the server when a file changes, it is then up to an external process to restart the server. For example, with Gradle this can be achieved with a continuous build:</p>
-</div>
-<div class="listingblock">
-<div class="title">Automatic Restart with Gradle Continuous Build</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gradle run --continuous</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can also use a Kubernetes replication controller to restart the application if this feature is used in production
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Maven does not have an equivalent feature, however you can achieve a similar effect with a bash script:</p>
-</div>
-<div class="listingblock">
-<div class="title">Automatic Restart with Maven and Bash</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">#!/usr/bin/env sh
-
-while true; do
-	./mvn compile exec:exec
-	sleep 1s
-done</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If automatic restart is for some reason not your preferred approach then you can use most JVM agents with Micronaut. See the following sections for a description on how to setup JVM agents.</p>
 </div>
 </div>
 
@@ -33732,104 +33743,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 </div>
 
-<h2 id="springloaded"><a class="anchor" href="#springloaded"></a>17.5.3 Spring-Loaded</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/springloaded.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>"Spring Loaded is a JVM agent for reloading class file changes whilst a JVM is running." (via the <a href="https://github.com/spring-projects/spring-loaded">official README</a>).</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Spring-Loaded is not actively maintained and currently only supports Java versions &lt; 9.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>springloaded</code> feature to preconfigure Springloaded in your project. This feature will include the Spring-Loaded agent JAR and provide the appropriate build tool config for Gradle or Maven to load the agent.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ mn create-app my-app --features springloaded</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can start the application with <code>./gradlew run</code> (Gradle) or <code>./mvnw compile exec:exec</code> (Maven).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect1">
-<h2 id="_configuration">Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Configuring Spring-Loaded requires the agent JAR file to be downloaded on your system, and configured to be loaded as a <code>javaagent</code> by the build tool (or IDE).</p>
-</div>
-<div class="listingblock">
-<div class="title">Gradle build.gradle example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">run.jvmArgs('-noverify', '-javaagent:/usr/local/libs/springloaded/springloaded-1.2.8.RELEASE.jar')</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Maven pom.xml example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project&gt;
-    &lt;!-- --&gt;
-    &lt;build&gt;
-        &lt;plugins&gt;
-
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-                &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
-                &lt;version&gt;1.6.0&lt;/version&gt;
-                &lt;configuration&gt;
-                    &lt;executable&gt;java&lt;/executable&gt;
-                    &lt;arguments&gt;
-                        &lt;argument&gt;-noverify&lt;/argument&gt; &lt;!-- 1 --&gt;
-                        &lt;argument&gt;-javaagent:/usr/local/libs/springloaded/springloaded-1.2.8.RELEASE.jar&lt;/argument&gt; &lt;!-- 2 --&gt;
-                    &lt;/arguments&gt;</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Add <code>noverify</code> argument</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Add <code>javaagent</code> argument</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You can now start the application with <code>./gradlew run</code> (Gradle) or <code>./mvnw compile exec:exec</code> (Maven).</p>
-</div>
-</div>
-</div>
-
-<h2 id="gradleReload"><a class="anchor" href="#gradleReload"></a>17.5.4 Reloading with Gradle</h2>
+<h2 id="gradleReload"><a class="anchor" href="#gradleReload"></a>17.5.3 Recompiling with Gradle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/gradleReload.adoc"'>
@@ -33857,7 +33771,7 @@ Spring-Loaded is not actively maintained and currently only supports Java versio
 <p>The <code>classes</code> task will be rerun every time a source file is modified, allowing the reloading agent to pick up the change.</p>
 </div>
 
-<h2 id="ideReload"><a class="anchor" href="#ideReload"></a>17.5.5 Reloading with an IDE</h2>
+<h2 id="ideReload"><a class="anchor" href="#ideReload"></a>17.5.4 Recompiling with an IDE</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/cli/reloading/ideReload.adoc"'>
