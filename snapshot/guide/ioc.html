@@ -3186,12 +3186,14 @@ The <a href="../api/io/micronaut/context/event/ApplicationEventListener.html#sup
 </table>
 </div>
 <div class="paragraph">
-<p>Alternatively you can use the <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation if you do not wish to specifically implement an interface:</p>
+<p>Alternatively you can use the <a href="../api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a> annotation if you do not wish to specifically implement an interface or utilize one of the built in events like <a href="../api/io/micronaut/context/event/StartupEvent.html">StartupEvent</a> and <a href="../api/io/micronaut/context/event/ShutdownEvent.html">ShutdownEvent</a>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.context.event.StartupEvent;
+import io.micronaut.context.event.ShutdownEvent;
 import io.micronaut.runtime.event.annotation.EventListener;
 
 @Singleton
@@ -3201,6 +3203,16 @@ public class SampleEventListener {
     @EventListener
     public void onSampleEvent(SampleEvent event) {
         invocationCounter++;
+    }
+
+    @EventListener
+    public void onStartupEvent(StartupEvent event) {
+        // startup logic here
+    }
+
+    @EventListener
+    public void onShutdownEvent(ShutdownEvent event) {
+        // shutdown logic here
     }
 
     public int getInvocationCounter() {
@@ -3213,6 +3225,8 @@ public class SampleEventListener {
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.context.event.StartupEvent
+import io.micronaut.context.event.ShutdownEvent
 import io.micronaut.runtime.event.annotation.EventListener
 
 @Singleton
@@ -3223,6 +3237,16 @@ class SampleEventListener {
     void onSampleEvent(SampleEvent event) {
         invocationCounter++
     }
+
+    @EventListener
+    void onStartupEvent(StartupEvent event) {
+        // startup logic here
+    }
+
+    @EventListener
+    void onShutdownEvent(ShutdownEvent event) {
+        // shutdown logic here
+    }
 }</code></pre>
 </div>
 </div>
@@ -3230,6 +3254,8 @@ class SampleEventListener {
 <div class="title">Listening for Events with <code>@EventListener</code></div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.context.event.StartupEvent
+import io.micronaut.context.event.ShutdownEvent
 import io.micronaut.runtime.event.annotation.EventListener
 
 @Singleton
@@ -3239,6 +3265,16 @@ class SampleEventListener {
     @EventListener
     internal fun onSampleEvent(event: SampleEvent) {
         invocationCounter++
+    }
+
+    @EventListener
+    internal fun onStartupEvent(event: StartupEvent) {
+        // startup logic here
+    }
+
+    @EventListener
+    internal fun onShutdownEvent(event: ShutdownEvent) {
+        // shutdown logic here
     }
 }</code></pre>
 </div>
