@@ -131,6 +131,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#whatsNew"><strong>1.1</strong><span>What's New?</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#upgrading"><strong>1.2</strong><span>Upgrading to Micronaut 2.x</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -617,6 +620,176 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </li>
 </ul>
 </div>
+</div>
+</div>
+
+<h2 id="upgrading"><a class="anchor" href="#upgrading"></a>1.2 Upgrading to Micronaut 2.x</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/introduction/upgrading.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This section covers the steps required to upgrade a Micronaut 1.x application to Micronaut 2.x.</p>
+</div>
+<div class="sect2">
+<h3 id="_thread_pool_selection_now_manual">Thread Pool Selection Now Manual</h3>
+<div class="paragraph">
+<p>If your application does blocking I/O such as communication via JDBC or JPA you should annotate all controllers that interact with these blocking resources with the <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> annotation specifying either the default I/O thread pool or a thread pool that you configure an manage to deal with these blocking interactions. For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ExecuteOn</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+
+@Controller("/executeOn/people")
+public class PersonController {
+
+    private final PersonService personService;
+
+    PersonController(
+            PersonService personService) {
+        this.personService = personService;
+    }
+
+    @Get("/{name}")
+    @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    Person byName(String name) {
+        return personService.findByName(name);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ExecuteOn</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
+
+@Controller("/executeOn/people")
+class PersonController {
+
+    private final PersonService personService
+
+    PersonController(
+            PersonService personService) {
+        this.personService = personService
+    }
+
+    @Get("/{name}")
+    @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    Person byName(String name) {
+        return personService.findByName(name)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Using @ExecuteOn</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
+
+@Controller("/executeOn/people")
+class PersonController (private val personService: PersonService) {
+    @Get("/{name}")
+    @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
+    fun byName(name: String): Person {
+        return personService.findByName(name)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> annotation is used to execute the operation on the I/O thread pool</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you wish to return to the previous behaviour as defined in Micronaut 1.x you can set <code>micronaut.server.thread-selection</code> to <code>AUTO</code> in configuration.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compilation_error_with_classes_in_code_io_micronaut_cache_code_package">Compilation Error with classes in <code>io.micronaut.cache</code> package</h3>
+<div class="paragraph">
+<p>If your application fails to compile due to missing classes in the <code>io.micronaut.cache</code> you need to add a dependency on a cache implementation, for example the default cache implementation was Caffeine and this can be restored with the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.cache:micronaut-cache-caffeine")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.cache&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-cache-caffeine&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compilation_error_with_classes_in_code_javax_annotation_code_package">Compilation Error with classes in <code>javax.annotation</code> package</h3>
+<div class="paragraph">
+<p>If you application fails to compile referencing classes in the <code>javax.annotation</code> package such as <code>@Nullable</code> and <code>@Nonnull</code> you should update your project to instead import <code>edu.umd.cs.findbugs.annotations</code> from Spot Bugs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_group_ids">New Group IDs</h3>
+<div class="paragraph">
+<p>Some dependencies have new Maven Group IDs so you may need to update your dependency. The following table summarizes changes to group IDs:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Updated Maven Group IDs</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Previous ID</th>
+<th class="tableblock halign-left valign-top">New ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-kafka</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.kafka:micronaut-kafka</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-redis</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.redis:micronaut-redis</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_other_breaking_changes">Other Breaking Changes</h3>
+<div class="paragraph">
+<p>If the above cases don&#8217;t cover your use case see the section on <a href="#breaks">Breaking Changes</a> for a list of other changes that are regarded as breaking in this release.</p>
 </div>
 </div>
 
