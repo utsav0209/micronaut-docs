@@ -286,11 +286,13 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-threadPools"><a href="#threadPools"><strong>6.27.1</strong><span>Configuring Server Thread Pools</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-cors"><a href="#cors"><strong>6.27.2</strong><span>Configuring CORS</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-nettyPipeline"><a href="#nettyPipeline"><strong>6.27.2</strong><span>Configuring the Netty Pipeline</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-https"><a href="#https"><strong>6.27.3</strong><span>Securing the Server with HTTPS</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-cors"><a href="#cors"><strong>6.27.3</strong><span>Configuring CORS</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-dualProtocol"><a href="#dualProtocol"><strong>6.27.4</strong><span>Enabling HTTP and HTTPS</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-https"><a href="#https"><strong>6.27.4</strong><span>Securing the Server with HTTPS</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-dualProtocol"><a href="#dualProtocol"><strong>6.27.5</strong><span>Enabling HTTP and HTTPS</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-views"><a href="#views"><strong>6.28</strong><span>Server Side View Rendering</span></a></div>
         
@@ -19835,7 +19837,181 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 <p>The above configuration will create a fixed thread pool with 75 threads.</p>
 </div>
 
-<h2 id="cors"><a class="anchor" href="#cors"></a>6.27.2 Configuring CORS</h2>
+<h2 id="nettyPipeline"><a class="anchor" href="#nettyPipeline"></a>6.27.2 Configuring the Netty Pipeline</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/nettyPipeline.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can customize the Netty pipeline by writing an <a href="#events">Bean Event Listener</a> that listens for the creation of <a href="../api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html">ChannelPipelineCustomizer</a>.</p>
+</div>
+<div class="paragraph">
+<p>Both the Netty HTTP server and client implement this interface and it allows you to customize the Netty <code>ChannelPipeline</code> and add additional handlers.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html">ChannelPipelineCustomizer</a> interface defines constants for the names of the various handlers Micronaut registers.</p>
+</div>
+<div class="paragraph">
+<p>As an example the following demonstrates registing the <a href="https://github.com/zalando/logbook">Logbook</a> library which includes additional Netty handlers to perform request and response logging:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.event.*;
+import io.micronaut.http.netty.channel.ChannelPipelineCustomizer;
+import org.zalando.logbook.Logbook;
+import org.zalando.logbook.netty.*;
+import javax.inject.Singleton;
+
+@Requires(beans = Logbook.class)
+@Singleton
+public class LogbookPipelineCustomizer implements BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+    private final Logbook logbook;
+
+    public LogbookPipelineCustomizer(Logbook logbook) {
+        this.logbook = logbook;
+    }
+
+    @Override
+    public ChannelPipelineCustomizer onCreated(BeanCreatedEvent&lt;ChannelPipelineCustomizer&gt; event) {
+        ChannelPipelineCustomizer customizer = event.getBean();
+
+        if (customizer.isServerChannel()) { <b class="conum">(2)</b>
+            customizer.doOnConnect(pipeline -&gt; {
+                pipeline.addAfter(
+                    ChannelPipelineCustomizer.HANDLER_HTTP_SERVER_CODEC,
+                    "logbook",
+                    new LogbookServerHandler(logbook)
+                );
+                return pipeline;
+            });
+        } else { <b class="conum">(3)</b>
+            customizer.doOnConnect(pipeline -&gt; {
+                pipeline.addAfter(
+                        ChannelPipelineCustomizer.HANDLER_HTTP_CLIENT_CODEC,
+                        "logbook",
+                        new LogbookClientHandler(logbook)
+                );
+                return pipeline;
+            });
+        }
+        return customizer;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
+import io.micronaut.context.event.*
+import io.micronaut.http.netty.channel.ChannelPipelineCustomizer
+import io.netty.channel.ChannelPipeline
+import org.zalando.logbook.Logbook
+import org.zalando.logbook.netty.*
+import javax.inject.Singleton
+
+@Requires(beans = Logbook.class)
+@Singleton
+class LogbookPipelineCustomizer implements BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+    private final Logbook logbook
+
+    LogbookPipelineCustomizer(Logbook logbook) {
+        this.logbook = logbook
+    }
+
+    @Override
+    ChannelPipelineCustomizer onCreated(BeanCreatedEvent&lt;ChannelPipelineCustomizer&gt; event) {
+        ChannelPipelineCustomizer customizer = event.getBean()
+
+        if (customizer.isServerChannel()) { <b class="conum">(2)</b>
+            customizer.doOnConnect( { ChannelPipeline pipeline -&gt;
+                pipeline.addAfter(
+                        ChannelPipelineCustomizer.HANDLER_HTTP_SERVER_CODEC,
+                        "logbook",
+                        new LogbookServerHandler(logbook)
+                )
+                return pipeline
+            })
+        } else { <b class="conum">(3)</b>
+            customizer.doOnConnect({ ChannelPipeline pipeline -&gt;
+                pipeline.addAfter(
+                        ChannelPipelineCustomizer.HANDLER_HTTP_CLIENT_CODEC,
+                        "logbook",
+                        new LogbookClientHandler(logbook)
+                )
+                return pipeline
+            })
+        }
+        return customizer
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
+import io.micronaut.context.event.*
+import io.micronaut.http.netty.channel.ChannelPipelineCustomizer
+import io.netty.channel.ChannelPipeline
+import org.zalando.logbook.Logbook
+import org.zalando.logbook.netty.*
+import javax.inject.Singleton
+
+@Requires(beans = [Logbook::class])
+@Singleton
+class LogbookPipelineCustomizer(private val logbook: Logbook) : BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+
+    override fun onCreated(event: BeanCreatedEvent&lt;ChannelPipelineCustomizer&gt;): ChannelPipelineCustomizer {
+        val customizer = event.bean
+        if (customizer.isServerChannel) { <b class="conum">(2)</b>
+            customizer.doOnConnect { pipeline: ChannelPipeline -&gt;
+                pipeline.addAfter(
+                        ChannelPipelineCustomizer.HANDLER_HTTP_SERVER_CODEC,
+                        "logbook",
+                        LogbookServerHandler(logbook)
+                )
+                pipeline
+            }
+        } else { <b class="conum">(3)</b>
+            customizer.doOnConnect { pipeline: ChannelPipeline -&gt;
+                pipeline.addAfter(
+                        ChannelPipelineCustomizer.HANDLER_HTTP_CLIENT_CODEC,
+                        "logbook",
+                        LogbookClientHandler(logbook)
+                )
+                pipeline
+            }
+        }
+        return customizer
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A bean is created that implements <a href="../api/io/micronaut/http/netty/ChannelPipelineCustomizer.html">ChannelPipelineCustomizer</a> and requires the definition of a <code>Logbook</code> bean</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the bean being created is the server then the server handler is registered</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>if the bean being created is the client then the client handler is registered</td>
+</tr>
+</table>
+</div>
+
+<h2 id="cors"><a class="anchor" href="#cors"></a>6.27.3 Configuring CORS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/cors.adoc"'>
@@ -20044,7 +20220,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 </div>
 
-<h2 id="https"><a class="anchor" href="#https"></a>6.27.3 Securing the Server with HTTPS</h2>
+<h2 id="https"><a class="anchor" href="#https"></a>6.27.4 Securing the Server with HTTPS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/https.adoc"'>
@@ -20275,7 +20451,7 @@ If either <code>srcstorepass</code> or <code>alias</code> are not the same as de
 </div>
 </div>
 
-<h2 id="dualProtocol"><a class="anchor" href="#dualProtocol"></a>6.27.4 Enabling HTTP and HTTPS</h2>
+<h2 id="dualProtocol"><a class="anchor" href="#dualProtocol"></a>6.27.5 Enabling HTTP and HTTPS</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/dualProtocol.adoc"'>
