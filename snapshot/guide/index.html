@@ -318,27 +318,29 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-bindErrors"><a href="#bindErrors"><strong>7.1.7</strong><span>Bind Errors</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-clientAnnotation"><a href="#clientAnnotation"><strong>7.2</strong><span>Declarative HTTP Clients with @Client</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-proxyClient"><a href="#proxyClient"><strong>7.2</strong><span>Proxying Requests with ProxyHttpClient</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientParameters"><a href="#clientParameters"><strong>7.2.1</strong><span>Customizing Parameter Binding</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-clientAnnotation"><a href="#clientAnnotation"><strong>7.3</strong><span>Declarative HTTP Clients with @Client</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientAnnotationStreaming"><a href="#clientAnnotationStreaming"><strong>7.2.2</strong><span>Streaming with @Client</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientParameters"><a href="#clientParameters"><strong>7.3.1</strong><span>Customizing Parameter Binding</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientError"><a href="#clientError"><strong>7.2.3</strong><span>Error Responses</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientAnnotationStreaming"><a href="#clientAnnotationStreaming"><strong>7.3.2</strong><span>Streaming with @Client</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientHeaders"><a href="#clientHeaders"><strong>7.2.4</strong><span>Customizing Request Headers</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientError"><a href="#clientError"><strong>7.3.3</strong><span>Error Responses</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientJackson"><a href="#clientJackson"><strong>7.2.5</strong><span>Customizing Jackson Settings</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientHeaders"><a href="#clientHeaders"><strong>7.3.4</strong><span>Customizing Request Headers</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientRetry"><a href="#clientRetry"><strong>7.2.6</strong><span>Retry and Circuit Breaker</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientJackson"><a href="#clientJackson"><strong>7.3.5</strong><span>Customizing Jackson Settings</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-clientFallback"><a href="#clientFallback"><strong>7.2.7</strong><span>Client Fallbacks</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientRetry"><a href="#clientRetry"><strong>7.3.6</strong><span>Retry and Circuit Breaker</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-netflixHystrix"><a href="#netflixHystrix"><strong>7.2.8</strong><span>Netflix Hystrix Support</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-clientFallback"><a href="#clientFallback"><strong>7.3.7</strong><span>Client Fallbacks</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-clientFilter"><a href="#clientFilter"><strong>7.3</strong><span>HTTP Client Filters</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-netflixHystrix"><a href="#netflixHystrix"><strong>7.3.8</strong><span>Netflix Hystrix Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-clientSample"><a href="#clientSample"><strong>7.4</strong><span>HTTP Client Sample</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-clientFilter"><a href="#clientFilter"><strong>7.4</strong><span>HTTP Client Filters</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-clientSample"><a href="#clientSample"><strong>7.5</strong><span>HTTP Client Sample</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-cloud"><a href="#cloud"><strong>8</strong><span>Cloud Native Features</span></a></div>
         
@@ -569,13 +571,13 @@
 
 
 <div class="paragraph">
-<p>Micronaut is a modern, JVM-based, full stack microservices framework designed for building modular, easily testable microservice applications.</p>
+<p>Micronaut is a modern, JVM-based, full stack Java framework designed for building modular, easily testable JVM applications with support for Java, Kotlin and the Groovy language.</p>
 </div>
 <div class="paragraph">
 <p>Micronaut is developed by the creators of the Grails framework and takes inspiration from lessons learnt over the years building real-world applications from monoliths to microservices using Spring, Spring Boot and Grails.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut aims to provide all the tools necessary to build full-featured microservice applications, including:</p>
+<p>Micronaut aims to provide all the tools necessary to build JVM applications including:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -583,10 +585,20 @@
 <p>Dependency Injection and Inversion of Control (IoC)</p>
 </li>
 <li>
-<p>Sensible Defaults and Auto-Configuration</p>
+<p>Aspect Oriented Programming (AOP)</p>
 </li>
 <li>
-<p>Configuration and Configuration Sharing</p>
+<p>Sensible Defaults and Auto-Configuration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>With Micronaut you can build Message-Driven Applications, Command Line Applications, HTTP Servers and more whilst for Microservices in particular Micronaut also provides:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Distributed Configuration</p>
 </li>
 <li>
 <p>Service Discovery</p>
@@ -595,7 +607,7 @@
 <p>HTTP Routing</p>
 </li>
 <li>
-<p>HTTP Client with client-side load-balancing</p>
+<p>Client-Side Load Balancing</p>
 </li>
 </ul>
 </div>
@@ -617,7 +629,10 @@
 <p>Minimal use of proxies</p>
 </li>
 <li>
-<p>Easy unit testing</p>
+<p>No runtime bytecode generation</p>
+</li>
+<li>
+<p>Easy Unit Testing</p>
 </li>
 </ul>
 </div>
@@ -625,7 +640,7 @@
 <p>Historically, frameworks such as Spring and Grails were not designed to run in scenarios such as server-less functions, Android apps, or low memory-footprint microservices. In contrast, Micronaut is designed to be suitable for all of these scenarios.</p>
 </div>
 <div class="paragraph">
-<p>This goal is achieved through the use of Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html">annotation processors</a>, which are usable on any JVM language that supports them, as well as an HTTP Server and Client built on <a href="https://netty.io/">Netty</a>. In order to provide a similar programming model to Spring and Grails, these annotation processors precompile the necessary metadata in order to perform DI, define AOP proxies and configure your application to run in a microservices environment.</p>
+<p>This goal is achieved through the use of Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html">annotation processors</a>, which are usable on any JVM language that supports them, as well as an HTTP Server and Client built on <a href="https://netty.io/">Netty</a>. In order to provide a similar programming model to Spring and Grails, these annotation processors precompile the necessary metadata in order to perform DI, define AOP proxies and configure your application to run in a low-memory environment.</p>
 </div>
 <div class="paragraph">
 <p>Many of the APIs within Micronaut are heavily inspired by Spring and Grails. This is by design, and aids in bringing developers up to speed quickly.</p>
@@ -857,6 +872,12 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </div>
 <div class="paragraph">
 <p>If no host is provided at the time of a request, a <a href="../api/io/micronaut/http/client/exceptions/NoHostException.html">NoHostException</a> will be thrown.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_api_for_proxying_requests">API for Proxying Requests</h4>
+<div class="paragraph">
+<p>A new API for writing API gateways and proxying requests has been added. See the documentation on the <a href="#proxyClient">ProxyHttpClient</a> for more information.</p>
 </div>
 </div>
 </div>
@@ -22230,7 +22251,195 @@ class BooksController {
 </table>
 </div>
 
-<h2 id="clientAnnotation"><a class="anchor" href="#clientAnnotation"></a>7.2 Declarative HTTP Clients with @Client</h2>
+<h2 id="proxyClient"><a class="anchor" href="#proxyClient"></a>7.2 Proxying Requests with ProxyHttpClient</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/proxyClient.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A common requirement in Microservice environments is to proxy requests in a Gateway Microservice to other backend Microservices.</p>
+</div>
+<div class="paragraph">
+<p>The regular <a href="../api/io/micronaut/http/client/HttpClient.html">HttpClient</a> API is designed around simplifying exchange of messages and is not really designed for proxying requests. For this use case you should use the the <a href="../api/io/micronaut/http/client/ProxyHttpClient.html">ProxyHttpClient</a> which can be used from a <a href="#filters">HTTP Server Filter</a> to proxy requests to backend Microservices.</p>
+</div>
+<div class="paragraph">
+<p>The following example demonstrates rewriting requests under the URI <code>/proxy</code> to the URI <code>/real</code> onto the same server (clearly in a real environment you would generally proxy onto another server):</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.async.publisher.Publishers;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Filter;
+import io.micronaut.http.client.ProxyHttpClient;
+import io.micronaut.http.filter.*;
+import io.micronaut.http.filter.ServerFilterChain;
+import io.micronaut.runtime.server.EmbeddedServer;
+import org.reactivestreams.Publisher;
+
+@Filter("/proxy/**")
+public class ProxyFilter extends OncePerRequestHttpServerFilter { <b class="conum">(1)</b>
+    private final ProxyHttpClient client;
+    private final EmbeddedServer embeddedServer;
+
+    public ProxyFilter(ProxyHttpClient client, EmbeddedServer embeddedServer) { <b class="conum">(2)</b>
+        this.client = client;
+        this.embeddedServer = embeddedServer;
+    }
+
+    @Override
+    protected Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilterOnce(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        return Publishers.map(client.proxy( <b class="conum">(3)</b>
+                request.mutate() <b class="conum">(4)</b>
+                        .uri(b -&gt; b <b class="conum">(5)</b>
+                                .scheme("http")
+                                .host(embeddedServer.getHost())
+                                .port(embeddedServer.getPort())
+                                .replacePath(StringUtils.prependUri(
+                                        "/real",
+                                        request.getPath().substring("/proxy".length())
+                                ))
+                        )
+                        .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
+        ), response -&gt; response.header("X-My-Response-Header", "YYY"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.async.publisher.Publishers
+import io.micronaut.core.util.StringUtils
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.client.ProxyHttpClient
+import io.micronaut.http.filter.*
+import io.micronaut.http.filter.ServerFilterChain
+import io.micronaut.http.uri.UriBuilder
+import io.micronaut.runtime.server.EmbeddedServer
+import org.reactivestreams.Publisher
+
+
+@Filter("/proxy/**")
+class ProxyFilter extends OncePerRequestHttpServerFilter { <b class="conum">(1)</b>
+    private final ProxyHttpClient client
+    private final EmbeddedServer embeddedServer
+
+    ProxyFilter(ProxyHttpClient client, EmbeddedServer embeddedServer) { <b class="conum">(2)</b>
+        this.client = client
+        this.embeddedServer = embeddedServer
+    }
+
+    @Override
+    protected Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilterOnce(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
+        return Publishers.map(client.proxy( <b class="conum">(3)</b>
+                request.mutate() <b class="conum">(4)</b>
+                        .uri { UriBuilder b -&gt; <b class="conum">(5)</b>
+                            b.with {
+                                scheme("http")
+                                host(embeddedServer.getHost())
+                                port(embeddedServer.getPort())
+                                replacePath(StringUtils.prependUri(
+                                                "/real",
+                                                request.getPath().substring("/proxy".length())
+                                ))
+                            }
+                        }
+                        .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
+        ), { MutableHttpResponse&lt;?&gt; response -&gt; response.header("X-My-Response-Header", "YYY")})
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Customizing the Netty pipeline for Logbook</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.async.publisher.Publishers
+import io.micronaut.core.util.StringUtils
+import io.micronaut.http.*
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.client.ProxyHttpClient
+import io.micronaut.http.filter.*
+import io.micronaut.http.uri.UriBuilder
+import io.micronaut.runtime.server.EmbeddedServer
+import org.reactivestreams.Publisher
+import java.util.function.Function
+
+@Filter("/proxy/**")
+class ProxyFilter(
+        private val client: ProxyHttpClient, <b class="conum">(2)</b>
+        private val embeddedServer: EmbeddedServer) : OncePerRequestHttpServerFilter() { <b class="conum">(1)</b>
+    override fun doFilterOnce(request: HttpRequest&lt;*&gt;, chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
+        return Publishers.map(client.proxy( <b class="conum">(3)</b>
+                request.mutate() <b class="conum">(4)</b>
+                        .uri { b: UriBuilder -&gt; <b class="conum">(5)</b>
+                            b.apply {
+                                scheme("http")
+                                host(embeddedServer.host)
+                                port(embeddedServer.port)
+                                replacePath(StringUtils.prependUri(
+                                        "/real",
+                                        request.path.substring("/proxy".length)
+                                ))
+                            }
+                        }
+                        .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
+        ), Function { response: MutableHttpResponse&lt;*&gt; -&gt; response.header("X-My-Response-Header", "YYY") })
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The filter extends <a href="../api/io/micronaut/http/filter/OncePerRequestHttpServerFilter.html">OncePerRequestHttpServerFilter</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <a href="../api/io/micronaut/http/client/ProxyHttpClient.html">ProxyHttpClient</a> is injected into the constructor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>proxy</code> method is used to proxy the request</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The request is mutated to modify the URI and include an additional header</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Here the <a href="../api/io/micronaut/http/uri/UriBuilder.html">UriBuilder</a> API is used to rewrite the URI</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Additional request and response headers are included</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/http/client/ProxyHttpClient.html">ProxyHttpClient</a> API is a low level API that can be used to build a higher level abstraction such as an API Gateway.
+</td>
+</tr>
+</table>
+</div>
+
+<h2 id="clientAnnotation"><a class="anchor" href="#clientAnnotation"></a>7.3 Declarative HTTP Clients with @Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation.adoc"'>
@@ -22592,7 +22801,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <p>Returning <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> instances is also supported. Note that returning any other type <em>will result in a blocking request</em> and is not recommended other than for testing.</p>
 </div>
 
-<h2 id="clientParameters"><a class="anchor" href="#clientParameters"></a>7.2.1 Customizing Parameter Binding</h2>
+<h2 id="clientParameters"><a class="anchor" href="#clientParameters"></a>7.3.1 Customizing Parameter Binding</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientParameters.adoc"'>
@@ -22725,7 +22934,7 @@ Single&lt;Pet&gt; save(
 </table>
 </div>
 
-<h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.2.2 Streaming with @Client</h2>
+<h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.3.2 Streaming with @Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientAnnotationStreaming.adoc"'>
@@ -23065,7 +23274,7 @@ interface HeadlineClient {
 </div>
 </div>
 
-<h2 id="clientError"><a class="anchor" href="#clientError"></a>7.2.3 Error Responses</h2>
+<h2 id="clientError"><a class="anchor" href="#clientError"></a>7.3.3 Error Responses</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientError.adoc"'>
@@ -23106,7 +23315,7 @@ The one exception to this rule is HTTP Not Found (404) responses. This exception
 <p>If the method returns an <code>HttpResponse</code>, the original response will be returned. If the return type is <code>Optional</code>, an empty optional will be returned. For all other types, <code>null</code> will be returned.</p>
 </div>
 
-<h2 id="clientHeaders"><a class="anchor" href="#clientHeaders"></a>7.2.4 Customizing Request Headers</h2>
+<h2 id="clientHeaders"><a class="anchor" href="#clientHeaders"></a>7.3.4 Customizing Request Headers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientHeaders.adoc"'>
@@ -23202,7 +23411,7 @@ interface PetClient : PetOperations {
 </div>
 </div>
 
-<h2 id="clientJackson"><a class="anchor" href="#clientJackson"></a>7.2.5 Customizing Jackson Settings</h2>
+<h2 id="clientJackson"><a class="anchor" href="#clientJackson"></a>7.3.5 Customizing Jackson Settings</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientJackson.adoc"'>
@@ -23264,7 +23473,7 @@ If the customization offered by <code>JacksonFeatures</code> is not enough, you 
 </table>
 </div>
 
-<h2 id="clientRetry"><a class="anchor" href="#clientRetry"></a>7.2.6 Retry and Circuit Breaker</h2>
+<h2 id="clientRetry"><a class="anchor" href="#clientRetry"></a>7.3.6 Retry and Circuit Breaker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientRetry.adoc"'>
@@ -23318,7 +23527,7 @@ interface PetClient : PetOperations {
 <p>For more information on customizing retry, see the section on <a href="#retry">Retry Advice</a>.</p>
 </div>
 
-<h2 id="clientFallback"><a class="anchor" href="#clientFallback"></a>7.2.7 Client Fallbacks</h2>
+<h2 id="clientFallback"><a class="anchor" href="#clientFallback"></a>7.3.7 Client Fallbacks</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientFallback.adoc"'>
@@ -23408,7 +23617,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 <p>Of course, the actual behaviour of the fallback is down to you. You could for example implement a fallback that pulls data from a local cache when the real data is not available, and sends alert emails to operations about downtime or whatever.</p>
 </div>
 
-<h2 id="netflixHystrix"><a class="anchor" href="#netflixHystrix"></a>7.2.8 Netflix Hystrix Support</h2>
+<h2 id="netflixHystrix"><a class="anchor" href="#netflixHystrix"></a>7.3.8 Netflix Hystrix Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/netflixHystrix.adoc"'>
@@ -23513,7 +23722,7 @@ For information on how to customize the Hystrix thread pool, group and propertie
 </div>
 </div>
 
-<h2 id="clientFilter"><a class="anchor" href="#clientFilter"></a>7.3 HTTP Client Filters</h2>
+<h2 id="clientFilter"><a class="anchor" href="#clientFilter"></a>7.4 HTTP Client Filters</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientFilter.adoc"'>
@@ -23894,7 +24103,7 @@ annotation class BasicAuth</code></pre>
 </div>
 </div>
 
-<h2 id="clientSample"><a class="anchor" href="#clientSample"></a>7.4 HTTP Client Sample</h2>
+<h2 id="clientSample"><a class="anchor" href="#clientSample"></a>7.5 HTTP Client Sample</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientSample.adoc"'>

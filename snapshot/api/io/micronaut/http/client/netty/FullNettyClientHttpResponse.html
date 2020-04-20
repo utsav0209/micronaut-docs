@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -111,14 +111,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a>, <a href="../../../../../io/micronaut/core/attr/AttributeHolder.html" title="interface in io.micronaut.core.attr">AttributeHolder</a>, <a href="../../../../../io/micronaut/core/attr/MutableAttributeHolder.html" title="interface in io.micronaut.core.attr">MutableAttributeHolder</a>, <a href="../../../../../io/micronaut/http/HttpMessage.html" title="interface in io.micronaut.http">HttpMessage</a>&lt;B&gt;, <a href="../../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;B&gt;</dd>
+<dd><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a>, <a href="../../../../../io/micronaut/core/attr/AttributeHolder.html" title="interface in io.micronaut.core.attr">AttributeHolder</a>, <a href="../../../../../io/micronaut/core/attr/MutableAttributeHolder.html" title="interface in io.micronaut.core.attr">MutableAttributeHolder</a>, <a href="../../../../../io/micronaut/http/HttpMessage.html" title="interface in io.micronaut.http">HttpMessage</a>&lt;B&gt;, <a href="../../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;B&gt;, <a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></dd>
 </dl>
 <hr>
 <br>
 <pre><a href="../../../../../io/micronaut/core/annotation/Internal.html" title="annotation in io.micronaut.core.annotation">@Internal</a>
 public class <span class="typeNameLabel">FullNettyClientHttpResponse&lt;B&gt;</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;B&gt;, <a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a></pre>
+implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;B&gt;, <a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a>, <a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></pre>
 <div class="block">Wraps a Netty <code>FullHttpResponse</code> for consumption by the <a href="../../../../../io/micronaut/http/client/HttpClient.html" title="interface in io.micronaut.http.client"><code>HttpClient</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -179,14 +179,30 @@ implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#getStatus--">getStatus</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#isStream--">isStream</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#onComplete--">onComplete</a></span>()</code>
 <div class="block">* Successful terminal state.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#reason--">reason</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>io.netty.handler.codec.http.FullHttpResponse</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#toFullHttpResponse--">toFullHttpResponse</a></span>()</code>
+<div class="block">Converts this object to a full http response.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>io.netty.handler.codec.http.HttpResponse</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/FullNettyClientHttpResponse.html#toHttpResponse--">toHttpResponse</a></span>()</code>
+<div class="block">Converts this object to the most appropriate http response type.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -223,6 +239,13 @@ implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="i
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.core.attr.<a href="../../../../../io/micronaut/core/attr/AttributeHolder.html" title="interface in io.micronaut.core.attr">AttributeHolder</a></h3>
 <code><a href="../../../../../io/micronaut/core/attr/AttributeHolder.html#getAttribute-java.lang.CharSequence-">getAttribute</a>, <a href="../../../../../io/micronaut/core/attr/AttributeHolder.html#getAttribute-java.lang.CharSequence-java.lang.Class-">getAttribute</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.http.netty.NettyHttpResponseBuilder">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.http.netty.<a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></h3>
+<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toHttpResponse-io.micronaut.http.HttpResponse-">toHttpResponse</a>, <a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toStreamHttpResponse--">toStreamHttpResponse</a>, <a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toStreamResponse-io.micronaut.http.HttpResponse-">toStreamResponse</a></code></li>
 </ul>
 </li>
 </ul>
@@ -379,7 +402,7 @@ implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="i
 <a name="onComplete--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onComplete</h4>
 <pre>public&nbsp;void&nbsp;onComplete()</pre>
@@ -390,6 +413,57 @@ implements <a href="../../../../../io/micronaut/http/HttpResponse.html" title="i
 <dd><code><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html#onComplete--">onComplete</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a></code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Subscriber.html?is-external=true#onComplete--" title="class or interface in org.reactivestreams"><code>Subscriber.onComplete()</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="toFullHttpResponse--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toFullHttpResponse</h4>
+<pre>@NonNull
+public&nbsp;io.netty.handler.codec.http.FullHttpResponse&nbsp;toFullHttpResponse()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toFullHttpResponse--">NettyHttpResponseBuilder</a></code></span></div>
+<div class="block">Converts this object to a full http response.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toFullHttpResponse--">toFullHttpResponse</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a full http response</dd>
+</dl>
+</li>
+</ul>
+<a name="toHttpResponse--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toHttpResponse</h4>
+<pre>@NonNull
+public&nbsp;io.netty.handler.codec.http.HttpResponse&nbsp;toHttpResponse()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toHttpResponse--">NettyHttpResponseBuilder</a></code></span></div>
+<div class="block">Converts this object to the most appropriate http response type.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#toHttpResponse--">toHttpResponse</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The http response</dd>
+</dl>
+</li>
+</ul>
+<a name="isStream--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isStream</h4>
+<pre>public&nbsp;boolean&nbsp;isStream()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html#isStream--">isStream</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/http/netty/NettyHttpResponseBuilder.html" title="interface in io.micronaut.http.netty">NettyHttpResponseBuilder</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Is the response a stream.</dd>
 </dl>
 </li>
 </ul>
