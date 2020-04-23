@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../io/micronaut/context/ApplicationContextProvider.html" title="interface in io.micronaut.context">ApplicationContextProvider</a></dd>
+<dd><a href="../../../../io/micronaut/context/ApplicationContextProvider.html" title="interface in io.micronaut.context">ApplicationContextProvider</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -189,10 +189,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/function/executor/StreamFunctionExecutor.html#buildApplicationContext-C-">buildApplicationContext</a></span>(C&nbsp;context)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/function/executor/StreamFunctionExecutor.html#closeApplicationContext--">closeApplicationContext</a></span>()</code>
-<div class="block">Close the application context.</div>
-</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/function/executor/StreamFunctionExecutor.html#close--">close</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -339,16 +337,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="closeApplicationContext--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>closeApplicationContext</h4>
-<pre>protected&nbsp;void&nbsp;closeApplicationContext()</pre>
-<div class="block">Close the application context.</div>
-</li>
-</ul>
 <a name="resolveFunction-io.micronaut.function.LocalFunctionRegistry-java.lang.String-">
 <!--   -->
 </a>
@@ -435,7 +423,7 @@ protected&nbsp;<a href="../../../../io/micronaut/context/ApplicationContextBuild
 <a name="getApplicationContext--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getApplicationContext</h4>
 <pre>public&nbsp;<a href="../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;getApplicationContext()</pre>
@@ -446,6 +434,25 @@ protected&nbsp;<a href="../../../../io/micronaut/context/ApplicationContextBuild
 <dd><code><a href="../../../../io/micronaut/context/ApplicationContextProvider.html#getApplicationContext--">getApplicationContext</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/context/ApplicationContextProvider.html" title="interface in io.micronaut.context">ApplicationContextProvider</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context"><code>ApplicationContext</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="close--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>close</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/PreDestroy.html?is-external=true" title="class or interface in javax.annotation">@PreDestroy</a>
+public&nbsp;void&nbsp;close()
+                       throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true#close--" title="class or interface in java.io">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
 </dl>
 </li>
 </ul>
