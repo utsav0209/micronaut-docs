@@ -228,6 +228,65 @@ protected DefaultHttpClient httpClient(InjectionPoint&lt;?&gt; injectionPoint) {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_cli_features">CLI Features</h3>
+<div class="sect3">
+<h4 id="_new_native_cli">New Native CLI</h4>
+<div class="paragraph">
+<p>Micronaut&#8217;s <code>mn</code> command for the CLI has been rewritten in Micronaut itself and is now compiled into a native image available on Linux, MacOS X and Windows.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_micronaut_launchpad">Micronaut LaunchPad</h4>
+<div class="paragraph">
+<p>Create Micronaut 2.0 applications without having the CLI installed using <code>curl</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl https://launch.micronaut.io/demo.zip -o demo.zip
+$ unzip demo.zip -d demo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or by visiting <a href="https://launch.micronaut.io" class="bare">https://launch.micronaut.io</a> in your browser.</p>
+</div>
+<div class="paragraph">
+<p>Run <code>curl <a href="https://launch.micronaut.io" class="bare">https://launch.micronaut.io</a></code> for more instructions on how to use the API or visit the <a href="https://launch.micronaut.io/swagger/views/swagger-ui/index.html">OpenAPI documentation</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_diff_command">Diff Command</h4>
+<div class="paragraph">
+<p>Run <code>mn feature-diff --features=[FEATURE NAME]</code> from the root of another Micronaut project to create a diff of the changes that need to be applied to enable the feature. For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>feature-diff</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn feature-diff --features=azure-function
+--- micronaut-cli.yml
++++ micronaut-cli.yml
+@@ -3,4 +3,4 @@
+ testFramework: junit
+ sourceLanguage: java
+ buildTool: gradle
+-features: [app-name, application, gradle, http-client, java, junit, logback, netty-server, shade, yaml]
++features: [app-name, application, azure-function, azure-function-http, gradle, java, junit, logback, yaml]
+
+
+--- host.json
++++ host.json
+@@ -1,0 +1,7 @@
++{
++  "version": "2.0",
++  "extensionBundle": {
++    "id": "Microsoft.Azure.Functions.ExtensionBundle",
++    "version": "[1.*, 2.0.0)"
++  }
++}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_build_improvements">Build Improvements</h3>
 <div class="sect3">
 <h4 id="_new_maven_parent_pom">New Maven Parent POM</h4>
@@ -392,9 +451,12 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </div>
 </div>
 <div class="sect3">
-<h4 id="_micronaut_sql_2_0_0_upgrade">Micronaut SQL 2.0.0 Upgrade</h4>
+<h4 id="_micronaut_sql_2_1_0_upgrade">Micronaut SQL 2.1.0 Upgrade</h4>
 <div class="paragraph">
 <p>Micronaut SQL has been improved to default to Micronaut transaction management (making Spring management optional) and includes <a href="https://micronaut-projects.github.io/micronaut-sql/2.0.x/guide/#jdbi">support for Jdbi</a> (Thanks to <a href="https://github.com/drmaas">Dan Maas</a> for this contribution).</p>
+</div>
+<div class="paragraph">
+<p>In addition, support has been added for <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/#jdbc">Oracle Universal Connection Pool</a>. Thanks to <a href="https://github.com/recursivecodes">Todd Sharp</a> for this contribution.</p>
 </div>
 </div>
 <div class="sect3">

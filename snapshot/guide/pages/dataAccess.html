@@ -223,8 +223,12 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-postgres-reactive</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/reactiverse/reactive-pg-client">Reactive Postgres Client</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-vertx-mysql-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-mysql-client">Reactive MySQL Client</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-vertx-pg-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-pg-client">Reactive Postgres Client</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-redis-lettuce</code></p></td>
@@ -654,7 +658,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 
 
 <div class="paragraph">
-<p>Micronaut supports reactive and non-blocking client to connect to Postgres using <a href="https://github.com/reactiverse/reactive-pg-client">reactive-pg-client</a>, allowing  to handle many database connections with a single thread.</p>
+<p>Micronaut supports reactive and non-blocking client to connect to Postgres using <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-pg-client">vertx-pg-client</a>, allowing to handle many database connections with a single thread.</p>
 </div>
 <div class="sect1">
 <h2 id="_configuring_the_reactive_postgres_client">Configuring the Reactive Postgres Client</h2>
@@ -668,11 +672,11 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <td class="content">
 <div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>postgres-reactive</code> feature to configure the Reactive Postgres client in your project:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>vertx-pg-client</code> feature to configure the Reactive Postgres client in your project:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ mn create-app my-app --features postgres-reactive</pre>
+<pre>$ mn create-app my-app --features vertx-pg-client</pre>
 </div>
 </div>
 </td>
@@ -680,12 +684,12 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 </table>
 </div>
 <div class="paragraph">
-<p>To configure the Reactive Postgres client you should first add <code>postgres-reactive</code> module to your classpath:</p>
+<p>To configure the Reactive Postgres client you should first add <code>vertx-pg-client</code> module to your classpath:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-postgres-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-vertx-pg-client"</code></pre>
 </div>
 </div>
 <div class="paragraph">
