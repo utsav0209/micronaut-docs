@@ -179,6 +179,18 @@ function addJsClass() {
 <div class="paragraph">
 <p>The Micronaut CLI is the recommended way to create new Micronaut projects. The CLI includes commands for generating specific categories of projects, allowing you to choose between build tools, test frameworks, and even pick the language you wish to use in your application. The CLI also provides commands for generating artifacts such as controllers, client interfaces, and serverless functions.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+We have a website that can be used to generate projects instead of the CLI. Check out <a href="https://micronaut.io/start">Micronaut Launch</a> to get started!
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>When <a href="#buildCLI">Micronaut is installed on your computer</a>, you can call the CLI with the <code>mn</code> command.</p>
 </div>
@@ -188,7 +200,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="paragraph">
-<p>A Micronaut CLI project can be identified by the <code>micronaut-cli.yml</code> file, which will be included at the root of the project (if it was generated via the CLI). This file will include the project&#8217;s profile, default package, and other variables. The project&#8217;s default package is evaluated based on the project name, for example:</p>
+<p>A Micronaut CLI project can be identified by the <code>micronaut-cli.yml</code> file, which will be included at the root of the project (if it was generated via the CLI). This file will include the project&#8217;s profile, default package, and other variables. The project&#8217;s default package is evaluated based on the project name.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -196,17 +208,7 @@ function addJsClass() {
 </div>
 </div>
 <div class="paragraph">
-<p>Will result in the following <code>micronaut-cli-yml</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">micronaut-cli.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">profile: service
-defaultPackage: my.demo.app
----
-testFramework: junit
-sourceLanguage: java</code></pre>
-</div>
+<p>Will result in the default package being <code>my.demo.app</code>.</p>
 </div>
 <div class="paragraph">
 <p>You can supply your own default package when creating the application by prefixing the application name with the package:</p>
@@ -217,43 +219,7 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Will result in the following <code>micronaut-cli-yml</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">micronaut-cli.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">profile: service
-defaultPackage: example
----
-testFramework: junit
-sourceLanguage: java</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Throughout the user guide, references to CLI features/commands have been provided as applicable.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect1">
-<h2 id="_definitions">Definitions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Projects created with the CLI are based on one of several <strong>profiles</strong>, which consist of a project template (or <strong>skeleton</strong>), optional features, and profile-specific commands. Commands from a profile typically are specific to the profile application type; for example, the <code>service</code> profile (designed for creation of web service applications) provides the <code>create-controller</code> and <code>create-client</code> commands.</p>
-</div>
-<div class="paragraph">
-<p>CLI commands typically accept at least one <strong>argument</strong>, such as the name of the project or controller to generate.</p>
-</div>
-<div class="paragraph">
-<p>CLI commands can accept optional <strong>flags</strong> to control their behavior. Some flags accept multiple arguments, which are separated by commas.</p>
-</div>
-</div>
+<p>Will result in the default package being <code>example</code>.</p>
 </div>
 <div class="sect1">
 <h2 id="_interactive_mode">Interactive Mode</h2>
@@ -275,83 +241,41 @@ mn&gt;</code></pre>
 <h2 id="_help_and_info">Help and Info</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>General usage information can be viewed using the <code>help</code> command.</p>
+<p>General usage information can be viewed using the <code>help</code> flag on a command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; help create-app
-    Usage: mn create-app [-hinvVx] [-b=BUILD-TOOL] [-l=LANG] [-p=PROFILE] [-f=FEATURE[,FEATURE...]]...
-                         [NAME]
-    Creates an application
-          [NAME]               The name of the application to create.
-      -b, --build=BUILD-TOOL   Which build tool to configure. Possible values: gradle, maven.
-      -f, --features=FEATURE[,FEATURE...]
-                               The features to use
-      -h, --help               Show this help message and exit.
-      -i, --inplace            Create a service using the current directory
-      -l, --lang=LANG          Which language to use. Possible values: java, groovy, kotlin.
-...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For details about a specific command, supply the command name after the <code>help</code> command.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; help create-app
-| Command: create-app
-| Description:
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-app -h
+Usage: mn create-app [-hivVx] [--list-features] [-b=BUILD-TOOL] [--jdk=&lt;javaVersion&gt;] [-l=LANG]
+                     [-t=TEST] [-f=FEATURE[,FEATURE...]]... [NAME]
 Creates an application
-
-| Usage:
-create-app [NAME]
-...</code></pre>
+      [NAME]               The name of the application to create.
+  -b, --build=BUILD-TOOL   Which build tool to configure. Possible values: gradle, maven.
+  -f, --features=FEATURE[,FEATURE...]
+  -h, --help               Show this help message and exit.
+  -i, --inplace            Create a service using the current directory
+      --jdk, --java-version=&lt;javaVersion&gt;
+                           The JDK version the project should target
+  -l, --lang=LANG          Which language to use. Possible values: java, groovy, kotlin.
+      --list-features      Output the available features and their descriptions
+  -t, --test=TEST          Which test framework to use. Possible values: junit, spock, kotlintest.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A list of available profiles can be viewed using the <code>list-profiles</code> command.</p>
+<p>A list of available features can be viewed using the <code>--list-features</code> flag on any of the create commands.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; list-profiles
-| Available Profiles
---------------------
-  base          The base profile
-  cli           The cli profile
-  federation    The federation profile
-  function      The function profile
-  function-aws  The function profile for AWS Lambda
-  kafka         The Kafka messaging profile
-  profile       A profile for creating new Micronaut profiles
-  service       The service profile</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To view details on a specific profile, use the <code>profile-info</code> command, followed by the profile name.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; profile-info service
-    | Profile: service
-    --------------------
-    The service profile
-
-    | Provided Commands:
-    --------------------
-      create-bean        Creates a singleton bean
-      create-client      Creates a client interface
-      create-controller  Creates a controller and associated test
-      create-job         Creates a job with scheduled method
-      help               Prints help information for a specific command
-
-    | Provided Features:
-    --------------------
-      annotation-api    Adds Java annotation API
-      config-consul     Adds support for Distributed Configuration with Consul (https://www.consul.io)
-      discovery-consul  Adds support for Service Discovery with Consul (https://www.consul.io)
-      discovery-eureka  Adds support for Service Discovery with Eureka
-      groovy            Creates a Groovy application
-...</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn&gt; create-app --list-features
+Available Features
+(+) denotes the feature is included by default
+  Name                             Description
+  -------------------------------  ---------------
+  Cache
+  cache-caffeine                   Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)
+  cache-ehcache                    Adds support for cache using EHCache (https://www.ehcache.org/)
+  cache-hazelcast                  Adds support for cache using Hazelcast (https://hazelcast.org/)
+  cache-infinispan                 Adds support for cache using Infinispan (https://infinispan.org/)</code></pre>
 </div>
 </div>
 </div>
@@ -368,18 +292,6 @@ create-app [NAME]
 
 <div class="paragraph">
 <p>Creating a project is the primary usage of the CLI. There primary command for creating a new project is <code>create-app</code>. That will create a standard server application that communicates over HTTP. For other types of applications, see the documentation below.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-We have a website that can be used to generate projects instead of the CLI. Check out <a href="https://micronaut.io/start">Micronaut Launch</a> to get started!
-</td>
-</tr>
-</table>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Micronaut CLI Project Creation Commands</caption>
