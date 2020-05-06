@@ -440,7 +440,7 @@ implements <a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html" title="class in io.micronaut.inject.writer">ExecutableMethodWriter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-">visitExecutableMethod</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;declaringType,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-boolean-">visitExecutableMethod</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;declaringType,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;returnType,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;genericReturnType,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;returnTypeGenericTypes,
@@ -450,7 +450,8 @@ implements <a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&gt;&nbsp;argumentAnnotationMetadata,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;genericTypes,
                      <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata,
-                     boolean&nbsp;isInterface)</code>
+                     boolean&nbsp;isInterface,
+                     boolean&nbsp;isDefault)</code>
 <div class="block">Visit a method that is to be made executable allow invocation of said method without reflection.</div>
 </td>
 </tr>
@@ -1255,7 +1256,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
 </dl>
 </li>
 </ul>
-<a name="visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-">
+<a name="visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1271,12 +1272,13 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&gt;&nbsp;argumentAnnotationMetadata,
                                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;&nbsp;genericTypes,
                                                     <a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata,
-                                                    boolean&nbsp;isInterface)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-">BeanDefinitionVisitor</a></code></span></div>
+                                                    boolean&nbsp;isInterface,
+                                                    boolean&nbsp;isDefault)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-boolean-">BeanDefinitionVisitor</a></code></span></div>
 <div class="block">Visit a method that is to be made executable allow invocation of said method without reflection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-">visitExecutableMethod</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html" title="interface in io.micronaut.inject.writer">BeanDefinitionVisitor</a></code></dd>
+<dd><code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html#visitExecutableMethod-java.lang.Object-java.lang.Object-java.lang.Object-java.util.Map-java.lang.String-java.util.Map-java.util.Map-java.util.Map-java.util.Map-io.micronaut.core.annotation.AnnotationMetadata-boolean-boolean-">visitExecutableMethod</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/inject/writer/BeanDefinitionVisitor.html" title="interface in io.micronaut.inject.writer">BeanDefinitionVisitor</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>declaringType</code> - The declaring type of the method. Either a Class or a string representing the
                                    name of the type</dd>
@@ -1293,6 +1295,7 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.
 <dd><code>genericTypes</code> - The generic types of each argument. Can be null.</dd>
 <dd><code>annotationMetadata</code> - The annotation metadata for the method</dd>
 <dd><code>isInterface</code> - If the method belongs to an interface</dd>
+<dd><code>isDefault</code> - If the method is a default method</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../../io/micronaut/inject/writer/ExecutableMethodWriter.html" title="class in io.micronaut.inject.writer"><code>ExecutableMethodWriter</code></a>.</dd>
 </dl>
