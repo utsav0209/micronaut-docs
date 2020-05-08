@@ -438,12 +438,44 @@ Hello, Fred</code></pre>
 
 
 <div class="paragraph">
-<p>When creating a function you can use the <code>openfaas</code> feature to create a function that includes a <code>Dockerfile</code> that can be built into an image deployable to OpenFaas:</p>
+<p>When creating a function you can use the <code>openfaas</code> feature to create a function that includes a <code>Dockerfile</code> that can be built into a docker image deployable to OpenFaas as well as the <code>function.yml</code> needed to deploy the function in OpenFaas:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating an OpenFaaS Function</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-function hello-world-function --features openfaas</code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manual_deployment">Manual deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To deploy the function manually the image should first be build using the OpenFaas cli:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli build -f function.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The image can then be pushed to a registry. This will be the registry as specified in the image in the <code>function.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli push -f function.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the image pushed in the registry, the function can be deployed in the cluster:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli deploy -f function.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will deploy the function in the namespace <code>openfaas-fn</code>.</p>
+</div>
 </div>
 </div>
 
