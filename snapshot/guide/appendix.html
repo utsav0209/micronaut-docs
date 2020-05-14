@@ -832,12 +832,6 @@ This change does not apply to an explicit primary defined in the annotation (<co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cookie_configuration">Cookie Configuration</h3>
-<div class="paragraph">
-<p>The <code>getCookieMaxAge</code> method has been changed to return a <code>java.time.Duration</code>.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_code_retryable_code_and_code_circuitbreaker_code_exception_handling"><code>@Retryable</code> and <code>@CircuitBreaker</code> Exception Handling</h3>
 <div class="paragraph">
 <p><code>@Retryable</code> and <code>@CircuitBreaker</code> in previous versions of Micronaut resolved <code>includes</code> and <code>excludes</code> explicitly. Any exception thrown had to exactly match one of the exceptions specified. This has been changed to now also include subclasses of the exception types specified.</p>
@@ -875,6 +869,12 @@ This change also applies to messages in custom constraint annotations, which int
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_environment_order_bugfix">Environment Order Bugfix</h3>
+<div class="paragraph">
+<p>Environments specified through the application context builder have priority over environments deduced or supplied through the MICRONAUT_ENVIRONMENTS environment variable, or the equivalent system property. A bug in the logic however did not change the order of a specified environment if it previously was found or deduced. This issue manifested itself with <code>@MicronautTest(environments = "test")</code>. The <code>test</code> environment is already deduced for tests, so it retained the order of other deduced environments, and was able to be overriden by <code>MICRONAUT_ENVIRONMENTS=dev</code>. In Micronaut 1.x configuration for <code>dev</code> would have overridden <code>test</code>. In Micronaut 2.x <code>test</code> will override <code>dev</code>.</p>
 </div>
 </div>
 
