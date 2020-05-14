@@ -163,7 +163,8 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/DirectoryClassWriterOutputVisitor.html#visitClass-java.lang.String-">visitClass</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/DirectoryClassWriterOutputVisitor.html#visitClass-java.lang.String-io.micronaut.inject.ast.Element-">visitClass</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classname,
+          <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;originatingElement)</code>
 <div class="block">Visits a new class and returns the output stream with which should be written the bytes of the class to be
  generated.</div>
 </td>
@@ -186,7 +187,7 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.inject.writer.<a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html" title="class in io.micronaut.inject.writer">AbstractClassWriterOutputVisitor</a></h3>
-<code><a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#finish--">finish</a>, <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#getServiceEntries--">getServiceEntries</a>, <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#visitServiceDescriptor-java.lang.String-java.lang.String-">visitServiceDescriptor</a></code></li>
+<code><a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#finish--">finish</a>, <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#getServiceEntries--">getServiceEntries</a>, <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#visitServiceDescriptor-java.lang.String-java.lang.String-">visitServiceDescriptor</a>, <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutputVisitor.html#writeServiceEntries-java.util.Map-">writeServiceEntries</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -200,7 +201,7 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.writer.<a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html" title="interface in io.micronaut.inject.writer">ClassWriterOutputVisitor</a></h3>
-<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitServiceDescriptor-java.lang.Class-java.lang.String-">visitServiceDescriptor</a></code></li>
+<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitClass-java.lang.String-">visitClass</a>, <a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitServiceDescriptor-java.lang.Class-java.lang.String-">visitServiceDescriptor</a></code></li>
 </ul>
 </li>
 </ul>
@@ -237,20 +238,23 @@ extends <a href="../../../../io/micronaut/inject/writer/AbstractClassWriterOutpu
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="visitClass-java.lang.String-">
+<a name="visitClass-java.lang.String-io.micronaut.inject.ast.Element-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>visitClass</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;visitClass(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className)
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;visitClass(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classname,
+                               @Nullable
+                               <a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&nbsp;originatingElement)
                         throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitClass-java.lang.String-">ClassWriterOutputVisitor</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/inject/writer/ClassWriterOutputVisitor.html#visitClass-java.lang.String-io.micronaut.inject.ast.Element-">ClassWriterOutputVisitor</a></code></span></div>
 <div class="block">Visits a new class and returns the output stream with which should be written the bytes of the class to be
  generated.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>className</code> - the fully qualified classname</dd>
+<dd><code>classname</code> - the fully qualified classname</dd>
+<dd><code>originatingElement</code> - The originating element</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the output stream to write to</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
