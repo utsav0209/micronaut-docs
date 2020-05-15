@@ -195,6 +195,45 @@ function addJsClass() {
 <p>Finally, the Cloud environment names are also detected. See the section on <a href="#cloudConfiguration">Cloud Configuration</a> for more information.</p>
 </div>
 <div class="sect1">
+<h2 id="_environment_priority">Environment Priority</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Micronaut will load property sources based off the environments specified, and if the same property key exists in multiple property sources specific to an environment, the environment order determines which value will be used.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut uses the following hierarchy for environment processing (lowest priority to highest priority):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deduced environments</p>
+</li>
+<li>
+<p>Environments from the <code>micronaut.environments</code> system property</p>
+</li>
+<li>
+<p>Environments from the <code>MICRONAUT_ENVIRONMENTS</code> environment variable</p>
+</li>
+<li>
+<p>Environments specified explicitly through the application context builder</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This also applies to <code>@MicronautTest(environments = )</code>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_disabling_environment_detection">Disabling Environment Detection</h2>
 <div class="sectionbody">
 <div class="paragraph">
