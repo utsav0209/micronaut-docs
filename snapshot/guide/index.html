@@ -13332,6 +13332,11 @@ String lock(String name)</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Binds from the path of the request</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@PathVariable String id</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestBean.html">@RequestBean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds any Bindable value or HttpRequest to single Bean object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestBean MyBean bean</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -13421,7 +13426,7 @@ String lock(String name)</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_binding_from_multiple_values">Binding from Multiple values</h2>
+<h2 id="_binding_from_multiple_query_values">Binding from Multiple Query values</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instead of binding from a single section of the request, it may be desirable to bind all query values for example to a POJO. This can be achieved by using the exploded operator (<code>?pojo*</code>) in the URI template. For example:</p>
@@ -13484,6 +13489,170 @@ open class BookmarkController {
     }
 }</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_binding_from_multiple_bindable_values">Binding from Multiple Bindable values</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Instead of binding just Query values, it is also possible to bind any Bindable value or HttpRequest to POJO  (e.g. when you want to bind <code>HttpRequest</code>, <code>@PathVariable</code>, <code>@QueryValue</code> and <code>@Header</code> to single POJO).
+This can be achieved with <code>@RequestBean</code> annotation and custom Bean class that has fields with Bindable annotations or field that is of HttpRequest type.
+For example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Bindable values to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/api")
+public class MovieTicketController {
+
+    // You can also omit query parameters like:
+    // @Get("/movie/ticket/{movieId}
+    @Get("/movie/ticket/{movieId}{?minPrice,maxPrice}")
+    public HttpStatus list(@Valid @RequestBean MovieTicketBean bean) {
+        return HttpStatus.OK;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Bindable values to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/api")
+class MovieTicketController {
+
+    // You can also omit query parameters like:
+    // @Get("/movie/ticket/{movieId}
+    @Get("/movie/ticket/{movieId}{?minPrice,maxPrice}")
+    HttpStatus list(@Valid @RequestBean MovieTicketBean bean) {
+        return HttpStatus.OK
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Binding Bindable values to POJO</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/api")
+open class MovieTicketController {
+
+    // You can also omit query parameters like:
+    // @Get("/movie/ticket/{movieId}
+    @Get("/movie/ticket/{movieId}{?minPrice,maxPrice}")
+    open fun list(@Valid @RequestBean bean: MovieTicketBean): HttpStatus {
+        return HttpStatus.OK
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Bean definition</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Introspected
+public class MovieTicketBean {
+
+    private HttpRequest&lt;?&gt; httpRequest;
+
+    @PathVariable
+    private String movieId;
+
+    @Nullable
+    @QueryValue
+    @PositiveOrZero
+    private Double minPrice;
+
+    @Nullable
+    @QueryValue
+    @PositiveOrZero
+    private Double maxPrice;
+
+    public MovieTicketBean(HttpRequest&lt;?&gt; httpRequest, String movieId, Double minPrice, Double maxPrice) {
+        this.httpRequest = httpRequest;
+        this.movieId = movieId;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+    }
+
+    public HttpRequest&lt;?&gt; getHttpRequest() {
+        return httpRequest;
+    }
+
+    public String getMovieId() {
+        return movieId;
+    }
+
+    @Nullable
+    public Double getMaxPrice() {
+        return maxPrice;
+    }
+
+    @Nullable
+    public Double getMinPrice() {
+        return minPrice;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Bean definition</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Introspected
+class MovieTicketBean {
+
+    private HttpRequest&lt;?&gt; httpRequest
+
+    @PathVariable
+    String movieId
+
+    @Nullable
+    @QueryValue
+    @PositiveOrZero
+    Double minPrice
+
+    @Nullable
+    @QueryValue
+    @PositiveOrZero
+    Double maxPrice
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Bean definition</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Introspected
+data class MovieTicketBean(val httpRequest: HttpRequest&lt;Any&gt;,
+                           @field:PathVariable val movieId: String,
+                           @field:QueryValue @field:PositiveOrZero @field:Nullable val minPrice: Double,
+                           @field:QueryValue @field:PositiveOrZero @field:Nullable val maxPrice: Double)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bean class has to be introspected with <code>@Introspected</code>. It can be one of:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Mutable Bean class with setters and getters</p>
+</li>
+<li>
+<p>Immutable Bean class with getters and all argument constructor (or <code>@Creator</code> annotation on a constructor or static method).
+Arguments of constructor have to match field names so object can be constructed without reflection.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Since Java does not retain argument names in the byte code, you have to compile code with <code>-parameters</code> in case you want to use Immutable Bean class from another Jar.
+Another option is to override Bean class in your source.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
