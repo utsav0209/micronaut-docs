@@ -154,6 +154,28 @@ function addJsClass() {
 </div>
 </div>
 <div class="sect3">
+<h4 id="_improvements_to_bean_introspections">Improvements to Bean Introspections</h4>
+<div class="paragraph">
+<p>Bean introspections have been improved to support static creator methods, interfaces and enums. This means you can define a bean introspection on an interface with a private implementation such as:</p>
+</div>
+<div class="listingblock">
+<div class="title">Introspections on interfaces</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.core.annotation.Creator;
+
+@io.micronaut.core.annotation.Introspected
+interface Example {
+    String getName();
+
+    @Creator
+    static Example create(String name) {
+        return () -&gt; name;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_support_for_analyzing_the_injection_point">Support for Analyzing the Injection Point</h4>
 <div class="paragraph">
 <p>Micronaut&#8217;s Dependency Injection implementation has been improved such that you can now receive an <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a> instance to any <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> method. This makes it possible to customize how the bean is created based on the annotation metadata at the point at which the bean is injected.</p>
@@ -349,6 +371,15 @@ $ unzip demo.zip -d demo</code></pre>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_support_for_code_requestbean_code">Support for <code>@RequestBean</code></h4>
+<div class="paragraph">
+<p>It is now possible to bind the properties of a POJO argument to a <code>@Controller</code> to request parameters, headers and so on using the <a href="../api/io/micronaut/http/annotation/RequestBean.html">@RequestBean</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to Github user <a href="https://github.com/asodja">asodja</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_micronaut_servlet">Micronaut Servlet</h4>
 <div class="paragraph">
 <p>Micronaut now includes support for creating <a href="https://github.com/micronaut-projects/micronaut-servlet">Servlet applications</a> and users can use the command line to create an application that targets popular Servlet containers:</p>
@@ -433,6 +464,12 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <h4 id="_support_for_microsoft_azure_function">Support for Microsoft Azure Function</h4>
 <div class="paragraph">
 <p>You can now write Serverless functions that target Microsoft Azure using Micronaut. See the <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/">Micronaut Azure</a> documentation and <a href="https://github.com/micronaut-projects/micronaut-azure/tree/master/examples/azure-functions-example">example application</a> for more information.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvements_to_micronaut_aws">Improvements to Micronaut AWS</h4>
+<div class="paragraph">
+<p><a href="https://micronaut-projects.github.io/micronaut-aws/2.0.x/guide/#whatsNew">Micronaut AWS 2.0.0</a> includes a number of improvements to support for AWS Lambda and AWS in general including new client modules for AWS SDK 2.0, cold start improvements on Lambda and improvements to the support for Amazon Alexa.</p>
 </div>
 </div>
 </div>
@@ -578,6 +615,18 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </div>
 </div>
 <div class="sect3">
+<h4 id="_new_micronaut_nats_module">New Micronaut NATS module</h4>
+<div class="paragraph">
+<p>A new messaging module for <a href="https://nats.io">Nats.io</a> has been included in Micronaut core.</p>
+</div>
+<div class="paragraph">
+<p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-nats/latest/guide/">Micronaut Nats</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to <a href="https://github.com/grimmjo">Joachim Grimm</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_module_upgrades">Module Upgrades</h4>
 <div class="ulist">
 <ul>
@@ -588,16 +637,22 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <p>Micronaut Mongo - <code>1.3.0</code> &#8594; <code>2.0.0</code></p>
 </li>
 <li>
-<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.0.0.RC1</code></p>
+<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.2.1</code></p>
 </li>
 <li>
-<p>Micronaut Cache - <code>1.2.0</code> &#8594; <code>2.0.0.M1</code></p>
+<p>Micronaut Cache - <code>1.2.0</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 <li>
-<p>Micronaut AWS - <code>1.3.9</code> &#8594; <code>2.0.0.M2</code></p>
+<p>Micronaut AWS - <code>1.3.9</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 <li>
-<p>Micronaut Security - <code>1.4.0</code> &#8594; <code>2.0.0.M2</code></p>
+<p>Micronaut Security - <code>1.4.0</code> &#8594; <code>2.0.0.RC1</code></p>
+</li>
+<li>
+<p>Micronaut Micrometer - <code>1.3.1</code> &#8594; <code>2.0.0.RC2</code></p>
+</li>
+<li>
+<p>Micronaut GCP - <code>1.1.0</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 </ul>
 </div>
@@ -607,16 +662,16 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <div class="ulist">
 <ul>
 <li>
-<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.12.Final</code></p>
+<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.16.Final</code></p>
 </li>
 <li>
-<p>Groovy <code>2.5.8</code> &#8594; <code>2.5.11</code></p>
+<p>Groovy <code>2.5.8</code> &#8594; <code>3.0.3</code></p>
 </li>
 <li>
-<p>Mongo Reactive Streams <code>1.13.0</code> &#8594; <code>4.0.1</code></p>
+<p>Mongo Reactive Streams <code>1.13.0</code> &#8594; <code>4.0.2</code></p>
 </li>
 <li>
-<p>Mongo Java Driver <code>3.12.0</code> &#8594; <code>4.0.1</code></p>
+<p>Mongo Java Driver <code>3.12.0</code> &#8594; <code>4.0.2</code></p>
 </li>
 <li>
 <p>Jaeger <code>1.0.0</code> &#8594; <code>1.2.0</code></p>

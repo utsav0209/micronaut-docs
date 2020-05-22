@@ -382,27 +382,15 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-serverlessFunctions"><a href="#serverlessFunctions"><strong>9</strong><span>Serverless Functions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-writingFunctions"><a href="#writingFunctions"><strong>9.1</strong><span>Writing Functions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-awsLambda"><a href="#awsLambda"><strong>9.1</strong><span>AWS Lambda</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-functionApplication"><a href="#functionApplication"><strong>9.1.1</strong><span>FunctionApplication</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-gcpFunction"><a href="#gcpFunction"><strong>9.2</strong><span>Google Cloud Function</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-functionBean"><a href="#functionBean"><strong>9.1.2</strong><span>FunctionBean</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-gcpCloudRun"><a href="#gcpCloudRun"><strong>9.3</strong><span>Google CLoud Run</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-groovyFunctions"><a href="#groovyFunctions"><strong>9.1.3</strong><span>Groovy Functions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-azureFunction"><a href="#azureFunction"><strong>9.4</strong><span>Azure Function</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-runningFunctions"><a href="#runningFunctions"><strong>9.2</strong><span>Running Functions</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-functionWeb"><a href="#functionWeb"><strong>9.2.1</strong><span>Functions as Web Applications</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-functionCLI"><a href="#functionCLI"><strong>9.2.2</strong><span>Functions as CLI Applications</span></a></div>
-        
-        <div class="toc-item" style="margin-left:10px" id="toc-item-deployingFunctions"><a href="#deployingFunctions"><strong>9.3</strong><span>Deploying Functions</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-lambdaFunctions"><a href="#lambdaFunctions"><strong>9.3.1</strong><span>Deploying Functions to AWS Lambda</span></a></div>
-        
-        <div class="toc-item" style="margin-left:20px" id="toc-item-openFaasFunctions"><a href="#openFaasFunctions"><strong>9.3.2</strong><span>Deploying Functions to OpenFaaS</span></a></div>
-        
-        <div class="toc-item" style="margin-left:10px" id="toc-item-callingFunctions"><a href="#callingFunctions"><strong>9.4</strong><span>Calling Functions with FunctionClient</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-callingFunctions"><a href="#callingFunctions"><strong>9.5</strong><span>Calling Functions with FunctionClient</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-messaging"><a href="#messaging"><strong>10</strong><span>Message-Driven Microservices</span></a></div>
         
@@ -675,6 +663,28 @@
 </div>
 </div>
 <div class="sect3">
+<h4 id="_improvements_to_bean_introspections">Improvements to Bean Introspections</h4>
+<div class="paragraph">
+<p>Bean introspections have been improved to support static creator methods, interfaces and enums. This means you can define a bean introspection on an interface with a private implementation such as:</p>
+</div>
+<div class="listingblock">
+<div class="title">Introspections on interfaces</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.core.annotation.Creator;
+
+@io.micronaut.core.annotation.Introspected
+interface Example {
+    String getName();
+
+    @Creator
+    static Example create(String name) {
+        return () -&gt; name;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_support_for_analyzing_the_injection_point">Support for Analyzing the Injection Point</h4>
 <div class="paragraph">
 <p>Micronaut&#8217;s Dependency Injection implementation has been improved such that you can now receive an <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a> instance to any <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> method. This makes it possible to customize how the bean is created based on the annotation metadata at the point at which the bean is injected.</p>
@@ -870,6 +880,15 @@ $ unzip demo.zip -d demo</code></pre>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_support_for_code_requestbean_code">Support for <code>@RequestBean</code></h4>
+<div class="paragraph">
+<p>It is now possible to bind the properties of a POJO argument to a <code>@Controller</code> to request parameters, headers and so on using the <a href="../api/io/micronaut/http/annotation/RequestBean.html">@RequestBean</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to Github user <a href="https://github.com/asodja">asodja</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_micronaut_servlet">Micronaut Servlet</h4>
 <div class="paragraph">
 <p>Micronaut now includes support for creating <a href="https://github.com/micronaut-projects/micronaut-servlet">Servlet applications</a> and users can use the command line to create an application that targets popular Servlet containers:</p>
@@ -954,6 +973,12 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <h4 id="_support_for_microsoft_azure_function">Support for Microsoft Azure Function</h4>
 <div class="paragraph">
 <p>You can now write Serverless functions that target Microsoft Azure using Micronaut. See the <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/">Micronaut Azure</a> documentation and <a href="https://github.com/micronaut-projects/micronaut-azure/tree/master/examples/azure-functions-example">example application</a> for more information.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvements_to_micronaut_aws">Improvements to Micronaut AWS</h4>
+<div class="paragraph">
+<p><a href="https://micronaut-projects.github.io/micronaut-aws/2.0.x/guide/#whatsNew">Micronaut AWS 2.0.0</a> includes a number of improvements to support for AWS Lambda and AWS in general including new client modules for AWS SDK 2.0, cold start improvements on Lambda and improvements to the support for Amazon Alexa.</p>
 </div>
 </div>
 </div>
@@ -1099,6 +1124,18 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 </div>
 </div>
 <div class="sect3">
+<h4 id="_new_micronaut_nats_module">New Micronaut NATS module</h4>
+<div class="paragraph">
+<p>A new messaging module for <a href="https://nats.io">Nats.io</a> has been included in Micronaut core.</p>
+</div>
+<div class="paragraph">
+<p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-nats/latest/guide/">Micronaut Nats</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to <a href="https://github.com/grimmjo">Joachim Grimm</a> for this contribution.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_module_upgrades">Module Upgrades</h4>
 <div class="ulist">
 <ul>
@@ -1109,16 +1146,22 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <p>Micronaut Mongo - <code>1.3.0</code> &#8594; <code>2.0.0</code></p>
 </li>
 <li>
-<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.0.0.RC1</code></p>
+<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.2.1</code></p>
 </li>
 <li>
-<p>Micronaut Cache - <code>1.2.0</code> &#8594; <code>2.0.0.M1</code></p>
+<p>Micronaut Cache - <code>1.2.0</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 <li>
-<p>Micronaut AWS - <code>1.3.9</code> &#8594; <code>2.0.0.M2</code></p>
+<p>Micronaut AWS - <code>1.3.9</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 <li>
-<p>Micronaut Security - <code>1.4.0</code> &#8594; <code>2.0.0.M2</code></p>
+<p>Micronaut Security - <code>1.4.0</code> &#8594; <code>2.0.0.RC1</code></p>
+</li>
+<li>
+<p>Micronaut Micrometer - <code>1.3.1</code> &#8594; <code>2.0.0.RC2</code></p>
+</li>
+<li>
+<p>Micronaut GCP - <code>1.1.0</code> &#8594; <code>2.0.0.RC1</code></p>
 </li>
 </ul>
 </div>
@@ -1128,16 +1171,16 @@ To add XML support use the <a href="https://github.com/micronaut-projects/micron
 <div class="ulist">
 <ul>
 <li>
-<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.12.Final</code></p>
+<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.16.Final</code></p>
 </li>
 <li>
-<p>Groovy <code>2.5.8</code> &#8594; <code>2.5.11</code></p>
+<p>Groovy <code>2.5.8</code> &#8594; <code>3.0.3</code></p>
 </li>
 <li>
-<p>Mongo Reactive Streams <code>1.13.0</code> &#8594; <code>4.0.1</code></p>
+<p>Mongo Reactive Streams <code>1.13.0</code> &#8594; <code>4.0.2</code></p>
 </li>
 <li>
-<p>Mongo Java Driver <code>3.12.0</code> &#8594; <code>4.0.1</code></p>
+<p>Mongo Java Driver <code>3.12.0</code> &#8594; <code>4.0.2</code></p>
 </li>
 <li>
 <p>Jaeger <code>1.0.0</code> &#8594; <code>1.2.0</code></p>
@@ -1314,6 +1357,10 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-cassandra</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.cassandra:micronaut-cassandra</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-micrometer-*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.micrometer:micronaut-micrometer-*</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -27109,702 +27156,44 @@ Or alternatively if you have the Micronaut CLI installed you can configure Jaege
 <p>Traditional frameworks like Grails and Spring are not really suitable since low memory consumption and fast startup time are critical, since the Function as a Service (FaaS) server will typically spin up your function for a period using a cold start and then keep it warm.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut&#8217;s compile-time approach, fast startup time and low-memory footprint make it a great candidate for using as a framework for developing functions and in fact Micronaut features dedicated support for developing and deploying functions to AWS Lambda and any FaaS system that supports running functions as containers (such as OpenFaaS, Rift or Fn).</p>
-</div>
-
-<h2 id="writingFunctions"><a class="anchor" href="#writingFunctions"></a>9.1 Writing Functions</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/writingFunctions.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, use the <code>create-function</code> command to include the required dependencies and configuration for a serverless function. See the CLI documentation for <a href="#createProject">Creating a Project</a>.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Micronaut&#8217;s compile-time approach, fast startup time and low-memory footprint make it a great candidate for using as a framework for developing functions and in fact Micronaut features dedicated support for developing and deploying functions to AWS Lambda, Google Cloud Function, Azure Function and any FaaS system that supports running functions as containers (such as OpenFaaS, Rift or Fn).</p>
 </div>
 <div class="paragraph">
-<p>There are a few approaches to building functions depending on the target Function-as-a-Service (FaaS) system.</p>
-</div>
-<div class="sect2">
-<h3 id="_functions_with_standard_in_out_streams">Functions with Standard In/Out Streams</h3>
-<div class="paragraph">
-<p>One common approach and supported by many FaaS systems is to read from standard in and write to standard out to control function input and outputs.</p>
-</div>
-<div class="paragraph">
-<p>When creating a function with the <code>create-function</code> command Micronaut will setup an application that does exactly this by default. For example the following steps:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-function hello-world
-$ ./gradlew assemble
-$ echo '{"name":"hello"}' | java -jar build/libs/hello-world-0.1-all.jar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Result in the following output being printed to standard out:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{"name":"hello"}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The output is produced by <code>hello-world/src/main/java/hello/world/HelloWorldFunction.java</code> which is a supplier that returns a value of <code>{"name":"hello"}</code>.</p>
-</div>
-<div class="paragraph">
-<p>Typically in this arrangement to test your function locally you would have the <code>micronaut-http-server-netty</code> and <code>micronaut-function-web</code> dependencies in place as <code>provided</code> scope dependencies. This would allow you to run the function as a local web server and access it via the <code>/hello-world</code> URI.</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">developmentOnly(<span class="hljs-string">"io.micronaut:micronaut-http-server-netty")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">developmentOnly(<span class="hljs-string">"io.micronaut:micronaut-function-web")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>FaaS systems that support the standard in/out approach include <a href="https://docs.openfaas.com">OpenFaas</a>, <a href="https://fnproject.io/">Project.Fn</a> and <a href="https://projectriff.io/">Riff</a> (amongst others).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_functions_by_implementing_sdk_interface">Functions by Implementing SDK Interface</h3>
-<div class="paragraph">
-<p>Other FaaS systems require that you implement custom interfaces for a particular SDK rather than read from standard in/out. For example to deploy the above function to AWS Lambda you need the <code>micronaut-function-aws</code> dependency in place:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-aws")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-aws&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>In this arrangement you would set your Lambda handler to <code>io.micronaut.function.aws.MicronautRequestStreamHandler</code>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-See the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#requestHandlers">Micronaut Request Handlers</a> documentation for an explanation on how this approach works.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>When using this approach the FaaS system (in this case AWS Lambda) will directly invoke the <code>MicronautRequestStreamHandler</code> class and pass the input as stream rather than requiring the function to read from standard in.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_lambda_functions_using_aws_api_gateway_proxy">Lambda Functions Using AWS API Gateway Proxy</h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using the CLI</div>
-<div class="paragraph">
-<p>You can create a AWS API Gateway service using <code>mn create-app myapp --features aws-api-gateway</code></p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Another approach to FaaS is to build a regular REST application and then deploy the application using tools offered by the FaaS system such as <a href="https://aws.amazon.com/api-gateway/">AWS API Gateway</a>.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#apiProxy">AWS API Proxy Support</a> documentation for an explanation on how this approach works.</p>
-</div>
-</div>
-
-<h2 id="functionApplication"><a class="anchor" href="#functionApplication"></a>9.1.1 FunctionApplication</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/writingFunctions/functionApplication.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This section applies to Java &amp; Kotlin functions - for functions written in Groovy, see <a href="#groovyFunctions">Groovy Functions</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>In order to enable Micronaut&#8217;s DI features in a deployed function, your project&#8217;s <strong>main</strong> class must be set to the <a href="../api/io/micronaut/function/executor/FunctionApplication.html">FunctionApplication</a> class. Typically this will be done in your <code>build.gradle</code> or <code>pom.xml</code> files, as seen in the examples below:</p>
-</div>
-<div class="listingblock">
-<div class="title">Example build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">mainClassName = "io.micronaut.function.executor.FunctionApplication"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Example pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project&gt;
-    &lt;properties&gt;
-        &lt;exec.mainClass&gt;io.micronaut.function.executor.FunctionApplication&lt;/exec.mainClass&gt;
-    &lt;/properties&gt;
-&lt;/project&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <a href="../api/io/micronaut/function/executor/FunctionApplication.html">FunctionApplication</a> will lookup the function to execute from the property <code>micronaut.function.name</code>.</p>
-</div>
-<div class="paragraph">
-<p>By default <code>micronaut.function.name</code> is configured in <code>application.yml</code> and set to a single function. You can however control which function to execute by setting the environment variable equivalent <code>MICRONAUT_FUNCTION_NAME</code>.</p>
-</div>
-<div class="paragraph">
-<p>This approach allows you to package multiple functions into a single application unit (JAR file) and control which function is executed by passing either <code>-Dmicronaut.function.name=myfunction</code> or setting the environment variable.</p>
-</div>
-
-<h2 id="functionBean"><a class="anchor" href="#functionBean"></a>9.1.2 FunctionBean</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/writingFunctions/functionBean.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This section applies to Java &amp; Kotlin functions - for functions written in Groovy, see <a href="#groovyFunctions">Groovy Functions</a>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To write your function&#8217;s behavior, annotate your class with the <a href="../api/io/micronaut/function/FunctionBean.html">@FunctionBean</a> annotation. Your class must also implement one of the interfaces from the <code>java.util.function</code> package.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you have the Micronaut CLI installed you can quickly create a Java function with <code>mn create-function hello-world</code> or <code>mn create-function hello-world --lang kotlin</code> for Kotlin
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following examples implement Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a> functional interface.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example Java Function</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
-
-import io.micronaut.function.FunctionBean;
-import java.util.function.Supplier;
-
-@FunctionBean("hello-world-java")
-public class HelloJavaFunction implements Supplier&lt;String&gt; {
-
-    @Override
-    public String get() { <i class="conum" data-value="1"></i><b>(1)</b>
-        return "Hello world!";
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Override the <code>get</code> method of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a> to return the response from your function.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Alternatively you can also define a <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> that returns a Java lambda:</p>
-</div>
-<div class="listingblock">
-<div class="title">Example Java Function as a Lambda</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
-
-import io.micronaut.context.annotation.*;
-import io.micronaut.function.FunctionBean;
-import java.util.function.Supplier;
-
-@Factory <i class="conum" data-value="1"></i><b>(1)</b>
-public class MyFunctions {
-
-    @FunctionBean("hello-world-java")
-    public Supplier&lt;String&gt; helloWorld() { <i class="conum" data-value="2"></i><b>(2)</b>
-        return () -&gt; "Hello world!";
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>A <a href="../api/io/micronaut/context/annotation/Factory.html">Factory</a> bean is defined</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <a href="../api/io/micronaut/function/FunctionBean.html">@FunctionBean</a> annotation is used on a method that returns the function.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If you are using Kotlin then process is exactly the same:</p>
-</div>
-<div class="listingblock">
-<div class="title">Example Kotlin Function</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package example
-
-import io.micronaut.function.FunctionBean
-import java.util.function.Supplier
-
-@FunctionBean("hello-world-kotlin")
-class HelloKotlinFunction : Supplier&lt;String&gt; {
-
-    override fun get(): String { <i class="conum" data-value="1"></i><b>(1)</b>
-        return "Hello world!"
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Override the <code>get</code> method of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a> to return the response from your function.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following table summarizes the supported interfaces:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Functional Interfaces</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Interface</th>
-<th class="tableblock halign-left valign-top">Dependency</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts no arguments and returns a single result</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts a single argument and returns no result</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html">BiConsumer</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts two arguments and returns no result</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html">Function</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts a single argument and returns a single result</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html">BiFunction</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts two arguments and returns a single result</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>In addition, functions have an input and/or an output. The input is represented by the accepted argument and represents the body consumed by the function and the output is represented by the return value of the function. The input and the output should be either a Java primitive or simple type (<code>int</code>, <code>String</code> etc.) or a POJO.</p>
-</div>
-<div class="paragraph">
-<p>Often, you want to accept a POJO and return a POJO. Use <code>java.util.function.Function</code> to accept a single argument and return a single result.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.function.FunctionBean;
-import java.util.function.Function;
-
-@FunctionBean("isbn-validator")
-public class IsbnValidatorFunction implements Function&lt;IsbnValidationRequest, IsbnValidationResponse&gt; {
-
-    @Override
-    public IsbnValidationResponse apply(IsbnValidationRequest request) {
-        return new IsbnValidationResponse();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A single project can define multiple functions, however only a single function should be configured for execution by the application. This can be configured using the <code>micronaut.function.name</code> property in <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuring the Function Name to Execute</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    function:
-        name: hello-world-java</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alternatively you can specify the value when running your function (for example in the <code>Dockerfile</code>) either as an environment variable:</p>
-</div>
-<div class="listingblock">
-<div class="title">Specifying the Function to Execute as a Environment variable</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ export MICRONAUT_FUNCTION_NAME=hello-world-java
-$ java -jar build/libs/hello-world-function-all.jar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Or as a system property:</p>
-</div>
-<div class="listingblock">
-<div class="title">Specifying the Function to Execute as a System property</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dmicronaut.function.name=hello-world-java -jar build/libs/hello-world-function-all.jar</code></pre>
-</div>
-</div>
-
-<h2 id="groovyFunctions"><a class="anchor" href="#groovyFunctions"></a>9.1.3 Groovy Functions</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/writingFunctions/groovyFunctions.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>As is typical in Groovy, writing functions is much simpler than in Java or Kotlin.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you have the Micronaut CLI installed you can quickly create a Groovy function with <code>mn create-function hello-world --lang groovy</code>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To begin, add the <code>function-groovy</code> dependency (instead of the provider-specific dependency) which provides additional AST transformations that make writing functions simpler.</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-groovy")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-groovy&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>You can now create your function as a Groovy script, under <code>src/main/groovy</code>. You will set your project&#8217;s <strong>main</strong> class property to this function (instead of <code>FunctionApplication</code> as in Java/Kotlin). For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Example build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">mainClassName = "example.HelloGroovyFunction"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">HelloGroovyFunction.groovy</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String hello(String name) {
-    "Hello ${name}!"
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The function you define should follow the following rules:</p>
+<p>There are generally 2 approaches to writing functions with Micronaut:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Define no more than 2 inputs</p>
+<p>Low-level functions that are written using the native API of the function platform</p>
 </li>
 <li>
-<p>Use either Java primitive or simple types or POJOs as the arguments and return values</p>
+<p>Higher-level functions where you simply define controllers as you would normally do in a typical Micronaut application and deploy to the function platform.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>In order to make use of dependency injection in your Groovy function, use the <code>groovy.transform.Field</code> annotation transform in addition to the <code>@Inject</code> annotation.</p>
+<p>The first approach has marginally less startup time overhead and is typically used for non-HTTP functions such as functions that listen to an event or background functions.</p>
 </div>
-<div class="listingblock">
-<div class="title">HelloGroovyFunction.groovy</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import groovy.transform.Field
-import javax.inject.Inject
-
-@Field @Inject HelloService helloService
-
-String hello(String name) {
-    helloService.hello(name)
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>The second approach is only for HTTP functions and is useful for users who want to take a slice of an existing application and deploy it as a serverless function. If cold start performance is a concern it is recommended that you consider building a native image with GraalVM for this option.</p>
 </div>
 
-<h2 id="runningFunctions"><a class="anchor" href="#runningFunctions"></a>9.2 Running Functions</h2>
+<h2 id="awsLambda"><a class="anchor" href="#awsLambda"></a>9.1 AWS Lambda</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/awsLambda.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Typically function applications will be run in a cloud-based environment, such as AWS Lambda. However during development and testing it is often desirable to run your functions locally, either as standalone web applications or as executables from the command line. Micronaut provides support for both of these approaches.</p>
+<p>Support for AWS Lambda is implemented in the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#whatsNew">Micronaut AWS</a> subproject.</p>
 </div>
-
-<h2 id="functionWeb"><a class="anchor" href="#functionWeb"></a>9.2.1 Functions as Web Applications</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions/functionWeb.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
+<div class="sect3">
+<h4 id="_simple_functions_with_aws_lambda">Simple Functions with AWS Lambda</h4>
 <div class="paragraph">
-<p>To run your function as a web application as described in this section, you will need the <code>function-web</code> dependency on your classpath. For example, in <code>build.gradle</code></p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-http-server-netty")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-web")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>In order to run the function as a web application, you will need an HTTP server, such as the <code>http-server-netty</code> dependency</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once the dependencies have been added to the project, you can run the function via an <code>Application</code> class.</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.runtime.Micronaut;
-
-public class Application {
-
-    public static void main(String[] args) {
-        Micronaut.run(Application.class);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.runtime.Micronaut
-
-class Application {
-
-    static void main(String... args) {
-        Micronaut.run Application.class
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.runtime.Micronaut
-
-object Application {
-
-    @JvmStatic
-    fun main(args: Array&lt;String&gt;) {
-        Micronaut.run(Application.javaClass)
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can now make requests against the function with a REST client.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ curl -X GET http://localhost:8080/hello</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The URI mapped to is defined by the either the value of the <a href="../api/io/micronaut/function/FunctionBean.html">@FunctionBean</a> annotation for Java or, in the case of Groovy, the name of the function defined in the function script. The following tables summarizes the convention:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Function URI Mapping with @FunctionBean</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Annotation</th>
-<th class="tableblock halign-left valign-top">URI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@FunctionBean("hello")</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/hello</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@FunctionBean("helloWorld")</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/helloWorld</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@FunctionBean("hello-world")</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/hello-world</code></p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Function URI Mapping with Groovy Function Script</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Method Name</th>
-<th class="tableblock halign-left valign-top">URI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hello</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/hello</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helloWorld</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/hello-world</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Functions that only return a value are mapped to HTTP <code>GET</code> requests, whilst functions that accept an input require an HTTP <code>POST</code>.</p>
-</div>
-<div class="paragraph">
-<p>In addition, the function will be registered by the configured <a href="#serviceDiscovery">Service Discovery</a> provider, and be made accessible to clients via the <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> annotation.</p>
+<p>You can implement AWS Request Handlers with Micronaut that implement directly the AWS Lambda SDK API. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#requestHandlers">Micronaut Request Handlers</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27813,52 +27202,33 @@ object Application {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-For further information on the use of <code>@FunctionClient</code>, please see <a href="#callingFunctions">Calling Functions</a>.
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create an AWS Lambda Function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-function-app my-app --features aws-lambda</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/create/function/example\?features\=aws-lambda -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="sect1">
-<h2 id="_testing_functions">Testing Functions</h2>
-<div class="sectionbody">
+</div>
+<div class="sect3">
+<h4 id="_http_functions_with_aws_lambda">HTTP Functions with AWS Lambda</h4>
 <div class="paragraph">
-<p>Functions can also be run as part of the Micronaut application context for ease of testing. Similarly to the example above, this approach requires the <code>function-web</code> and an HTTP server dependency on the classpath for tests. For example, in <code>build.gradle</code>:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testImplementation(<span class="hljs-string">"io.micronaut:micronaut-http-server-netty")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-http-server-netty&lt;/artifactId&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">testImplementation(<span class="hljs-string">"io.micronaut:micronaut-function-web")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-web&lt;/artifactId&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
+<p>You can deploy regular Micronaut applications that use <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> etc. using Micronaut&#8217;s support for AWS API Gateway. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/snapshot/guide/#apiProxy">AWS API Gateway Support</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27867,28 +27237,46 @@ For further information on the use of <code>@FunctionClient</code>, please see <
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-In order to run the function as a web application, you will need an HTTP server, such as the <code>http-server-netty</code> dependency
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create an AWS API Gateway Proxy application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features aws-lambda</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/example.zip\?features\=aws-lambda -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
 </div>
+</div>
+
+<h2 id="gcpFunction"><a class="anchor" href="#gcpFunction"></a>9.2 Google Cloud Function</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/gcpFunction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
-<p>Create a <a href="../api/io/micronaut/function/client/FunctionClient.html">@FunctionClient</a> interface as shown below:</p>
+<p>Support for Google Cloud Function is implemented in the <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/#cloudFunction">Micronaut GCP</a> subproject.</p>
 </div>
-<div class="listingblock">
-<div class="title">MathClient.groovy</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.function.client.FunctionClient
-import javax.inject.Named
-
-@FunctionClient
-static interface MathClient {
-
-    Long max() <i class="conum" data-value="1"></i><b>(1)</b>
-    @Named("round")
-    int rnd(float value)
-}</code></pre>
-</div>
+<div class="sect3">
+<h4 id="_simple_functions_with_cloud_function">Simple Functions with Cloud Function</h4>
+<div class="paragraph">
+<p>You can implement Cloud Functions with Micronaut that implement directly the <a href="https://github.com/GoogleCloudPlatform/functions-framework-java">Cloud Function Framework API</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/#simpleFunctions">Simple Functions</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27897,119 +27285,34 @@ static interface MathClient {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-For further information on the use of <code>@FunctionClient</code>, please see <a href="#callingFunctions">Calling Functions</a>.
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create a Google Cloud Function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-function-app my-app --features google-cloud-function</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/create/function/example\?features\=google-cloud-function -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_http_functions_with_cloud_function">HTTP Functions with Cloud Function</h4>
 <div class="paragraph">
-<p>Now you can start up the Micronaut application and access your function via the client interface in your test.</p>
+<p>You can deploy regular Micronaut applications that use <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> etc. using Micronaut&#8217;s support for HTTP Functions. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/#httpFunctions">Google Cloud HTTP Functions</a> for more information.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void "test invoking a local function"() {
-    given:
-    EmbeddedServer server = ApplicationContext.run(EmbeddedServer)
-    MathClient mathClient = server.getApplicationContext().getBean(MathClient)
-
-    expect:
-    mathClient.max() == Integer.MAX_VALUE.toLong()
-    mathClient.rnd(1.6) == 2
-    mathClient.sum(new Sum(a:5,b:10)) == 15
-
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-
-<h2 id="functionCLI"><a class="anchor" href="#functionCLI"></a>9.2.2 Functions as CLI Applications</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/runningFunctions/functionCLI.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>To execute your function as a CLI application with <code>java -jar</code>, you will need to package your application as an executable JAR file. For example, in <code>build.gradle</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" } <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-...
-    }
-}
-
-apply plugin:"com.github.johnrengelman.shadow"
-
-shadowJar {
-    mergeServiceFiles()
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The Gradle Shadow plugin is hosted in the <code><a href="http://plugins.gradle.org" class="bare">http://plugins.gradle.org</a></code> repository</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You can now package your application using the <code>shadowJar</code> task.</p>
-</div>
-<div class="listingblock">
-<div class="title">Packaging a Function as a JAR</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew shadowJar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>At this point, you can execute your function using the <code>java -jar</code> command. To supply input data to the function, simply pipe input via <code>System.in</code>. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Executing a function via the CLI</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ echo '{value: 3}' | java -jar build/libs/math-function-0.1-all.jar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above example will provide the JSON <code>{value: 3}</code> to function which will write the return value to standard out.</p>
-</div>
-<div class="paragraph">
-<p>This allows functions written with Micronaut to be deployed to Function-as-a-Service (FaaS) platforms that process functions via standard in/out such as <a href="https://github.com/openfaas/faas">OpenFaaS</a>.</p>
-</div>
-
-<h2 id="deployingFunctions"><a class="anchor" href="#deployingFunctions"></a>9.3 Deploying Functions</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/deployingFunctions.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Micronaut functions can be deployed to either AWS lambda or any FaaS platform that can execute the function as a container. The following sections detail how to deploy your function.</p>
-</div>
-
-<h2 id="lambdaFunctions"><a class="anchor" href="#lambdaFunctions"></a>9.3.1 Deploying Functions to AWS Lambda</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/deployingFunctions/lambdaFunctions.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -28017,317 +27320,191 @@ shadowJar {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Read <a href="http://guides.micronaut.io/micronaut-function-aws-lambda/guide/index.html">Micronaut Functions deployed in AWS Lambda</a> guide for a step by step tutorial.
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create a Google Cloud HTTP Function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features google-cloud-function</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/example.zip\?features\=google-cloud-function -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>For Java &amp; Kotlin functions, support for <a href="http://aws.amazon.com">AWS Lambda</a> can be enabled by adding the <code>function-aws</code> dependency to your classpath.</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-aws")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-aws&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>For Groovy functions, the <code>function-groovy</code> dependency is sufficient for AWS Lambda support.</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-function-groovy")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-function-groovy&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="sect1">
-<h2 id="_configuration">Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Configuration properties specific to AWS Lambda environments can be supplied in an <code>application-aws</code> configuration file in <code>src/main/resources</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">application-aws.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">production:
-    property: 44</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_manual_deployment">Manual Deployment</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can deploy your function to AWS Lambda manually by building and uploading an executable JAR file. Various build plugins offer this capability.</p>
-</div>
-<div class="sect2">
-<h3 id="_gradle_shadow_plugin">Gradle Shadow plugin</h3>
-<div class="paragraph">
-<p>The <a href="https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow">Gradle Shadow</a> plugin provides a <code>shadowJar</code> task to generate a self-contained executable JAR file, which is suitable for AWS Lambda deployments.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" } <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-...
-    }
-}
-
-apply plugin:"com.github.johnrengelman.shadow"
-
-shadowJar {
-    mergeServiceFiles()
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The Gradle Shadow plugin is hosted in the <code><a href="http://plugins.gradle.org" class="bare">http://plugins.gradle.org</a></code> repository</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The executable JAR file can now be built using the <code>shadowJar</code> task.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew shadowJar</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_maven_shade_plugin">Maven Shade plugin</h3>
-<div class="paragraph">
-<p>The <a href="https://maven.apache.org/plugins/maven-shade-plugin/">Maven Shade</a> plugin will generate an executable JAR file for Maven projects. For further details, consult the <a href="https://docs.aws.amazon.com/lambda/latest/dg/java-create-jar-pkg-maven-no-ide.html">AWS Lambda Documentation.</a></p>
-</div>
-<div class="listingblock">
-<div class="title">Example pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project&gt;
-
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
-                &lt;version&gt;3.1.0&lt;/version&gt;
-                &lt;executions&gt;
-                    &lt;execution&gt;
-                        &lt;phase&gt;package&lt;/phase&gt;
-                        &lt;goals&gt;
-                            &lt;goal&gt;shade&lt;/goal&gt;
-                        &lt;/goals&gt;
-                        &lt;configuration&gt;
-                            &lt;transformers&gt;
-                                &lt;transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"&gt;
-                                    &lt;mainClass&gt;${exec.mainClass}&lt;/mainClass&gt;
-                                &lt;/transformer&gt;
-                                &lt;transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/&gt;
-                            &lt;/transformers&gt;
-                        &lt;/configuration&gt;
-                    &lt;/execution&gt;
-                &lt;/executions&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
-&lt;/project&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The executable JAR file can now be built using the <code>package</code> phase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_gradle_aws_plugin">Gradle AWS Plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For Gradle projects, deployment can be made even more straightforward using the <a href="https://github.com/classmethod/gradle-aws-plugin">Gradle AWS Plugin</a>. This plugin provides a <code>deploy</code> task which can push your function to AWS Lambda directly, as well as a <code>AWSLambdaInvokeTask</code> which can be used to invoke your function when it is deployed.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import com.amazonaws.services.lambda.model.InvocationType
-import jp.classmethod.aws.gradle.lambda.AWSLambdaInvokeTask
-import jp.classmethod.aws.gradle.lambda.AWSLambdaMigrateFunctionTask
-import com.amazonaws.services.lambda.model.Runtime
-
-buildscript {
-    repositories {
-        ...
-        maven { url "https://plugins.gradle.org/m2/" } <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-    dependencies {
-        classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
-    }
-}
-
-apply plugin: 'jp.classmethod.aws.lambda' <i class="conum" data-value="2"></i><b>(2)</b>
-
-...
-task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
-    functionName = "hello-world"
-    handler = "example.HelloWorldFunction::hello"
-    role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution" <i class="conum" data-value="3"></i><b>(3)</b>
-    runtime = Runtime.Java8
-    zipFile = shadowJar.archivePath
-    memorySize = 256
-    timeout = 60
-}
-
-task invoke(type: AWSLambdaInvokeTask) {
-    functionName = "hello-world"
-    invocationType = InvocationType.RequestResponse
-    payload = '{"name":"Fred"}'
-    doLast {
-        println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The AWS Gradle plugin is hosted from the <code><a href="https://plugins.gradle.org" class="bare">https://plugins.gradle.org</a></code> repository</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Apply the Gradle AWS plugin</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The Gradle AWS plugin will resolve your AWS credentials from <code>.aws/credentials</code> file, which is the default location used by the <a href="https://aws.amazon.com/cli/">AWS CLI</a> to set up your environment</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Note that the value of the <code>handler</code> property of the <code>deploy</code> task should be either:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In this case of Java or Kotlin: <code>io.micronaut.function.aws.MicronautRequestStreamHandler</code></p>
-</li>
-<li>
-<p>In the case of Groovy function definitions: A reference to the function (in the above case <code>example.HelloWorldFunction::hello</code>)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The reason for this is the <code>function-groovy</code> dependency applies additional code transformations to make it possible to reference the function directly.</p>
-</div>
-<div class="paragraph">
-<p>With the above build configuration, the function can be deployed to AWS Lambda using the <code>deploy</code> task.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew deploy</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The deployed function can then be invoked.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew invoke
-Hello, Fred</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Consult the <a href="https://github.com/classmethod/gradle-aws-plugin">Gradle AWS plugin documentation</a> for more details on the use of the plugin.</p>
-</div>
-</div>
 </div>
 
-<h2 id="openFaasFunctions"><a class="anchor" href="#openFaasFunctions"></a>9.3.2 Deploying Functions to OpenFaaS</h2>
+<h2 id="gcpCloudRun"><a class="anchor" href="#gcpCloudRun"></a>9.3 Google CLoud Run</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/deployingFunctions/openFaasFunctions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/gcpCloudRun.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>When creating a function you can use the <code>openfaas</code> feature to create a function that includes a <code>Dockerfile</code> that can be built into a docker image deployable to OpenFaas as well as the <code>function.yml</code> needed to deploy the function in OpenFaas:</p>
+<p>To deploy to <a href="https://cloud.google.com/run">Google Cloud Run</a> we recommend using <a href="https://github.com/GoogleContainerTools/jib">JIB</a> to containerize your application.</p>
 </div>
-<div class="listingblock">
-<div class="title">Creating an OpenFaaS Function</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-function hello-world-function --features openfaas</code></pre>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_manual_deployment">Manual deployment</h2>
-<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>To deploy the function manually the image should first be build using the OpenFaas cli:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli build -f function.yml</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The image can then be pushed to a registry. This will be the registry as specified in the image in the <code>function.yml</code>:</p>
+<p>Creating an application with JIB:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli push -f function.yml</code></pre>
+<pre>$ mn create-app my-app --features jib</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the image pushed in the registry, the function can be deployed in the cluster:</p>
+<p>Or with Micronaut Launch</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ faas-cli deploy -f function.yml</code></pre>
+<pre>$ curl https://launch.micronaut.io/example.zip\?features\=jib -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With JIB setup to deploy your application to Google Container Registry you can simple run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew jib</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will deploy the function in the namespace <code>openfaas-fn</code>.</p>
+<p>You are now ready to deploy your application :</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud run deploy --image gcr.io/[PROJECT ID]/example --platform=managed --allow-unauthenticated</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <code>[PROJECT ID]</code> is replaced for your project ID. You should be asked to specify a region and see output like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Service name: (example):
+Deploying container to Cloud Run service [example] in project [PROJECT_ID] region [us-central1]
+
+✓ Deploying... Done.
+  ✓ Creating Revision...
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [example] revision [example-00004] has been deployed and is serving 100 percent of traffic at https://example-9487r97234-uc.a.run.app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The URL is the URL of your Cloud Run application.</p>
+</div>
+
+<h2 id="azureFunction"><a class="anchor" href="#azureFunction"></a>9.4 Azure Function</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/azureFunction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Support for Azure Function is implemented in the <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#azureFunction">Micronaut Azure</a> subproject.</p>
+</div>
+<div class="sect3">
+<h4 id="_simple_functions_with_azure_function">Simple Functions with Azure Function</h4>
+<div class="paragraph">
+<p>You can implement Azure Functions with Micronaut that implement directly the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=consumption">Azure Function Java SDK</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#azureFunction">Azure Functions</a> for more information.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create an Azure Function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-function-app my-app --features azure-function</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/create/function/example\?features\=azure-function -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_functions_with_azure_function">HTTP Functions with Azure Function</h4>
+<div class="paragraph">
+<p>You can deploy regular Micronaut applications that use <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> etc. using Micronaut&#8217;s support for Azure HTTP Functions. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#azureFunction">Google Azure HTTP Functions</a> for more information.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Using the CLI</div>
+<div class="paragraph">
+<p>To create a Azure HTTP Function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mn create-app my-app --features azure-function</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or with Micronaut Launch</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl https://launch.micronaut.io/example.zip\?features\=azure-function -o example.zip
+$ unzip example.zip -d example</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 
-<h2 id="callingFunctions"><a class="anchor" href="#callingFunctions"></a>9.4 Calling Functions with FunctionClient</h2>
+<h2 id="callingFunctions"><a class="anchor" href="#callingFunctions"></a>9.5 Calling Functions with FunctionClient</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/serverlessFunctions/callingFunctions.adoc"'>
