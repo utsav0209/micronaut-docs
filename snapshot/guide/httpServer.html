@@ -1395,7 +1395,7 @@ String lock(String name)</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/RequestBean.html">@RequestBean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Binds any Bindable value or HttpRequest to single Bean object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binds any Bindable value to single Bean object</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequestBean MyBean bean</code></p></td>
 </tr>
 </tbody>
@@ -1557,8 +1557,8 @@ open class BookmarkController {
 <h2 id="_binding_from_multiple_bindable_values">Binding from Multiple Bindable values</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instead of binding just Query values, it is also possible to bind any Bindable value or HttpRequest to POJO  (e.g. when you want to bind <code>HttpRequest</code>, <code>@PathVariable</code>, <code>@QueryValue</code> and <code>@Header</code> to single POJO).
-This can be achieved with <code>@RequestBean</code> annotation and custom Bean class that has fields with Bindable annotations or field that is of HttpRequest type.
+<p>Instead of binding just Query values, it is also possible to bind any Bindable value to POJO  (e.g. when you want to bind <code>HttpRequest</code>, <code>@PathVariable</code>, <code>@QueryValue</code> and <code>@Header</code> to single POJO).
+This can be achieved with <code>@RequestBean</code> annotation and custom Bean class that has fields with Bindable annotations or fields that can be bound by type (e.g. HttpRequest, BasicAuth, Authentication etc.).
 For example:</p>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1710,7 +1710,7 @@ Arguments of constructor have to match field names so object can be constructed 
 </td>
 <td class="content">
 Since Java does not retain argument names in the byte code, you have to compile code with <code>-parameters</code> in case you want to use Immutable Bean class from another Jar.
-Another option is to override Bean class in your source.
+Another option is to extend Bean class in your source.
 </td>
 </tr>
 </table>
