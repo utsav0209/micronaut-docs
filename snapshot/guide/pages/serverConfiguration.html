@@ -145,6 +145,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#dualProtocol"><strong>6.5</strong><span>Enabling HTTP and HTTPS</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#accessLogger"><strong>6.6</strong><span>Enabling Access Logger</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -1052,6 +1055,169 @@ dual protocol support, modify your configuration. For example with <code>applica
 <td>To enable http &amp; https is an opt-in feature, setting the dualProtocol flag enables that, by default Micronaut will only enable one or the other</td>
 </tr>
 </table>
+</div>
+
+<h2 id="accessLogger"><a class="anchor" href="#accessLogger"></a>6.27.6 Enabling Access Logger</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpServer/serverConfiguration/accessLogger.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>In the spirit of <a href="http://httpd.apache.org/docs/current/mod/mod_log_config.html">apache mod_log_config</a> and  <a href="https://tomcat.apache.org/tomcat-10.0-doc/config/valve.html#Access_Logging">Tomcat Access Log Valve</a>, it is possible to enabled an access logger for
+ the http server (it works for both http/1 and http/2.)</p>
+</div>
+<div class="paragraph">
+<p>To enable and configure the access logger, in <code>application.yml</code> set:</p>
+</div>
+<div class="listingblock">
+<div class="title">Enabling the access logger</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+    server:
+        netty:
+           access-logger:
+              enabled: true # Enables the access logger
+              logger-name: my-access-logger # A logger name, default is `HTTP_ACCESS_LOGGER`
+              log-format: common # A log format, default is Common Log Format</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_logback_configuration">Logback Configuration</h4>
+<div class="paragraph">
+<p>In addition to enabling the access logger, you have to add a logger for the specified or default logger name.
+For instance using the default logger name for logback:</p>
+</div>
+<div class="listingblock">
+<div class="title">Logback configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;appender
+    name="httpAccessLogAppender"
+    class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
+    &lt;append&gt;true&lt;/append&gt;
+    &lt;file&gt;log/http-access.log&lt;/file&gt;
+    &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
+        &lt;!-- daily rollover --&gt;
+        &lt;fileNamePattern&gt;log/http-access-%d{yyyy-MM-dd}.log
+        &lt;/fileNamePattern&gt;
+        &lt;maxHistory&gt;7&lt;/maxHistory&gt;
+    &lt;/rollingPolicy&gt;
+    &lt;encoder&gt;
+        &lt;charset&gt;UTF-8&lt;/charset&gt;
+        &lt;pattern&gt;%msg%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+        &lt;immediateFlush&gt;true&lt;/immediateFlush&gt;
+&lt;/appender&gt;
+
+&lt;logger name="HTTP_ACCESS_LOGGER" additivity="false" level="info"&gt;
+    &lt;appender-ref ref="httpAccessLogAppender" /&gt;
+&lt;/logger&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pattern should only have the message marker as other elements will be processed by the access logger.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_log_format">Log Format</h4>
+<div class="paragraph">
+<p>The syntax is based on <a href="http://httpd.apache.org/docs/current/mod/mod_log_config.html">Apache httpd log format</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here are the supported markers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>%a</strong> - Remote IP address</p>
+</li>
+<li>
+<p><strong>%A</strong> - Local IP address</p>
+</li>
+<li>
+<p><strong>%b</strong> - Bytes sent, excluding HTTP headers, or '-' if no bytes were sent</p>
+</li>
+<li>
+<p><strong>%B</strong> - Bytes sent, excluding HTTP headers</p>
+</li>
+<li>
+<p><strong>%h</strong> - Remote host name</p>
+</li>
+<li>
+<p><strong>%H</strong> - Request protocol</p>
+</li>
+<li>
+<p><strong>%{&lt;header&gt;}i</strong> - Request header. If the argument is omitted (<strong>%i</strong>) all headers will be printed</p>
+</li>
+<li>
+<p><strong>%{&lt;header&gt;}o</strong> - Response header. If the argument is omitted (<strong>%o</strong>) all headers will be printed</p>
+</li>
+<li>
+<p><strong>%{&lt;cookie&gt;}C</strong> - Request cookie (COOKIE). If the argument is omitted (<strong>%C</strong>) all cookies will be printed</p>
+</li>
+<li>
+<p><strong>%{&lt;cookie&gt;}c</strong> - Response cookie (SET_COOKIE). If the argument is omitted (<strong>%c</strong>) all cookies will be printed</p>
+</li>
+<li>
+<p><strong>%l</strong> - Remote logical username from identd (always returns '-')</p>
+</li>
+<li>
+<p><strong>%m</strong> - Request method</p>
+</li>
+<li>
+<p><strong>%p</strong> - Local port</p>
+</li>
+<li>
+<p><strong>%q</strong> - Query string (excluding the '?' character)</p>
+</li>
+<li>
+<p><strong>%r</strong> - First line of the request</p>
+</li>
+<li>
+<p><strong>%s</strong> - HTTP status code of the response</p>
+</li>
+<li>
+<p><strong>%{&lt;format&gt;}t</strong> - Date and time. If the argument is ommitted the Common Log Format format is used ("'['dd/MMM/yyyy:HH:mm:ss Z']'").</p>
+</li>
+<li>
+<p>If the format starts with begin: (default) the time is taken at the beginning of the request processing. If it starts with end: it is the time when the log entry gets written, close to the end of the request processing.</p>
+</li>
+<li>
+<p>The format should follow the DateTimeFormatter syntax.</p>
+</li>
+<li>
+<p><strong>%{property}u</strong> - Remote user that was authenticated. When <strong>micronaut-session</strong> is on the classpath, returns the session id if the argument is omitted or the specified property otherwise prints '-'</p>
+</li>
+<li>
+<p><strong>%U</strong> - Requested URI</p>
+</li>
+<li>
+<p><strong>%v</strong> - Local server name</p>
+</li>
+<li>
+<p><strong>%D</strong> - Time taken to process the request, in millis</p>
+</li>
+<li>
+<p><strong>%T</strong> - Time taken to process the request, in seconds</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In addition, the following aliases for commonly utilized patterns:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>common</strong> - &lt;code&gt;%h %l %u %t "%r" %s %b&lt;/code&gt; Common Log Format (CLF)</p>
+</li>
+<li>
+<p><strong>combined</strong> - &lt;code&gt;%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"&lt;/code&gt; Combined Log Format</p>
+</li>
+</ul>
+</div>
 </div>
 
 
