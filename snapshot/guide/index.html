@@ -34685,6 +34685,30 @@ This change also applies to messages in custom constraint annotations, which int
 <p>Environments specified through the application context builder have priority over environments deduced or supplied through the MICRONAUT_ENVIRONMENTS environment variable, or the equivalent system property. A bug in the logic however did not change the order of a specified environment if it previously was found or deduced. This issue manifested itself with <code>@MicronautTest(environments = "test")</code>. The <code>test</code> environment is already deduced for tests, so it retained the order of other deduced environments, and was able to be overriden by <code>MICRONAUT_ENVIRONMENTS=dev</code>. In Micronaut 1.x configuration for <code>dev</code> would have overridden <code>test</code>. In Micronaut 2.x <code>test</code> will override <code>dev</code>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_introspections_and_inner_classes">Introspections and Inner Classes</h3>
+<div class="paragraph">
+<p>A bug in Micronaut 1.x caused bean introspections to be generated for inner classes of classes annotated with <code>@Introspected</code>. That also applies to classes where <code>@Introspection</code> is a meta annotation, like <code>@Entity</code>. This may have an impact for GraalVM users that rely on accesses to those classes without using reflection. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>@Entity
+public class Pet {
+    ...
+    private PetType type = PetType.DOG;
+    // getters &amp; setters
+
+    public enum PetType {
+        DOG,
+        CAT
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Previously a bean introspection would have been generated for <code>PetType</code>. That is no longer the case. If the type should be introspected, simply add the annotation.</p>
+</div>
+</div>
 
     </div>
 </div>
