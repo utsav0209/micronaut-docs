@@ -232,7 +232,8 @@ implements <a href="../../../io/micronaut/inject/ParametrizedBeanFactory.html" t
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractParametrizedBeanDefinition.html#isEnabled-io.micronaut.context.BeanContext-">isEnabled</a></span>(<a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractParametrizedBeanDefinition.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></span>(<a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context,
+         <a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext)</code>
 <div class="block">Return whether this component is enabled for the given context.</div>
 </td>
 </tr>
@@ -291,7 +292,7 @@ implements <a href="../../../io/micronaut/inject/ParametrizedBeanFactory.html" t
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.<a href="../../../io/micronaut/inject/BeanContextConditional.html" title="interface in io.micronaut.inject">BeanContextConditional</a></h3>
-<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-">isEnabled</a></code></li>
+<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-">isEnabled</a>, <a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></code></li>
 </ul>
 </li>
 </ul>
@@ -423,21 +424,24 @@ implements <a href="../../../io/micronaut/inject/ParametrizedBeanFactory.html" t
 </dl>
 </li>
 </ul>
-<a name="isEnabled-io.micronaut.context.BeanContext-">
+<a name="isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isEnabled</h4>
 <pre>public&nbsp;boolean&nbsp;isEnabled(@NonNull
-                         <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-">BeanContextConditional</a></code></span></div>
+                         <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context,
+                         @Nullable
+                         <a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">BeanContextConditional</a></code></span></div>
 <div class="block">Return whether this component is enabled for the given context.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-">isEnabled</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html" title="interface in io.micronaut.inject">BeanContextConditional</a></code></dd>
+<dd><code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html" title="interface in io.micronaut.inject">BeanContextConditional</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>context</code> - The context</dd>
+<dd><code>resolutionContext</code> - The bean resolution context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>True if it is</dd>
 </dl>

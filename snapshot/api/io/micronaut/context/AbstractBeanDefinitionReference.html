@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var methods = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -207,19 +207,26 @@ implements <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" t
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#isPresent--">isPresent</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></span>(<a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context,
+         <a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext)</code>
+<div class="block">Return whether this component is enabled for the given context.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#isPrimary--">isPrimary</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#isPresent--">isPresent</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#isPrimary--">isPrimary</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#load-io.micronaut.context.BeanContext-">load</a></span>(<a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context)</code>
 <div class="block">Loads the bean definition for the current <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context"><code>BeanContext</code></a>.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/context/AbstractBeanDefinitionReference.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -258,6 +265,13 @@ implements <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" t
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.core.annotation.<a href="../../../io/micronaut/core/annotation/AnnotationSource.html" title="interface in io.micronaut.core.annotation">AnnotationSource</a></h3>
 <code><a href="../../../io/micronaut/core/annotation/AnnotationSource.html#getAnnotation-java.lang.Class-">getAnnotation</a>, <a href="../../../io/micronaut/core/annotation/AnnotationSource.html#getAnnotation-java.lang.String-">getAnnotation</a>, <a href="../../../io/micronaut/core/annotation/AnnotationSource.html#getDeclaredAnnotation-java.lang.Class-">getDeclaredAnnotation</a>, <a href="../../../io/micronaut/core/annotation/AnnotationSource.html#getDeclaredAnnotation-java.lang.String-">getDeclaredAnnotation</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.BeanContextConditional">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.inject.<a href="../../../io/micronaut/inject/BeanContextConditional.html" title="interface in io.micronaut.inject">BeanContextConditional</a></h3>
+<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></code></li>
 </ul>
 </li>
 </ul>
@@ -451,7 +465,7 @@ implements <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" t
 <a name="getBeanDefinitionType--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getBeanDefinitionType</h4>
 <pre>protected abstract&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../io/micronaut/inject/BeanDefinition.html" title="interface in io.micronaut.inject">BeanDefinition</a>&lt;?&gt;&gt;&nbsp;getBeanDefinitionType()</pre>
@@ -459,6 +473,29 @@ implements <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" t
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The bean definition type.</dd>
+</dl>
+</li>
+</ul>
+<a name="isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isEnabled</h4>
+<pre>public&nbsp;boolean&nbsp;isEnabled(@NonNull
+                         <a href="../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;context,
+                         @Nullable
+                         <a href="../../../io/micronaut/context/BeanResolutionContext.html" title="interface in io.micronaut.context">BeanResolutionContext</a>&nbsp;resolutionContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">BeanContextConditional</a></code></span></div>
+<div class="block">Return whether this component is enabled for the given context.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/inject/BeanContextConditional.html#isEnabled-io.micronaut.context.BeanContext-io.micronaut.context.BeanResolutionContext-">isEnabled</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/inject/BeanContextConditional.html" title="interface in io.micronaut.inject">BeanContextConditional</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - The context</dd>
+<dd><code>resolutionContext</code> - The bean resolution context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if it is</dd>
 </dl>
 </li>
 </ul>

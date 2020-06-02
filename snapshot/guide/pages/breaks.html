@@ -497,6 +497,12 @@ This change does not apply to an explicit primary defined in the annotation (<co
 </div>
 </div>
 <div class="sect2">
+<h3 id="_no_longer_possible_to_return_null_to_disable_a_bean">No Longer Possible to Return Null to Disable a Bean</h3>
+<div class="paragraph">
+<p>It is no longer possible to return <code>null</code> from a <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> bean method to disable the bean. You should now throw <a href="../api/io/micronaut/context/exceptions/DisabledBeanException.html">DisabledBeanException</a> instead.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_invalid_configuration_file_locations">Invalid Configuration File Locations</h3>
 <div class="paragraph">
 <p>Specifying a file with <code>micronaut.config.files</code>, either through the system property or environment variable, that does not exist or cannot be read will now result in the application failing to startup. In previous versions of Micronaut a warning would be logged and the file would be ignored.</p>
