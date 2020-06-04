@@ -142,16 +142,78 @@ function addJsClass() {
 <p>The HTTP server is built on <a href="http://netty.io">Netty</a> which is designed as a non-blocking I/O toolkit in an event loop model.</p>
 </div>
 <div class="paragraph">
-<p>To configure the number of threads used by the Netty <a href="https://netty.io/4.0/api/io/netty/channel/EventLoop.html">EventLoop</a>, you can use <code>application.yml</code>:</p>
+<p>The Netty worker event loop uses the "default" named event loop group. That event loop can be configured through <code>micronaut.server.netty.worker</code>, or <code>micronaut.netty.event-loops.default</code>, with the latter having precedence.</p>
+</div>
+<a id="io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration$Worker" href="#io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration$Worker">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html">NettyHttpServerConfiguration$Worker</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.event-loop-group</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the name to use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for the event loop group.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.io-ratio</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the I/O ratio.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.executor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the name of the executor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.prefer-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether to prefer the native transport if available</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The parent event loop can be configured with <code>micronaut.server.netty.parent</code> with the same configuration options.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The server can also be configured to use a different named worker event loop:</p>
 </div>
 <div class="listingblock">
-<div class="title">Configuring Netty Event Loop Threads</div>
+<div class="title">Using a different event loop for the server</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
     server:
         netty:
-           worker:
-              threads: 8 # number of netty worker threads</code></pre>
+            worker:
+                event-loop-group: other
+    netty:
+        event-loops:
+            other:
+                num-threads: 10</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -161,11 +223,54 @@ function addJsClass() {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The default value is the value of the system property <code>io.netty.eventLoopThreads</code> or if not specified the available processors x 2
+The default value for the number of threads is the value of the system property <code>io.netty.eventLoopThreads</code>, or if not specified, the available processors x 2.
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>See the following table for configuring event loops:</p>
+</div>
+<a id="io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration" href="#io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html">DefaultEventLoopGroupConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.num-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.io-ratio</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.prefer-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.netty.event-loops.*.executor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_blocking_operations">Blocking Operations</h4>
 <div class="paragraph">
 <p>When dealing with blocking operations, Micronaut will shift the blocking operations to an unbound, caching I/O thread pool by default. You can configure the I/O thread pool using the <a href="../api/io/micronaut/scheduling/executor/ExecutorConfiguration.html">ExecutorConfiguration</a> named <code>io</code>. For example:</p>
 </div>
@@ -181,6 +286,7 @@ The default value is the value of the system property <code>io.netty.eventLoopTh
 </div>
 <div class="paragraph">
 <p>The above configuration will create a fixed thread pool with 75 threads.</p>
+</div>
 </div>
 
 
