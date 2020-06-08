@@ -242,7 +242,7 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_micronaut_cache_moved_out_of_runtime">Micronaut Cache Moved Out Of Runtime</h3>
+<h3 id="_micronaut_cache_removed_from_core">Micronaut Cache Removed from Core</h3>
 <div class="paragraph">
 <p>The <code>micronaut-runtime</code> module in Micronaut 1.x included support for caching AOP with the <code>@Cache</code> annotation. The core caching library and a default implementation based on caffeine were included.</p>
 </div>
@@ -256,13 +256,13 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 <div class="sect2">
 <h3 id="_support_for_rxjava_1_x_removed_from_core">Support for RxJava 1.x Removed from Core</h3>
 <div class="paragraph">
-<p>RxJava 1.x support is no longer included in core by default. You can re-enable suppot by adding the following dependency:</p>
+<p>RxJava 1.x support is no longer included in core by default. You can re-enable support by adding the following dependency:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava1:micronaut-rxjava1:1.0.0")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava1:micronaut-rxjava1")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -270,11 +270,51 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut.rxjava1&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-rxjava1&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support_for_reactor_removed_from_core">Support for Reactor Removed from Core</h3>
+<div class="paragraph">
+<p>Reactor support is no longer included in core by default. You can re-enable support by adding the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.reactor:micronaut-reactor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.reactor&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-reactor&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loggers_endpoint_disabled_by_default">Loggers Endpoint Disabled by Default</h3>
+<div class="paragraph">
+<p>Since logging can potentially leak sensitive information the <code>/loggers</code> endpoint is disabled by default and can be explicitly re-enabled as desired with:</p>
+</div>
+<div class="listingblock">
+<div class="title">Enabling the Loggers Endpoint</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
+    loggers:
+        enabled: true
+        sensitive: false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that if it is preferable to require authentication so only use <code>sensitive: false</code> as a last resort.</p>
 </div>
 </div>
 <div class="sect2">

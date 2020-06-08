@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../io/micronaut/logging/LoggingSystem.html" title="interface in io.micronaut.logging">LoggingSystem</a></dd>
+<dd><a href="../../../../../../io/micronaut/logging/LoggingSystem.html" title="interface in io.micronaut.logging">LoggingSystem</a>, <a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers">ManagedLoggingSystem</a></dd>
 </dl>
 <hr>
 <br>
@@ -116,8 +116,8 @@ var activeTableTab = "activeTableTab";
  <a href="../../../../../../io/micronaut/context/annotation/Replaces.html" title="annotation in io.micronaut.context.annotation">@Replaces</a>(<a href="../../../../../../io/micronaut/context/annotation/Replaces.html#value--">value</a>=<a href="../../../../../../io/micronaut/logging/impl/LogbackLoggingSystem.html" title="class in io.micronaut.logging.impl">LogbackLoggingSystem.class</a>)
 public class <span class="typeNameLabel">LogbackLoggingSystem</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers">LoggingSystem</a>, <a href="../../../../../../io/micronaut/logging/LoggingSystem.html" title="interface in io.micronaut.logging">LoggingSystem</a></pre>
-<div class="block">An implementation of <a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers"><code>LoggingSystem</code></a> that works with logback.</div>
+implements <a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers">ManagedLoggingSystem</a>, <a href="../../../../../../io/micronaut/logging/LoggingSystem.html" title="interface in io.micronaut.logging">LoggingSystem</a></pre>
+<div class="block">An implementation of <a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers"><code>ManagedLoggingSystem</code></a> that works with logback.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.0</dd>
@@ -225,9 +225,11 @@ implements <a href="../../../../../../io/micronaut/management/endpoint/loggers/L
 <h4>getLoggers</h4>
 <pre>@NonNull
 public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggerConfiguration.html" title="class in io.micronaut.management.endpoint.loggers">LoggerConfiguration</a>&gt;&nbsp;getLoggers()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggingSystem.html#getLoggers--">LoggingSystem</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html#getLoggers--">ManagedLoggingSystem</a></code></span></div>
 <div class="block">Returns all existing loggers.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html#getLoggers--">getLoggers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers">ManagedLoggingSystem</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a> of <a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggerConfiguration.html" title="class in io.micronaut.management.endpoint.loggers"><code>LoggerConfiguration</code></a> instances for all existing loggers</dd>
 </dl>
@@ -241,9 +243,11 @@ public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collect
 <h4>getLogger</h4>
 <pre>@NonNull
 public&nbsp;<a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggerConfiguration.html" title="class in io.micronaut.management.endpoint.loggers">LoggerConfiguration</a>&nbsp;getLogger(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggingSystem.html#getLogger-java.lang.String-">LoggingSystem</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html#getLogger-java.lang.String-">ManagedLoggingSystem</a></code></span></div>
 <div class="block">Returns a <a href="../../../../../../io/micronaut/management/endpoint/loggers/LoggerConfiguration.html" title="class in io.micronaut.management.endpoint.loggers"><code>LoggerConfiguration</code></a> for the logger found by name (or created if not found).</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html#getLogger-java.lang.String-">getLogger</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/management/endpoint/loggers/ManagedLoggingSystem.html" title="interface in io.micronaut.management.endpoint.loggers">ManagedLoggingSystem</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - the logger name</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
