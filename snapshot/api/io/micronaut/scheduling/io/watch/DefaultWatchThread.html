@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -172,32 +172,38 @@ implements <a href="../../../../../io/micronaut/context/LifeCycle.html" title="i
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#close--">close</a></span>()</code>
+<div class="block">Delegates to <a href="../../../../../io/micronaut/context/LifeCycle.html#stop--"><code>LifeCycle.stop()</code></a>.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#closeWatchService--">closeWatchService</a></span>()</code>
 <div class="block">Closes the watch service.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/WatchService.html?is-external=true" title="class or interface in java.nio.file">WatchService</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#getWatchService--">getWatchService</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#isRunning--">isRunning</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/WatchKey.html?is-external=true" title="class or interface in java.nio.file">WatchKey</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#registerPath-java.nio.file.Path-">registerPath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;dir)</code>
 <div class="block">Registers a patch to watch.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#start--">start</a></span>()</code>
 <div class="block">Starts the lifecyle component.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html#stop--">stop</a></span>()</code>
 <div class="block">Stops the life cycle component.</div>
@@ -216,7 +222,7 @@ implements <a href="../../../../../io/micronaut/context/LifeCycle.html" title="i
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.context.<a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a></h3>
-<code><a href="../../../../../io/micronaut/context/LifeCycle.html#close--">close</a>, <a href="../../../../../io/micronaut/context/LifeCycle.html#refresh--">refresh</a></code></li>
+<code><a href="../../../../../io/micronaut/context/LifeCycle.html#refresh--">refresh</a></code></li>
 </ul>
 </li>
 </ul>
@@ -297,8 +303,7 @@ public&nbsp;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatc
 <ul class="blockList">
 <li class="blockList">
 <h4>stop</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/PreDestroy.html?is-external=true" title="class or interface in javax.annotation">@PreDestroy</a>
-public&nbsp;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a>&nbsp;stop()</pre>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a>&nbsp;stop()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html#stop--">LifeCycle</a></code></span></div>
 <div class="block">Stops the life cycle component.</div>
 <dl>
@@ -306,6 +311,26 @@ public&nbsp;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatc
 <dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#stop--">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This lifecycle component</dd>
+</dl>
+</li>
+</ul>
+<a name="close--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>close</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/PreDestroy.html?is-external=true" title="class or interface in javax.annotation">@PreDestroy</a>
+public&nbsp;void&nbsp;close()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html#close--">LifeCycle</a></code></span></div>
+<div class="block">Delegates to <a href="../../../../../io/micronaut/context/LifeCycle.html#stop--"><code>LifeCycle.stop()</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#close--">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;<a href="../../../../../io/micronaut/scheduling/io/watch/DefaultWatchThread.html" title="class in io.micronaut.scheduling.io.watch">DefaultWatchThread</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true#close--" title="class or interface in java.io">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
 </dl>
 </li>
 </ul>
