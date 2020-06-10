@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":18,"i3":6,"i4":17};
+var methods = {"i0":18,"i1":6,"i2":18,"i3":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/scheduling/instrument/DefaultInstrumentation.html" title="class in io.micronaut.scheduling.instrument"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li>Prev&nbsp;Class</li>
 <li><a href="../../../../io/micronaut/scheduling/instrument/InstrumentedExecutor.html" title="interface in io.micronaut.scheduling.instrument"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -101,18 +101,11 @@ var activeTableTab = "activeTableTab";
 <dt>All Superinterfaces:</dt>
 <dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
 </dl>
-<dl>
-<dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../io/micronaut/scheduling/instrument/DefaultInstrumentation.html" title="class in io.micronaut.scheduling.instrument">DefaultInstrumentation</a></dd>
-</dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">Instrumentation</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></pre>
-<div class="block">Instrumentation represents an ongoing instrumentation with a given <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument"><code>InvocationInstrumenter</code></a> if any. When the
- instance is returned to the caller it should already have executed <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#beforeInvocation--"><code>InvocationInstrumenter.beforeInvocation()</code></a>.
- When assigning a newly instantiated instance in a try-with-resources block it will automatically execute
- <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation--"><code>InvocationInstrumenter.afterInvocation()</code></a> upon leaving the protected block.
+<div class="block">Instrumentation represents an ongoing instrumentation with a given context of <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument"><code>InvocationInstrumenter</code></a> if any.
  <p/>
  To force cleanup after the invocation, use the instance returned by <a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#forceCleanup--"><code>forceCleanup()</code></a> instead, such as:
  <p/>
@@ -146,15 +139,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#close--">close</a></span>()</code>
-<div class="block">Closes the active instrumentation as defined in <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation--"><code>InvocationInstrumenter.afterInvocation()</code></a>.</div>
+<div class="block">Closes the active instrumentation.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#close-boolean-">close</a></span>(boolean&nbsp;cleanup)</code>
-<div class="block">Closes the active instrumentation according to <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation-boolean-"><code>InvocationInstrumenter.afterInvocation(boolean)</code></a>.</div>
+<div class="block">Closes the active instrumentation with cleanup flag.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -164,10 +157,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#isActive--">isActive</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html" title="interface in io.micronaut.scheduling.instrument">Instrumentation</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#noop--">noop</a></span>()</code>&nbsp;</td>
 </tr>
@@ -186,20 +175,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="isActive--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isActive</h4>
-<pre>boolean&nbsp;isActive()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if and only if the given instrumentation is in progress, meaning that <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#beforeInvocation--"><code>InvocationInstrumenter.beforeInvocation()</code></a> has already been invoked but <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation--"><code>InvocationInstrumenter.afterInvocation()</code></a> or <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation-boolean-"><code>InvocationInstrumenter.afterInvocation(boolean)</code></a> has not yet
- been called.</dd>
-</dl>
-</li>
-</ul>
 <a name="close-boolean-">
 <!--   -->
 </a>
@@ -207,7 +182,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <li class="blockList">
 <h4>close</h4>
 <pre>void&nbsp;close(boolean&nbsp;cleanup)</pre>
-<div class="block">Closes the active instrumentation according to <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation-boolean-"><code>InvocationInstrumenter.afterInvocation(boolean)</code></a>.</div>
+<div class="block">Closes the active instrumentation with cleanup flag.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>cleanup</code> - Whether to enforce cleanup</dd>
@@ -220,8 +195,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <ul class="blockList">
 <li class="blockList">
 <h4>close</h4>
-<pre>void&nbsp;close()</pre>
-<div class="block">Closes the active instrumentation as defined in <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation--"><code>InvocationInstrumenter.afterInvocation()</code></a>.</div>
+<pre>default&nbsp;void&nbsp;close()</pre>
+<div class="block">Closes the active instrumentation.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
@@ -237,7 +212,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <pre>@NonNull
 default&nbsp;<a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html" title="interface in io.micronaut.scheduling.instrument">Instrumentation</a>&nbsp;forceCleanup()</pre>
 <div class="block">Return an instance which guarantees that cleanup will be forced to the instrumenter upon closing. The returned
- instance will always invoke <a href="../../../../io/micronaut/scheduling/instrument/InvocationInstrumenter.html#afterInvocation-boolean-"><code>InvocationInstrumenter.afterInvocation(boolean)</code></a> with <code>cleanup=true</code>
+ instance will always invoke <a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#close-boolean-"><code>close(boolean)</code></a> with <code>cleanup=true</code>
  even if <a href="../../../../io/micronaut/scheduling/instrument/Instrumentation.html#close-boolean-"><code>close(boolean)</code></a> gets called with <code>cleanup=false</code></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -286,7 +261,7 @@ static&nbsp;<a href="../../../../io/micronaut/scheduling/instrument/Instrumentat
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/scheduling/instrument/DefaultInstrumentation.html" title="class in io.micronaut.scheduling.instrument"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li>Prev&nbsp;Class</li>
 <li><a href="../../../../io/micronaut/scheduling/instrument/InstrumentedExecutor.html" title="interface in io.micronaut.scheduling.instrument"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
