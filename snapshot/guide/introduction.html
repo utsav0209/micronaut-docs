@@ -1025,6 +1025,32 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </table>
 </div>
 <div class="sect2">
+<h3 id="_kubernetes_discovery_service_deprecation">Kubernetes Discovery Service deprecation</h3>
+<div class="paragraph">
+<p>The class <code>io.micronaut.discovery.kubernetes.KubernetesDiscoveryClient</code>, that was deprecated in Micronaut 1.2, has now been removed from Micronaut 2.0. The replacement is the new <a href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/">Micronaut Kubernetes</a> module, with an improved support for running Micronaut applications in a Kubernetes cluster, including support for Kubernetes' <code>ConfigMap</code>s, <code>Secret</code>s and more.</p>
+</div>
+<div class="paragraph">
+<p>To use the new module, you need to add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.kubernetes&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-kubernetes-discovery-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_other_breaking_changes">Other Breaking Changes</h3>
 <div class="paragraph">
 <p>If the above cases don&#8217;t cover your use case see the section on <a href="#breaks">Breaking Changes</a> for a list of other changes that are regarded as breaking in this release.</p>
