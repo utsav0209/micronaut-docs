@@ -6493,13 +6493,13 @@ Currently only bean properties (private field with public getter/setter) are sup
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-validator")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.beanvalidation:micronaut-hibernate-validator")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.beanvalidation&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -15579,13 +15579,13 @@ The output produced by Jackson can be customized in a variety of manners, from d
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-validator")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.beanvalidation:micronaut-hibernate-validator")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.beanvalidation&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -18496,7 +18496,7 @@ The examples use RxJava, however you can use any reactive framework that support
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-session"
-compile "io.micronaut.configuration:micronaut-redis-lettuce"</code></pre>
+compile "io.micronaut.redis:micronaut-redis-lettuce"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23291,14 +23291,24 @@ Be aware that some annotations, such as <a href="../api/io/micronaut/http/client
 </table>
 </div>
 <div class="paragraph">
-<p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> and <code>hibernate-validator</code> dependencies on your classpath. For example in <code>build.gradle</code>:</p>
+<p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> module on your classpath:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-validation"
-compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-validator")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>On the server-side of Micronaut you can implement the <code>PetOperations</code> interface:</p>
@@ -24372,11 +24382,22 @@ If you purely want to use fallbacks to help with testing against external Micros
 <div class="paragraph">
 <p>Micronaut features integration with Hystrix through the <code>netflix-hystrix</code> module, which you can add to your <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-hystrix"</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.netflix:micronaut-netflix-hystrix")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.netflix&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-netflix-hystrix&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="sect1">
 <h2 id="_using_the_hystrixcommand_annotation">Using the @HystrixCommand Annotation</h2>
@@ -25767,13 +25788,22 @@ spring:
 <div class="paragraph">
 <p>Micronaut supports configuration sharing via AWS System Manager Parameter Store. You will need the following dependencies configured:</p>
 </div>
-<div class="listingblock">
-<div class="title">Example <code>build.gradle</code> for AWS System Manager Parameter Store</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
-compile "io.micronaut.configuration:micronaut-aws-common"
-compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.aws:micronaut-aws-parameter-store")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.aws&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-aws-parameter-store&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To enable distributed configuration a <code>src/main/resources/bootstrap.yml</code> configuration file must be created and configured to use Parameter Store:</p>
@@ -26880,16 +26910,22 @@ micronaut:
 </li>
 </ol>
 </div>
-<div class="listingblock">
-<div class="title">Sample build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
-compile "io.micronaut.configuration:micronaut-aws-common"
-compile group: 'com.amazonaws', name: 'aws-java-sdk-route53', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'jmespath-java', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'aws-java-sdk-servicediscovery', version: '1.11.297'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.aws:micronaut-aws-route53")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.aws&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-aws-route53&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -27205,7 +27241,7 @@ You can override this configuration in production by specifying an environment v
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-ribbon"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.netflix:micronaut-netflix-ribbon"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -28327,19 +28363,19 @@ $ unzip example.zip -d example</pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-dbcp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-dbcp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://commons.apache.org/proper/commons-dbcp/">Commons DBCP</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-hikari</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-hikari</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://brettwooldridge.github.io/HikariCP/">Hikari Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-tomcat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-tomcat</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html">Tomcat Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-jpa</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-hibernate-jpa</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures Hibernate/JPA EntityManagerFactory beans</p></td>
 </tr>
 <tr>
@@ -28347,7 +28383,7 @@ $ unzip example.zip -d example</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-reactive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.mongodb:micronaut-mongo-reactive</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="http://mongodb.github.io/mongo-java-driver-reactivestreams">MongoDB Reactive Driver</a></p></td>
 </tr>
 <tr>
@@ -28355,7 +28391,7 @@ $ unzip example.zip -d example</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-bolt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.neo4j:micronaut-neo4j-bolt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/neo4j/neo4j-java-driver">Bolt Java Driver</a> for <a href="https://neo4j.com">Neo4j</a></p></td>
 </tr>
 <tr>
@@ -28363,19 +28399,19 @@ $ unzip example.zip -d example</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-vertx-mysql-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-vertx-mysql-client</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-mysql-client">Reactive MySQL Client</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-vertx-pg-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-vertx-pg-client</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-pg-client">Reactive Postgres Client</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-redis-lettuce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.redis:micronaut-redis-lettuce</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://lettuce.io">Lettuce</a> driver for <a href="https://redis.io">Redis</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-cassandra</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.cassandra:micronaut-cassandra</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/datastax/java-driver">Datastax Java Driver</a> for <a href="http://cassandra.apache.org">Cassandra</a></p></td>
 </tr>
 </tbody>
@@ -28386,7 +28422,7 @@ $ unzip example.zip -d example</pre>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.mongodb:micronaut-mongo-reactive"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -28450,13 +28486,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-tomcat")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-tomcat")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-tomcat&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -28468,13 +28504,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-hikari")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-hikari")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-hikari&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -28486,14 +28522,32 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-dbcp")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-dbcp")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-dbcp&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-ucp")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-ucp&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -28568,13 +28622,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-jpa")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.sql:micronaut-hibernate-jpa")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-jpa&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -28653,13 +28707,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-mongo-reactive")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.mongodb:micronaut-mongo-reactive")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.mongodb&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-mongo-reactive&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -28829,7 +28883,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-vertx-pg-client"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.sql:micronaut-vertx-pg-client"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -28879,7 +28933,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-redis-lettuce"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.redis:micronaut-redis-lettuce"</code></pre>
 </div>
 </div>
 <div class="paragraph">

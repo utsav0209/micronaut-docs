@@ -958,13 +958,22 @@ spring:
 <div class="paragraph">
 <p>Micronaut supports configuration sharing via AWS System Manager Parameter Store. You will need the following dependencies configured:</p>
 </div>
-<div class="listingblock">
-<div class="title">Example <code>build.gradle</code> for AWS System Manager Parameter Store</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
-compile "io.micronaut.configuration:micronaut-aws-common"
-compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.aws:micronaut-aws-parameter-store")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.aws&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-aws-parameter-store&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To enable distributed configuration a <code>src/main/resources/bootstrap.yml</code> configuration file must be created and configured to use Parameter Store:</p>
@@ -2071,16 +2080,22 @@ micronaut:
 </li>
 </ol>
 </div>
-<div class="listingblock">
-<div class="title">Sample build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
-compile "io.micronaut.configuration:micronaut-aws-common"
-compile group: 'com.amazonaws', name: 'aws-java-sdk-route53', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'jmespath-java', version: '1.11.297'
-compile group: 'com.amazonaws', name: 'aws-java-sdk-servicediscovery', version: '1.11.297'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.aws:micronaut-aws-route53")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.aws&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-aws-route53&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -2396,7 +2411,7 @@ You can override this configuration in production by specifying an environment v
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-ribbon"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.netflix:micronaut-netflix-ribbon"</code></pre>
 </div>
 </div>
 <div class="paragraph">
