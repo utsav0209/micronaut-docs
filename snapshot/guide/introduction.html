@@ -1172,6 +1172,112 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </div>
 </div>
 <div class="sect2">
+<h3 id="_transaction_management">Transaction Management</h3>
+<div class="paragraph">
+<p>For Micronaut 2.0, we recommend you to use the native Micronaut-based transaction management instead of other alternatives such as Spring Transaction Management.</p>
+</div>
+<div class="paragraph">
+<p>You will use <a href="https://docs.oracle.com/javaee/7/api/javax/transaction/Transactional.html">Java EE 7 javax.transaction.Transactional annotation</a> and <a href="https://micronaut-projects.github.io/micronaut-data/latest/api/index.html">io.micronaut.transaction.annotation.ReadOnly</a> to mark your transaction demarcations.</p>
+</div>
+<div class="paragraph">
+<p>To use those annotations, you have to include the <code>micronaut-data-processor</code> dependency in your annotation processor configuration:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut.data:micronaut-data-processor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.data&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-data-processor&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>If you use Hibernate/JPA, you will need to add as well:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.data:micronaut-data-hibernate-jpa")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.data&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-data-hibernate-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Then, code such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.spring.tx.annotation.Transactional;
+...
+..
+.
+@Singleton
+public class GenreRepositoryImpl implements GenreRepository {
+...
+..
+.
+    @Transactional(readOnly = true)
+    public Optional&lt;Genre&gt; findById(@NotNull Long id) {
+...
+..
+    }
+
+    @Transactional
+    public Genre save(@NotBlank String name) {
+    ...
+    ..
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>becomes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.transaction.Transactional;
+import io.micronaut.transaction.annotation.ReadOnly;
+...
+..
+.
+@Singleton
+public class GenreRepositoryImpl implements GenreRepository {
+...
+..
+.
+    @ReadOnly
+    public Optional&lt;Genre&gt; findById(@NotNull Long id) {
+...
+..
+    }
+
+    @Transactional
+    public Genre save(@NotBlank String name) {
+    ...
+    ..
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_other_breaking_changes">Other Breaking Changes</h3>
 <div class="paragraph">
 <p>If the above cases don&#8217;t cover your use case see the section on <a href="#breaks">Breaking Changes</a> for a list of other changes that are regarded as breaking in this release.</p>
