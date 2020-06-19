@@ -15884,7 +15884,7 @@ open class EmailController {
 </table>
 </div>
 <div class="paragraph">
-<p>The validation behaviour is shown in the following test:</p>
+<p>If a validation error occurs a <code>javax.validation.ConstraintViolationException</code> will be thrown. By default, the integrated <code>io.micronaut.validation.exception.ConstraintExceptionHandler</code> is used to handle the exception leading to a behaviour as shown in the following test:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Example Test</div>
@@ -15939,6 +15939,9 @@ open class EmailController {
             response.status shouldBe HttpStatus.OK
         }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>If you want your own <code>ExceptionHandler</code> to handle the constraint exceptions, you need to annotate it with <code>@Replaces(ConstraintExceptionHandler.class)</code></p>
 </div>
 <div class="paragraph">
 <p>Often, you may want to use POJOs as controller method parameters.</p>
