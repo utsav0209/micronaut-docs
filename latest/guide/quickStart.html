@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2 Quick Start 1.3.6</title>
+    <title>2 Quick Start 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2 Quick Start</h1>
 
-                    <p><strong>Version:</strong> 1.3.6</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -226,7 +226,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 1.3.6</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut 2.0.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -477,7 +477,7 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </div>
 </div>
 <div class="paragraph">
-<p>If you have created a Maven based project, use <code>./mvnw compile exec:exec</code> instead.</p>
+<p>If you have created a Maven based project, use <code>./mvnw mn:run</code> instead.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -856,14 +856,15 @@ class HelloControllerSpec {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.Get;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @Client("/hello") <b class="conum">(1)</b>
 public interface HelloClient {
 
-    @Get <b class="conum">(2)</b>
+    @Get(consumes = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     Single&lt;String&gt; hello(); <b class="conum">(3)</b>
 }</code></pre>
 </div>
@@ -877,21 +878,22 @@ import io.reactivex.Single
 @Client("/hello") <b class="conum">(1)</b>
 interface HelloClient {
 
-    @Get <b class="conum">(2)</b>
+    @Get(consumes = MediaType.TEXT_PLAIN) <b class="conum">(2)</b>
     Single&lt;String&gt; hello() <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Get
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Single
 
 @Client("/hello") <b class="conum">(1)</b>
 interface HelloClient {
 
-    @Get <b class="conum">(2)</b>
+    @Get(consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(2)</b>
     fun hello(): Single&lt;String&gt;  <b class="conum">(3)</b>
 }</code></pre>
 </div>

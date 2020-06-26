@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>12 Configurations 1.3.6</title>
+    <title>12 Configurations 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,41 +123,53 @@ function addJsClass() {
                 <div class="project">
                     <h1>12 Configurations</h1>
 
-                    <p><strong>Version:</strong> 1.3.6</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
                 <div id="table-of-content">
                     <h2>Table of Contents</h2>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#dataAccess"><strong>12.1</strong><span>Configurations for Data Access</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#reactiveConfigs"><strong>12.1</strong><span>Configurations for Reactive Programming</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#sqlSupport"><strong>12.1.1</strong><span>Configuring a SQL Data Source</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#rxjava3"><strong>12.1.1</strong><span>RxJava 3 Support</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#hibernateSupport"><strong>12.1.2</strong><span>Configuring Hibernate</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#reactor"><strong>12.1.2</strong><span>Reactor Support</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#mongoSupport"><strong>12.1.3</strong><span>Configuring MongoDB</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#rxjava1"><strong>12.1.3</strong><span>RxJava 1 Support</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#neo4jSupport"><strong>12.1.4</strong><span>Configuring Neo4j</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#dataAccess"><strong>12.2</strong><span>Configurations for Data Access</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#postgresSupport"><strong>12.1.5</strong><span>Configuring Postgres</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#sqlSupport"><strong>12.2.1</strong><span>Configuring a SQL Data Source</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#redisSupport"><strong>12.1.6</strong><span>Configuring Redis</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#hibernateSupport"><strong>12.2.2</strong><span>Configuring Hibernate</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#cassandraSupport"><strong>12.1.7</strong><span>Configuring Cassandra</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#mongoSupport"><strong>12.2.3</strong><span>Configuring MongoDB</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#liquibaseSupport"><strong>12.1.8</strong><span>Configuring Liquibase</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#neo4jSupport"><strong>12.2.4</strong><span>Configuring Neo4j</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:10px"><a href="#flywaySupport"><strong>12.1.9</strong><span>Configuring Flyway</span></a>
+                    <div class="toc-item" style="margin-left:10px"><a href="#postgresSupport"><strong>12.2.5</strong><span>Configuring Postgres</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#redisSupport"><strong>12.2.6</strong><span>Configuring Redis</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#cassandraSupport"><strong>12.2.7</strong><span>Configuring Cassandra</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#liquibaseSupport"><strong>12.2.8</strong><span>Configuring Liquibase</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#flywaySupport"><strong>12.2.9</strong><span>Configuring Flyway</span></a>
                     </div>
                     
                 </div>
@@ -177,7 +189,159 @@ function addJsClass() {
 <p>Micronaut features several built-in configurations that enable integration with common databases and other servers.</p>
 </div>
 
-<h2 id="dataAccess"><a class="anchor" href="#dataAccess"></a>12.1 Configurations for Data Access</h2>
+<h2 id="reactiveConfigs"><a class="anchor" href="#reactiveConfigs"></a>12.1 Configurations for Reactive Programming</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/reactiveConfigs.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>RxJava 2 is the default reactive programming library used by Micronaut, however individual modules for other reactive libraries have been added.</p>
+</div>
+
+<h2 id="rxjava3"><a class="anchor" href="#rxjava3"></a>12.1.1 RxJava 3 Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/reactiveConfigs/rxjava3.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To add support for RxJava 3 add the following module:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava3:micronaut-rxjava3")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.rxjava3&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-rxjava3&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>To use the RxJava 3 HTTP client add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava3:micronaut-rxjava3-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.rxjava3&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-rxjava3-http-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>For more information see the documentation for <a href="https://micronaut-projects.github.io/micronaut-rxjava3/latest/guide/">Micronaut RxJava 3</a>.</p>
+</div>
+
+<h2 id="reactor"><a class="anchor" href="#reactor"></a>12.1.2 Reactor Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/reactiveConfigs/reactor.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To add support for Reactor add the following module:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.reactor:micronaut-reactor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.reactor&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-reactor&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>To use the RxJava 3 HTTP client add the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.reactor:micronaut-reactor-http-client")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.reactor&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-reactor-http-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>For more information see the documentation for <a href="https://micronaut-projects.github.io/micronaut-reactor/latest/guide/">Micronaut Reactor</a>.</p>
+</div>
+
+<h2 id="rxjava1"><a class="anchor" href="#rxjava1"></a>12.1.3 RxJava 1 Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/reactiveConfigs/rxjava1.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Legacy support for RxJava 1 can be added with the following module:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava1:micronaut-rxjava1")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.rxjava1&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-rxjava1&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-rxjava1/latest/guide/">Micronaut RxJava1</a> documentation.</p>
+</div>
+
+<h2 id="dataAccess"><a class="anchor" href="#dataAccess"></a>12.2 Configurations for Data Access</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess.adoc"'>
@@ -203,19 +367,19 @@ function addJsClass() {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-dbcp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-dbcp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://commons.apache.org/proper/commons-dbcp/">Commons DBCP</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-hikari</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-hikari</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://brettwooldridge.github.io/HikariCP/">Hikari Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-jdbc-tomcat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-jdbc-tomcat</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures SQL <a href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> instances using <a href="https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html">Tomcat Connection Pool</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-jpa</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-hibernate-jpa</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures Hibernate/JPA EntityManagerFactory beans</p></td>
 </tr>
 <tr>
@@ -223,7 +387,7 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-reactive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.mongodb:micronaut-mongo-reactive</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="http://mongodb.github.io/mongo-java-driver-reactivestreams">MongoDB Reactive Driver</a></p></td>
 </tr>
 <tr>
@@ -231,7 +395,7 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-bolt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.neo4j:micronaut-neo4j-bolt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/neo4j/neo4j-java-driver">Bolt Java Driver</a> for <a href="https://neo4j.com">Neo4j</a></p></td>
 </tr>
 <tr>
@@ -239,15 +403,19 @@ function addJsClass() {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-postgres-reactive</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/reactiverse/reactive-pg-client">Reactive Postgres Client</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-vertx-mysql-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-mysql-client">Reactive MySQL Client</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-redis-lettuce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.sql:micronaut-vertx-pg-client</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-pg-client">Reactive Postgres Client</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.redis:micronaut-redis-lettuce</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://lettuce.io">Lettuce</a> driver for <a href="https://redis.io">Redis</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-cassandra</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.cassandra:micronaut-cassandra</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the <a href="https://github.com/datastax/java-driver">Datastax Java Driver</a> for <a href="http://cassandra.apache.org">Cassandra</a></p></td>
 </tr>
 </tbody>
@@ -258,7 +426,7 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-mongo-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.mongodb:micronaut-mongo-reactive"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -280,7 +448,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>The following sections go into more detail about configuration options and the exposed beans for each implementation.</p>
 </div>
 
-<h2 id="sqlSupport"><a class="anchor" href="#sqlSupport"></a>12.1.1 Configuring a SQL Data Source</h2>
+<h2 id="sqlSupport"><a class="anchor" href="#sqlSupport"></a>12.2.1 Configuring a SQL Data Source</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/sqlSupport.adoc"'>
@@ -322,13 +490,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-tomcat")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-tomcat")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-tomcat&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -340,13 +508,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-hikari")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-hikari")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-hikari&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -358,14 +526,32 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.configuration:micronaut-jdbc-dbcp")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-dbcp")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-jdbc-dbcp&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut.sql:micronaut-jdbc-ucp")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-jdbc-ucp&lt;/artifactId&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -399,7 +585,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 </div>
 </div>
 
-<h2 id="hibernateSupport"><a class="anchor" href="#hibernateSupport"></a>12.1.2 Configuring Hibernate</h2>
+<h2 id="hibernateSupport"><a class="anchor" href="#hibernateSupport"></a>12.2.2 Configuring Hibernate</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/hibernateSupport.adoc"'>
@@ -440,13 +626,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-jpa")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.sql:micronaut-hibernate-jpa")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.sql&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-jpa&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -487,7 +673,7 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 </div>
 </div>
 
-<h2 id="mongoSupport"><a class="anchor" href="#mongoSupport"></a>12.1.3 Configuring MongoDB</h2>
+<h2 id="mongoSupport"><a class="anchor" href="#mongoSupport"></a>12.2.3 Configuring MongoDB</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/mongoSupport.adoc"'>
@@ -525,13 +711,13 @@ For GORM for Hibernate you should not have both the <code>hibernate-jpa</code> a
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-mongo-reactive")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.mongodb:micronaut-mongo-reactive")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.mongodb&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-mongo-reactive&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -579,7 +765,7 @@ The <code>mongodb.uri</code> follows the <a href="https://docs.mongodb.com/manua
 </div>
 </div>
 
-<h2 id="neo4jSupport"><a class="anchor" href="#neo4jSupport"></a>12.1.4 Configuring Neo4j</h2>
+<h2 id="neo4jSupport"><a class="anchor" href="#neo4jSupport"></a>12.2.4 Configuring Neo4j</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/neo4jSupport.adoc"'>
@@ -660,7 +846,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <p>See the <a href="https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/">Micronaut Neo4j</a> documentation for further information on configuring and using Neo4j within Micronaut.</p>
 </div>
 
-<h2 id="postgresSupport"><a class="anchor" href="#postgresSupport"></a>12.1.5 Configuring Postgres</h2>
+<h2 id="postgresSupport"><a class="anchor" href="#postgresSupport"></a>12.2.5 Configuring Postgres</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/postgresSupport.adoc"'>
@@ -670,7 +856,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 
 
 <div class="paragraph">
-<p>Micronaut supports reactive and non-blocking client to connect to Postgres using <a href="https://github.com/reactiverse/reactive-pg-client">reactive-pg-client</a>, allowing  to handle many database connections with a single thread.</p>
+<p>Micronaut supports reactive and non-blocking client to connect to Postgres using <a href="https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-pg-client">vertx-pg-client</a>, allowing to handle many database connections with a single thread.</p>
 </div>
 <div class="sect1">
 <h2 id="_configuring_the_reactive_postgres_client">Configuring the Reactive Postgres Client</h2>
@@ -684,11 +870,11 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <td class="content">
 <div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply the <code>postgres-reactive</code> feature to configure the Reactive Postgres client in your project:</p>
+<p>If you are creating your project using the Micronaut CLI, supply the <code>vertx-pg-client</code> feature to configure the Reactive Postgres client in your project:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ mn create-app my-app --features postgres-reactive</pre>
+<pre>$ mn create-app my-app --features vertx-pg-client</pre>
 </div>
 </div>
 </td>
@@ -696,12 +882,12 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 </table>
 </div>
 <div class="paragraph">
-<p>To configure the Reactive Postgres client you should first add <code>postgres-reactive</code> module to your classpath:</p>
+<p>To configure the Reactive Postgres client you should first add <code>vertx-pg-client</code> module to your classpath:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-postgres-reactive"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.sql:micronaut-vertx-pg-client"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -710,7 +896,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 </div>
 </div>
 
-<h2 id="redisSupport"><a class="anchor" href="#redisSupport"></a>12.1.6 Configuring Redis</h2>
+<h2 id="redisSupport"><a class="anchor" href="#redisSupport"></a>12.2.6 Configuring Redis</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/redisSupport.adoc"'>
@@ -751,7 +937,7 @@ The <code>neo4j.uri</code> setting should be in the format as described in the <
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-redis-lettuce"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.redis:micronaut-redis-lettuce"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -785,7 +971,7 @@ The <code>redis.uri</code> setting should be in the format as described in the <
 </div>
 </div>
 
-<h2 id="cassandraSupport"><a class="anchor" href="#cassandraSupport"></a>12.1.7 Configuring Cassandra</h2>
+<h2 id="cassandraSupport"><a class="anchor" href="#cassandraSupport"></a>12.2.7 Configuring Cassandra</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/cassandraSupport.adoc"'>
@@ -818,7 +1004,7 @@ The <code>redis.uri</code> setting should be in the format as described in the <
 <p>For more information see the <a href="https://micronaut-projects.github.io/micronaut-cassandra/latest/guide/">Micronaut Cassandra Module</a> documentation.</p>
 </div>
 
-<h2 id="liquibaseSupport"><a class="anchor" href="#liquibaseSupport"></a>12.1.8 Configuring Liquibase</h2>
+<h2 id="liquibaseSupport"><a class="anchor" href="#liquibaseSupport"></a>12.2.8 Configuring Liquibase</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/liquibaseSupport.adoc"'>
@@ -832,7 +1018,7 @@ The <code>redis.uri</code> setting should be in the format as described in the <
 <a href="https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html">these instructions</a>.</p>
 </div>
 
-<h2 id="flywaySupport"><a class="anchor" href="#flywaySupport"></a>12.1.9 Configuring Flyway</h2>
+<h2 id="flywaySupport"><a class="anchor" href="#flywaySupport"></a>12.2.9 Configuring Flyway</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/configurations/dataAccess/flywaySupport.adoc"'>

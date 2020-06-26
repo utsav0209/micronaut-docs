@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>7.2 Declarative HTTP Clients with @Client 1.3.6</title>
+    <title>7.3 Declarative HTTP Clients with @Client 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -121,9 +121,9 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>7.2 Declarative HTTP Clients with @Client</h1>
+                    <h1>7.3 Declarative HTTP Clients with @Client</h1>
 
-                    <p><strong>Version:</strong> 1.3.6</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -158,7 +158,7 @@ function addJsClass() {
                 
 
                 
-<h2 id="clientAnnotation"><a class="anchor" href="#clientAnnotation"></a>7.2 Declarative HTTP Clients with @Client</h2>
+<h2 id="clientAnnotation"><a class="anchor" href="#clientAnnotation"></a>7.3 Declarative HTTP Clients with @Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation.adoc"'>
@@ -290,14 +290,24 @@ Be aware that some annotations, such as <a href="../api/io/micronaut/http/client
 </table>
 </div>
 <div class="paragraph">
-<p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> and <code>hibernate-validator</code> dependencies on your classpath. For example in <code>build.gradle</code>:</p>
+<p>Additionally, to use the <code>javax.validation</code> features you should have the <code>validation</code> module on your classpath:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-validation"
-compile "io.micronaut.configuration:micronaut-hibernate-validator"</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-validator")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>On the server-side of Micronaut you can implement the <code>PetOperations</code> interface:</p>
@@ -520,7 +530,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <p>Returning <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture</a> instances is also supported. Note that returning any other type <em>will result in a blocking request</em> and is not recommended other than for testing.</p>
 </div>
 
-<h2 id="clientParameters"><a class="anchor" href="#clientParameters"></a>7.2.1 Customizing Parameter Binding</h2>
+<h2 id="clientParameters"><a class="anchor" href="#clientParameters"></a>7.3.1 Customizing Parameter Binding</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientParameters.adoc"'>
@@ -653,7 +663,7 @@ Single&lt;Pet&gt; save(
 </table>
 </div>
 
-<h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.2.2 Streaming with @Client</h2>
+<h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.3.2 Streaming with @Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientAnnotationStreaming.adoc"'>
@@ -677,7 +687,6 @@ Single&lt;Pet&gt; save(
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Flowable;
-import reactor.core.publisher.Flux;
 
 @Client("/streaming")
 public interface HeadlineClient {
@@ -693,7 +702,6 @@ public interface HeadlineClient {
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
-import reactor.core.publisher.Flux
 
 @Client("/streaming")
 interface HeadlineClient {
@@ -711,7 +719,6 @@ interface HeadlineClient {
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
-import reactor.core.publisher.Flux
 
 
 @Client("/streaming")
@@ -890,14 +897,14 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
-        return Flux.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        return Flowable.&lt;Event&lt;Headline&gt;&gt;create((emitter) -&gt; {  <b class="conum">(2)</b>
             Headline headline = new Headline();
             headline.setText("Latest Headline at " + ZonedDateTime.now());
-            emitter.next(Event.of(headline));
-            emitter.complete();
-        }).repeat(100) <b class="conum">(3)</b>
-          .delayElements(Duration.ofSeconds(1)); <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline));
+            emitter.onComplete();
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+          .delay(1, TimeUnit.SECONDS); <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -905,14 +912,14 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
-        Flux.&lt;Event&lt;Headline&gt;&gt;create { emitter -&gt; <b class="conum">(2)</b>
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
+        Flowable.&lt;Event&lt;Headline&gt;&gt;create( { emitter -&gt; <b class="conum">(2)</b>
             Headline headline = new Headline()
             headline.setText("Latest Headline at " + ZonedDateTime.now())
-            emitter.next(Event.of(headline))
-            emitter.complete()
-        }.repeat(100) <b class="conum">(3)</b>
-         .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline))
+            emitter.onComplete()
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+         .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -920,15 +927,15 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="title">SSE Controller</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
-    internal fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt; {
-        return Flux.create&lt;Event&lt;Headline&gt;&gt; {  <b class="conum">(2)</b>
+    internal fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt; {
+        return Flowable.create&lt;Event&lt;Headline&gt;&gt;( {  <b class="conum">(2)</b>
             emitter -&gt;
             val headline = Headline()
             headline.text = "Latest Headline at " + ZonedDateTime.now()
-            emitter.next(Event.of(headline))
-            emitter.complete()
-        }.repeat(100) <b class="conum">(3)</b>
-                .delayElements(Duration.ofSeconds(1)) <b class="conum">(4)</b>
+            emitter.onNext(Event.of(headline))
+            emitter.onComplete()
+        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
+                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -965,7 +972,7 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 public interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines();
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines();
 }</code></pre>
 </div>
 </div>
@@ -976,7 +983,7 @@ public interface HeadlineClient {
 interface HeadlineClient {
 
     @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
-    Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
+    Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
 }</code></pre>
 </div>
 </div>
@@ -987,7 +994,7 @@ interface HeadlineClient {
 interface HeadlineClient {
 
     @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM])
-    fun streamHeadlines(): Flux&lt;Event&lt;Headline&gt;&gt;
+    fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt;
 }</code></pre>
 </div>
 </div>
@@ -996,7 +1003,7 @@ interface HeadlineClient {
 </div>
 </div>
 
-<h2 id="clientError"><a class="anchor" href="#clientError"></a>7.2.3 Error Responses</h2>
+<h2 id="clientError"><a class="anchor" href="#clientError"></a>7.3.3 Error Responses</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientError.adoc"'>
@@ -1037,7 +1044,7 @@ The one exception to this rule is HTTP Not Found (404) responses. This exception
 <p>If the method returns an <code>HttpResponse</code>, the original response will be returned. If the return type is <code>Optional</code>, an empty optional will be returned. For all other types, <code>null</code> will be returned.</p>
 </div>
 
-<h2 id="clientHeaders"><a class="anchor" href="#clientHeaders"></a>7.2.4 Customizing Request Headers</h2>
+<h2 id="clientHeaders"><a class="anchor" href="#clientHeaders"></a>7.3.4 Customizing Request Headers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientHeaders.adoc"'>
@@ -1133,7 +1140,7 @@ interface PetClient : PetOperations {
 </div>
 </div>
 
-<h2 id="clientJackson"><a class="anchor" href="#clientJackson"></a>7.2.5 Customizing Jackson Settings</h2>
+<h2 id="clientJackson"><a class="anchor" href="#clientJackson"></a>7.3.5 Customizing Jackson Settings</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientJackson.adoc"'>
@@ -1195,7 +1202,7 @@ If the customization offered by <code>JacksonFeatures</code> is not enough, you 
 </table>
 </div>
 
-<h2 id="clientRetry"><a class="anchor" href="#clientRetry"></a>7.2.6 Retry and Circuit Breaker</h2>
+<h2 id="clientRetry"><a class="anchor" href="#clientRetry"></a>7.3.6 Retry and Circuit Breaker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientRetry.adoc"'>
@@ -1249,7 +1256,7 @@ interface PetClient : PetOperations {
 <p>For more information on customizing retry, see the section on <a href="#retry">Retry Advice</a>.</p>
 </div>
 
-<h2 id="clientFallback"><a class="anchor" href="#clientFallback"></a>7.2.7 Client Fallbacks</h2>
+<h2 id="clientFallback"><a class="anchor" href="#clientFallback"></a>7.3.7 Client Fallbacks</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/clientFallback.adoc"'>
@@ -1339,7 +1346,7 @@ If you purely want to use fallbacks to help with testing against external Micros
 <p>Of course, the actual behaviour of the fallback is down to you. You could for example implement a fallback that pulls data from a local cache when the real data is not available, and sends alert emails to operations about downtime or whatever.</p>
 </div>
 
-<h2 id="netflixHystrix"><a class="anchor" href="#netflixHystrix"></a>7.2.8 Netflix Hystrix Support</h2>
+<h2 id="netflixHystrix"><a class="anchor" href="#netflixHystrix"></a>7.3.8 Netflix Hystrix Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/httpClient/clientAnnotation/netflixHystrix.adoc"'>
@@ -1374,11 +1381,22 @@ If you purely want to use fallbacks to help with testing against external Micros
 <div class="paragraph">
 <p>Micronaut features integration with Hystrix through the <code>netflix-hystrix</code> module, which you can add to your <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.configuration:micronaut-netflix-hystrix"</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.netflix:micronaut-netflix-hystrix")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.netflix&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-netflix-hystrix&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="sect1">
 <h2 id="_using_the_hystrixcommand_annotation">Using the @HystrixCommand Annotation</h2>

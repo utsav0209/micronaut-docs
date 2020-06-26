@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>6.23 Server Sent Events 1.3.6</title>
+    <title>6.23 Server Sent Events 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.23 Server Sent Events</h1>
 
-                    <p><strong>Version:</strong> 1.3.6</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -220,15 +220,19 @@ function addJsClass() {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.annotation.*;
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.*;
 import io.micronaut.http.sse.Event;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
 @Controller("/headlines")
 public class HeadlineController {
 
-    @Get
+    @ExecuteOn(TaskExecutors.IO)
+    @Get(produces = MediaType.TEXT_EVENT_STREAM)
     public Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = new String[]{"1.0", "2.0"}; <b class="conum">(2)</b>
 
@@ -252,6 +256,8 @@ public class HeadlineController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -261,7 +267,8 @@ import org.reactivestreams.Publisher
 @Controller("/headlines")
 class HeadlineController {
 
-    @Get
+    @ExecuteOn(TaskExecutors.IO)
+    @Get(produces = MediaType.TEXT_EVENT_STREAM)
     Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
 
@@ -285,9 +292,12 @@ class HeadlineController {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -298,7 +308,8 @@ import java.util.concurrent.Callable
 @Controller("/headlines")
 class HeadlineController {
 
-    @Get
+    @ExecuteOn(TaskExecutors.IO)
+    @Get(produces = [MediaType.TEXT_EVENT_STREAM])
     fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
         val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
 
@@ -339,6 +350,18 @@ class HeadlineController {
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>The <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html">Emitter</a> interface&#8217;s <code>onComplete</code> method is used to indicate when to finish sending server sent events.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You typically want to schedule SSE event streams on a separate executor. The previous example uses <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> to execute the stream on the I/O executor.
+</td>
 </tr>
 </table>
 </div>

@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>8.1.5 AWS Parameter Store Support 1.3.6</title>
+    <title>8.1.5 AWS Parameter Store Support 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>8.1.5 AWS Parameter Store Support</h1>
 
-                    <p><strong>Version:</strong> 1.3.6</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -141,13 +141,22 @@ function addJsClass() {
 <div class="paragraph">
 <p>Micronaut supports configuration sharing via AWS System Manager Parameter Store. You will need the following dependencies configured:</p>
 </div>
-<div class="listingblock">
-<div class="title">Example <code>build.gradle</code> for AWS System Manager Parameter Store</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut:micronaut-discovery-client"
-compile "io.micronaut.configuration:micronaut-aws-common"
-compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.aws:micronaut-aws-parameter-store")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.aws&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-aws-parameter-store&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>To enable distributed configuration a <code>src/main/resources/bootstrap.yml</code> configuration file must be created and configured to use Parameter Store:</p>
@@ -162,40 +171,9 @@ compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</c
         enabled: true</code></pre>
 </div>
 </div>
-<a id="io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration" href="#io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/discovery/aws/parameterstore/AWSParameterStoreConfiguration.html">AWSParameterStoreConfiguration</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.use-secure-parameters</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use auto-decryption via MKS for SecureString parameters. Default value ({@value DEFAULT_SECURE}).
- If set to false, you will not get unencrypted values.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.root-hierarchy-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The the root hierarchy on the parameter store. Default value ("/" + PREFIX + "/").</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws.client.system-manager.parameterstore.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable or disable distributed configuration with AWS Parameter Store. Default value (false).</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration.adoc[]</p>
+</div>
 <div class="paragraph">
 <p>You can configure shared properties by going into the AWS Console &#8594; System Manager &#8594; Parameter Store</p>
 </div>
@@ -206,7 +184,7 @@ compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.308'</c
 <p>You can make environment specific configurations as well by including the environment name after an underscore <code>_</code>. For example if your <code>micronaut.application.name</code> setting is set to <code>helloworld</code> then providing configuration values under <code>helloworld_test</code> will be applied only to the <code>test</code> environment.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Configuration Resolution Precedence</caption>
+<caption class="title">Table 1. Configuration Resolution Precedence</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
