@@ -352,10 +352,12 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 
 @Singleton<b class="conum">(2)</b>
 public class V8Engine implements Engine {
+    @Override
     public String start() {
         return "Starting V8";
     }
 
+    @Override
     public int getCylinders() {
         return cylinders;
     }
@@ -392,6 +394,7 @@ public class Vehicle {
 class V8Engine implements Engine {
     int cylinders = 8
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -640,10 +643,12 @@ A prototype bean will have one instance created per place the bean is injected. 
 
 @Singleton
 public class V6Engine implements Engine {  <b class="conum">(2)</b>
+    @Override
     public String start() {
         return "Starting V6";
     }
 
+    @Override
     public int getCylinders() {
         return 6;
     }
@@ -651,10 +656,12 @@ public class V6Engine implements Engine {  <b class="conum">(2)</b>
 
 @Singleton
 public class V8Engine implements Engine {
+    @Override
     public String start() {
         return "Starting V8";
     }
 
+    @Override
     public int getCylinders() {
         return 8;
     }
@@ -687,6 +694,7 @@ public class Vehicle {
 class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
 
+    @Override
     String start() {
         "Starting V6"
     }
@@ -696,6 +704,7 @@ class V6Engine implements Engine { <b class="conum">(2)</b>
 class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -1512,6 +1521,7 @@ class V8Engine implements Engine {
         this.crankShaft = crankShaft;
     }
 
+    @Override
     public String start() {
         return "Starting V8";
     }
@@ -1541,6 +1551,7 @@ class V8Engine implements Engine {
         this.crankShaft = crankShaft
     }
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -2642,6 +2653,7 @@ public class V8Engine implements Engine {
     private int cylinders = 8;
     private boolean initialized = false; <b class="conum">(2)</b>
 
+    @Override
     public String start() {
         if(!initialized) {
             throw new IllegalStateException("Engine not initialized!");
@@ -2676,6 +2688,7 @@ class V8Engine implements Engine {
     int cylinders = 8
     boolean initialized = false <b class="conum">(2)</b>
 
+    @Override
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
 
@@ -3476,10 +3489,12 @@ class SampleEventListenerSpec : AnnotationSpec() {
         this.rodLength = rodLength;
     }
 
+    @Override
     public String start() {
         return "Starting V" + String.valueOf(getCylinders()) + " [rodLength=" + String.valueOf(getRodLength()) + "]";
     }
 
+    @Override
     public final int getCylinders() {
         return cylinders;
     }
@@ -3531,6 +3546,7 @@ public class EngineInitializer implements BeanInitializedEventListener&lt;Engine
     final int cylinders = 8
     double rodLength <b class="conum">(1)</b>
 
+    @Override
     String start() {
         return "Starting V${cylinders} [rodLength=$rodLength]"
     }

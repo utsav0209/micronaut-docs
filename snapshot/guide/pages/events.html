@@ -164,10 +164,12 @@ function addJsClass() {
         this.rodLength = rodLength;
     }
 
+    @Override
     public String start() {
         return "Starting V" + String.valueOf(getCylinders()) + " [rodLength=" + String.valueOf(getRodLength()) + "]";
     }
 
+    @Override
     public final int getCylinders() {
         return cylinders;
     }
@@ -219,6 +221,7 @@ public class EngineInitializer implements BeanInitializedEventListener&lt;Engine
     final int cylinders = 8
     double rodLength <b class="conum">(1)</b>
 
+    @Override
     String start() {
         return "Starting V${cylinders} [rodLength=$rodLength]"
     }
