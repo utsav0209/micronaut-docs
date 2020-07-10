@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>5 Aspect Oriented Programming 2.0.0</title>
+    <title>5 Aspect Oriented Programming 1.3.7</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Aspect Oriented Programming</h1>
 
-                    <p><strong>Version:</strong> 2.0.0</p>
+                    <p><strong>Version:</strong> 1.3.7</p>
                 </div>
 
                 
@@ -576,7 +576,7 @@ Since Micronaut injection is done at compile time, generally the advice should b
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Timed
+<pre class="highlight"><code class="language-java" data-lang="java">@Cacheable("my-cache")
 @Factory
 public class MyFactory {
 
@@ -590,7 +590,7 @@ public class MyFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Timed
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Cacheable("my-cache")
 @Factory
 class MyFactory {
 
@@ -604,7 +604,7 @@ class MyFactory {
 <div class="listingblock multi-language-sample">
 <div class="title">AOP Advice at the type level of a <code>@Factory</code></div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Timed
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Cacheable("my-cache")
 @Factory
 open class MyFactory {
 
@@ -616,7 +616,7 @@ open class MyFactory {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will log the time it takes to create the <code>MyBean</code> bean.</p>
+<p>The above example will cache creation of <code>MyBean</code> bean, according to the semantics defined by the <a href="../api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a> cache configuration.</p>
 </div>
 <div class="paragraph">
 <p>Now consider this example:</p>
@@ -628,7 +628,7 @@ open class MyFactory {
 public class MyFactory {
 
     @Prototype
-    @Timed
+    @Cacheable("my-cache")
     public MyBean myBean() {
         return new MyBean();
     }
@@ -642,7 +642,7 @@ public class MyFactory {
 class MyFactory {
 
     @Prototype
-    @Timed
+    @Cacheable("my-cache")
     MyBean myBean() {
         return new MyBean()
     }
@@ -656,7 +656,7 @@ class MyFactory {
 open class MyFactory {
 
     @Prototype
-    @Timed
+    @Cacheable("my-cache")
     open fun myBean(): MyBean {
         return MyBean()
     }
@@ -664,7 +664,7 @@ open class MyFactory {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will log the time it takes to execute all of the public methods of the <code>MyBean</code> bean, but not the bean creation.</p>
+<p>The above example will cache all of the public methods of the <code>MyBean</code> bean, but not the bean creation.</p>
 </div>
 <div class="paragraph">
 <p>The rationale for this behaviour is that you may at times wish to apply advice to a factory and at other times apply advice to the bean produced by the factory.</p>
@@ -1180,9 +1180,64 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <div class="paragraph">
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/travis/build/micronaut-projects/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.DefaultCacheConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.cache.DefaultCacheConfiguration" href="#io.micronaut.cache.DefaultCacheConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/cache/DefaultCacheConfiguration.html">DefaultCacheConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset used to serialize and deserialize values</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.initial-capacity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial cache capacity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum number of entries the cache may contain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.maximum-weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the maximum weight of entries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-write</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after writing into it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.expire-after-access</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache expiration duration after accessing it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.record-stats</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether record stats is enabled. Default value ({@value #DEFAULT_RECORD_STATS}).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.caches.*.test-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether test mode is enabled. Default value ({@value #DEFAULT_TESTMODE}).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
