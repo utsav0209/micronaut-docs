@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>6.18 Writing Response Data 1.3.7</title>
+    <title>6.18 Writing Response Data 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>6.18 Writing Response Data</h1>
 
-                    <p><strong>Version:</strong> 1.3.7</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -139,9 +139,9 @@ function addJsClass() {
 
 
 <div class="sect2">
-<h3 id="_writing_data_without_blocking">Writing Data without Blocking</h3>
+<h3 id="_reactively_writing_response_data">Reactively Writing Response Data</h3>
 <div class="paragraph">
-<p>Micronaut&#8217;s HTTP server supports writing data without blocking simply by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
+<p>Micronaut&#8217;s HTTP server supports writing chunks of response data by returning a <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> the emits objects that can be encoded to the HTTP response.</p>
 </div>
 <div class="paragraph">
 <p>The following table summarizes example return type signatures and the behaviour the server exhibits to handle each of them:</p>
@@ -180,7 +180,19 @@ function addJsClass() {
 <p>When returning reactive type the server will use a <code>Transfer-Encoding</code> of <code>chunked</code> and keep writing data until the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>'s <code>onComplete</code> method is called.</p>
 </div>
 <div class="paragraph">
-<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item, without blocking, and then request the next item, thus controlling back pressure.</p>
+<p>The server will request a single item from the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a>, write the item and then request the next item, controlling back pressure.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is up to the implementation of the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> to schedule any blocking I/O work that may be done as a result of subscribing to the publisher.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -189,7 +201,7 @@ function addJsClass() {
 <p>In some cases you may wish to integrate with a library that does not support non-blocking I/O.</p>
 </div>
 <div class="paragraph">
-<p>In this you can return a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object from any controller method. The <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> has various signatures that allowing writing to traditional blocking streams like <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html">Writer</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html">OutputStream</a>.</p>
+<p>In this case you can return a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object from any controller method. The <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> has various signatures that allowing writing to traditional blocking streams like <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html">Writer</a> or <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html">OutputStream</a>.</p>
 </div>
 <div class="paragraph">
 <p>When returning a <a href="../api/io/micronaut/core/io/Writable.html">Writable</a> object the blocking I/O operation will be shifted to the I/O thread pool so that the Netty event loop is not blocked.</p>

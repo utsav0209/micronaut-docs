@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3.15 Bean Validation 1.3.7</title>
+    <title>3.15 Bean Validation 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -123,7 +123,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3.15 Bean Validation</h1>
 
-                    <p><strong>Version:</strong> 1.3.7</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
                 </div>
 
                 
@@ -176,7 +176,7 @@ function addJsClass() {
 <p>XML-based configuration</p>
 </li>
 <li>
-<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> (io.micronaut.validation.validator.constraints.ConstraintValidator) to define custom constraints, which supports validating annotations as compilation time.</p>
+<p>Instead of using <code>javax.validation.ConstraintValidator</code> you should use <a href="../api/io/micronaut/validation/validator/constraints/ConstraintValidator.html">ConstraintValidator</a> (io.micronaut.validation.validator.constraints.ConstraintValidator) to define custom constraints, which supports validating annotations at compilation time.</p>
 </li>
 </ul>
 </div>
@@ -215,13 +215,13 @@ function addJsClass() {
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.configuration:micronaut-hibernate-validator")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.beanvalidation:micronaut-hibernate-validator")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
+    &lt;groupId&gt;io.micronaut.beanvalidation&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-hibernate-validator&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -973,16 +973,17 @@ If <code>duration</code> is a property placeholder such as <code>@TimeOff(durati
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.annotation.AnnotationValue;
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.validation.validator.constraints.*;
-import javax.annotation.*;
 
 public class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     public boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
     }
 }</code></pre>
@@ -990,16 +991,17 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.annotation.AnnotationValue
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.*
-import javax.annotation.*
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
     boolean isValid(
             @Nullable CharSequence value,
-            @Nonnull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
-            @Nonnull ConstraintValidatorContext context) {
+            @NonNull AnnotationValue&lt;DurationPattern&gt; annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
         return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
     }
 }</code></pre>
