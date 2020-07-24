@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>13.1.3 Using Project Lombok 2.0.1.BUILD-SNAPSHOT</title>
+    <title>18.1 Resource Bundles 2.0.1.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -113,18 +113,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/configurations.html">&lt;&lt; <strong>12</strong><span>Configurations</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/cli.html">&lt;&lt; <strong>17</strong><span>Micronaut CLI</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/management.html"><strong>14</strong><span>Management &amp; Monitoring</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>19</strong><span>Appendices</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>13.1.3 Using Project Lombok</h1>
+                    <h1>18.1 Resource Bundles</h1>
 
                     <p><strong>Version:</strong> 2.0.1.BUILD-SNAPSHOT</p>
                 </div>
@@ -132,71 +132,73 @@ function addJsClass() {
                 
 
                 
-<h2 id="lombok"><a class="anchor" href="#lombok"></a>13.1.3 Using Project Lombok</h2>
+<h2 id="bundle"><a class="anchor" href="#bundle"></a>18.1 Resource Bundles</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/languageSupport/java/lombok.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/i18n/bundle.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p><a href="https://projectlombok.org">Project Lombok</a> is a popular java library that adds a number of useful AST transformations to the Java language via annotation processors.</p>
+<p>A resource bundle is a Java .properties file that contains locale-specific data.</p>
 </div>
 <div class="paragraph">
-<p>Since both Micronaut and Lombok use annotation processors, special care needs to be taken when configuring Lombok to ensure that the Lombok processor runs <strong>before</strong> Micronaut&#8217;s processor.</p>
-</div>
-<div class="paragraph">
-<p>For example in Gradle adding the following dependencies to the <code>dependencies</code> block:</p>
+<p>Given this Resource Bundle:</p>
 </div>
 <div class="listingblock">
-<div class="title">Configuring Lombok in Gradle</div>
+<div class="title">src/main/resources/io/micronaut/docs/i18n/messages_en.properties</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compileOnly 'org.projectlombok:lombok:1.18.12'
-annotationProcessor "org.projectlombok:lombok:1.18.12"
-...
-// Micronaut processor define after Lombok
-annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">hello=Hello</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/io/micronaut/docs/i18n/messages_es.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">hello=Hola</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Or when using Maven:</p>
+<p>You can use <a href="../api/io/micronaut/context/i18n/ResourceBundleMessageSource.html">ResourceBundleMessageSource</a>, an implementation of <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> which eases accessing <a href="https://docs.oracle.com/javase/8/docs/api//java/util/ResourceBundle.html">Resource Bundles</a> and provides cache functionality, to access the previous messages:</p>
 </div>
-<div class="listingblock">
-<div class="title">Configuring Lombok in Maven</div>
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
-  &lt;dependency&gt;
-    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;1.18.12&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-  &lt;/dependency&gt;
-&lt;/dependencies&gt;
-...
-&lt;annotationProcessorPaths&gt;
-  &lt;path&gt;
-    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;1.18.12&lt;/version&gt;
-  &lt;/path&gt;
-  &lt;path&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-    &lt;version&gt;${micronaut.version}&lt;/version&gt;
-  &lt;/path&gt;
-&lt;/annotationProcessorPaths&gt;</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">        ResourceBundleMessageSource ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages");
+        assertEquals("Hola", ms.getMessage("hello", MessageSource.MessageContext.of(new Locale("es"))).get());
+        assertEquals("Hello", ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get());</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        given:
+        ResourceBundleMessageSource ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
+
+        expect:
+        ms.getMessage("hello", MessageSource.MessageContext.of(new Locale("es"))).get() == 'Hola'
+
+        and:
+        ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get() == 'Hello'</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val ms = ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
+        Assertions.assertEquals("Hola", ms.getMessage("hello", MessageSource.MessageContext.of(Locale("es"))).get())
+        Assertions.assertEquals("Hello", ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get())</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-In both cases (Gradle and Maven) the Micronaut processor should be configured after the Lombok processor, reversing the order of the declared dependencies will not work.
+You should not instantiate a new <code>ResourceBundleMessageSource</code> each time you retrieve a message. Instantiate it once, maybe in a <code>javax.inject.Singleton</code>, and reuse it.
 </td>
 </tr>
 </table>
@@ -205,9 +207,9 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/configurations.html">&lt;&lt; <strong>12</strong><span>Configurations</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/cli.html">&lt;&lt; <strong>17</strong><span>Micronaut CLI</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/management.html"><strong>14</strong><span>Management &amp; Monitoring</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/appendix.html"><strong>19</strong><span>Appendices</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

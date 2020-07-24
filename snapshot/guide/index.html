@@ -77,7 +77,9 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#cli"><strong>17</strong><span>Micronaut CLI</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#appendix"><strong>18</strong><span>Appendices</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#i18n"><strong>18</strong><span>Internationalization</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#appendix"><strong>19</strong><span>Appendices</span></a></div>
                                 
                             </div>
                         </div>
@@ -528,15 +530,19 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-proxy"><a href="#proxy"><strong>17.6</strong><span>Proxy Configuration</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-appendix"><a href="#appendix"><strong>18</strong><span>Appendices</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-i18n"><a href="#i18n"><strong>18</strong><span>Internationalization</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-faq"><a href="#faq"><strong>18.1</strong><span>Frequently Asked Questions (FAQ)</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-bundle"><a href="#bundle"><strong>18.1</strong><span>Resource Bundles</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-usingsnapshots"><a href="#usingsnapshots"><strong>18.2</strong><span>Using Snapshots</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-appendix"><a href="#appendix"><strong>19</strong><span>Appendices</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-problems"><a href="#problems"><strong>18.3</strong><span>Common Problems</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-faq"><a href="#faq"><strong>19.1</strong><span>Frequently Asked Questions (FAQ)</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-breaks"><a href="#breaks"><strong>18.4</strong><span>Breaking Changes</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-usingsnapshots"><a href="#usingsnapshots"><strong>19.2</strong><span>Using Snapshots</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-problems"><a href="#problems"><strong>19.3</strong><span>Common Problems</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-breaks"><a href="#breaks"><strong>19.4</strong><span>Breaking Changes</span></a></div>
         
         </div>
     </div>
@@ -33623,7 +33629,90 @@ if (project.hasProperty('rebelAgent')) {
 <p>For Windows systems the environment variable can be configured under <code>My Computer/Advanced/Environment Variables</code>.</p>
 </div>
 
-<h1 id="appendix"><a class="anchor" href="#appendix"></a>18 Appendices</h1>
+<h1 id="i18n"><a class="anchor" href="#i18n"></a>18 Internationalization</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/i18n.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+
+
+<h2 id="bundle"><a class="anchor" href="#bundle"></a>18.1 Resource Bundles</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/i18n/bundle.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>A resource bundle is a Java .properties file that contains locale-specific data.</p>
+</div>
+<div class="paragraph">
+<p>Given this Resource Bundle:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/io/micronaut/docs/i18n/messages_en.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">hello=Hello</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/io/micronaut/docs/i18n/messages_es.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">hello=Hola</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use <a href="../api/io/micronaut/context/i18n/ResourceBundleMessageSource.html">ResourceBundleMessageSource</a>, an implementation of <a href="../api/io/micronaut/context/MessageSource.html">MessageSource</a> which eases accessing <a href="https://docs.oracle.com/javase/8/docs/api//java/util/ResourceBundle.html">Resource Bundles</a> and provides cache functionality, to access the previous messages:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        ResourceBundleMessageSource ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages");
+        assertEquals("Hola", ms.getMessage("hello", MessageSource.MessageContext.of(new Locale("es"))).get());
+        assertEquals("Hello", ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get());</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        given:
+        ResourceBundleMessageSource ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
+
+        expect:
+        ms.getMessage("hello", MessageSource.MessageContext.of(new Locale("es"))).get() == 'Hola'
+
+        and:
+        ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get() == 'Hello'</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">ResourceBundleMessageSource Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val ms = ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
+        Assertions.assertEquals("Hola", ms.getMessage("hello", MessageSource.MessageContext.of(Locale("es"))).get())
+        Assertions.assertEquals("Hello", ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get())</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+You should not instantiate a new <code>ResourceBundleMessageSource</code> each time you retrieve a message. Instantiate it once, maybe in a <code>javax.inject.Singleton</code>, and reuse it.
+</td>
+</tr>
+</table>
+</div>
+
+<h1 id="appendix"><a class="anchor" href="#appendix"></a>19 Appendices</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix.adoc"'>
@@ -33634,7 +33723,7 @@ if (project.hasProperty('rebelAgent')) {
 
 
 
-<h2 id="faq"><a class="anchor" href="#faq"></a>18.1 Frequently Asked Questions (FAQ)</h2>
+<h2 id="faq"><a class="anchor" href="#faq"></a>19.1 Frequently Asked Questions (FAQ)</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/faq.adoc"'>
@@ -33741,7 +33830,7 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 </div>
 </div>
 
-<h2 id="usingsnapshots"><a class="anchor" href="#usingsnapshots"></a>18.2 Using Snapshots</h2>
+<h2 id="usingsnapshots"><a class="anchor" href="#usingsnapshots"></a>19.2 Using Snapshots</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/usingsnapshots.adoc"'>
@@ -33841,7 +33930,7 @@ dependencyManagement {
 </table>
 </div>
 
-<h2 id="problems"><a class="anchor" href="#problems"></a>18.3 Common Problems</h2>
+<h2 id="problems"><a class="anchor" href="#problems"></a>19.3 Common Problems</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/problems.adoc"'>
@@ -33881,7 +33970,7 @@ dependencyManagement {
 </div>
 </div>
 
-<h2 id="breaks"><a class="anchor" href="#breaks"></a>18.4 Breaking Changes</h2>
+<h2 id="breaks"><a class="anchor" href="#breaks"></a>19.4 Breaking Changes</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/appendix/breaks.adoc"'>
