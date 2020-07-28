@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>13 Language Support 2.0.0</title>
+    <title>13 Language Support 2.0.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -89,7 +89,10 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/i18n.html"><strong>18</strong><span>Internationalization</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>19</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -123,7 +126,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>13 Language Support</h1>
 
-                    <p><strong>Version:</strong> 2.0.0</p>
+                    <p><strong>Version:</strong> 2.0.1</p>
                 </div>
 
                 
@@ -335,8 +338,8 @@ If you do not enable processing for custom annotations you define these annotati
 <div class="listingblock">
 <div class="title">Configuring Lombok in Gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compileOnly 'org.projectlombok:lombok:1.16.20'
-annotationProcessor "org.projectlombok:lombok:1.16.20"
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compileOnly 'org.projectlombok:lombok:1.18.12'
+annotationProcessor "org.projectlombok:lombok:1.18.12"
 ...
 // Micronaut processor define after Lombok
 annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
@@ -348,11 +351,20 @@ annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
 <div class="listingblock">
 <div class="title">Configuring Lombok in Maven</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;annotationProcessorPaths&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;1.18.12&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+...
+&lt;annotationProcessorPaths&gt;
   &lt;path&gt;
     &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
     &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;1.18.0&lt;/version&gt;
+    &lt;version&gt;1.18.12&lt;/version&gt;
   &lt;/path&gt;
   &lt;path&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
@@ -716,15 +728,15 @@ static class MyRoutes extends GroovyRouteBuilder {
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-hibernate-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.groovy:micronaut-hibernate-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/hibernate/manual">GORM for Hibernate</a> for Groovy applications. See the <a href="#hibernateSupport">Hibernate Support</a> docs</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-mongo-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.groovy:micronaut-mongo-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/mongodb/manual">GORM for MongoDB</a> for Groovy applications. See the <a href="#mongoSupport">Mongo Support</a> docs.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.configuration:micronaut-neo4j-gorm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut.groovy:micronaut-neo4j-gorm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures <a href="http://gorm.grails.org/latest/neo4j/manual">GORM for Neo4j</a> for Groovy applications. See the <a href="#neo4jSupport">Neo4j Support</a> docs.</p></td>
 </tr>
 </tbody>

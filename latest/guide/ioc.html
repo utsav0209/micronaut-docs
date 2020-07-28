@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3 Inversion of Control 2.0.0</title>
+    <title>3 Inversion of Control 2.0.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -89,7 +89,10 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/cli.html"><strong>17</strong><span>Micronaut CLI</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>18</strong><span>Appendices</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/i18n.html"><strong>18</strong><span>Internationalization</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/appendix.html"><strong>19</strong><span>Appendices</span></a>
                         </div>
                         
                     </div>
@@ -123,7 +126,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 2.0.0</p>
+                    <p><strong>Version:</strong> 2.0.1</p>
                 </div>
 
                 
@@ -250,15 +253,15 @@ function addJsClass() {
 <div class="title">Configuring Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-  id "net.ltgt.apt" version "0.21" // <1>
+  id "com.diffplug.eclipse.apt" version "3.22.0" // <1>
 }
 
 ...
 dependencies {
-    annotationProcessor("io.micronaut:micronaut-inject-java:2.0.0") // <2>
-    implementation("io.micronaut:micronaut-inject:2.0.0")
+    annotationProcessor("io.micronaut:micronaut-inject-java:2.0.1") // <2>
+    implementation("io.micronaut:micronaut-inject:2.0.1")
     ...
-    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.0.0") // <3>
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.0.1") // <3>
     ...
 }</code></pre>
 </div>
@@ -267,7 +270,7 @@ dependencies {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Apply net.ltgt.apt Gradle plugin which makes it easier/safer to use Java annotation processors</td>
+<td>Apply <code>com.diffplug.eclipse.apt</code> Gradle plugin which modifes Eclipse projects to include gradle annotationProcessor dependencies</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -352,10 +355,12 @@ The example uses Java&#8217;s <a href="https://docs.oracle.com/javase/tutorial/e
 
 @Singleton<b class="conum">(2)</b>
 public class V8Engine implements Engine {
+    @Override
     public String start() {
         return "Starting V8";
     }
 
+    @Override
     public int getCylinders() {
         return cylinders;
     }
@@ -392,6 +397,7 @@ public class Vehicle {
 class V8Engine implements Engine {
     int cylinders = 8
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -640,10 +646,12 @@ A prototype bean will have one instance created per place the bean is injected. 
 
 @Singleton
 public class V6Engine implements Engine {  <b class="conum">(2)</b>
+    @Override
     public String start() {
         return "Starting V6";
     }
 
+    @Override
     public int getCylinders() {
         return 6;
     }
@@ -651,10 +659,12 @@ public class V6Engine implements Engine {  <b class="conum">(2)</b>
 
 @Singleton
 public class V8Engine implements Engine {
+    @Override
     public String start() {
         return "Starting V8";
     }
 
+    @Override
     public int getCylinders() {
         return 8;
     }
@@ -687,6 +697,7 @@ public class Vehicle {
 class V6Engine implements Engine { <b class="conum">(2)</b>
     int cylinders = 6
 
+    @Override
     String start() {
         "Starting V6"
     }
@@ -696,6 +707,7 @@ class V6Engine implements Engine { <b class="conum">(2)</b>
 class V8Engine implements Engine { <b class="conum">(3)</b>
     int cylinders = 8
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -1512,6 +1524,7 @@ class V8Engine implements Engine {
         this.crankShaft = crankShaft;
     }
 
+    @Override
     public String start() {
         return "Starting V8";
     }
@@ -1541,6 +1554,7 @@ class V8Engine implements Engine {
         this.crankShaft = crankShaft
     }
 
+    @Override
     String start() {
         "Starting V8"
     }
@@ -2613,8 +2627,17 @@ package my.package</code></pre>
 <div class="paragraph">
 <p>In the above example, all bean definitions within the annotated package will only be loaded and made available if a <code>javax.sql.DataSource</code> bean is present. This allows you to implement conditional auto-configuration of bean definitions.</p>
 </div>
-<div class="paragraph">
-<p>INFO: Java and Kotlin also support this functionality via <code>package-info.java</code>. Kotlin does not support a <code>package-info.kt</code> as of version 1.3.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Java and Kotlin also support this functionality via <code>package-info.java</code>. Kotlin does not support a <code>package-info.kt</code> as of version 1.3.
+</td>
+</tr>
+</table>
 </div>
 
 <h2 id="lifecycle"><a class="anchor" href="#lifecycle"></a>3.11 Life-Cycle Methods</h2>
@@ -2642,6 +2665,7 @@ public class V8Engine implements Engine {
     private int cylinders = 8;
     private boolean initialized = false; <b class="conum">(2)</b>
 
+    @Override
     public String start() {
         if(!initialized) {
             throw new IllegalStateException("Engine not initialized!");
@@ -2676,6 +2700,7 @@ class V8Engine implements Engine {
     int cylinders = 8
     boolean initialized = false <b class="conum">(2)</b>
 
+    @Override
     String start() {
         if(!initialized) throw new IllegalStateException("Engine not initialized!")
 
@@ -3476,10 +3501,12 @@ class SampleEventListenerSpec : AnnotationSpec() {
         this.rodLength = rodLength;
     }
 
+    @Override
     public String start() {
         return "Starting V" + String.valueOf(getCylinders()) + " [rodLength=" + String.valueOf(getRodLength()) + "]";
     }
 
+    @Override
     public final int getCylinders() {
         return cylinders;
     }
@@ -3531,6 +3558,7 @@ public class EngineInitializer implements BeanInitializedEventListener&lt;Engine
     final int cylinders = 8
     double rodLength <b class="conum">(1)</b>
 
+    @Override
     String start() {
         return "Starting V${cylinders} [rodLength=$rodLength]"
     }
@@ -3669,7 +3697,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.0.0")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.0.1")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3679,7 +3707,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0&lt;/version&gt;
+        &lt;version&gt;2.0.1&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -3702,7 +3730,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.0.0")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.0.1")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3710,7 +3738,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.0&lt;/version&gt;
+    &lt;version&gt;2.0.1&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -4211,29 +4239,10 @@ The <code>AnnotationMapper</code> should be on the annotation processor classpat
 <div class="sect2">
 <h3 id="_jackson_and_bean_introspection">Jackson and Bean Introspection</h3>
 <div class="paragraph">
-<p>You can enable bean introspection integration with Jackson for reflection-free JSON serialization and deserialization using the <code>jackson.bean-introspection-module</code> setting.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This feature is currently regarded as experimental and may be subject to changes in the future.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="title">Enabling Jackson Bean Introspection</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">jackson:
-    bean-introspection-module: true</code></pre>
-</div>
+<p>Jackson is configured to use the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API to read and write property values and construct objects resulting in reflection-free serialization/deserialization which is benefitial from a performance perspective and requires less configuring to operate correctly with runtimes such as GraalVM native.</p>
 </div>
 <div class="paragraph">
-<p>With the above configuration in place Jackson will be configured to use the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API to read and write property values and construct objects resulting in reflection-free serialization/deserialization which is benefitial from a performance perspective and requires less configuring to operate correctly with runtimes such as GraalVM native.</p>
+<p>This feature is enabled by default, you can disable it by setting the <code>jackson.bean-introspection-module</code> configuration to <code>false</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4243,6 +4252,18 @@ This feature is currently regarded as experimental and may be subject to changes
 </td>
 <td class="content">
 Currently only bean properties (private field with public getter/setter) are supported and usage of public fields is not supported.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This feature is currently regarded as experimental and may be subject to changes in the future.
 </td>
 </tr>
 </table>
@@ -5422,8 +5443,8 @@ any of Spring&#8217;s bean definition styles:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.0"
-    compileOnly "io.micronaut:micronaut-inject-java:2.0.0"
+    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.1"
+    compileOnly "io.micronaut:micronaut-inject-java:2.0.1"
     ...
 }</code></pre>
 </div>
