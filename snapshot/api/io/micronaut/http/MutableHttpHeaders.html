@@ -217,25 +217,25 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#date-java.time.LocalDateTime-">date</a></span>(java.time.LocalDateTime&nbsp;date)</code>
-<div class="block">Adds the date header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the date header for the given <code>LocalDateTime</code>.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#date-long-">date</a></span>(long&nbsp;timeInMillis)</code>
-<div class="block">Adds the DATE header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the DATE header for the given <code>Long</code>.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#expires-java.time.LocalDateTime-">expires</a></span>(java.time.LocalDateTime&nbsp;date)</code>
-<div class="block">Adds the EXPIRES header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the EXPIRES header for the given <code>LocalDateTime</code>.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#expires-long-">expires</a></span>(long&nbsp;timeInMillis)</code>
-<div class="block">Adds the EXPIRES header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the EXPIRES header for the given <code>Long</code>.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -247,19 +247,19 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#ifModifiedSince-long-">ifModifiedSince</a></span>(long&nbsp;timeInMillis)</code>
-<div class="block">Adds the IF_MODIFIED_SINCE header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the IF_MODIFIED_SINCE header for the given <code>Long</code>.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#lastModified-java.time.LocalDateTime-">lastModified</a></span>(java.time.LocalDateTime&nbsp;date)</code>
-<div class="block">Adds the LAST_MODIFIED header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the LAST_MODIFIED header for the given <code>LocalDateTime</code>.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>default <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/http/MutableHttpHeaders.html#lastModified-long-">lastModified</a></span>(long&nbsp;timeInMillis)</code>
-<div class="block">Adds the LAST_MODIFIED header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the LAST_MODIFIED header for the given <code>Long</code>.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -344,7 +344,7 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../io/micronaut/core/type/MutableHeaders.html#add-java.lang.CharSequence-java.lang.CharSequence-">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/core/type/MutableHeaders.html" title="interface in io.micronaut.core.type">MutableHeaders</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>header</code> - The head name</dd>
+<dd><code>header</code> - The header name</dd>
 <dd><code>value</code> - The value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This headers object</dd>
@@ -414,12 +414,14 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>date</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;date(java.time.LocalDateTime&nbsp;date)</pre>
-<div class="block">Adds the date header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the date header for the given <code>LocalDateTime</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>date</code> - The local date time (will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
+<dd><code>date</code> - The local date time (assumed to represent system's default time-zone <code>ZoneId.systemDefault()</code>, will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../io/micronaut/http/MutableHttpHeaders.html#add-java.lang.CharSequence-java.time.ZonedDateTime-"><code>to set date time with time-zone.</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -430,12 +432,14 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>expires</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;expires(java.time.LocalDateTime&nbsp;date)</pre>
-<div class="block">Adds the EXPIRES header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the EXPIRES header for the given <code>LocalDateTime</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>date</code> - The local date time (will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
+<dd><code>date</code> - The local date time (assumed to represent system's default time-zone <code>ZoneId.systemDefault()</code>, will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../io/micronaut/http/MutableHttpHeaders.html#add-java.lang.CharSequence-java.time.ZonedDateTime-"><code>to set date time with time-zone.</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -446,12 +450,14 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>lastModified</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;lastModified(java.time.LocalDateTime&nbsp;date)</pre>
-<div class="block">Adds the LAST_MODIFIED header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the LAST_MODIFIED header for the given <code>LocalDateTime</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>date</code> - The local date time (will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
+<dd><code>date</code> - The local date time (assumed to represent system's default time-zone <code>ZoneId.systemDefault()</code>, will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../io/micronaut/http/MutableHttpHeaders.html#add-java.lang.CharSequence-java.time.ZonedDateTime-"><code>to set date time with time-zone.</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -465,9 +471,11 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <div class="block">Adds the IF_MODIFIED_SINCE header for the given <code>ZonedDateTime</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>date</code> - The local date time (will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
+<dd><code>date</code> - The local date time (assumed to represent system's default time-zone <code>ZoneId.systemDefault()</code>, will be converted to GMT) as per <code>DateTimeFormatter.RFC_1123_DATE_TIME</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../io/micronaut/http/MutableHttpHeaders.html#add-java.lang.CharSequence-java.time.ZonedDateTime-"><code>to set date time with time-zone.</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -478,10 +486,10 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>date</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;date(long&nbsp;timeInMillis)</pre>
-<div class="block">Adds the DATE header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the DATE header for the given <code>Long</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeInMillis</code> - The current time in milli seconds</dd>
+<dd><code>timeInMillis</code> - The time in milli seconds since Epoch.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
 </dl>
@@ -494,10 +502,10 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>expires</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;expires(long&nbsp;timeInMillis)</pre>
-<div class="block">Adds the EXPIRES header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the EXPIRES header for the given <code>Long</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeInMillis</code> - The current time in milli seconds</dd>
+<dd><code>timeInMillis</code> - The time in milli seconds since Epoch.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
 </dl>
@@ -510,10 +518,10 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>lastModified</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;lastModified(long&nbsp;timeInMillis)</pre>
-<div class="block">Adds the LAST_MODIFIED header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the LAST_MODIFIED header for the given <code>Long</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeInMillis</code> - The current time in milli seconds</dd>
+<dd><code>timeInMillis</code> - The time in milli seconds since Epoch.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
 </dl>
@@ -526,10 +534,10 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <li class="blockList">
 <h4>ifModifiedSince</h4>
 <pre>default&nbsp;<a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http">MutableHttpHeaders</a>&nbsp;ifModifiedSince(long&nbsp;timeInMillis)</pre>
-<div class="block">Adds the IF_MODIFIED_SINCE header for the given <code>ZonedDateTime</code>.</div>
+<div class="block">Adds the IF_MODIFIED_SINCE header for the given <code>Long</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeInMillis</code> - The current time in milli seconds</dd>
+<dd><code>timeInMillis</code> - The time in milli seconds since Epoch.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../io/micronaut/http/MutableHttpHeaders.html" title="interface in io.micronaut.http"><code>MutableHttpHeaders</code></a></dd>
 </dl>
@@ -644,7 +652,7 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <div class="block">Add a header for the given name and value.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>header</code> - The head name</dd>
+<dd><code>header</code> - The header name</dd>
 <dd><code>value</code> - The value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This headers object</dd>
@@ -662,7 +670,7 @@ extends <a href="../../../io/micronaut/core/type/MutableHeaders.html" title="int
 <div class="block">Add a header for the given name and value.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>header</code> - The head name</dd>
+<dd><code>header</code> - The header name</dd>
 <dd><code>value</code> - The value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This headers object</dd>
