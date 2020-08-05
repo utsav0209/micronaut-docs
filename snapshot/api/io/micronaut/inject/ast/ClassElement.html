@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18,"i2":18,"i3":18,"i4":18,"i5":18,"i6":18,"i7":18,"i8":18,"i9":18,"i10":18,"i11":18,"i12":18,"i13":18,"i14":18,"i15":18,"i16":6,"i17":18,"i18":18,"i19":18};
+var methods = {"i0":18,"i1":18,"i2":18,"i3":18,"i4":18,"i5":18,"i6":18,"i7":18,"i8":18,"i9":18,"i10":18,"i11":18,"i12":18,"i13":18,"i14":6,"i15":18,"i16":18,"i17":18,"i18":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaPrimitiveElement.html" title="enum in io.micronaut.annotation.processing.visitor">JavaPrimitiveElement</a></dd>
+<dd><a href="../../../../io/micronaut/ast/groovy/visitor/GroovyClassElement.html" title="class in io.micronaut.ast.groovy.visitor">GroovyClassElement</a>, <a href="../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor">JavaClassElement</a>, <a href="../../../../io/micronaut/inject/ast/PrimitiveElement.html" title="class in io.micronaut.inject.ast">PrimitiveElement</a></dd>
 </dl>
 <hr>
 <br>
@@ -234,39 +234,35 @@ extends <a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="i
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isAbstract--">isAbstract</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isArray--">isArray</a></span>()</code>
-<div class="block">Returns whether the class element is an array.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isAssignable-java.lang.Class-">isAssignable</a></span>(java.lang.Class&lt;?&gt;&nbsp;type)</code>
 <div class="block">Tests whether one type is assignable to another.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isAssignable-java.lang.String-">isAssignable</a></span>(java.lang.String&nbsp;type)</code>
 <div class="block">Tests whether one type is assignable to another.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isEnum--">isEnum</a></span>()</code>
 <div class="block">Whether this element is an enum.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isInterface--">isInterface</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#isIterable--">isIterable</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code><a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/ast/ClassElement.html#toArray--">toArray</a></span>()</code>
+<div class="block">Convert the class element to an element for the same type, but representing an array.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -274,14 +270,14 @@ extends <a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="i
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.ast.<a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="interface in io.micronaut.inject.ast">TypedElement</a></h3>
-<code><a href="../../../../io/micronaut/inject/ast/TypedElement.html#getGenericType--">getGenericType</a>, <a href="../../../../io/micronaut/inject/ast/TypedElement.html#isPrimitive--">isPrimitive</a></code></li>
+<code><a href="../../../../io/micronaut/inject/ast/TypedElement.html#getArrayDimensions--">getArrayDimensions</a>, <a href="../../../../io/micronaut/inject/ast/TypedElement.html#getGenericType--">getGenericType</a>, <a href="../../../../io/micronaut/inject/ast/TypedElement.html#isArray--">isArray</a>, <a href="../../../../io/micronaut/inject/ast/TypedElement.html#isPrimitive--">isPrimitive</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.ast.Element">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.ast.<a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a></h3>
-<code><a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-java.util.function.Consumer-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getDocumentation--">getDocumentation</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isStatic--">isStatic</a></code></li>
+<code><a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-java.util.function.Consumer-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getDocumentation--">getDocumentation</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getName--">getName</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a>, <a href="../../../../io/micronaut/inject/ast/Element.html#isStatic--">isStatic</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.annotation.AnnotationMetadataDelegate">
@@ -485,21 +481,6 @@ default&nbsp;<a href="../../../../io/micronaut/inject/ast/ClassElement.html" tit
 </dl>
 </li>
 </ul>
-<a name="isAbstract--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isAbstract</h4>
-<pre>default&nbsp;boolean&nbsp;isAbstract()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Whether the class element is abstract</dd>
-</dl>
-</li>
-</ul>
 <a name="isInterface--">
 <!--   -->
 </a>
@@ -510,22 +491,6 @@ default&nbsp;<a href="../../../../io/micronaut/inject/ast/ClassElement.html" tit
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Whether the class element is an interface</dd>
-</dl>
-</li>
-</ul>
-<a name="isArray--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isArray</h4>
-<pre>default&nbsp;boolean&nbsp;isArray()</pre>
-<div class="block">Returns whether the class element is an array.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/inject/ast/TypedElement.html#isArray--">isArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="interface in io.micronaut.inject.ast">TypedElement</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if this class element is an array</dd>
 </dl>
 </li>
 </ul>
@@ -610,7 +575,7 @@ default&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../io/micronaut
 <a name="isAssignable-java.lang.Class-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isAssignable</h4>
 <pre>default&nbsp;boolean&nbsp;isAssignable(java.lang.Class&lt;?&gt;&nbsp;type)</pre>
@@ -620,6 +585,21 @@ default&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../io/micronaut
 <dd><code>type</code> - The type to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if and only if the this type is assignable to the second</dd>
+</dl>
+</li>
+</ul>
+<a name="toArray--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toArray</h4>
+<pre><a href="../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;toArray()</pre>
+<div class="block">Convert the class element to an element for the same type, but representing an array.
+ Do not mutate the existing instance. Create a new instance instead.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A new class element</dd>
 </dl>
 </li>
 </ul>
