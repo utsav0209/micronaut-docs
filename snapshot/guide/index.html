@@ -29358,7 +29358,7 @@ interface HeadlineFlowClient {
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>native-image</code> tool</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut currently supports GraalVM 20.1.0 version and the team is improving the support in every new release. Don&#8217;t
+<p>Micronaut currently supports GraalVM 20.2.0 version and the team is improving the support in every new release. Don&#8217;t
 hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
 </div>
 <div class="paragraph">
@@ -29485,10 +29485,10 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 20.1.0 with SDKman</div>
+<div class="title">Installing GraalVM 20.2.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.1.0.r8-grl # or 20.1.0.r11-grl if you want to use JDK 11
-$ sdk use java 20.1.0.r8-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.2.0.r8-grl # or 20.2.0.r11-grl if you want to use JDK 11
+$ sdk use java 20.2.0.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -29504,14 +29504,14 @@ $ sdk use java 20.1.0.r8-grl</code></pre>
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image --no-server -cp build/libs/hello-world-0.1-all.jar</code></pre>
+$ native-image -cp build/libs/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Maven</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package
-$ native-image --no-server -cp target/hello-world-0.1-all.jar</code></pre>
+$ native-image -cp target/hello-world-0.1-all.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -29638,18 +29638,13 @@ automatically added to the generated file.</p>
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server \ <i class="conum" data-value="1"></i><b>(1)</b>
-             --class-path build/libs/hello-world-0.1-all.jar <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --class-path build/libs/hello-world-0.1-all.jar <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Do not start a background server to generate the native image</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>The <code>class-path</code> argument is used to refer to the Micronaut shaded JAR</td>
 </tr>
 </table>
