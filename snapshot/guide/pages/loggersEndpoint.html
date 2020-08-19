@@ -211,7 +211,7 @@ a body providing the log level to configure.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -i -X POST
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -i -X POST \
        -H "Content-Type: application/json" \
        -d '{ "configuredLevel": "ERROR" }' \
        http://localhost:8080/loggers/ROOT
@@ -240,6 +240,19 @@ $ curl http://localhost:8080/loggers/ROOT
         enabled: Boolean
         sensitive: Boolean</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+By default the endpoint doesn&#8217;t allow to change the log level by unauthorized users (even if <code>sensitive</code> is set to
+<code>false</code>). To allow it is necessary set <code>endpoints.loggers.write-sensitive</code> to <code>false</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
