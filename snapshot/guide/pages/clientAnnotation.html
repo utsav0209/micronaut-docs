@@ -777,11 +777,13 @@ annotation class Metadata</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="title">Annotation Argument Binder</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.convert.ArgumentConversionContext;
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.naming.NameUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder;
+import io.micronaut.http.client.bind.ClientRequestUriContext;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
@@ -798,7 +800,10 @@ public class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequ
 
 
     @Override
-    public void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context, @NotNull Object value, @NotNull MutableHttpRequest&lt;?&gt; request) {
+    public void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context,
+                     @NonNull ClientRequestUriContext uriContext,
+                     @NotNull Object value,
+                     @NotNull MutableHttpRequest&lt;?&gt; request) {
         if (value instanceof Map) {
             for (Map.Entry&lt;?, ?&gt; entry: ((Map&lt;?, ?&gt;) value).entrySet()) {
                 String key = NameUtils.hyphenate(StringUtils.capitalize(entry.getKey().toString()), false);
@@ -817,6 +822,7 @@ import io.micronaut.core.naming.NameUtils
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.MutableHttpRequest
 import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder
+import io.micronaut.http.client.bind.ClientRequestUriContext
 import org.jetbrains.annotations.NotNull
 
 import javax.inject.Singleton
@@ -827,7 +833,10 @@ class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequestBind
     Class&lt;Metadata&gt; annotationType = Metadata
 
     @Override
-    void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context, @NotNull Object value, @NotNull MutableHttpRequest&lt;?&gt; request) {
+    void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context,
+              @NonNull ClientRequestUriContext uriContext,
+              @NotNull Object value,
+              @NotNull MutableHttpRequest&lt;?&gt; request) {
         if (value instanceof Map) {
             for (def entry: ((Map) value).entrySet()) {
                 String key = NameUtils.hyphenate(StringUtils.capitalize(entry.key.toString()), false)
@@ -846,6 +855,7 @@ import io.micronaut.core.naming.NameUtils
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.MutableHttpRequest
 import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder
+import io.micronaut.http.client.bind.ClientRequestUriContext
 import javax.inject.Singleton
 
 @Singleton
@@ -855,7 +865,10 @@ class MetadataClientArgumentBinder : AnnotatedClientArgumentRequestBinder&lt;Met
         return Metadata::class.java
     }
 
-    override fun bind(context: ArgumentConversionContext&lt;Any&gt;, value: Any, request: MutableHttpRequest&lt;*&gt;) {
+    override fun bind(context: ArgumentConversionContext&lt;Any&gt;,
+                      uriContext: ClientRequestUriContext,
+                      value: Any,
+                      request: MutableHttpRequest&lt;*&gt;) {
         if (value is Map&lt;*, *&gt;) {
             for ((key1, value1) in value) {
                 val key = NameUtils.hyphenate(StringUtils.capitalize(key1.toString()), false)
@@ -920,6 +933,7 @@ interface MetadataClient {
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.client.bind.ClientRequestUriContext;
 import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder;
 
 import javax.inject.Singleton;
@@ -934,7 +948,10 @@ public class MetadataClientArgumentBinder implements TypedClientArgumentRequestB
     }
 
     @Override
-    public void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context, @NonNull Metadata value, @NonNull MutableHttpRequest&lt;?&gt; request) {
+    public void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context,
+                     @NonNull ClientRequestUriContext uriContext,
+                     @NonNull Metadata value,
+                     @NonNull MutableHttpRequest&lt;?&gt; request) {
         request.header("X-Metadata-Version", value.getVersion().toString());
         request.header("X-Metadata-Deployment-Id", value.getDeploymentId().toString());
     }
@@ -948,6 +965,7 @@ public class MetadataClientArgumentBinder implements TypedClientArgumentRequestB
 import io.micronaut.core.convert.ArgumentConversionContext
 import io.micronaut.core.type.Argument
 import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.ClientRequestUriContext
 import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder
 
 import javax.inject.Singleton
@@ -962,7 +980,10 @@ class MetadataClientArgumentBinder implements TypedClientArgumentRequestBinder&l
     }
 
     @Override
-    void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context, @NonNull Metadata value, @NonNull MutableHttpRequest&lt;?&gt; request) {
+    void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context,
+              @NonNull ClientRequestUriContext uriContext,
+              @NonNull Metadata value,
+              @NonNull MutableHttpRequest&lt;?&gt; request) {
         request.header("X-Metadata-Version", value.version.toString())
         request.header("X-Metadata-Deployment-Id", value.deploymentId.toString())
     }
@@ -975,6 +996,7 @@ class MetadataClientArgumentBinder implements TypedClientArgumentRequestBinder&l
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.convert.ArgumentConversionContext
 import io.micronaut.core.type.Argument
 import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.ClientRequestUriContext
 import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder
 import javax.inject.Singleton
 
@@ -985,7 +1007,10 @@ class MetadataClientArgumentBinder : TypedClientArgumentRequestBinder&lt;Metadat
         return Argument.of(Metadata::class.java)
     }
 
-    override fun bind(context: ArgumentConversionContext&lt;Metadata?&gt;, value: Metadata, request: MutableHttpRequest&lt;*&gt;) {
+    override fun bind(context: ArgumentConversionContext&lt;Metadata?&gt;,
+                      uriContext: ClientRequestUriContext,
+                      value: Metadata,
+                      request: MutableHttpRequest&lt;*&gt;) {
         request.header("X-Metadata-Version", value.version.toString())
         request.header("X-Metadata-Deployment-Id", value.deploymentId.toString())
     }
