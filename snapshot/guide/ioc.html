@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3 Inversion of Control 2.0.2.BUILD-SNAPSHOT</title>
+    <title>3 Inversion of Control 2.1.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -126,7 +126,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Inversion of Control</h1>
 
-                    <p><strong>Version:</strong> 2.0.2.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.1.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -258,10 +258,10 @@ function addJsClass() {
 
 ...
 dependencies {
-    annotationProcessor("io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT") // <2>
-    implementation("io.micronaut:micronaut-inject:2.0.2.BUILD-SNAPSHOT")
+    annotationProcessor("io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT") // <2>
+    implementation("io.micronaut:micronaut-inject:2.1.0.BUILD-SNAPSHOT")
     ...
-    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT") // <3>
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT") // <3>
     ...
 }</code></pre>
 </div>
@@ -3697,7 +3697,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3707,7 +3707,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;2.0.2.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;2.1.0.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -3730,7 +3730,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.0.2.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.1.0.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -3738,7 +3738,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.2.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;2.1.0.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -5367,7 +5367,51 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 
 
 <div class="paragraph">
-<p>Micronaut has integrations with Spring in several forms. See the <a href="https://micronaut-projects.github.io/micronaut-spring/latest/guide">Micronaut Spring Documentation</a> for more information.</p>
+<p>The <a href="../api/io/micronaut/spring/beans/MicronautBeanProcessor.html">MicronautBeanProcessor</a>
+class is a <code>BeanFactoryPostProcessor</code> which will add Micronaut beans to a
+Spring Application Context.  An instance of <code>MicronautBeanProcessor</code> should
+be added to the Spring Application Context.  <code>MicronautBeanProcessor</code> requires
+a constructor parameter which represents a list of the types of
+Micronaut beans which should be added to the Spring Application Context.  The
+processor may be used in any Spring application.  As an example, a Grails 3
+application could take advantage of <code>MicronautBeanProcessor</code> to add all of the
+Micronaut HTTP Client beans to the Spring Application Context with something
+like the folowing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
+import io.micronaut.spring.beans.MicronautBeanProcessor
+import io.micronaut.http.client.annotation.Client
+
+beans = {
+    httpClientBeanProcessor MicronautBeanProcessor, Client
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Multiple types may be specified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
+import io.micronaut.spring.beans.MicronautBeanProcessor
+import io.micronaut.http.client.annotation.Client
+import com.sample.Widget
+
+beans = {
+    httpClientBeanProcessor MicronautBeanProcessor, [Client, Widget]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In a non-Grails application something similar may be specified using
+any of Spring&#8217;s bean definition styles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::spring/src/test/groovy/io/micronaut/spring/beans/MicronautBeanProcessorByAnnotationTypeSpec.groovy[tags=springconfig, indent=0]</code></pre>
+</div>
 </div>
 
 <h2 id="android"><a class="anchor" href="#android"></a>3.18 Android Support</h2>
@@ -5399,8 +5443,8 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>

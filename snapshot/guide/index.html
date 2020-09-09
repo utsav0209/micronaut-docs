@@ -650,670 +650,51 @@
 
 
 <div class="paragraph">
-<p>Micronaut 2.0.2.BUILD-SNAPSHOT includes the following changes:</p>
+<p>Micronaut 2.1.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
 <h3 id="_core_features">Core Features</h3>
 <div class="sect3">
-<h4 id="_support_for_jdk_14">Support for JDK 14</h4>
+<h4 id="_kotlin_1_4">Kotlin 1.4</h4>
 <div class="paragraph">
-<p>Micronaut has been updated to support JDK 14.</p>
+<p>Micronaut now ships with Kotlin 1.4 for those users using Kotlin.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_groovy_3">Groovy 3</h4>
+<h4 id="_introspections_for_jdk_14_records">Introspections for JDK 14 Records</h4>
 <div class="paragraph">
-<p>Micronaut now supports applications written in Groovy 3.</p>
+<p>It is now possible to define <a href="#introspection">bean introspections</a> on JDK 14+ record types (note these currently require the <code>––enable–preview</code> flag to the compiler and JVM).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_startup_performance_improvements">Startup Performance Improvements</h4>
+<h4 id="_client_binding_api">Client Binding API</h4>
 <div class="paragraph">
-<p>Startup time has been further improved in this release with typical startup time for a new application around 20% faster.</p>
+<p>A new API has been created to allow for binding declarative HTTP client method arguments to an HTTP request. See the <a href="#clientParameters">documentation</a> for more information.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvements_to_bean_introspections">Improvements to Bean Introspections</h4>
+<h4 id="_websocket_improvements">Websocket Improvements</h4>
 <div class="paragraph">
-<p>Bean introspections have been improved to support static creator methods, interfaces and enums. This means you can define a bean introspection on an interface with a private implementation such as:</p>
-</div>
-<div class="listingblock">
-<div class="title">Introspections on interfaces</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.core.annotation.Creator;
-
-@io.micronaut.core.annotation.Introspected
-interface Example {
-    String getName();
-
-    @Creator
-    static Example create(String name) {
-        return () -&gt; name;
-    }
-}</code></pre>
-</div>
+<p>Query parameters are now respected and bindable in the Micronaut websocket support.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_support_for_analyzing_the_injection_point">Support for Analyzing the Injection Point</h4>
+<h4 id="_httpresponse_improvements">HttpResponse Improvements</h4>
 <div class="paragraph">
-<p>Micronaut&#8217;s Dependency Injection implementation has been improved such that you can now receive an <a href="../api/io/micronaut/inject/InjectionPoint.html">InjectionPoint</a> instance to any <a href="../api/io/micronaut/context/annotation/Factory.html">@Factory</a> method. This makes it possible to customize how the bean is created based on the annotation metadata at the point at which the bean is injected.</p>
-</div>
-<div class="paragraph">
-<p>For example consider the following definition:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject @Client("http://foo.com") RxHttpClient client;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A factory method can receive the injection point and create a client based off of the value:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-protected DefaultHttpClient httpClient(InjectionPoint&lt;?&gt; injectionPoint) {
-    String url = metadata.stringValue(Client.class).orElse(null);
-    if (url != null) {
-        ......
-        URL parsedUrl = new URL(url) //handle exception
-        return new DefaultHttpClient(parsedUrl);
-    } else {
-        return new DefaultHttpClient();
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_eager_initialization_of_beans">Support for Eager Initialization of Beans</h4>
-<div class="paragraph">
-<p>Eager initialization of beans is useful in certain cases, such as on AWS Lambda where more CPU resources are assigned to Lamdba construction than execution. Therefore as for Micronaut 2.0, you can specify whether you want to eager initialization configuration or all singletons using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> interface:</p>
-</div>
-<div class="listingblock">
-<div class="title">Enabling Eager Initialization</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Application {
-
-    public static void main(String[] args) {
-        Micronaut.build(args)
-            .eagerInitSingletons(true) <i class="conum" data-value="1"></i><b>(1)</b>
-            .mainClass(Application.class)
-            .start();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Setting eager init to true initializes all singletons</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>It is also possible to just eager init configuration using <code>eagerInitConfiguration</code> which will initialize all <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> beans.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_spot_bugs_instead_of_jsr_305_nullable_nonnull_annotations">Spot Bugs Instead of JSR-305 Nullable/NonNull Annotations</h4>
-<div class="paragraph">
-<p>In Micronaut 1.x the Google distributed JSR-305 annotations library (<code>com.google.code.findbugs:jsr305</code>) was used to specify <code>@Nullable</code> and <code>@NonNull</code> on interfaces of the Micronaut API using the annotations contained within the <code>javax.annotation</code> package.</p>
-</div>
-<div class="paragraph">
-<p>Due to the fact that JSR-305 has been cancelled and that this dependency has potential licensing issues (by using the <code>javax</code> namespace) as well as problems with the cross packages on Java 9+ with the module system Micronaut 2.x switches to the <code>spotbugs-annotations</code> module provided by the <a href="https://spotbugs.github.io/">SpotBugs project</a>.</p>
-</div>
-<div class="paragraph">
-<p>It is recommended users of Micronaut use this API instead (although the <code>javax.annotation.Nullable</code> and <code>javax.annotation.NotNull</code> annotations continue to be supported).</p>
+<p>Cookies in HTTP responses from the client side are now retrievable on the HttpResponse. These are the cookies found in the <code>Set-Cookie</code> header.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cli_features">CLI Features</h3>
-<div class="sect3">
-<h4 id="_new_native_cli">New Native CLI</h4>
+<h3 id="_module_upgrades">Module Upgrades</h3>
 <div class="paragraph">
-<p>Micronaut&#8217;s <code>mn</code> command for the CLI has been rewritten in Micronaut itself and is now compiled into a native image <a href="https://github.com/micronaut-projects/micronaut-starter/releases/tag/v2.0.2.BUILD-SNAPSHOT">available on Linux, MacOS X and Windows</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_launch">Micronaut Launch</h4>
-<div class="paragraph">
-<p>Create Micronaut 2.0 applications without having the CLI installed using <code>curl</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl https://launch.micronaut.io/demo.zip -o demo.zip
-$ unzip demo.zip -d demo</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Or by visiting <a href="https://launch.micronaut.io" class="bare">https://launch.micronaut.io</a> in your browser.</p>
-</div>
-<div class="paragraph">
-<p>Run <code>curl <a href="https://launch.micronaut.io" class="bare">https://launch.micronaut.io</a></code> for more instructions on how to use the API or visit the <a href="https://launch.micronaut.io/swagger/views/swagger-ui/index.html">OpenAPI documentation</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_diff_command">Diff Command</h4>
-<div class="paragraph">
-<p>Run <code>mn feature-diff --features=[FEATURE NAME]</code> from the root of another Micronaut project to create a diff of the changes that need to be applied to enable the feature. For example:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using <code>feature-diff</code></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn feature-diff --features=azure-function
---- micronaut-cli.yml
-+++ micronaut-cli.yml
-@@ -3,4 +3,4 @@
- testFramework: junit
- sourceLanguage: java
- buildTool: gradle
--features: [app-name, application, gradle, http-client, java, junit, logback, netty-server, shade, yaml]
-+features: [app-name, application, azure-function, azure-function-http, gradle, java, junit, logback, yaml]
-
-
---- host.json
-+++ host.json
-@@ -1,0 +1,7 @@
-+{
-+  "version": "2.0",
-+  "extensionBundle": {
-+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
-+    "version": "[1.*, 2.0.0)"
-+  }
-+}</code></pre>
-</div>
-</div>
+<p>TODO</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_graalvm_improvements">GraalVM Improvements</h3>
+<h3 id="_dependency_upgrades">Dependency Upgrades</h3>
 <div class="paragraph">
-<p>Micronaut&#8217;s support for GraalVM Native Image has been moved out of experimental status, which solidifies our commitment to continue improving support for native images.</p>
-</div>
-<div class="sect3">
-<h4 id="_automatic_static_resource_detection_for_native_image">Automatic Static Resource Detection for Native Image</h4>
-<div class="paragraph">
-<p>It is not longer necessary to configure static resources for your Native Image builds. The <code>micronaut-graal</code> annotation processor will automatically do this for you for all resources found in <code>src/main/resources</code>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improved_support_for_jdbc_hibernate_in_native_image">Improved support for JDBC / Hibernate in Native Image</h4>
-<div class="paragraph">
-<p>It is no longer necessary to provide additional GraalVM related configuration to connect to databases via JDBC or Hibernate/JPA. Micronaut includes automatic support for the following drivers with GraalVM Native Image:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Oracle</p>
-</li>
-<li>
-<p>MariaDB</p>
-</li>
-<li>
-<p>Postgres</p>
-</li>
-<li>
-<p>MS SQL</p>
-</li>
-<li>
-<p>H2</p>
-</li>
-<li>
-<p>MySQL</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_flyway_migrations_in_native_image">Support for Flyway Migrations in Native Image</h4>
-<div class="paragraph">
-<p>The Micronaut Flyway module has been <a href="https://micronaut-projects.github.io/micronaut-flyway/2.0.x/guide/index.html#graalvm">updated with GraalVM Native Image support</a> so you can now run database migrations in Native Image.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_native_image_in_aws_sdk_v2">Support for Native Image in AWS SDK v2</h4>
-<div class="paragraph">
-<p>Version 2.0 of the Micronaut AWS module <a href="https://micronaut-projects.github.io/micronaut-aws/2.0.x/guide/index.html#sdkv2">includes support for Native Image</a> for the majority of the v2 AWS APIs including S3, Dynamo DB, SES, SNS, and SQS which will be helpful for those developing native AWS Lambda functions with Micronaut + GraalVM.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_jooq_in_native_image">Support for jOOQ in Native Image</h4>
-<div class="paragraph">
-<p>The Micronaut jOOQ module <a href="https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#_graalvm_native_image">includes support for Native Image</a> and it&#8217;s possible to use it with <a href="https://simpleflatmapper.org/">SimpleFlatMapper</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_redis_in_native_image">Support for Redis in Native Image</h4>
-<div class="paragraph">
-<p>The Micronaut Redis module <a href="https://micronaut-projects.github.io/micronaut-redis/latest/guide/index.html#graalvm">includes support for Native Image</a>. There are still some pending uses cases that won&#8217;t work because of how Lettuce driver works. Make sure you read the documentation.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_elasticsearch_in_native_image">Support for Elasticsearch in Native Image</h4>
-<div class="paragraph">
-<p>The Micronaut Elasticsearch module <a href="https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/index.html#graalvm">includes support for Native Image</a></p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_build_improvements">Build Improvements</h3>
-<div class="sect3">
-<h4 id="_new_maven_parent_pom">New Maven Parent POM</h4>
-<div class="paragraph">
-<p>Micronaut now provides a new parent POM that can be used in Maven projects to get setup quickly:</p>
-</div>
-<div class="listingblock">
-<div class="title">Using the Maven Parent POM</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;parent&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-parent&lt;/artifactId&gt;
-    &lt;version&gt;${micronaut.version}&lt;/version&gt;
-&lt;/parent&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_new_maven_plugin">New Maven Plugin</h4>
-<div class="paragraph">
-<p>The parent POM mentioned above includes a new Micronaut Maven Plugin that enables automatic application restart during development. Just run the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw mn:run</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Whenever you make a change to a class file the server will restart automatically.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_gradle_6_5_update">Gradle 6.5 Update</h4>
-<div class="paragraph">
-<p>For Gradle users who create new applications Gradle 6.5 is used which is compatible with JDK 14.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_better_gradle_incremental_annotation_processing_support">Better Gradle Incremental Annotation Processing Support</h4>
-<div class="paragraph">
-<p>Gradle builds with Micronaut 2 for both Java and Kotlin should be significantly faster thanks to improved support for <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_annotation_processing">Gradle incremental annotation processing</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_http_features">HTTP Features</h3>
-<div class="sect3">
-<h4 id="_support_for_http_2">Support for HTTP/2</h4>
-<div class="paragraph">
-<p>Micronaut&#8217;s Netty-based HTTP client and server have been updated to support HTTP/2.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="#http2Server">HTTP/2 documentation</a> for more information on how to enable support for HTTP/2.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_threading_model_and_event_loop_group_improvements">Threading Model and Event Loop Group Improvements</h4>
-<div class="paragraph">
-<p>Micronaut 2.0 uses a new shared default Netty <code>EventLoopGroup</code> for server worker threads and client request threads. This reduces context switching and improves resource utilization.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="#clientConfiguration">HTTP Client Configuration</a> section for information on how to configure the default <code>EventLoopGroup</code> and add additional `EventLoopGroup&#8217;s that are configured per client.</p>
-</div>
-<div class="paragraph">
-<p>In addition, as of Micronaut 2.0 all operations are by default executed on the <code>EventLoop</code> and users can optionally use the new <a href="../api/io/micronaut/scheduling/annotation/ExecuteOn.html">@ExecuteOn</a> annotation to specify a named executor to execute an operation on if required (for example to offload blocking operations such as interactions with JPA/JDBC to a specific thread pool).</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_code_requestbean_code">Support for <code>@RequestBean</code></h4>
-<div class="paragraph">
-<p>It is now possible to bind the properties of a POJO argument to a <code>@Controller</code> to request parameters, headers and so on using the <a href="../api/io/micronaut/http/annotation/RequestBean.html">@RequestBean</a> annotation.</p>
-</div>
-<div class="paragraph">
-<p>Thanks to Github user <a href="https://github.com/asodja">asodja</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_servlet">Micronaut Servlet</h4>
-<div class="paragraph">
-<p>Micronaut now includes support for creating <a href="https://github.com/micronaut-projects/micronaut-servlet">Servlet applications</a> and users can use the command line to create an application that targets popular Servlet containers:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app myapp --features jetty-server    # for Jetty
-$ mn create-app myapp --features tomcat-server   # for Tomcat
-$ mn create-app myapp --features undertow-server # for Undertow</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improved_support_for_server_side_content_negotiation">Improved Support for Server-Side Content Negotiation</h4>
-<div class="paragraph">
-<p>Micronaut will now correctly handle the HTTP <code>Accept</code> header and pick the most appropriate route for the specified accepted media types using <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation">Server-Side Content Negotiation</a>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This also applies to <code>@Error</code> routes making it possible to send different error responses for different content types
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-To add XML support use the <a href="https://github.com/micronaut-projects/micronaut-jackson-xml">Jackson XML</a> module
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improved_support_for_cloud_foundry">Improved Support for Cloud Foundry</h4>
-<div class="paragraph">
-<p>Micronaut will now process the <code>VCAP_APPLICATION</code> and <code>VCAP_SERVICES</code> environment variables and treat them as property sources.</p>
-</div>
-<div class="paragraph">
-<p>Thanks to <a href="https://github.com/fnonnenmacher">Fabian Nonnenmacher</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_http_client_improvements">HTTP Client Improvements</h4>
-<div class="paragraph">
-<p>It is no longer necessary to use <code>@Client(..)</code> to inject a default <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> instance. You can now inject the default client simply with:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Inject RxHttpClient client;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If no host is provided at the time of a request, a <a href="../api/io/micronaut/http/client/exceptions/NoHostException.html">NoHostException</a> will be thrown.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_api_for_proxying_requests">API for Proxying Requests</h4>
-<div class="paragraph">
-<p>A new API for writing API gateways and proxying requests has been added. See the documentation on the <a href="#proxyClient">ProxyHttpClient</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_endpoint_sensitivity">Endpoint Sensitivity</h4>
-<div class="paragraph">
-<p>It is now possible to control the sensitivity of individual endpoint methods. The <a href="../api/io/micronaut/management/endpoint/annotation/Sensitive.html">@Sensitive</a> annotation can be applied to endpoint methods to allow for some methods to have a different sensitivity than the value supplied to the endpoint annotation.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improvements_to_instrumentation">Improvements to Instrumentation</h4>
-<div class="paragraph">
-<p>The Instrumentation mechanism for RxJava 2 has been improved to address issues with MDC and reduce the size of reactive stack traces. Thanks to <a href="https://github.com/dstepanov">Denis Stepanov</a> and <a href="https://github.com/lgathy">Lajos Gathy</a> for their contributions in this area.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_kotlin_improvements">Kotlin Improvements</h3>
-<div class="sect3">
-<h4 id="_support_for_ktor_in_micronaut_launch">Support for KTOR in Micronaut Launch</h4>
-<div class="paragraph">
-<p>You can generate a Micronaut + <a href="https://ktor.io/">Ktor</a> application from <a href="https://micronaut.io/launch/">Micronaut Launch</a> or via the command line.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_kotlin_extensions">Micronaut Kotlin Extensions</h4>
-<div class="paragraph">
-<p>New <a href="https://micronaut-projects.github.io/micronaut-kotlin/1.0.x/guide/#extensionFunctions">Kotlin Extension Functions</a> are available that make the Kotlin + Micronaut experience that little bit better.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_serverless_improvements">Serverless Improvements</h3>
-<div class="sect3">
-<h4 id="_support_for_google_cloud_function">Support for Google Cloud Function</h4>
-<div class="paragraph">
-<p>You can now write Serverless functions that target Google Cloud Function using Micronaut. See the <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/">Micronaut GCP</a> documentation and <a href="https://github.com/micronaut-projects/micronaut-gcp/tree/master/examples/hello-world-cloud-function">example application</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_microsoft_azure_function">Support for Microsoft Azure Function</h4>
-<div class="paragraph">
-<p>You can now write Serverless functions that target Microsoft Azure using Micronaut. See the <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/">Micronaut Azure</a> documentation and <a href="https://github.com/micronaut-projects/micronaut-azure/tree/master/examples/azure-functions-example">example application</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improvements_to_micronaut_aws">Improvements to Micronaut AWS</h4>
-<div class="paragraph">
-<p><a href="https://micronaut-projects.github.io/micronaut-aws/2.0.x/guide/#whatsNew">Micronaut AWS 2.0.0</a> includes a number of improvements to support for AWS Lambda and AWS in general including new client modules for AWS SDK 2.0, cold start improvements on Lambda and improvements to the support for Amazon Alexa.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_module_improvements">Module Improvements</h3>
-<div class="paragraph">
-<p>Micronaut is more modular than ever, with several components now available in separate modules and upgrades to those modules.</p>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_cache_2_0_0_upgrade">Micronaut Cache 2.0.0 Upgrade</h4>
-<div class="paragraph">
-<p>Caching has been moved into a separate module and out of <code>micronaut-runtime</code>. If you need caching (including the annotations within <code>io.micronaut.cache.annotation</code>) you just need to add the individual module for the cache provider you are interested (for example Caffeine, Redis, Hazelcast etc.).</p>
-</div>
-<div class="paragraph">
-<p>See the documentation for the <a href="https://micronaut-projects.github.io/micronaut-cache/2.0.x/guide/">Cache module</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_sql_2_3_0_upgrade">Micronaut SQL 2.3.0 Upgrade</h4>
-<div class="paragraph">
-<p>Micronaut SQL has been improved to default to Micronaut transaction management (making Spring management optional) and includes <a href="https://micronaut-projects.github.io/micronaut-sql/2.3.x/guide/#jdbi">support for Jdbi</a> (Thanks to <a href="https://github.com/drmaas">Dan Maas</a> for this contribution).</p>
-</div>
-<div class="paragraph">
-<p>In addition, support has been added for <a href="https://micronaut-projects.github.io/micronaut-sql/2.3.x/guide/#jdbc">Oracle Universal Connection Pool</a>. Thanks to <a href="https://github.com/recursivecodes">Todd Sharp</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_security_2_0_0_upgrade">Micronaut Security 2.0.0 Upgrade</h4>
-<div class="paragraph">
-<p>The security module has seen many changes to improve the API and introduce new features to support a wider array of use cases.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-security/2.0.x/guide">Security module</a> for more information.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_new_reactive_modules">New Reactive Modules</h4>
-<div class="paragraph">
-<p>Whilst RxJava 2 remains the default, individual modules for other reactive libraries have been added.</p>
-</div>
-<div class="paragraph">
-<p>For RxJava 3:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava3:micronaut-rxjava3")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.rxjava3&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-rxjava3&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>For Reactor:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.reactor:micronaut-reactor")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.reactor&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-reactor&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>And legacy support for RxJava 1:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava1:micronaut-rxjava1")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.rxjava1&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-rxjava1&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>Included within the new RxJava 3 and Reactor modules are variants of <a href="../api/io/micronaut/http/client/RxHttpClient.html">RxHttpClient</a> called <code>Rx3HttpClient</code> and <code>ReactorHttpClient</code> respectively.</p>
-</div>
-<div class="paragraph">
-<p>To use the RxJava 3 HTTP client add the following dependency:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava3:micronaut-rxjava3-http-client")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.rxjava3&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-rxjava3-http-client&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>To use the Reactor HTTP client add:</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.rxjava3:micronaut-reactor-http-client")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.rxjava3&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-reactor-http-client&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_new_micronaut_nats_module">New Micronaut NATS module</h4>
-<div class="paragraph">
-<p>A new messaging module for <a href="https://nats.io">Nats.io</a> has been included in Micronaut core.</p>
-</div>
-<div class="paragraph">
-<p>See the documentation for <a href="https://micronaut-projects.github.io/micronaut-nats/latest/guide/">Micronaut Nats</a> for more information.</p>
-</div>
-<div class="paragraph">
-<p>Thanks to <a href="https://github.com/grimmjo">Joachim Grimm</a> for this contribution.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_module_upgrades">Module Upgrades</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Micronaut AWS - <code>1.3.9</code> &#8594; <code>2.0.0.RC1</code></p>
-</li>
-<li>
-<p>Micronaut Cache - <code>1.2.0</code> &#8594; <code>2.0.0.RC1</code></p>
-</li>
-<li>
-<p>Micronaut Data - <code>1.0.2</code> &#8594; <code>1.1.0.RC2</code></p>
-</li>
-<li>
-<p>Micronaut GCP - <code>1.1.0</code> &#8594; <code>2.0.0.RC2</code></p>
-</li>
-<li>
-<p>Micronaut gRPC - <code>1.1.1</code> &#8594; <code>2.0.0.RC1</code></p>
-</li>
-<li>
-<p>Micronaut Micrometer - <code>1.3.1</code> &#8594; <code>2.0.0.RC2</code></p>
-</li>
-<li>
-<p>Micronaut Mongo - <code>1.3.0</code> &#8594; <code>2.1.0</code></p>
-</li>
-<li>
-<p>Micronaut Neo4j - <code>1.3.0</code> &#8594; <code>3.0.0.RC1</code></p>
-</li>
-<li>
-<p>Micronaut SQL - <code>1.3.0</code> &#8594; <code>2.3.0</code></p>
-</li>
-<li>
-<p>Micronaut Security - <code>1.4.0</code> &#8594; <code>2.0.0.RC1</code></p>
-</li>
-<li>
-<p>Micronaut Spring - <code>1.0.2</code> &#8594; <code>2.0.1</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_dependency_upgrades">Dependency Upgrades</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Hibernate <code>5.4.10.Final</code> &#8594; <code>5.4.16.Final</code></p>
-</li>
-<li>
-<p>Groovy <code>2.5.8</code> &#8594; <code>3.0.3</code></p>
-</li>
-<li>
-<p>Mongo Reactive Streams <code>1.13.0</code> &#8594; <code>4.0.2</code></p>
-</li>
-<li>
-<p>Mongo Java Driver <code>3.12.0</code> &#8594; <code>4.0.2</code></p>
-</li>
-<li>
-<p>Jaeger <code>1.0.0</code> &#8594; <code>1.2.0</code></p>
-</li>
-<li>
-<p>Jackson <code>2.10.3</code> &#8594; <code>2.11.0</code></p>
-</li>
-</ul>
-</div>
+<p>TODO</p>
 </div>
 </div>
 
@@ -2478,10 +1859,10 @@ class HelloClientSpec {
 
 ...
 dependencies {
-    annotationProcessor("io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT") // <2>
-    implementation("io.micronaut:micronaut-inject:2.0.2.BUILD-SNAPSHOT")
+    annotationProcessor("io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT") // <2>
+    implementation("io.micronaut:micronaut-inject:2.1.0.BUILD-SNAPSHOT")
     ...
-    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT") // <3>
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT") // <3>
     ...
 }</code></pre>
 </div>
@@ -5917,7 +5298,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5927,7 +5308,7 @@ Bean event listeners are initialized <strong>before</strong> type converters. If
     &lt;path&gt;
         &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
-        &lt;version&gt;2.0.2.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;2.1.0.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
@@ -5950,7 +5331,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.0.2.BUILD-SNAPSHOT")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"io.micronaut:micronaut-core:2.1.0.BUILD-SNAPSHOT")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5958,7 +5339,7 @@ For Kotlin the <code>micronaut-inject-java</code> dependency should be in <code>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.2.BUILD-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;2.1.0.BUILD-SNAPSHOT&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -7587,7 +6968,51 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 
 
 <div class="paragraph">
-<p>Micronaut has integrations with Spring in several forms. See the <a href="https://micronaut-projects.github.io/micronaut-spring/latest/guide">Micronaut Spring Documentation</a> for more information.</p>
+<p>The <a href="../api/io/micronaut/spring/beans/MicronautBeanProcessor.html">MicronautBeanProcessor</a>
+class is a <code>BeanFactoryPostProcessor</code> which will add Micronaut beans to a
+Spring Application Context.  An instance of <code>MicronautBeanProcessor</code> should
+be added to the Spring Application Context.  <code>MicronautBeanProcessor</code> requires
+a constructor parameter which represents a list of the types of
+Micronaut beans which should be added to the Spring Application Context.  The
+processor may be used in any Spring application.  As an example, a Grails 3
+application could take advantage of <code>MicronautBeanProcessor</code> to add all of the
+Micronaut HTTP Client beans to the Spring Application Context with something
+like the folowing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
+import io.micronaut.spring.beans.MicronautBeanProcessor
+import io.micronaut.http.client.annotation.Client
+
+beans = {
+    httpClientBeanProcessor MicronautBeanProcessor, Client
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Multiple types may be specified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// grails-app/conf/spring/resources.groovy
+import io.micronaut.spring.beans.MicronautBeanProcessor
+import io.micronaut.http.client.annotation.Client
+import com.sample.Widget
+
+beans = {
+    httpClientBeanProcessor MicronautBeanProcessor, [Client, Widget]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In a non-Grails application something similar may be specified using
+any of Spring&#8217;s bean definition styles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">Unresolved directive in &lt;stdin&gt; - include::spring/src/test/groovy/io/micronaut/spring/beans/MicronautBeanProcessorByAnnotationTypeSpec.groovy[tags=springconfig, indent=0]</code></pre>
+</div>
 </div>
 
 <h2 id="android"><a class="anchor" href="#android"></a>3.18 Android Support</h2>
@@ -7619,8 +7044,8 @@ The example above implements the <a href="../api/io/micronaut/inject/annotation/
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT"
-    compileOnly "io.micronaut:micronaut-inject-java:2.0.2.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT"
+    compileOnly "io.micronaut:micronaut-inject-java:2.1.0.BUILD-SNAPSHOT"
     ...
 }</code></pre>
 </div>
@@ -8183,7 +7608,7 @@ Because the number of properties generated is exponential based on the number of
 public class Application {
 
     public static void main(String[] args) {
-        Micronaut.build(null)
+        Micronaut.build(args)
                 .mainClass(Application.class)
                 .environmentPropertySource(false)
                 //or
@@ -11765,7 +11190,7 @@ properties of a bean meet specific criteria, using <code>javax.validation</code>
 <p>To configure a weigher to be used with the <code>maximumWeight</code> configuration, create a bean that implements <code>io.micronaut.caffeine.cache.Weigher</code>. To associate a given weigher with only a specific cache, annotate the bean with <code>@Named(&lt;cache name&gt;)</code>. Weighers without a named qualifier will apply to all caches that don&#8217;t have a named weigher. If no beans are found, a default implementation will be used.</p>
 </div>
 <div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-cache/latest/guide/configurationreference.html#io.micronaut.cache.caffeine.DefaultCacheConfiguration">configuration reference</a> for all available configuration options.</p>
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.cache.DefaultCacheConfiguration.adoc[]</p>
 </div>
 </div>
 </div>
@@ -23760,6 +23185,360 @@ Single&lt;Pet&gt; save(
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="_custom_binding">Custom Binding</h4>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/http/client/bind/ClientArgumentRequestBinder.html">ClientArgumentRequestBinder</a> API is what is responsible for binding client arguments to the request. Custom binder classes registered as beans will automatically be used during the binding process. Annotation based binders are searched for first, with type based binders being searched if a binder was not found.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This is an experimental feature in 2.1 and subject to change! One limitation of binding is that binders many not manipulate or set the request URI because it can be a combination of many arguments.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_binding_by_annotation">Binding By Annotation</h5>
+<div class="paragraph">
+<p>To control how an argument is bound to the request based on the annotation applied to the argument, create a bean of type <a href="../api/io/micronaut/http/client/bind/AnnotatedClientArgumentRequestBinder.html">AnnotatedClientArgumentRequestBinder</a>. Any custom annotations must be annotated with <a href="../api/io/micronaut/core/bind/annotation/Bindable.html">@Bindable</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this example, see the following client:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With @Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/")
+public interface MetadataClient {
+
+    @Get("/client/bind")
+    String get(@Metadata Map&lt;String, Object&gt; metadata);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With @Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/")
+interface MetadataClient {
+
+    @Get("/client/bind")
+    String get(@Metadata Map metadata)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With @Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/")
+interface MetadataClient {
+
+    @Get("/client/bind")
+    operator fun get(@Metadata metadata: Map&lt;String, Any&gt;): String
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The argument is annotated with the following annotation:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Metadata Annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.core.bind.annotation.Bindable;
+import java.lang.annotation.*;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+@Bindable
+public @interface Metadata {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Metadata Annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.bind.annotation.Bindable
+import java.lang.annotation.*
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+@Bindable
+@interface Metadata {
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">@Metadata Annotation</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.bind.annotation.Bindable
+
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Bindable
+annotation class Metadata</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without any additional code, the client will attempt to convert the metadata to a string and append it as a query parameter. In this case that isn&#8217;t the desired effect so a custom binder must be created.</p>
+</div>
+<div class="paragraph">
+<p>The following binder will handle arguments passed to clients that are annotated with the <code>@Metadata</code> annotation and then mutate the request to contain the desired headers. The implementation could be modified to accept more types of data other than <code>Map</code>.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Annotation Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder;
+import io.micronaut.http.client.bind.ClientRequestUriContext;
+import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Singleton;
+import java.util.Map;
+
+@Singleton
+public class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequestBinder&lt;Metadata&gt; {
+
+    @NotNull
+    @Override
+    public Class&lt;Metadata&gt; getAnnotationType() {
+        return Metadata.class;
+    }
+
+
+    @Override
+    public void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context,
+                     @NonNull ClientRequestUriContext uriContext,
+                     @NotNull Object value,
+                     @NotNull MutableHttpRequest&lt;?&gt; request) {
+        if (value instanceof Map) {
+            for (Map.Entry&lt;?, ?&gt; entry: ((Map&lt;?, ?&gt;) value).entrySet()) {
+                String key = NameUtils.hyphenate(StringUtils.capitalize(entry.getKey().toString()), false);
+                request.header("X-Metadata-" + key, entry.getValue().toString());
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Annotation Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.ArgumentConversionContext
+import io.micronaut.core.naming.NameUtils
+import io.micronaut.core.util.StringUtils
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder
+import io.micronaut.http.client.bind.ClientRequestUriContext
+import org.jetbrains.annotations.NotNull
+
+import javax.inject.Singleton
+
+@Singleton
+class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequestBinder&lt;Metadata&gt; {
+
+    Class&lt;Metadata&gt; annotationType = Metadata
+
+    @Override
+    void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context,
+              @NonNull ClientRequestUriContext uriContext,
+              @NotNull Object value,
+              @NotNull MutableHttpRequest&lt;?&gt; request) {
+        if (value instanceof Map) {
+            for (def entry: ((Map) value).entrySet()) {
+                String key = NameUtils.hyphenate(StringUtils.capitalize(entry.key.toString()), false)
+                request.header("X-Metadata-" + key, entry.value.toString())
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Annotation Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.convert.ArgumentConversionContext
+import io.micronaut.core.naming.NameUtils
+import io.micronaut.core.util.StringUtils
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder
+import io.micronaut.http.client.bind.ClientRequestUriContext
+import javax.inject.Singleton
+
+@Singleton
+class MetadataClientArgumentBinder : AnnotatedClientArgumentRequestBinder&lt;Metadata&gt; {
+
+    override fun getAnnotationType(): Class&lt;Metadata&gt; {
+        return Metadata::class.java
+    }
+
+    override fun bind(context: ArgumentConversionContext&lt;Any&gt;,
+                      uriContext: ClientRequestUriContext,
+                      value: Any,
+                      request: MutableHttpRequest&lt;*&gt;) {
+        if (value is Map&lt;*, *&gt;) {
+            for ((key1, value1) in value) {
+                val key = NameUtils.hyphenate(StringUtils.capitalize(key1.toString()), false)
+                request.header("X-Metadata-$key", value1.toString())
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_binding_by_type">Binding By Type</h5>
+<div class="paragraph">
+<p>To bind to the request based on the type of the argument, create a bean of type <a href="../api/io/micronaut/http/client/bind/TypedClientArgumentRequestBinder.html">TypedClientArgumentRequestBinder</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this example, see the following client:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Client("/")
+public interface MetadataClient {
+
+    @Get("/client/bind")
+    String get(Metadata metadata);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/")
+interface MetadataClient {
+
+    @Get("/client/bind")
+    String get(Metadata metadata)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Client With Metadata Argument</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/")
+interface MetadataClient {
+    @Get("/client/bind")
+    operator fun get(metadata: Metadata?): String?
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without any additional code, the client will attempt to convert the metadata to a string and append it as a query parameter. In this case that isn&#8217;t the desired effect so a custom binder must be created.</p>
+</div>
+<div class="paragraph">
+<p>The following binder will handle arguments passed to clients that are of the <code>Metadata</code> type and then mutate the request to contain the desired headers.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Typed Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.type.Argument;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.client.bind.ClientRequestUriContext;
+import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder;
+
+import javax.inject.Singleton;
+
+@Singleton
+public class MetadataClientArgumentBinder implements TypedClientArgumentRequestBinder&lt;Metadata&gt; {
+
+    @Override
+    @NonNull
+    public Argument&lt;Metadata&gt; argumentType() {
+        return Argument.of(Metadata.class);
+    }
+
+    @Override
+    public void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context,
+                     @NonNull ClientRequestUriContext uriContext,
+                     @NonNull Metadata value,
+                     @NonNull MutableHttpRequest&lt;?&gt; request) {
+        request.header("X-Metadata-Version", value.getVersion().toString());
+        request.header("X-Metadata-Deployment-Id", value.getDeploymentId().toString());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Typed Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.convert.ArgumentConversionContext
+import io.micronaut.core.type.Argument
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.ClientRequestUriContext
+import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder
+
+import javax.inject.Singleton
+
+@Singleton
+class MetadataClientArgumentBinder implements TypedClientArgumentRequestBinder&lt;Metadata&gt; {
+
+    @Override
+    @NonNull
+    Argument&lt;Metadata&gt; argumentType() {
+        return Argument.of(Metadata)
+    }
+
+    @Override
+    void bind(@NonNull ArgumentConversionContext&lt;Metadata&gt; context,
+              @NonNull ClientRequestUriContext uriContext,
+              @NonNull Metadata value,
+              @NonNull MutableHttpRequest&lt;?&gt; request) {
+        request.header("X-Metadata-Version", value.version.toString())
+        request.header("X-Metadata-Deployment-Id", value.deploymentId.toString())
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Typed Argument Binder</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.convert.ArgumentConversionContext
+import io.micronaut.core.type.Argument
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.bind.ClientRequestUriContext
+import io.micronaut.http.client.bind.TypedClientArgumentRequestBinder
+import javax.inject.Singleton
+
+@Singleton
+class MetadataClientArgumentBinder : TypedClientArgumentRequestBinder&lt;Metadata?&gt; {
+
+    override fun argumentType(): Argument&lt;Metadata?&gt; {
+        return Argument.of(Metadata::class.java)
+    }
+
+    override fun bind(context: ArgumentConversionContext&lt;Metadata?&gt;,
+                      uriContext: ClientRequestUriContext,
+                      value: Metadata,
+                      request: MutableHttpRequest&lt;*&gt;) {
+        request.header("X-Metadata-Version", value.version.toString())
+        request.header("X-Metadata-Deployment-Id", value.deploymentId.toString())
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 
 <h2 id="clientAnnotationStreaming"><a class="anchor" href="#clientAnnotationStreaming"></a>7.3.2 Streaming with @Client</h2>
 
@@ -25302,7 +25081,7 @@ Any configuration property in the <a href="../api/io/micronaut/context/env/Envir
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Depending on the environment you are running in the backing implementation will be either <a href="../api/io/micronaut/discovery/cloud/gcp/GoogleComputeInstanceMetadata.html">GoogleComputeInstanceMetadata</a>, <a href="../api/io/micronaut/discovery/cloud/aws/AmazonEC2InstanceMetadata.html">AmazonEC2InstanceMetadata</a>,  <a href="../api/io/micronaut/discovery/cloud/digitalocean/DigitalOceanInstanceMetadata.html">DigitalOceanInstanceMetadata</a> or <a href="../api/io/micronaut/discovery/cloud/oraclecloud/OracleCloudInstanceMetadata.html">OracleCloudInstanceMetadata</a> with metadata found from the cloud provider metadata services.
+As of Micronaut 2.1.x this logic depends on the presence of the appropriate core Cloud module for Oracle Cloud, AWS or GCP.
 </td>
 </tr>
 </table>
@@ -25643,7 +25422,7 @@ vault:
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/configurationreference.html#io.micronaut.discovery.vault.config.VaultClientConfiguration">configuration reference</a> for all configuration options.</p>
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.vault.config.VaultClientConfiguration.adoc[]</p>
 </div>
 <div class="paragraph">
 <p>Micronaut will use the configured <code>micronaut.application.name</code> to lookup property sources for the application from Vault.</p>
@@ -25765,7 +25544,7 @@ spring:
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/configurationreference.html#io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration">configuration reference</a> for all configuration options.</p>
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration.adoc[]</p>
 </div>
 <div class="paragraph">
 <p>You can configure shared properties by going into the AWS Console &#8594; System Manager &#8594; Parameter Store</p>
@@ -25867,7 +25646,7 @@ oraclecloud:
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/configurationreference.html#io.micronaut.discovery.oraclecloud.vault.config.OracleCloudVaultClientConfiguration">configuration reference</a> for all configuration options.</p>
+<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.discovery.oraclecloud.vault.config.OracleCloudVaultClientConfiguration.adoc[]</p>
 </div>
 <div class="admonitionblock note">
 <table>
