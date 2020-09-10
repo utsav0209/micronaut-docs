@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>1.2 Upgrading to Micronaut 2.x 2.1.0.BUILD-SNAPSHOT</title>
+    <title>1.2 Upgrading to Micronaut 2.x 2.0.2.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -124,7 +124,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>1.2 Upgrading to Micronaut 2.x</h1>
 
-                    <p><strong>Version:</strong> 2.1.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.2.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -133,7 +133,7 @@ function addJsClass() {
 <h2 id="upgrading"><a class="anchor" href="#upgrading"></a>1.2 Upgrading to Micronaut 2.x</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/master/src/main/docs/guide/introduction/upgrading.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.0.x/src/main/docs/guide/introduction/upgrading.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -233,6 +233,13 @@ If you wish to return to the previous behaviour as defined in Micronaut 1.x you 
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_thread_factory_instrumentation_and_context_propagation">Thread Factory instrumentation and context propagation</h3>
+<div class="paragraph">
+<p>Prior to 2.0 Micronaut had all <code>java.util.concurrent.ThreadFactory</code> intercepted to allow propagating context. That didn&#8217;t work well in cases where threads are long-running causing the instrumentation to leak the context.
+It&#8217;s recommended to use <code>@Named(TaskExecutors.IO) ExecutorService executorService</code> which supports context propagation.</p>
 </div>
 </div>
 <div class="sect2">
