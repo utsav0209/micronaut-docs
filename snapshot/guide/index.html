@@ -685,6 +685,12 @@
 </div>
 </div>
 <div class="sect3">
+<h4 id="_default_environment">Default Environment</h4>
+<div class="paragraph">
+<p>Micronaut 2.1 introduces the concept of a default environment. One or more default environments can be set and they will apply if no other environments are explicitly specified. See the <a href="#environments">environments documentation</a> for information on how to use this new feature.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_mandatory_upgrade_for_netty_tcnative">Mandatory upgrade for Netty tcnative</h4>
 <div class="paragraph">
 <p>Due to a new <a href="https://github.com/netty/netty/pull/10407">SSL default value introduced in Netty 4.1.52</a>, if you are using tcnative you need to update it to <code>2.0.33.Final</code>.</p>
@@ -7323,6 +7329,27 @@ This also applies to <code>@MicronautTest(environments = )</code>
         assertFalse(ctx.environment.activeNames.contains(Environment.TEST))
         ctx.close()
     }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_default_environment">Default Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Micronaut supports the concept of one or many default environments. A default environment is one that is only applied if no other environments are explicitly specified. Environments can be explicitly specified either through the application context builder <code>Micronaut.build().environments(&#8230;&#8203;)</code>, through the <code>micronaut.environments</code> system property, or the <code>MICRONAUT_ENVIRONMENTS</code> environment variable. If an environment is configured through any of the above means, the default environment will <strong>not</strong> be applied.</p>
+</div>
+<div class="paragraph">
+<p>To set the default environments, modify your application main method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public static void main(String[] args) {
+    Micronaut.build(args)
+            .mainClass(Application.class)
+            .defaultEnvironments("dev")
+            .start();
+}</code></pre>
 </div>
 </div>
 </div>

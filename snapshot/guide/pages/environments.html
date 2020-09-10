@@ -289,6 +289,27 @@ This also applies to <code>@MicronautTest(environments = )</code>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_default_environment">Default Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Micronaut supports the concept of one or many default environments. A default environment is one that is only applied if no other environments are explicitly specified. Environments can be explicitly specified either through the application context builder <code>Micronaut.build().environments(&#8230;&#8203;)</code>, through the <code>micronaut.environments</code> system property, or the <code>MICRONAUT_ENVIRONMENTS</code> environment variable. If an environment is configured through any of the above means, the default environment will <strong>not</strong> be applied.</p>
+</div>
+<div class="paragraph">
+<p>To set the default environments, modify your application main method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public static void main(String[] args) {
+    Micronaut.build(args)
+            .mainClass(Application.class)
+            .defaultEnvironments("dev")
+            .start();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
