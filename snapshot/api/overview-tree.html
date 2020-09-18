@@ -77,6 +77,7 @@
 <li><a href="io/micronaut/aop/package-tree.html">io.micronaut.aop</a>, </li>
 <li><a href="io/micronaut/aop/chain/package-tree.html">io.micronaut.aop.chain</a>, </li>
 <li><a href="io/micronaut/aop/exceptions/package-tree.html">io.micronaut.aop.exceptions</a>, </li>
+<li><a href="io/micronaut/aop/internal/intercepted/package-tree.html">io.micronaut.aop.internal.intercepted</a>, </li>
 <li><a href="io/micronaut/aop/writer/package-tree.html">io.micronaut.aop.writer</a>, </li>
 <li><a href="io/micronaut/ast/groovy/utils/package-tree.html">io.micronaut.ast.groovy.utils</a>, </li>
 <li><a href="io/micronaut/ast/groovy/visitor/package-tree.html">io.micronaut.ast.groovy.visitor</a>, </li>
@@ -1086,6 +1087,7 @@
 <li type="circle">io.micronaut.session.<a href="io/micronaut/session/InMemorySession.html" title="class in io.micronaut.session"><span class="typeNameLink">InMemorySession</span></a> (implements io.micronaut.session.<a href="io/micronaut/session/Session.html" title="interface in io.micronaut.session">Session</a>)</li>
 <li type="circle">io.micronaut.session.<a href="io/micronaut/session/InMemorySessionStore.html" title="class in io.micronaut.session"><span class="typeNameLink">InMemorySessionStore</span></a> (implements io.micronaut.session.<a href="io/micronaut/session/SessionStore.html" title="interface in io.micronaut.session">SessionStore</a>&lt;S&gt;)</li>
 <li type="circle">io.micronaut.core.reflect.<a href="io/micronaut/core/reflect/InstantiationUtils.html" title="class in io.micronaut.core.reflect"><span class="typeNameLink">InstantiationUtils</span></a></li>
+<li type="circle">io.micronaut.aop.internal.intercepted.<a href="io/micronaut/aop/internal/intercepted/InterceptedMethodUtil.html" title="class in io.micronaut.aop.internal.intercepted"><span class="typeNameLink">InterceptedMethodUtil</span></a></li>
 <li type="circle">io.micronaut.aop.chain.<a href="io/micronaut/aop/chain/InterceptorChain.html" title="class in io.micronaut.aop.chain"><span class="typeNameLink">InterceptorChain</span></a>&lt;B,R&gt; (implements io.micronaut.aop.<a href="io/micronaut/aop/InvocationContext.html" title="interface in io.micronaut.aop">InvocationContext</a>&lt;T,R&gt;)
 <ul>
 <li type="circle">io.micronaut.aop.chain.<a href="io/micronaut/aop/chain/MethodInterceptorChain.html" title="class in io.micronaut.aop.chain"><span class="typeNameLink">MethodInterceptorChain</span></a>&lt;T,R&gt; (implements io.micronaut.aop.<a href="io/micronaut/aop/MethodInvocationContext.html" title="interface in io.micronaut.aop">MethodInvocationContext</a>&lt;T,R&gt;)</li>
@@ -1405,6 +1407,7 @@
 <li type="circle">io.micronaut.multitenancy.tenantresolver.<a href="io/micronaut/multitenancy/tenantresolver/SubdomainTenantResolver.html" title="class in io.micronaut.multitenancy.tenantresolver"><span class="typeNameLink">SubdomainTenantResolver</span></a> (implements io.micronaut.multitenancy.tenantresolver.<a href="io/micronaut/multitenancy/tenantresolver/TenantResolver.html" title="interface in io.micronaut.multitenancy.tenantresolver">TenantResolver</a>)</li>
 <li type="circle">io.micronaut.multitenancy.tenantresolver.<a href="io/micronaut/multitenancy/tenantresolver/SubdomainTenantResolverConfigurationProperties.html" title="class in io.micronaut.multitenancy.tenantresolver"><span class="typeNameLink">SubdomainTenantResolverConfigurationProperties</span></a> (implements io.micronaut.multitenancy.tenantresolver.<a href="io/micronaut/multitenancy/tenantresolver/SubdomainTenantResolverConfiguration.html" title="interface in io.micronaut.multitenancy.tenantresolver">SubdomainTenantResolverConfiguration</a>)</li>
 <li type="circle">io.micronaut.core.async.<a href="io/micronaut/core/async/SupplierUtil.html" title="class in io.micronaut.core.async"><span class="typeNameLink">SupplierUtil</span></a></li>
+<li type="circle">io.micronaut.aop.internal.intercepted.<a href="io/micronaut/aop/internal/intercepted/SynchronousInterceptedMethod.html" title="class in io.micronaut.aop.internal.intercepted"><span class="typeNameLink">SynchronousInterceptedMethod</span></a> (implements io.micronaut.aop.<a href="io/micronaut/aop/InterceptedMethod.html" title="interface in io.micronaut.aop">InterceptedMethod</a>)</li>
 <li type="circle">io.micronaut.http.server.types.files.<a href="io/micronaut/http/server/types/files/SystemFile.html" title="class in io.micronaut.http.server.types.files"><span class="typeNameLink">SystemFile</span></a> (implements io.micronaut.http.server.types.files.<a href="io/micronaut/http/server/types/files/FileCustomizableResponseType.html" title="interface in io.micronaut.http.server.types.files">FileCustomizableResponseType</a>)
 <ul>
 <li type="circle">io.micronaut.http.server.netty.types.files.<a href="io/micronaut/http/server/netty/types/files/NettySystemFileCustomizableResponseType.html" title="class in io.micronaut.http.server.netty.types.files"><span class="typeNameLink">NettySystemFileCustomizableResponseType</span></a> (implements io.micronaut.http.server.netty.types.<a href="io/micronaut/http/server/netty/types/NettyFileCustomizableResponseType.html" title="interface in io.micronaut.http.server.netty.types">NettyFileCustomizableResponseType</a>)</li>
@@ -4064,6 +4067,7 @@
 <li type="circle">io.micronaut.aop.<a href="io/micronaut/aop/Introduced.html" title="interface in io.micronaut.aop"><span class="typeNameLink">Introduced</span></a></li>
 </ul>
 </li>
+<li type="circle">io.micronaut.aop.<a href="io/micronaut/aop/InterceptedMethod.html" title="interface in io.micronaut.aop"><span class="typeNameLink">InterceptedMethod</span></a></li>
 <li type="circle">io.micronaut.scheduling.instrument.<a href="io/micronaut/scheduling/instrument/InvocationInstrumenter.html" title="interface in io.micronaut.scheduling.instrument"><span class="typeNameLink">InvocationInstrumenter</span></a></li>
 <li type="circle">io.micronaut.scheduling.instrument.<a href="io/micronaut/scheduling/instrument/InvocationInstrumenterFactory.html" title="interface in io.micronaut.scheduling.instrument"><span class="typeNameLink">InvocationInstrumenterFactory</span></a></li>
 <li type="circle">java.lang.Iterable&lt;T&gt;
@@ -5267,6 +5271,7 @@
 <ul>
 <li type="circle">java.lang.Enum&lt;E&gt; (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)
 <ul>
+<li type="circle">io.micronaut.aop.<a href="io/micronaut/aop/InterceptedMethod.ResultType.html" title="enum in io.micronaut.aop"><span class="typeNameLink">InterceptedMethod.ResultType</span></a></li>
 <li type="circle">io.micronaut.aop.<a href="io/micronaut/aop/InterceptPhase.html" title="enum in io.micronaut.aop"><span class="typeNameLink">InterceptPhase</span></a></li>
 <li type="circle">io.micronaut.core.naming.conventions.<a href="io/micronaut/core/naming/conventions/StringConvention.html" title="enum in io.micronaut.core.naming.conventions"><span class="typeNameLink">StringConvention</span></a></li>
 <li type="circle">io.micronaut.core.naming.conventions.<a href="io/micronaut/core/naming/conventions/PropertyConvention.html" title="enum in io.micronaut.core.naming.conventions"><span class="typeNameLink">PropertyConvention</span></a></li>
