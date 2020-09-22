@@ -696,6 +696,12 @@
 <p>A new health endpoint resources <code>/health/liveness</code> and <code>/health/readiness</code> to distinguish health indicators purpose.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_order_annotation">@Order Annotation</h4>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/core/annotation/Order.html">@Order</a> annotation has been added to support supplying bean order for factory methods or for those who prefer the use of annotations over the <a href="../api/io/micronaut/core/order/Ordered.html">Ordered</a> interface.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_module_upgrades">Module Upgrades</h3>
@@ -1828,6 +1834,95 @@ A prototype bean will have one instance created per place the bean is injected. 
 </td>
 </tr>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_collection_ordering">Collection Ordering</h3>
+<div class="paragraph">
+<p>When injecting a collection of beans, they will not be ordered by default. To allow for the beans to be ordered, implement the <a href="../api/io/micronaut/core/order/Ordered.html">Ordered</a> interface. If the requested bean type does not implement <a href="../api/io/micronaut/core/ordere/Ordered.html">Ordered</a>, then the <a href="../api/io/micronaut/core/annotation/Order.html">@Order</a> annotation will be searched for on any beans.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/core/annotation/Order.html">@Order</a> annotation is especially useful for ordering beans created by factories where the bean type is a class in a third party library. In this example, both <code>LowRateLimit</code> and <code>HighRateLimit</code> implement the <code>RateLimit</code> interface.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Factory with @Order</div>
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Order;
+
+import javax.inject.Singleton;
+import java.time.Duration;
+
+@Factory
+public class RateLimitsFactory {
+
+    @Singleton
+    @Order(20)
+    LowRateLimit rateLimit2() {
+        return new LowRateLimit(Duration.ofMinutes(50), 100);
+    }
+
+    @Singleton
+    @Order(10)
+    HighRateLimit rateLimit1() {
+        return new HighRateLimit(Duration.ofMinutes(50), 1000);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Factory with @Order</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.Order
+
+import javax.inject.Singleton
+import java.time.Duration
+
+@Factory
+class RateLimitsFactory {
+
+    @Singleton
+    @Order(20)
+    LowRateLimit rateLimit2() {
+        new LowRateLimit(Duration.ofMinutes(50), 100);
+    }
+
+    @Singleton
+    @Order(10)
+    HighRateLimit rateLimit1() {
+        new HighRateLimit(Duration.ofMinutes(50), 1000);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title">Factory with @Order</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.Order
+import java.time.Duration
+import javax.inject.Singleton
+
+@Factory
+class RateLimitsFactory {
+
+    @Singleton
+    @Order(20)
+    fun rateLimit2(): LowRateLimit {
+        return LowRateLimit(Duration.ofMinutes(50), 100)
+    }
+
+    @Singleton
+    @Order(10)
+    fun rateLimit1(): HighRateLimit {
+        return HighRateLimit(Duration.ofMinutes(50), 1000)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a collection of <code>RateLimit</code> beans are requested from the context, they will be returned in ascending order based on the value supplied in the annotation.</p>
+</div>
 </div>
 
 <h2 id="qualifiers"><a class="anchor" href="#qualifiers"></a>3.5 Bean Qualifiers</h2>
