@@ -663,7 +663,7 @@
 <div class="sect3">
 <h4 id="_default_environment">Default Environment</h4>
 <div class="paragraph">
-<p>Micronaut 2.1 introduces the concept of a default environment. One or more default environments can be set and they will apply if no other environments are explicitly specified or deduced. See the <a href="#environments">environments documentation</a> for information on how to use this new feature.</p>
+<p>Micronaut 2.1 introduces the concept of a default environment. One or more default environments can be set and they will apply if no other environments are explicitly specified. See the <a href="#environments">environments documentation</a> for information on how to use this new feature.</p>
 </div>
 </div>
 <div class="sect3">
@@ -7220,7 +7220,7 @@ This also applies to <code>@MicronautTest(environments = )</code>
 <h2 id="_default_environment">Default Environment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Micronaut supports the concept of one or many default environments. A default environment is one that is only applied if no other environments are explicitly specified or deduced. Environments can be explicitly specified either through the application context builder <code>Micronaut.build().environments(&#8230;&#8203;)</code>, through the <code>micronaut.environments</code> system property, or the <code>MICRONAUT_ENVIRONMENTS</code> environment variable. Environments can be deduced to automatically apply the environment appropriate for cloud deployments. If an environment is found through any of the above means, the default environment will <strong>not</strong> be applied.</p>
+<p>Micronaut supports the concept of one or many default environments. A default environment is one that is only applied if no other environments are explicitly specified. Environments can be explicitly specified either through the application context builder <code>Micronaut.build().environments(&#8230;&#8203;)</code>, through the <code>micronaut.environments</code> system property, or the <code>MICRONAUT_ENVIRONMENTS</code> environment variable. If an environment is configured through any of the above means, the default environment will <strong>not</strong> be applied.</p>
 </div>
 <div class="paragraph">
 <p>To set the default environments, modify your application main method:</p>
@@ -26078,18 +26078,6 @@ When the test completes it will remove/terminate all resources it spun up.</p>
 </div>
 <div class="paragraph">
 <p>You can then inject a client with <code>@Client("foo")</code> and it will use the above configuration to load balance between the two configured servers.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-When using an <code>@Client</code> with service discovery, the service id must be specified in the annotation in kebab-case. The configuration in the example above however can be in camel case.
-</td>
-</tr>
-</table>
 </div>
 <div class="admonitionblock tip">
 <table>
