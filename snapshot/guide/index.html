@@ -12917,7 +12917,7 @@ String lock(String name)</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Header.html">@Header</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Binds a parameter from an HTTP header</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Header String contentType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Header String requestId</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
@@ -23060,7 +23060,7 @@ Single&lt;Pet&gt; save(
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/Header.html">@Header</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Allows specifying parameters that should be sent as HTTP headers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Header String contentType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Header String requestId</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
@@ -23079,6 +23079,18 @@ Single&lt;Pet&gt; save(
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Always use <a href="../api/io/micronaut/http/annotation/Produces.html">@Produces</a> or <a href="../api/io/micronaut/http/annotation/Consumes.html">@Consumes</a> instead of supplying a header for <code>Content-Type</code> or <code>Accept</code>.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="_type_based_binding_parameters">Type Based Binding Parameters</h4>
 <div class="paragraph">
