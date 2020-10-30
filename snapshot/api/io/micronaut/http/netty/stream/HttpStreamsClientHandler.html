@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/http/netty/stream/DefaultWebSocketHttpResponse.html" title="class in io.micronaut.http.netty.stream"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/http/netty/stream/Http2Content.html" title="interface in io.micronaut.http.netty.stream"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html" title="class in io.micronaut.http.netty.stream"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -257,59 +257,65 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected io.netty.handler.codec.http.HttpResponse</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#createStreamedMessage-io.netty.handler.codec.http.HttpResponse-org.reactivestreams.Publisher-">createStreamedMessage</a></span>(io.netty.handler.codec.http.HttpResponse&nbsp;response,
-                     org.reactivestreams.Publisher&lt;io.netty.handler.codec.http.HttpContent&gt;&nbsp;stream)</code>
+                     org.reactivestreams.Publisher&lt;? extends io.netty.handler.codec.http.HttpContent&gt;&nbsp;stream)</code>
 <div class="block">Create a streamed incoming message with the given stream.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#getStreamId-java.lang.Object-">getStreamId</a></span>(java.lang.Object&nbsp;msg)</code>
+<div class="block">Gets the stream ID from the message.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#hasBody-io.netty.handler.codec.http.HttpResponse-">hasBody</a></span>(io.netty.handler.codec.http.HttpResponse&nbsp;response)</code>
 <div class="block">Whether the given incoming message has a body.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#isClient--">isClient</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#isValidInMessage-java.lang.Object-">isValidInMessage</a></span>(java.lang.Object&nbsp;msg)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#isValidOutMessage-java.lang.Object-">isValidOutMessage</a></span>(java.lang.Object&nbsp;msg)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#receivedInMessage-io.netty.channel.ChannelHandlerContext-">receivedInMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an incoming message is first received.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#receivedOutMessage-io.netty.channel.ChannelHandlerContext-">receivedOutMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an outgoing message is first received.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#sentOutMessage-io.netty.channel.ChannelHandlerContext-">sentOutMessage</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx)</code>
 <div class="block">Invoked when an outgoing message is fully sent.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#subscribeSubscriberToStream-io.micronaut.http.netty.stream.StreamedHttpMessage-org.reactivestreams.Subscriber-">subscribeSubscriberToStream</a></span>(<a href="../../../../../io/micronaut/http/netty/stream/StreamedHttpMessage.html" title="interface in io.micronaut.http.netty.stream">StreamedHttpMessage</a>&nbsp;msg,
                            org.reactivestreams.Subscriber&lt;io.netty.handler.codec.http.HttpContent&gt;&nbsp;subscriber)</code>
 <div class="block">Subscribe the given subscriber to the given streamed message.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#unbufferedWrite-io.netty.channel.ChannelHandlerContext-io.micronaut.http.netty.stream.HttpStreamsHandler.Outgoing-">unbufferedWrite</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
                io.micronaut.http.netty.stream.HttpStreamsHandler.Outgoing&nbsp;out)</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsClientHandler.html#write-io.netty.channel.ChannelHandlerContext-java.lang.Object-io.netty.channel.ChannelPromise-">write</a></span>(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
      java.lang.Object&nbsp;msg,
@@ -511,7 +517,7 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 <li class="blockList">
 <h4>createStreamedMessage</h4>
 <pre>protected&nbsp;io.netty.handler.codec.http.HttpResponse&nbsp;createStreamedMessage(io.netty.handler.codec.http.HttpResponse&nbsp;response,
-                                                                         org.reactivestreams.Publisher&lt;io.netty.handler.codec.http.HttpContent&gt;&nbsp;stream)</pre>
+                                                                         org.reactivestreams.Publisher&lt;? extends io.netty.handler.codec.http.HttpContent&gt;&nbsp;stream)</pre>
 <div class="block">Create a streamed incoming message with the given stream.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -621,6 +627,22 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 </dl>
 </li>
 </ul>
+<a name="getStreamId-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getStreamId</h4>
+<pre>protected&nbsp;int&nbsp;getStreamId(java.lang.Object&nbsp;msg)</pre>
+<div class="block">Gets the stream ID from the message.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>msg</code> - The message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The stream id</dd>
+</dl>
+</li>
+</ul>
 <a name="channelReadComplete-io.netty.channel.ChannelHandlerContext-">
 <!--   -->
 </a>
@@ -711,7 +733,7 @@ extends io.netty.channel.ChannelDuplexHandler</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/http/netty/stream/DefaultWebSocketHttpResponse.html" title="class in io.micronaut.http.netty.stream"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/http/netty/stream/Http2Content.html" title="interface in io.micronaut.http.netty.stream"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/http/netty/stream/HttpStreamsServerHandler.html" title="class in io.micronaut.http.netty.stream"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
