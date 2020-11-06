@@ -25483,11 +25483,16 @@ spring:
     application:
         name: hello-world
     config-client:
-        enabled: true</code></pre>
+        enabled: true
+aws:
+    client:
+        system-manager:
+            parameterstore:
+                enabled: true</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/configurationreference.html#io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration">configuration reference</a> for all configuration options.</p>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/configurationreference.html#io.micronaut.discovery.aws.parameterstore.AWSParameterStoreConfiguration">configuration reference</a> for all configuration options.</p>
 </div>
 <div class="paragraph">
 <p>You can configure shared properties by going into the AWS Console &#8594; System Manager &#8594; Parameter Store</p>
@@ -25538,9 +25543,6 @@ spring:
 <div class="paragraph">
 <p>For special secure information, like keys or passwords, use the type "SecureString". KMS will be automatically invoked when you
 add and retrieve values and decrypt them with the default key store for your account. If you set the configuration to not use secure strings, they will be returned to you encrypted and you must manually decrypt them.</p>
-</div>
-<div class="paragraph">
-<p>The <a href="https://github.com/micronaut-projects/micronaut-examples/aws" class="bare">https://github.com/micronaut-projects/micronaut-examples/aws</a> repository showcases a sample application using this feature.</p>
 </div>
 
 <h2 id="distributedConfigurationOracleCloudVault"><a class="anchor" href="#distributedConfigurationOracleCloudVault"></a>8.1.6 Oracle Cloud Vault Support</h2>
