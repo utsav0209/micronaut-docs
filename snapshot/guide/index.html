@@ -651,135 +651,100 @@
 <p>Micronaut 2.2.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_core_features">Core Features</h3>
-<div class="sect3">
-<h4 id="_introspections_for_jdk_14_records">Introspections for JDK 14 Records</h4>
-<div class="paragraph">
-<p>It is now possible to define <a href="#introspection">bean introspections</a> on JDK 14+ record types (note these currently require the <code>––enable–preview</code> flag to the compiler and JVM).</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_client_kotlin">@Client + Kotlin</h4>
-<div class="paragraph">
-<p>@Client interfaces now support suspend methods!</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_default_environment">Default Environment</h4>
-<div class="paragraph">
-<p>Micronaut 2.1 introduces the concept of a default environment. One or more default environments can be set and they will apply if no other environments are explicitly specified or deduced. See the <a href="#environments">environments documentation</a> for information on how to use this new feature.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_order_annotation">@Order Annotation</h4>
-<div class="paragraph">
-<p>The <a href="../api/io/micronaut/core/annotation/Order.html">@Order</a> annotation has been added to support supplying bean order for factory methods or for those who prefer the use of annotations over the <a href="../api/io/micronaut/core/order/Ordered.html">Ordered</a> interface.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_kotlin_1_4">Kotlin 1.4</h4>
-<div class="paragraph">
-<p>Micronaut now ships with Kotlin 1.4 for those users using Kotlin.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_build_features">Build Features</h3>
 <div class="sect3">
-<h4 id="_new_gradle_plugin">New Gradle Plugin</h4>
+<h4 id="_maven_plugin_improvements">Maven Plugin Improvements</h4>
 <div class="paragraph">
-<p>A new Gradle plugin is available that provides a more expressive way to define a Micronaut application and includes awesome new features for GraalVM Native Image and Docker. The minimum required build to build a Micronaut application is now:</p>
+<p>The Maven plugin now supports different <code>&lt;packaging&gt;</code> types:</p>
 </div>
-<div class="listingblock">
-<div class="title">Micronaut Minimal Gradle Build</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-     id 'io.micronaut.application' version '{version}'
-}
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-micronaut {
-    version = "2.1.0" // The Micronaut Version
-    runtime "netty" // Using the Netty runtime
-}
-mainClassName = "example.Application" // Your main class</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jar</code> (default): produces a runnable fat JAR.</p>
+</li>
+<li>
+<p><code>native-image</code>: generates a GraalVM native image.</p>
+</li>
+<li>
+<p><code>docker</code>: builds a Docker image with the application artifacts (compiled classes, resources, dependencies, etc).</p>
+</li>
+<li>
+<p><code>docker-native</code>: builds a Docker image with a GraalVM native image inside.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Building a Native Image is then as simple as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew nativeImage</code></pre>
-</div>
+<p>To package an application, <code>mvn package</code> is the one-stop shop to produce the desired artifact.</p>
 </div>
 <div class="paragraph">
-<p>Whilst building a docker image using GraalVM Native Image can be done with:</p>
+<p>It also supports using <code>mvn deploy</code> as the only command required to deploy an application that, depending on the <code>&lt;packaging&gt;</code>:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew dockerBuildNative
-
-# Or to push a native image to a Docker registry
-$ ./gradlew dockerPushNative</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jar</code> (default): will deploy the artifact to a remote repository using <code>org.apache.maven.plugins:maven-deploy-plugin:deploy</code>.</p>
+</li>
+<li>
+<p><code>docker</code> or <code>docker-native</code>: will push the Docker image to the configured Docker registry.</p>
+</li>
+</ul>
 </div>
+<div class="paragraph">
+<p>Read more information in the <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest">Maven Plugin documentation</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gradle_plugin_improvements">Gradle Plugin Improvements</h4>
+<div class="paragraph">
+<p>The Gradle plugin has a new <code>testNativeImage</code> task that builds the GraalVM Native Image and uses the native application as an embedded server enabling the ability to write native integration tests.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_web_features">Web Features</h3>
+<h3 id="_micronaut_launch_enhancements">Micronaut Launch Enhancements</h3>
 <div class="sect3">
-<h4 id="_client_binding_api">Client Binding API</h4>
+<h4 id="_support_for_kotlin_gradle_builds">Support for Kotlin Gradle Builds</h4>
 <div class="paragraph">
-<p>A new API has been created to allow for binding declarative HTTP client method arguments to an HTTP request. See the <a href="#clientParameters">documentation</a> for more information.</p>
+<p>It is now possible to create applications that use <code>build.gradle.kts</code> instead of <code>build.gradle</code> using the <code>--build</code> argument of the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app demo --build gradle_kotlin &amp;&amp; cd demo
+$ ./gradlew test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or via the Micronaut Launch API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl https://launch.micronaut.io/demo.zip?build=gradle_kotlin -o demo.zip &amp;&amp; unzip demo.zip -d demo &amp;&amp; cd demo
+$ ./gradlew test</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_websocket_improvements">Websocket Improvements</h4>
+<h4 id="_push_to_github">Push to Github</h4>
 <div class="paragraph">
-<p>Query parameters are now respected and bindable in the Micronaut websocket support.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_httpresponse_improvements">HttpResponse Improvements</h4>
-<div class="paragraph">
-<p>Cookies in HTTP responses from the client side are now retrievable on the HttpResponse. These are the cookies found in the <code>Set-Cookie</code> header.</p>
+<p>It is now possible to create an application with and <a href="https://micronaut.io/launch/">Micronaut Launch</a> and have it pushed automatically to a repository in your Github account. When generating an application just select the "Push to Github" option.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cloud_features">Cloud Features</h3>
+<h3 id="_new_micronaut_modules">New Micronaut Modules</h3>
 <div class="sect3">
-<h4 id="_support_for_oracle_cloud_sdk">Support for Oracle Cloud SDK</h4>
+<h4 id="_mqtt_support">MQTT Support</h4>
 <div class="paragraph">
-<p>A new GraalVM Native Image compatible <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/">module for Oracle Cloud SDK</a> has been added allowing you to use any part of the Oracle Cloud SDK with Native Image and also enhancing the SDK with RxJava 2 support.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_oracle_function">Support for Oracle Function</h4>
-<div class="paragraph">
-<p>Support has been added for building <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions">Oracle Functions</a> deployable to Oracle Cloud including the ability to compute the functions in native images using GraalVM.</p>
+<p>Improving the experience in IoT use cases, Micronaut now has integration with MQTT similar to the integration with Kafka and RabbitMQ. See the <a href="https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/">Micronaut MQTT documentation</a> to get started.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_support_for_google_pub_sub">Support for Google Pub/Sub</h4>
+<h4 id="_micronaut_data_r2dbc">Micronaut Data R2DBC</h4>
 <div class="paragraph">
-<p>Thanks to <a href="https://github.com/viniciusccarvalho">Vinicius Carvalho</a> at Google, Micronaut now features dedicated support for <a href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#pubsub">Google Pub/Sub</a> for seamless messaging in Google Cloud.</p>
+<p>A new module that adds support for R2DBC (Reactive Database Connectivity) has been added in preview status. Micronaut Data R2DBC lets you define reactive data repositories using R2DBC that work with any of the supported drivers and include support for GraalVM Native Image.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_google_cloud_log_format">Support for Google Cloud Log Format</h4>
 <div class="paragraph">
-<p>Thanks to <a href="https://github.com/viniciusccarvalho">Vinicius Carvalho</a> at Google, Micronaut can now <a href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#logging">output logs in the official JSON format</a> supported by Stackdriver on Google Cloud</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_liveness_readiness_probes">Liveness/Readiness Probes</h4>
-<div class="paragraph">
-<p>Micronaut&#8217;s <code>/health</code> endpoint now allows you to distinguish liveness and readiness probes at the URIs <code>/health/liveness</code> and <code>/health/readiness</code>. Micronaut Launch&#8217;s Kubernetes support has been updated to generate a Kubenetes descriptor that is configured to with these probe endpoints by default.</p>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-r2dbc/1.0.x/guide/">Documentation for Micronaut R2DBC</a> for more information.</p>
 </div>
 </div>
 </div>
@@ -788,91 +753,88 @@ $ ./gradlew dockerPushNative</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Micronaut AWS <code>2.1.0</code></p>
+<p>Micronaut Aws <code>2.2.3</code></p>
 </li>
 <li>
-<p>Micronaut Acme <code>2.0.0</code></p>
+<p>Micronaut Azure <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Azure <code>2.0.1</code></p>
+<p>Micronaut Cache <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Cache <code>2.1.0</code></p>
+<p>Micronaut Cassandra <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Cassandra <code>3.0.0</code></p>
+<p>Micronaut Data <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Data <code>2.0.0</code></p>
+<p>Micronaut DiscoveryClient <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Elasticsearch <code>2.0.1</code></p>
+<p>Micronaut ElasticSearch <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Flyway <code>2.1.1</code></p>
+<p>Micronaut Flyway <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut GCP <code>3.2.1</code></p>
+<p>Micronaut Gcp <code>3.3.0</code></p>
 </li>
 <li>
-<p>Micronaut GraphQL <code>2.1.0</code></p>
+<p>Micronaut GraphQL <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Groovy <code>2.1.0</code></p>
+<p>Micronaut Grpc <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut gRPC <code>2.0.5</code></p>
+<p>Micronaut Jmx <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Ignite <code>1.0.0.RC1</code></p>
+<p>Micronaut Liquibase <code>3.0.0</code></p>
 </li>
 <li>
-<p>Micronaut Kafka <code>3.0.0</code></p>
+<p>Micronaut MQTT <code>1.0.0.RC1</code></p>
 </li>
 <li>
-<p>Micronaut Kotlin <code>2.1.1</code></p>
+<p>Micronaut Micrometer <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Liquibase <code>2.1.0</code></p>
+<p>Micronaut Mongo <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Micrometer <code>3.0.1</code></p>
+<p>Micronaut Neo4j <code>4.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Mongo <code>DB 3.0.0</code></p>
+<p>Micronaut OpenApi <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Neo4j <code>4.0.0</code></p>
+<p>Micronaut R2DBC <code>1.0.0.M2</code></p>
 </li>
 <li>
-<p>Micronaut Open <code>API 2.1.0</code></p>
+<p>Micronaut Reactor <code>1.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Oracle <code>Cloud 1.0.0</code></p>
+<p>Micronaut Redis <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Picocli <code>3.0.0</code></p>
+<p>Micronaut Rss <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut RabbitMQ <code>2.1.0</code></p>
+<p>Micronaut Security <code>2.1.4</code></p>
 </li>
 <li>
-<p>Micronaut Redis <code>3.0.0</code></p>
+<p>Micronaut Servlet <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Security <code>2.1.0</code></p>
+<p>Micronaut Sql <code>3.3.1</code></p>
 </li>
 <li>
-<p>Micronaut Servlet <code>2.0.0</code></p>
+<p>Micronaut Test <code>2.2.1</code></p>
 </li>
 <li>
-<p>Micronaut Sql <code>3.1.0</code></p>
+<p>Micronaut Views <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Test <code>2.1.0</code></p>
-</li>
-<li>
-<p>Micronaut Xml <code>2.0.0</code></p>
+<p>Micronaut Xml <code>2.1.0</code></p>
 </li>
 </ul>
 </div>
@@ -882,70 +844,37 @@ $ ./gradlew dockerPushNative</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Commons Dbcp <code>2.8.0</code></p>
+<p>Caffeine <code>2.8.6</code></p>
 </li>
 <li>
-<p>Dekorate <code>1.0.3</code></p>
+<p>Elasticsearch <code>7.9.3</code></p>
 </li>
 <li>
-<p>Elasticsearch <code>7.8.1</code></p>
+<p>Flyway <code>7.0.4</code></p>
 </li>
 <li>
-<p>Flyway <code>6.5.4</code></p>
+<p>gRPC <code>1.32.2</code></p>
 </li>
 <li>
-<p>gRPC <code>1.32.1</code></p>
+<p>Hibernate <code>5.4.23.Final</code></p>
 </li>
 <li>
-<p>Hibernate <code>5.4.21.Final</code></p>
+<p>Kotlin Coroutines <code>1.4.1</code></p>
 </li>
 <li>
-<p>Ignite <code>2.8.1</code></p>
+<p>Liquibase <code>4.2.0</code></p>
 </li>
 <li>
-<p>JUnit <code>5.7.0</code></p>
+<p>Lombok <code>1.18.16</code></p>
 </li>
 <li>
-<p>Kotlin <code>1.4.10</code></p>
+<p>Oracle JDBC Driver <code>19.8.0.0</code></p>
 </li>
 <li>
-<p>Ktor <code>1.4.0</code></p>
+<p>Reactor <code>3.4.0</code></p>
 </li>
 <li>
-<p>Liquibase <code>3.10.2</code></p>
-</li>
-<li>
-<p>MSSQL Driver <code>8.4.1.jre8</code></p>
-</li>
-<li>
-<p>MariaDB Driver <code>2.6.2</code></p>
-</li>
-<li>
-<p>Micrometer <code>1.5.5</code></p>
-</li>
-<li>
-<p>Mongo Driver <code>4.1.0</code></p>
-</li>
-<li>
-<p>Mongo Reactive Driver <code>4.1.0</code></p>
-</li>
-<li>
-<p>Neo4j Driver <code>4.1.1</code></p>
-</li>
-<li>
-<p>Netty <code>4.1.52.Final</code></p>
-</li>
-<li>
-<p>Picocli <code>4.5.1</code></p>
-</li>
-<li>
-<p>Postgres Driver <code>42.2.16</code></p>
-</li>
-<li>
-<p>Redis Lettuce <code>5.3.4.RELEASE</code></p>
-</li>
-<li>
-<p>Tomcat Jdbc <code>9.0.38</code></p>
+<p>Swagger <code>2.1.5</code></p>
 </li>
 </ul>
 </div>
@@ -29162,7 +29091,7 @@ interface HeadlineFlowClient {
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>native-image</code> tool</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut currently supports GraalVM 20.2.0 version and the team is improving the support in every new release. Don&#8217;t
+<p>Micronaut currently supports GraalVM 20.3.0 version and the team is improving the support in every new release. Don&#8217;t
 hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
 </div>
 <div class="paragraph">
@@ -29241,14 +29170,14 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 20.2.0 with SDKman</div>
+<div class="title">Installing GraalVM 20.3.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.2.0.r8-grl # or 20.2.0.r11-grl if you want to use JDK 11
-$ sdk use java 20.2.0.r8-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.3.0.r8-grl # or 20.3.0.r11-grl if you want to use JDK 11
+$ sdk use java 20.3.0.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently it is available as an early adopter plugin. To install it, run:</p>
+<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently, it is available as an early adopter plugin. To install it, run:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing <code>native-image</code> tool</div>
