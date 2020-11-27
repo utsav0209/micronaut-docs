@@ -510,25 +510,23 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-createProject"><a href="#createProject"><strong>17.1</strong><span>Creating a Project</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-profiles"><a href="#profiles"><strong>17.2</strong><span>Profiles</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-comparingVersions"><a href="#comparingVersions"><strong>17.1.1</strong><span>Comparing Versions</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-comparingVersions"><a href="#comparingVersions"><strong>17.2.1</strong><span>Comparing Versions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-features"><a href="#features"><strong>17.2</strong><span>Features</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-features"><a href="#features"><strong>17.3</strong><span>Features</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-commands"><a href="#commands"><strong>17.3</strong><span>Commands</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-commands"><a href="#commands"><strong>17.4</strong><span>Commands</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-reloading"><a href="#reloading"><strong>17.4</strong><span>Reloading</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-reloading"><a href="#reloading"><strong>17.5</strong><span>Reloading</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-automaticRestart"><a href="#automaticRestart"><strong>17.4.1</strong><span>Automatic Restart</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-automaticRestart"><a href="#automaticRestart"><strong>17.5.1</strong><span>Automatic Restart</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.4.2</strong><span>JRebel</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-jrebel"><a href="#jrebel"><strong>17.5.2</strong><span>JRebel</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.4.3</strong><span>Recompiling with Gradle</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-gradleReload"><a href="#gradleReload"><strong>17.5.3</strong><span>Recompiling with Gradle</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.4.4</strong><span>Recompiling with an IDE</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-ideReload"><a href="#ideReload"><strong>17.5.4</strong><span>Recompiling with an IDE</span></a></div>
-        
-        <div class="toc-item" style="margin-left:10px" id="toc-item-proxy"><a href="#proxy"><strong>17.6</strong><span>Proxy Configuration</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-proxy"><a href="#proxy"><strong>17.5</strong><span>Proxy Configuration</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-i18n"><a href="#i18n"><strong>18</strong><span>Internationalization</span></a></div>
         
@@ -653,135 +651,100 @@
 <p>Micronaut 2.3.0.BUILD-SNAPSHOT includes the following changes:</p>
 </div>
 <div class="sect2">
-<h3 id="_core_features">Core Features</h3>
-<div class="sect3">
-<h4 id="_introspections_for_jdk_14_records">Introspections for JDK 14 Records</h4>
-<div class="paragraph">
-<p>It is now possible to define <a href="#introspection">bean introspections</a> on JDK 14+ record types (note these currently require the <code>––enable–preview</code> flag to the compiler and JVM).</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_client_kotlin">@Client + Kotlin</h4>
-<div class="paragraph">
-<p>@Client interfaces now support suspend methods!</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_default_environment">Default Environment</h4>
-<div class="paragraph">
-<p>Micronaut 2.1 introduces the concept of a default environment. One or more default environments can be set and they will apply if no other environments are explicitly specified or deduced. See the <a href="#environments">environments documentation</a> for information on how to use this new feature.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_order_annotation">@Order Annotation</h4>
-<div class="paragraph">
-<p>The <a href="../api/io/micronaut/core/annotation/Order.html">@Order</a> annotation has been added to support supplying bean order for factory methods or for those who prefer the use of annotations over the <a href="../api/io/micronaut/core/order/Ordered.html">Ordered</a> interface.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_kotlin_1_4">Kotlin 1.4</h4>
-<div class="paragraph">
-<p>Micronaut now ships with Kotlin 1.4 for those users using Kotlin.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_build_features">Build Features</h3>
 <div class="sect3">
-<h4 id="_new_gradle_plugin">New Gradle Plugin</h4>
+<h4 id="_maven_plugin_improvements">Maven Plugin Improvements</h4>
 <div class="paragraph">
-<p>A new Gradle plugin is available that provides a more expressive way to define a Micronaut application and includes awesome new features for GraalVM Native Image and Docker. The minimum required build to build a Micronaut application is now:</p>
+<p>The Maven plugin now supports different <code>&lt;packaging&gt;</code> types:</p>
 </div>
-<div class="listingblock">
-<div class="title">Micronaut Minimal Gradle Build</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-     id 'io.micronaut.application' version '{version}'
-}
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-micronaut {
-    version = "2.1.0" // The Micronaut Version
-    runtime "netty" // Using the Netty runtime
-}
-mainClassName = "example.Application" // Your main class</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jar</code> (default): produces a runnable fat JAR.</p>
+</li>
+<li>
+<p><code>native-image</code>: generates a GraalVM native image.</p>
+</li>
+<li>
+<p><code>docker</code>: builds a Docker image with the application artifacts (compiled classes, resources, dependencies, etc).</p>
+</li>
+<li>
+<p><code>docker-native</code>: builds a Docker image with a GraalVM native image inside.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Building a Native Image is then as simple as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew nativeImage</code></pre>
-</div>
+<p>To package an application, <code>mvn package</code> is the one-stop shop to produce the desired artifact.</p>
 </div>
 <div class="paragraph">
-<p>Whilst building a docker image using GraalVM Native Image can be done with:</p>
+<p>It also supports using <code>mvn deploy</code> as the only command required to deploy an application that, depending on the <code>&lt;packaging&gt;</code>:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew dockerBuildNative
-
-# Or to push a native image to a Docker registry
-$ ./gradlew dockerPushNative</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jar</code> (default): will deploy the artifact to a remote repository using <code>org.apache.maven.plugins:maven-deploy-plugin:deploy</code>.</p>
+</li>
+<li>
+<p><code>docker</code> or <code>docker-native</code>: will push the Docker image to the configured Docker registry.</p>
+</li>
+</ul>
 </div>
+<div class="paragraph">
+<p>Read more information in the <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest">Maven Plugin documentation</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gradle_plugin_improvements">Gradle Plugin Improvements</h4>
+<div class="paragraph">
+<p>The Gradle plugin has a new <code>testNativeImage</code> task that builds the GraalVM Native Image and uses the native application as an embedded server enabling the ability to write native integration tests.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_web_features">Web Features</h3>
+<h3 id="_micronaut_launch_enhancements">Micronaut Launch Enhancements</h3>
 <div class="sect3">
-<h4 id="_client_binding_api">Client Binding API</h4>
+<h4 id="_support_for_kotlin_gradle_builds">Support for Kotlin Gradle Builds</h4>
 <div class="paragraph">
-<p>A new API has been created to allow for binding declarative HTTP client method arguments to an HTTP request. See the <a href="#clientParameters">documentation</a> for more information.</p>
+<p>It is now possible to create applications that use <code>build.gradle.kts</code> instead of <code>build.gradle</code> using the <code>--build</code> argument of the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app demo --build gradle_kotlin &amp;&amp; cd demo
+$ ./gradlew test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or via the Micronaut Launch API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl https://launch.micronaut.io/demo.zip?build=gradle_kotlin -o demo.zip &amp;&amp; unzip demo.zip -d demo &amp;&amp; cd demo
+$ ./gradlew test</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_websocket_improvements">Websocket Improvements</h4>
+<h4 id="_push_to_github">Push to Github</h4>
 <div class="paragraph">
-<p>Query parameters are now respected and bindable in the Micronaut websocket support.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_httpresponse_improvements">HttpResponse Improvements</h4>
-<div class="paragraph">
-<p>Cookies in HTTP responses from the client side are now retrievable on the HttpResponse. These are the cookies found in the <code>Set-Cookie</code> header.</p>
+<p>It is now possible to create an application with and <a href="https://micronaut.io/launch/">Micronaut Launch</a> and have it pushed automatically to a repository in your Github account. When generating an application just select the "Push to Github" option.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cloud_features">Cloud Features</h3>
+<h3 id="_new_micronaut_modules">New Micronaut Modules</h3>
 <div class="sect3">
-<h4 id="_support_for_oracle_cloud_sdk">Support for Oracle Cloud SDK</h4>
+<h4 id="_mqtt_support">MQTT Support</h4>
 <div class="paragraph">
-<p>A new GraalVM Native Image compatible <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/">module for Oracle Cloud SDK</a> has been added allowing you to use any part of the Oracle Cloud SDK with Native Image and also enhancing the SDK with RxJava 2 support.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_oracle_function">Support for Oracle Function</h4>
-<div class="paragraph">
-<p>Support has been added for building <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions">Oracle Functions</a> deployable to Oracle Cloud including the ability to compute the functions in native images using GraalVM.</p>
+<p>Improving the experience in IoT use cases, Micronaut now has integration with MQTT similar to the integration with Kafka and RabbitMQ. See the <a href="https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/">Micronaut MQTT documentation</a> to get started.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_support_for_google_pub_sub">Support for Google Pub/Sub</h4>
+<h4 id="_micronaut_data_r2dbc">Micronaut Data R2DBC</h4>
 <div class="paragraph">
-<p>Thanks to <a href="https://github.com/viniciusccarvalho">Vinicius Carvalho</a> at Google, Micronaut now features dedicated support for <a href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#pubsub">Google Pub/Sub</a> for seamless messaging in Google Cloud.</p>
+<p>A new module that adds support for R2DBC (Reactive Database Connectivity) has been added in preview status. Micronaut Data R2DBC lets you define reactive data repositories using R2DBC that work with any of the supported drivers and include support for GraalVM Native Image.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_google_cloud_log_format">Support for Google Cloud Log Format</h4>
 <div class="paragraph">
-<p>Thanks to <a href="https://github.com/viniciusccarvalho">Vinicius Carvalho</a> at Google, Micronaut can now <a href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#logging">output logs in the official JSON format</a> supported by Stackdriver on Google Cloud</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_liveness_readiness_probes">Liveness/Readiness Probes</h4>
-<div class="paragraph">
-<p>Micronaut&#8217;s <code>/health</code> endpoint now allows you to distinguish liveness and readiness probes at the URIs <code>/health/liveness</code> and <code>/health/readiness</code>. Micronaut Launch&#8217;s Kubernetes support has been updated to generate a Kubenetes descriptor that is configured to with these probe endpoints by default.</p>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-r2dbc/1.0.x/guide/">Documentation for Micronaut R2DBC</a> for more information.</p>
 </div>
 </div>
 </div>
@@ -790,91 +753,124 @@ $ ./gradlew dockerPushNative</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Micronaut AWS <code>2.1.0</code></p>
+<p>Micronaut Acme <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Acme <code>2.0.0</code></p>
+<p>Micronaut Aws <code>2.2.3</code></p>
 </li>
 <li>
-<p>Micronaut Azure <code>2.0.1</code></p>
+<p>Micronaut Azure <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Cache <code>2.1.0</code></p>
+<p>Micronaut Cache <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Cassandra <code>3.0.0</code></p>
+<p>Micronaut Cassandra <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Data <code>2.0.0</code></p>
+<p>Micronaut Data <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Elasticsearch <code>2.0.1</code></p>
+<p>Micronaut DiscoveryClient <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Flyway <code>2.1.1</code></p>
+<p>Micronaut ElasticSearch <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut GCP <code>3.2.1</code></p>
+<p>Micronaut Flyway <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut GraphQL <code>2.1.0</code></p>
+<p>Micronaut Gcp <code>3.3.0</code></p>
 </li>
 <li>
-<p>Micronaut Groovy <code>2.1.0</code></p>
+<p>Micronaut GraphQL <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut gRPC <code>2.0.5</code></p>
+<p>Micronaut Groovy <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Ignite <code>1.0.0.RC1</code></p>
+<p>Micronaut gRPC <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Kafka <code>3.0.0</code></p>
+<p>Micronaut Hibernate Validator <code>3.0.0</code></p>
 </li>
 <li>
-<p>Micronaut Kotlin <code>2.1.1</code></p>
+<p>Micronaut Jmx <code>2.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Liquibase <code>2.1.0</code></p>
+<p>Micronaut Kafka <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Micrometer <code>3.0.1</code></p>
+<p>Micronaut Kotlin <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Mongo <code>DB 3.0.0</code></p>
+<p>Micronaut Liquibase <code>3.0.0</code></p>
 </li>
 <li>
-<p>Micronaut Neo4j <code>4.0.0</code></p>
+<p>Micronaut MQTT <code>1.0.0</code></p>
 </li>
 <li>
-<p>Micronaut Open <code>API 2.1.0</code></p>
+<p>Micronaut Micrometer <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Oracle <code>Cloud 1.0.0</code></p>
+<p>Micronaut Mongo <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Picocli <code>3.0.0</code></p>
+<p>Micronaut NatsIo <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut RabbitMQ <code>2.1.0</code></p>
+<p>Micronaut Neo4j <code>4.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Redis <code>3.0.0</code></p>
+<p>Micronaut OpenApi <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Security <code>2.1.0</code></p>
+<p>Micronaut Oracle Cloud <code>1.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Servlet <code>2.0.0</code></p>
+<p>Micronaut Picocli <code>3.1.0</code></p>
 </li>
 <li>
-<p>Micronaut Sql <code>3.1.0</code></p>
+<p>Micronaut R2DBC <code>1.0.0.M2</code></p>
 </li>
 <li>
-<p>Micronaut Test <code>2.1.0</code></p>
+<p>Micronaut RabbitMQ <code>2.2.0</code></p>
 </li>
 <li>
-<p>Micronaut Xml <code>2.0.0</code></p>
+<p>Micronaut Reactor <code>1.1.0</code></p>
+</li>
+<li>
+<p>Micronaut Redis <code>3.1.0</code></p>
+</li>
+<li>
+<p>Micronaut Rss <code>2.2.0</code></p>
+</li>
+<li>
+<p>Micronaut Rss <code>2.3.0</code></p>
+</li>
+<li>
+<p>Micronaut RxJava3 <code>1.1.0</code></p>
+</li>
+<li>
+<p>Micronaut Security <code>2.1.4</code></p>
+</li>
+<li>
+<p>Micronaut Security <code>2.2.0</code></p>
+</li>
+<li>
+<p>Micronaut Servlet <code>2.1.1</code></p>
+</li>
+<li>
+<p>Micronaut Sql <code>3.3.1</code></p>
+</li>
+<li>
+<p>Micronaut Test <code>2.2.1</code></p>
+</li>
+<li>
+<p>Micronaut Views <code>2.1.0</code></p>
+</li>
+<li>
+<p>Micronaut Xml <code>2.1.0</code></p>
 </li>
 </ul>
 </div>
@@ -884,70 +880,55 @@ $ ./gradlew dockerPushNative</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Commons Dbcp <code>2.8.0</code></p>
+<p>Caffeine <code>2.8.6</code></p>
 </li>
 <li>
-<p>Dekorate <code>1.0.3</code></p>
+<p>Eclipse Paho v3 <code>1.2.5</code></p>
 </li>
 <li>
-<p>Elasticsearch <code>7.8.1</code></p>
+<p>Eclipse Paho v5 <code>1.2.5</code></p>
 </li>
 <li>
-<p>Flyway <code>6.5.4</code></p>
+<p>Elasticsearch <code>7.9.3</code></p>
 </li>
 <li>
-<p>gRPC <code>1.32.1</code></p>
+<p>Flyway <code>7.0.4</code></p>
 </li>
 <li>
-<p>Hibernate <code>5.4.21.Final</code></p>
+<p>gRPC <code>1.33.1</code></p>
 </li>
 <li>
-<p>Ignite <code>2.8.1</code></p>
+<p>Hibernate <code>5.4.23.Final</code></p>
 </li>
 <li>
-<p>JUnit <code>5.7.0</code></p>
+<p>Kafka <code>2.6.0</code></p>
 </li>
 <li>
-<p>Kotlin <code>1.4.10</code></p>
+<p>Kotlin Coroutines <code>1.4.1</code></p>
 </li>
 <li>
-<p>Ktor <code>1.4.0</code></p>
+<p>Ktor <code>1.4.1</code></p>
 </li>
 <li>
-<p>Liquibase <code>3.10.2</code></p>
+<p>Liquibase <code>4.2.0</code></p>
 </li>
 <li>
-<p>MSSQL Driver <code>8.4.1.jre8</code></p>
+<p>Lombok <code>1.18.16</code></p>
 </li>
 <li>
-<p>MariaDB Driver <code>2.6.2</code></p>
+<p>Oracle JDBC Driver <code>19.8.0.0</code></p>
 </li>
 <li>
-<p>Micrometer <code>1.5.5</code></p>
+<p>Picocli <code>4.5.2</code></p>
 </li>
 <li>
-<p>Mongo Driver <code>4.1.0</code></p>
+<p>Protobuf <code>3.14.0</code></p>
 </li>
 <li>
-<p>Mongo Reactive Driver <code>4.1.0</code></p>
+<p>Reactor <code>3.4.0</code></p>
 </li>
 <li>
-<p>Neo4j Driver <code>4.1.1</code></p>
-</li>
-<li>
-<p>Netty <code>4.1.52.Final</code></p>
-</li>
-<li>
-<p>Picocli <code>4.5.1</code></p>
-</li>
-<li>
-<p>Postgres Driver <code>42.2.16</code></p>
-</li>
-<li>
-<p>Redis Lettuce <code>5.3.4.RELEASE</code></p>
-</li>
-<li>
-<p>Tomcat Jdbc <code>9.0.38</code></p>
+<p>Swagger <code>2.1.5</code></p>
 </li>
 </ul>
 </div>
@@ -1657,7 +1638,49 @@ class HelloClientSpec {
 </div>
 </div>
 <div class="paragraph">
-<p>The runnable JAR can also easily be packaged within a Docker container or deployed to any Cloud infrastructure that supports runnable JAR  files.</p>
+<p>The runnable JAR can be executed locally, deployed to a virtual machine or managed Cloud service that supports runnable JARs.</p>
+</div>
+<div class="paragraph">
+<p>To publish a layered application to a Docker container registry you can configure your Docker image name in <code>build.gradle</code> for Gradle:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dockerBuild {
+    images = ["[REPO_URL]/[NAMESPACE]/my-image:$project.version"]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then use <code>dockerPush</code> to push a built image of the application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew dockerPush</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For Maven, define the following plugin in your POM:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;plugin&gt;
+  &lt;groupId&gt;com.google.cloud.tools&lt;/groupId&gt;
+  &lt;artifactId&gt;jib-maven-plugin&lt;/artifactId&gt;
+  &lt;configuration&gt;
+    &lt;to&gt;
+      &lt;image&gt;docker.io/my-company/my-image:${project.version}&lt;/image&gt;
+    &lt;/to&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then invoke the <code>deploy</code> lifecycle phase specifying the packaging type to either <code>docker</code> or <code>docker-native</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw deploy -Dpackaging=docker</code></pre>
+</div>
 </div>
 
 <h1 id="ioc"><a class="anchor" href="#ioc"></a>3 Inversion of Control</h1>
@@ -1704,22 +1727,30 @@ class HelloClientSpec {
 </ul>
 </div>
 <div class="paragraph">
-<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build. To do so all you need to do is configure your build appropriately to include the <code>micronaut-inject-java</code> dependency as an annotation processor. For example with Gradle:</p>
+<p>Note that the IoC part of Micronaut can be used completely independently of Micronaut itself for whatever application type you may wish to build.</p>
+</div>
+<div class="paragraph">
+<p>To do so all you need to do is configure your build appropriately to include the <code>micronaut-inject-java</code> dependency as an annotation processor.</p>
+</div>
+<div class="paragraph">
+<p>The easiest way to do this is with Micronaut&#8217;s Gradle or Maven plugins. For example with Gradle:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-  id "com.diffplug.eclipse.apt" version "3.22.0" // <1>
+    id 'io.micronaut.library' version '1.1.0' // <1>
 }
 
-...
-dependencies {
-    annotationProcessor("io.micronaut:micronaut-inject-java:2.3.0.BUILD-SNAPSHOT") // <2>
-    implementation("io.micronaut:micronaut-inject:2.3.0.BUILD-SNAPSHOT")
-    ...
-    testAnnotationProcessor("io.micronaut:micronaut-inject-java:2.3.0.BUILD-SNAPSHOT") // <3>
-    ...
+version "0.1"
+group "com.example"
+
+repositories {
+    mavenCentral()
+}
+
+micronaut {
+    version = "2.3.0.BUILD-SNAPSHOT" // <2>
 }</code></pre>
 </div>
 </div>
@@ -1727,27 +1758,11 @@ dependencies {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Apply <code>com.diffplug.eclipse.apt</code> Gradle plugin which modifes Eclipse projects to include gradle annotationProcessor dependencies</td>
+<td>Define the <a href="https://plugins.gradle.org/plugin/io.micronaut.library">Micronaut Library plugin</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Include the minimal dependencies required to perform dependency injection</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This is necessary to create beans in the <code>test</code> directory</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-For the Groovy language you should include <code>micronaut-inject-groovy</code> in the <code>compileOnly</code> and <code>testCompileOnly</code> scopes.
-</td>
+<td>Specify the Micronaut version to use</td>
 </tr>
 </table>
 </div>
@@ -4300,6 +4315,9 @@ class V8Engine : Engine {
 <td>A method is annotated with <code>@PostConstruct</code> and will be invoked once the object is constructed and fully injected.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>To manage when a bean is constructed, see the section on <a href="#scopes">bean scopes</a>.</p>
 </div>
 </div>
 </div>
@@ -22964,7 +22982,7 @@ Notice in the above example we override the <code>save</code> method. This is ne
 <p>In a production deployment you would typically use a service ID and <a href="#serviceDiscovery">Service Discovery</a> to discover services automatically.</p>
 </div>
 <div class="paragraph">
-<p>Another important thing to notice regarding the <code>save</code> method in the example above is that is returns a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> type.</p>
+<p>Another important thing to notice regarding the <code>save</code> method in the example above is that it returns a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> type.</p>
 </div>
 <div class="paragraph">
 <p>This is a non-blocking reactive type and typically you want your HTTP clients not to block. There are cases where you may want to write an HTTP client that does block (such as in unit test cases), but this are rare.</p>
@@ -26277,11 +26295,22 @@ You can override this configuration in production by specifying an environment v
 <div class="paragraph">
 <p>To add Ribbon support to your application add the <code>netflix-ribbon</code> configuration to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile "io.micronaut.netflix:micronaut-netflix-ribbon"</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.netflix:micronaut-netflix-ribbon")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.netflix&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-netflix-ribbon&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/http/client/LoadBalancer.html">LoadBalancer</a> implementations will now be <a href="../api/io/micronaut/configuration/ribbon/RibbonLoadBalancer.html">RibbonLoadBalancer</a> instances.</p>
@@ -26662,11 +26691,23 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 <div class="paragraph">
 <p>To send tracing spans to Jaeger the minimal configuration requires you add the following dependencies to <code>build.gradle</code> or <code>pom.xml</code>:</p>
 </div>
-<div class="listingblock">
-<div class="title">Adding Jaeger Dependencies</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compile 'io.jaegertracing:jaeger-thrift:0.31.0'</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.jaegertracing:jaeger-thrift:0.31.0")</span></code></pre>
 </div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.jaegertracing&lt;/groupId&gt;
+    &lt;artifactId&gt;jaeger-thrift&lt;/artifactId&gt;
+    &lt;version&gt;0.31.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Then you need to enable Jaeger tracing in your configuration (potentially only your production configuration):</p>
@@ -29104,7 +29145,7 @@ interface HeadlineFlowClient {
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>native-image</code> tool</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut currently supports GraalVM 20.2.0 version and the team is improving the support in every new release. Don&#8217;t
+<p>Micronaut currently supports GraalVM 20.3.0 version and the team is improving the support in every new release. Don&#8217;t
 hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
 </div>
 <div class="paragraph">
@@ -29145,84 +29186,36 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 <div class="sect2">
 <h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
 <div class="paragraph">
-<p>To get started creating a Microservice that can be compiled into a native image, use the <code>graalvm</code> feature when creating the application with the CLI:</p>
+<p>Since Micronaut 2.2, any Micronaut application is already ready to be built into a native image using the Micronaut Gradle or Maven plugins, to get started simply create a new application:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating a Graal Native Microservice</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app hello-world --features graalvm</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app hello-world</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>graalvm</code> feature adds three important items:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The <code>svm</code> and <code>graal</code> dependencies to your <code>build.gradle</code> (or <code>pom.xml</code> if <code>--build maven</code> is used).</p>
-</li>
-<li>
-<p>A <code>Dockerfile</code> which can be used to construct the native image using Docker and a script <code>docker-build.sh</code> to run it.</p>
-</li>
-<li>
-<p>A <code>native-image.properties</code> configuration file <code>src/main/resources/META-INF/native-image</code> to simplify building the image.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The <code>native-image.properties</code> file that is generated looks something like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">Args = -H:Name=example \ <i class="conum" data-value="1"></i><b>(1)</b>
-       -H:Class=example.Application <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>-H:Name</code> argument specifies the name of the native image that will be generated.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>-H:Class</code> argument specifies the entry point of your application (the class that defines a <code>static void main</code> method.</td>
-</tr>
-</table>
+<p>You can use <code>--build maven</code> for a Maven build.</p>
 </div>
 <div class="sect3">
 <h4 id="_building_a_native_image_using_docker">Building a Native Image Using Docker</h4>
 <div class="paragraph">
-<p>To build your native image using Docker simply run:</p>
+<p>To build your native image using Gradle and Docker simply run:</p>
 </div>
 <div class="listingblock">
+<div class="title">Building a Native Image with Docker and Gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble # or ./mvnw package if using Maven
-$ docker build . -t hello-world
-$ docker run -p 8080:8080 hello-world</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew dockerBuildNative</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Or use the provided script:</p>
+<p>To build your native image using Maven and Docker simply run:</p>
 </div>
 <div class="listingblock">
+<div class="title">Building a Native Image with Docker and Maven</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble # or ./mvnw package if using Maven
-$ ./docker-build.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package -Dpackaging=docker-native</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>The provided <code>Dockerfile</code> is a multi-stage dockerfile which builds the project in two steps:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>A GraalVM official image will build the native image.</p>
-</li>
-<li>
-<p>A typical dockerfile structure will build the final image which is smaller due to layering.</p>
-</li>
-</ol>
 </div>
 </div>
 <div class="sect3">
@@ -29231,14 +29224,14 @@ $ ./docker-build.sh</code></pre>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 20.2.0 with SDKman</div>
+<div class="title">Installing GraalVM 20.3.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.2.0.r8-grl # or 20.2.0.r11-grl if you want to use JDK 11
-$ sdk use java 20.2.0.r8-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.3.0.r8-grl # or 20.3.0.r11-grl if you want to use JDK 11
+$ sdk use java 20.3.0.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently it is available as an early adopter plugin. To install it, run:</p>
+<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently, it is available as an early adopter plugin. To install it, run:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing <code>native-image</code> tool</div>
@@ -29246,19 +29239,32 @@ $ sdk use java 20.2.0.r8-grl</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gu install native-image</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Now you can build a native image with Gradle simply by running the <code>nativeImage</code> task:</p>
+</div>
 <div class="listingblock">
 <div class="title">Creating native image with Gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew assemble
-$ native-image -cp build/libs/hello-world-0.1-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew nativeImage</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The native image will be built to the <code>build/native-image</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>To create a native image with Maven and the Micronaut Maven plugin use <code>native-image</code> as the packaging format:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Maven</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package
-$ native-image -cp target/hello-world-0.1-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./mvnw package -Dpackaging=native-image</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Which will build the native image into the <code>target</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>You can then run the native image from the directory you built it to.</p>
 </div>
 <div class="listingblock">
 <div class="title">Run native image</div>
@@ -31968,43 +31974,10 @@ Currently AWS Lambda, Micronaut Azure, and Google Cloud are the supported cloud 
 </div>
 </div>
 
-<h2 id="profiles"><a class="anchor" href="#profiles"></a>17.2 Profiles</h2>
+<h2 id="comparingVersions"><a class="anchor" href="#comparingVersions"></a>17.1.1 Comparing Versions</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/profiles.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Profiles are project templates, consisting of a "skeleton" project structure with default configuration, build dependencies and other assets, along with a set of commands for generating application-appropriate artifacts (such as controllers, client interfaces, etc).</p>
-</div>
-<div class="paragraph">
-<p>Profiles can inherit from other profiles, augmenting/overriding defaults set in their parent. All profiles inherit from the <code>base</code> profile, which provides the bare minimum required to set up a Micronaut application.</p>
-</div>
-<div class="paragraph">
-<p>Many Micronaut apps will use the <code>service</code> profile, which augments the <code>base</code> profile to add HTTP client/server libraries, <code>create-controller</code> and <code>create-client</code> commands, and other features that are appropriate for web service applications. This is the default profile used when running the <code>create-app</code> command.</p>
-</div>
-<div class="paragraph">
-<p>Other Micronaut apps will be better served by the <code>cli</code> profile, which adds the <code>create-command</code> command and the <a href="https://picocli.info/">picocli</a> library for parsing command line input. This is the default profile used when running the <code>create-cli-app</code> command.</p>
-</div>
-<div class="paragraph">
-<p>You can view all of the built-in profiles using the CLI command <code>list-profiles</code>.</p>
-</div>
-<div class="paragraph">
-<p>Profiles can be chosen using the <code>profile</code> flag on the <code>create-app</code>, <code>create-cli-app</code>, and <code>create-federation</code> commands.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app my-project --profile rabbitmq</code></pre>
-</div>
-</div>
-
-<h2 id="comparingVersions"><a class="anchor" href="#comparingVersions"></a>17.2.1 Comparing Versions</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/profiles/comparingVersions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/createProject/comparingVersions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -32014,7 +31987,7 @@ Currently AWS Lambda, Micronaut Azure, and Google Cloud are the supported cloud 
 <p>The easiest way to see version dependency updates and other changes for a new version of Micronaut, is to produce one clean application using the older and one using the newer version of the <code>mn</code> CLI, and then comparing those directories.</p>
 </div>
 
-<h2 id="features"><a class="anchor" href="#features"></a>17.3 Features</h2>
+<h2 id="features"><a class="anchor" href="#features"></a>17.2 Features</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/features.adoc"'>
@@ -32032,15 +32005,17 @@ Currently AWS Lambda, Micronaut Azure, and Google Cloud are the supported cloud 
 </div>
 </div>
 <div class="paragraph">
-<p>This will add the necessary dependencies and configuration for the <a href="http://mongodb.github.io/mongo-java-driver-reactivestreams">MongoDB Reactive Driver</a> in your application. You can view all the available features using the <code>profile-info</code> command.</p>
+<p>This will add the necessary dependencies and configuration for the <a href="http://mongodb.github.io/mongo-java-driver-reactivestreams">MongoDB Reactive Driver</a> in your application.
+You can view all the available features using the <code>--list-features</code> flag for whichever create command you&#8217;d like to use.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn profile-info service</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app --list-features # Output will be supported features for the create-app command
+$ mn create-function-app --list-features # Output will be supported features for the create-function-app command, different from above.</code></pre>
 </div>
 </div>
 
-<h2 id="commands"><a class="anchor" href="#commands"></a>17.4 Commands</h2>
+<h2 id="commands"><a class="anchor" href="#commands"></a>17.3 Commands</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/commands.adoc"'>
@@ -32050,31 +32025,55 @@ Currently AWS Lambda, Micronaut Azure, and Google Cloud are the supported cloud 
 
 
 <div class="paragraph">
-<p>Profiles can include commands for generating common code artifacts. Not all commands are supported by all profiles; the available commands for a given profile can be viewed using the <code>profile-info</code> command.</p>
+<p>You can view a full list of available commands using the help flag, like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn profile-info service
-Profile: service
-------------------
-The service profile
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn -h
+Usage: mn [-hvVx] [COMMAND]
+Micronaut CLI command line interface for generating projects and services.
+Application generation commands are: <i class="conum" data-value="1"></i><b>(1)</b>
 
-Provided Commands:
---------------------
-  create-bean              Creates a singleton bean
+*  create-app NAME
+*  create-cli-app NAME
+*  create-function-app NAME
+*  create-grpc-app NAME
+*  create-messaging-app NAME
+
+Options:
+  -h, --help         Show this help message and exit.
+  -v, --verbose      Create verbose output.
+  -V, --version      Print version information and exit.
+  -x, --stacktrace   Show full stack trace when exceptions occur.
+
+Commands: <i class="conum" data-value="2"></i><b>(2)</b>
+  create-app             Creates an application
+  create-cli-app         Creates a CLI application
+  create-function-app    Creates a Cloud Function
+  create-grpc-app        Creates a gRPC application
+  create-messaging-app   Creates a messaging application
+  create-test            Creates a simple test for the projects testing framework <i class="conum" data-value="3"></i><b>(3)</b>
+  create-websocket-server  Creates a Websocket server
   create-client            Creates a client interface
   create-controller        Creates a controller and associated test
-  create-job               Creates a job with scheduled method
-  create-test              Creates a simple test for the project's testing framework
-  create-websocket-client  Creates a Websocket client
-  create-websocket-server  Creates a Websocket server
-  help                     Prints help information for a specific command
-
-
-Provided Features:
-------------------
-...</code></pre>
+  create-bean              Creates a singleton bean</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here you can see the project generation commands lists</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>All commands available in the current directory are listed here</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><strong>Note:</strong> the things listed after the project creation commands (always available) will depend on the current directory context</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>All of the code-generation commands will honor the values written in <code>micronaut-cli.yml</code>. For example, assume the following <code>micronaut-cli.yml</code> file.</p>
@@ -32082,21 +32081,20 @@ Provided Features:
 <div class="listingblock">
 <div class="title">micronaut-cli.yml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">profile: service
-defaultPackage: example
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">defaultPackage: example
 ---
 testFramework: spock
 sourceLanguage: java</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>With the above settings, the <code>create-controller</code> command will (by default) generate Java controllers with an associated Spock test, under the <code>example</code> package. Commands accept arguments and these defaults can be overriden on a per-command basis.</p>
+<p>With the above settings, the <code>create-bean</code> command will (by default) generate a Java class with an associated Spock test, under the <code>example</code> package. Commands accept arguments and these defaults can be overriden on a per-command basis.</p>
 </div>
 <div class="sect1">
-<h2 id="_base_profile_commands">Base Profile Commands</h2>
+<h2 id="_base_commands">Base Commands</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Commands in the base profile are inherited by all other profiles and are always available.</p>
+<p>These commands are always available within the context of a micronaut project.</p>
 </div>
 <div class="sect2">
 <h3 id="_create_bean">Create-Bean</h3>
@@ -32179,11 +32177,8 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_service_profile_commands">Service Profile Commands</h2>
+<h2 id="_http_related_commands">HTTP-Related Commands</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The service profile includes commands that are dependent upon the HTTP server and client dependencies (which are not included in the base profile).</p>
-</div>
 <div class="sect2">
 <h3 id="_create_controller">Create-Controller</h3>
 <table class="tableblock frame-all grid-all spread">
@@ -32344,11 +32339,8 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cli_profile_commands">CLI Profile Commands</h2>
+<h2 id="_cli_project_commands">CLI Project Commands</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The cli profile lets you generate CLI commands to control your application.</p>
-</div>
 <div class="sect2">
 <h3 id="_create_command">Create-Command</h3>
 <table class="tableblock frame-all grid-all spread">
@@ -32391,11 +32383,17 @@ It creates an associated test that will run the application and verify that a co
 | Rendered template CommandTest.java to destination src/test/java/example/PrintCommandTest.java</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This list is just a small subset of all the code generation commands in the Micronaut CLI.
+To see all the context-sensitive commands the CLI has available (and under what circumstances they apply), check out the
+<a href="https://github.com/micronaut-projects/micronaut-starter">micronaut-starter</a> project and find the classes that
+extend <code>CodeGenCommand</code>. The <code>applies</code> method dictates whether a command is available or not.</p>
+</div>
 </div>
 </div>
 </div>
 
-<h2 id="reloading"><a class="anchor" href="#reloading"></a>17.5 Reloading</h2>
+<h2 id="reloading"><a class="anchor" href="#reloading"></a>17.4 Reloading</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/reloading.adoc"'>
@@ -32414,7 +32412,7 @@ It creates an associated test that will run the application and verify that a co
 <p>However, if you wish to have your changes automatically reloaded Micronaut does support automatic restart or the use of third-party reloading agents.</p>
 </div>
 
-<h2 id="automaticRestart"><a class="anchor" href="#automaticRestart"></a>17.5.1 Automatic Restart</h2>
+<h2 id="automaticRestart"><a class="anchor" href="#automaticRestart"></a>17.4.1 Automatic Restart</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/reloading/automaticRestart.adoc"'>
@@ -32463,115 +32461,20 @@ It creates an associated test that will run the application and verify that a co
 <div class="sect2">
 <h3 id="_gradle_restart">Gradle Restart</h3>
 <div class="paragraph">
-<p>For Gradle restart you can create a new application with the <code>file-watch</code> feature already configured using the CLI with the command <code>mn create-app myapp --features file-watch</code></p>
-</div>
-<div class="paragraph">
-<p>This essentially introduces the following configuration to <code>application.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">File Watch Configuration</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    io:
-        watch:
-            paths: src/main
-            restart: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>By setting <code>micronaut.io.watch.paths</code> what happens is that Micronaut will fire a <a href="../api/io/micronaut/scheduling/io/watch/event/FileChangedEvent.html">FileChangedEvent</a> if any file is changed. Setting <code>micronaut.io.watch.restart</code> tells Micronaut to stop the server if a file is changed.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The <code>micronaut.io.watch.paths</code> setting can be used for more than just automatic restart, you can use this setting to monitor for file changes within your production application.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once this is in place to have Gradle automatically restart on any change add run the following command:</p>
+<p>Gradle automatic restart can be activated when using the Micronaut Gradle plugin simply by activating Gradle&#8217;s support for continuous builds via the <code>-t</code> flag:</p>
 </div>
 <div class="listingblock">
 <div class="title">Using Gradle for Automatic Restart</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew run --continuous</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew run -t</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Every time you make a change to class or resources Gradle will recompile and restart the application.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_file_watch_and_mac_os_x">File Watch and Mac OS X</h3>
-<div class="paragraph">
-<p>The native JVM implementation of the <code>WatchService</code> interface for Mac OS X using polling which is slow. To improve file watch performance add the following dependencies to your build if you are using OS X:</p>
-</div>
-<div class="listingblock">
-<div class="title">Gradle - Configuring Native File Watch on Mac OS X</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">configurations {
-    developmentOnly
-}
-dependencies {
-    // Automatically added with the 'file-watch' feature in the CLi
-    developmentOnly "io.micronaut:micronaut-runtime-osx"
-    ...
-    developmentOnly "net.java.dev.jna:jna"
-    developmentOnly "io.methvin:directory-watcher"
 
-}
-run.classpath += configurations.developmentOnly</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-A custom <code>developmentOnly</code> configuration is used to ensure the dependencies don&#8217;t go into the production JAR.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Or with Maven:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;io.methvin&lt;/groupId&gt;
-  &lt;artifactId&gt;directory-watcher&lt;/artifactId&gt;
-  &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;net.java.dev.jna&lt;/groupId&gt;
-  &lt;artifactId&gt;jna&lt;/artifactId&gt;
-  &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The <code>provided</code> scope is used to ensure the dependencies don&#8217;t go into the production JAR.
-</td>
-</tr>
-</table>
-</div>
-</div>
-
-<h2 id="jrebel"><a class="anchor" href="#jrebel"></a>17.5.2 JRebel</h2>
+<h2 id="jrebel"><a class="anchor" href="#jrebel"></a>17.4.2 JRebel</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/reloading/jrebel.adoc"'>
@@ -32684,38 +32587,47 @@ if (project.hasProperty('rebelAgent')) {
 <div class="sect2">
 <h3 id="_maven">Maven</h3>
 <div class="paragraph">
-<p>Add the path to <code>pom.xml</code> as a build profile (if using the CLI feature, the profile <code>jrebel</code> is already provided - simply update the path to the agent JAR).</p>
+<p>Configure the Micronaut Maven Plugin accordingly:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
-&lt;!-- ... --&gt;
-    &lt;profiles&gt;
-        &lt;profile&gt;
-            &lt;id&gt;jrebel&lt;/id&gt;
-            &lt;build&gt;
-                &lt;plugins&gt;
-                    &lt;plugin&gt;
-                        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-                        &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
-                        &lt;version&gt;1.6.0&lt;/version&gt;
-                        &lt;configuration&gt;
-                            &lt;executable&gt;java&lt;/executable&gt;
-                            &lt;arguments&gt;
-                                &lt;argument&gt;-noverify&lt;/argument&gt;
-                                &lt;argument&gt;-XX:TieredStopAtLevel=1&lt;/argument&gt;
-                                &lt;argument&gt;-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib&lt;/argument&gt;
-                                &lt;argument&gt;-classpath&lt;/argument&gt;
-                                &lt;classpath/&gt;
-                                &lt;argument&gt;${exec.mainClass}&lt;/argument&gt;
-                            &lt;/arguments&gt;
-                        &lt;/configuration&gt;
-                    &lt;/plugin&gt;
-                &lt;/plugins&gt;
-            &lt;/build&gt;
-        &lt;/profile&gt;
-    &lt;/profiles&gt;
+
+  &lt;!-- ... --&gt;
+
+  &lt;build&gt;
+    &lt;plugins&gt;
+
+      &lt;!-- ... --&gt;
+
+      &lt;plugin&gt;
+        &lt;groupId&gt;io.micronaut.build&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-maven-plugin&lt;/artifactId&gt;
+          &lt;configuration&gt;
+            &lt;jvmArguments&gt;
+              &lt;jvmArgument&gt;-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib&lt;/jvmArgument&gt;
+            &lt;/jvmArguments&gt;
+          &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.zeroturnaround&lt;/groupId&gt;
+        &lt;artifactId&gt;jrebel-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.1.8&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;generate-rebel-xml&lt;/id&gt;
+            &lt;phase&gt;process-resources&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;generate&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+
+      &lt;!-- ... --&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
 &lt;/project&gt;</code></pre>
 </div>
 </div>
@@ -32723,7 +32635,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 </div>
 
-<h2 id="gradleReload"><a class="anchor" href="#gradleReload"></a>17.5.3 Recompiling with Gradle</h2>
+<h2 id="gradleReload"><a class="anchor" href="#gradleReload"></a>17.4.3 Recompiling with Gradle</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/reloading/gradleReload.adoc"'>
@@ -32751,7 +32663,7 @@ if (project.hasProperty('rebelAgent')) {
 <p>The <code>classes</code> task will be rerun every time a source file is modified, allowing the reloading agent to pick up the change.</p>
 </div>
 
-<h2 id="ideReload"><a class="anchor" href="#ideReload"></a>17.5.4 Recompiling with an IDE</h2>
+<h2 id="ideReload"><a class="anchor" href="#ideReload"></a>17.4.4 Recompiling with an IDE</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/reloading/ideReload.adoc"'>
@@ -32776,7 +32688,7 @@ if (project.hasProperty('rebelAgent')) {
 </div>
 </div>
 
-<h2 id="proxy"><a class="anchor" href="#proxy"></a>17.6 Proxy Configuration</h2>
+<h2 id="proxy"><a class="anchor" href="#proxy"></a>17.5 Proxy Configuration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x/src/main/docs/guide/cli/proxy.adoc"'>
@@ -33022,16 +32934,11 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ext {
-  micronautVersion = '1.0.2.BUILD-SNAPSHOT'
+  micronautVersion = '2.2.0.BUILD-SNAPSHOT'
 }
 repositories {
   jcenter() <i class="conum" data-value="1"></i><b>(1)</b>
   maven { url "https://oss.jfrog.org/oss-snapshot-local" } <i class="conum" data-value="2"></i><b>(2)</b>
-}
-dependencyManagement {
-  imports {
-      mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
-  }
 }</code></pre>
 </div>
 </div>
@@ -33055,8 +32962,14 @@ dependencyManagement {
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
   ...
 
+  &lt;parent&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-parent&lt;/artifactId&gt;
+    &lt;version&gt;2.2.0.BUILD-SNAPSHOT&lt;/version&gt;
+  &lt;/parent&gt;
+
   &lt;properties&gt;
-    &lt;micronaut.version&gt;1.0.2.BUILD-SNAPSHOT&lt;/micronaut.version&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;micronaut.version&gt;2.2.0.BUILD-SNAPSHOT&lt;/micronaut.version&gt; <i class="conum" data-value="1"></i><b>(1)</b>
     ...
   &lt;/properties&gt;
 
@@ -33070,18 +32983,6 @@ dependencyManagement {
       &lt;url&gt;https://oss.jfrog.org/oss-snapshot-local&lt;/url&gt; <i class="conum" data-value="3"></i><b>(3)</b>
     &lt;/repository&gt;
   &lt;/repositories&gt;
-
-  &lt;dependencyManagement&gt;
-    &lt;dependencies&gt;
-      &lt;dependency&gt;
-        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-        &lt;artifactId&gt;micronaut-bom&lt;/artifactId&gt;
-        &lt;version&gt;${micronaut.version}&lt;/version&gt;
-        &lt;type&gt;pom&lt;/type&gt;
-        &lt;scope&gt;import&lt;/scope&gt;
-      &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-  &lt;/dependencyManagement&gt;
 
   ...
 &lt;/project&gt;</code></pre>
@@ -33155,6 +33056,12 @@ dependencyManagement {
 
 <div class="paragraph">
 <p>This section will document breaking changes between Micronaut 1.0 and Micronaut 2.0</p>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_2_2">Micronaut 2.2</h3>
+<div class="paragraph">
+<p>Kotlin suspend functions in controllers that return null will now correctly respond with a 404. This behavior was inconsistent with other return types in previous versions and returned a 200 OK response.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_thread_pool_selection_now_manual">Thread Pool Selection Now Manual</h3>
