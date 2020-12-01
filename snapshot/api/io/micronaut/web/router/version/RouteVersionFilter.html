@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -167,6 +167,25 @@ implements <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilt
 <div class="block">Filters route matches by specified version.</div>
 </td>
 </tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected &lt;T,R&gt;&nbsp;java.util.Optional&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/version/RouteVersionFilter.html#getVersion-io.micronaut.web.router.UriRouteMatch-">getVersion</a></span>(<a href="../../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;&nbsp;routeMatch)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/version/RouteVersionFilter.html#matchIfRouteIsNotVersioned-io.micronaut.http.HttpRequest-java.lang.String-">matchIfRouteIsNotVersioned</a></span>(<a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                          java.lang.String&nbsp;version)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/version/RouteVersionFilter.html#matchIfRouteIsVersioned-io.micronaut.http.HttpRequest-java.lang.String-java.lang.String-">matchIfRouteIsVersioned</a></span>(<a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                       java.lang.String&nbsp;resolvedVersion,
+                       java.lang.String&nbsp;routeVersion)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected java.util.Optional&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/web/router/version/RouteVersionFilter.html#resolveVersion-io.micronaut.http.HttpRequest-">resolveVersion</a></span>(<a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -217,7 +236,7 @@ implements <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilt
 <a name="filter-io.micronaut.http.HttpRequest-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
 <pre>public&nbsp;&lt;T,R&gt;&nbsp;java.util.function.Predicate&lt;<a href="../../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;&gt;&nbsp;filter(<a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
@@ -232,6 +251,82 @@ implements <a href="../../../../../io/micronaut/web/router/filter/RouteMatchFilt
 <dd><code>request</code> - The HTTP request</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A filtered list of route matches</dd>
+</dl>
+</li>
+</ul>
+<a name="matchIfRouteIsNotVersioned-io.micronaut.http.HttpRequest-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>matchIfRouteIsNotVersioned</h4>
+<pre>protected&nbsp;boolean&nbsp;matchIfRouteIsNotVersioned(@NonNull
+                                             <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                                             @Nullable
+                                             java.lang.String&nbsp;version)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - HTTP Request</dd>
+<dd><code>version</code> - The version resolved evaluating the HTTP Request with beans of type <a href="../../../../../io/micronaut/web/router/version/resolution/RequestVersionResolver.html" title="interface in io.micronaut.web.router.version.resolution"><code>RequestVersionResolver</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if no version was resolved from the request</dd>
+</dl>
+</li>
+</ul>
+<a name="matchIfRouteIsVersioned-io.micronaut.http.HttpRequest-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>matchIfRouteIsVersioned</h4>
+<pre>protected&nbsp;boolean&nbsp;matchIfRouteIsVersioned(@NonNull
+                                          <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request,
+                                          @Nullable
+                                          java.lang.String&nbsp;resolvedVersion,
+                                          @NonNull
+                                          java.lang.String&nbsp;routeVersion)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - HTTP Request</dd>
+<dd><code>resolvedVersion</code> - The version resolved evaluating the HTTP Request with beans of type <a href="../../../../../io/micronaut/web/router/version/resolution/RequestVersionResolver.html" title="interface in io.micronaut.web.router.version.resolution"><code>RequestVersionResolver</code></a> and the <a href="../../../../../io/micronaut/web/router/version/RoutesVersioningConfiguration.html#getDefaultVersion--"><code>RoutesVersioningConfiguration.getDefaultVersion()</code></a>.</dd>
+<dd><code>routeVersion</code> - The route's version. For example, it could specified by the <a href="../../../../../io/micronaut/core/version/annotation/Version.html" title="annotation in io.micronaut.core.version.annotation"><code>Version</code></a> annotation.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if the resolved version matches the route version or if the resolved version is <code>null</code></dd>
+</dl>
+</li>
+</ul>
+<a name="resolveVersion-io.micronaut.http.HttpRequest-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveVersion</h4>
+<pre>@NonNull
+protected&nbsp;java.util.Optional&lt;java.lang.String&gt;&nbsp;resolveVersion(@NonNull
+                                                                       <a href="../../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - HTTP Request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the resolved requested version wrapped in an <code>Optional</code></dd>
+</dl>
+</li>
+</ul>
+<a name="getVersion-io.micronaut.web.router.UriRouteMatch-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getVersion</h4>
+<pre>protected&nbsp;&lt;T,R&gt;&nbsp;java.util.Optional&lt;java.lang.String&gt;&nbsp;getVersion(<a href="../../../../../io/micronaut/web/router/UriRouteMatch.html" title="interface in io.micronaut.web.router">UriRouteMatch</a>&lt;T,R&gt;&nbsp;routeMatch)</pre>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The target type</dd>
+<dd><code>R</code> - The return type</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>routeMatch</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns the value of the annotation <a href="../../../../../io/micronaut/core/version/annotation/Version.html" title="annotation in io.micronaut.core.version.annotation"><code>Version</code></a> in the route method wrapped in an <code>Optional</code>.</dd>
 </dl>
 </li>
 </ul>
