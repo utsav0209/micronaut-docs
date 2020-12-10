@@ -1966,7 +1966,7 @@ println(vehicle.start())</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Constructor injection (must be one public constructor or a single contructor annotated with <code>@Inject</code>)</p>
+<p>Constructor injection (must be one public constructor or a single constructor annotated with <code>@Inject</code>)</p>
 </li>
 <li>
 <p>Field injection</p>
@@ -2741,7 +2741,7 @@ If your bean fails to initialize in parallel then the application will be automa
 
 
 <div class="paragraph">
-<p>Eager initialization of <code>@Singleton</code> beans maybe desirable in certain scenarios, such as on AWS Lambda where more CPU resources are assigned to Lamdba construction than execution.</p>
+<p>Eager initialization of <code>@Singleton</code> beans maybe desirable in certain scenarios, such as on AWS Lambda where more CPU resources are assigned to Lambda construction than execution.</p>
 </div>
 <div class="paragraph">
 <p>You can specify whether you want to initialize eagerly <code>@Singleton</code> scoped beans using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> interface:</p>
@@ -5428,7 +5428,7 @@ data class Person(var name : String) {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>A <a href="../api/io/micronaut/core/beans/BeanProperty.html">BeanProperty</a> can be retreived from the introspection</td>
+<td>A <a href="../api/io/micronaut/core/beans/BeanProperty.html">BeanProperty</a> can be retrieved from the introspection</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -5803,7 +5803,7 @@ The <code>AnnotationMapper</code> should be on the annotation processor classpat
 <div class="sect2">
 <h3 id="_jackson_and_bean_introspection">Jackson and Bean Introspection</h3>
 <div class="paragraph">
-<p>Jackson is configured to use the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API to read and write property values and construct objects resulting in reflection-free serialization/deserialization which is benefitial from a performance perspective and requires less configuring to operate correctly with runtimes such as GraalVM native.</p>
+<p>Jackson is configured to use the <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> API to read and write property values and construct objects resulting in reflection-free serialization/deserialization which is beneficial from a performance perspective and requires less configuring to operate correctly with runtimes such as GraalVM native.</p>
 </div>
 <div class="paragraph">
 <p>This feature is enabled by default, you can disable it by setting the <code>jackson.bean-introspection-module</code> configuration to <code>false</code>.</p>
@@ -8334,7 +8334,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
 <h2 id="_property_type_conversion">Property Type Conversion</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When resolving properties Micronaut will use the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> bean to convert properties. You can register additional converters for types not supported by micronaut by defining beans that implement the <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> interface.</p>
+<p>When resolving properties Micronaut will use the <a href="../api/io/micronaut/core/convert/ConversionService.html">ConversionService</a> bean to convert properties. You can register additional converters for types not supported by Micronaut by defining beans that implement the <a href="../api/io/micronaut/core/convert/TypeConverter.html">TypeConverter</a> interface.</p>
 </div>
 <div class="paragraph">
 <p>Micronaut features some built-in conversions that are useful, which are detailed below.</p>
@@ -11271,7 +11271,7 @@ information.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>With the above in place if <code>book.retry.attempts</code> is specified in configuration it wil be bound the value of the <code>attempts</code> member of the <code>@Retryable</code> annotation via annotation metadata.</p>
+<p>With the above in place if <code>book.retry.attempts</code> is specified in configuration it will be bound the value of the <code>attempts</code> member of the <code>@Retryable</code> annotation via annotation metadata.</p>
 </div>
 </div>
 </div>
@@ -16334,7 +16334,7 @@ interface HelloClient {
 <p>The advantage of this approach is that the same Jackson annotations used for customizing JSON binding can be used for form submissions too.</p>
 </div>
 <div class="paragraph">
-<p>What this means in practise is that in order to bind regular form data the only change required to the previous JSON binding code is updating the <a href="../api/io/micronaut/http/MediaType.html">MediaType</a> consumed:</p>
+<p>What this means in practice is that in order to bind regular form data the only change required to the previous JSON binding code is updating the <a href="../api/io/micronaut/http/MediaType.html">MediaType</a> consumed:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Binding Form Data to POJOs</div>
@@ -17622,7 +17622,7 @@ To use a custom data source to send data through an input stream, construct a <a
 <p>The <code>proceed(..)</code> method returns a Reactive Streams <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> that emits the response that will be returned to the client. Implementors of filters can subscribe to the <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html">Publisher</a> and mutate the emitted <a href="../api/io/micronaut/http/MutableHttpResponse.html">MutableHttpResponse</a> object to modify the response prior to returning the response to the client.</p>
 </div>
 <div class="paragraph">
-<p>To put these concepts into practise lets look at an example.</p>
+<p>To put these concepts into practice lets look at an example.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -20713,7 +20713,7 @@ For instance using the default logger name for logback:</p>
 <p><strong>%s</strong> - HTTP status code of the response</p>
 </li>
 <li>
-<p><strong>%{&lt;format&gt;}t</strong> - Date and time. If the argument is ommitted the Common Log Format format is used ("'['dd/MMM/yyyy:HH:mm:ss Z']'").</p>
+<p><strong>%{&lt;format&gt;}t</strong> - Date and time. If the argument is omitted the Common Log Format format is used ("'['dd/MMM/yyyy:HH:mm:ss Z']'").</p>
 <div class="ulist">
 <ul>
 <li>
@@ -21380,7 +21380,7 @@ Jackson annotations are used to map the constructor
 <p>Sometimes, receiving just the object is not enough and you need information about the response. In this case, instead of <code>retrieve</code> you should use the <code>exchange</code> method:</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Recieving the Full HTTP Response</div>
+<div class="title">Receiving the Full HTTP Response</div>
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
                 GET("/greet/John"), Message.class <b class="conum">(1)</b>
@@ -21402,7 +21402,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Recieving the Full HTTP Response</div>
+<div class="title">Receiving the Full HTTP Response</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
         Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
@@ -21420,7 +21420,7 @@ Jackson annotations are used to map the constructor
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Recieving the Full HTTP Response</div>
+<div class="title">Receiving the Full HTTP Response</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val call = client.exchange(
                     GET&lt;Any&gt;("/greet/John"), Message::class.java <b class="conum">(1)</b>
@@ -26036,11 +26036,11 @@ List&lt;ServiceInstance&gt; instances = Flowable.fromPublisher(discoveryClient.g
 <div class="listingblock">
 <div class="title">Creating Namespace</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ aws servicediscovery create-public-dns-namespace --name micronaut.io --create-request-id create-1522767790 --description adescrptionhere
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ aws servicediscovery create-public-dns-namespace --name micronaut.io --create-request-id create-1522767790 --description adescriptionhere
 
 or
 
-$ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io --create-request-id create-1522767790 --description adescrptionhere --vpc yourvpcID</code></pre>
+$ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io --create-request-id create-1522767790 --description adescriptionhere --vpc yourvpcID</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26067,7 +26067,7 @@ $ aws servicediscovery create-private-dns-namespace --name micronaut.internal.io
 <div class="listingblock">
 <div class="title">Create Service</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ aws create-service --name yourservicename --create-request-id somenumber --description someservicedescrption --dns-config NamespaceId=yournamespaceid,RoutingPolicy=WEIGHTED,DnsRecords=[{Type=A,TTL=1000},{Type=A,TTL=1000}]</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ aws create-service --name yourservicename --create-request-id somenumber --description someservicedescription --dns-config NamespaceId=yournamespaceid,RoutingPolicy=WEIGHTED,DnsRecords=[{Type=A,TTL=1000},{Type=A,TTL=1000}]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -29116,7 +29116,7 @@ action can be a <code>suspend</code> function:</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Emitting will happend with <code>emit</code> <code>suspend</code> function</td>
+<td>Emitting will happen with <code>emit</code> <code>suspend</code> function</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -30946,7 +30946,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>. This will return a list of availble metric names.</p>
+<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>. This will return a list of available metric names.</p>
 </div>
 <div class="paragraph">
 <p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.</p>
@@ -32116,7 +32116,7 @@ sourceLanguage: java</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>With the above settings, the <code>create-bean</code> command will (by default) generate a Java class with an associated Spock test, under the <code>example</code> package. Commands accept arguments and these defaults can be overriden on a per-command basis.</p>
+<p>With the above settings, the <code>create-bean</code> command will (by default) generate a Java class with an associated Spock test, under the <code>example</code> package. Commands accept arguments and these defaults can be overridden on a per-command basis.</p>
 </div>
 <div class="sect1">
 <h2 id="_base_commands">Base Commands</h2>
@@ -33592,7 +33592,7 @@ This change also applies to messages in custom constraint annotations, which int
 <div class="sect2">
 <h3 id="_environment_order_bugfix">Environment Order Bugfix</h3>
 <div class="paragraph">
-<p>Environments specified through the application context builder have priority over environments deduced or supplied through the MICRONAUT_ENVIRONMENTS environment variable, or the equivalent system property. A bug in the logic however did not change the order of a specified environment if it previously was found or deduced. This issue manifested itself with <code>@MicronautTest(environments = "test")</code>. The <code>test</code> environment is already deduced for tests, so it retained the order of other deduced environments, and was able to be overriden by <code>MICRONAUT_ENVIRONMENTS=dev</code>. In Micronaut 1.x configuration for <code>dev</code> would have overridden <code>test</code>. In Micronaut 2.x <code>test</code> will override <code>dev</code>.</p>
+<p>Environments specified through the application context builder have priority over environments deduced or supplied through the MICRONAUT_ENVIRONMENTS environment variable, or the equivalent system property. A bug in the logic however did not change the order of a specified environment if it previously was found or deduced. This issue manifested itself with <code>@MicronautTest(environments = "test")</code>. The <code>test</code> environment is already deduced for tests, so it retained the order of other deduced environments, and was able to be overridden by <code>MICRONAUT_ENVIRONMENTS=dev</code>. In Micronaut 1.x configuration for <code>dev</code> would have overridden <code>test</code>. In Micronaut 2.x <code>test</code> will override <code>dev</code>.</p>
 </div>
 </div>
 <div class="sect2">
