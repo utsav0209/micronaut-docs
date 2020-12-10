@@ -28305,8 +28305,9 @@ annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
   &lt;/dependency&gt;
 &lt;/dependencies&gt;
 ...
-&lt;annotationProcessorPaths&gt;
+&lt;annotationProcessorPaths combine.self="override"&gt;
   &lt;path&gt;
+    &lt;!-- must precede micronaut-inject-java --&gt;
     &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
     &lt;artifactId&gt;lombok&lt;/artifactId&gt;
     &lt;version&gt;1.18.12&lt;/version&gt;
@@ -28314,6 +28315,11 @@ annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
   &lt;path&gt;
     &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
+    &lt;version&gt;${micronaut.version}&lt;/version&gt;
+  &lt;/path&gt;
+    &lt;path&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-validation&lt;/artifactId&gt;
     &lt;version&gt;${micronaut.version}&lt;/version&gt;
   &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
