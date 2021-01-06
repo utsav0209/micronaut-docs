@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -134,34 +134,14 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getAnnotationMetadata--">getAnnotationMetadata</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="interface in io.micronaut.inject.ast">TypedElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getBeanType--">getBeanType</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getArgumentAnnotationMetadata--">getArgumentAnnotationMetadata</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getMethodElement--">getMethodElement</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getArgumentTypes--">getArgumentTypes</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getDeclaringType--">getDeclaringType</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.util.Map&lt;java.lang.String,java.lang.Object&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getGenericTypes--">getGenericTypes</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getMethodName--">getMethodName</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#getReturnType--">getReturnType</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/inject/writer/BeanDefinitionWriter.MethodVisitData.html#isRequiresReflection--">isRequiresReflection</a></span>()</code>&nbsp;</td>
 </tr>
@@ -187,13 +167,26 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getDeclaringType--">
+<a name="getMethodElement--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDeclaringType</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;getDeclaringType()</pre>
+<h4>getMethodElement</h4>
+<pre>public&nbsp;<a href="../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a>&nbsp;getMethodElement()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The method element</dd>
+</dl>
+</li>
+</ul>
+<a name="getBeanType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBeanType</h4>
+<pre>public&nbsp;<a href="../../../../io/micronaut/inject/ast/TypedElement.html" title="interface in io.micronaut.inject.ast">TypedElement</a>&nbsp;getBeanType()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The declaring type object.</dd>
@@ -203,91 +196,13 @@ extends java.lang.Object</pre>
 <a name="isRequiresReflection--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>isRequiresReflection</h4>
 <pre>public&nbsp;boolean&nbsp;isRequiresReflection()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>is reflection required</dd>
-</dl>
-</li>
-</ul>
-<a name="getReturnType--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getReturnType</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;getReturnType()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The return type object</dd>
-</dl>
-</li>
-</ul>
-<a name="getMethodName--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMethodName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getMethodName()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The method name</dd>
-</dl>
-</li>
-</ul>
-<a name="getArgumentTypes--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getArgumentTypes</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getArgumentTypes()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The argument types</dd>
-</dl>
-</li>
-</ul>
-<a name="getArgumentAnnotationMetadata--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getArgumentAnnotationMetadata</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&gt;&nbsp;getArgumentAnnotationMetadata()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The argument metadata</dd>
-</dl>
-</li>
-</ul>
-<a name="getGenericTypes--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getGenericTypes</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.util.Map&lt;java.lang.String,java.lang.Object&gt;&gt;&nbsp;getGenericTypes()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The generic types</dd>
-</dl>
-</li>
-</ul>
-<a name="getAnnotationMetadata--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getAnnotationMetadata</h4>
-<pre>public&nbsp;<a href="../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;getAnnotationMetadata()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The annotation metadata</dd>
 </dl>
 </li>
 </ul>

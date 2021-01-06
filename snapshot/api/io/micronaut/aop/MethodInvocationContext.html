@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":18,"i2":18};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -156,7 +156,7 @@ extends <a href="../../../io/micronaut/aop/InvocationContext.html" title="interf
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -165,6 +165,18 @@ extends <a href="../../../io/micronaut/aop/InvocationContext.html" title="interf
 <td class="colFirst"><code><a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">T</a>,<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">R</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/aop/MethodInvocationContext.html#getExecutableMethod--">getExecutableMethod</a></span>()</code>
 <div class="block">The underlying <a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject"><code>ExecutableMethod</code></a> reference.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/aop/MethodInvocationContext.html#isAbstract--">isAbstract</a></span>()</code>
+<div class="block">Defines whether the method is abstract.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/aop/MethodInvocationContext.html#isSuspend--">isSuspend</a></span>()</code>
+<div class="block">Defines whether the method is Kotlin suspend function.</div>
 </td>
 </tr>
 </table>
@@ -194,7 +206,7 @@ extends <a href="../../../io/micronaut/aop/InvocationContext.html" title="interf
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.<a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a></h3>
-<code><a href="../../../io/micronaut/inject/ExecutableMethod.html#isAbstract--">isAbstract</a>, <a href="../../../io/micronaut/inject/ExecutableMethod.html#isSuspend--">isSuspend</a></code></li>
+<code><a href="../../../io/micronaut/inject/ExecutableMethod.html#getDescription-boolean-">getDescription</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.type.Executable">
@@ -248,7 +260,7 @@ extends <a href="../../../io/micronaut/aop/InvocationContext.html" title="interf
 <a name="getExecutableMethod--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getExecutableMethod</h4>
 <pre>@NonNull
@@ -257,6 +269,40 @@ extends <a href="../../../io/micronaut/aop/InvocationContext.html" title="interf
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The underlying method reference.</dd>
+</dl>
+</li>
+</ul>
+<a name="isSuspend--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSuspend</h4>
+<pre>default&nbsp;boolean&nbsp;isSuspend()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/inject/ExecutableMethod.html#isSuspend--">ExecutableMethod</a></code></span></div>
+<div class="block">Defines whether the method is Kotlin suspend function.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/inject/ExecutableMethod.html#isSuspend--">isSuspend</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">T</a>,<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">R</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Is the method Kotlin suspend function.</dd>
+</dl>
+</li>
+</ul>
+<a name="isAbstract--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isAbstract</h4>
+<pre>default&nbsp;boolean&nbsp;isAbstract()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/inject/ExecutableMethod.html#isAbstract--">ExecutableMethod</a></code></span></div>
+<div class="block">Defines whether the method is abstract.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../io/micronaut/inject/ExecutableMethod.html#isAbstract--">isAbstract</a></code>&nbsp;in interface&nbsp;<code><a href="../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">T</a>,<a href="../../../io/micronaut/aop/MethodInvocationContext.html" title="type parameter in MethodInvocationContext">R</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Is the method abstract.</dd>
 </dl>
 </li>
 </ul>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaElementFactory.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaPackageElement.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -222,13 +222,50 @@ implements <a href="../../../../../io/micronaut/inject/ast/MethodElement.html" t
 <td class="colFirst"><code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#getReturnType--">getReturnType</a></span>()</code>&nbsp;</td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#getSuspendParameters--">getSuspendParameters</a></span>()</code>
+<div class="block">If <a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isSuspend--"><code>MethodElement.isSuspend()</code></a> returns true this method exposes the continuation parameter in addition to the other parameters of the method.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#isDefault--">isDefault</a></span>()</code>
+<div class="block">Is the method a default method on an interfaces.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#isSuspend--">isSuspend</a></span>()</code>
+<div class="block">Is the method a Kotlin suspend function.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected io.micronaut.annotation.processing.visitor.JavaParameterElement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#newParameterElement-javax.lang.model.element.VariableElement-io.micronaut.core.annotation.AnnotationMetadata-">newParameterElement</a></span>(javax.lang.model.element.VariableElement&nbsp;variableElement,
+                   <a href="../../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</code>
+<div class="block">Creates a new parameter element for the given args.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#returnType-java.util.Map-">returnType</a></span>(java.util.Map&lt;java.lang.String,java.util.Map&lt;java.lang.String,javax.lang.model.type.TypeMirror&gt;&gt;&nbsp;info)</code>
+<div class="block">The return type for the given info.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaMethodElement.html#withNewParameters-io.micronaut.inject.ast.ParameterElement...-">withNewParameters</a></span>(<a href="../../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>...&nbsp;newParameters)</code>
+<div class="block">Takes this method element and transforms into a new method element with the given parameters appended to the existing parameters.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.annotation.processing.visitor.AbstractJavaElement">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.annotation.processing.visitor.<a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html" title="class in io.micronaut.annotation.processing.visitor">AbstractJavaElement</a></h3>
-<code><a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getAnnotationMetadata--">getAnnotationMetadata</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getName--">getName</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getNativeType--">getNativeType</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isAbstract--">isAbstract</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isFinal--">isFinal</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isPrivate--">isPrivate</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isProtected--">isProtected</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isPublic--">isPublic</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isStatic--">isStatic</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-">mirrorToClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-java.util.Map-">mirrorToClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#parameterizedClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-java.util.Map-">parameterizedClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#toString--">toString</a></code></li>
+<code><a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getAnnotationMetadata--">getAnnotationMetadata</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getName--">getName</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#getNativeType--">getNativeType</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isAbstract--">isAbstract</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isFinal--">isFinal</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isPackagePrivate--">isPackagePrivate</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isPrivate--">isPrivate</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isProtected--">isProtected</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isPublic--">isPublic</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#isStatic--">isStatic</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-">mirrorToClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-java.util.Map-">mirrorToClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#mirrorToClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-java.util.Map-boolean-">mirrorToClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#parameterizedClassElement-javax.lang.model.type.TypeMirror-io.micronaut.annotation.processing.visitor.JavaVisitorContext-java.util.Map-">parameterizedClassElement</a>, <a href="../../../../../io/micronaut/annotation/processing/visitor/AbstractJavaElement.html#toString--">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -238,11 +275,18 @@ implements <a href="../../../../../io/micronaut/inject/ast/MethodElement.html" t
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.ast.MethodElement">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.inject.ast.<a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></h3>
+<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#getDescription-boolean-">getDescription</a>, <a href="../../../../../io/micronaut/inject/ast/MethodElement.html#hasParameters--">hasParameters</a>, <a href="../../../../../io/micronaut/inject/ast/MethodElement.html#of-io.micronaut.inject.ast.ClassElement-io.micronaut.core.annotation.AnnotationMetadata-io.micronaut.inject.ast.ClassElement-io.micronaut.inject.ast.ClassElement-java.lang.String-io.micronaut.inject.ast.ParameterElement...-">of</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.ast.Element">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.ast.<a href="../../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a></h3>
-<code><a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getName--">getName</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getSimpleName--">getSimpleName</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isStatic--">isStatic</a></code></li>
+<code><a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.Class-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#annotate-java.lang.String-java.util.function.Consumer-">annotate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getName--">getName</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getNativeType--">getNativeType</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#getSimpleName--">getSimpleName</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isAbstract--">isAbstract</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isFinal--">isFinal</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isPackagePrivate--">isPackagePrivate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isPrivate--">isPrivate</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isProtected--">isProtected</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isPublic--">isPublic</a>, <a href="../../../../../io/micronaut/inject/ast/Element.html#isStatic--">isStatic</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.annotation.AnnotationMetadataDelegate">
@@ -306,6 +350,23 @@ implements <a href="../../../../../io/micronaut/inject/ast/MethodElement.html" t
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isDefault--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDefault</h4>
+<pre>public&nbsp;boolean&nbsp;isDefault()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isDefault--">MethodElement</a></code></span></div>
+<div class="block">Is the method a default method on an interfaces.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isDefault--">isDefault</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if it is.</dd>
+</dl>
+</li>
+</ul>
 <a name="getGenericReturnType--">
 <!--   -->
 </a>
@@ -355,6 +416,23 @@ public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" t
 </dl>
 </li>
 </ul>
+<a name="isSuspend--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSuspend</h4>
+<pre>public&nbsp;boolean&nbsp;isSuspend()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isSuspend--">MethodElement</a></code></span></div>
+<div class="block">Is the method a Kotlin suspend function.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isSuspend--">isSuspend</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if it is.</dd>
+</dl>
+</li>
+</ul>
 <a name="getParameters--">
 <!--   -->
 </a>
@@ -367,6 +445,63 @@ public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" t
 <dd><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#getParameters--">getParameters</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The method parameters</dd>
+</dl>
+</li>
+</ul>
+<a name="withNewParameters-io.micronaut.inject.ast.ParameterElement...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withNewParameters</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a>&nbsp;withNewParameters(<a href="../../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>...&nbsp;newParameters)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#withNewParameters-io.micronaut.inject.ast.ParameterElement...-">MethodElement</a></code></span></div>
+<div class="block">Takes this method element and transforms into a new method element with the given parameters appended to the existing parameters.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#withNewParameters-io.micronaut.inject.ast.ParameterElement...-">withNewParameters</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>newParameters</code> - The new parameters</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A new method element</dd>
+</dl>
+</li>
+</ul>
+<a name="getSuspendParameters--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSuspendParameters</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ParameterElement.html" title="interface in io.micronaut.inject.ast">ParameterElement</a>[]&nbsp;getSuspendParameters()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#getSuspendParameters--">MethodElement</a></code></span></div>
+<div class="block">If <a href="../../../../../io/micronaut/inject/ast/MethodElement.html#isSuspend--"><code>MethodElement.isSuspend()</code></a> returns true this method exposes the continuation parameter in addition to the other parameters of the method.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html#getSuspendParameters--">getSuspendParameters</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MethodElement.html" title="interface in io.micronaut.inject.ast">MethodElement</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The suspend parameters</dd>
+</dl>
+</li>
+</ul>
+<a name="newParameterElement-javax.lang.model.element.VariableElement-io.micronaut.core.annotation.AnnotationMetadata-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newParameterElement</h4>
+<pre>@NonNull
+protected&nbsp;io.micronaut.annotation.processing.visitor.JavaParameterElement&nbsp;newParameterElement(@NonNull
+                                                                                                       javax.lang.model.element.VariableElement&nbsp;variableElement,
+                                                                                                       @NonNull
+                                                                                                       <a href="../../../../../io/micronaut/core/annotation/AnnotationMetadata.html" title="interface in io.micronaut.core.annotation">AnnotationMetadata</a>&nbsp;annotationMetadata)</pre>
+<div class="block">Creates a new parameter element for the given args.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>variableElement</code> - The variable element</dd>
+<dd><code>annotationMetadata</code> - The annotation metadata</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The parameter element</dd>
 </dl>
 </li>
 </ul>
@@ -388,7 +523,7 @@ public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" t
 <a name="getOwningType--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getOwningType</h4>
 <pre>public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;getOwningType()</pre>
@@ -401,6 +536,22 @@ public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" t
 <dd><code><a href="../../../../../io/micronaut/inject/ast/MemberElement.html#getOwningType--">getOwningType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/MemberElement.html" title="interface in io.micronaut.inject.ast">MemberElement</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The owning type.</dd>
+</dl>
+</li>
+</ul>
+<a name="returnType-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>returnType</h4>
+<pre>protected&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a>&nbsp;returnType(java.util.Map&lt;java.lang.String,java.util.Map&lt;java.lang.String,javax.lang.model.type.TypeMirror&gt;&gt;&nbsp;info)</pre>
+<div class="block">The return type for the given info.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>info</code> - The info</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The return type</dd>
 </dl>
 </li>
 </ul>
@@ -431,7 +582,7 @@ public&nbsp;<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" t
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaElementFactory.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaPackageElement.html" title="class in io.micronaut.annotation.processing.visitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
