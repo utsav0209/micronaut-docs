@@ -233,9 +233,9 @@ implements <a href="../../../../../io/micronaut/inject/ast/ArrayableClassElement
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html#getFields-java.util.function.Predicate-">getFields</a></span>(java.util.function.Predicate&lt;java.util.Set&lt;<a href="../../../../../io/micronaut/inject/ast/ElementModifier.html" title="enum in io.micronaut.inject.ast">ElementModifier</a>&gt;&gt;&nbsp;modifierFilter)</code>
-<div class="block">Return fields contained with the given modifiers include / exclude rules.</div>
+<td class="colFirst"><code>&lt;T extends <a href="../../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/annotation/processing/visitor/JavaClassElement.html#getEnclosedElements-io.micronaut.inject.ast.ElementQuery-">getEnclosedElements</a></span>(<a href="../../../../../io/micronaut/inject/ast/ElementQuery.html" title="interface in io.micronaut.inject.ast">ElementQuery</a>&lt;T&gt;&nbsp;query)</code>
+<div class="block">Return the elements that match the given query.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -339,7 +339,7 @@ implements <a href="../../../../../io/micronaut/inject/ast/ArrayableClassElement
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.inject.ast.<a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></h3>
-<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getCanonicalName--">getCanonicalName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields--">getFields</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFirstTypeArgument--">getFirstTypeArgument</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPackageName--">getPackageName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getSimpleName--">getSimpleName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getType--">getType</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getTypeArguments-java.lang.Class-">getTypeArguments</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isAssignable-java.lang.Class-">isAssignable</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isEnum--">isEnum</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isIterable--">isIterable</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isOptional--">isOptional</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#of-java.lang.Class-">of</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#of-java.lang.String-">of</a></code></li>
+<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getCanonicalName--">getCanonicalName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields--">getFields</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields-java.util.function.Predicate-">getFields</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFirstTypeArgument--">getFirstTypeArgument</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getPackageName--">getPackageName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getSimpleName--">getSimpleName</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getType--">getType</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getTypeArguments-java.lang.Class-">getTypeArguments</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isAssignable-java.lang.Class-">isAssignable</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isEnum--">isEnum</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isIterable--">isIterable</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#isOptional--">isOptional</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#of-java.lang.Class-">of</a>, <a href="../../../../../io/micronaut/inject/ast/ClassElement.html#of-java.lang.String-">of</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.inject.ast.TypedElement">
@@ -578,21 +578,23 @@ public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../io/microna
 </dl>
 </li>
 </ul>
-<a name="getFields-java.util.function.Predicate-">
+<a name="getEnclosedElements-io.micronaut.inject.ast.ElementQuery-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getFields</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../../../io/micronaut/inject/ast/FieldElement.html" title="interface in io.micronaut.inject.ast">FieldElement</a>&gt;&nbsp;getFields(@NonNull
-                                              java.util.function.Predicate&lt;java.util.Set&lt;<a href="../../../../../io/micronaut/inject/ast/ElementModifier.html" title="enum in io.micronaut.inject.ast">ElementModifier</a>&gt;&gt;&nbsp;modifierFilter)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields-java.util.function.Predicate-">ClassElement</a></code></span></div>
-<div class="block">Return fields contained with the given modifiers include / exclude rules.</div>
+<h4>getEnclosedElements</h4>
+<pre>public&nbsp;&lt;T extends <a href="../../../../../io/micronaut/inject/ast/Element.html" title="interface in io.micronaut.inject.ast">Element</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getEnclosedElements(@NonNull
+                                                                 <a href="../../../../../io/micronaut/inject/ast/ElementQuery.html" title="interface in io.micronaut.inject.ast">ElementQuery</a>&lt;T&gt;&nbsp;query)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getEnclosedElements-io.micronaut.inject.ast.ElementQuery-">ClassElement</a></code></span></div>
+<div class="block">Return the elements that match the given query.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getFields-java.util.function.Predicate-">getFields</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html#getEnclosedElements-io.micronaut.inject.ast.ElementQuery-">getEnclosedElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/inject/ast/ClassElement.html" title="interface in io.micronaut.inject.ast">ClassElement</a></code></dd>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The element type</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>modifierFilter</code> - Can be used to filter fields by modifier</dd>
+<dd><code>query</code> - The query to use.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The fields</dd>
 </dl>
