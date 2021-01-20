@@ -508,8 +508,6 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-multitenancy"><a href="#multitenancy"><strong>16</strong><span>Multi-Tenancy</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-multitenancyGorm"><a href="#multitenancyGorm"><strong>16.1</strong><span>Multi-Tenancy GORM</span></a></div>
-        
         <div class="toc-item" style="margin-left:0px" id="toc-item-cli"><a href="#cli"><strong>17</strong><span>Micronaut CLI</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-createProject"><a href="#createProject"><strong>17.1</strong><span>Creating a Project</span></a></div>
@@ -29698,7 +29696,7 @@ interface HeadlineFlowClient {
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>native-image</code> tool</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut currently supports GraalVM 20.3.0 version and the team is improving the support in every new release. Don&#8217;t
+<p>Micronaut currently supports GraalVM 21.0.0 version and the team is improving the support in every new release. Don&#8217;t
 hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
 </div>
 <div class="paragraph">
@@ -29778,10 +29776,10 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 <p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
 </div>
 <div class="listingblock">
-<div class="title">Installing GraalVM 20.3.0 with SDKman</div>
+<div class="title">Installing GraalVM 21.0.0 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 20.3.0.r8-grl # or 20.3.0.r11-grl if you want to use JDK 11
-$ sdk use java 20.3.0.r8-grl</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 21.0.0.r8-grl # or 21.0.0.r11-grl if you want to use JDK 11
+$ sdk use java 21.0.0.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31905,153 +31903,7 @@ Properties that may contain sensitive data will be masked.
 
 
 <div class="paragraph">
-<p>Multi-Tenancy, as it relates to software development, is when a single instance of an application is used to service multiple clients (tenants) in a way that each tenant&#8217;s data is isolated from the other.</p>
-</div>
-<div class="paragraph">
-<p>To use the Micronaut&#8217;s multitenancy capabilities you must have the <code>multitenancy</code> dependency on your classpath.</p>
-</div>
-<div class="paragraph">
-<p>        <div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-multitenancy")</span></code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-multitenancy&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</p>
-</div>
-<div class="paragraph">
-<p>A common requirement for supporting Multi-tenancy is the ability to resolve the current tenant. Micronaut ships with the following built-in <a href="../api/io/micronaut/multitenancy/tenantresolver/TenantResolver.html">TenantResolver</a>s:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/CookieTenantResolver.html">CookieTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from an HTTP cookie. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.CookieTenantResolverConfigurationProperties">CookieTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/FixedTenantResolver.html">FixedTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves against a fixed tenant id. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.FixedTenantResolverConfigurationProperties">FixTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/HttpHeaderTenantResolver.html">HttpHeaderTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the request HTTP Header. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.HttpHeaderTenantResolverConfigurationProperties">FixTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/PrincipalTenantResolver.html">PrincipalTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the authenticated username. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.PrincipalTenantResolverConfigurationProperties">PrincipalTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SessionTenantResolver.html">SessionTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the current tenant from the HTTP session. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SessionTenantResolverConfigurationProperties">SessionTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SubdomainTenantResolver.html">SubdomainTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from the subdomain. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SubdomainTenantResolverConfigurationProperties">SubdomainTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/tenantresolver/SystemPropertyTenantResolver.html">SystemPropertyTenantResolver</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the tenant id from a system property. See <a href="configurationreference.html#io.micronaut.multitenancy.tenantresolver.SystemPropertyTenantResolverConfigurationProperties">SystemPropertyTenantResolver Configuration Properties</a>.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Micronaut supports tenant propagation. As an example, take the following scenario:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../img/multitenancy.svg" alt="multitenancy"></span></p>
-</div>
-<div class="paragraph">
-<p>You want incoming requests to the <code>gateway</code> microservice to resolve the tenant id via subdomain. However, you want
-your requests to other internal microservices to include the <code>tenant Id</code> as an HTTP Header.</p>
-</div>
-<div class="paragraph">
-<p>Your configuration in the <code>gateway</code> microservice will look like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-  multitenancy:
-    propagation:
-      enabled: true
-      service-id-regex: 'catalogue'
-    tenantresolver:
-      subdomain:
-        enabled: true
-    tenantwriter:
-      httpheader:
-        enabled: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In the <code>catalogue</code> microservice the configuration will look like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-  multitenancy:
-    tenantresolver:
-      httpheader:
-        enabled: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To propagate the tenant you will need to write the resolved tenant ID to the outgoing requests.</p>
-</div>
-<div class="paragraph">
-<p>Currently, Micronaut ships with two built-in implementations for <a href="../api/io/micronaut/multitenancy/writer/TenantWriter.html">TenantWriter</a>:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/writer/CookieTenantWriter.html">CookieTenantWriter</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Writes the current tenant to a Cookie in your outgoing requests. See <a href="configurationreference.html#io.micronaut.multitenancy.writer.CookieTenantWriterConfigurationProperties">CookieTenantWriter Configuration Properties</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/multitenancy/writer/HttpHeaderTenantWriter.html">HttpHeaderTenantWriter</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Writes the current tenant to a HTTP Header. See <a href="configurationreference.html#io.micronaut.multitenancy.writer.HttpHeaderTenantWriterConfigurationProperties">HttpHeaderTenantWriter Configuration Properties</a>.</p></td>
-</tr>
-</tbody>
-</table>
-
-<h2 id="multitenancyGorm"><a class="anchor" href="#multitenancyGorm"></a>16.1 Multi-Tenancy GORM</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x
-/src/main/docs/guide/multitenancy/multitenancyGorm.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p><a href="http://gorm.grails.org">GORM</a> supports Multi-tenancy and integrates with Micronaut Multi-tenancy support.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://micronaut-projects.github.io/micronaut-groovy/latest/guide/index.html#multitenancyGorm">Micronaut Groovy module</a> for more information.</p>
+<p>See the <a href="https://micronaut-projects.github.io/micronaut-multitenancy/latest/guide">Micronaut Multitenancy&#8217;s documentation</a> to discover Micronaut&#8217;s support for common tasks such as tenant resolution for multi-tenancy aware Micronaut applications.</p>
 </div>
 
 <h1 id="cli"><a class="anchor" href="#cli"></a>17 Micronaut CLI</h1>
@@ -33648,7 +33500,13 @@ repositories {
 
 
 <div class="paragraph">
-<p>This section will document breaking changes between Micronaut 1.0 and Micronaut 2.0</p>
+<p>This section will document breaking changes between Micronaut 1.x and Micronaut 2.x</p>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_2_3">Micronaut 2.3</h3>
+<div class="paragraph">
+<p>The <code>micronaut.server.multipart.enabled</code> setting previously was not respected for the Netty server implementation. The setting is now honored and if explicitly set to false, all multipart requests will be rejected.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_micronaut_2_2">Micronaut 2.2</h3>
