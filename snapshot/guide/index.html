@@ -657,6 +657,12 @@
 <div class="sect2">
 <h3 id="_core_features">Core Features</h3>
 <div class="sect3">
+<h4 id="_banner">Banner</h4>
+<div class="paragraph">
+<p>A new customizable banner is now displayed when the application starts up. See <a href="#_micronaut_banner">Micronaut Banner</a> for more information.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_improved_support_for_records">Improved Support for Records</h4>
 <div class="paragraph">
 <p>Java 14+ Records can now be used to define <a href="#configurationProperties">Configuration Properties</a>. By default when <code>@ConfigurationProperties</code> is used on a <code>record</code>, configuration injection is applied. For example:</p>
@@ -680,6 +686,34 @@ record Example(@Min(20) int num, String name) {
 </div>
 </div>
 <div class="sect3">
+<h4 id="_improved_support_for_copy_constructors_and_immutable_types">Improved Support for Copy Constructors and Immutable Types</h4>
+<div class="paragraph">
+<p>An immutable <a href="../api/io/micronaut/core/beans/BeanIntrospection.html">BeanIntrospection</a> (like Java Records as mentioned above) requires different handling when you need to create a new instance with a particular property modified. A typical pattern for this is to construct a new instance passing all the existing values plus the modified value (see for example <a href="https://projectlombok.org/features/With">Lombok&#8217;s @With</a>).</p>
+</div>
+<div class="paragraph">
+<p>Micronaut&#8217;s Bean Introspections now support this pattern. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val introspection = BeanIntrospection.getIntrospection(Example.java);
+Example example = introspection.instantiate(10, "Test");
+assertEquals(10, example.num());
+example = introspection.getRequiredProperty("num", int.class)
+             .withValue(example, 20);
+assertEquals(20, example.num());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The new <code>withValue</code> method will automatically create a new instance populating the existing properties and returning the instance.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut will at compilation time compute an efficient copy-constructor approach that will only return a new instance if the value changes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_http_features">HTTP Features</h3>
+<div class="sect3">
 <h4 id="_locale_resolution">Locale Resolution</h4>
 <div class="paragraph">
 <p>A new interface <a href="../api/io/micronaut/http/server/util/HttpLocaleResolver.html">HttpLocaleResolver</a> has been introduced to support resolving a locale from a given request in multiple ways. A <code>java.util.Locale</code> object can now be a parameter to controller and client methods to automatically bind the locale to/from the request. See <a href="#localeResolution">the documentation</a> for more information.</p>
@@ -691,16 +725,22 @@ record Example(@Min(20) int num, String name) {
 <p>It is now possible to validate a resolved host against a list regular expressions patterns. See <a href="#hostResolution">the documentation</a> for more information.</p>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_cloud_features">Cloud Features</h3>
+<div class="sect3">
+<h4 id="_new_ci_cd_deployment_workflows_for_github_actions_in_launch">New CI/CD Deployment Workflows for Github Actions in Launch</h4>
+<div class="paragraph">
+<p><a href="https://micronaut.io/launch/">Micronaut Launch</a> has been updated to include CI/CD workflows to deploy to common container based Cloud environments including Oracle Cloud Function, Azure Container Instance and Google Cloud Run.</p>
+</div>
+<div class="paragraph">
+<p>Combined with the ability to <a href="https://www.youtube.com/watch?v=X4AKGf1TlXM">Push to Github</a> this makes it a breeze to setup Micronaut applications to be deployed to the Cloud.</p>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_google_cloud_secret_manager">Google Cloud Secret Manager</h4>
 <div class="paragraph">
 <p>Thanks to a contribution by <a href="https://github.com/viniciusccarvalho">Vinicius Carvalho</a>, Micronaut GCP supports distributed configuration via Google Cloud Secret Manager.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_banner">Banner</h4>
-<div class="paragraph">
-<p>A new customizable banner is now displayed when the application starts up. See <a href="#_micronaut_banner">Micronaut Banner</a> for more information.</p>
 </div>
 </div>
 </div>
