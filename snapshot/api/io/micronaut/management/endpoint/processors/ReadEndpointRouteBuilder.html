@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../io/micronaut/context/processor/AnnotationProcessor.html" title="interface in io.micronaut.context.processor">AnnotationProcessor</a>&lt;<a href="../../../../../io/micronaut/management/endpoint/annotation/Endpoint.html" title="annotation in io.micronaut.management.endpoint.annotation">Endpoint</a>,<a href="../../../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;?,?&gt;&gt;, <a href="../../../../../io/micronaut/context/processor/ExecutableMethodProcessor.html" title="interface in io.micronaut.context.processor">ExecutableMethodProcessor</a>&lt;<a href="../../../../../io/micronaut/management/endpoint/annotation/Endpoint.html" title="annotation in io.micronaut.management.endpoint.annotation">Endpoint</a>&gt;, <a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a>, <a href="../../../../../io/micronaut/web/router/RouteBuilder.html" title="interface in io.micronaut.web.router">RouteBuilder</a></dd>
+<dd><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&gt;, <a href="../../../../../io/micronaut/context/processor/AnnotationProcessor.html" title="interface in io.micronaut.context.processor">AnnotationProcessor</a>&lt;<a href="../../../../../io/micronaut/management/endpoint/annotation/Endpoint.html" title="annotation in io.micronaut.management.endpoint.annotation">Endpoint</a>,<a href="../../../../../io/micronaut/inject/ExecutableMethod.html" title="interface in io.micronaut.inject">ExecutableMethod</a>&lt;?,?&gt;&gt;, <a href="../../../../../io/micronaut/context/processor/ExecutableMethodProcessor.html" title="interface in io.micronaut.context.processor">ExecutableMethodProcessor</a>&lt;<a href="../../../../../io/micronaut/management/endpoint/annotation/Endpoint.html" title="annotation in io.micronaut.management.endpoint.annotation">Endpoint</a>&gt;, <a href="../../../../../io/micronaut/web/router/RouteBuilder.html" title="interface in io.micronaut.web.router">RouteBuilder</a>, java.io.Closeable, java.lang.AutoCloseable</dd>
 </dl>
 <hr>
 <br>
@@ -216,10 +216,8 @@ extends <a href="../../../../../io/micronaut/web/router/DefaultRouteBuilder.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#isPathParameter-io.micronaut.core.type.Argument-">isPathParameter</a></span>(<a href="../../../../../io/micronaut/core/type/Argument.html" title="interface in io.micronaut.core.type">Argument</a>&nbsp;argument)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#onComplete--">onComplete</a></span>()</code>
-<div class="block">Clears endpoint ids information.</div>
-</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#isRunning--">isRunning</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -240,6 +238,18 @@ extends <a href="../../../../../io/micronaut/web/router/DefaultRouteBuilder.html
 <td class="colFirst"><code>protected java.util.Optional&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#resolveActiveEndPointId-java.lang.Class-">resolveActiveEndPointId</a></span>(java.lang.Class&lt;?&gt;&nbsp;declaringType)</code>&nbsp;</td>
 </tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#start--">start</a></span>()</code>
+<div class="block">Starts the lifecyle component.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/management/endpoint/processors/ReadEndpointRouteBuilder.html#stop--">stop</a></span>()</code>
+<div class="block">Clears endpoint ids information.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.web.router.DefaultRouteBuilder">
@@ -254,6 +264,13 @@ extends <a href="../../../../../io/micronaut/web/router/DefaultRouteBuilder.html
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.context.LifeCycle">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.context.<a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a></h3>
+<code><a href="../../../../../io/micronaut/context/LifeCycle.html#close--">close</a>, <a href="../../../../../io/micronaut/context/LifeCycle.html#refresh--">refresh</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.web.router.RouteBuilder">
@@ -334,19 +351,53 @@ extends <a href="../../../../../io/micronaut/web/router/DefaultRouteBuilder.html
 </dl>
 </li>
 </ul>
-<a name="onComplete--">
+<a name="start--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>onComplete</h4>
-<pre>public final&nbsp;void&nbsp;onComplete()</pre>
+<h4>start</h4>
+<pre><a href="../../../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+public&nbsp;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&nbsp;start()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html#start--">LifeCycle</a></code></span></div>
+<div class="block">Starts the lifecyle component.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#start--">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This lifecycle component</dd>
+</dl>
+</li>
+</ul>
+<a name="stop--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>stop</h4>
+<pre><a href="../../../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+public&nbsp;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&nbsp;stop()</pre>
 <div class="block">Clears endpoint ids information.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html#onComplete--">onComplete</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/core/async/subscriber/Completable.html" title="interface in io.micronaut.core.async.subscriber">Completable</a></code></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Subscriber.onComplete()</code></dd>
+<dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#stop--">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This lifecycle component</dd>
+</dl>
+</li>
+</ul>
+<a name="isRunning--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isRunning</h4>
+<pre>public&nbsp;boolean&nbsp;isRunning()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/context/LifeCycle.html#isRunning--">isRunning</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/context/LifeCycle.html" title="interface in io.micronaut.context">LifeCycle</a>&lt;io.micronaut.management.endpoint.processors.AbstractEndpointRouteBuilder&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether the component is running</dd>
 </dl>
 </li>
 </ul>
