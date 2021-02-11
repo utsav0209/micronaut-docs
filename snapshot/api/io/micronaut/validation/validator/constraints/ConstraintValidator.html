@@ -116,7 +116,9 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="../../../../../io/micronaut/core/annotation/Indexed.html" title="annotation in io.micronaut.core.annotation">@Indexed</a>(<a href="../../../../../io/micronaut/core/annotation/Indexed.html#value--">value</a>=<a href="../../../../../io/micronaut/validation/validator/constraints/ConstraintValidator.html" title="interface in io.micronaut.validation.validator.constraints">ConstraintValidator.class</a>)
+<pre>@Immutable
+ @ThreadSafe
+ <a href="../../../../../io/micronaut/core/annotation/Indexed.html" title="annotation in io.micronaut.core.annotation">@Indexed</a>(<a href="../../../../../io/micronaut/core/annotation/Indexed.html#value--">value</a>=<a href="../../../../../io/micronaut/validation/validator/constraints/ConstraintValidator.html" title="interface in io.micronaut.validation.validator.constraints">ConstraintValidator.class</a>)
  @FunctionalInterface
 public interface <span class="typeNameLabel">ConstraintValidator&lt;A extends java.lang.annotation.Annotation,T&gt;</span>
 extends javax.validation.ConstraintValidator&lt;A,T&gt;</pre>
@@ -224,11 +226,11 @@ extends javax.validation.ConstraintValidator&lt;A,T&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isValid</h4>
-<pre>boolean&nbsp;isValid(<a href="../../../../../io/micronaut/core/annotation/Nullable.html" title="annotation in io.micronaut.core.annotation">@Nullable</a>
+<pre>boolean&nbsp;isValid(@Nullable
                 <a href="../../../../../io/micronaut/validation/validator/constraints/ConstraintValidator.html" title="type parameter in ConstraintValidator">T</a>&nbsp;value,
-                <a href="../../../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+                @NonNull
                 <a href="../../../../../io/micronaut/core/annotation/AnnotationValue.html" title="class in io.micronaut.core.annotation">AnnotationValue</a>&lt;<a href="../../../../../io/micronaut/validation/validator/constraints/ConstraintValidator.html" title="type parameter in ConstraintValidator">A</a>&gt;&nbsp;annotationMetadata,
-                <a href="../../../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+                @NonNull
                 <a href="../../../../../io/micronaut/validation/validator/constraints/ConstraintValidatorContext.html" title="interface in io.micronaut.validation.validator.constraints">ConstraintValidatorContext</a>&nbsp;context)</pre>
 <div class="block">Implements the validation logic.
 

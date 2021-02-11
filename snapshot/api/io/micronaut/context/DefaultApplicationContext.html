@@ -477,7 +477,7 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>DefaultApplicationContext</h4>
-<pre>public&nbsp;DefaultApplicationContext(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>public&nbsp;DefaultApplicationContext(@NonNull
                                  java.lang.String...&nbsp;environmentNames)</pre>
 <div class="block">Construct a new ApplicationContext for the given environment name.</div>
 <dl>
@@ -492,9 +492,9 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>DefaultApplicationContext</h4>
-<pre>public&nbsp;DefaultApplicationContext(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>public&nbsp;DefaultApplicationContext(@NonNull
                                  <a href="../../../io/micronaut/core/io/scan/ClassPathResourceLoader.html" title="interface in io.micronaut.core.io.scan">ClassPathResourceLoader</a>&nbsp;resourceLoader,
-                                 <a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+                                 @NonNull
                                  java.lang.String...&nbsp;environmentNames)</pre>
 <div class="block">Construct a new ApplicationContext for the given environment name and classloader.</div>
 <dl>
@@ -510,7 +510,7 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DefaultApplicationContext</h4>
-<pre>public&nbsp;DefaultApplicationContext(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>public&nbsp;DefaultApplicationContext(@NonNull
                                  <a href="../../../io/micronaut/context/ApplicationContextConfiguration.html" title="interface in io.micronaut.context">ApplicationContextConfiguration</a>&nbsp;configuration)</pre>
 <div class="block">Construct a new ApplicationContext for the given environment name and classloader.</div>
 <dl>
@@ -535,12 +535,12 @@ implements <a href="../../../io/micronaut/context/ApplicationContext.html" title
 <ul class="blockList">
 <li class="blockList">
 <h4>registerSingleton</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
-public&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;registerSingleton(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
+public&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;registerSingleton(@NonNull
                                                          java.lang.Class&lt;T&gt;&nbsp;type,
-                                                         <a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+                                                         @NonNull
                                                          T&nbsp;singleton,
-                                                         <a href="../../../io/micronaut/core/annotation/Nullable.html" title="annotation in io.micronaut.core.annotation">@Nullable</a>
+                                                         @Nullable
                                                          <a href="../../../io/micronaut/context/Qualifier.html" title="interface in io.micronaut.context">Qualifier</a>&lt;T&gt;&nbsp;qualifier,
                                                          boolean&nbsp;inject)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/context/BeanDefinitionRegistry.html#registerSingleton-java.lang.Class-T-io.micronaut.context.Qualifier-boolean-">BeanDefinitionRegistry</a></code></span></div>
@@ -578,7 +578,7 @@ public&nbsp;&lt;T&gt;&nbsp;<a href="../../../io/micronaut/context/ApplicationCon
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveBeanConfigurations</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 protected&nbsp;java.lang.Iterable&lt;<a href="../../../io/micronaut/inject/BeanConfiguration.html" title="interface in io.micronaut.inject">BeanConfiguration</a>&gt;&nbsp;resolveBeanConfigurations()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#resolveBeanConfigurations--">DefaultBeanContext</a></code></span></div>
 <div class="block">Resolves the <a href="../../../io/micronaut/inject/BeanConfiguration.html" title="interface in io.micronaut.inject"><code>BeanConfiguration</code></a> class instances. Default implementation uses ServiceLoader pattern.</div>
@@ -596,7 +596,7 @@ protected&nbsp;java.lang.Iterable&lt;<a href="../../../io/micronaut/inject/BeanC
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveBeanDefinitionReferences</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 protected&nbsp;java.util.List&lt;<a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject">BeanDefinitionReference</a>&gt;&nbsp;resolveBeanDefinitionReferences()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#resolveBeanDefinitionReferences--">DefaultBeanContext</a></code></span></div>
 <div class="block">Resolves the <a href="../../../io/micronaut/inject/BeanDefinitionReference.html" title="interface in io.micronaut.inject"><code>BeanDefinitionReference</code></a> class instances. Default implementation uses ServiceLoader pattern.</div>
@@ -614,8 +614,8 @@ protected&nbsp;java.util.List&lt;<a href="../../../io/micronaut/inject/BeanDefin
 <ul class="blockList">
 <li class="blockList">
 <h4>createEnvironment</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
-protected&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&nbsp;createEnvironment(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
+protected&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&nbsp;createEnvironment(@NonNull
                                                  <a href="../../../io/micronaut/context/ApplicationContextConfiguration.html" title="interface in io.micronaut.context">ApplicationContextConfiguration</a>&nbsp;configuration)</pre>
 <div class="block">Creates the default environment for the given environment name.</div>
 <dl>
@@ -632,7 +632,7 @@ protected&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>createConversionService</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 protected&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&nbsp;createConversionService()</pre>
 <div class="block">Creates the default conversion service.</div>
 <dl>
@@ -647,7 +647,7 @@ protected&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getConversionService</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 public&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" title="interface in io.micronaut.core.convert">ConversionService</a>&lt;?&gt;&nbsp;getConversionService()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -663,7 +663,7 @@ public&nbsp;<a href="../../../io/micronaut/core/convert/ConversionService.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>getEnvironment</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 public&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="interface in io.micronaut.context.env">Environment</a>&nbsp;getEnvironment()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -679,7 +679,7 @@ public&nbsp;<a href="../../../io/micronaut/context/env/Environment.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>start</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;start()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#start--">DefaultBeanContext</a></code></span></div>
 <div class="block">The start method will read all bean definition classes found on the classpath and initialize any pre-required
@@ -702,7 +702,7 @@ public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>stop</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
 public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" title="interface in io.micronaut.context">ApplicationContext</a>&nbsp;stop()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../io/micronaut/context/DefaultBeanContext.html#stop--">DefaultBeanContext</a></code></span></div>
 <div class="block">The close method will shut down the context calling <code>PreDestroy</code> hooks on loaded
@@ -793,8 +793,8 @@ public&nbsp;<a href="../../../io/micronaut/context/ApplicationContext.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>getPropertyEntries</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
-public&nbsp;java.util.Collection&lt;java.lang.String&gt;&nbsp;getPropertyEntries(<a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
+<pre>@NonNull
+public&nbsp;java.util.Collection&lt;java.lang.String&gt;&nbsp;getPropertyEntries(@NonNull
                                                                           java.lang.String&nbsp;name)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/core/value/PropertyResolver.html#getPropertyEntries-java.lang.String-">PropertyResolver</a></code></span></div>
 <div class="block">Returns a collection of properties entries under the given key. For example given the following keys:
@@ -823,10 +823,10 @@ public&nbsp;java.util.Collection&lt;java.lang.String&gt;&nbsp;getPropertyEntries
 <ul class="blockList">
 <li class="blockList">
 <h4>getProperties</h4>
-<pre><a href="../../../io/micronaut/core/annotation/NonNull.html" title="annotation in io.micronaut.core.annotation">@NonNull</a>
-public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getProperties(<a href="../../../io/micronaut/core/annotation/Nullable.html" title="annotation in io.micronaut.core.annotation">@Nullable</a>
+<pre>@NonNull
+public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getProperties(@Nullable
                                                                                java.lang.String&nbsp;name,
-                                                                               <a href="../../../io/micronaut/core/annotation/Nullable.html" title="annotation in io.micronaut.core.annotation">@Nullable</a>
+                                                                               @Nullable
                                                                                <a href="../../../io/micronaut/core/naming/conventions/StringConvention.html" title="enum in io.micronaut.core.naming.conventions">StringConvention</a>&nbsp;keyFormat)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../io/micronaut/core/value/PropertyResolver.html#getProperties-java.lang.String-io.micronaut.core.naming.conventions.StringConvention-">PropertyResolver</a></code></span></div>
 <div class="block">Return all the properties under the given key. By default Micronaut stores keys in keb-case, such that normalized lookups
