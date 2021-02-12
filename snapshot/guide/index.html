@@ -1359,8 +1359,7 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Property
-import io.micronaut.http.client.HttpClient
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -1855,15 +1854,14 @@ class Vehicle {
 class V8Engine : Engine {
 
     override var cylinders = 8
+
     override fun start(): String {
         return "Starting V8"
     }
 }
 
 @Singleton
-class Vehicle(private val engine: Engine)<b class="conum">(3)</b>
-{
-
+class Vehicle(private val engine: Engine) { <b class="conum">(3)</b>
     fun start(): String {
         return engine.start()
     }
@@ -2275,11 +2273,10 @@ class V8Engine : Engine {
 
 @Singleton
 class Vehicle @Inject
-constructor(@param:Named("v8") private val engine: Engine)<b class="conum">(4)</b>
-{
+constructor(@param:Named("v8") private val engine: Engine) { <b class="conum">(4)</b>
 
     fun start(): String {
-        return engine.start()<b class="conum">(5)</b>
+        return engine.start() <b class="conum">(5)</b>
     }
 }</code></pre>
 </div>
@@ -2459,7 +2456,6 @@ class Green implements ColorPicker {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Primary
 import javax.inject.Singleton
 
-
 @Primary
 @Singleton
 class Green: ColorPicker {
@@ -2506,7 +2502,6 @@ class Blue implements ColorPicker {
 <div class="title">Another Bean of the Same Type</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
-
 
 @Singleton
 class Blue: ColorPicker {
@@ -2936,12 +2931,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
 import javax.inject.Singleton
-
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
 @Requires(classes = [Car::class]) <b class="conum">(1)</b>
 @Singleton <b class="conum">(2)</b>
 @MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(RUNTIME)
 annotation class Driver</code></pre>
 </div>
 </div>
@@ -3235,7 +3230,7 @@ class EngineFactory {
 @EachProperty("engines")
 class EngineConfiguration : Toggleable {
 
-    val enabled = true
+    var enabled = true
 
     @NotNull
     val cylinders: Int? = null
@@ -4252,22 +4247,23 @@ class V8Engine implements Engine {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PostConstruct
 import javax.inject.Singleton
 
-
 @Singleton
 class V8Engine : Engine {
+
     override val cylinders = 8
-    var isIntialized = false
+
+    var initialized = false
         private set <b class="conum">(2)</b>
 
     override fun start(): String {
-        check(isIntialized) { "Engine not initialized!" }
+        check(initialized) { "Engine not initialized!" }
 
         return "Starting V8"
     }
 
     @PostConstruct <b class="conum">(3)</b>
     fun initialize() {
-        this.isIntialized = true
+        initialized = true
     }
 }</code></pre>
 </div>
@@ -4339,7 +4335,7 @@ class PreDestroyBean implements AutoCloseable {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.annotation.PreDestroy <b class="conum">(1)</b>
 import javax.inject.Singleton
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -4706,6 +4702,7 @@ class SampleEventListenerSpec extends Specification {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.docs.context.events.SampleEvent
+import javax.inject.Singleton
 
 @Singleton
 class SampleEventListener : ApplicationEventListener&lt;SampleEvent&gt; {
@@ -4972,7 +4969,6 @@ import org.opentest4j.AssertionFailedError
 class SampleEventListenerSpec : AnnotationSpec() {
 
     @Test
-//    @Ignore // TODO can't get this to pass on CI, any help is welcome
     fun testEventListenerWasNotified() {
         val context = ApplicationContext.run()
         val emitter = context.getBean(SampleEventEmitterBean::class.java)
@@ -4980,7 +4976,7 @@ class SampleEventListenerSpec : AnnotationSpec() {
         listener.invocationCounter.get().shouldBe(0)
         emitter.publishSampleEvent()
 
-        eventually(5.seconds,  AssertionFailedError::class.java) {
+        eventually(5.seconds, AssertionFailedError::class.java) {
             println("Current value of counter: " + listener.invocationCounter.get())
             listener.invocationCounter.get().shouldBe(1)
         }
@@ -5167,8 +5163,8 @@ class EngineFactory {
 class EngineInitializer : BeanInitializedEventListener&lt;EngineFactory&gt; { <b class="conum">(4)</b>
     override fun onInitialized(event: BeanInitializingEvent&lt;EngineFactory&gt;): EngineFactory {
         val engineFactory = event.bean
-        engineFactory.setRodLength(6.6)<b class="conum">(5)</b>
-        return event.bean as EngineFactory
+        engineFactory.setRodLength(6.6) <b class="conum">(5)</b>
+        return engineFactory
     }
 }</code></pre>
 </div>
@@ -5500,7 +5496,7 @@ import javax.annotation.concurrent.Immutable
 
 @Introspected
 @Immutable
-class Vehicle @Creator constructor(val make: String, val model: String, val axels: Int) { <b class="conum">(1)</b>
+class Vehicle @Creator constructor(val make: String, val model: String, val axles: Int) { <b class="conum">(1)</b>
 
     constructor(make: String, model: String) : this(make, model, 2) {}
 }</code></pre>
@@ -5929,7 +5925,6 @@ class PersonService {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
 import javax.validation.constraints.NotBlank
 
-
 @Singleton
 open class PersonService {
     open fun sayHello(@NotBlank name: String) {
@@ -6025,8 +6020,9 @@ class PersonServiceSpec {
 
     @Test
     fun testThatNameIsValidated() {
-        val exception = assertThrows(ConstraintViolationException::class.java
-        ) { personService.sayHello("") } <b class="conum">(1)</b>
+        val exception = assertThrows(ConstraintViolationException::class.java) {
+            personService.sayHello("") <b class="conum">(1)</b>
+        }
 
         assertEquals("sayHello.name: must not be blank", exception.message) <b class="conum">(2)</b>
     }
@@ -6172,7 +6168,7 @@ lateinit var validator: Validator
 @Test
 fun testThatPersonIsValidWithValidator() {
     val person = Person("", 10)
-    val constraintViolations = validator.validate(person)  <b class="conum">(1)</b>
+    val constraintViolations = validator.validate(person) <b class="conum">(1)</b>
 
     assertEquals(2, constraintViolations.size) <b class="conum">(2)</b>
 }</code></pre>
@@ -6268,8 +6264,9 @@ lateinit var personService: PersonService
 @Test
 fun testThatPersonIsValid() {
     val person = Person("", 10)
-    val exception = assertThrows(ConstraintViolationException::class.java  <b class="conum">(1)</b>
-    ) { personService.sayHello(person) }
+    val exception = assertThrows(ConstraintViolationException::class.java) {
+        personService.sayHello(person) <b class="conum">(1)</b>
+    }
 
     assertEquals(2, exception.constraintViolations.size) <b class="conum">(2)</b>
 }</code></pre>
@@ -6361,8 +6358,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.validation.Constraint
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(RUNTIME)
 @Constraint(validatedBy = []) <b class="conum">(1)</b>
 annotation class DurationPattern(
     val message: String = "invalid duration ({validatedValue})" <b class="conum">(2)</b>
@@ -6511,11 +6509,10 @@ class HolidayService {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 open class HolidayService {
 
-    open fun startHoliday( @NotBlank person: String,
-                           @DurationPattern duration: String): String {
+    open fun startHoliday(@NotBlank person: String,
+                          @DurationPattern duration: String): String {
         val d = Duration.parse(duration)
-        val mins = d.toMinutes()
-        return "Person $person is off on holiday for $mins minutes"
+        return "Person $person is off on holiday for ${d.toMinutes()} minutes"
     }
 }</code></pre>
 </div>
@@ -6557,8 +6554,9 @@ lateinit var holidayService: HolidayService
 
 @Test
 fun testCustomValidator() {
-    val exception = assertThrows(ConstraintViolationException::class.java
-    ) { holidayService.startHoliday("Fred", "junk") }   <b class="conum">(1)</b>
+    val exception = assertThrows(ConstraintViolationException::class.java) {
+        holidayService.startHoliday("Fred", "junk") <b class="conum">(1)</b>
+    }
 
     assertEquals("startHoliday.duration: invalid duration (junk)", exception.message) <b class="conum">(2)</b>
 }</code></pre>
@@ -6633,7 +6631,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Retention(AnnotationRetention.RUNTIME)
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import kotlin.annotation.AnnotationRetention.RUNTIME
+
+@Retention(RUNTIME)
 annotation class TimeOff(
     @DurationPattern val duration: String
 )</code></pre>
@@ -6698,7 +6698,8 @@ class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.annotation.AnnotationValue
-import io.micronaut.validation.validator.constraints.*
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
 
 class DurationPatternValidator : ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     override fun isValid(
@@ -7105,10 +7106,10 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 <div class="title">Initializing the Environment</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run("test", "android")
-        val environment = applicationContext.getEnvironment()
+        val environment = applicationContext.environment
 
-        assertTrue(environment.getActiveNames().contains("test"))
-        assertTrue(environment.getActiveNames().contains("android"))</code></pre>
+        assertTrue(environment.activeNames.contains("test"))
+        assertTrue(environment.activeNames.contains("android"))</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7348,19 +7349,20 @@ and it will be used instead.</p>
 <div class="title">Initializing the Environment</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val applicationContext = ApplicationContext.run(
-                PropertySource.of(
-                        "test",
-                        mapOf(
-                                "micronaut.server.host" to "foo",
-                                "micronaut.server.port" to 8080
-                        )
-                ),
-                "test", "android")
-        val environment = applicationContext.getEnvironment()
+            PropertySource.of(
+                "test",
+                mapOf(
+                    "micronaut.server.host" to "foo",
+                    "micronaut.server.port" to 8080
+                )
+            ),
+            "test", "android"
+        )
+        val environment = applicationContext.environment
 
         assertEquals(
-                "foo",
-                environment.getProperty("micronaut.server.host", String::class.java).orElse("localhost")
+            "foo",
+            environment.getProperty("micronaut.server.host", String::class.java).orElse("localhost")
         )</code></pre>
 </div>
 </div>
@@ -7817,7 +7819,9 @@ class EngineImpl implements Engine {
 <div class="listingblock multi-language-sample">
 <div class="title">@Value Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Value
+
+import javax.inject.Singleton
 
 @Singleton
 class EngineImpl : Engine {
@@ -7826,7 +7830,7 @@ class EngineImpl : Engine {
     override var cylinders: Int = 0
         protected set
 
-    override fun start(): String {<b class="conum">(2)</b>
+    override fun start(): String { <b class="conum">(2)</b>
         return "Starting V$cylinders Engine"
     }
 }</code></pre>
@@ -8192,8 +8196,7 @@ class EngineConfig {
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
-import java.util.*
-
+import java.util.Optional
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 
@@ -8202,8 +8205,10 @@ class EngineConfig {
 
     @NotBlank <b class="conum">(2)</b>
     var manufacturer = "Ford" <b class="conum">(3)</b>
+
     @Min(1L)
     var cylinders: Int = 0
+
     var crankShaft = CrankShaft()
 
     @ConfigurationProperties("crank-shaft")
@@ -8631,6 +8636,7 @@ import io.micronaut.context.annotation.ConfigurationProperties
 
 @ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 internal class EngineConfig {
+
     @ConfigurationBuilder(prefixes = ["with"])  <b class="conum">(2)</b>
     val builder = EngineImpl.builder()
 
@@ -8853,14 +8859,15 @@ class EngineConfig {
 <div class="title">@MapFormat Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
-import javax.validation.constraints.Min
 import io.micronaut.core.convert.format.MapFormat
+import javax.validation.constraints.Min
 
 @ConfigurationProperties("my.engine")
 class EngineConfig {
 
     @Min(1L)
     var cylinders: Int = 0
+
     @MapFormat(transformation = MapFormat.MapTransformation.FLAT) <b class="conum">(1)</b>
     var sensors: Map&lt;Int, String&gt;? = null
 }</code></pre>
@@ -8929,6 +8936,7 @@ class EngineImpl implements Engine {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
 class EngineImpl : Engine {
+
     override val sensors: Map&lt;*, *&gt;?
         get() = config!!.sensors
 
@@ -8980,17 +8988,18 @@ class EngineImpl : Engine {
 <div class="title">Use Map Configuration</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val subMap = mapOf(
-                0 to "thermostat",
-                1 to "fuel pressure"
+            0 to "thermostat",
+            1 to "fuel pressure"
         )
         val map = mapOf(
-                "my.engine.cylinders" to "8",
-                "my.engine.sensors" to subMap
+            "my.engine.cylinders" to "8",
+            "my.engine.sensors" to subMap
         )
+
         val applicationContext = ApplicationContext.run(map, "test")
 
         val vehicle = applicationContext.getBean(Vehicle::class.java)
-        DefaultGroovyMethods.println(this, vehicle.start())</code></pre>
+        println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9052,6 +9061,7 @@ class MyConfigurationProperties {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
 class MyConfigurationProperties {
+
     var updatedAt: LocalDate? = null
         protected set
 
@@ -9110,13 +9120,13 @@ class MyConfigurationProperties {
     @BeforeEach
     fun setup() {
         ctx = ApplicationContext.run(
-                mapOf(
-                        "myapp.updatedAt" to mapOf( <b class="conum">(1)</b>
-                                "day" to 28,
-                                "month" to 10,
-                                "year" to 1982
-                        )
+            mapOf(
+                "myapp.updatedAt" to mapOf( <b class="conum">(1)</b>
+                    "day" to 28,
+                    "month" to 10,
+                    "year" to 1982
                 )
+            )
         )
     }
 
@@ -9205,11 +9215,10 @@ class MapToLocalDateConverter implements TypeConverter&lt;Map, LocalDate&gt; { <
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.convert.ConversionContext
 import io.micronaut.core.convert.ConversionService
 import io.micronaut.core.convert.TypeConverter
-
-import javax.inject.Singleton
 import java.time.DateTimeException
 import java.time.LocalDate
 import java.util.Optional
+import javax.inject.Singleton
 
 @Singleton
 class MapToLocalDateConverter : TypeConverter&lt;Map&lt;*, *&gt;, LocalDate&gt; { <b class="conum">(1)</b>
@@ -9224,7 +9233,6 @@ class MapToLocalDateConverter : TypeConverter&lt;Map&lt;*, *&gt;, LocalDate&gt; 
                 context.reject(propertyMap, e) <b class="conum">(3)</b>
                 return Optional.empty()
             }
-
         }
 
         return Optional.empty()
@@ -9321,12 +9329,16 @@ class DataSourceConfiguration {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @EachProperty</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@EachProperty("test.datasource")  <b class="conum">(1)</b>
-class DataSourceConfiguration <b class="conum">(2)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Parameter
+import java.net.URI
+import java.net.URISyntaxException
+
+@EachProperty("test.datasource")  <b class="conum">(1)</b>
+class DataSourceConfiguration
 @Throws(URISyntaxException::class)
-constructor(@param:Parameter val name: String) {
-    <b class="conum">(3)</b>
-    var url = URI("localhost")
+constructor(@param:Parameter val name: String) { <b class="conum">(2)</b>
+    var url = URI("localhost") <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -9424,7 +9436,7 @@ constructor(@param:Parameter val name: String) {
 <div class="title">Evaluating Beans Built by @EachProperty</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration::class.java)
-        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+        assertEquals(2, beansOfType.size) <b class="conum">(1)</b>
 
         val firstConfig = applicationContext.getBean(
                 DataSourceConfiguration::class.java,
@@ -9720,7 +9732,7 @@ class DataSourceFactory {
 <div class="title">Using a Qualifier</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val beansOfType = applicationContext.getBeansOfType(DataSource::class.java)
-        assertEquals(2, beansOfType.size.toLong()) <b class="conum">(1)</b>
+        assertEquals(2, beansOfType.size) <b class="conum">(1)</b>
 
         val firstConfig = applicationContext.getBean(
                 DataSource::class.java,
@@ -9823,9 +9835,9 @@ interface EngineConfig {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.core.bind.annotation.Bindable
-import javax.validation.constraints.*
-import java.util.Optional
-
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 interface EngineConfig {
@@ -10005,19 +10017,19 @@ class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.*
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.ConfigurationInject
+import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.core.bind.annotation.Bindable
-import javax.validation.constraints.*
 import java.util.Optional
-
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 data class EngineConfig @ConfigurationInject <b class="conum">(2)</b>
     constructor(
-        @Bindable(defaultValue = "Ford") @NotBlank <b class="conum">(3)</b>
-        val manufacturer: String,
-        @Min(1L) <b class="conum">(4)</b>
-        val cylinders: Int,
+        @Bindable(defaultValue = "Ford") @NotBlank val manufacturer: String, <b class="conum">(3)</b>
+        @Min(1) val cylinders: Int, <b class="conum">(4)</b>
         @NotNull val crankShaft: CrankShaft) {
 
     @ConfigurationProperties("crank-shaft")
@@ -10147,7 +10159,8 @@ Using this approach if you want the configuration to be refreshable then you mus
         )
         val applicationContext = ApplicationContext.run(map)
 
-        val vehicle = applicationContext.getBean(Vehicle::class.java)</code></pre>
+        val vehicle = applicationContext.getBean(Vehicle::class.java)
+        println(vehicle.start())</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10292,12 +10305,8 @@ class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.MethodInterceptor
 import io.micronaut.aop.MethodInvocationContext
-import io.micronaut.core.type.MutableArgumentValue
-
-import javax.inject.Singleton
 import java.util.Objects
-import java.util.Optional
-
+import javax.inject.Singleton
 
 @Singleton
 class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1)</b>
@@ -10311,7 +10320,7 @@ class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">
                 }
                 .findFirst() <b class="conum">(2)</b>
         return if (nullParam.isPresent) {
-            throw IllegalArgumentException("Null parameter [" + nullParam.get().key + "] not allowed") <b class="conum">(3)</b>
+            throw IllegalArgumentException("Null parameter [${nullParam.get().key}] not allowed") <b class="conum">(3)</b>
         } else {
             context.proceed() <b class="conum">(4)</b>
         }
@@ -10405,16 +10414,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.Around
 import io.micronaut.context.annotation.Type
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.CLASS
+import kotlin.annotation.AnnotationTarget.FILE
+import kotlin.annotation.AnnotationTarget.FUNCTION
+import kotlin.annotation.AnnotationTarget.PROPERTY_GETTER
+import kotlin.annotation.AnnotationTarget.PROPERTY_SETTER
 
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-
-import java.lang.annotation.RetentionPolicy.RUNTIME
-
-
-@Documented
+@MustBeDocumented
 @Retention(RUNTIME) <b class="conum">(1)</b>
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER) <b class="conum">(2)</b>
+@Target(CLASS, FILE, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER) <b class="conum">(2)</b>
 @Around <b class="conum">(3)</b>
 @Type(NotNullInterceptor::class) <b class="conum">(4)</b>
 annotation class NotNull</code></pre>
@@ -10476,7 +10485,9 @@ class NotNullExample {
 <div class="listingblock multi-language-sample">
 <div class="title">Around Advice Usage Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import javax.inject.Singleton
+
+@Singleton
 open class NotNullExample {
 
     @NotNull
@@ -10787,19 +10798,20 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.Introduction
 import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Type
-
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-
-import java.lang.annotation.RetentionPolicy.RUNTIME
-
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.ANNOTATION_CLASS
+import kotlin.annotation.AnnotationTarget.CLASS
+import kotlin.annotation.AnnotationTarget.FILE
+import kotlin.annotation.AnnotationTarget.FUNCTION
+import kotlin.annotation.AnnotationTarget.PROPERTY_GETTER
+import kotlin.annotation.AnnotationTarget.PROPERTY_SETTER
 
 @Introduction <b class="conum">(1)</b>
 @Type(StubIntroduction::class) <b class="conum">(2)</b>
 @Bean <b class="conum">(3)</b>
-@Documented
+@MustBeDocumented
 @Retention(RUNTIME)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE, AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+@Target(CLASS, FILE, ANNOTATION_CLASS, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER)
 annotation class Stub(val value: String = "")</code></pre>
 </div>
 </div>
@@ -10874,7 +10886,6 @@ class StubIntroduction implements MethodInterceptor&lt;Object,Object&gt; { <b cl
 import io.micronaut.aop.MethodInvocationContext
 
 import javax.inject.Singleton
-
 
 @Singleton
 class StubIntroduction : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(1)</b>
@@ -10977,7 +10988,7 @@ interface StubExample {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        val stubExample = applicationContext.getBean(StubExample::class.java)
 
-        stubExample.number.toLong().shouldBe(10)
+        stubExample.number.shouldBe(10)
         stubExample.date.shouldBe(null)</code></pre>
 </div>
 </div>
@@ -11325,7 +11336,8 @@ information.</p>
 <div class="listingblock multi-language-sample">
 <div class="title">Setting Retry Attempts</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "5", delay = "2s")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "5",
+               delay = "2s")
     open fun findBook(title: String): Book {
         // ...</code></pre>
 </div>
@@ -11354,7 +11366,8 @@ information.</p>
 <div class="listingblock multi-language-sample">
 <div class="title">Setting Retry via Configuration</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "\${book.retry.attempts:3}", delay = "\${book.retry.delay:1s}")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Retryable(attempts = "\${book.retry.attempts:3}",
+               delay = "\${book.retry.delay:1s}")
     open fun getBook(title: String): Book {
         // ...</code></pre>
 </div>
@@ -12135,8 +12148,7 @@ class HelloControllerSpec extends Specification {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Property
-import io.micronaut.http.client.HttpClient
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -12533,23 +12545,25 @@ class IssuesControllerTest extends Specification {
 <div class="listingblock multi-language-sample">
 <div class="title">Testing URI Variables</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ApplicationContext
-import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.runtime.server.EmbeddedServer
-import io.kotlintest.shouldBe
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
 import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.runtime.server.EmbeddedServer
 
 class IssuesControllerTest: StringSpec() {
 
     val embeddedServer = autoClose( <b class="conum">(2)</b>
-            ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
+        ApplicationContext.run(EmbeddedServer::class.java) <b class="conum">(1)</b>
     )
 
     val client = autoClose( <b class="conum">(2)</b>
-            embeddedServer.applicationContext.createBean(RxHttpClient::class.java, embeddedServer.getURL()) <b class="conum">(1)</b>
+        embeddedServer.applicationContext.createBean(
+            RxHttpClient::class.java,
+            embeddedServer.url) <b class="conum">(1)</b>
     )
 
     init {
@@ -12561,13 +12575,17 @@ class IssuesControllerTest: StringSpec() {
         }
 
         "test issue with invalid integer" {
-            val e = shouldThrow&lt;HttpClientResponseException&gt; { client.toBlocking().exchange&lt;Any&gt;("/issues/hello") }
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                client.toBlocking().exchange&lt;Any&gt;("/issues/hello")
+            }
 
             e.status.code shouldBe 400 <b class="conum">(5)</b>
         }
 
         "test issue without number" {
-            val e = shouldThrow&lt;HttpClientResponseException&gt; { client.toBlocking().exchange&lt;Any&gt;("/issues/") }
+            val e = shouldThrow&lt;HttpClientResponseException&gt; {
+                client.toBlocking().exchange&lt;Any&gt;("/issues/")
+            }
 
             e.status.code shouldBe 404 <b class="conum">(6)</b>
         }
@@ -12780,7 +12798,10 @@ class BackwardCompatibleController {
 <div class="listingblock multi-language-sample">
 <div class="title">Multiple URIs</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/hello")
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+
+@Controller("/hello")
 class BackwardCompatibleController {
 
     @Get(uris = ["/{name}", "/person/{name}"]) <b class="conum">(1)</b>
@@ -12881,12 +12902,12 @@ class MyRoutes extends GroovyRouteBuilder { <b class="conum">(1)</b>
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.ExecutionHandleLocator
 import io.micronaut.web.router.DefaultRouteBuilder
 import io.micronaut.web.router.RouteBuilder
-
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MyRoutes(executionHandleLocator: ExecutionHandleLocator, uriNamingStrategy: RouteBuilder.UriNamingStrategy) :
+class MyRoutes(executionHandleLocator: ExecutionHandleLocator,
+               uriNamingStrategy: RouteBuilder.UriNamingStrategy) :
         DefaultRouteBuilder(executionHandleLocator, uriNamingStrategy) { <b class="conum">(1)</b>
 
     @Inject
@@ -13212,7 +13233,6 @@ class BookmarkController {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.validation.Validated
 import javax.validation.Valid
 
 @Controller("/api")
@@ -13359,10 +13379,12 @@ class MovieTicketBean {
 <div class="title">Bean definition</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Introspected
-data class MovieTicketBean(val httpRequest: HttpRequest&lt;Any&gt;,
-                           @field:PathVariable val movieId: String,
-                           @field:QueryValue @field:PositiveOrZero @field:Nullable val minPrice: Double,
-                           @field:QueryValue @field:PositiveOrZero @field:Nullable val maxPrice: Double)</code></pre>
+data class MovieTicketBean(
+    val httpRequest: HttpRequest&lt;Any&gt;,
+    @field:PathVariable val movieId: String,
+    @field:QueryValue @field:PositiveOrZero @field:Nullable val minPrice: Double,
+    @field:QueryValue @field:PositiveOrZero @field:Nullable val maxPrice: Double
+)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -13672,9 +13694,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="title">An example of a binding annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.bind.annotation.Bindable
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.ANNOTATION_CLASS
+import kotlin.annotation.AnnotationTarget.FIELD
+import kotlin.annotation.AnnotationTarget.VALUE_PARAMETER
 
-@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.ANNOTATION_CLASS)
-@Retention(AnnotationRetention.RUNTIME)
+@Target(FIELD, VALUE_PARAMETER, ANNOTATION_CLASS)
+@Retention(RUNTIME)
 @Bindable <b class="conum">(1)</b>
 annotation class ShoppingCart(val value: String = "")</code></pre>
 </div>
@@ -13817,7 +13843,7 @@ import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.bind.binders.AnnotatedRequestArgumentBinder
 import io.micronaut.jackson.serialize.JacksonObjectSerializer
-import java.util.*
+import java.util.Optional
 import javax.inject.Singleton
 
 @Singleton
@@ -13830,26 +13856,24 @@ class ShoppingCartRequestArgumentBinder(
         return ShoppingCart::class.java
     }
 
-    override fun bind(context: ArgumentConversionContext&lt;Any&gt;, source: HttpRequest&lt;*&gt;): BindingResult&lt;Any&gt; { <b class="conum">(2)</b>
+    override fun bind(context: ArgumentConversionContext&lt;Any&gt;,
+                      source: HttpRequest&lt;*&gt;): BindingResult&lt;Any&gt; { <b class="conum">(2)</b>
 
         val parameterName = context.annotationMetadata
             .stringValue(ShoppingCart::class.java)
             .orElse(context.argument.name)
 
-        val cookie = source.cookies.get("shoppingCart")
+        val cookie = source.cookies.get("shoppingCart") ?: return BindingResult.EMPTY
 
-        if (cookie != null) {
-            val cookieValue: Optional&lt;Map&lt;String, Any&gt;&gt; = objectSerializer.deserialize(
-                    cookie.value.toByteArray(),
-                    Argument.mapOf(String::class.java, Any::class.java))
+        val cookieValue: Optional&lt;Map&lt;String, Any&gt;&gt; = objectSerializer.deserialize(
+                cookie.value.toByteArray(),
+                Argument.mapOf(String::class.java, Any::class.java))
 
-            return BindingResult {
-                cookieValue.flatMap { map: Map&lt;String, Any&gt; -&gt;
-                    conversionService.convert(map[parameterName], context)
-                }
+        return BindingResult {
+            cookieValue.flatMap { map: Map&lt;String, Any&gt; -&gt;
+                conversionService.convert(map[parameterName], context)
             }
         }
-        return BindingResult.EMPTY
     }
 }</code></pre>
 </div>
@@ -14079,27 +14103,31 @@ import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder
 import io.micronaut.jackson.serialize.JacksonObjectSerializer
-import javax.inject.Singleton
 import java.util.Optional
+import javax.inject.Singleton
 
 @Singleton
 class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObjectSerializer) :
     TypedRequestArgumentBinder&lt;ShoppingCart&gt; {
 
     override fun bind(
-            context: ArgumentConversionContext&lt;ShoppingCart&gt;,
-            source: HttpRequest&lt;*&gt;
-    ): ArgumentBinder.BindingResult&lt;ShoppingCart&gt; { <b class="conum">(1)</b>
+        context: ArgumentConversionContext&lt;ShoppingCart&gt;,
+        source: HttpRequest&lt;*&gt;
+    ): BindingResult&lt;ShoppingCart&gt; { <b class="conum">(1)</b>
+
         val cookie = source.cookies["shoppingCart"]
-        return if (cookie != null) {
+
+        return if (cookie == null)
+            BindingResult {
+                Optional.empty()
+            }
+        else {
             BindingResult {
                 objectSerializer.deserialize( <b class="conum">(2)</b>
                     cookie.value.toByteArray(),
                     ShoppingCart::class.java
                 )
             }
-        } else BindingResult {
-            Optional.empty()
         }
     }
 
@@ -14157,11 +14185,9 @@ class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObj
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/typed")
     fun loadCart(shoppingCart: ShoppingCart): HttpResponse&lt;*&gt; { <b class="conum">(1)</b>
-        val responseMap: MutableMap&lt;String, Any?&gt; = HashMap()
-        responseMap["sessionId"] = shoppingCart.sessionId
-        responseMap["total"] = shoppingCart.total
-
-        return HttpResponse.ok&lt;Map&lt;String, Any?&gt;&gt;(responseMap)
+        return HttpResponse.ok(mapOf(
+            "sessionId" to shoppingCart.sessionId,
+            "total" to shoppingCart.total))
     }</code></pre>
 </div>
 </div>
@@ -14419,8 +14445,8 @@ class MessageController {
     @Get("/hello") <b class="conum">(1)</b>
     fun hello(request: HttpRequest&lt;*&gt;): HttpResponse&lt;String&gt; {
         val name = request.parameters
-                .getFirst("name")
-                .orElse("Nobody") <b class="conum">(2)</b>
+                          .getFirst("name")
+                          .orElse("Nobody") <b class="conum">(2)</b>
 
         return HttpResponse.ok("Hello $name!!")
                 .header("X-My-Header", "Foo") <b class="conum">(3)</b>
@@ -14907,12 +14933,16 @@ class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @ExecuteOn</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.http.server.reactive.PersonService
+import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 
 @Controller("/executeOn/people")
 class PersonController (private val personService: PersonService) {
+
     @Get("/{name}")
     @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
     fun byName(name: String): Person {
@@ -15022,27 +15052,28 @@ class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">RxJava subscribeOn Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
-import io.reactivex.*
+import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.ExecutorService
 import javax.inject.Named
 
 @Controller("/subscribeOn/people")
 class PersonController internal constructor(
-        @Named(TaskExecutors.IO) executorService: ExecutorService, <b class="conum">(1)</b>
-        val personService: PersonService) {
-    private val scheduler: Scheduler
+    @Named(TaskExecutors.IO) executorService: ExecutorService, <b class="conum">(1)</b>
+    private val personService: PersonService) {
 
-    init {
-        scheduler = Schedulers.from(executorService)
-    }
+    private val scheduler: Scheduler = Schedulers.from(executorService)
 
     @Get("/{name}")
     fun byName(name: String): Single&lt;Person&gt; {
-        return Single.fromCallable { personService.findByName(name) } <b class="conum">(2)</b>
-                .subscribeOn(scheduler) <b class="conum">(3)</b>
+        return Single
+            .fromCallable { personService.findByName(name) } <b class="conum">(2)</b>
+            .subscribeOn(scheduler) <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -15131,18 +15162,12 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.reactivex.Flowable
 import io.reactivex.Single
-
 import javax.validation.constraints.Size
-
-
-@Controller("/receive")
-open class MessageController {
 
     @Post(value = "/echo", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     open fun echo(@Size(max = 1024) @Body text: String): String { <b class="conum">(2)</b>
         return text <b class="conum">(3)</b>
-    }
-}</code></pre>
+    }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -15206,8 +15231,9 @@ The <code>micronaut.server.maxRequestSize</code> setting in <code>application.ym
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Post(value = "/echo-flow", consumes = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
     open fun echoFlow(@Body text: Flowable&lt;String&gt;): Single&lt;MutableHttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
-        return text.collect({ StringBuffer() }, { obj, str -&gt; obj.append(str) }) <b class="conum">(3)</b>
-                .map { buffer -&gt; HttpResponse.ok(buffer.toString()) }
+        return text
+            .collect({ StringBuffer() }, { obj, str -&gt; obj.append(str) }) <b class="conum">(3)</b>
+            .map { buffer -&gt; HttpResponse.ok(buffer.toString()) }
     }</code></pre>
 </div>
 </div>
@@ -15827,15 +15853,11 @@ class EmailController {
 <div class="listingblock multi-language-sample">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import io.micronaut.http.HttpResponse
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.validation.Validated
-
 import javax.validation.constraints.NotBlank
-import java.util.Collections
-
 
 @Validated <b class="conum">(1)</b>
 @Controller("/email")
@@ -15843,8 +15865,8 @@ open class EmailController {
 
     @Get("/send")
     open fun send(@NotBlank recipient: String, <b class="conum">(2)</b>
-             @NotBlank subject: String): HttpResponse&lt;*&gt; { <b class="conum">(2)</b>
-        return HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+                  @NotBlank subject: String): HttpResponse&lt;*&gt; { <b class="conum">(2)</b>
+        return HttpResponse.ok(mapOf("msg" to "OK"))
     }
 }</code></pre>
 </div>
@@ -16101,16 +16123,12 @@ class EmailController {
 <div class="listingblock multi-language-sample">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import io.micronaut.http.HttpResponse
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.validation.Validated
-
 import javax.validation.Valid
-import java.util.Collections
-
 
 @Validated <b class="conum">(1)</b>
 @Controller("/email")
@@ -16118,7 +16136,7 @@ open class EmailController {
 
     @Post("/send")
     open fun send(@Body @Valid email: Email): HttpResponse&lt;*&gt; { <b class="conum">(2)</b>
-        return HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+        return HttpResponse.ok(mapOf("msg" to "OK"))
     }
 }</code></pre>
 </div>
@@ -16184,7 +16202,7 @@ open class EmailController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test poko validation"() {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">        "test pojo validation" {
             val e = shouldThrow&lt;HttpClientResponseException&gt; {
                 val email = Email()
                 email.subject = "Hi"
@@ -16339,8 +16357,8 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="title">Local exception handler</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error
-    fun jsonError(request: HttpRequest&lt;*&gt;, jsonParseException: JsonParseException): HttpResponse&lt;JsonError&gt; { <b class="conum">(1)</b>
-        val error = JsonError("Invalid JSON: " + jsonParseException.message) <b class="conum">(2)</b>
+    fun jsonError(request: HttpRequest&lt;*&gt;, e: JsonParseException): HttpResponse&lt;JsonError&gt; { <b class="conum">(1)</b>
+        val error = JsonError("Invalid JSON: ${e.message}") <b class="conum">(2)</b>
                 .link(Link.SELF, Link.of(request.uri))
 
         return HttpResponse.status&lt;JsonError&gt;(HttpStatus.BAD_REQUEST, "Fix Your JSON")
@@ -16455,7 +16473,7 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Error(global = true) <b class="conum">(1)</b>
     fun error(request: HttpRequest&lt;*&gt;, e: Throwable): HttpResponse&lt;JsonError&gt; {
-        val error = JsonError("Bad Things Happened: " + e.message) <b class="conum">(2)</b>
+        val error = JsonError("Bad Things Happened: ${e.message}") <b class="conum">(2)</b>
                 .link(Link.SELF, Link.of(request.uri))
 
         return HttpResponse.serverError&lt;JsonError&gt;()
@@ -16657,7 +16675,7 @@ class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockExcept
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Produces
 @Singleton
 @Requirements(
-        Requires(classes = [OutOfStockException::class, ExceptionHandler::class])
+    Requires(classes = [OutOfStockException::class, ExceptionHandler::class])
 )
 class OutOfStockExceptionHandler : ExceptionHandler&lt;OutOfStockException, HttpResponse&lt;*&gt;&gt; {
 
@@ -16750,7 +16768,6 @@ class VersionedController {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.version.annotation.Version
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-
 
 @Controller("/versioned")
 internal class VersionedController {
@@ -17360,48 +17377,38 @@ class TemplateController {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import io.micronaut.core.io.Writable
-import io.micronaut.core.util.CollectionUtils
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.server.exceptions.HttpServerException
 import java.io.Writer
 
-
 @Controller("/template")
 class TemplateController {
 
     private val templateEngine = SimpleTemplateEngine()
-    private val template: Template
-
-    init {
-        template = initTemplate() <b class="conum">(1)</b>
-    }
+    private val template = initTemplate() <b class="conum">(1)</b>
 
     @Get(value = "/welcome", produces = [MediaType.TEXT_PLAIN])
     internal fun render(): Writable { <b class="conum">(2)</b>
         return { writer: Writer -&gt;
-            val writable = template.make( <b class="conum">(3)</b>
-                    CollectionUtils.mapOf(
-                            "firstName", "Fred",
-                            "lastName", "Flintstone"
+            template.make( <b class="conum">(3)</b>
+                    mapOf(
+                        "firstName" to "Fred",
+                        "lastName" to "Flintstone"
                     )
-            )
-            writable.writeTo(writer)
+            ).writeTo(writer)
         } as Writable
     }
 
     private fun initTemplate(): Template {
-        val template: Template
-        try {
-            template = templateEngine.createTemplate(
-                    "Dear \$firstName \$lastName. Nice to meet you."
+        return try {
+            templateEngine.createTemplate(
+                "Dear \$firstName \$lastName. Nice to meet you."
             )
         } catch (e: Exception) {
             throw HttpServerException("Cannot create template")
         }
-
-        return template
     }
 }</code></pre>
 </div>
@@ -17655,8 +17662,9 @@ class UploadController {
 <div class="title">Streaming file upload</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
-import io.micronaut.http.HttpStatus
-import io.micronaut.http.MediaType
+import io.micronaut.http.HttpStatus.CONFLICT
+import io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import io.micronaut.http.MediaType.TEXT_PLAIN
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.StreamingFileUpload
@@ -17666,21 +17674,22 @@ import java.io.File
 @Controller("/upload")
 class UploadController {
 
-    @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA], produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    @Post(value = "/", consumes = [MULTIPART_FORM_DATA], produces = [TEXT_PLAIN]) <b class="conum">(1)</b>
     fun upload(file: StreamingFileUpload): Single&lt;HttpResponse&lt;String&gt;&gt; { <b class="conum">(2)</b>
+
         val tempFile = File.createTempFile(file.filename, "temp")
         val uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
-        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
-                .map { success -&gt;
-                    if (success) {
-                        HttpResponse.ok("Uploaded")
-                    } else {
-                        HttpResponse.status&lt;String&gt;(HttpStatus.CONFLICT)
-                                .body("Upload Failed")
-                    }
-                }
-    }
 
+        return Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
+            .map { success -&gt;
+                if (success) {
+                    HttpResponse.ok("Uploaded")
+                } else {
+                    HttpResponse.status&lt;String&gt;(CONFLICT)
+                        .body("Upload Failed")
+                }
+            }
+    }
 }</code></pre>
 </div>
 </div>
@@ -17779,31 +17788,28 @@ class BytesUploadController {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
+import io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import io.micronaut.http.MediaType.TEXT_PLAIN
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 @Controller("/upload")
 class BytesUploadController {
 
-    @Post(value = "/bytes",
-            consumes = [MediaType.MULTIPART_FORM_DATA],
-            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    @Post(value = "/bytes", consumes = [MULTIPART_FORM_DATA], produces = [TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadBytes(file: ByteArray, fileName: String): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
         return try {
             val tempFile = File.createTempFile(fileName, "temp")
             val path = Paths.get(tempFile.absolutePath)
             Files.write(path, file) <b class="conum">(3)</b>
             HttpResponse.ok("Uploaded")
-        } catch (exception: IOException) {
+        } catch (e: IOException) {
             HttpResponse.badRequest("Upload Failed")
         }
-
     }
 }</code></pre>
 </div>
@@ -17881,33 +17887,29 @@ class CompletedUploadController {
 <div class="title">File upload with metadata</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpResponse
-import io.micronaut.http.MediaType
+import io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import io.micronaut.http.MediaType.TEXT_PLAIN
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.CompletedFileUpload
-
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 @Controller("/upload")
 class CompletedUploadController {
 
-    @Post(value = "/completed",
-            consumes = [MediaType.MULTIPART_FORM_DATA],
-            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    @Post(value = "/completed", consumes = [MULTIPART_FORM_DATA], produces = [TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadCompleted(file: CompletedFileUpload): HttpResponse&lt;String&gt; { <b class="conum">(2)</b>
         return try {
             val tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
             val path = Paths.get(tempFile.absolutePath)
             Files.write(path, file.bytes) <b class="conum">(3)</b>
             HttpResponse.ok("Uploaded")
-        } catch (exception: IOException) {
+        } catch (e: IOException) {
             HttpResponse.badRequest("Upload Failed")
         }
-
     }
 }</code></pre>
 </div>
@@ -18112,7 +18114,8 @@ class WholeBodyUploadController {
 <div class="listingblock multi-language-sample">
 <div class="title">Binding to the entire multipart body</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import io.micronaut.http.MediaType.TEXT_PLAIN
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
@@ -18126,10 +18129,9 @@ import org.reactivestreams.Subscription
 @Controller("/upload")
 class WholeBodyUploadController {
 
-    @Post(value = "/whole-body",
-            consumes = [MediaType.MULTIPART_FORM_DATA],
-            produces = [MediaType.TEXT_PLAIN]) <b class="conum">(1)</b>
+    @Post(value = "/whole-body", consumes = [MULTIPART_FORM_DATA], produces = [TEXT_PLAIN]) <b class="conum">(1)</b>
     fun uploadBytes(@Body body: MultipartBody): Single&lt;String&gt; { <b class="conum">(2)</b>
+
         return Single.create { emitter -&gt;
             body.subscribe(object : Subscriber&lt;CompletedPart&gt; {
                 private var s: Subscription? = null
@@ -18405,9 +18407,7 @@ class TraceService {
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import org.slf4j.LoggerFactory
-
 import javax.inject.Singleton
-
 
 @Singleton
 class TraceService {
@@ -18417,9 +18417,7 @@ class TraceService {
     internal fun trace(request: HttpRequest&lt;*&gt;): Flowable&lt;Boolean&gt; {
         return Flowable.fromCallable {
             <b class="conum">(1)</b>
-            if (LOG.isDebugEnabled) {
-                LOG.debug("Tracing request: " + request.uri)
-            }
+            LOG.debug("Tracing request: {}", request.uri)
             // trace logic here, potentially performing I/O <b class="conum">(2)</b>
             true
         }.subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
@@ -18500,10 +18498,9 @@ import io.micronaut.http.filter.HttpServerFilter
 import io.micronaut.http.filter.ServerFilterChain
 import org.reactivestreams.Publisher
 
-
 @Filter("/hello/**") <b class="conum">(1)</b>
 class TraceFilter(<b class="conum">(2)</b>
-        private val traceService: TraceService)<b class="conum">(3)</b>
+    private val traceService: TraceService)<b class="conum">(3)</b>
     : HttpServerFilter {
 
 }</code></pre>
@@ -18561,13 +18558,13 @@ class TraceFilter(<b class="conum">(2)</b>
 <div class="listingblock multi-language-sample">
 <div class="title">The doFilter implementation</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    override fun doFilter(request: HttpRequest&lt;*&gt;, chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    override fun doFilter(request: HttpRequest&lt;*&gt;,
+                          chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
         return traceService.trace(request) <b class="conum">(1)</b>
-                .switchMap { aBoolean -&gt; chain.proceed(request) } <b class="conum">(2)</b>
-                .doOnNext { res -&gt;
-                    <b class="conum">(3)</b>
-                    res.headers.add("X-Trace-Enabled", "true")
-                }
+            .switchMap { aBoolean -&gt; chain.proceed(request) } <b class="conum">(2)</b>
+            .doOnNext { res -&gt;
+                res.headers.add("X-Trace-Enabled", "true") <b class="conum">(3)</b>
+            }
     }</code></pre>
 </div>
 </div>
@@ -18786,19 +18783,21 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.session.Session
 import io.micronaut.session.annotation.SessionValue
 
-
 @Controller("/shopping")
 class ShoppingController {
+
+    companion object {
+        private const val ATTR_CART = "cart" <b class="conum">(1)</b>
+    }
 
     @Post("/cart/{name}")
     internal fun addItem(session: Session, name: String): Cart { <b class="conum">(2)</b>
         require(name.isNotBlank()) { "Name cannot be blank" }
-        val cart = session.get(ATTR_CART, Cart::class.java).orElseGet({
-            <b class="conum">(3)</b>
+        val cart = session.get(ATTR_CART, Cart::class.java).orElseGet { <b class="conum">(3)</b>
             val newCart = Cart()
             session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
             newCart
-        })
+        }
         cart.items.add(name)
         return cart
     }
@@ -18902,7 +18901,7 @@ class ShoppingController {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            var response = client.exchange(HttpRequest.GET&lt;Cart&gt;("/shopping/cart"), Cart::class.java) <b class="conum">(1)</b>
-                    .blockingFirst()
+                                 .blockingFirst()
             var cart = response.body()
 
             assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)) <b class="conum">(2)</b>
@@ -18949,10 +18948,9 @@ class ShoppingController {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
 
-            response = client.exchange(
-                    HttpRequest.POST("/shopping/cart/Apple", "")
-                            .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java) <b class="conum">(2)</b>
-                    .blockingFirst()
+            response = client.exchange(HttpRequest.POST("/shopping/cart/Apple", "")
+                             .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java) <b class="conum">(2)</b>
+                             .blockingFirst()
             cart = response.body()</code></pre>
 </div>
 </div>
@@ -19005,11 +19003,7 @@ class ShoppingController {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get("/cart")
     @SessionValue(ATTR_CART) <b class="conum">(1)</b>
     internal fun viewCart(@SessionValue cart: Cart?): Cart { <b class="conum">(2)</b>
-        var cart = cart
-        if (cart == null) {
-            cart = Cart()
-        }
-        return cart
+        return cart ?: Cart()
     }</code></pre>
 </div>
 </div>
@@ -19146,10 +19140,11 @@ class ShoppingController {
 <div class="title">Headline</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Headline {
+
     var title: String? = null
     var description: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(title: String, description: String) {
         this.title = title
@@ -19246,7 +19241,6 @@ import io.reactivex.functions.BiFunction
 import org.reactivestreams.Publisher
 import java.util.concurrent.Callable
 
-
 @Controller("/headlines")
 class HeadlineController {
 
@@ -19255,12 +19249,12 @@ class HeadlineController {
     fun index(): Publisher&lt;Event&lt;Headline&gt;&gt; { <b class="conum">(1)</b>
         val versions = arrayOf("1.0", "2.0") <b class="conum">(2)</b>
 
-        return Flowable.generate&lt;Event&lt;Headline&gt;, Int&gt;(Callable&lt;Int&gt;{ 0 }, BiFunction { <b class="conum">(3)</b>
+        return Flowable.generate(Callable { 0 }, BiFunction { <b class="conum">(3)</b>
             i: Int, emitter: Emitter&lt;Event&lt;Headline&gt;&gt; -&gt;
             var nextInt: Int = i
             if (i &lt; versions.size) {
                 emitter.onNext( <b class="conum">(4)</b>
-                        Event.of&lt;Headline&gt;(Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                        Event.of&lt;Headline&gt;(Headline("Micronaut ${versions[i]} Released", "Come and get it"))
                 )
             } else {
                 emitter.onComplete() <b class="conum">(5)</b>
@@ -19463,26 +19457,22 @@ class ChatServerWebSocket(private val broadcaster: WebSocketBroadcaster) {
     }
 
     @OnMessage <b class="conum">(3)</b>
-    fun onMessage(
-            topic: String,
-            username: String,
-            message: String,
-            session: WebSocketSession) {
+    fun onMessage(topic: String, username: String,
+                  message: String, session: WebSocketSession) {
         val msg = "[$username] $message"
         broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
     }
 
     @OnClose <b class="conum">(5)</b>
-    fun onClose(
-            topic: String,
-            username: String,
-            session: WebSocketSession) {
+    fun onClose(topic: String, username: String, session: WebSocketSession) {
         val msg = "[$username] Disconnected!"
         broadcaster.broadcastSync(msg, isValid(topic, session))
     }
 
     private fun isValid(topic: String, session: WebSocketSession): Predicate&lt;WebSocketSession&gt; {
-        return Predicate&lt;WebSocketSession&gt;{ s -&gt; (s !== session &amp;&amp; topic.equals(s.getUriVariables().get("topic", String::class.java, null), ignoreCase = true)) }
+        return Predicate&lt;WebSocketSession&gt; {
+            (it !== session &amp;&amp; topic.equals(it.uriVariables.get("topic", String::class.java, null), ignoreCase = true))
+        }
     }
 }</code></pre>
 </div>
@@ -19603,12 +19593,8 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @OnMessage
-    fun onMessage(
-            topic: String,
-            username: String,
-            message: Message,
-            session: WebSocketSession): Publisher&lt;Message&gt; {
-
+    fun onMessage(topic: String, username: String,
+                  message: Message, session: WebSocketSession): Publisher&lt;Message&gt; {
         val text = "[" + username + "] " + message.text
         val newMessage = Message(text)
         return broadcaster.broadcast(newMessage, isValid(topic, session))
@@ -19859,7 +19845,6 @@ import io.reactivex.Single
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Future
 
-
 @ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
 abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
 
@@ -19874,7 +19859,8 @@ abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
     private val replies = ConcurrentLinkedQueue&lt;String&gt;()
 
     @OnOpen
-    fun onOpen(topic: String, username: String, session: WebSocketSession, request: HttpRequest&lt;*&gt;) { <b class="conum">(3)</b>
+    fun onOpen(topic: String, username: String,
+               session: WebSocketSession, request: HttpRequest&lt;*&gt;) { <b class="conum">(3)</b>
         this.topic = topic
         this.username = username
         this.session = session
@@ -19886,8 +19872,7 @@ abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
     }
 
     @OnMessage
-    fun onMessage(
-            message: String) {
+    fun onMessage(message: String) {
         replies.add(message) <b class="conum">(4)</b>
     }</code></pre>
 </div>
@@ -20708,16 +20693,19 @@ class LogbookPipelineCustomizer
 <div class="title">Customizing the Netty pipeline for Logbook</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import io.micronaut.context.event.*
+import io.micronaut.context.event.BeanCreatedEvent
+import io.micronaut.context.event.BeanCreatedEventListener
 import io.micronaut.http.netty.channel.ChannelPipelineCustomizer
 import io.netty.channel.ChannelPipeline
 import org.zalando.logbook.Logbook
-import org.zalando.logbook.netty.*
+import org.zalando.logbook.netty.LogbookClientHandler
+import org.zalando.logbook.netty.LogbookServerHandler
 import javax.inject.Singleton
 
 @Requires(beans = [Logbook::class])
 @Singleton
-class LogbookPipelineCustomizer(private val logbook: Logbook) : BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+class LogbookPipelineCustomizer(private val logbook: Logbook) :
+    BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
 
     override fun onCreated(event: BeanCreatedEvent&lt;ChannelPipelineCustomizer&gt;): ChannelPipelineCustomizer {
         val customizer = event.bean
@@ -21639,8 +21627,8 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <div class="title">Using retrieve</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val uri = UriBuilder.of("/hello/{name}")
-                    .expand(Collections.singletonMap("name", "John"))
-                    .toString()
+                                .expand(Collections.singletonMap("name", "John"))
+                                .toString()
             uri shouldBe "/hello/John"
 
             val result = client.toBlocking().retrieve(uri)
@@ -21703,19 +21691,22 @@ import static io.micronaut.http.MediaType.TEXT_PLAIN
 <div class="listingblock multi-language-sample">
 <div class="title">Using the HTTP client without blocking</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpStatus
-import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.HttpRequest.GET
+import io.micronaut.http.HttpStatus.CREATED
+import io.micronaut.http.MediaType.TEXT_PLAIN
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Status
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Maybe
 
-import io.micronaut.http.HttpRequest.GET
-
     @Get("/hello/{name}")
     internal fun hello(name: String): Maybe&lt;String&gt; { <b class="conum">(1)</b>
         return httpClient.retrieve(GET&lt;Any&gt;("/hello/$name"))
-                .firstElement() <b class="conum">(2)</b>
+                         .firstElement() <b class="conum">(2)</b>
     }</code></pre>
 </div>
 </div>
@@ -21901,7 +21892,6 @@ class Message {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-
 
 class Message @JsonCreator
 constructor(@param:JsonProperty("text") val text: String)</code></pre>
@@ -22482,8 +22472,8 @@ import org.reactivestreams.Publisher
 <div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">                    HttpRequest.POST("/multipart/upload", requestBody)   <b class="conum">(1)</b>
-                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">                    HttpRequest.POST("/multipart/upload", requestBody)    <b class="conum">(1)</b>
+                               .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -22587,24 +22577,21 @@ import java.util.concurrent.TimeUnit
 <div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Server</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType.APPLICATION_JSON_STREAM
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.reactivex.Flowable
-
 import java.time.ZonedDateTime
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.SECONDS
 
-
-    @Get(value = "/headlines", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = [APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flowable&lt;Headline&gt; {
-        return Flowable.fromCallable {
-            <b class="conum">(2)</b>
+        return Flowable.fromCallable { <b class="conum">(2)</b>
             val headline = Headline()
-            headline.text = "Latest Headline at " + ZonedDateTime.now()
+            headline.text = "Latest Headline at ${ZonedDateTime.now()}"
             headline
         }.repeat(100) <b class="conum">(3)</b>
-                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+         .delay(1, SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -22706,7 +22693,8 @@ The server does not have to be written in Micronaut, any server that supports JS
 <div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Client</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val headlineStream = client.jsonStream(GET&lt;Any&gt;("/streaming/headlines"), Headline::class.java) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">            val headlineStream = client.jsonStream(
+                GET&lt;Any&gt;("/streaming/headlines"), Headline::class.java) <b class="conum">(1)</b>
             val future = CompletableFuture&lt;Headline&gt;() <b class="conum">(2)</b>
             headlineStream.subscribe(object : Subscriber&lt;Headline&gt; {
                 override fun onSubscribe(s: Subscription) {
@@ -22714,7 +22702,7 @@ The server does not have to be written in Micronaut, any server that supports JS
                 }
 
                 override fun onNext(headline: Headline) {
-                    println("Received Headline = " + headline.text!!)
+                    println("Received Headline = ${headline.text!!}")
                     future.complete(headline) <b class="conum">(4)</b>
                 }
 
@@ -23080,14 +23068,15 @@ class BooksController {
     @Get("/{isbn}")
     fun find(isbn: String): HttpResponse&lt;*&gt; {
         if (isbn == "1680502395") {
-            val m = HashMap&lt;String, Any&gt;()
-            m["status"] = 401
-            m["error"] = "Unauthorized"
-            m["message"] = "No message available"
-            m["path"] = "/books/$isbn"
+            val m = mapOf(
+                "status" to 401,
+                "error" to "Unauthorized",
+                "message" to "No message available",
+                "path" to "/books/$isbn"
+            )
             return HttpResponse.status&lt;Any&gt;(HttpStatus.UNAUTHORIZED).body(m)
-
         }
+
         return HttpResponse.ok(Book("1491950358", "Building Microservices"))
     }
 }</code></pre>
@@ -23283,37 +23272,40 @@ class ProxyFilter extends OncePerRequestHttpServerFilter { <b class="conum">(1)<
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.async.publisher.Publishers
 import io.micronaut.core.util.StringUtils
-import io.micronaut.http.*
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Filter
 import io.micronaut.http.client.ProxyHttpClient
-import io.micronaut.http.filter.*
+import io.micronaut.http.filter.OncePerRequestHttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.runtime.server.EmbeddedServer
 import org.reactivestreams.Publisher
-import java.util.function.Function
 
 @Filter("/proxy/**")
 class ProxyFilter(
-        private val client: ProxyHttpClient, <b class="conum">(2)</b>
-        private val embeddedServer: EmbeddedServer) : OncePerRequestHttpServerFilter() { <b class="conum">(1)</b>
-    override fun doFilterOnce(request: HttpRequest&lt;*&gt;, chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
-        return Publishers.map(client.proxy( <b class="conum">(3)</b>
-                request.mutate() <b class="conum">(4)</b>
-                        .uri { b: UriBuilder -&gt; <b class="conum">(5)</b>
-                            b.apply {
-                                scheme("http")
-                                host(embeddedServer.host)
-                                port(embeddedServer.port)
-                                replacePath(StringUtils.prependUri(
-                                        "/real",
-                                        request.path.substring("/proxy".length)
-                                ))
-                            }
-                        }
-                        .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
-        ), Function { response: MutableHttpResponse&lt;*&gt; -&gt; response.header("X-My-Response-Header", "YYY") })
-    }
+    private val client: ProxyHttpClient, <b class="conum">(2)</b>
+    private val embeddedServer: EmbeddedServer
+) : OncePerRequestHttpServerFilter() { <b class="conum">(1)</b>
 
+    override fun doFilterOnce(request: HttpRequest&lt;*&gt;,
+                              chain: ServerFilterChain): Publisher&lt;MutableHttpResponse&lt;*&gt;&gt; {
+        return Publishers.map(client.proxy( <b class="conum">(3)</b>
+            request.mutate() <b class="conum">(4)</b>
+                .uri { b: UriBuilder -&gt; <b class="conum">(5)</b>
+                    b.apply {
+                        scheme("http")
+                        host(embeddedServer.host)
+                        port(embeddedServer.port)
+                        replacePath(StringUtils.prependUri(
+                            "/real",
+                            request.path.substring("/proxy".length))
+                        )
+                    }
+                }
+                .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
+        ), { response: MutableHttpResponse&lt;*&gt; -&gt; response.header("X-My-Response-Header", "YYY") })
+    }
 }</code></pre>
 </div>
 </div>
@@ -23463,10 +23455,8 @@ interface PetOperations {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Post
 import io.micronaut.validation.Validated
 import io.reactivex.Single
-
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
-
 
 @Validated
 interface PetOperations {
@@ -23557,7 +23547,6 @@ class PetController implements PetOperations {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.Controller
 import io.reactivex.Single
 
-
 @Controller("/pets")
 open class PetController : PetOperations {
 
@@ -23608,11 +23597,10 @@ interface PetClient extends PetOperations { <b class="conum">(2)</b>
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.client.annotation.Client
 import io.reactivex.Single
 
-
 @Client("/pets") <b class="conum">(1)</b>
 interface PetClient : PetOperations { <b class="conum">(2)</b>
 
-    override fun save(name: String, age: Int): Single&lt;Pet&gt;  <b class="conum">(3)</b>
+    override fun save(name: String, age: Int): Single&lt;Pet&gt; <b class="conum">(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -23979,10 +23967,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="title">@Metadata Annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.core.bind.annotation.Bindable
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.VALUE_PARAMETER
 
 @MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(RUNTIME)
+@Target(VALUE_PARAMETER)
 @Bindable
 annotation class Metadata</code></pre>
 </div>
@@ -24134,6 +24124,7 @@ interface MetadataClient {
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/")
 interface MetadataClient {
+
     @Get("/client/bind")
     operator fun get(metadata: Metadata?): String?
 }</code></pre>
@@ -24294,16 +24285,15 @@ interface HeadlineClient {
 <div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.MediaType.APPLICATION_JSON_STREAM
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
 
-
 @Client("/streaming")
 interface HeadlineClient {
 
-    @Get(value = "/headlines", processes = [MediaType.APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = [APPLICATION_JSON_STREAM]) <b class="conum">(1)</b>
     fun streamHeadlines(): Flowable&lt;Headline&gt;  <b class="conum">(2)</b></code></pre>
 </div>
 </div>
@@ -24506,16 +24496,16 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <div class="listingblock multi-language-sample">
 <div class="title">SSE Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Get(value = "/headlines", processes = [TEXT_EVENT_STREAM]) <b class="conum">(1)</b>
     internal fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt; {
-        return Flowable.create&lt;Event&lt;Headline&gt;&gt;( {  <b class="conum">(2)</b>
-            emitter -&gt;
+        return Flowable.create&lt;Event&lt;Headline&gt;&gt;( { emitter -&gt; <b class="conum">(2)</b>
             val headline = Headline()
-            headline.text = "Latest Headline at " + ZonedDateTime.now()
+            headline.text = "Latest Headline at ${ZonedDateTime.now()}"
             emitter.onNext(Event.of(headline))
             emitter.onComplete()
-        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
-                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+        }, BackpressureStrategy.BUFFER)
+            .repeat(100) <b class="conum">(3)</b>
+            .delay(1, SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -24573,7 +24563,7 @@ interface HeadlineClient {
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Client("/streaming/sse")
 interface HeadlineClient {
 
-    @Get(value = "/headlines", processes = [MediaType.TEXT_EVENT_STREAM])
+    @Get(value = "/headlines", processes = [TEXT_EVENT_STREAM])
     fun streamHeadlines(): Flowable&lt;Event&lt;Headline&gt;&gt;
 }</code></pre>
 </div>
@@ -25224,7 +25214,7 @@ internal class BintrayFilter(
 
     override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
         return chain.proceed(
-                request.basicAuth(username, token) <b class="conum">(3)</b>
+            request.basicAuth(username, token) <b class="conum">(3)</b>
         )
     }
 }</code></pre>
@@ -25377,7 +25367,9 @@ import javax.inject.Provider
 @Filter(patterns = ["/google-auth/api/**"])
 class GoogleAuthFilter (
         private val authClientProvider: Provider&lt;RxHttpClient&gt;) : HttpClientFilter { <b class="conum">(1)</b>
-    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;?&gt; {
+
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;,
+                          chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;?&gt; {
         val token = Flowable.fromCallable { encodeURI(request) }
                 .flatMap { authURI: String -&gt;
                     authClientProvider.get().retrieve(HttpRequest.GET&lt;Any&gt;(authURI).header( <b class="conum">(2)</b>
@@ -25525,7 +25517,8 @@ import javax.inject.Singleton
 @Singleton <b class="conum">(2)</b>
 class BasicAuthClientFilter : HttpClientFilter {
 
-    override fun doFilter(request: MutableHttpRequest&lt;*&gt;, chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
+    override fun doFilter(request: MutableHttpRequest&lt;*&gt;,
+                          chain: ClientFilterChain): Publisher&lt;out HttpResponse&lt;*&gt;&gt; {
         return chain.proceed(request.basicAuth("user", "pass"))
     }
 }</code></pre>
@@ -25589,11 +25582,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.FilterMatcher
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.CLASS
+import kotlin.annotation.AnnotationTarget.VALUE_PARAMETER
 
 @FilterMatcher <b class="conum">(1)</b>
 @MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.VALUE_PARAMETER)
+@Retention(RUNTIME)
+@Target(CLASS, VALUE_PARAMETER)
 annotation class BasicAuth</code></pre>
 </div>
 </div>
@@ -29826,7 +29822,7 @@ action can be a <code>suspend</code> function:</p>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED) <b class="conum">(1)</b>
     @Get("/status")
-    suspend fun status(): Unit {
+    suspend fun status() {
     }</code></pre>
 </div>
 </div>
@@ -29843,7 +29839,7 @@ action can be a <code>suspend</code> function:</p>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">    @Status(HttpStatus.CREATED)
     @Get("/statusDelayed")
-    suspend fun statusDelayed(): Unit {
+    suspend fun statusDelayed() {
         delay(1)
     }</code></pre>
 </div>
@@ -29859,7 +29855,7 @@ action can be a <code>suspend</code> function:</p>
         flow { <b class="conum">(2)</b>
             repeat(100) { <b class="conum">(3)</b>
                 with (Headline()) {
-                    text = "Latest Headline at " + ZonedDateTime.now()
+                    text = "Latest Headline at ${ZonedDateTime.now()}"
                     emit(this) <b class="conum">(4)</b>
                     delay(1_000) <b class="conum">(5)</b>
                 }
@@ -30696,7 +30692,6 @@ import io.micronaut.management.endpoint.annotation.Read
 import io.micronaut.http.MediaType
 import io.micronaut.management.endpoint.annotation.Selector
 
-
 @Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
 class CurrentDateEndpoint {
 
@@ -30801,7 +30796,6 @@ import io.micronaut.management.endpoint.annotation.Write
 
 import io.micronaut.http.MediaType
 import io.micronaut.management.endpoint.annotation.Selector
-
 
 @Endpoint(id = "date", prefix = "custom", defaultEnabled = true, defaultSensitive = false)
 class CurrentDateEndpoint {
@@ -31084,12 +31078,7 @@ class AlertsEndpoint {
 <div class="listingblock multi-language-sample">
 <div class="title">AlertsEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.context.annotation.Requires
-import io.micronaut.http.MediaType
-import io.micronaut.management.endpoint.annotation.*
-import java.util.concurrent.CopyOnWriteArrayList
-
-@Endpoint(id = "alerts", defaultSensitive = false) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Endpoint(id = "alerts", defaultSensitive = false) <b class="conum">(1)</b>
 class AlertsEndpoint {
 
     private val alerts: MutableList&lt;String&gt; = CopyOnWriteArrayList()
@@ -33877,12 +33866,16 @@ class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @ExecuteOn</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.docs.http.server.reactive.PersonService
+import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 
 @Controller("/executeOn/people")
 class PersonController (private val personService: PersonService) {
+
     @Get("/{name}")
     @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
     fun byName(name: String): Person {
