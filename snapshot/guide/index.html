@@ -504,6 +504,8 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-environmentEndpoint"><a href="#environmentEndpoint"><strong>14.2.10</strong><span>The Environment Endpoint</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-threadDumpEndpoint"><a href="#threadDumpEndpoint"><strong>14.2.11</strong><span>The ThreadDump Endpoint</span></a></div>
+        
         <div class="toc-item" style="margin-left:0px" id="toc-item-security"><a href="#security"><strong>15</strong><span>Security</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-multitenancy"><a href="#multitenancy"><strong>16</strong><span>Multi-Tenancy</span></a></div>
@@ -1581,6 +1583,17 @@ class HelloClientSpec {
 </div>
 </div>
 <div class="paragraph">
+<p>if building with Gradle, or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar target/hello-world.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>if building with Maven.</p>
+</div>
+<div class="paragraph">
 <p>The runnable JAR can be executed locally, deployed to a virtual machine or managed Cloud service that supports runnable JARs.</p>
 </div>
 <div class="paragraph">
@@ -1637,16 +1650,10 @@ class HelloClientSpec {
 
 
 <div class="paragraph">
-<p>When most developers think of Inversion of Control (also known as Dependency Injection and referred to as such from this point onwards) the Spring Framework comes to mind.</p>
+<p>Unlike other frameworks which rely on runtime reflection and proxies, Micronaut uses compile time data to implement dependency injection.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut takes inspiration from Spring, and in fact, the core developers of Micronaut are former SpringSource/Pivotal engineers now working for <a href="https://objectcomputing.com">OCI</a>.</p>
-</div>
-<div class="paragraph">
-<p>Unlike Spring which relies exclusively on runtime reflection and proxies, Micronaut uses compile time data to implement dependency injection.</p>
-</div>
-<div class="paragraph">
-<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as Spring but without using reflection or caching excessive amounts of reflection metadata.</p>
+<p>This is a similar approach taken by tools such as Google&#8217;s <a href="https://google.github.io/dagger/">Dagger</a>, which is designed primarily with Android in mind. Micronaut, on the other hand, is designed for building server-side microservices and provides many of the same tools and utilities as other frameworks but without using reflection or caching excessive amounts of reflection metadata.</p>
 </div>
 <div class="paragraph">
 <p>The goals of the Micronaut IoC container are summarized as:</p>
@@ -6991,10 +6998,6 @@ public class BaseApplication extends Application { <i class="conum" data-value="
 
     private ApplicationContext ctx;
 
-    public BaseApplication() {
-        super();
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -7379,7 +7382,7 @@ and it will be used instead.</p>
 <p>OS environment variables</p>
 </li>
 <li>
-<p>Configuration files loaded in order from the system property 'micronaut.config.files' or the environment variable <code>MICRONAUT_CONFIG_FILES</code>. The value can be a comma separated list of paths with the last file having precedence. The files can be referenced from the file system as a path or the classpath with a <code>classpath:</code> prefix.</p>
+<p>Configuration files loaded in order from the system property 'micronaut.config.files' or the environment variable <code>MICRONAUT_CONFIG_FILES</code>. The value can be a comma-separated list of paths with the last file having precedence. The files can be referenced from the file system as a path, or the classpath with a <code>classpath:</code> prefix.</p>
 </li>
 <li>
 <p>Environment-specific properties from <code>application-{environment}.{extension}</code></p>
@@ -12874,7 +12877,7 @@ Unfortunately due to type erasure a Java method lambda reference cannot be used 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">annotationProcessor "io.micronaut:micronaut-validation" // Java only
 kapt "io.micronaut:micronaut-validation" // Kotlin only
-compile "io.micronaut:micronaut-validation"</code></pre>
+implementation "io.micronaut:micronaut-validation"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -19900,7 +19903,9 @@ abstract class ChatClientWebSocket : AutoCloseable { <b class="conum">(2)</b>
 <div class="listingblock">
 <div class="title">Connecting a Client WebSocket</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClientWebSocket chatClient = webSocketClient.connect(ChatClientWebSocket.class, "/chat/football/fred").blockingFirst();
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClientWebSocket chatClient = webSocketClient
+    .connect(ChatClientWebSocket.class, "/chat/football/fred")
+    .blockingFirst();
 chatClient.send("Hello World!");</code></pre>
 </div>
 </div>
@@ -20145,8 +20150,9 @@ public class StartupListener implements ApplicationEventListener&lt;ServerStartu
 <div class="listingblock">
 <div class="title">Using <code>@EventListener</code> with <code>ServerStartupEvent</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.server.event.*;
-import io.micronaut.runtime.event.annotation.*;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.runtime.event.annotation.EventListener;
+import io.micronaut.runtime.server.event.ServerStartupEvent;
+import javax.inject.Singleton;
 ...
 @Singleton
 public class MyBean {
@@ -22781,8 +22787,8 @@ The server does not have to be written in Micronaut, any server that supports JS
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Named("twitter")
 @Singleton
 class TwitterHttpClientConfiguration extends HttpClientConfiguration {
-   public TwitterHttpClientConfiguration(ApplicationConfiguration applicationConfiguration) {
-        super(applicationConfiguration);
+   public TwitterHttpClientConfiguration(ApplicationConfiguration configuration) {
+        super(configuration);
     }
 }</code></pre>
 </div>
@@ -25778,8 +25784,8 @@ Flowable.fromPublisher(
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@EventListener
 void onServiceStarted(ServiceReadyEvent event) {
-    ServiceInstance serviceInstance = event.getSource()
-    ConvertibleValues&lt;String&gt; metadata = serviceInstance.metadata
+    ServiceInstance serviceInstance = event.getSource();
+    ConvertibleValues&lt;String&gt; metadata = serviceInstance.getMetadata();
 }</code></pre>
 </div>
 </div>
@@ -26633,7 +26639,7 @@ micronaut:
 <div class="listingblock">
 <div class="title">Sample application.yml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">aws:
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">aws:
   route53:
     discovery:
       client:
@@ -26648,7 +26654,7 @@ micronaut:
 <div class="listingblock">
 <div class="title">Sample code for client</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DiscoveryClient discoveryClient = embeddedServer.applicationContext.getBean(DiscoveryClient);
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DiscoveryClient discoveryClient = embeddedServer.getApplicationContext().getBean(DiscoveryClient.class);
 List&lt;String&gt; serviceIds = Flowable.fromPublisher(discoveryClient.getServiceIds()).blockingFirst();
 List&lt;ServiceInstance&gt; instances = Flowable.fromPublisher(discoveryClient.getInstances(serviceIds.get(0))).blockingFirst();</code></pre>
 </div>
@@ -28033,7 +28039,7 @@ $ unzip example.zip -d example</pre>
 </p>
 </div>
 <div class="paragraph">
-<p>To use the RxJava 3 HTTP client add the following dependency:</p>
+<p>To use the Reactor HTTP client add the following dependency:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -29982,7 +29988,7 @@ $ sdk use java 21.0.0.r8-grl</code></pre>
 <p>Micronaut itself does not rely on reflection or dynamic classloading so works automatically with GraalVM native, however certain third party libraries used by Micronaut may require additional input about uses of reflection.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflection-config.json</code> and <code>resource-config.json</code>
+<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflect-config.json</code> and <code>resource-config.json</code>
 metadata files that are automatically picked up by the <code>native-image</code> tool:</p>
 </div>
 <div class="paragraph">
@@ -30006,11 +30012,21 @@ metadata files that are automatically picked up by the <code>native-image</code>
 </p>
 </div>
 <div class="paragraph">
-<p>This processor will generate:
-- A <code>reflection-config.json</code> file in the <code>META-INF/native-image</code> directory in your build classes directory (<code>target/classes</code> with Maven and typically <code>build/classes/java/main</code> with Gradle).
-- A <code>native-image.properties</code> file to read this configuration for all classes annotated with either <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.
-- A <code>resource-config.json</code> file also in the <code>META-INF/native-image</code> directory in your build classes directory containing
+<p>This processor will generate:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <code>reflect-config.json</code> file in the <code>META-INF/native-image</code> directory in your build classes directory (<code>target/classes</code> with Maven and typically <code>build/classes/java/main</code> with Gradle).</p>
+</li>
+<li>
+<p>A <code>native-image.properties</code> file to read this configuration for all classes annotated with either <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
+</li>
+<li>
+<p>A <code>resource-config.json</code> file also in the <code>META-INF/native-image</code> directory in your build classes directory containing
 all the files in the <code>src/main/resources</code> file.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>For example the following class:</p>
@@ -30018,7 +30034,8 @@ all the files in the <code>src/main/resources</code> file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
-import io.micronaut.core.annotation.*;
+
+import io.micronaut.core.annotation.Introspected;
 
 @Introspected
 class Test {
@@ -30027,7 +30044,7 @@ class Test {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will result in the public methods and declared constructors of <code>example.Test</code> being included in <code>reflection-config.json</code>.</p>
+<p>The above example will result in the public methods and declared constructors of <code>example.Test</code> being included in <code>reflect-config.json</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you have more advanced requirements and only wish to include certain fields or methods, you can use <a href="../api/io/micronaut/core/annotation/ReflectiveAccess.html">@ReflectiveAccess</a> instead which can be present on any constructor, field or method to include only the specific field, constructor or method.</p>
@@ -32025,6 +32042,48 @@ Properties that may contain sensitive data will be masked.
 </div>
 </div>
 
+<h2 id="threadDumpEndpoint"><a class="anchor" href="#threadDumpEndpoint"></a>14.2.11 The ThreadDump Endpoint</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.3.x
+/src/main/docs/guide/management/providedEndpoints/threadDumpEndpoint.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The threaddump endpoint returns information about the threads running in your application.</p>
+</div>
+<div class="paragraph">
+<p>To execute the threaddump endpoint, send a GET request to /threaddump.</p>
+</div>
+<div class="sect1">
+<h2 id="_configuration">Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To configure the threaddump endpoint, supply configuration through <code>endpoints.threaddump</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Threaddump Endpoint Configuration Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
+  threaddump:
+    enabled: Boolean
+    sensitive: Boolean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customization">Customization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The thread dump endpoint delegates to a <a href="../api/io/micronaut/management/endpoint/threads/ThreadInfoMapper.html">ThreadInfoMapper</a>) that is responsible for transforming the <code>java.lang.management.ThreadInfo</code> objects into any other to be sent for serialization.</p>
+</div>
+</div>
+</div>
+
 <h1 id="security"><a class="anchor" href="#security"></a>15 Security</h1>
 
 <div class='contribute-btn'>
@@ -32140,7 +32199,8 @@ Usage: mn create-app [-hivVx] [--list-features] [-b=BUILD-TOOL] [--jdk=&lt;javaV
                      [-t=TEST] [-f=FEATURE[,FEATURE...]]... [NAME]
 Creates an application
       [NAME]               The name of the application to create.
-  -b, --build=BUILD-TOOL   Which build tool to configure. Possible values: gradle, maven.
+  -b, --build=BUILD-TOOL   Which build tool to configure. Possible values: gradle, gradle_kotlin,
+                             maven.
   -f, --features=FEATURE[,FEATURE...]
   -h, --help               Show this help message and exit.
   -i, --inplace            Create a service using the current directory
@@ -32148,7 +32208,7 @@ Creates an application
                            The JDK version the project should target
   -l, --lang=LANG          Which language to use. Possible values: java, groovy, kotlin.
       --list-features      Output the available features and their descriptions
-  -t, --test=TEST          Which test framework to use. Possible values: junit, spock, kotlintest.</code></pre>
+  -t, --test=TEST          Which test framework to use. Possible values: junit, spock, kotest.</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -32256,7 +32316,7 @@ Available Features
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mn create-cli-app my-project --features
  http-client,jdbc-hikari --build maven
- --lang kotlin --test kotlintest</code></pre>
+ --lang kotlin --test kotest</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -32472,7 +32532,7 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 <div class="sect3">
 <h4 id="_kotlin">Kotlin</h4>
 <div class="paragraph">
-<p>To create an app with Kotlin support (which comes with Kotlintest by default), supply the appropriate language via the <code>lang</code> flag:</p>
+<p>To create an app with Kotlin support (which comes with Kotest by default), supply the appropriate language via the <code>lang</code> flag:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -32480,7 +32540,7 @@ The values in <code>micronaut-cli.yml</code> are used by the CLI for code genera
 </div>
 </div>
 <div class="paragraph">
-<p>This will include the Kotlin &amp; Kotlintest dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
+<p>This will include the Kotlin &amp; Kotest dependencies in your project, and write the appropriates values in <code>micronaut-cli.yml</code>.</p>
 </div>
 </div>
 </div>
@@ -32629,16 +32689,20 @@ Options:
   -x, --stacktrace   Show full stack trace when exceptions occur.
 
 Commands: <i class="conum" data-value="2"></i><b>(2)</b>
-  create-app             Creates an application
-  create-cli-app         Creates a CLI application
-  create-function-app    Creates a Cloud Function
-  create-grpc-app        Creates a gRPC application
-  create-messaging-app   Creates a messaging application
-  create-test            Creates a simple test for the projects testing framework <i class="conum" data-value="3"></i><b>(3)</b>
-  create-websocket-server  Creates a Websocket server
+  create-app               Creates an application
+  create-cli-app           Creates a CLI application
+  create-function-app      Creates a Cloud Function
+  create-grpc-app          Creates a gRPC application
+  create-messaging-app     Creates a messaging application
+  create-job               Creates a job with scheduled method
+  create-bean              Creates a singleton bean
+  create-websocket-client  Creates a Websocket client
   create-client            Creates a client interface
   create-controller        Creates a controller and associated test
-  create-bean              Creates a singleton bean</code></pre>
+  feature-diff             Produces the diff of an original project with an original project with
+                             additional features.
+  create-websocket-server  Creates a Websocket server
+  create-test              Creates a simple test for the project's testing framework</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -33069,7 +33133,7 @@ extend <code>CodeGenCommand</code>. The <code>applies</code> method dictates whe
 
 
 <div class="paragraph">
-<p><a href="https://zeroturnaround.com/software/jrebel/">JRebel</a> is a proprietary reloading solution that involves an agent library, as well as sophisticated IDE support. The JRebel documentation includes detailed steps for IDE integration and usage of the tool. In this section, we will simply show how to install and configure the agent for Maven and Gradle projects.</p>
+<p><a href="https://www.jrebel.com/products/jrebel">JRebel</a> is a proprietary reloading solution that involves an agent library, as well as sophisticated IDE support. The JRebel documentation includes detailed steps for IDE integration and usage of the tool. In this section, we will simply show how to install and configure the agent for Maven and Gradle projects.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -33095,7 +33159,7 @@ extend <code>CodeGenCommand</code>. The <code>applies</code> method dictates whe
 <h2 id="_install_configure_jrebel_agent">Install/configure JRebel Agent</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The simplest way to install JRebel is to download the "standalone" installation package from the <a href="https://zeroturnaround.com/software/jrebel/download">JRebel download page</a>. Unzip the downloaded file to a convenient location within your user&#8217;s directory - for example, <code>~/bin/jrebel</code></p>
+<p>The simplest way to install JRebel is to download the "standalone" installation package from the <a href="https://www.jrebel.com/products/jrebel/download">JRebel download page</a>. Unzip the downloaded file to a convenient location within your user&#8217;s directory - for example, <code>~/bin/jrebel</code></p>
 </div>
 <div class="paragraph">
 <p>The installation directory will contain a <code>lib</code> directory containing the agent files. The appropriate agent based on your operating system, following the table below:</p>
@@ -33178,14 +33242,10 @@ if (project.hasProperty('rebelAgent')) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
-
   &lt;!-- ... --&gt;
-
   &lt;build&gt;
     &lt;plugins&gt;
-
       &lt;!-- ... --&gt;
-
       &lt;plugin&gt;
         &lt;groupId&gt;io.micronaut.build&lt;/groupId&gt;
         &lt;artifactId&gt;micronaut-maven-plugin&lt;/artifactId&gt;
@@ -33198,7 +33258,7 @@ if (project.hasProperty('rebelAgent')) {
       &lt;plugin&gt;
         &lt;groupId&gt;org.zeroturnaround&lt;/groupId&gt;
         &lt;artifactId&gt;jrebel-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.1.8&lt;/version&gt;
+        &lt;version&gt;1.1.10&lt;/version&gt;
         &lt;executions&gt;
           &lt;execution&gt;
             &lt;id&gt;generate-rebel-xml&lt;/id&gt;
@@ -33209,7 +33269,6 @@ if (project.hasProperty('rebelAgent')) {
           &lt;/execution&gt;
         &lt;/executions&gt;
       &lt;/plugin&gt;
-
       &lt;!-- ... --&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -33265,7 +33324,7 @@ if (project.hasProperty('rebelAgent')) {
 <div class="sect2">
 <h3 id="_intellij">IntelliJ</h3>
 <div class="paragraph">
-<p>IntelliJ unfortunately does not have an automatic rebuild option that works for a running application. However, you can trigger a "rebuild" of the project with <code>CMD-F9</code> (Mac) or <code>CTRL-F9</code> (Windows).</p>
+<p>IntelliJ unfortunately does not have an automatic rebuild option that works for a running application. However, you can trigger a "rebuild" of the project with <code>CMD-F9</code> (Mac) or <code>CTRL-F9</code> (Windows/Linux).</p>
 </div>
 </div>
 <div class="sect2">
@@ -33527,11 +33586,11 @@ The Spring ecosystem is very broad and there are many Spring libraries you can u
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">ext {
-  micronautVersion = '2.2.0-SNAPSHOT'
+    micronautVersion = '2.4.0-SNAPSHOT'
 }
 repositories {
-  jcenter() <i class="conum" data-value="1"></i><b>(1)</b>
-  maven { url "https://oss.jfrog.org/oss-snapshot-local" } <i class="conum" data-value="2"></i><b>(2)</b>
+    jcenter() <i class="conum" data-value="1"></i><b>(1)</b>
+    maven { url "https://oss.jfrog.org/oss-snapshot-local" } <i class="conum" data-value="2"></i><b>(2)</b>
 }</code></pre>
 </div>
 </div>
