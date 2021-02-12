@@ -1145,7 +1145,7 @@ public class Application {
 class Application {
 
     static void main(String... args) {
-        Micronaut.run Application.class
+        Micronaut.run Application
     }
 }</code></pre>
 </div>
@@ -1336,10 +1336,12 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
+
 import javax.inject.Inject
 
 @MicronautTest
 class HelloControllerSpec extends Specification {
+
     @Inject
     EmbeddedServer embeddedServer <b class="conum">(1)</b>
 
@@ -1507,7 +1509,6 @@ import javax.inject.Inject
 class HelloClientSpec extends Specification {
 
     @Inject HelloClient client <b class="conum">(2)</b>
-
 
     void "test hello world response"() {
         expect:
@@ -1899,7 +1900,7 @@ System.out.println(vehicle.start());</code></pre>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">def context = BeanContext.run()
 Vehicle vehicle = context.getBean(Vehicle)
-println( vehicle.start() )</code></pre>
+println vehicle.start()</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2491,7 +2492,6 @@ public class Blue implements ColorPicker {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
 
-
 @Singleton
 class Blue implements ColorPicker {
 
@@ -2924,7 +2924,7 @@ import java.lang.annotation.Retention
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME
 
-@Requires(classes = Car.class ) <b class="conum">(1)</b>
+@Requires(classes = Car.class) <b class="conum">(1)</b>
 @Singleton <b class="conum">(2)</b>
 @Documented
 @Retention(RUNTIME)
@@ -3324,7 +3324,9 @@ class Vehicle {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
 class Vehicle {
+
     private final Engine engine
+
     Vehicle(@Cylinders(6) Engine engine) {
         this.engine = engine
     }
@@ -3482,7 +3484,7 @@ public class JdbcBookService implements BookService {
 <div class="title">Using @Requires</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
-@Requires(beans = DataSource.class)
+@Requires(beans = DataSource)
 @Requires(property = "datasource.url")
 class JdbcBookService implements BookService {
 
@@ -3533,7 +3535,7 @@ public @interface RequiresJdbc {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target([ElementType.PACKAGE, ElementType.TYPE])
-@Requires(beans = DataSource.class)
+@Requires(beans = DataSource)
 @Requires(property = "datasource.url")
 @interface RequiresJdbc {
 }</code></pre>
@@ -3760,7 +3762,7 @@ public class JdbcBookService implements BookService {
 <div class="title">JdbcBookService</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
-@Requires(beans = DataSource.class)
+@Requires(beans = DataSource)
 @Requires(property = "datasource.url")
 class JdbcBookService implements BookService {
 
@@ -3928,7 +3930,7 @@ public class CustomBookFactory {
 <div class="title">CustomBookFactory</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory
-@Replaces(factory = BookFactory.class)
+@Replaces(factory = BookFactory)
 class CustomBookFactory {
 
     @Singleton
@@ -3976,7 +3978,7 @@ public class TextBookFactory {
 class TextBookFactory {
 
     @Singleton
-    @Replaces(value = TextBook.class, factory = BookFactory.class)
+    @Replaces(value = TextBook, factory = BookFactory)
     TextBook textBook() {
         new TextBook('Learning 305')
     }
@@ -4225,19 +4227,22 @@ import javax.inject.Singleton
 
 @Singleton
 class V8Engine implements Engine {
+
     int cylinders = 8
     boolean initialized = false <b class="conum">(2)</b>
 
     @Override
     String start() {
-        if(!initialized) throw new IllegalStateException("Engine not initialized!")
+        if (!initialized) {
+            throw new IllegalStateException("Engine not initialized!")
+        }
 
         return "Starting V8"
     }
 
     @PostConstruct <b class="conum">(3)</b>
     void initialize() {
-        this.initialized = true
+        initialized = true
     }
 }</code></pre>
 </div>
@@ -4316,8 +4321,8 @@ public class PreDestroyBean implements AutoCloseable {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.annotation.PreDestroy <b class="conum">(1)</b>
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Singleton
+import java.util.concurrent.atomic.AtomicBoolean
 
 @Singleton
 class PreDestroyBean implements AutoCloseable {
@@ -4657,6 +4662,7 @@ public class SampleEventListenerSpec {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.docs.context.events.SampleEvent
+import javax.inject.Singleton
 
 @Singleton
 class SampleEventListener implements ApplicationEventListener&lt;SampleEvent&gt; {
@@ -4679,7 +4685,9 @@ class SampleEventListenerSpec extends Specification {
         ApplicationContext context = ApplicationContext.run()
         SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
         SampleEventListener listener = context.getBean(SampleEventListener)
-        assert listener.invocationCounter == 0
+
+        expect:
+        listener.invocationCounter == 0
 
         when:
         emitter.publishSampleEvent()
@@ -4911,22 +4919,23 @@ class SampleEventListenerSpec extends Specification {
 
     void "test event listener is notified"() {
         given:
-        ApplicationContext context = ApplicationContext.run()
-        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
-        SampleEventListener listener = context.getBean(SampleEventListener)
-        assert listener.invocationCounter.get() == 0
+        def context = ApplicationContext.run()
+        def emitter = context.getBean(SampleEventEmitterBean)
+        def listener = context.getBean(SampleEventListener)
+
+        expect:
+        listener.invocationCounter.get() == 0
 
         when:
         emitter.publishSampleEvent()
 
         then:
-        new PollingConditions().eventually {
+        new PollingConditions(timeout: 5).eventually {
             listener.invocationCounter.get() == 1
         }
 
         cleanup:
         context.close()
-
     }
 }</code></pre>
 </div>
@@ -5091,7 +5100,7 @@ public class EngineInitializer implements BeanInitializedEventListener&lt;Engine
 
     @Override
     String start() {
-        return "Starting V${cylinders} [rodLength=$rodLength]"
+        return "Starting V$cylinders [rodLength=$rodLength]"
     }
 }
 
@@ -5117,7 +5126,7 @@ class EngineInitializer implements BeanInitializedEventListener&lt;EngineFactory
     EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) {
         EngineFactory engineFactory = event.bean
         engineFactory.rodLength = 6.6 <b class="conum">(5)</b>
-        return event.bean
+        return engineFactory
     }
 }</code></pre>
 </div>
@@ -5364,12 +5373,12 @@ data class Person(var name : String) {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        def introspection = BeanIntrospection.getIntrospection(Person) <b class="conum">(1)</b>
         Person person = introspection.instantiate("John") <b class="conum">(2)</b>
-        println("Hello ${person.name}")
+        println("Hello $person.name")
 
         BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty("name", String) <b class="conum">(3)</b>
         property.set(person, "Fred") <b class="conum">(4)</b>
         String name = property.get(person) <b class="conum">(5)</b>
-        println("Hello ${person.name}")</code></pre>
+        println("Hello $person.name")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5465,31 +5474,19 @@ import javax.annotation.concurrent.Immutable
 @Immutable
 class Vehicle {
 
-    private final String make
-    private final String model
-    private final int axels
+    final String make
+    final String model
+    final int axles
 
     Vehicle(String make, String model) {
         this(make, model, 2)
     }
 
     @Creator <b class="conum">(1)</b>
-    Vehicle(String make, String model, int axels) {
+    Vehicle(String make, String model, int axles) {
         this.make = make
         this.model = model
-        this.axels = axels
-    }
-
-    String getMake() {
-        make
-    }
-
-    String getModel() {
-        model
-    }
-
-    int getAxels() {
-        axels
+        this.axles = axles
     }
 }</code></pre>
 </div>
@@ -5574,7 +5571,7 @@ import javax.annotation.concurrent.Immutable
 @Immutable
 class Business {
 
-    private String name
+    final String name
 
     private Business(String name) {
         this.name = name
@@ -5584,11 +5581,6 @@ class Business {
     static Business forName(String name) {
         new Business(name)
     }
-
-    String getName() {
-        name
-    }
-
 }</code></pre>
 </div>
 </div>
@@ -5926,7 +5918,6 @@ import javax.validation.constraints.NotBlank
 
 @Singleton
 class PersonService {
-
     void sayHello(@NotBlank String name) {
         println "Hello $name"
     }
@@ -6103,9 +6094,11 @@ import javax.validation.constraints.NotBlank
 
 @Introspected
 class Person {
+
     @NotBlank
     String name
-    @Min(18l)
+
+    @Min(18L)
     int age
 }</code></pre>
 </div>
@@ -6354,7 +6347,7 @@ public @interface DurationPattern {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.validation.Constraint
-import java.lang.annotation.*
+import java.lang.annotation.Retention
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME
 
@@ -6432,7 +6425,9 @@ public class MyValidatorFactory {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Factory
 import io.micronaut.core.annotation.AnnotationValue
-import io.micronaut.validation.validator.constraints.*
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
+
 import javax.inject.Singleton
 
 @Factory
@@ -6625,9 +6620,11 @@ public @interface TimeOff {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import java.lang.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import java.lang.annotation.Retention
 
-@Retention(RetentionPolicy.RUNTIME)
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Retention(RUNTIME)
 @interface TimeOff {
     @DurationPattern
     String duration()
@@ -6684,7 +6681,8 @@ public class DurationPatternValidator implements ConstraintValidator&lt;Duration
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
 import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.core.annotation.AnnotationValue
-import io.micronaut.validation.validator.constraints.*
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
 
 class DurationPatternValidator implements ConstraintValidator&lt;DurationPattern, CharSequence&gt; {
     @Override
@@ -7099,8 +7097,8 @@ public class BaseApplication extends Application { <i class="conum" data-value="
         Environment environment = applicationContext.getEnvironment()
 
         then:
-        environment.getActiveNames().contains("test")
-        environment.getActiveNames().contains("android")</code></pre>
+        environment.activeNames.contains("test")
+        environment.activeNames.contains("android")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -7794,7 +7792,9 @@ public class EngineImpl implements Engine {
 <div class="listingblock multi-language-sample">
 <div class="title">@Value Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Value
+
+import javax.inject.Singleton
 
 @Singleton
 class EngineImpl implements Engine {
@@ -7804,12 +7804,12 @@ class EngineImpl implements Engine {
 
     @Override
     int getCylinders() {
-        this.cylinders
+        cylinders
     }
 
     @Override
     String start() { <b class="conum">(2)</b>
-        "Starting V${cylinders} Engine"
+        "Starting V$cylinders Engine"
     }
 }</code></pre>
 </div>
@@ -8178,13 +8178,13 @@ class EngineConfig {
 
     @Min(1L)
     int cylinders
+
     CrankShaft crankShaft = new CrankShaft()
 
     @ConfigurationProperties('crank-shaft')
     static class CrankShaft { <b class="conum">(4)</b>
         Optional&lt;Double&gt; rodLength = Optional.empty() <b class="conum">(5)</b>
     }
-
 }</code></pre>
 </div>
 </div>
@@ -8286,7 +8286,7 @@ class EngineImpl implements Engine {
 
     @Override
     String start() { <b class="conum">(2)</b>
-        "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength.orElse(6.0d)}]"
+        "$config.manufacturer Engine Starting V$config.cylinders [rodLength=${config.crankShaft.rodLength.orElse(6.0d)}]"
     }
 }</code></pre>
 </div>
@@ -8340,8 +8340,7 @@ class EngineImpl(val config: EngineConfig) : Engine {<b class="conum">(1)</b>
                 "test"
         )
 
-        Vehicle vehicle = applicationContext
-                .getBean(Vehicle)
+        def vehicle = applicationContext.getBean(Vehicle)
         println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -8759,8 +8758,7 @@ internal class EngineFactory {
                 "test"
         )
 
-        Vehicle vehicle = applicationContext
-                .getBean(Vehicle)
+        Vehicle vehicle = applicationContext.getBean(Vehicle)
         println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -8836,8 +8834,9 @@ public class EngineConfig {
 <div class="title">@MapFormat Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
-import javax.validation.constraints.Min
 import io.micronaut.core.convert.format.MapFormat
+
+import javax.validation.constraints.Min
 
 @ConfigurationProperties('my.engine')
 class EngineConfig {
@@ -8847,7 +8846,6 @@ class EngineConfig {
 
     @MapFormat(transformation = MapFormat.MapTransformation.FLAT) <b class="conum">(1)</b>
     Map&lt;Integer, String&gt; sensors
-
 }</code></pre>
 </div>
 </div>
@@ -8921,7 +8919,7 @@ class EngineImpl implements Engine {
 
     @Override
     String start() {
-        "Engine Starting V${config.cylinders} [sensors=${sensors.size()}]"
+        "Engine Starting V$config.cylinders [sensors=${sensors.size()}]"
     }
 }</code></pre>
 </div>
@@ -8968,12 +8966,13 @@ class EngineImpl : Engine {
 <div class="title">Use Map Configuration</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        ApplicationContext applicationContext = ApplicationContext.run(
-                ['my.engine.cylinders': '8', 'my.engine.sensors': [0: 'thermostat', 1: 'fuel pressure']],
+                ['my.engine.cylinders': '8',
+                 'my.engine.sensors'  : [0: 'thermostat',
+                                         1: 'fuel pressure']],
                 "test"
         )
 
-        Vehicle vehicle = applicationContext
-                .getBean(Vehicle)
+        def vehicle = applicationContext.getBean(Vehicle)
         println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -9038,11 +9037,13 @@ public class MyConfigurationProperties {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@ConfigurationProperties(MyConfigurationProperties.PREFIX)
 class MyConfigurationProperties {
+
     public static final String PREFIX = "myapp"
+
     protected LocalDate updatedAt
 
     LocalDate getUpdatedAt() {
-        return this.updatedAt
+        updatedAt
     }
 }</code></pre>
 </div>
@@ -9183,10 +9184,10 @@ import java.time.LocalDate
 class MapToLocalDateConverter implements TypeConverter&lt;Map, LocalDate&gt; { <b class="conum">(1)</b>
     @Override
     Optional&lt;LocalDate&gt; convert(Map propertyMap, Class&lt;LocalDate&gt; targetType, ConversionContext context) {
-        Optional&lt;Integer&gt; day = ConversionService.SHARED.convert(propertyMap.get("day"), Integer.class)
-        Optional&lt;Integer&gt; month = ConversionService.SHARED.convert(propertyMap.get("month"), Integer.class)
-        Optional&lt;Integer&gt; year = ConversionService.SHARED.convert(propertyMap.get("year"), Integer.class)
-        if (day.isPresent() &amp;&amp; month.isPresent() &amp;&amp; year.isPresent()) {
+        Optional&lt;Integer&gt; day = ConversionService.SHARED.convert(propertyMap.day, Integer)
+        Optional&lt;Integer&gt; month = ConversionService.SHARED.convert(propertyMap.month, Integer)
+        Optional&lt;Integer&gt; year = ConversionService.SHARED.convert(propertyMap.year, Integer)
+        if (day.present &amp;&amp; month.present &amp;&amp; year.present) {
             try {
                 return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) <b class="conum">(2)</b>
             } catch (DateTimeException e) {
@@ -9301,12 +9302,14 @@ public class DataSourceConfiguration {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @EachProperty</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@EachProperty("test.datasource")
-<b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Parameter
+
+@EachProperty("test.datasource") <b class="conum">(1)</b>
 class DataSourceConfiguration {
 
     final String name
-    URI url = new URI("localhost")
+    URI url = new URI("localhost") <b class="conum">(3)</b>
 
     DataSourceConfiguration(@Parameter String name) <b class="conum">(2)</b>
             throws URISyntaxException {
@@ -9646,9 +9649,9 @@ public class DataSourceFactory {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Factory <b class="conum">(1)</b>
 class DataSourceFactory {
 
-    @EachBean(DataSourceConfiguration.class) <b class="conum">(2)</b>
+    @EachBean(DataSourceConfiguration) <b class="conum">(2)</b>
     DataSource dataSource(DataSourceConfiguration configuration) { <b class="conum">(3)</b>
-        URI url = configuration.getUrl()
+        URI url = configuration.url
         return new DataSource(url)
     }</code></pre>
 </div>
@@ -9704,11 +9707,11 @@ class DataSourceFactory {
 <div class="title">Using a Qualifier</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
-        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource.class)
+        Collection&lt;DataSource&gt; beansOfType = applicationContext.getBeansOfType(DataSource)
         assertEquals(2, beansOfType.size()) <b class="conum">(1)</b>
 
         DataSource firstConfig = applicationContext.getBean(
-                DataSource.class,
+                DataSource,
                 Qualifiers.byName("one") <b class="conum">(2)</b>
         )</code></pre>
 </div>
@@ -9790,8 +9793,10 @@ public interface EngineConfig {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.core.bind.annotation.Bindable
-import javax.validation.constraints.*
 
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 interface EngineConfig {
@@ -9955,41 +9960,30 @@ public class EngineConfig {
 <div class="listingblock multi-language-sample">
 <div class="title">@ConfigurationProperties Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.ConfigurationInject
+import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.core.bind.annotation.Bindable
+
 import javax.annotation.Nullable
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
-
 @ConfigurationProperties("my.engine") <b class="conum">(1)</b>
 class EngineConfig {
 
-    private final String manufacturer
-    private final int cylinders
-    private final CrankShaft crankShaft
+    final String manufacturer
+    final int cylinders
+    final CrankShaft crankShaft
 
     @ConfigurationInject <b class="conum">(2)</b>
     EngineConfig(
-                  @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, <b class="conum">(3)</b>
-                  @Min(1L) int cylinders, <b class="conum">(4)</b>
-                  @NotNull CrankShaft crankShaft) {
+            @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, <b class="conum">(3)</b>
+            @Min(1L) int cylinders, <b class="conum">(4)</b>
+            @NotNull CrankShaft crankShaft) {
         this.manufacturer = manufacturer
         this.cylinders = cylinders
         this.crankShaft = crankShaft
-    }
-
-    String getManufacturer() {
-        return manufacturer
-    }
-
-    int getCylinders() {
-        return cylinders
-    }
-
-    CrankShaft getCrankShaft() {
-        return crankShaft
     }
 
     @ConfigurationProperties("crank-shaft")
@@ -10002,7 +9996,7 @@ class EngineConfig {
         }
 
         Optional&lt;Double&gt; getRodLength() {
-            return Optional.ofNullable(rodLength)
+            Optional.ofNullable(rodLength)
         }
     }
 }</code></pre>
@@ -10140,7 +10134,7 @@ Using this approach if you want the configuration to be refreshable then you mus
                 "my.engine.crank-shaft.rod-length": "7.0"
         )
 
-        Vehicle vehicle = applicationContext.getBean(Vehicle.class)
+        Vehicle vehicle = applicationContext.getBean(Vehicle)
         System.out.println(vehicle.start())</code></pre>
 </div>
 </div>
@@ -10277,19 +10271,18 @@ import javax.inject.Singleton
 class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(1)</b>
     @Override
     Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
+        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.parameters
             .entrySet()
             .stream()
             .filter({entry -&gt;
-                MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue()
-                return Objects.isNull(argumentValue.getValue())
+                MutableArgumentValue&lt;?&gt; argumentValue = entry.value
+                return Objects.isNull(argumentValue.value)
             })
             .findFirst() <b class="conum">(2)</b>
-        if (nullParam.isPresent()) {
-            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed") <b class="conum">(3)</b>
-        } else {
-            return context.proceed() <b class="conum">(4)</b>
+        if (nullParam.present) {
+            throw new IllegalArgumentException("Null parameter [${nullParam.get().key}] not allowed") <b class="conum">(3)</b>
         }
+        return context.proceed() <b class="conum">(4)</b>
     }
 }</code></pre>
 </div>
@@ -10391,17 +10384,18 @@ public @interface NotNull {
 import io.micronaut.context.annotation.Type
 
 import java.lang.annotation.Documented
-import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
 import java.lang.annotation.Target
 
+import static java.lang.annotation.ElementType.METHOD
+import static java.lang.annotation.ElementType.TYPE
 import static java.lang.annotation.RetentionPolicy.RUNTIME
 
 @Documented
 @Retention(RUNTIME) <b class="conum">(1)</b>
-@Target([ElementType.TYPE, ElementType.METHOD]) <b class="conum">(2)</b>
+@Target([TYPE, METHOD]) <b class="conum">(2)</b>
 @Around <b class="conum">(3)</b>
-@Type(NotNullInterceptor.class) <b class="conum">(4)</b>
+@Type(NotNullInterceptor) <b class="conum">(4)</b>
 @interface NotNull {
 }</code></pre>
 </div>
@@ -10467,12 +10461,14 @@ public class NotNullExample {
 <div class="listingblock multi-language-sample">
 <div class="title">Around Advice Usage Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import javax.inject.Singleton
+
+@Singleton
 class NotNullExample {
 
     @NotNull
     void doWork(String taskName) {
-        println("Doing job: " + taskName)
+        println "Doing job: $taskName"
     }
 }</code></pre>
 </div>
@@ -10517,14 +10513,14 @@ open class NotNullExample {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test not null"() {
         when:
-        ApplicationContext applicationContext = ApplicationContext.run()
-        NotNullExample exampleBean = applicationContext.getBean(NotNullExample.class)
+        def applicationContext = ApplicationContext.run()
+        def exampleBean = applicationContext.getBean(NotNullExample)
 
         exampleBean.doWork(null)
 
         then:
-        IllegalArgumentException ex = thrown()
-        ex.message == 'Null parameter [taskName] not allowed'
+        IllegalArgumentException e = thrown()
+        e.message == 'Null parameter [taskName] not allowed'
 
         cleanup:
         applicationContext.close()
@@ -10627,7 +10623,7 @@ class MyFactory {
 
     @Prototype
     MyBean myBean() {
-        return new MyBean()
+        new MyBean()
     }
 }</code></pre>
 </div>
@@ -10675,7 +10671,7 @@ class MyFactory {
     @Prototype
     @Timed
     MyBean myBean() {
-        return new MyBean()
+        new MyBean()
     }
 }</code></pre>
 </div>
@@ -10766,18 +10762,20 @@ import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Type
 
 import java.lang.annotation.Documented
-import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
 import java.lang.annotation.Target
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE
+import static java.lang.annotation.ElementType.METHOD
+import static java.lang.annotation.ElementType.TYPE
 import static java.lang.annotation.RetentionPolicy.RUNTIME
 
 @Introduction <b class="conum">(1)</b>
-@Type(StubIntroduction.class) <b class="conum">(2)</b>
+@Type(StubIntroduction) <b class="conum">(2)</b>
 @Bean <b class="conum">(3)</b>
 @Documented
 @Retention(RUNTIME)
-@Target([ElementType.TYPE, ElementType.ANNOTATION_TYPE, ElementType.METHOD])
+@Target([TYPE, ANNOTATION_TYPE, METHOD])
 @interface Stub {
     String value() default ""
 }</code></pre>
@@ -10861,9 +10859,9 @@ class StubIntroduction implements MethodInterceptor&lt;Object,Object&gt; { <b cl
 
     @Override
     Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        return context.getValue( <b class="conum">(2)</b>
-                Stub.class,
-                context.getReturnType().getType()
+        context.getValue( <b class="conum">(2)</b>
+                Stub,
+                context.returnType.type
         ).orElse(null) <b class="conum">(3)</b>
     }
 }</code></pre>
@@ -10967,11 +10965,11 @@ interface StubExample {
 <div class="title">Testing Introduction Advice</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
-        StubExample stubExample = applicationContext.getBean(StubExample.class)
+        def stubExample = applicationContext.getBean(StubExample)
 
         then:
-        stubExample.getNumber() == 10
-        stubExample.getDate() == null</code></pre>
+        stubExample.number == 10
+        stubExample.date == null</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -11318,8 +11316,8 @@ information.</p>
 <div class="listingblock multi-language-sample">
 <div class="title">Setting Retry Attempts</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable( attempts = "5",
-                delay = "2s" )
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable(attempts = "5",
+               delay = "2s")
     Book findBook(String title) {
         // ...</code></pre>
 </div>
@@ -11347,8 +11345,8 @@ information.</p>
 <div class="listingblock multi-language-sample">
 <div class="title">Setting Retry via Configuration</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable( attempts = "\${book.retry.attempts:3}",
-            delay = "\${book.retry.delay:1s}")
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Retryable(attempts = '${book.retry.attempts:3}',
+               delay = '${book.retry.delay:1s}')
     Book getBook(String title) {
         // ...</code></pre>
 </div>
@@ -11540,7 +11538,7 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(fixedRate = "5m")
     void everyFiveMinutes() {
-        System.out.println("Executing everyFiveMinutes()")
+        println "Executing everyFiveMinutes()"
     }</code></pre>
 </div>
 </div>
@@ -11576,7 +11574,7 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(fixedDelay = "5m")
     void fiveMinutesAfterLastExecution() {
-        System.out.println("Executing fiveMinutesAfterLastExecution()")
+        println "Executing fiveMinutesAfterLastExecution()"
     }</code></pre>
 </div>
 </div>
@@ -11607,9 +11605,9 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="listingblock multi-language-sample">
 <div class="title">Cron Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(cron = "0 15 10 ? * MON" )
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(cron = "0 15 10 ? * MON")
     void everyMondayAtTenFifteenAm() {
-        System.out.println("Executing everyMondayAtTenFifteenAm()")
+        println "Executing everyMondayAtTenFifteenAm()"
     }</code></pre>
 </div>
 </div>
@@ -11643,9 +11641,9 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="listingblock multi-language-sample">
 <div class="title">Initial Delay Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(initialDelay = "1m" )
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(initialDelay = "1m")
     void onceOneMinuteAfterStartup() {
-        System.out.println("Executing onceOneMinuteAfterStartup()")
+        println "Executing onceOneMinuteAfterStartup()"
     }</code></pre>
 </div>
 </div>
@@ -11712,10 +11710,10 @@ Remember that the scope of the bean has an impact on behaviour. a <code>@Singlet
 <div class="listingblock multi-language-sample">
 <div class="title">Allow tasks to be configured</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled( fixedRate = "\${my.task.rate:5m}",
-                initialDelay = "\${my.task.delay:1m}" )
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Scheduled(fixedRate = '${my.task.rate:5m}',
+            initialDelay = '${my.task.delay:1m}')
     void configuredTask() {
-        System.out.println("Executing configuredTask()")
+        println "Executing configuredTask()"
     }</code></pre>
 </div>
 </div>
@@ -12053,7 +12051,7 @@ public class Application {
 class Application {
 
     static void main(String... args) {
-        Micronaut.run Application.class
+        Micronaut.run Application
     }
 }</code></pre>
 </div>
@@ -12114,10 +12112,12 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
+
 import javax.inject.Inject
 
 @MicronautTest
 class HelloControllerSpec extends Specification {
+
     @Inject
     EmbeddedServer embeddedServer <b class="conum">(1)</b>
 
@@ -12515,7 +12515,7 @@ class IssuesControllerTest extends Specification {
         client.toBlocking().exchange("/issues/hello")
 
         then:
-        HttpClientResponseException e = thrown(HttpClientResponseException)
+        def e = thrown(HttpClientResponseException)
         e.status.code == 400 <b class="conum">(5)</b>
     }
 
@@ -12524,7 +12524,7 @@ class IssuesControllerTest extends Specification {
         client.toBlocking().exchange("/issues/")
 
         then:
-        HttpClientResponseException e = thrown(HttpClientResponseException)
+        def e = thrown(HttpClientResponseException)
         e.status.code == 404 <b class="conum">(6)</b>
     }
 }</code></pre>
@@ -12772,7 +12772,7 @@ class BackwardCompatibleController {
 
     @Get(uris = ["/{name}", "/person/{name}"]) <b class="conum">(1)</b>
     String hello(String name) { <b class="conum">(2)</b>
-        "Hello, " + name
+        "Hello, $name"
     }
 }</code></pre>
 </div>
@@ -12852,7 +12852,9 @@ public class MyRoutes extends DefaultRouteBuilder { <b class="conum">(1)</b>
 <div class="listingblock multi-language-sample">
 <div class="title">URI Variables Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.web.router.GroovyRouteBuilder
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.ExecutionHandleLocator
+import io.micronaut.core.convert.ConversionService
+import io.micronaut.web.router.GroovyRouteBuilder
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12860,7 +12862,9 @@ import javax.inject.Singleton
 @Singleton
 class MyRoutes extends GroovyRouteBuilder { <b class="conum">(1)</b>
 
-    MyRoutes(ExecutionHandleLocator executionHandleLocator, UriNamingStrategy uriNamingStrategy, ConversionService&lt;?&gt; conversionService) {
+    MyRoutes(ExecutionHandleLocator executionHandleLocator,
+             UriNamingStrategy uriNamingStrategy,
+             ConversionService conversionService) {
         super(executionHandleLocator, uriNamingStrategy, conversionService)
     }
 
@@ -13256,7 +13260,7 @@ class MovieTicketController {
     // @Get("/movie/ticket/{movieId}
     @Get("/movie/ticket/{movieId}{?minPrice,maxPrice}")
     HttpStatus list(@Valid @RequestBean MovieTicketBean bean) {
-        return HttpStatus.OK
+        HttpStatus.OK
     }
 }</code></pre>
 </div>
@@ -13645,18 +13649,21 @@ public @interface ShoppingCart {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import groovy.transform.CompileStatic
 import io.micronaut.context.annotation.AliasFor
 import io.micronaut.core.bind.annotation.Bindable
-import java.lang.annotation.ElementType
+
 import java.lang.annotation.Retention
 import java.lang.annotation.Target
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE
+import static java.lang.annotation.ElementType.FIELD
+import static java.lang.annotation.ElementType.PARAMETER
 import static java.lang.annotation.RetentionPolicy.RUNTIME
 
 @CompileStatic
-@Target([ElementType.FIELD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE])
+@Target([FIELD, PARAMETER, ANNOTATION_TYPE])
 @Retention(RUNTIME)
 @Bindable <b class="conum">(1)</b>
 @interface ShoppingCart {
-    @AliasFor(annotation = Bindable.class, member = "value")
+    @AliasFor(annotation = Bindable, member = "value")
     String value() default ""
 }</code></pre>
 </div>
@@ -13755,7 +13762,8 @@ import javax.inject.Singleton
 
 @CompileStatic
 @Singleton
-class ShoppingCartRequestArgumentBinder implements AnnotatedRequestArgumentBinder&lt;ShoppingCart, Object&gt; { <b class="conum">(1)</b>
+class ShoppingCartRequestArgumentBinder
+        implements AnnotatedRequestArgumentBinder&lt;ShoppingCart, Object&gt; { <b class="conum">(1)</b>
 
     private final ConversionService&lt;?&gt; conversionService
     private final JacksonObjectSerializer objectSerializer
@@ -13769,7 +13777,7 @@ class ShoppingCartRequestArgumentBinder implements AnnotatedRequestArgumentBinde
 
     @Override
     Class&lt;ShoppingCart&gt; getAnnotationType() {
-        return ShoppingCart.class
+        ShoppingCart
     }
 
     @Override
@@ -13782,20 +13790,19 @@ class ShoppingCartRequestArgumentBinder implements AnnotatedRequestArgumentBinde
                 .orElse(context.argument.name)
 
         Cookie cookie = source.cookies.get("shoppingCart")
-
-        if (cookie != null) {
-            Optional&lt;Map&lt;String, Object&gt;&gt; cookieValue = objectSerializer.deserialize(
-                    cookie.value.bytes,
-                    Argument.mapOf(String, Object))
-
-            return (BindingResult) { -&gt;
-                cookieValue.flatMap({value -&gt;
-                    conversionService.convert(value.get(parameterName), context)
-                })
-            }
+        if (!cookie) {
+            return BindingResult.EMPTY
         }
 
-        return BindingResult.EMPTY
+        Optional&lt;Map&lt;String, Object&gt;&gt; cookieValue = objectSerializer.deserialize(
+                cookie.value.bytes,
+                Argument.mapOf(String, Object))
+
+        return (BindingResult) { -&gt;
+            cookieValue.flatMap({value -&gt;
+                conversionService.convert(value.get(parameterName), context)
+            })
+        }
     }
 }</code></pre>
 </div>
@@ -13890,7 +13897,7 @@ It is common to use <a href="../api/io/micronaut/core/convert/ConversionService.
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/annotated")
     HttpResponse&lt;String&gt; checkSession(@ShoppingCart Long sessionId) { <b class="conum">(1)</b>
-        HttpResponse.ok("Session:${sessionId}".toString())
+        HttpResponse.ok("Session:" + sessionId)
     }
     // end::method
 }</code></pre>
@@ -14032,7 +14039,8 @@ import io.micronaut.jackson.serialize.JacksonObjectSerializer
 import javax.inject.Singleton
 
 @Singleton
-class ShoppingCartRequestArgumentBinder implements TypedRequestArgumentBinder&lt;ShoppingCart&gt; {
+class ShoppingCartRequestArgumentBinder
+        implements TypedRequestArgumentBinder&lt;ShoppingCart&gt; {
 
     private final JacksonObjectSerializer objectSerializer
 
@@ -14041,17 +14049,17 @@ class ShoppingCartRequestArgumentBinder implements TypedRequestArgumentBinder&lt
     }
 
     @Override
-    BindingResult&lt;ShoppingCart&gt; bind(ArgumentConversionContext&lt;ShoppingCart&gt; context, HttpRequest&lt;?&gt; source) { <b class="conum">(1)</b>
+    BindingResult&lt;ShoppingCart&gt; bind(ArgumentConversionContext&lt;ShoppingCart&gt; context,
+                                     HttpRequest&lt;?&gt; source) { <b class="conum">(1)</b>
 
-        Cookie cookie = source.getCookies().get("shoppingCart")
-
-        if (cookie != null) {
-            return () -&gt; objectSerializer.deserialize( <b class="conum">(2)</b>
-                    cookie.getValue().getBytes(),
-                    ShoppingCart)
+        Cookie cookie = source.cookies.get("shoppingCart")
+        if (!cookie) {
+            return BindingResult.EMPTY
         }
 
-        return BindingResult.EMPTY
+        return () -&gt; objectSerializer.deserialize( <b class="conum">(2)</b>
+                cookie.value.bytes,
+                ShoppingCart)
     }
 
     @Override
@@ -14138,11 +14146,9 @@ class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObj
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/typed")
     HttpResponse&lt;Map&lt;String, Object&gt;&gt; loadCart(ShoppingCart shoppingCart) { <b class="conum">(1)</b>
-        Map&lt;String, Object&gt; responseMap = [:]
-        responseMap.sessionId = shoppingCart.sessionId
-        responseMap.total = shoppingCart.total
-
-        return HttpResponse.ok(responseMap)
+        HttpResponse.ok(
+                sessionId: shoppingCart.sessionId,
+                total: shoppingCart.total)
     }</code></pre>
 </div>
 </div>
@@ -14389,7 +14395,7 @@ class MessageController {
 
     @Get("/hello") <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; hello(HttpRequest&lt;?&gt; request) {
-        String name = request.getParameters()
+        String name = request.parameters
                              .getFirst("name")
                              .orElse("Nobody") <b class="conum">(2)</b>
 
@@ -14511,7 +14517,7 @@ Generally <a href="../api/io/micronaut/http/context/ServerRequestContext.html">S
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Status(HttpStatus.CREATED)
     @Get(produces = MediaType.TEXT_PLAIN)
     String index() {
-        return "success"
+        "success"
     }</code></pre>
 </div>
 </div>
@@ -14610,7 +14616,7 @@ class ProducesController {
 
     @Get <b class="conum">(1)</b>
     HttpResponse index() {
-        HttpResponse.ok().body("{\"msg\":\"This is JSON\"}")
+        HttpResponse.ok().body('{"msg":"This is JSON"}')
     }
 
     @Produces(MediaType.TEXT_HTML) <b class="conum">(2)</b>
@@ -14621,7 +14627,7 @@ class ProducesController {
 
     @Get(value = "/xml", produces = MediaType.TEXT_XML) <b class="conum">(3)</b>
     String xml() {
-        return "&lt;html&gt;&lt;title&gt;&lt;h1&gt;XML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
+        "&lt;html&gt;&lt;title&gt;&lt;h1&gt;XML&lt;/h1&gt;&lt;/title&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"
     }
 }</code></pre>
 </div>
@@ -14874,7 +14880,10 @@ public class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @ExecuteOn</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.http.server.reactive.PersonService
+import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 
@@ -14883,15 +14892,14 @@ class PersonController {
 
     private final PersonService personService
 
-    PersonController(
-            PersonService personService) {
+    PersonController(PersonService personService) {
         this.personService = personService
     }
 
     @Get("/{name}")
     @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
     Person byName(String name) {
-        return personService.findByName(name)
+        personService.findByName(name)
     }
 }</code></pre>
 </div>
@@ -14978,10 +14986,14 @@ public class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">RxJava subscribeOn Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
-import io.reactivex.*
+import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+
 import javax.inject.Named
 import java.util.concurrent.ExecutorService
 
@@ -15000,9 +15012,9 @@ class PersonController {
 
     @Get("/{name}")
     Single&lt;Person&gt; byName(String name) {
-        return Single.fromCallable({ -&gt; <b class="conum">(2)</b>
-            personService.findByName(name)
-        }).subscribeOn(scheduler) <b class="conum">(3)</b>
+        return Single
+                .fromCallable({ -&gt; personService.findByName(name) }) <b class="conum">(2)</b>
+                .subscribeOn(scheduler) <b class="conum">(3)</b>
     }
 }</code></pre>
 </div>
@@ -15091,7 +15103,8 @@ import javax.validation.constraints.Size;
 <div class="listingblock multi-language-sample">
 <div class="title">Using the @Body annotation</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
@@ -15182,10 +15195,9 @@ The <code>micronaut.server.maxRequestSize</code> setting in <code>application.ym
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Post(value = "/echo-flow", consumes = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     Single&lt;MutableHttpResponse&lt;String&gt;&gt; echoFlow(@Body Flowable&lt;String&gt; text) { <b class="conum">(2)</b>
-        return text.collect({ x -&gt; new StringBuffer()}, { StringBuffer sb, String s -&gt; sb.append(s)}) <b class="conum">(3)</b>
-                   .map({ buffer -&gt;
-                       HttpResponse.ok(buffer.toString())
-                   });
+        return text
+                .collect({ x -&gt; new StringBuffer() }, { StringBuffer sb, String s -&gt; sb.append(s) }) <b class="conum">(3)</b>
+                .map({ buffer -&gt; HttpResponse.ok(buffer.toString()) });
     }</code></pre>
 </div>
 </div>
@@ -15371,7 +15383,7 @@ public class PersonController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
 class PersonController {
 
-    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;()
 
     @Post("/saveReactive")
     Single&lt;HttpResponse&lt;Person&gt;&gt; save(@Body Single&lt;Person&gt; person) { <b class="conum">(1)</b>
@@ -15462,7 +15474,7 @@ public class PersonController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
 class PersonController {
 
-    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;()
 
     @Post("/saveFuture")
     CompletableFuture&lt;HttpResponse&lt;Person&gt;&gt; save(@Body CompletableFuture&lt;Person&gt; person) {
@@ -15528,7 +15540,7 @@ public class PersonController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
 class PersonController {
 
-    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;()
 
     @Post
     HttpResponse&lt;Person&gt; save(@Body Person person) {
@@ -15793,14 +15805,12 @@ public class EmailController {
 <div class="listingblock multi-language-sample">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.validation.Validated;
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.validation.Validated
 
-import javax.validation.constraints.NotBlank;
-import java.util.Collections;
+import javax.validation.constraints.NotBlank
 
 @Validated <b class="conum">(1)</b>
 @Controller("/email")
@@ -15808,8 +15818,8 @@ class EmailController {
 
     @Get("/send")
     HttpResponse send(@NotBlank String recipient, <b class="conum">(2)</b>
-                             @NotBlank String subject) { <b class="conum">(2)</b>
-        HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+                      @NotBlank String subject) { <b class="conum">(2)</b>
+        HttpResponse.ok(msg: "OK")
     }
 }</code></pre>
 </div>
@@ -15981,20 +15991,20 @@ public class Email {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.docs.datavalidation.pogo;
+package io.micronaut.docs.datavalidation.pogo
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.Introspected
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank
 
 @Introspected
 class Email {
 
     @NotBlank <b class="conum">(1)</b>
-    String subject;
+    String subject
 
     @NotBlank <b class="conum">(1)</b>
-    String recipient;
+    String recipient
 }</code></pre>
 </div>
 </div>
@@ -16069,15 +16079,13 @@ public class EmailController {
 <div class="listingblock multi-language-sample">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.validation.Validated;
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.validation.Validated
 
-import javax.validation.Valid;
-import java.util.Collections;
+import javax.validation.Valid
 
 @Validated <b class="conum">(1)</b>
 @Controller("/email")
@@ -16085,7 +16093,7 @@ class EmailController {
 
     @Post("/send")
     HttpResponse send(@Body @Valid Email email) { <b class="conum">(2)</b>
-        HttpResponse.ok(Collections.singletonMap("msg", "OK"))
+        HttpResponse.ok(msg: "OK")
     }
 }</code></pre>
 </div>
@@ -16157,9 +16165,7 @@ open class EmailController {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    def "invoking /email/send parse parameters in a POJO and validates"() {
         when:
-        Email email = new Email()
-        email.subject = 'Hi'
-        email.recipient = ''
+        Email email = new Email(subject: 'Hi', recipient: '')
         client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
 
         then:
@@ -16168,9 +16174,7 @@ open class EmailController {
         response.status == HttpStatus.BAD_REQUEST
 
         when:
-        email = new Email()
-        email.subject = 'Hi'
-        email.recipient = 'me@micronaut.example'
+        email = new Email(subject: 'Hi', recipient: 'me@micronaut.example')
         response = client.toBlocking().exchange(HttpRequest.POST('/email/send', email))
 
         then:
@@ -16322,9 +16326,9 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="title">Local exception handler</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error
-    HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseException jsonParseException) { <b class="conum">(1)</b>
-        JsonError error = new JsonError("Invalid JSON: " + jsonParseException.getMessage()) <b class="conum">(2)</b>
-                .link(Link.SELF, Link.of(request.getUri()))
+    HttpResponse&lt;JsonError&gt; jsonError(HttpRequest request, JsonParseException e) { <b class="conum">(1)</b>
+        JsonError error = new JsonError("Invalid JSON: " + e.message) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
 
         HttpResponse.&lt;JsonError&gt;status(HttpStatus.BAD_REQUEST, "Fix Your JSON")
                 .body(error) <b class="conum">(3)</b>
@@ -16379,7 +16383,7 @@ When defining an error handler for an exception, you can specify the exception i
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(status = HttpStatus.NOT_FOUND)
     HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
         JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
-                .link(Link.SELF, Link.of(request.getUri()))
+                .link(Link.SELF, Link.of(request.uri))
 
         HttpResponse.&lt;JsonError&gt;notFound()
                 .body(error) <b class="conum">(3)</b>
@@ -16438,8 +16442,8 @@ When defining an error handler for an exception, you can specify the exception i
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(global = true) <b class="conum">(1)</b>
     HttpResponse&lt;JsonError&gt; error(HttpRequest request, Throwable e) {
-        JsonError error = new JsonError("Bad Things Happened: " + e.getMessage()) <b class="conum">(2)</b>
-                .link(Link.SELF, Link.of(request.getUri()))
+        JsonError error = new JsonError("Bad Things Happened: " + e.message) <b class="conum">(2)</b>
+                .link(Link.SELF, Link.of(request.uri))
 
         HttpResponse.&lt;JsonError&gt;serverError()
                 .body(error) <b class="conum">(3)</b>
@@ -16494,7 +16498,7 @@ When defining an error handler for an exception, you can specify the exception i
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Error(status = HttpStatus.NOT_FOUND)
     HttpResponse&lt;JsonError&gt; notFound(HttpRequest request) { <b class="conum">(1)</b>
         JsonError error = new JsonError("Person Not Found") <b class="conum">(2)</b>
-                .link(Link.SELF, Link.of(request.getUri()))
+                .link(Link.SELF, Link.of(request.uri))
 
         HttpResponse.&lt;JsonError&gt;notFound()
                 .body(error) <b class="conum">(3)</b>
@@ -16638,11 +16642,11 @@ public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStoc
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Produces
 @Singleton
-@Requires(classes = [OutOfStockException.class, ExceptionHandler.class])
+@Requires(classes = [OutOfStockException, ExceptionHandler])
 class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
 
     @Override
-    HttpResponse handle(HttpRequest request, OutOfStockException exception) {
+    HttpResponse handle(HttpRequest request, OutOfStockException e) {
         HttpResponse.ok(0)
     }
 }</code></pre>
@@ -16919,7 +16923,6 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Single
 
-
 @Client("/hello")
 @Version("1") <b class="conum">(1)</b>
 interface HelloClient {
@@ -17075,7 +17078,7 @@ public class PersonController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
 class PersonController {
 
-    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;()
 
     @Post
     HttpResponse&lt;Person&gt; save(@Body Person person) {
@@ -17143,7 +17146,7 @@ public class PersonController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/people")
 class PersonController {
 
-    ConcurrentHashMap&lt;String, Person&gt; inMemoryDatastore = [:]
+    Map&lt;String, Person&gt; inMemoryDatastore = new ConcurrentHashMap&lt;&gt;()
 
     @Post("/saveWithArgs")
     HttpResponse&lt;Person&gt; save(String firstName, String lastName, Optional&lt;Integer&gt; age) {
@@ -17315,47 +17318,38 @@ public class TemplateController {
 <div class="listingblock multi-language-sample">
 <div class="title">Performing Blocking I/O</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import groovy.text.SimpleTemplateEngine;
-import groovy.text.Template;
-import io.micronaut.core.io.Writable;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.server.exceptions.HttpServerException;
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import groovy.text.SimpleTemplateEngine
+import groovy.text.Template
+import io.micronaut.core.io.Writable
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.server.exceptions.HttpServerException
 
 @Controller("/template")
 class TemplateController {
 
     private final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
-    private final Template template
-
-    TemplateController() {
-        template = initTemplate() <b class="conum">(1)</b>
-    }
+    private final Template template = initTemplate() <b class="conum">(1)</b>
 
     @Get(value = "/welcome", produces = MediaType.TEXT_PLAIN)
     Writable render() { <b class="conum">(2)</b>
         { writer -&gt;
             template.make( <b class="conum">(3)</b>
-                    CollectionUtils.mapOf(
-                            "firstName", "Fred",
-                            "lastName", "Flintstone"
-                    )
+                    firstName: "Fred",
+                    lastName: "Flintstone"
             ).writeTo(writer)
         }
     }
 
     private Template initTemplate() {
-        Template template
         try {
-            template = templateEngine.createTemplate(
+            return templateEngine.createTemplate(
                     'Dear $firstName $lastName. Nice to meet you.'
             )
         } catch (Exception e) {
             throw new HttpServerException("Cannot create template")
         }
-        template
     }
 }</code></pre>
 </div>
@@ -17625,32 +17619,35 @@ public class UploadController {
 <div class="title">Streaming file upload</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
-import io.micronaut.http.HttpStatus
-import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.StreamingFileUpload
 import io.reactivex.Single
 import org.reactivestreams.Publisher
 
+import static io.micronaut.http.HttpStatus.CONFLICT
+import static io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import static io.micronaut.http.MediaType.TEXT_PLAIN
+
 @Controller("/upload")
 class UploadController {
 
-    @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    @Post(value = "/", consumes = MULTIPART_FORM_DATA, produces = TEXT_PLAIN) <b class="conum">(1)</b>
     Single&lt;HttpResponse&lt;String&gt;&gt; upload(StreamingFileUpload file) { <b class="conum">(2)</b>
+
         File tempFile = File.createTempFile(file.filename, "temp")
         Publisher&lt;Boolean&gt; uploadPublisher = file.transferTo(tempFile) <b class="conum">(3)</b>
+
         Single.fromPublisher(uploadPublisher)  <b class="conum">(4)</b>
             .map({ success -&gt;
                 if (success) {
                     HttpResponse.ok("Uploaded")
                 } else {
-                    HttpResponse.&lt;String&gt;status(HttpStatus.CONFLICT)
+                    HttpResponse.&lt;String&gt;status(CONFLICT)
                             .body("Upload Failed")
                 }
             })
     }
-
 }</code></pre>
 </div>
 </div>
@@ -17750,7 +17747,6 @@ public class BytesUploadController {
 <div class="title">Receiving a byte array</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
-import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 
@@ -17758,19 +17754,20 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+import static io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import static io.micronaut.http.MediaType.TEXT_PLAIN
+
 @Controller("/upload")
 class BytesUploadController {
 
-    @Post(value = "/bytes",
-            consumes = MediaType.MULTIPART_FORM_DATA,
-            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    @Post(value = "/bytes", consumes = MULTIPART_FORM_DATA, produces = TEXT_PLAIN) <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; uploadBytes(byte[] file, String fileName) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(fileName, "temp")
             Path path = Paths.get(tempFile.absolutePath)
             Files.write(path, file) <b class="conum">(3)</b>
             HttpResponse.ok("Uploaded")
-        } catch (IOException exception) {
+        } catch (IOException e) {
             HttpResponse.badRequest("Upload Failed")
         }
     }
@@ -17852,7 +17849,6 @@ public class CompletedUploadController {
 <div class="title">File upload with metadata</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpResponse
-import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.CompletedFileUpload
@@ -17861,19 +17857,20 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+import static io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import static io.micronaut.http.MediaType.TEXT_PLAIN
+
 @Controller("/upload")
 class CompletedUploadController {
 
-    @Post(value = "/completed",
-            consumes = MediaType.MULTIPART_FORM_DATA,
-            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    @Post(value = "/completed", consumes = MULTIPART_FORM_DATA, produces = TEXT_PLAIN) <b class="conum">(1)</b>
     HttpResponse&lt;String&gt; uploadCompleted(CompletedFileUpload file) { <b class="conum">(2)</b>
         try {
             File tempFile = File.createTempFile(file.filename, "temp") <b class="conum">(3)</b>
             Path path = Paths.get(tempFile.absolutePath)
             Files.write(path, file.bytes) <b class="conum">(3)</b>
             HttpResponse.ok("Uploaded")
-        } catch (IOException exception) {
+        } catch (IOException e) {
             HttpResponse.badRequest("Upload Failed")
         }
     }
@@ -18060,8 +18057,7 @@ public class WholeBodyUploadController {
 <div class="listingblock multi-language-sample">
 <div class="title">Binding to the entire multipart body</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Body
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.CompletedFileUpload
@@ -18071,13 +18067,15 @@ import io.reactivex.Single
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 
+import static io.micronaut.http.MediaType.MULTIPART_FORM_DATA
+import static io.micronaut.http.MediaType.TEXT_PLAIN
+
 @Controller("/upload")
 class WholeBodyUploadController {
 
-    @Post(value = "/whole-body",
-            consumes = MediaType.MULTIPART_FORM_DATA,
-            produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
+    @Post(value = "/whole-body", consumes = MULTIPART_FORM_DATA, produces = TEXT_PLAIN) <b class="conum">(1)</b>
     Single&lt;String&gt; uploadBytes(@Body MultipartBody body) { <b class="conum">(2)</b>
+
         Single.&lt;String&gt;create({ emitter -&gt;
             body.subscribe(new Subscriber&lt;CompletedPart&gt;() {
                 private Subscription s
@@ -18092,7 +18090,7 @@ class WholeBodyUploadController {
                 void onNext(CompletedPart completedPart) {
                     String partName = completedPart.name
                     if (completedPart instanceof CompletedFileUpload) {
-                        String originalFileName = ((CompletedFileUpload) completedPart).filename
+                        String originalFileName = completedPart.filename
                     }
                 }
 
@@ -18392,9 +18390,7 @@ class TraceService {
 
     Flowable&lt;Boolean&gt; trace(HttpRequest&lt;?&gt; request) {
         Flowable.fromCallable({ -&gt;  <b class="conum">(1)</b>
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Tracing request: " + request.getUri())
-            }
+            LOG.debug('Tracing request: {}', request.uri)
             // trace logic here, potentially performing I/O <b class="conum">(2)</b>
             return true
         }).subscribeOn(Schedulers.io()) <b class="conum">(3)</b>
@@ -18484,6 +18480,7 @@ import org.reactivestreams.Publisher
 
 @Filter("/hello/**") <b class="conum">(1)</b>
 class TraceFilter implements HttpServerFilter { <b class="conum">(2)</b>
+
     private final TraceService traceService
 
     TraceFilter(TraceService traceService) { <b class="conum">(3)</b>
@@ -18550,12 +18547,14 @@ class TraceFilter(<b class="conum">(2)</b>
 <div class="title">The doFilter implementation</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Override
-    Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
-        traceService.trace(request) <b class="conum">(1)</b>
-                           .switchMap({ aBoolean -&gt; chain.proceed(request) }) <b class="conum">(2)</b>
-                           .doOnNext({ res -&gt; <b class="conum">(3)</b>
-                               res.getHeaders().add("X-Trace-Enabled", "true")
-                           })
+    Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request,
+                                               ServerFilterChain chain) {
+        traceService
+                .trace(request) <b class="conum">(1)</b>
+                .switchMap({ aBoolean -&gt; chain.proceed(request) }) <b class="conum">(2)</b>
+                .doOnNext({ res -&gt;
+                    res.headers.add("X-Trace-Enabled", "true") <b class="conum">(3)</b>
+                })
     }</code></pre>
 </div>
 </div>
@@ -18763,16 +18762,16 @@ import javax.validation.constraints.NotBlank
 
 @Controller("/shopping")
 class ShoppingController {
-    static final String ATTR_CART = "cart" <b class="conum">(1)</b>
+    private static final String ATTR_CART = "cart" <b class="conum">(1)</b>
 
     @Post("/cart/{name}")
     Cart addItem(Session session, @NotBlank String name) { <b class="conum">(2)</b>
-        Cart cart = session.get(ATTR_CART, Cart.class).orElseGet({ -&gt;  <b class="conum">(3)</b>
+        Cart cart = session.get(ATTR_CART, Cart).orElseGet({ -&gt; <b class="conum">(3)</b>
             Cart newCart = new Cart()
             session.put(ATTR_CART, newCart) <b class="conum">(4)</b>
             newCart
         })
-        cart.getItems().add(name)
+        cart.items &lt;&lt; name
         cart
     }
 
@@ -18849,9 +18848,7 @@ class ShoppingController {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Post("/cart/clear")
     void clearCart(@Nullable Session session) {
-        if (session != null) {
-            session.remove(ATTR_CART)
-        }
+        session?.remove(ATTR_CART)
     }</code></pre>
 </div>
 </div>
@@ -18892,7 +18889,7 @@ class ShoppingController {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when: "The shopping cart is retrieved"
-        HttpResponse&lt;Cart&gt; response = httpClient.exchange(HttpRequest.GET('/shopping/cart'), Cart) <b class="conum">(1)</b>
+        HttpResponse&lt;Cart&gt; response = client.exchange(HttpRequest.GET('/shopping/cart'), Cart) <b class="conum">(1)</b>
                                                 .blockingFirst()
         Cart cart = response.body()
 
@@ -18942,10 +18939,9 @@ class ShoppingController {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        String sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) <b class="conum">(1)</b>
 
-        response = httpClient.exchange(
-                HttpRequest.POST('/shopping/cart/Apple', "")
-                        .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <b class="conum">(2)</b>
-                .blockingFirst()
+        response = client.exchange(HttpRequest.POST('/shopping/cart/Apple', "")
+                         .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart) <b class="conum">(2)</b>
+                         .blockingFirst()
         cart = response.body()</code></pre>
 </div>
 </div>
@@ -18999,10 +18995,7 @@ class ShoppingController {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/cart")
     @SessionValue("cart") <b class="conum">(1)</b>
     Cart viewCart(@SessionValue @Nullable Cart cart) { <b class="conum">(2)</b>
-        if (cart == null) {
-            cart = new Cart()
-        }
-        cart
+        cart ?: new Cart()
     }</code></pre>
 </div>
 </div>
@@ -19136,8 +19129,9 @@ class ShoppingController {
 <div class="title">Headline</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">class Headline {
-    String title;
-    String description;
+
+    String title
+    String description
 
     Headline() {}
 
@@ -19204,7 +19198,8 @@ public class HeadlineController {
 <div class="listingblock multi-language-sample">
 <div class="title">Publishing Server Sent Events from a Controller</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Controller
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.sse.Event
 import io.micronaut.scheduling.TaskExecutors
@@ -19214,7 +19209,6 @@ import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
 import org.reactivestreams.Publisher
 
-
 @Controller("/headlines")
 class HeadlineController {
 
@@ -19223,19 +19217,16 @@ class HeadlineController {
     Publisher&lt;Event&lt;Headline&gt;&gt; index() { <b class="conum">(1)</b>
         String[] versions = ["1.0", "2.0"] <b class="conum">(2)</b>
 
-        def initialState = { -&gt; 0 }
-        def emitterFunction = { Integer i, Emitter emitter -&gt;  <b class="conum">(3)</b>
+        return Flowable.generate({ -&gt; 0 }, { int i, Emitter emitter -&gt;  <b class="conum">(3)</b>
             if (i &lt; versions.length) {
                 emitter.onNext( <b class="conum">(4)</b>
-                        Event.of(new Headline("Micronaut " + versions[i] + " Released", "Come and get it"))
+                        Event.of(new Headline("Micronaut ${versions[i]} Released", "Come and get it"))
                 )
             } else {
                 emitter.onComplete() <b class="conum">(5)</b>
             }
             return ++i
-        }
-
-        return Flowable.generate(initialState, emitterFunction as BiFunction&lt;Integer,Emitter&lt;Event&lt;Headline&gt;&gt;,Integer&gt;)
+        } as BiFunction&lt;Integer, Emitter&lt;Event&lt;Headline&gt;&gt;, Integer&gt;)
     }
 }</code></pre>
 </div>
@@ -19418,7 +19409,8 @@ import java.util.function.Predicate
 
 @ServerWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
 class ChatServerWebSocket {
-    private WebSocketBroadcaster broadcaster
+
+    private final WebSocketBroadcaster broadcaster
 
     ChatServerWebSocket(WebSocketBroadcaster broadcaster) {
         this.broadcaster = broadcaster
@@ -19426,31 +19418,25 @@ class ChatServerWebSocket {
 
     @OnOpen <b class="conum">(2)</b>
     void onOpen(String topic, String username, WebSocketSession session) {
-        String msg = "[" + username + "] Joined!"
+        String msg = "[$username] Joined!"
         broadcaster.broadcastSync(msg, isValid(topic, session))
     }
 
     @OnMessage <b class="conum">(3)</b>
-     void onMessage(
-            String topic,
-            String username,
-            String message,
-            WebSocketSession session) {
-        String msg = "[" + username + "] " + message
+    void onMessage(String topic, String username,
+                   String message, WebSocketSession session) {
+        String msg = "[$username] $message"
         broadcaster.broadcastSync(msg, isValid(topic, session)) <b class="conum">(4)</b>
     }
 
     @OnClose <b class="conum">(5)</b>
-     void onClose(
-            String topic,
-            String username,
-            WebSocketSession session) {
-        String msg = "[" + username + "] Disconnected!"
+    void onClose(String topic, String username, WebSocketSession session) {
+        String msg = "[$username] Disconnected!"
         broadcaster.broadcastSync(msg, isValid(topic, session))
     }
 
     private Predicate&lt;WebSocketSession&gt; isValid(String topic, WebSocketSession session) {
-        return { s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.getUriVariables().get("topic", String.class, null)) }
+        return { s -&gt; s != session &amp;&amp; topic.equalsIgnoreCase(s.uriVariables.get("topic", String, null)) }
     }
 }</code></pre>
 </div>
@@ -19605,13 +19591,9 @@ A working example of WebSockets in action can be found in the <a href="https://g
 <div class="title">WebSocket Chat Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @OnMessage
-     Publisher&lt;Message&gt; onMessage(
-            String topic,
-            String username,
-            Message message,
-            WebSocketSession session) {
-
-        String text = "[" + username + "] " + message.getText()
+    Publisher&lt;Message&gt; onMessage(String topic, String username,
+                                 Message message, WebSocketSession session) {
+        String text = "[$username] $message.text"
         Message newMessage = new Message(text)
         broadcaster.broadcast(newMessage, isValid(topic, session))
     }</code></pre>
@@ -19821,7 +19803,6 @@ import io.reactivex.Single
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Future
 
-
 @ClientWebSocket("/chat/{topic}/{username}") <b class="conum">(1)</b>
 abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(2)</b>
 
@@ -19832,7 +19813,8 @@ abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(
     private Collection&lt;String&gt; replies = new ConcurrentLinkedQueue&lt;&gt;()
 
     @OnOpen
-    void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
+    void onOpen(String topic, String username,
+                WebSocketSession session, HttpRequest request) { <b class="conum">(3)</b>
         this.topic = topic
         this.username = username
         this.session = session
@@ -19860,9 +19842,8 @@ abstract class ChatClientWebSocket implements AutoCloseable { <b class="conum">(
     }
 
     @OnMessage
-    void onMessage(
-            String message) {
-        replies.add(message) <b class="conum">(4)</b>
+    void onMessage(String message) {
+        replies &lt;&lt; message <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -20674,16 +20655,21 @@ public class LogbookPipelineCustomizer
 <div class="title">Customizing the Netty pipeline for Logbook</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires
-import io.micronaut.context.event.*
+import io.micronaut.context.event.BeanCreatedEvent
+import io.micronaut.context.event.BeanCreatedEventListener
 import io.micronaut.http.netty.channel.ChannelPipelineCustomizer
 import io.netty.channel.ChannelPipeline
 import org.zalando.logbook.Logbook
-import org.zalando.logbook.netty.*
+import org.zalando.logbook.netty.LogbookClientHandler
+import org.zalando.logbook.netty.LogbookServerHandler
+
 import javax.inject.Singleton
 
 @Requires(beans = Logbook.class)
 @Singleton
-class LogbookPipelineCustomizer implements BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+class LogbookPipelineCustomizer
+        implements BeanCreatedEventListener&lt;ChannelPipelineCustomizer&gt; { <b class="conum">(1)</b>
+
     private final Logbook logbook
 
     LogbookPipelineCustomizer(Logbook logbook) {
@@ -20692,9 +20678,9 @@ class LogbookPipelineCustomizer implements BeanCreatedEventListener&lt;ChannelPi
 
     @Override
     ChannelPipelineCustomizer onCreated(BeanCreatedEvent&lt;ChannelPipelineCustomizer&gt; event) {
-        ChannelPipelineCustomizer customizer = event.getBean()
+        ChannelPipelineCustomizer customizer = event.bean
 
-        if (customizer.isServerChannel()) { <b class="conum">(2)</b>
+        if (customizer.serverChannel) { <b class="conum">(2)</b>
             customizer.doOnConnect( { ChannelPipeline pipeline -&gt;
                 pipeline.addAfter(
                         ChannelPipelineCustomizer.HANDLER_HTTP_SERVER_CODEC,
@@ -21638,8 +21624,7 @@ Regardless whether you choose to use Micronaut&#8217;s HTTP server, you may wish
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
         String uri = UriBuilder.of("/hello/{name}")
-                               .expand(Collections.singletonMap("name", "John"))
-                               .toString()
+                               .expand(name: "John")
         then:
         "/hello/John" == uri
 
@@ -21695,19 +21680,23 @@ import static io.micronaut.http.MediaType.TEXT_PLAIN;
 <div class="listingblock multi-language-sample">
 <div class="title">Using the HTTP client without blocking</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.HttpStatus
-import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Status
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Maybe
 
 import static io.micronaut.http.HttpRequest.GET
+import static io.micronaut.http.HttpStatus.CREATED
+import static io.micronaut.http.MediaType.TEXT_PLAIN
 
     @Get("/hello/{name}")
     Maybe&lt;String&gt; hello(String name) { <b class="conum">(1)</b>
-        return httpClient.retrieve( GET("/hello/" + name) )
-                         .firstElement() <b class="conum">(2)</b>
+        httpClient.retrieve( GET("/hello/" + name) )
+                  .firstElement() <b class="conum">(2)</b>
     }</code></pre>
 </div>
 </div>
@@ -21853,7 +21842,7 @@ Using RxJava (or Reactor if you prefer) you can easily and efficiently compose m
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get("/greet/{name}")
     Message greet(String name) {
-        return new Message("Hello " + name)
+        new Message("Hello $name")
     }</code></pre>
 </div>
 </div>
@@ -21897,15 +21886,12 @@ public class Message {
 import com.fasterxml.jackson.annotation.JsonProperty
 
 class Message {
-    private final String text
+
+    final String text
 
     @JsonCreator
     Message(@JsonProperty("text") String text) {
         this.text = text
-    }
-
-    String getText() {
-        return text
     }
 }</code></pre>
 </div>
@@ -21948,7 +21934,7 @@ Jackson annotations are used to map the constructor
 <div class="title">Decoding the response body to a Map</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Map&gt; response = client.retrieve(
-                GET("/greet/John"), Map.class
+                GET("/greet/John"), Map
         )</code></pre>
 </div>
 </div>
@@ -21977,7 +21963,7 @@ Jackson annotations are used to map the constructor
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        response = client.retrieve(
                 GET("/greet/John"),
-                Argument.of(Map.class, String.class, String.class) <b class="conum">(1)</b>
+                Argument.of(Map, String, String) <b class="conum">(1)</b>
         )</code></pre>
 </div>
 </div>
@@ -22016,7 +22002,7 @@ Jackson annotations are used to map the constructor
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
         Flowable&lt;Message&gt; response = client.retrieve(
-                GET("/greet/John"), Message.class
+                GET("/greet/John"), Message
         )
 
         then:
@@ -22072,11 +22058,11 @@ Jackson annotations are used to map the constructor
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        when:
         Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
-                GET("/greet/John"), Message.class <b class="conum">(1)</b>
+                GET("/greet/John"), Message <b class="conum">(1)</b>
         )
 
         HttpResponse&lt;Message&gt; response = call.blockingFirst();
-        Optional&lt;Message&gt; message = response.getBody(Message.class) <b class="conum">(2)</b>
+        Optional&lt;Message&gt; message = response.getBody(Message) <b class="conum">(2)</b>
         // check the status
         then:
         HttpStatus.OK == response.getStatus() <b class="conum">(3)</b>
@@ -22211,7 +22197,7 @@ Jackson annotations are used to map the constructor
                 POST("/hello", "Hello John") <b class="conum">(1)</b>
                     .contentType(MediaType.TEXT_PLAIN_TYPE)
                     .accept(MediaType.TEXT_PLAIN_TYPE), <b class="conum">(2)</b>
-                String.class <b class="conum">(3)</b>
+                String <b class="conum">(3)</b>
         )</code></pre>
 </div>
 </div>
@@ -22264,7 +22250,7 @@ Jackson annotations are used to map the constructor
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Message&gt;&gt; call = client.exchange(
                 POST("/greet", new Message("Hello John")), <b class="conum">(1)</b>
-                Message.class <b class="conum">(2)</b>
+                Message <b class="conum">(2)</b>
         )</code></pre>
 </div>
 </div>
@@ -22325,7 +22311,7 @@ Jackson annotations are used to map the constructor
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
                 POST("/amazon/book/{title}", new Book("The Stand")),
-                Book.class
+                Book
         );</code></pre>
 </div>
 </div>
@@ -22365,7 +22351,7 @@ Jackson annotations are used to map the constructor
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(
                 POST("/amazon/book/{title}", new Book("The Stand"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED),
-                Book.class
+                Book
         )</code></pre>
 </div>
 </div>
@@ -22489,8 +22475,8 @@ import org.reactivestreams.Publisher
 <div class="listingblock multi-language-sample">
 <div class="title">Creating a request</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)       <b class="conum">(1)</b>
-                        .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">                HttpRequest.POST("/multipart/upload", requestBody)      <b class="conum">(1)</b>
+                           .contentType(MediaType.MULTIPART_FORM_DATA_TYPE) <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -22592,9 +22578,7 @@ import java.util.concurrent.TimeUnit
     @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() {
         Flowable.fromCallable({ <b class="conum">(2)</b>
-            Headline headline = new Headline()
-            headline.setText("Latest Headline at " + ZonedDateTime.now())
-            return headline
+            new Headline(text: "Latest Headline at ${ZonedDateTime.now()}")
         }).repeat(100) <b class="conum">(3)</b>
           .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
@@ -22692,7 +22676,8 @@ The server does not have to be written in Micronaut, any server that supports JS
 <div class="listingblock multi-language-sample">
 <div class="title">Streaming JSON on the Client</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(GET("/streaming/headlines"), Headline.class) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">        Flowable&lt;Headline&gt; headlineStream = client.jsonStream(
+                GET("/streaming/headlines"), Headline) <b class="conum">(1)</b>
         CompletableFuture&lt;Headline&gt; future = new CompletableFuture&lt;&gt;() <b class="conum">(2)</b>
         headlineStream.subscribe(new Subscriber&lt;Headline&gt;() {
             @Override
@@ -22702,7 +22687,7 @@ The server does not have to be written in Micronaut, any server that supports JS
 
             @Override
             void onNext(Headline headline) {
-                System.out.println("Received Headline = " + headline.getText())
+                println "Received Headline = $headline.text"
                 future.complete(headline) <b class="conum">(4)</b>
             }
 
@@ -23074,14 +23059,14 @@ class BooksController {
     @Get("/{isbn}")
     HttpResponse find(String isbn) {
         if (isbn == "1680502395") {
-            Map&lt;String, Object&gt; m = new HashMap&lt;&gt;()
-            m.put("status", 401)
-            m.put("error", "Unauthorized")
-            m.put("message", "No message available")
-            m.put("path", "/books/"+isbn)
+            Map&lt;String, Object&gt; m = [
+                    status : 401,
+                    error  : "Unauthorized",
+                    message: "No message available",
+                    path   : "/books/" + isbn]
             return HttpResponse.status(HttpStatus.UNAUTHORIZED).body(m)
-
         }
+
         return HttpResponse.ok(new Book("1491950358", "Building Microservices"))
     }
 }</code></pre>
@@ -23253,40 +23238,42 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Filter
 import io.micronaut.http.client.ProxyHttpClient
-import io.micronaut.http.filter.*
+import io.micronaut.http.filter.OncePerRequestHttpServerFilter
 import io.micronaut.http.filter.ServerFilterChain
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.runtime.server.EmbeddedServer
 import org.reactivestreams.Publisher
 
-
 @Filter("/proxy/**")
 class ProxyFilter extends OncePerRequestHttpServerFilter { <b class="conum">(1)</b>
+
     private final ProxyHttpClient client
     private final EmbeddedServer embeddedServer
 
-    ProxyFilter(ProxyHttpClient client, EmbeddedServer embeddedServer) { <b class="conum">(2)</b>
+    ProxyFilter(ProxyHttpClient client,
+                EmbeddedServer embeddedServer) { <b class="conum">(2)</b>
         this.client = client
         this.embeddedServer = embeddedServer
     }
 
     @Override
-    protected Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilterOnce(HttpRequest&lt;?&gt; request, ServerFilterChain chain) {
-        return Publishers.map(client.proxy( <b class="conum">(3)</b>
+    protected Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilterOnce(HttpRequest&lt;?&gt; request,
+                                                             ServerFilterChain chain) {
+        Publishers.map(client.proxy( <b class="conum">(3)</b>
                 request.mutate() <b class="conum">(4)</b>
                         .uri { UriBuilder b -&gt; <b class="conum">(5)</b>
                             b.with {
                                 scheme("http")
-                                host(embeddedServer.getHost())
-                                port(embeddedServer.getPort())
+                                host(embeddedServer.host)
+                                port(embeddedServer.port)
                                 replacePath(StringUtils.prependUri(
-                                                "/real",
-                                                request.getPath().substring("/proxy".length())
+                                        "/real",
+                                        request.path.substring("/proxy".length())
                                 ))
                             }
                         }
                         .header("X-My-Request-Header", "XXX") <b class="conum">(6)</b>
-        ), { MutableHttpResponse&lt;?&gt; response -&gt; response.header("X-My-Response-Header", "YYY")})
+        ), { it.header("X-My-Response-Header", "YYY") })
     }
 }</code></pre>
 </div>
@@ -23557,9 +23544,7 @@ class PetController implements PetOperations {
 
     @Override
     Single&lt;Pet&gt; save(String name, int age) {
-        Pet pet = new Pet()
-        pet.setName(name)
-        pet.setAge(age)
+        Pet pet = new Pet(name: name, age: age)
         // save to database or something
         return Single.just(pet)
     }
@@ -23974,14 +23959,19 @@ public @interface Metadata {
 <div class="title">@Metadata Annotation</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.bind.annotation.Bindable
-import java.lang.annotation.*
+
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+import java.lang.annotation.Target
+
+import static java.lang.annotation.ElementType.PARAMETER
+import static java.lang.annotation.RetentionPolicy.RUNTIME
 
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
+@Retention(RUNTIME)
+@Target(PARAMETER)
 @Bindable
 @interface Metadata {
-
 }</code></pre>
 </div>
 </div>
@@ -24045,7 +24035,8 @@ public class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequ
 <div class="listingblock multi-language-sample">
 <div class="title">Annotation Argument Binder</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.core.convert.ArgumentConversionContext
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.convert.ArgumentConversionContext
 import io.micronaut.core.naming.NameUtils
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.MutableHttpRequest
@@ -24058,7 +24049,7 @@ import javax.inject.Singleton
 @Singleton
 class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequestBinder&lt;Metadata&gt; {
 
-    Class&lt;Metadata&gt; annotationType = Metadata
+    final Class&lt;Metadata&gt; annotationType = Metadata
 
     @Override
     void bind(@NotNull ArgumentConversionContext&lt;Object&gt; context,
@@ -24066,9 +24057,9 @@ class MetadataClientArgumentBinder implements AnnotatedClientArgumentRequestBind
               @NotNull Object value,
               @NotNull MutableHttpRequest&lt;?&gt; request) {
         if (value instanceof Map) {
-            for (def entry: ((Map) value).entrySet()) {
-                String key = NameUtils.hyphenate(StringUtils.capitalize(entry.key.toString()), false)
-                request.header("X-Metadata-" + key, entry.value.toString())
+            for (entry in value.entrySet()) {
+                String key = NameUtils.hyphenate(StringUtils.capitalize(entry.key as String), false)
+                request.header("X-Metadata-$key", entry.value as String)
             }
         }
     }
@@ -24204,7 +24195,7 @@ class MetadataClientArgumentBinder implements TypedClientArgumentRequestBinder&l
     @Override
     @NonNull
     Argument&lt;Metadata&gt; argumentType() {
-        return Argument.of(Metadata)
+        Argument.of(Metadata)
     }
 
     @Override
@@ -24285,15 +24276,16 @@ public interface HeadlineClient {
 <div class="listingblock multi-language-sample">
 <div class="title">HeadlineClient.java</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Get
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
+
+import static io.micronaut.http.MediaType.APPLICATION_JSON_STREAM
 
 @Client("/streaming")
 interface HeadlineClient {
 
-    @Get(value = "/headlines", processes = MediaType.APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
+    @Get(value = "/headlines", processes = APPLICATION_JSON_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Headline&gt; streamHeadlines() <b class="conum">(2)</b>
 
 }</code></pre>
@@ -24355,16 +24347,16 @@ interface HeadlineClient {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    void "test client annotation streaming"() throws Exception {
         when:
-        HeadlineClient headlineClient = embeddedServer.getApplicationContext()
-                                            .getBean(HeadlineClient.class) <b class="conum">(1)</b>
+        def headlineClient = embeddedServer.applicationContext
+                                           .getBean(HeadlineClient) <b class="conum">(1)</b>
 
         Maybe&lt;Headline&gt; firstHeadline = headlineClient.streamHeadlines().firstElement() <b class="conum">(2)</b>
 
         Headline headline = firstHeadline.blockingGet() <b class="conum">(3)</b>
 
         then:
-        null != headline
-        headline.getText().startsWith("Latest Headline")
+        headline
+        headline.text.startsWith("Latest Headline")
     }</code></pre>
 </div>
 </div>
@@ -24502,12 +24494,12 @@ Although SSE streams are typically consumed by a browser <code>EventSource</code
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM) <b class="conum">(1)</b>
     Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines() {
         Flowable.&lt;Event&lt;Headline&gt;&gt;create( { emitter -&gt; <b class="conum">(2)</b>
-            Headline headline = new Headline()
-            headline.setText("Latest Headline at " + ZonedDateTime.now())
+            Headline headline = new Headline(text: "Latest Headline at ${ZonedDateTime.now()}")
             emitter.onNext(Event.of(headline))
             emitter.onComplete()
-        }, BackpressureStrategy.BUFFER).repeat(100) <b class="conum">(3)</b>
-         .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
+        }, BackpressureStrategy.BUFFER)
+                .repeat(100) <b class="conum">(3)</b>
+                .delay(1, TimeUnit.SECONDS) <b class="conum">(4)</b>
     }</code></pre>
 </div>
 </div>
@@ -24570,7 +24562,7 @@ public interface HeadlineClient {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Client("/streaming/sse")
 interface HeadlineClient {
 
-    @Get(value = "/headlines", processes = MediaType.TEXT_EVENT_STREAM)
+    @Get(value = "/headlines", processes = TEXT_EVENT_STREAM)
     Flowable&lt;Event&lt;Headline&gt;&gt; streamHeadlines()
 }</code></pre>
 </div>
@@ -24899,10 +24891,8 @@ public class PetFallback implements PetOperations {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Fallback
 class PetFallback implements PetOperations {
     @Override
-    public Single&lt;Pet&gt; save(String name, int age) {
-        Pet pet = new Pet()
-        pet.setAge(age)
-        pet.setName(name)
+    Single&lt;Pet&gt; save(String name, int age) {
+        Pet pet = new Pet(age: age, name: name)
         return Single.just(pet)
     }
 }</code></pre>
@@ -25122,18 +25112,18 @@ class BintrayService {
     final String org
 
     BintrayService(
-            @Client(BintrayApi.URL) RxHttpClient client,           <b class="conum">(1)</b>
+            @Client(BintrayApi.URL) RxHttpClient client, <b class="conum">(1)</b>
             @Value('${bintray.organization}') String org ) {
         this.client = client
         this.org = org
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() {
-        return client.exchange(HttpRequest.GET("/repos/$org"), String) <b class="conum">(2)</b>
+        client.exchange(HttpRequest.GET("/repos/$org"), String) <b class="conum">(2)</b>
     }
 
     Flowable&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) {
-        return client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <b class="conum">(2)</b>
+        client.exchange(HttpRequest.GET("/repos/${org}/${repo}/packages"), String) <b class="conum">(2)</b>
     }
 }</code></pre>
 </div>
@@ -25204,7 +25194,6 @@ class BintrayFilter implements HttpClientFilter {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">@Filter('/repos/**') <b class="conum">(1)</b>
 class BintrayFilter implements HttpClientFilter {
 
-
     final String username
     final String token
 
@@ -25216,8 +25205,9 @@ class BintrayFilter implements HttpClientFilter {
     }
 
     @Override
-    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
-        return chain.proceed(
+    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request,
+                                                  ClientFilterChain chain) {
+        chain.proceed(
                 request.basicAuth(username, token) <b class="conum">(3)</b>
         )
     }
@@ -25336,9 +25326,12 @@ import org.reactivestreams.Publisher
 
 import javax.inject.Provider
 
+import static io.micronaut.http.HttpRequest.GET
+
 @Requires(env = Environment.GOOGLE_COMPUTE)
 @Filter(patterns = "/google-auth/api/**")
 class GoogleAuthFilter implements HttpClientFilter {
+
     private final Provider&lt;RxHttpClient&gt; authClientProvider
 
     GoogleAuthFilter(Provider&lt;RxHttpClient&gt; httpClientProvider) { <b class="conum">(1)</b>
@@ -25346,9 +25339,10 @@ class GoogleAuthFilter implements HttpClientFilter {
     }
 
     @Override
-    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request,
+                                                  ClientFilterChain chain) {
         Flowable&lt;String&gt; token = Flowable.fromCallable(() -&gt; encodeURI(request))
-                .flatMap(authURI -&gt; authClientProvider.get().retrieve(HttpRequest.GET(authURI).header( <b class="conum">(2)</b>
+                .flatMap(authURI -&gt; authClientProvider.get().retrieve(GET(authURI).header( <b class="conum">(2)</b>
                         "Metadata-Flavor", "Google"
                 )))
 
@@ -25357,7 +25351,7 @@ class GoogleAuthFilter implements HttpClientFilter {
 
     private static String encodeURI(MutableHttpRequest&lt;?&gt; request) {
         String receivingURI = "$request.uri.scheme://$request.uri.host"
-        return "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=" +
+        "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=" +
                 URLEncoder.encode(receivingURI, "UTF-8")
     }
 }</code></pre>
@@ -25510,7 +25504,8 @@ import javax.inject.Singleton
 class BasicAuthClientFilter implements HttpClientFilter {
 
     @Override
-    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request, ClientFilterChain chain) {
+    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request,
+                                                  ClientFilterChain chain) {
         chain.proceed(request.basicAuth("user", "pass"))
     }
 }</code></pre>
@@ -25575,12 +25570,18 @@ public @interface BasicAuth {
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.FilterMatcher
 
-import java.lang.annotation.*
+import java.lang.annotation.Documented
+import java.lang.annotation.Retention
+import java.lang.annotation.Target
+
+import static java.lang.annotation.ElementType.PARAMETER
+import static java.lang.annotation.ElementType.TYPE
+import static java.lang.annotation.RetentionPolicy.RUNTIME
 
 @FilterMatcher <b class="conum">(1)</b>
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target([ElementType.TYPE, ElementType.PARAMETER])
+@Retention(RUNTIME)
+@Target([TYPE, PARAMETER])
 @interface BasicAuth {
 }</code></pre>
 </div>
@@ -30482,9 +30483,9 @@ public class CurrentDateEndpoint {
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.management.endpoint.annotation.Endpoint
 
 @Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
+          prefix = "custom",
+          defaultEnabled = true,
+          defaultSensitive = false)
 class CurrentDateEndpoint {
 
     //.. endpoint methods
@@ -30585,16 +30586,16 @@ public class CurrentDateEndpoint {
 import io.micronaut.management.endpoint.annotation.Read
 
 @Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
+          prefix = "custom",
+          defaultEnabled = true,
+          defaultSensitive = false)
 class CurrentDateEndpoint {
 
-    Date currentDate
+    private Date currentDate
 
     @Read
     Date currentDate() {
-        return currentDate
+        currentDate
     }
 
 }</code></pre>
@@ -30669,18 +30670,17 @@ import io.micronaut.management.endpoint.annotation.Read
 import io.micronaut.http.MediaType
 import io.micronaut.management.endpoint.annotation.Selector
 
-
 @Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
+          prefix = "custom",
+          defaultEnabled = true,
+          defaultSensitive = false)
 class CurrentDateEndpoint {
 
-    Date currentDate
+    private Date currentDate
 
     @Read(produces = MediaType.TEXT_PLAIN) <b class="conum">(1)</b>
     String currentDatePrefix(@Selector String prefix) {
-        return "${prefix}: ${currentDate}"
+        "$prefix: $currentDate"
     }
 
 }</code></pre>
@@ -30774,14 +30774,13 @@ import io.micronaut.management.endpoint.annotation.Write
 import io.micronaut.http.MediaType
 import io.micronaut.management.endpoint.annotation.Selector
 
-
 @Endpoint(id = "date",
-        prefix = "custom",
-        defaultEnabled = true,
-        defaultSensitive = false)
+          prefix = "custom",
+          defaultEnabled = true,
+          defaultSensitive = false)
 class CurrentDateEndpoint {
 
-    Date currentDate
+    private Date currentDate
 
     @Write
     String reset() {
@@ -31058,14 +31057,7 @@ public class AlertsEndpoint {
 <div class="listingblock multi-language-sample">
 <div class="title">AlertsEndpoint</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.context.annotation.Requires;
-import io.micronaut.http.MediaType;
-import io.micronaut.management.endpoint.annotation.*;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-@Endpoint(id = "alerts", defaultSensitive = false) <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Endpoint(id = "alerts", defaultSensitive = false) <b class="conum">(1)</b>
 class AlertsEndpoint {
 
     private final List&lt;String&gt; alerts = new CopyOnWriteArrayList&lt;&gt;();
@@ -31076,15 +31068,15 @@ class AlertsEndpoint {
     }
 
     @Delete
-    @Sensitive(true)  <b class="conum">(2)</b>
+    @Sensitive(true) <b class="conum">(2)</b>
     void clearAlerts() {
         alerts.clear()
     }
 
     @Write(consumes = MediaType.TEXT_PLAIN)
-    @Sensitive(property = "add.sensitive", defaultValue = true)  <b class="conum">(3)</b>
+    @Sensitive(property = "add.sensitive", defaultValue = true) <b class="conum">(3)</b>
     void addAlert(String alert) {
-        alerts.add(alert)
+        alerts &lt;&lt; alert
     }
 }</code></pre>
 </div>
@@ -33508,13 +33500,13 @@ if (project.hasProperty('rebelAgent')) {
 <div class="title">ResourceBundleMessageSource Example</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">        given:
-        ResourceBundleMessageSource ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
+        def ms = new ResourceBundleMessageSource("io.micronaut.docs.i18n.messages")
 
         expect:
-        ms.getMessage("hello", MessageSource.MessageContext.of(new Locale("es"))).get() == 'Hola'
+        ms.getMessage("hello", MessageContext.of(new Locale("es"))).get() == 'Hola'
 
         and:
-        ms.getMessage("hello", MessageSource.MessageContext.of(Locale.ENGLISH)).get() == 'Hello'</code></pre>
+        ms.getMessage("hello", MessageContext.of(Locale.ENGLISH)).get() == 'Hello'</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -33858,7 +33850,10 @@ public class PersonController {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @ExecuteOn</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.http.annotation.*
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.docs.http.server.reactive.PersonService
+import io.micronaut.docs.ioc.beans.Person
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 
@@ -33867,15 +33862,14 @@ class PersonController {
 
     private final PersonService personService
 
-    PersonController(
-            PersonService personService) {
+    PersonController(PersonService personService) {
         this.personService = personService
     }
 
     @Get("/{name}")
     @ExecuteOn(TaskExecutors.IO) <b class="conum">(1)</b>
     Person byName(String name) {
-        return personService.findByName(name)
+        personService.findByName(name)
     }
 }</code></pre>
 </div>
