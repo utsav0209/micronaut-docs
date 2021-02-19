@@ -791,7 +791,12 @@ protected abstract&nbsp;java.lang.String&nbsp;getDeclaringType(@NonNull
 <li class="blockList">
 <h4>getAnnotationsForType</h4>
 <pre>protected abstract&nbsp;java.util.List&lt;? extends <a href="../../../../io/micronaut/inject/annotation/AbstractAnnotationMetadataBuilder.html" title="type parameter in AbstractAnnotationMetadataBuilder">A</a>&gt;&nbsp;getAnnotationsForType(<a href="../../../../io/micronaut/inject/annotation/AbstractAnnotationMetadataBuilder.html" title="type parameter in AbstractAnnotationMetadataBuilder">T</a>&nbsp;element)</pre>
-<div class="block">Obtain the annotations for the given type.</div>
+<div class="block">Obtain the annotations for the given type. This method
+ is also responsible for unwrapping repeatable annotations.
+
+ For example, <code>@Parent(value = {@Child, @Child})</code> should result in the two
+ child annotations being returned from this method <b>instead</b> of the
+ parent annotation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>element</code> - The type element</dd>
