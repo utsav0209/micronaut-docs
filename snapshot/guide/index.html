@@ -952,7 +952,7 @@ assertEquals(20, example.num());</code></pre>
 <p>The best way to install Micronaut on Unix systems is with <a href="http://sdkman.io/">SDKMAN</a> which greatly simplifies installing and managing multiple Micronaut versions.</p>
 </div>
 <div class="paragraph">
-<p>To see all the available installation methods, check the <a href="https://micronaut-projects.github.io/micronaut-starter/latest/guide/#installation">Micronaut Starter documentation</a>.</p>
+<p>To see all available installation methods, check the <a href="https://micronaut-projects.github.io/micronaut-starter/latest/guide/#installation">Micronaut Starter documentation</a>.</p>
 </div>
 
 <h2 id="creatingServer"><a class="anchor" href="#creatingServer"></a>2.2 Creating a Server Application</h2>
@@ -969,7 +969,7 @@ assertEquals(20, example.num());</code></pre>
 <p>Although not required to use Micronaut, the Micronaut CLI is the quickest way to create a new server application.</p>
 </div>
 <div class="paragraph">
-<p>Using the CLI you can create a new Micronaut application in either Groovy, Java or Kotlin (the default is Java).</p>
+<p>Using the CLI you can create a new Micronaut application in either Groovy, Java, or Kotlin (the default is Java).</p>
 </div>
 <div class="paragraph">
 <p>The following command creates a new "Hello World" server application in Java with a Gradle build:</p>
@@ -981,7 +981,7 @@ assertEquals(20, example.num());</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The applications generated via our CLI come with Gradle or Maven wrappers, so its not even necessary to have Gradle or Maven installed on your machine to begin running the applications. Simply use the <code>mvnw</code> or <code>gradlew</code> command, as explained further below.
+Applications generated via our CLI include Gradle or Maven wrappers, so it is not even necessary to have Gradle or Maven installed on your machine to begin running the applications. Simply use the <code>mvnw</code> or <code>gradlew</code> command, as explained further below.
 </td>
 </tr>
 </table>
@@ -998,13 +998,13 @@ The applications generated via our CLI come with Gradle or Maven wrappers, so it
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can supply <code>--build maven</code> if you wish to create a Maven based build instead
+Supply <code>--build maven</code> to create a Maven-based build instead
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The previous command will create a new Java application in a directory called <code>hello-world</code> featuring a Gradle build. The application can be run with <code>./gradlew run</code>:</p>
+<p>The previous command creates a new Java application in a directory called <code>hello-world</code> featuring a Gradle build. You can run the application with <code>./gradlew run</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1014,7 +1014,7 @@ You can supply <code>--build maven</code> if you wish to create a Maven based bu
 </div>
 </div>
 <div class="paragraph">
-<p>If you have created a Maven based project, use <code>./mvnw mn:run</code> instead.</p>
+<p>If you have created a Maven-based project, use <code>./mvnw mn:run</code> instead.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1029,10 +1029,10 @@ For Windows the ./ before commands is not needed
 </table>
 </div>
 <div class="paragraph">
-<p>By default the Micronaut HTTP server is configured to run on port 8080. See the section <a href="#runningSpecificPort">Running Server on a Specific Port</a> in the user guide for more options.</p>
+<p>By default the Micronaut HTTP server is configured to run on port 8080. See the section <a href="#runningSpecificPort">Running Server on a Specific Port</a> for more options.</p>
 </div>
 <div class="paragraph">
-<p>In order to create a service that responds to "Hello World" you first need a controller. The following is an example of a controller:</p>
+<p>To create a service that responds to "Hello World" you first need a controller. The following is an example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -1086,25 +1086,25 @@ class HelloController {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The class is defined as a controller with the <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> annotation mapped to the path <code>/hello</code></td>
+<td>The <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> annotation defines the class as a controller mapped to the path <code>/hello</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <a href="../api/io/micronaut/http/annotation/Get.html">@Get</a> annotation is used to map the <code>index</code> method to all requests that use an HTTP <code>GET</code></td>
+<td>The <a href="../api/io/micronaut/http/annotation/Get.html">@Get</a> annotation maps the <code>index</code> method to all requests that use an HTTP <code>GET</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>A String "Hello World" is returned as the result</td>
+<td>A String "Hello World" is returned as the response</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If you are using Java, place the previous file in <code>src/main/java/hello/world</code>.<br>
-If you are using Groovy, place the previous file in <code>src/main/groovy/hello/world</code>.<br>
-If you are using Kotlin, place the previous file in <code>src/main/kotlin/hello/world</code>.</p>
+<p>If you use Java, place the previous file in <code>src/main/java/hello/world</code>.<br>
+If you use Groovy, place the previous file in <code>src/main/groovy/hello/world</code>.<br>
+If you use Kotlin, place the previous file in <code>src/main/kotlin/hello/world</code>.</p>
 </div>
 <div class="paragraph">
-<p>If you start the application and send a request to the <code>/hello</code> URI then the text "Hello World" is returned:</p>
+<p>If you start the application and send a <code>GET</code> request to the <code>/hello</code> URI, the text "Hello World" is returned:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1124,7 +1124,7 @@ Hello World</code></pre>
 
 
 <div class="paragraph">
-<p>The application created in the previous section contains a "main class" located in <code>src/main/java</code> that looks like the following:</p>
+<p>The application created in the previous section contains a main class located in <code>src/main/java</code> that looks like the following:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -1164,7 +1164,7 @@ object Application {
 </div>
 </div>
 <div class="paragraph">
-<p>This is the class that is run when running the application via Gradle or via deployment. You can also run the main class directly within your IDE if it is configured correctly.</p>
+<p>This is the class that is run when starting the application via Gradle/Maven or via deployment. You can also run the main class directly within your IDE.</p>
 </div>
 
 <h2 id="ideaSetup"><a class="anchor" href="#ideaSetup"></a>2.3.1 IntelliJ IDEA</h2>
@@ -1178,10 +1178,10 @@ object Application {
 
 
 <div class="paragraph">
-<p>To import a Micronaut project into IntelliJ IDEA simply open the <code>build.gradle</code> or <code>pom.xml</code> file and follow the instructions to import the project.</p>
+<p>To import a Micronaut project into IntelliJ IDEA, open the <code>build.gradle</code> or <code>pom.xml</code> file and follow the instructions to import the project.</p>
 </div>
 <div class="paragraph">
-<p>For IntelliJ IDEA if you plan to use the IntelliJ compiler then you should enable annotation processing under the "Build, Execution, Deployment &#8594; Compiler &#8594; Annotation Processors" by ticking the "Enable annotation processing" checkbox:</p>
+<p>For IntelliJ IDEA, if you plan to use the IntelliJ compiler, enable annotation processing under "Build, Execution, Deployment &#8594; Compiler &#8594; Annotation Processors" by ticking the "Enable annotation processing" checkbox:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1203,7 +1203,7 @@ object Application {
 
 
 <div class="paragraph">
-<p>If you wish to use Eclipse IDE, it is recommended you import your Micronaut project into Eclipse using either <a href="https://projects.eclipse.org/projects/tools.buildship">Gradle BuildShip</a> for Gradle or <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> for Maven.</p>
+<p>To use Eclipse IDE, it is recommended you import your Micronaut project into Eclipse using either <a href="https://projects.eclipse.org/projects/tools.buildship">Gradle BuildShip</a> for Gradle or <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> for Maven.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1212,7 +1212,7 @@ object Application {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Micronaut requires Eclipse IDE 4.9 or above
+Micronaut requires Eclipse IDE 4.9 or higher
 </td>
 </tr>
 </table>
@@ -1220,7 +1220,7 @@ Micronaut requires Eclipse IDE 4.9 or above
 <div class="sect2">
 <h3 id="_eclipse_and_gradle">Eclipse and Gradle</h3>
 <div class="paragraph">
-<p>Once you have setup Eclipse 4.9 or above with <a href="https://projects.eclipse.org/projects/tools.buildship">Gradle BuildShip</a> first run the <code>gradle eclipse</code> task from the root of your project then import the project by selecting <code>File &#8594; Import</code> then choosing <code>Gradle &#8594; Existing Gradle Project</code> and navigating to the root directory of your project (where the <code>build.gradle</code> is located).</p>
+<p>Once you have set up Eclipse 4.9 or higher with <a href="https://projects.eclipse.org/projects/tools.buildship">Gradle BuildShip</a>, first run the <code>gradle eclipse</code> task from the root of your project, then import the project by selecting <code>File &#8594; Import</code> and choosing <code>Gradle &#8594; Existing Gradle Project</code> and navigating to the root directory of your project (where the <code>build.gradle</code> file is located).</p>
 </div>
 </div>
 <div class="sect2">
@@ -1239,10 +1239,10 @@ Micronaut requires Eclipse IDE 4.9 or above
 </ul>
 </div>
 <div class="paragraph">
-<p>Once installed you need to import the project by selecting <code>File &#8594; Import</code> then choosing <code>Maven &#8594; Existing Maven Project</code> and navigating to the root directory of your project (where the <code>pom.xml</code> is located).</p>
+<p>Once these are installed, import the project by selecting <code>File &#8594; Import</code> and choosing <code>Maven &#8594; Existing Maven Project</code> and navigating to the root directory of your project (where the <code>pom.xml</code> file is located).</p>
 </div>
 <div class="paragraph">
-<p>You should then enable annotation processing by opening <code>Eclipse &#8594; Preferences</code> and navigating to <code>Maven &#8594; Annotation Processing</code> and selecting the option <code>Automatically configure JDT APT</code>.</p>
+<p>Then enable annotation processing by opening <code>Eclipse &#8594; Preferences</code> and navigating to <code>Maven &#8594; Annotation Processing</code> and selecting the option <code>Automatically configure JDT APT</code>.</p>
 </div>
 </div>
 
@@ -1257,7 +1257,7 @@ Micronaut requires Eclipse IDE 4.9 or above
 
 
 <div class="paragraph">
-<p>Micronaut can be setup within Visual Studio Code. You will need to first install the The <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack">Java Extension Pack</a>.</p>
+<p>Micronaut can be set up within Visual Studio Code. First install the <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack">Java Extension Pack</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1272,7 +1272,7 @@ You can also optionally install <a href="https://marketplace.visualstudio.com/it
 </table>
 </div>
 <div class="paragraph">
-<p>If you are using Gradle prior to opening the project in VSC you should run the following command from a terminal window:</p>
+<p>If you use Gradle, prior to opening the project in VSC run the following command from a terminal window:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1294,7 +1294,7 @@ You can also optionally install <a href="https://marketplace.visualstudio.com/it
 
 
 <div class="paragraph">
-<p>As mentioned previously, Micronaut includes both an <a href="#httpServer">HTTP server</a> and an <a href="#httpClient">HTTP client</a>. A <a href="#lowLevelHttpClient">low-level HTTP client</a> is provided out of the box which you can use to test the <code>HelloController</code> created in the previous section.</p>
+<p>As mentioned previously, Micronaut includes both an <a href="#httpServer">HTTP server</a> and an <a href="#httpClient">HTTP client</a>. A <a href="#lowLevelHttpClient">low-level HTTP client</a> is provided which you can use to test the <code>HelloController</code> created in the previous section.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -1398,11 +1398,11 @@ class HelloControllerSpec {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The test using the <code>toBlocking()</code> method to make a blocking call</td>
+<td>The test uses the <code>toBlocking()</code> method to make a blocking call</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <code>retrieve</code> method returns the response of the controller as a <code>String</code></td>
+<td>The <code>retrieve</code> method returns the controller response as a <code>String</code></td>
 </tr>
 </table>
 </div>
@@ -1410,7 +1410,7 @@ class HelloControllerSpec {
 <p>In addition to a low-level client, Micronaut features a <a href="#clientAnnotation">declarative, compile-time HTTP client</a>, powered by the <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation.</p>
 </div>
 <div class="paragraph">
-<p>To create a client, simply create an interface annotated with <code>@Client</code>. For example:</p>
+<p>To create a client, create an interface annotated with <code>@Client</code>, for example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -1460,7 +1460,7 @@ interface HelloClient {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>@Client</code> annotation is used with value that is a relative path to the current server</td>
+<td>The <code>@Client</code> annotation is used with a value that is a relative path to the current server</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1468,12 +1468,12 @@ interface HelloClient {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>A RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> is returned with the value read from the server</td>
+<td>An RxJava <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html">Single</a> is returned with the value read from the server</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>To test the <code>HelloClient</code> simply retrieve it from the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> associated with the server:</p>
+<p>To test the <code>HelloClient</code>, retrieve it from the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> associated with the server:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -1542,7 +1542,7 @@ class HelloClientSpec {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>@MicronautTest</code> annotation is used to define the test</td>
+<td>The <code>@MicronautTest</code> annotation defines the test</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1550,12 +1550,12 @@ class HelloClientSpec {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The client is invoked using RxJava&#8217;s <code>blockingGet</code> method</td>
+<td>The client is invoked using the RxJava <code>blockingGet</code> method</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation produces an implementation automatically for you at compile time without the need to use proxies or runtime reflection.</p>
+<p>The <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation produces an implementation automatically for you at compile time without the using proxies or runtime reflection.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="../api/io/micronaut/http/client/annotation/Client.html">Client</a> annotation is very flexible. See the section on the <a href="#httpClient">Micronaut HTTP Client</a> for more information.</p>
@@ -1572,7 +1572,7 @@ class HelloClientSpec {
 
 
 <div class="paragraph">
-<p>To deploy a Micronaut application you create a runnable JAR file by running <code>./gradlew assemble</code> or <code>./mvnw package</code>.</p>
+<p>To deploy a Micronaut application you create an executable JAR file by running <code>./gradlew assemble</code> or <code>./mvnw package</code>.</p>
 </div>
 <div class="paragraph">
 <p>The constructed JAR file can then be executed with <code>java -jar</code>. For example:</p>
@@ -1594,10 +1594,10 @@ class HelloClientSpec {
 <p>if building with Maven.</p>
 </div>
 <div class="paragraph">
-<p>The runnable JAR can be executed locally, deployed to a virtual machine or managed Cloud service that supports runnable JARs.</p>
+<p>The executable JAR can be run locally, or deployed to a virtual machine or managed Cloud service that supports executable JARs.</p>
 </div>
 <div class="paragraph">
-<p>To publish a layered application to a Docker container registry you can configure your Docker image name in <code>build.gradle</code> for Gradle:</p>
+<p>To publish a layered application to a Docker container registry, configure your Docker image name in <code>build.gradle</code> for Gradle:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1631,7 +1631,7 @@ class HelloClientSpec {
 </div>
 </div>
 <div class="paragraph">
-<p>Then invoke the <code>deploy</code> lifecycle phase specifying the packaging type to either <code>docker</code> or <code>docker-native</code>:</p>
+<p>Then invoke the <code>deploy</code> lifecycle phase specifying the packaging type as either <code>docker</code> or <code>docker-native</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2618,11 +2618,11 @@ class TestController(val colorPicker: ColorPicker) { <b class="conum">(1)</b>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html">@Singleton</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Singleton scope indicates only one instance of the bean should exist</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Singleton scope indicates only one instance of the bean will exist</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/annotation/Context.html">@Context</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Context scope indicates that the bean should be created at the same time as the <code>ApplicationContext</code> (eager initialization)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Context scope indicates that the bean will be created at the same time as the <code>ApplicationContext</code> (eager initialization)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</a></p></td>
@@ -2662,13 +2662,13 @@ The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</
 <p>Additional scopes can be added by defining a <code>@Singleton</code> bean that implements the <a href="../api/io/micronaut/context/scope/CustomScope.html">CustomScope</a> interface.</p>
 </div>
 <div class="paragraph">
-<p>Note that with Micronaut when starting an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> by default <code>@Singleton</code> scoped beans are created lazily and on demand. This is by design and to optimize startup time.</p>
+<p>Note that when starting an <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>, by default <code>@Singleton</code>-scoped beans are created lazily and on-demand. This is by design to optimize startup time.</p>
 </div>
 <div class="paragraph">
 <p>If this presents a problem for your use case you have the option of using the <a href="../api/io/micronaut/context/annotation/Context.html">@Context</a> annotation which binds the lifecycle of your object to the lifecycle of the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a>. In other words when the <a href="../api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a> is started your bean will be created.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively you can annotate any <code>@Singleton</code> scoped bean with <a href="../api/io/micronaut/context/annotation/Parallel.html">@Parallel</a> which allows parallel initialization of your bean without impacting overall startup time.</p>
+<p>Alternatively, annotate any <code>@Singleton</code>-scoped bean with <a href="../api/io/micronaut/context/annotation/Parallel.html">@Parallel</a> which allows parallel initialization of your bean without impacting overall startup time.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2677,7 +2677,7 @@ The <a href="../api/io/micronaut/context/annotation/Prototype.html">@Prototype</
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If your bean fails to initialize in parallel then the application will be automatically shutdown.
+If your bean fails to initialize in parallel, the application will be automatically shut down.
 </td>
 </tr>
 </table>
@@ -2697,7 +2697,7 @@ If your bean fails to initialize in parallel then the application will be automa
 <p>Eager initialization of <code>@Singleton</code> beans maybe desirable in certain scenarios, such as on AWS Lambda where more CPU resources are assigned to Lambda construction than execution.</p>
 </div>
 <div class="paragraph">
-<p>You can specify whether you want to initialize eagerly <code>@Singleton</code> scoped beans using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> interface:</p>
+<p>You can specify whether to eagerly initialize <code>@Singleton</code>-scoped beans using the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a> interface:</p>
 </div>
 <div class="listingblock">
 <div class="title">Enabling Eager Initialization of Singletons</div>
@@ -2717,12 +2717,12 @@ If your bean fails to initialize in parallel then the application will be automa
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Setting eager init to true initializes all singletons</td>
+<td>Setting eager init to <code>true</code> initializes all singletons</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>When you use Micronaut in environments such as <a href="#serverlessFunctions">Serverless Functions</a>, you will not have an Application class and instead you extend a Micronaut provided class. In those cases, Micronaut provides methods which you can override to enhance the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a></p>
+<p>When you use Micronaut in environments such as <a href="#serverlessFunctions">Serverless Functions</a>, you will not have an Application class and instead you extend a Micronaut-provided class. In those cases, Micronaut provides methods which you can override to enhance the <a href="../api/io/micronaut/context/ApplicationContextBuilder.html">ApplicationContextBuilder</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Override of newApplicationContextBuilder()</div>
@@ -2741,7 +2741,7 @@ If your bean fails to initialize in parallel then the application will be automa
 </div>
 </div>
 <div class="paragraph">
-<p><a href="../api/io/micronaut/context/annotation/ConfigurationReader.html">@ConfigurationReader</a> beans such as <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a>  or <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> are singleton beans. If you want to eager init configuration, but keep other <code>@Singleton</code> scoped beans creation lazy, use <code>eagerInitConfiguration</code>:</p>
+<p><a href="../api/io/micronaut/context/annotation/ConfigurationReader.html">@ConfigurationReader</a> beans such as <a href="../api/io/micronaut/context/annotation/EachProperty.html">@EachProperty</a>  or <a href="../api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a> are singleton beans. To eagerly init configuration but keep other <code>@Singleton</code>-scoped bean creation lazy, use <code>eagerInitConfiguration</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Enabling Eager Initialization of Configuration</div>
@@ -2790,7 +2790,7 @@ If your bean fails to initialize in parallel then the application will be automa
 </ul>
 </div>
 <div class="paragraph">
-<p>The following example, illustrates the <code>@Refreshable</code> scope behavior.</p>
+<p>The following example illustrates <code>@Refreshable</code> scope behavior.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -2857,10 +2857,10 @@ open class WeatherService {
 </table>
 </div>
 <div class="paragraph">
-<p>If you invoke the <code>latestForecast()</code> twice, you will see identical responses such as <code>"Scattered Clouds 01/Feb/18 10:29.199"</code>.</p>
+<p>If you invoke <code>latestForecast()</code> twice, you will see identical responses such as <code>"Scattered Clouds 01/Feb/18 10:29.199"</code>.</p>
 </div>
 <div class="paragraph">
-<p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published then the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
+<p>When the <code>/refresh</code> endpoint is invoked or a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> is published, the instance is invalidated and a new instance is created the next time the object is requested. For example:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -2889,7 +2889,7 @@ open class WeatherService {
 
 
 <div class="paragraph">
-<p>Scopes can be defined on Meta annotations that you can then apply to your classes. Consider the following example meta annotation:</p>
+<p>Scopes can be defined on meta annotations that you can then apply to your classes. Consider the following example meta annotation:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -2967,12 +2967,12 @@ class Foo {}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you wish for the scope to be overridable you should instead use the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
+<p>For the scope to be overridable, instead use the <a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> annotation on <code>@Driver</code> which allows a default scope to be specified if none other is present:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Using @DefaultScope</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(classes = Car.class )
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Requires(classes = Car.class)
 @DefaultScope(Singleton.class) <i class="conum" data-value="1"></i><b>(1)</b>
 @Documented
 @Retention(RUNTIME)
@@ -2982,7 +2982,7 @@ public @interface Driver {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Requires(classes = Car.class )
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Requires(classes = Car.class)
 @DefaultScope(Singleton.class) <i class="conum" data-value="1"></i><b>(1)</b>
 @Documented
 @Retention(RUNTIME)
@@ -3003,7 +3003,7 @@ annotation class Driver</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> is used to declare which scope to be used if none is present</td>
+<td><a href="../api/io/micronaut/context/annotation/DefaultScope.html">DefaultScope</a> declares the scope to use if none is specified</td>
 </tr>
 </table>
 </div>
@@ -27409,7 +27409,7 @@ In production, setting <code>TRACING_ZIPKIN_HTTP_URLS</code> environment variabl
 <div class="sect3">
 <h4 id="_simple_functions_with_aws_lambda">Simple Functions with AWS Lambda</h4>
 <div class="paragraph">
-<p>You can implement AWS Request Handlers with Micronaut that implement directly the AWS Lambda SDK API. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#requestHandlers">Micronaut Request Handlers</a> for more information.</p>
+<p>You can implement AWS Request Handlers with Micronaut that directly implement the AWS Lambda SDK API. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#requestHandlers">Micronaut Request Handlers</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27444,7 +27444,7 @@ $ unzip example.zip -d example</pre>
 <div class="sect3">
 <h4 id="_http_functions_with_aws_lambda">HTTP Functions with AWS Lambda</h4>
 <div class="paragraph">
-<p>You can deploy regular Micronaut applications that use <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a> etc. using Micronaut&#8217;s support for AWS API Gateway. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/snapshot/guide/#apiProxy">AWS API Gateway Support</a> for more information.</p>
+<p>You can deploy regular Micronaut applications that use <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a>, etc. using Micronaut&#8217;s support for AWS API Gateway. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-aws/snapshot/guide/#apiProxy">AWS API Gateway Support</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27493,7 +27493,7 @@ $ unzip example.zip -d example</pre>
 <div class="sect3">
 <h4 id="_simple_functions_with_cloud_function">Simple Functions with Cloud Function</h4>
 <div class="paragraph">
-<p>You can implement Cloud Functions with Micronaut that implement directly the <a href="https://github.com/GoogleCloudPlatform/functions-framework-java">Cloud Function Framework API</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/#simpleFunctions">Simple Functions</a> for more information.</p>
+<p>You can implement Cloud Functions with Micronaut that directly implement the <a href="https://github.com/GoogleCloudPlatform/functions-framework-java">Cloud Function Framework API</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-gcp/2.0.x/guide/#simpleFunctions">Simple Functions</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27604,7 +27604,7 @@ $ unzip example.zip -d example</pre>
 </table>
 </div>
 <div class="paragraph">
-<p>With JIB setup to deploy your application to Google Container Registry you can simple run:</p>
+<p>With JIB setup to deploy your application to Google Container Registry, run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -27612,7 +27612,7 @@ $ unzip example.zip -d example</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You are now ready to deploy your application :</p>
+<p>You are now ready to deploy your application:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -27620,7 +27620,7 @@ $ unzip example.zip -d example</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Where <code>[PROJECT ID]</code> is replaced for your project ID. You should be asked to specify a region and see output like the following:</p>
+<p>Where <code>[PROJECT ID]</code> is your project ID. You will be asked to specify a region and will see output like the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -27655,7 +27655,7 @@ Service [example] revision [example-00004] has been deployed and is serving 100 
 <div class="sect3">
 <h4 id="_simple_functions_with_azure_function">Simple Functions with Azure Function</h4>
 <div class="paragraph">
-<p>You can implement Azure Functions with Micronaut that implement directly the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=consumption">Azure Function Java SDK</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#azureFunction">Azure Functions</a> for more information.</p>
+<p>You can implement Azure Functions with Micronaut that directly implement the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=consumption">Azure Function Java SDK</a>. See the documentation on <a href="https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#azureFunction">Azure Functions</a> for more information.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -27780,7 +27780,7 @@ $ unzip example.zip -d example</pre>
 <p><a href="https://www.rabbitmq.com">RabbitMQ</a> is the most widely deployed open source message broker.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut features dedicated support for defining both RabbitMQ publishers and consumers. Micronaut applications built with RabbitMQ can be deployed with or without the presence of an HTTP server.</p>
+<p>Micronaut features dedicated support for defining both RabbitMQ publishers and consumers. Micronaut applications built with RabbitMQ can be deployed with or without an HTTP server.</p>
 </div>
 <div class="paragraph">
 <p>With Micronaut&#8217;s efficient compile-time AOP, using RabbitMQ has never been easier. Support has been added for publisher confirms and RPC through reactive streams.</p>
@@ -27800,10 +27800,10 @@ $ unzip example.zip -d example</pre>
 
 
 <div class="paragraph">
-<p><a href="https://nats.io/">Nats.io</a> is a simple, secure and high performance open source messaging system for cloud native applications, IoT messaging, and microservices architectures.</p>
+<p><a href="https://nats.io/">Nats.io</a> is a simple, secure, and high-performance open source messaging system for cloud native applications, IoT messaging, and microservices architectures.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut features dedicated support for defining both Nats.io publishers and consumers. Micronaut applications built with Nats.io can be deployed with or without the presence of an HTTP server.</p>
+<p>Micronaut features dedicated support for defining both Nats.io publishers and consumers. Micronaut applications built with Nats.io can be deployed with or without an HTTP server.</p>
 </div>
 <div class="paragraph">
 <p>With Micronaut&#8217;s efficient compile-time AOP, using Nats.io has never been easier. Support has been added for publisher confirms and RPC through reactive streams.</p>
@@ -28766,7 +28766,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 <p>For Java, Micronaut uses a Java <a href="../api/io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html">BeanDefinitionInjectProcessor</a> annotation processor to process classes at compile time and produce <a href="../api/io/micronaut/inject/BeanDefinition.html">BeanDefinition</a> classes.</p>
 </div>
 <div class="paragraph">
-<p>The major advantage here is that you pay a slight cost at compile time, but at runtime Micronaut is largely reflection-free, fast and consumes very little memory.</p>
+<p>The major advantage here is that you pay a slight cost at compile time, but at runtime Micronaut is largely reflection-free, fast, and consumes very little memory.</p>
 </div>
 
 <h2 id="java9"><a class="anchor" href="#java9"></a>13.1.1 Using Micronaut with Java 9+</h2>
@@ -28780,10 +28780,10 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 
 
 <div class="paragraph">
-<p>Micronaut is built with Java 8, however works fine with Java 9/10 and above as well. The classes that Micronaut generates sit alongside existing classes within the same package, hence do not violate anything regarding the Java module system.</p>
+<p>Micronaut is built with Java 8 but works fine with Java 9 and above. The classes that Micronaut generates sit alongside existing classes in the same package, hence do not violate anything regarding the Java module system.</p>
 </div>
 <div class="paragraph">
-<p>There are some considerations to take into account when using Java 9/10 with Micronaut.</p>
+<p>There are some considerations when using Java 9+ with Micronaut.</p>
 </div>
 <div class="sect2">
 <h3 id="_the_javax_annotation_package">The javax.annotation package</h3>
@@ -28796,14 +28796,14 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 <td class="content">
 <div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, the <code>javax.annotation</code> dependency will be added to your project automatically if you are using Java 9+.</p>
+<p>If you create your project using the Micronaut CLI, the <code>javax.annotation</code> dependency is added to your project automatically if you use Java 9+.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The <code>javax.annotation</code>, which includes <code>@PostConstruct</code>, <code>@PreDestroy</code> etc. is no longer part of the core JDK but instead a module. If you run under Java 9+ you will need to import the module or add the dependency to your classpath:</p>
+<p>The <code>javax.annotation</code>, which includes <code>@PostConstruct</code>, <code>@PreDestroy</code>, etc. has been moved from the core JDK to a module. If you run under Java 9+, import the module or add the dependency to your build:</p>
 </div>
 <div class="listingblock">
 <div class="title">Adding the <code>javax.annotation</code> dependency</div>
@@ -28824,7 +28824,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 
 
 <div class="paragraph">
-<p>Micronaut supports <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_annotation_processing">Gradle incremental annotation processing</a> which helps speed up builds by compiling only classes that have changed avoiding a full recompilation.</p>
+<p>Micronaut supports <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_annotation_processing">Gradle incremental annotation processing</a> which speeds up builds by compiling only classes that have changed, avoiding a full recompilation.</p>
 </div>
 <div class="paragraph">
 <p>However, the support is disabled by default since Micronaut allows the definition of custom meta-annotations (to for example define <a href="#aop">custom AOP advice</a>) that need to be configured for processing.</p>
@@ -28850,7 +28850,7 @@ Theoretically any language that supports a way to analyze the AST at compile tim
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you do not enable processing for custom annotations you define these annotations will simple be ignored by Micronaut which may break your application.
+If you do not enable processing for your custom annotations, they will be ignored by Micronaut, which may break your application.
 </td>
 </tr>
 </table>
@@ -28870,10 +28870,10 @@ If you do not enable processing for custom annotations you define these annotati
 <p><a href="https://projectlombok.org">Project Lombok</a> is a popular java library that adds a number of useful AST transformations to the Java language via annotation processors.</p>
 </div>
 <div class="paragraph">
-<p>Since both Micronaut and Lombok use annotation processors, special care needs to be taken when configuring Lombok to ensure that the Lombok processor runs <strong>before</strong> Micronaut&#8217;s processor.</p>
+<p>Since both Micronaut and Lombok use annotation processors, special care must be taken when configuring Lombok to ensure that the Lombok processor runs <strong>before</strong> Micronaut&#8217;s processor.</p>
 </div>
 <div class="paragraph">
-<p>For example in Gradle adding the following dependencies to the <code>dependencies</code> block:</p>
+<p>If you use Gradle, add the following dependencies:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Lombok in Gradle</div>
@@ -28881,12 +28881,12 @@ If you do not enable processing for custom annotations you define these annotati
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">compileOnly 'org.projectlombok:lombok:1.18.12'
 annotationProcessor "org.projectlombok:lombok:1.18.12"
 ...
-// Micronaut processor define after Lombok
+// Micronaut processor defined after Lombok
 annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Or when using Maven:</p>
+<p>Or if using Maven:</p>
 </div>
 <div class="listingblock">
 <div class="title">Configuring Lombok in Maven</div>
@@ -28927,7 +28927,7 @@ annotationProcessor "io.micronaut:micronaut-inject-java"</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In both cases (Gradle and Maven) the Micronaut processor should be configured after the Lombok processor, reversing the order of the declared dependencies will not work.
+In both cases (Gradle and Maven) the Micronaut processor must be configured after the Lombok processor. Reversing the order of the declared dependencies will not work.
 </td>
 </tr>
 </table>
@@ -28947,10 +28947,10 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 <p>You can use any IDE to develop Micronaut applications, if you depend on your configured build tool (Gradle or Maven) to build the application.</p>
 </div>
 <div class="paragraph">
-<p>However, if you wish to run tests within the IDE that is currently possible with <a href="http://jetbrains.com/idea">IntelliJ IDEA</a> or Eclipse 4.9 M2 or above.</p>
+<p>However, running tests within the IDE is currently possible with <a href="http://jetbrains.com/idea">IntelliJ IDEA</a> or Eclipse 4.9 or higher.</p>
 </div>
 <div class="paragraph">
-<p>See the section on <a href="#ideSetup">IDE Setup</a> in the Quick start for more information on how to configure IntelliJ or Eclipse.</p>
+<p>See the section on <a href="#ideSetup">IDE Setup</a> in the Quick start for more information on how to configure IntelliJ and Eclipse.</p>
 </div>
 
 <h2 id="retainparameternames"><a class="anchor" href="#retainparameternames"></a>13.1.5 Retaining Parameter Names</h2>
@@ -28979,7 +28979,7 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </div>
 </div>
 <div class="paragraph">
-<p>At compile time the parameter name <code>name</code> is lost and becomes simply <code>arg0</code> when compiled against or read via reflection later. To avoid this problem you have two options. You can either declare the parameter name explicitly:</p>
+<p>At compile time the parameter name <code>name</code> is lost and becomes <code>arg0</code> when compiled against or read via reflection later. To avoid this problem you have two options. You can either declare the parameter name explicitly:</p>
 </div>
 <div class="listingblock">
 <div class="title">Client Interface</div>
@@ -28991,7 +28991,7 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </div>
 </div>
 <div class="paragraph">
-<p>Or alternatively it is recommended that you compile all byte code with <code>-parameters</code> flag to <code>javac</code>. See <a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html">Obtaining Names of Method Parameters</a>. For example in <code>build.gradle</code>:</p>
+<p>Or alternatively it is recommended that you compile all bytecode with <code>-parameters</code> flag to <code>javac</code>. See <a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html">Obtaining Names of Method Parameters</a>. For example in <code>build.gradle</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -29011,16 +29011,16 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 
 
 <div class="paragraph">
-<p>The <a href="http://groovy-lang.org">Groovy language</a> has first class support in Micronaut.</p>
+<p><a href="http://groovy-lang.org">Groovy</a> has first-class support in Micronaut.</p>
 </div>
 <div class="sect1">
-<h2 id="_groovy_specific_modules">Groovy Specific Modules</h2>
+<h2 id="_groovy_specific_modules">Groovy-Specific Modules</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Additional modules exist specific to Groovy that improve the overall experience. These are detailed in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Groovy Specific Modules</caption>
+<caption class="title">Table 1. Groovy-Specific Modules</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -29038,7 +29038,7 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-runtime-groovy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the ability to specify configuration placed in <code>src/main/resources</code> in Groovy format (i.e. <code>application.groovy</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the ability to specify configuration under <code>src/main/resources</code> in Groovy format (i.e. <code>application.groovy</code>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.micronaut:micronaut-function-groovy</code></p></td>
@@ -29047,7 +29047,7 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </tbody>
 </table>
 <div class="paragraph">
-<p>The most common module you will need is <code>micronaut-inject-groovy</code>, which enables DI and AOP for classes written in Groovy.</p>
+<p>The most common module you need is <code>micronaut-inject-groovy</code>, which enables DI and AOP for Groovy classes.</p>
 </div>
 </div>
 </div>
@@ -29055,7 +29055,7 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 <h2 id="_groovy_support_in_the_cli">Groovy Support in the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="#cli">Command Line Interface</a> for Micronaut includes special support for Groovy. To create a Groovy application use the <code>groovy</code> lang option. For example:</p>
+<p>The Micronaut <a href="#cli">Command Line Interface</a> includes special support for Groovy. To create a Groovy application, use the <code>groovy</code> lang option. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Create a Micronaut Groovy application</div>
@@ -29064,10 +29064,10 @@ In both cases (Gradle and Maven) the Micronaut processor should be configured af
 </div>
 </div>
 <div class="paragraph">
-<p>The above will generate a Groovy project, built with Gradle. You can use the <code>-build maven</code> flag to generate a project built with Maven instead.</p>
+<p>The above generates a Groovy project, built with Gradle. Use the <code>-build maven</code> flag to generate a project built with Maven instead.</p>
 </div>
 <div class="paragraph">
-<p>Once you have created an application with the <code>groovy</code> feature commands like <code>create-controller</code>, <code>create-client</code> etc. will generate Groovy files instead of Java. The following example demonstrates this action when using interactive mode of the CLI:</p>
+<p>Once you have created an application with the <code>groovy</code> feature, commands like <code>create-controller</code>, <code>create-client</code> etc. generate Groovy files instead of Java. The following example demonstrates this when using interactive mode of the CLI:</p>
 </div>
 <div class="listingblock">
 <div class="title">Create a bean</div>
@@ -29171,7 +29171,7 @@ class HelloController {
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see from the output from the CLI a <a href="http://spockframework.org">Spock</a> test was also generated for you demonstrating how to test the controller:</p>
+<p>As you can see from the output from the CLI, a <a href="http://spockframework.org">Spock</a> test was also generated for you which demonstrates how to test the controller:</p>
 </div>
 <div class="listingblock">
 <div class="title">HelloControllerSpec.groovy</div>
@@ -29196,10 +29196,10 @@ class HelloController {
 <h2 id="_programmatic_routes_with_groovyrouterbuilder">Programmatic Routes with GroovyRouterBuilder</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you prefer to build your routes programmatically (similar to Grails <code>UrlMappings</code>) then a special <code>io.micronaut.web.router.GroovyRouteBuilder</code> exists that has some enhancements to make the DSL better.</p>
+<p>If you prefer to build your routes programmatically (similar to Grails <code>UrlMappings</code>), a special <code>io.micronaut.web.router.GroovyRouteBuilder</code> exists that has some enhancements to make the DSL better.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows <code>GroovyRouteBuilder</code> in act:</p>
+<p>The following example shows <code>GroovyRouteBuilder</code> in action:</p>
 </div>
 <div class="listingblock">
 <div class="title">Using GroovyRouteBuilder</div>
@@ -29260,7 +29260,7 @@ static class MyRoutes extends GroovyRouteBuilder {
 <h2 id="_using_gorm_in_a_groovy_application">Using GORM in a Groovy application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="http://gorm.grails.org">GORM</a> is a data access toolkit originally created as part of Grails framework. It supports multiple database types. The following table summarizes the modules needed to use GORM and links to documentation.</p>
+<p><a href="http://gorm.grails.org">GORM</a> is a data access toolkit originally created as part of Grails. It supports multiple database types. The following table summarizes the modules needed to use GORM, and links to documentation.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. GORM Modules</caption>
@@ -29312,7 +29312,7 @@ abstract class VehicleService {
 </div>
 </div>
 <div class="paragraph">
-<p>You can also define the service as an interface instead of an abstract class if you want GORM to do all of the work and you don&#8217;t want to add your own behaviors.</p>
+<p>You can also define the service as an interface instead of an abstract class to have GORM implement the methods for you.</p>
 </div>
 </div>
 </div>
@@ -29360,7 +29360,7 @@ The <a href="#cli">Command Line Interface</a> for Micronaut includes special sup
 </div>
 </div>
 <div class="paragraph">
-<p>Support for Kotlin in Micronaut is built upon the <a href="https://kotlinlang.org/docs/reference/kapt.html">Kapt</a> compiler plugin, which includes support for Java annotation processors. To use Kotlin in your Micronaut application, you will simply need to add the proper dependencies to configure and run kapt on your <code>kt</code> source files. Kapt will create Java "stub" classes for each of your Kotlin classes, which can then be processed by Micronaut&#8217;s Java annotation processor. The stubs are not included in the final compiled application.</p>
+<p>Support for Kotlin in Micronaut is built upon the <a href="https://kotlinlang.org/docs/reference/kapt.html">Kapt</a> compiler plugin, which includes support for Java annotation processors. To use Kotlin in your Micronaut application, add the proper dependencies to configure and run kapt on your <code>kt</code> source files. Kapt creates Java "stub" classes for your Kotlin classes, which can then be processed by Micronaut&#8217;s Java annotation processor. The stubs are not included in the final compiled application.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -29446,10 +29446,10 @@ class HelloController {
 
 
 <div class="paragraph">
-<p>As of this writing IntelliJ&#8217;s built-in compiler does not directly support Kapt and annotation processing. You must instead configure Intellij to run Gradle (or Maven) compilation as a build step before running your tests or application class.</p>
+<p>As of this writing, IntelliJ&#8217;s built-in compiler does not directly support Kapt and annotation processing. You must instead configure Intellij to run Gradle (or Maven) compilation as a build step before running your tests or application class.</p>
 </div>
 <div class="paragraph">
-<p>First edit the run configuration for tests or for the application and select "Run Gradle task" as a build step:</p>
+<p>First, edit the run configuration for tests or for the application and select "Run Gradle task" as a build step:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -29465,7 +29465,7 @@ class HelloController {
 </div>
 </div>
 <div class="paragraph">
-<p>Now whenever you run tests or the application Micronaut classes will be generated at compilation time.</p>
+<p>Now when you run tests or start the application, Micronaut will generate classes at compile time.</p>
 </div>
 <div class="paragraph">
 <p>Alternatively, you can <a href="https://www.jetbrains.com/help/idea/gradle.html#delegate_build_gradle">delegate IntelliJ build/run actions to Gradle</a> completely:</p>
@@ -29487,7 +29487,7 @@ class HelloController {
 
 
 <div class="paragraph">
-<p>To enable gradle incremental annotation processing with Kapt the arguments as specified <a href="#incrementalannotationgradle">Incremental Annotation Processing with Gradle</a> must be sent to Kapt</p>
+<p>To enable Gradle incremental annotation processing with Kapt, the arguments as specified in <a href="#incrementalannotationgradle">Incremental Annotation Processing with Gradle</a> must be sent to Kapt.</p>
 </div>
 <div class="paragraph">
 <p>The following example demonstrates how to enable and configure incremental annotation processing for annotations you have defined under the <code>com.example</code> and <code>io.example</code> packages:</p>
@@ -29510,7 +29510,7 @@ class HelloController {
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you do not enable processing for custom annotations you define these annotations will simple be ignored by Micronaut which may break your application.
+If you do not enable processing for your custom annotations, they will be ignored by Micronaut, which may break your application.
 </td>
 </tr>
 </table>
@@ -29527,8 +29527,7 @@ If you do not enable processing for custom annotations you define these annotati
 
 
 <div class="paragraph">
-<p>Micronaut provides a compile-time AOP API that does not use reflection. When you use any Micronaut&#8217;s <a href="#aop">AOP Advice</a>,
-it creates a subclass at compile-time to provide the AOP behaviour. This can be a problem because Kotlin classes are final by default. If the application was created with the Micronaut CLI, then the Kotlin <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin">all-open</a> plugin is configured for you to automatically change your classes to <code>open</code> when an AOP annotation is used. To configure it yourself, simply add the <a href="../api/io/micronaut/aop/Around.html">Around</a> class to the list of supported annotations.</p>
+<p>Micronaut provides a compile-time AOP API that does not use reflection. When you use any Micronaut <a href="#aop">AOP Advice</a>, it creates a subclass at compile-time to provide the AOP behaviour. This can be a problem because Kotlin classes are final by default. If the application was created with the Micronaut CLI, the Kotlin <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin">all-open</a> plugin is configured for you to automatically change your classes to <code>open</code> when an AOP annotation is used. To configure it yourself, add the <a href="../api/io/micronaut/aop/Around.html">Around</a> class to the list of supported annotations.</p>
 </div>
 <div class="paragraph">
 <p>If you prefer not to or cannot use the <code>all-open</code> plugin, you must declare the classes that are annotated with an AOP annotation to be open:</p>
@@ -29588,7 +29587,7 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 <p>Like with Java, the parameter name data for method parameters is not retained at compile time when using Kotlin. This can be a problem for Micronaut if you do not define parameter names explicitly and depend on an external JAR that is already compiled.</p>
 </div>
 <div class="paragraph">
-<p>To enable the retention of parameter name data with Kotlin you should set the <code>javaParameters</code> option to <code>true</code> in your <code>build.gradle</code>:</p>
+<p>To enable retention of parameter name data with Kotlin, set the <code>javaParameters</code> option to <code>true</code> in your <code>build.gradle</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -29613,8 +29612,7 @@ The <code>all-open</code> plugin does not handle methods. If you declare an AOP 
 
 
 <div class="paragraph">
-<p>Kotlin coroutines allow you to create asynchronous applications with imperative style code. A Micronaut&#8217;s controller
-action can be a <code>suspend</code> function:</p>
+<p>Kotlin coroutines allow you to create asynchronous applications with imperative style code. A Micronaut controller action can be a <code>suspend</code> function:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Controller suspend function example</div>
@@ -29713,15 +29711,15 @@ action can be a <code>suspend</code> function:</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This <code>Flow</code> will emit 100 messages</td>
+<td>This <code>Flow</code> emits 100 messages</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Emitting will happen with <code>emit</code> <code>suspend</code> function</td>
+<td>Emitting happens with <code>emit</code> <code>suspend</code> function</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>There will be a 1 second <em>delay</em> between messages</td>
+<td>There is a one second <em>delay</em> between messages</td>
 </tr>
 </table>
 </div>
@@ -29753,7 +29751,7 @@ interface HeadlineFlowClient {
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>A <code>Flow</code> is used as the return type</td>
+<td>The return type is <code>Flow</code></td>
 </tr>
 </table>
 </div>
@@ -29769,19 +29767,16 @@ interface HeadlineFlowClient {
 
 
 <div class="paragraph">
-<p><a href="https://www.graalvm.org">GraalVM</a> is a new universal virtual machine from Oracle that supports a polyglot runtime environment and the ability to compile Java applications down to native machine code.</p>
+<p><a href="https://www.graalvm.org">GraalVM</a> is a new universal virtual machine from Oracle that supports a polyglot runtime environment and the ability to compile Java applications to native machine code.</p>
 </div>
 <div class="paragraph">
 <p>Any Micronaut application can be run using the GraalVM JVM, however special support has been added to Micronaut to support running Micronaut applications using <a href="https://www.graalvm.org/docs/reference-manual/aot-compilation/">GraalVM&#8217;s <code>native-image</code> tool</a>.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut currently supports GraalVM 21.0.0.2 version and the team is improving the support in every new release. Don&#8217;t
-hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
+<p>Micronaut currently supports GraalVM version 21.0.0.2 and the team is improving the support in every new release. Don&#8217;t hesitate to <a href="https://github.com/micronaut-projects/micronaut-core/issues">report issues</a> however if you find any problem.</p>
 </div>
 <div class="paragraph">
-<p>A lot of Micronaut&#8217;s modules and third party libraries have been verified to work with GraalVM: HTTP server, HTTP client,
-Function support, Micronaut Data JDBC and JPA, Service Discovery, RabbitMQ, Views, Security, Zipkin,&#8230;&#8203; Support for other
-modules is still evolving and will improve over time.</p>
+<p>Many of Micronaut&#8217;s modules and third-party libraries have been verified to work with GraalVM: HTTP server, HTTP client, Function support, Micronaut Data JDBC and JPA, Service Discovery, RabbitMQ, Views, Security, Zipkin, etc. Support for other modules is evolving and will improve over time.</p>
 </div>
 <div class="sect2">
 <h3 id="_getting_started">Getting Started</h3>
@@ -29792,15 +29787,13 @@ modules is still evolving and will improve over time.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java or Kotlin projects. Groovy relies heavily on
-reflection which is only partially supported by GraalVM.
+Use of GraalVM&#8217;s <code>native-image</code> tool is only supported in Java or Kotlin projects. Groovy relies heavily on reflection which is only partially supported by GraalVM.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>To start using GraalVM you should first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>
-or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
+<p>To start using GraalVM, first install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a>  instructions or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 </div>
 </div>
 
@@ -29815,12 +29808,12 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 
 
 <div class="sect2">
-<h3 id="_getting_started_with_micronaut_and_graal">Getting Started with Micronaut and Graal</h3>
+<h3 id="_getting_started_with_micronaut_and_graalvm">Getting Started with Micronaut and GraalVM</h3>
 <div class="paragraph">
-<p>Since Micronaut 2.2, any Micronaut application is already ready to be built into a native image using the Micronaut Gradle or Maven plugins, to get started simply create a new application:</p>
+<p>Since Micronaut 2.2, any Micronaut application is ready to be built into a native image using the Micronaut Gradle or Maven plugins. To get started, create a new application:</p>
 </div>
 <div class="listingblock">
-<div class="title">Creating a Graal Native Microservice</div>
+<div class="title">Creating a GraalVM Native Microservice</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn create-app hello-world</code></pre>
 </div>
@@ -29831,7 +29824,7 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 <div class="sect3">
 <h4 id="_building_a_native_image_using_docker">Building a Native Image Using Docker</h4>
 <div class="paragraph">
-<p>To build your native image using Gradle and Docker simply run:</p>
+<p>To build your native image using Gradle and Docker, run:</p>
 </div>
 <div class="listingblock">
 <div class="title">Building a Native Image with Docker and Gradle</div>
@@ -29840,7 +29833,7 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>To build your native image using Maven and Docker simply run:</p>
+<p>To build your native image using Maven and Docker, run:</p>
 </div>
 <div class="listingblock">
 <div class="title">Building a Native Image with Docker and Maven</div>
@@ -29852,17 +29845,17 @@ or using <a href="https://sdkman.io/">Sdkman!</a>.</p>
 <div class="sect3">
 <h4 id="_building_a_native_image_without_using_docker">Building a Native Image Without Using Docker</h4>
 <div class="paragraph">
-<p>To build your native image without using Docker you need to install GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
+<p>To build your native image without using Docker, install the GraalVM SDK via the <a href="https://www.graalvm.org/docs/getting-started/">Getting Started</a> instructions or using <a href="https://sdkman.io/">Sdkman!</a>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing GraalVM 21.0.0.2 with SDKman</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 21.0.0.2.r8-grl # or 21.0.0.2.r11-grl if you want to use JDK 11
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install java 21.0.0.2.r8-grl # or 21.0.0.2.r11-grl to use JDK 11
 $ sdk use java 21.0.0.2.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution. Currently, it is available as an early adopter plugin. To install it, run:</p>
+<p>The <code>native-image</code> tool was extracted from the base GraalVM distribution and is available as a plugin. To install it, run:</p>
 </div>
 <div class="listingblock">
 <div class="title">Installing <code>native-image</code> tool</div>
@@ -29871,7 +29864,7 @@ $ sdk use java 21.0.0.2.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now you can build a native image with Gradle simply by running the <code>nativeImage</code> task:</p>
+<p>Now you can build a native image with Gradle by running the <code>nativeImage</code> task:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Gradle</div>
@@ -29880,10 +29873,10 @@ $ sdk use java 21.0.0.2.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The native image will be built to the <code>build/native-image</code> directory.</p>
+<p>The native image will be built in the <code>build/native-image</code> directory.</p>
 </div>
 <div class="paragraph">
-<p>To create a native image with Maven and the Micronaut Maven plugin use <code>native-image</code> as the packaging format:</p>
+<p>To create a native image with Maven and the Micronaut Maven plugin, use the <code>native-image</code> packaging format:</p>
 </div>
 <div class="listingblock">
 <div class="title">Creating native image with Maven</div>
@@ -29892,10 +29885,10 @@ $ sdk use java 21.0.0.2.r8-grl</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Which will build the native image into the <code>target</code> directory.</p>
+<p>which builds the native image in the <code>target</code> directory.</p>
 </div>
 <div class="paragraph">
-<p>You can then run the native image from the directory you built it to.</p>
+<p>You can then run the native image from the directory where you built it.</p>
 </div>
 <div class="listingblock">
 <div class="title">Run native image</div>
@@ -29906,13 +29899,12 @@ $ sdk use java 21.0.0.2.r8-grl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_micronaut_and_graal">Understanding Micronaut and Graal</h3>
+<h3 id="_understanding_micronaut_and_graalvm">Understanding Micronaut and GraalVM</h3>
 <div class="paragraph">
-<p>Micronaut itself does not rely on reflection or dynamic classloading so works automatically with GraalVM native, however certain third party libraries used by Micronaut may require additional input about uses of reflection.</p>
+<p>Micronaut itself does not rely on reflection or dynamic classloading, so it works automatically with GraalVM native, however certain third-party libraries used by Micronaut may require additional input about uses of reflection.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut includes an annotation processor that helps to handle generating the <code>reflect-config.json</code> and <code>resource-config.json</code>
-metadata files that are automatically picked up by the <code>native-image</code> tool:</p>
+<p>Micronaut includes an annotation processor that helps to generate the <code>reflect-config.json</code> and <code>resource-config.json</code> metadata files that are automatically picked up by the <code>native-image</code> tool:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -29935,7 +29927,7 @@ metadata files that are automatically picked up by the <code>native-image</code>
 </p>
 </div>
 <div class="paragraph">
-<p>This processor will generate:</p>
+<p>This processor generates:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -29946,8 +29938,7 @@ metadata files that are automatically picked up by the <code>native-image</code>
 <p>A <code>native-image.properties</code> file to read this configuration for all classes annotated with either <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
 </li>
 <li>
-<p>A <code>resource-config.json</code> file also in the <code>META-INF/native-image</code> directory in your build classes directory containing
-all the files in the <code>src/main/resources</code> file.</p>
+<p>A <code>resource-config.json</code> file also in the <code>META-INF/native-image</code> directory in your build classes directory containing information about the files in the <code>src/main/resources</code> directory.</p>
 </li>
 </ul>
 </div>
@@ -29967,10 +29958,10 @@ class Test {
 </div>
 </div>
 <div class="paragraph">
-<p>The above example will result in the public methods and declared constructors of <code>example.Test</code> being included in <code>reflect-config.json</code>.</p>
+<p>The above example results in the public methods and declared constructors of <code>example.Test</code> being included in <code>reflect-config.json</code>.</p>
 </div>
 <div class="paragraph">
-<p>If you have more advanced requirements and only wish to include certain fields or methods, you can use <a href="../api/io/micronaut/core/annotation/ReflectiveAccess.html">@ReflectiveAccess</a> instead which can be present on any constructor, field or method to include only the specific field, constructor or method.</p>
+<p>If you have more advanced requirements and only wish to include certain fields or methods, use <a href="../api/io/micronaut/core/annotation/ReflectiveAccess.html">@ReflectiveAccess</a> instead which can be present on any constructor, field or method to include only the specific field, constructor or method.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -29979,24 +29970,22 @@ class Test {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you wish to provide your own <code>reflect.json</code> you can add one to <code>src/main/graal/reflect.json</code> and it will be automatically picked up.
+To provide your own <code>reflect.json</code>, add one to <code>src/main/graal/reflect.json</code> and it will be automatically picked up.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Stating with Micronaut 2.0, as the framework generates automatically the file <code>resource-config.json</code>, if you want to
-include your own additional resources you can provide them in <code>src/main/graal/resource-config.json</code> and they will
-automatically added to the generated file.</p>
+<p>Stating with Micronaut 2.0, as the framework automatically generates the <code>resource-config.json</code> file, to include your own additional resources, provide them in <code>src/main/graal/resource-config.json</code> and they will automatically be added to the generated file.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_adding_additional_classes_for_reflective_access">Adding Additional Classes for Reflective Access</h3>
 <div class="paragraph">
-<p>To inform Micronaut of additional classes that should be included in the generated <code>reflect.json</code> file at compilation time you can either annotate a class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
+<p>To inform Micronaut of additional classes to be included in the generated <code>reflect.json</code> file at compile time, either annotate a class with <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> or <a href="../api/io/micronaut/core/annotation/TypeHint.html">@TypeHint</a>.</p>
 </div>
 <div class="paragraph">
-<p>The former will generate a compile time introspection as well as allowing reflective access and the latter will only allow reflective access and is typically used on a module or <code>Application</code> class to include classes that are needed reflectively. For example, the following is taken from Micronaut&#8217;s Jackson module:</p>
+<p>The former generates a compile-time introspection as well as allowing reflective access, and the latter only allows reflective access, and is typically used on a module or <code>Application</code> class to include classes that are needed reflectively. For example, the following is from Micronaut&#8217;s Jackson module:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -30015,7 +30004,7 @@ automatically added to the generated file.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>value</code> member is used to specify which classes require reflection.</td>
+<td>The <code>value</code> member specifies which classes require reflection.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -30027,7 +30016,7 @@ automatically added to the generated file.</p>
 <div class="sect2">
 <h3 id="_generating_native_images">Generating Native Images</h3>
 <div class="paragraph">
-<p>GraalVM&#8217;s <code>native-image</code> command is used to generate native images. You can use this command manually to generate your native image. An example can be seen below.</p>
+<p>GraalVM&#8217;s <code>native-image</code> command generates native images. You can use this command manually to generate your native image. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">The <code>native-image</code> command</div>
@@ -30039,12 +30028,12 @@ automatically added to the generated file.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>class-path</code> argument is used to refer to the Micronaut shaded JAR</td>
+<td>The <code>class-path</code> argument refers to the Micronaut shaded JAR</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Once the image has been built you can run the application using the native image name:</p>
+<p>Once the image is built, run the application using the native image name:</p>
 </div>
 <div class="listingblock">
 <div class="title">Running the Native Application</div>
@@ -30054,7 +30043,7 @@ automatically added to the generated file.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see the advantage of having a native image is startup completes in milliseconds and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
+<p>As you can see, the native image startup completes in milliseconds, and memory consumption does not include the overhead of the JVM (a native Micronaut application runs with just 20mb of memory).</p>
 </div>
 </div>
 
@@ -30111,7 +30100,7 @@ automatically added to the generated file.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>For arrays this needs to use the Java JVM internal array representation. For example:</p>
+<p>For arrays this must use the Java JVM internal array representation. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -30128,7 +30117,7 @@ automatically added to the generated file.</p>
 <div class="sect3">
 <h4 id="_what_if_i_want_to_set_the_heap_s_maximum_size_with_code_xmx_code_but_i_get_an_code_outofmemoryerror_code">What if I want to set the heap&#8217;s maximum size with <code>-Xmx</code>, but I get an <code>OutOfMemoryError</code>?</h4>
 <div class="paragraph">
-<p>If you set heap&#8217;s maximum size in the Dockerfile that you use to build your native image, you will probably get runtime an error like this:</p>
+<p>If you set the maximum heap size in the Dockerfile that you use to build your native image, you will probably get a runtime error like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -30136,11 +30125,11 @@ automatically added to the generated file.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The problem is that Netty is trying to allocate 16MiB of memory per chunk with its default settings for <code>io.netty.allocator.pageSize</code> and <code>io.netty.allocator.maxOrder</code>:</p>
+<p>The problem is that Netty tries to allocate 16MB of memory per chunk with its default settings for <code>io.netty.allocator.pageSize</code> and <code>io.netty.allocator.maxOrder</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int defaultChunkSize = DEFAULT_PAGE_SIZE &lt;&lt; DEFAULT_MAX_ORDER; // 8192 &lt;&lt; 11 = 16MiB</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int defaultChunkSize = DEFAULT_PAGE_SIZE &lt;&lt; DEFAULT_MAX_ORDER; // 8192 &lt;&lt; 11 = 16MB</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -30152,7 +30141,7 @@ automatically added to the generated file.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to go further, you can also experiment with <code>io.netty.allocator.numHeapArenas</code> or <code>io.netty.allocator.numDirectArenas</code>. You can find more information about Netty&#8217;s <code>PooledByteBufAllocator</code> in the <a href="https://netty.io/4.1/api/io/netty/buffer/PooledByteBufAllocator.html">official documentation</a>.</p>
+<p>To go further, you can also experiment with <code>io.netty.allocator.numHeapArenas</code> or <code>io.netty.allocator.numDirectArenas</code>. You can find more information about Netty&#8217;s <code>PooledByteBufAllocator</code> in the <a href="https://netty.io/4.1/api/io/netty/buffer/PooledByteBufAllocator.html">official documentation</a>.</p>
 </div>
 </div>
 
@@ -30221,7 +30210,7 @@ automatically added to the generated file.</p>
 
 
 <div class="paragraph">
-<p>In addition to the <a href="#providedEndpoints">Built-In Endpoints</a>, the <code>management</code> dependency also provides support for creating custom endpoints.  Custom endpoints can be enabled and configured identically to the built-in endpoints, and can be used to retrieve and return any metrics or other application data that you require.</p>
+<p>In addition to the <a href="#providedEndpoints">Built-In Endpoints</a>, the <code>management</code> dependency also provides support for creating custom endpoints. These can be enabled and configured like the built-in endpoints, and can be used to retrieve and return any metrics or other application data.</p>
 </div>
 
 <h2 id="endpointAnnotation"><a class="anchor" href="#endpointAnnotation"></a>14.1.1 The Endpoint Annotation</h2>
@@ -30247,7 +30236,7 @@ class FooEndpoint {
 </div>
 </div>
 <div class="paragraph">
-<p>If a single <code>String</code> argument is supplied to the annotation, it will be used as the endpoint id.</p>
+<p>If a single <code>String</code> argument is supplied to the annotation, it is used as the endpoint id.</p>
 </div>
 <div class="paragraph">
 <p>It is possible to supply additional (named) arguments to the annotation. Other possible arguments to <code>@Endpoint</code> are described in the table below:</p>
@@ -30293,7 +30282,7 @@ class FooEndpoint {
 <h2 id="_example_of_custom_endpoint">Example of custom Endpoint</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following example <code>Endpoint</code> class will create an endpoint accessible at <code>/date</code>:</p>
+<p>The following example <code>Endpoint</code> class creates an endpoint accessible at <code>/date</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">CurrentDateEndpoint</div>
@@ -30354,7 +30343,7 @@ class CurrentDateEndpoint {
 
 
 <div class="paragraph">
-<p>Endpoints respond to <code>GET</code> ("read"), <code>POST</code> ("write") and <code>DELETE</code> ("delete") requests. To return a response from an endpoint, annotate its public method/s with one of following annotations:</p>
+<p>Endpoints respond to <code>GET</code> ("read"), <code>POST</code> ("write") and <code>DELETE</code> ("delete") requests. To return a response from an endpoint, annotate its public method(s) with one of the following annotations:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Endpoint Method Annotations</caption>
@@ -30387,7 +30376,7 @@ class CurrentDateEndpoint {
 <h2 id="_read_methods">Read Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/annotation/Read.html">Read</a> annotation will cause it to respond to <code>GET</code> requests.</p>
+<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/annotation/Read.html">Read</a> annotation causes it to respond to <code>GET</code> requests.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">CurrentDateEndpoint</div>
@@ -30567,7 +30556,7 @@ the_date_is: Fri May 11 19:24:21 CDT</code></pre>
 <h2 id="_write_methods">Write Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation will cause it to respond to <code>POST</code> requests.</p>
+<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Write.html">Write</a> annotation causes it to respond to <code>POST</code> requests.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">CurrentDateEndpoint</div>
@@ -30753,7 +30742,7 @@ Message updated</code></pre>
 <h2 id="_delete_methods">Delete Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a> annotation will cause it to respond to <code>DELETE</code> requests.</p>
+<p>Annotating a method with the <a href="../api/io/micronaut/management/endpoint/Delete.html">Delete</a> annotation causes it to respond to <code>DELETE</code> requests.</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">MessageEndpoint</div>
@@ -30961,7 +30950,7 @@ class AlertsEndpoint {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The endpoint is not sensitive by default and the default prefix of <code>endpoints</code> is used.</td>
+<td>The endpoint is not sensitive by default, and the default prefix of <code>endpoints</code> is used.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -30974,12 +30963,12 @@ class AlertsEndpoint {
 </table>
 </div>
 <div class="paragraph">
-<p>If the configuration key <code>endpoints.alerts.add.sensitive</code> is set, that value will determine the sensitivity of the <code>addAlert</code> method.</p>
+<p>If the configuration key <code>endpoints.alerts.add.sensitive</code> is set, that value determines the sensitivity of the <code>addAlert</code> method.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>endpoint</code> is the first token because that is the default value for <code>prefix</code> in the endpoint annotation and is not set explicity in this example.</p>
+<p><code>endpoint</code> is the first token because that is the default value for <code>prefix</code> in the endpoint annotation and is not set explicitly in this example.</p>
 </li>
 <li>
 <p><code>alerts</code> is the next token because that is the endpoint id</p>
@@ -30990,7 +30979,7 @@ class AlertsEndpoint {
 </ol>
 </div>
 <div class="paragraph">
-<p>If the configuration key is not set, the <code>defaultValue</code> will be used (defaults to <code>true</code>).</p>
+<p>If the configuration key is not set, the <code>defaultValue</code> is used (defaults to <code>true</code>).</p>
 </div>
 
 <h2 id="endpointConfiguration"><a class="anchor" href="#endpointConfiguration"></a>14.1.4 Endpoint Configuration</h2>
@@ -31019,10 +31008,10 @@ class FooEndpoint {
 </div>
 </div>
 <div class="paragraph">
-<p>By default the endpoint will be enabled. To disable the endpoint, set <code>endpoints.foo.enabled</code> to false. If <code>endpoints.foo.enabled</code> is not set at all and <code>endpoints.all.enabled</code> is set to false, the endpoint will be disabled.</p>
+<p>By default the endpoint is enabled. To disable it, set <code>endpoints.foo.enabled</code> to false. If <code>endpoints.foo.enabled</code> is not set and <code>endpoints.all.enabled</code> is <code>false</code>, the endpoint will be disabled.</p>
 </div>
 <div class="paragraph">
-<p>The configuration values for the endpoint override the ones for <code>all</code>. If <code>endpoints.foo.enabled</code> is explicitly set to <code>true</code> and <code>endpoints.all.enabled</code> is explicitly set to <code>false</code>, the endpoint will be enabled.</p>
+<p>The configuration values for the endpoint override those for <code>all</code>. If <code>endpoints.foo.enabled</code> is <code>true</code> and <code>endpoints.all.enabled</code> is <code>false</code>, the endpoint will be enabled.</p>
 </div>
 <div class="paragraph">
 <p>For all endpoints, the following configuration values can be set.</p>
@@ -31030,9 +31019,9 @@ class FooEndpoint {
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">endpoints:
-    &lt;any endpoint id&gt;:
-        enabled: Boolean
-        sensitive: Boolean</code></pre>
+  &lt;any endpoint id&gt;:
+    enabled: Boolean
+    sensitive: Boolean</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -31169,7 +31158,7 @@ this should be used with care because private and sensitive information will be 
 <div class="sect2">
 <h3 id="_management_port">Management Port</h3>
 <div class="paragraph">
-<p>By default all management endpoints are exposed over the same port as the application. You can alter this behaviour by specifying the <code>endpoints.all.port</code> setting:</p>
+<p>By default, all management endpoints are exposed over the same port as the application. You can alter this behaviour by specifying the <code>endpoints.all.port</code> setting:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31179,7 +31168,7 @@ this should be used with care because private and sensitive information will be 
 </div>
 </div>
 <div class="paragraph">
-<p>In the above example the management endpoints will be exposed only over port 8085.</p>
+<p>In the above example the management endpoints are exposed only over port 8085.</p>
 </div>
 </div>
 <div class="sect2">
@@ -31226,7 +31215,7 @@ this should be used with care because private and sensitive information will be 
 <h2 id="_customization">Customization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The beans endpoint is composed of a bean definition data collector and a bean data implementation. The bean definition data collector (<a href="../api/io/micronaut/management/endpoint/beans/BeanDefinitionDataCollector.html">BeanDefinitionDataCollector</a>) is responsible for returning a publisher that will return the data used in the response. The bean definition data (<a href="../api/io/micronaut/management/endpoint/beans/BeanDefinitionData.html">BeanDefinitionData</a>) is responsible for returning data about an individual bean definition.</p>
+<p>The beans endpoint is composed of a bean definition data collector and a bean data implementation. The bean definition data collector (<a href="../api/io/micronaut/management/endpoint/beans/BeanDefinitionDataCollector.html">BeanDefinitionDataCollector</a>) is responsible for returning a publisher that returns the data used in the response. The bean definition data (<a href="../api/io/micronaut/management/endpoint/beans/BeanDefinitionData.html">BeanDefinitionData</a>) is responsible for returning data about an individual bean definition.</p>
 </div>
 <div class="paragraph">
 <p>To override the default behavior for either of the helper classes, either extend the default implementations (<a href="../api/io/micronaut/management/endpoint/beans/impl/RxJavaBeanDefinitionDataCollector.html">RxJavaBeanDefinitionDataCollector</a>, <a href="../api/io/micronaut/management/endpoint/beans/impl/DefaultBeanDefinitionData.html">DefaultBeanDefinitionData</a>), or implement the relevant interface directly. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the default implementation.</p>
@@ -31271,13 +31260,13 @@ this should be used with care because private and sensitive information will be 
 <h2 id="_customization">Customization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The info endpoint consists of an info aggregator and any number of info sources. To add an info source, simply create a bean class that implements <a href="../api/io/micronaut/management/endpoint/info/InfoSource.html">InfoSource</a>.  If your info source needs to retrieve data from Java properties files, you can extend the <a href="../api/io/micronaut/management/endpoint/info/source/PropertiesInfoSource.html">PropertiesInfoSource</a> interface which provides a helper method for this purpose.</p>
+<p>The info endpoint consists of an info aggregator and any number of info sources. To add an info source, create a bean class that implements <a href="../api/io/micronaut/management/endpoint/info/InfoSource.html">InfoSource</a>. If your info source needs to retrieve data from Java properties files, extend the <a href="../api/io/micronaut/management/endpoint/info/source/PropertiesInfoSource.html">PropertiesInfoSource</a> interface which provides a helper method for this purpose.</p>
 </div>
 <div class="paragraph">
-<p>All of the info source beans will be collected together with the info aggregator. To provide your own implementation of the info aggregator, create a class that implements <a href="../api/io/micronaut/management/endpoint/info/InfoAggregator.html">InfoAggregator</a> and register it as a bean. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the <a href="../api/io/micronaut/management/endpoint/info/impl/RxInfoAggregator.html">default implementation</a>.</p>
+<p>All info source beans are collected together with the info aggregator. To provide your own implementation of the info aggregator, create a class that implements <a href="../api/io/micronaut/management/endpoint/info/InfoAggregator.html">InfoAggregator</a> and register it as a bean. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the <a href="../api/io/micronaut/management/endpoint/info/impl/RxInfoAggregator.html">default implementation</a>.</p>
 </div>
 <div class="paragraph">
-<p>The default info aggregator returns map containing the combined properties returned by all the info sources. This map is returned as JSON from the /info endpoint.</p>
+<p>The default info aggregator returns a map containing the combined properties returned by all the info sources. This map is returned as JSON from the /info endpoint.</p>
 </div>
 </div>
 </div>
@@ -31287,7 +31276,7 @@ this should be used with care because private and sensitive information will be 
 <div class="sect2">
 <h3 id="_configuration_info_source">Configuration Info Source</h3>
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/management/endpoint/info/source/ConfigurationInfoSource.html">ConfigurationInfoSource</a> will return configuration properties under the <code>info</code> key. In addition to string, integer and boolean values, more complex properties can be exposed as maps in the JSON output (if the configuration format supports it).</p>
+<p>The <a href="../api/io/micronaut/management/endpoint/info/source/ConfigurationInfoSource.html">ConfigurationInfoSource</a> returns configuration properties under the <code>info</code> key. In addition to string, integer and boolean values, more complex properties can be exposed as maps in the JSON output (if the configuration format supports it).</p>
 </div>
 <div class="listingblock">
 <div class="title">Info Source Example (<code>application.groovy</code>)</div>
@@ -31298,7 +31287,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above config will result in the following JSON response from the info endpoint:</p>
+<p>The above config results in the following JSON response from the info endpoint:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31324,12 +31313,12 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="sect2">
 <h3 id="_git_info_source">Git Info Source</h3>
 <div class="paragraph">
-<p>If a <code>git.properties</code> file is available on the classpath, the <a href="../api/io/micronaut/management/endpoint/info/source/GitInfoSource.html">GitInfoSource</a> will expose the values in that file under the <code>git</code> key. Generating of a <code>git.properties</code> file will need to be configured as part of your build. One easy option for Gradle users is the <a href="https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties">Gradle Git Properties Plugin</a>. Maven users can look at the <a href="https://github.com/git-commit-id/maven-git-commit-id-plugin">Maven Git Commit Id Plugin</a>.</p>
+<p>If a <code>git.properties</code> file is available on the classpath, the <a href="../api/io/micronaut/management/endpoint/info/source/GitInfoSource.html">GitInfoSource</a> exposes the values in that file under the <code>git</code> key. Generating of a <code>git.properties</code> file must be configured as part of your build. One easy option for Gradle users is the <a href="https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties">Gradle Git Properties Plugin</a>. Maven users can use the <a href="https://github.com/git-commit-id/maven-git-commit-id-plugin">Maven Git Commit ID Plugin</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="_configuration_3">Configuration</h4>
 <div class="paragraph">
-<p>To specify an alternate path/name of the properties file, you can supply a custom value in the <code>endpoints.info.git.location</code> property.</p>
+<p>To specify an alternate path or name of the properties file, supply a custom value in the <code>endpoints.info.git.location</code> property.</p>
 </div>
 <div class="paragraph">
 <p>The git info source can be disabled using the <code>endpoints.info.git.enabled</code> property.</p>
@@ -31339,12 +31328,12 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="sect2">
 <h3 id="_build_info_source">Build Info Source</h3>
 <div class="paragraph">
-<p>If a <code>META-INF/build-info.properties</code> file is available on the classpath, the <a href="../api/io/micronaut/management/endpoint/info/source/BuildInfoSource.html">BuildInfoSource</a> will expose the values in that file under the <code>build</code> key. Generating of a <code>build-info.properties</code> file will need to be configured as part of your build. One easy option for Gradle users is the <a href="https://plugins.gradle.org/plugin/com.pasam.gradle.buildinfo">Gradle Build Info Plugin</a>. Another option for Maven users is the <a href="https://docs.spring.io/spring-boot/docs/current/maven-plugin/examples/build-info.html">Spring Boot Maven Plugin</a></p>
+<p>If a <code>META-INF/build-info.properties</code> file is available on the classpath, the <a href="../api/io/micronaut/management/endpoint/info/source/BuildInfoSource.html">BuildInfoSource</a> exposes the values in that file under the <code>build</code> key. Generating a <code>build-info.properties</code> file must be configured as part of your build. One easy option for Gradle users is the <a href="https://plugins.gradle.org/plugin/com.pasam.gradle.buildinfo">Gradle Build Info Plugin</a>. An option for Maven users is the <a href="https://docs.spring.io/spring-boot/docs/current/maven-plugin/examples/build-info.html">Spring Boot Maven Plugin</a></p>
 </div>
 <div class="sect3">
 <h4 id="_configuration_4">Configuration</h4>
 <div class="paragraph">
-<p>To specify an alternate path/name of the properties file, you can supply a custom value in the <code>endpoints.info.build.location</code> property.</p>
+<p>To specify an alternate path/name of the properties file, supply a custom value in the <code>endpoints.info.build.location</code> property.</p>
 </div>
 <div class="paragraph">
 <p>The build info source can be disabled using the <code>endpoints.info.build.enabled</code> property.</p>
@@ -31365,7 +31354,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 
 
 <div class="paragraph">
-<p>The health endpoint returns information about the "health" of the application. The application health is determined by any number of "health indicators".</p>
+<p>The health endpoint returns information about the "health" of the application, which is determined by any number of "health indicators".</p>
 </div>
 <div class="paragraph">
 <p>To execute the health endpoint, send a GET request to /health. Additionally the health endpoint exposes /health/liveness and /health/readiness health indicators.</p>
@@ -31397,10 +31386,10 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>The <code>details-visible</code> setting is used to control whether health detail should be exposed to users who are not authenticated.</p>
+<p>The <code>details-visible</code> setting controls whether health detail will be exposed to users who are not authenticated.</p>
 </div>
 <div class="paragraph">
-<p>For example setting:</p>
+<p>For example, setting:</p>
 </div>
 <div class="listingblock">
 <div class="title">Using <code>details-visible</code></div>
@@ -31411,10 +31400,10 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Will expose detailed information read from the various health indicators about the health status of the application to anonymous unauthenticated users.</p>
+<p>exposes detailed information from the various health indicators about the health status of the application to anonymous unauthenticated users.</p>
 </div>
 <div class="paragraph">
-<p>The <code>endpoints.health.status.http-mapping</code> setting can be used to control what status codes are returned for each health status. The defaults are described in the table below:</p>
+<p>The <code>endpoints.health.status.http-mapping</code> setting controls which status codes to return for each health status. The defaults are described in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -31456,7 +31445,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above will return <a href="../api/io/micronaut/http/HttpStatus.html#OK">OK</a> (200) even when the <a href="../api/io/micronaut/health/HealthStatus.html">HealthStatus</a> is <a href="../api/io/micronaut/health/HealthStatus.html#DOWN">DOWN</a>.</p>
+<p>The above returns <a href="../api/io/micronaut/http/HttpStatus.html#OK">OK</a> (200) even when the <a href="../api/io/micronaut/health/HealthStatus.html">HealthStatus</a> is <a href="../api/io/micronaut/health/HealthStatus.html#DOWN">DOWN</a>.</p>
 </div>
 </div>
 </div>
@@ -31464,13 +31453,13 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="_customization">Customization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The health endpoint consists of a health aggregator and any number of health indicators. To add a health indicator, simply create a bean class that implements <a href="../api/io/micronaut/management/health/indicator/HealthIndicator.html">HealthIndicator</a>. It is recommended to also use either <a href="../api/io/micronaut/health/indicator/annotation/Liveness.html">@Liveness</a> or <a href="../api/io/micronaut/health/indicator/annotation/Readiness.html">@Readiness</a> qualifier. If no qualifier is used then the health incidator is part of /health and /health/readiness endpoints. A base class <a href="../api/io/micronaut/management/health/indicator/AbstractHealthIndicator.html">AbstractHealthIndicator</a> has been provided for you to extend to make the process easier.</p>
+<p>The health endpoint consists of a health aggregator and any number of health indicators. To add a health indicator, create a bean class that implements <a href="../api/io/micronaut/management/health/indicator/HealthIndicator.html">HealthIndicator</a>. It is recommended to also use either <a href="../api/io/micronaut/health/indicator/annotation/Liveness.html">@Liveness</a> or <a href="../api/io/micronaut/health/indicator/annotation/Readiness.html">@Readiness</a> qualifier. If no qualifier is used, the health indicator will be part of /health and /health/readiness endpoints. A base class <a href="../api/io/micronaut/management/health/indicator/AbstractHealthIndicator.html">AbstractHealthIndicator</a> is available to subclass to make the process easier.</p>
 </div>
 <div class="paragraph">
-<p>All of the health indicator beans will be collected together with the health aggregator. To provide your own implementation of the health aggregator, create a class that implements <a href="../api/io/micronaut/management/health/aggregator/HealthAggregator.html">HealthAggregator</a> and register it as a bean. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the <a href="../api/io/micronaut/management/health/aggregator/RxJavaHealthAggregator.html">default implementation</a>.</p>
+<p>All health indicator beans are collected together with the health aggregator. To provide your own implementation of the health aggregator, create a class that implements <a href="../api/io/micronaut/management/health/aggregator/HealthAggregator.html">HealthAggregator</a> and register it as a bean. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the <a href="../api/io/micronaut/management/health/aggregator/RxJavaHealthAggregator.html">default implementation</a>.</p>
 </div>
 <div class="paragraph">
-<p>The default health aggregator returns an overall status that is calculated based on the health statuses of the indicators. A <a href="../api/io/micronaut/health/HealthStatus.html">health status</a> consists of several pieces of information.</p>
+<p>The default health aggregator returns an overall status calculated based on the health statuses of the indicators. A <a href="../api/io/micronaut/health/HealthStatus.html">health status</a> consists of several pieces of information.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -31497,7 +31486,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The "worst" status will be returned as the overall status. A non operational status will be selected over an operational status. A higher severity will be selected over a lower severity.</p>
+<p>The "worst" status is returned as the overall status. A non-operational status is selected over an operational status. A higher severity is selected over a lower severity.</p>
 </div>
 </div>
 </div>
@@ -31505,7 +31494,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="_provided_indicators">Provided Indicators</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All micronaut provided health indicators are exposed on /health and /health/readiness endpoints.</p>
+<p>All Micronaut provided health indicators are exposed on /health and /health/readiness endpoints.</p>
 </div>
 <div class="sect2">
 <h3 id="_disk_space">Disk Space</h3>
@@ -31536,7 +31525,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <div class="sect2">
 <h3 id="_discovery_client">Discovery Client</h3>
 <div class="paragraph">
-<p>If your application is using service discovery, a health indicator will be included to monitor the health of the discovery client. The data returned can include a list of the services available.</p>
+<p>If your application uses service discovery, a health indicator is included to monitor the health of the discovery client. The data returned can include a list of the services available.</p>
 </div>
 </div>
 </div>
@@ -31553,7 +31542,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 
 
 <div class="paragraph">
-<p>Micronaut includes the ability to expose Metrics via integration with <a href="http://micrometer.io">Micrometer</a>.</p>
+<p>Micronaut can expose application metrics via integration with <a href="http://micrometer.io">Micrometer</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -31564,7 +31553,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <td class="content">
 <div class="title">Using the CLI</div>
 <div class="paragraph">
-<p>If you are creating your project using the Micronaut CLI, supply one of the micrometer features to enable metrics and preconfigure the selected registery in your project. For example:</p>
+<p>If you create your project using the Micronaut CLI, supply one of the micrometer features to enable metrics and preconfigure the selected registry in your project. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31576,7 +31565,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>. This will return a list of available metric names.</p>
+<p>The metrics endpoint returns information about the "metrics" of the application. To execute the metrics endpoint, send a GET request to <code>/metrics</code>. This returns a list of available metric names.</p>
 </div>
 <div class="paragraph">
 <p>You can get specific metrics by using <code>/metrics/[name]</code> such as <code>/metrics/jvm.memory.used</code>.</p>
@@ -31596,7 +31585,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 
 
 <div class="paragraph">
-<p>The refresh endpoint will refresh the application state, causing all <a href="../api/io/micronaut/runtime/context/scope/Refreshable.html">Refreshable</a> beans in the context to be destroyed and reinstantiated upon further requests. This is accomplished by publishing a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> in the Application Context.</p>
+<p>The refresh endpoint refreshes the application state, causing all <a href="../api/io/micronaut/runtime/context/scope/Refreshable.html">Refreshable</a> beans in the context to be destroyed and reinstantiated upon further requests. This is accomplished by publishing a <a href="../api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html">RefreshEvent</a> in the Application Context.</p>
 </div>
 <div class="paragraph">
 <p>To execute the refresh endpoint, send a POST request to /refresh.</p>
@@ -31607,7 +31596,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>When executed without a body, the endpoint will first refresh the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> and perform a diff to detect any changes, and will then only perform the refresh if changes are detected. To skip this check and refresh all <code>@Refreshable</code> beans regardless of environment changes (e.g., to force refresh of cached responses from third-party services), you can supply a <code>force</code> parameter in the POST request body.</p>
+<p>When executed without a body, the endpoint first refreshes the <a href="../api/io/micronaut/context/env/Environment.html">Environment</a> and performs a diff to detect any changes, and then only performs the refresh if changes are detected. To skip this check and refresh all <code>@Refreshable</code> beans regardless of environment changes (e.g., to force refresh of cached responses from third-party services), add a <code>force</code> parameter in the POST request body.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31669,7 +31658,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 <h2 id="_customization">Customization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The routes endpoint is composed of a route data collector and a route data implementation. The route data collector (<a href="../api/io/micronaut/management/endpoint/routes/RouteDataCollector.html">RouteDataCollector</a>) is responsible for returning a publisher that will return the data used in the response. The route data (<a href="../api/io/micronaut/management/endpoint/routes/RouteData.html">RouteData</a>) is responsible for returning data about an individual route.</p>
+<p>The routes endpoint is composed of a route data collector and a route data implementation. The route data collector (<a href="../api/io/micronaut/management/endpoint/routes/RouteDataCollector.html">RouteDataCollector</a>) is responsible for returning a publisher that returns the data used in the response. The route data (<a href="../api/io/micronaut/management/endpoint/routes/RouteData.html">RouteData</a>) is responsible for returning data about an individual route.</p>
 </div>
 <div class="paragraph">
 <p>To override the default behavior for either of the helper classes, either extend the default implementations (<a href="../api/io/micronaut/management/endpoint/routes/impl/RxJavaRouteDataCollector.html">RxJavaRouteDataCollector</a>, <a href="../api/io/micronaut/management/endpoint/routes/impl/DefaultRouteData.html">DefaultRouteData</a>), or implement the relevant interface directly. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the default implementation.</p>
@@ -31688,8 +31677,7 @@ info.demo.map = [key: 'value', other_key: 123]</code></pre>
 
 
 <div class="paragraph">
-<p>The loggers endpoint returns information about the available loggers in the application and
-permits configuring the their log level.</p>
+<p>The loggers endpoint returns information about the available loggers in the application and permits configuring their log level.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -31698,14 +31686,13 @@ permits configuring the their log level.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The loggers endpoint is disabled by default and needs to be explicitly enabled with the setting <code>endpoints.loggers.enabled=true</code>.
+The loggers endpoint is disabled by default and must be explicitly enabled with the setting <code>endpoints.loggers.enabled=true</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>To get a collection of all loggers by name with their configured and effective log levels,
-send a GET request to /loggers. This will also provide a list of the available log levels.</p>
+<p>To get a collection of all loggers by name with their configured and effective log levels, send a GET request to /loggers. This also provides a list of the available log levels.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31734,8 +31721,7 @@ send a GET request to /loggers. This will also provide a list of the available l
 </div>
 </div>
 <div class="paragraph">
-<p>To get the log levels of a particular logger, include the logger name in your GET request. For
-example, to access the log levels of the logger 'io.micronaut.http':</p>
+<p>To get the log levels of a particular logger, include the logger name in your GET request. For example, to access the log levels of the logger 'io.micronaut.http':</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31748,12 +31734,10 @@ example, to access the log levels of the logger 'io.micronaut.http':</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If the named logger does not exist, it will be created with an unspecified (i.e. <code>NOT_SPECIFIED</code>)
-configured log level. (It&#8217;s effective log level will usually be that of the root logger.)</p>
+<p>If the named logger does not exist, it is created with an unspecified (i.e. <code>NOT_SPECIFIED</code>) configured log level (its effective log level is usually that of the root logger).</p>
 </div>
 <div class="paragraph">
-<p>To update the log level of a single logger, send a POST request to the named logger URL and include
-a body providing the log level to configure.</p>
+<p>To update the log level of a single logger, send a POST request to the named logger URL and include a body providing the log level to configure.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31794,8 +31778,7 @@ $ curl http://localhost:8080/loggers/ROOT
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default the endpoint doesn&#8217;t allow to change the log level by unauthorized users (even if <code>sensitive</code> is set to
-<code>false</code>). To allow it is necessary set <code>endpoints.loggers.write-sensitive</code> to <code>false</code>.
+By default, the endpoint doesn&#8217;t allow changing the log level by unauthorized users (even if <code>sensitive</code> is set to <code>false</code>). To allow this you must set <code>endpoints.loggers.write-sensitive</code> to <code>false</code>.
 </td>
 </tr>
 </table>
@@ -31811,16 +31794,10 @@ By default the endpoint doesn&#8217;t allow to change the log level by unauthori
 <div class="paragraph">
 <p>The loggers manager
 (<a href="../api/io/micronaut/management/endpoint/loggers/LoggersManager.html">LoggersManager</a>)
-is responsible for returning a Publisher that will return data collected and transformed for the response,
-and it is also responsible for updating a logger with a new log level.</p>
+is responsible for returning a Publisher that returns data collected and transformed for the response, and it is also responsible for updating a logger with a new log level.</p>
 </div>
 <div class="paragraph">
-<p>To override the default behavior for the loggers manager, either extend the default implementation
-(<a href="../api/io/micronaut/management/endpoint/loggers/impl/DefaultLoggersManager.html">DefaultLoggersManager</a>)
-or implement the <a href="../api/io/micronaut/management/endpoint/loggers/LoggersManager.html">LoggersManager</a>
-interface directly. To ensure your implementation is used instead of the default, add the
-<a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the
-value being the default implementation.</p>
+<p>To override the default behavior for the loggers manager, either extend the default implementation (<a href="../api/io/micronaut/management/endpoint/loggers/impl/DefaultLoggersManager.html">DefaultLoggersManager</a>) or implement the <a href="../api/io/micronaut/management/endpoint/loggers/LoggersManager.html">LoggersManager</a> interface directly. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the default implementation.</p>
 </div>
 <div class="paragraph">
 <p>The logging system
@@ -31829,14 +31806,7 @@ is responsible for processing requests from the loggers manager against a partic
 library (e.g. logback, log4j, etc.)</p>
 </div>
 <div class="paragraph">
-<p>The current default implementation for the logging system is
-<a href="../api/io/micronaut/management/endpoint/loggers/impl/LogbackLoggingSystem.html">LogbackLoggingSystem</a>,
-which works with the <a href="https://logback.qos.ch/">logback</a> logging framework. Additional logging systems will
-be implemented in future revisions of Micronaut. For custom logging system behavior, implement
-the <a href="../api/io/micronaut/management/endpoint/loggers/LoggingSystem.html">LoggingSystem</a> interface directly.
-To ensure your implementation is used instead of the default, add the
-<a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the
-value being the default implementation.</p>
+<p>The current default implementation for the logging system is <a href="../api/io/micronaut/management/endpoint/loggers/impl/LogbackLoggingSystem.html">LogbackLoggingSystem</a>, which works with the <a href="https://logback.qos.ch/">logback</a> logging framework. Additional logging systems will be implemented in future revisions of Micronaut. For custom logging system behavior, implement the <a href="../api/io/micronaut/management/endpoint/loggers/LoggingSystem.html">LoggingSystem</a> interface directly. To ensure your implementation is used instead of the default, add the <a href="../api/io/micronaut/context/annotation/Replaces.html">@Replaces</a> annotation to your class with the value being the default implementation.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31902,7 +31872,7 @@ public class CustomLoggingSystem implements LoggingSystem {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default, the stop endpoint is disabled and needs to be explicitly enabled to be used.
+By default, the stop endpoint is disabled and must be explicitly enabled to be used.
 </td>
 </tr>
 </table>
@@ -31930,7 +31900,7 @@ By default, the stop endpoint is disabled and needs to be explicitly enabled to 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Properties that may contain sensitive data will be masked.
+Properties that may contain sensitive data are masked.
 </td>
 </tr>
 </table>
