@@ -838,6 +838,60 @@ class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">
 </div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_data">Micronaut Data</h3>
+<div class="sect3">
+<h4 id="_support_for_java_14_records_with_jdbc">Support for Java 14+ Records with JDBC</h4>
+<div class="paragraph">
+<p>Micronaut Data JDBC now <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/#javaRecords">supports using Java 14+ records to represent persistent entities</a>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.data.annotation.*;
+import java.util.Date;
+
+@MappedEntity
+record Book(
+        @Id @GeneratedValue @Nullable Long id,
+        @DateCreated @Nullable Date dateCreated,
+        String title,
+        int pages) {
+    Book(String title, int pages) {
+        this(null, null, title, pages)
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_persistence_events_support">Persistence Events Support</h4>
+<div class="paragraph">
+<p>Micronaut Data JPA, JDBC and R2DBC now support <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/#entityEvents">persistence events</a> on either entities or Micronaut beans. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
+
+import io.micronaut.data.annotation.event.PrePersist;
+import javax.inject.Singleton;
+
+@Singleton
+public class AccountUsernameValidator {
+    @PrePersist
+    void validateUsername(Account account) {
+        final String username = account.getUsername();
+        if (username == null || !username.matches("[a-z0-9]+")) {
+            throw new IllegalArgumentException("Invalid username");
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_cloud_features">Cloud Features</h3>
 <div class="sect3">
 <h4 id="_easier_configuration_of_oracle_cloud_autonomous_database">Easier Configuration of Oracle Cloud Autonomous Database</h4>
@@ -867,6 +921,15 @@ class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">
 <ul>
 <li>
 <p>Micronaut Oracle Cloud <code>1.1.1</code> &#8594; <code>1.2.1</code></p>
+</li>
+<li>
+<p>Micronaut Data <code>2.2.4</code> &#8594; <code>2.3.0</code></p>
+</li>
+<li>
+<p>Micronaut R2DBC <code>1.0.1</code> &#8594; <code>1.1.0</code></p>
+</li>
+<li>
+<p>Micronaut Kubernetes <code>2.2.0</code> &#8594; <code>2.3.0</code></p>
 </li>
 </ul>
 </div>
