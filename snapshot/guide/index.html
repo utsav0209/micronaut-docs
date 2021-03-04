@@ -33692,6 +33692,12 @@ Previously snapshots were published to Bintray, however due to JFrog shutting th
 <p>This section documents breaking changes between Micronaut 1.x and Micronaut 2.x</p>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_2_4">Micronaut 2.4</h3>
+<div class="paragraph">
+<p>Methods annotated with <code>@CircuitBreaker</code> that used the <code>includes</code> or <code>excludes</code> members were not functioning correctly. The circuit breaker was opening for exceptions that did not match the supplied exception types. This has been changed to correctly respect the includes and excludes.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_2_3">Micronaut 2.3</h3>
 <div class="paragraph">
 <p>The <code>micronaut.server.multipart.enabled</code> setting previously was not respected for the Netty server implementation. The setting is now honored and if explicitly set to false, all multipart requests will be rejected.</p>
