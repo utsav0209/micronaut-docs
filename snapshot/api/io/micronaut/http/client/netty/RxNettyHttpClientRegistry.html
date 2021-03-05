@@ -141,7 +141,7 @@ implements java.lang.AutoCloseable, <a href="../../../../../io/micronaut/http/cl
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/RxNettyHttpClientRegistry.html#RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">RxNettyHttpClientRegistry</a></span>(<a href="../../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;defaultHttpClientConfiguration,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/http/client/netty/RxNettyHttpClientRegistry.html#RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-java.util.List-">RxNettyHttpClientRegistry</a></span>(<a href="../../../../../io/micronaut/http/client/HttpClientConfiguration.html" title="class in io.micronaut.http.client">HttpClientConfiguration</a>&nbsp;defaultHttpClientConfiguration,
                          <a href="../../../../../io/micronaut/http/filter/HttpClientFilterResolver.html" title="interface in io.micronaut.http.filter">HttpClientFilterResolver</a>&nbsp;httpClientFilterResolver,
                          <a href="../../../../../io/micronaut/http/client/LoadBalancerResolver.html" title="interface in io.micronaut.http.client">LoadBalancerResolver</a>&nbsp;loadBalancerResolver,
                          <a href="../../../../../io/micronaut/http/client/netty/ssl/NettyClientSslBuilder.html" title="class in io.micronaut.http.client.netty.ssl">NettyClientSslBuilder</a>&nbsp;nettyClientSslBuilder,
@@ -149,7 +149,8 @@ implements java.lang.AutoCloseable, <a href="../../../../../io/micronaut/http/cl
                          <a href="../../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
                          <a href="../../../../../io/micronaut/http/netty/channel/EventLoopGroupRegistry.html" title="interface in io.micronaut.http.netty.channel">EventLoopGroupRegistry</a>&nbsp;eventLoopGroupRegistry,
                          <a href="../../../../../io/micronaut/http/netty/channel/EventLoopGroupFactory.html" title="interface in io.micronaut.http.netty.channel">EventLoopGroupFactory</a>&nbsp;eventLoopGroupFactory,
-                         <a href="../../../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;beanContext)</code>
+                         <a href="../../../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;beanContext,
+                         java.util.List&lt;<a href="../../../../../io/micronaut/scheduling/instrument/InvocationInstrumenterFactory.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenterFactory</a>&gt;&nbsp;invocationInstrumenterFactories)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -230,7 +231,7 @@ implements java.lang.AutoCloseable, <a href="../../../../../io/micronaut/http/cl
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-">
+<a name="RxNettyHttpClientRegistry-io.micronaut.http.client.HttpClientConfiguration-io.micronaut.http.filter.HttpClientFilterResolver-io.micronaut.http.client.LoadBalancerResolver-io.micronaut.http.client.netty.ssl.NettyClientSslBuilder-java.util.concurrent.ThreadFactory-io.micronaut.http.codec.MediaTypeCodecRegistry-io.micronaut.http.netty.channel.EventLoopGroupRegistry-io.micronaut.http.netty.channel.EventLoopGroupFactory-io.micronaut.context.BeanContext-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -244,7 +245,8 @@ implements java.lang.AutoCloseable, <a href="../../../../../io/micronaut/http/cl
                                  <a href="../../../../../io/micronaut/http/codec/MediaTypeCodecRegistry.html" title="interface in io.micronaut.http.codec">MediaTypeCodecRegistry</a>&nbsp;codecRegistry,
                                  <a href="../../../../../io/micronaut/http/netty/channel/EventLoopGroupRegistry.html" title="interface in io.micronaut.http.netty.channel">EventLoopGroupRegistry</a>&nbsp;eventLoopGroupRegistry,
                                  <a href="../../../../../io/micronaut/http/netty/channel/EventLoopGroupFactory.html" title="interface in io.micronaut.http.netty.channel">EventLoopGroupFactory</a>&nbsp;eventLoopGroupFactory,
-                                 <a href="../../../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;beanContext)</pre>
+                                 <a href="../../../../../io/micronaut/context/BeanContext.html" title="interface in io.micronaut.context">BeanContext</a>&nbsp;beanContext,
+                                 java.util.List&lt;<a href="../../../../../io/micronaut/scheduling/instrument/InvocationInstrumenterFactory.html" title="interface in io.micronaut.scheduling.instrument">InvocationInstrumenterFactory</a>&gt;&nbsp;invocationInstrumenterFactories)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -257,6 +259,7 @@ implements java.lang.AutoCloseable, <a href="../../../../../io/micronaut/http/cl
 <dd><code>eventLoopGroupRegistry</code> - The event loop group registry</dd>
 <dd><code>eventLoopGroupFactory</code> - The event loop group factory</dd>
 <dd><code>beanContext</code> - The bean context</dd>
+<dd><code>invocationInstrumenterFactories</code> - The invocation instrumenter factories</dd>
 </dl>
 </li>
 </ul>
