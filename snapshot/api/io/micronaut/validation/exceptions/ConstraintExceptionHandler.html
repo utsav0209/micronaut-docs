@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;<a href="../../../../io/micronaut/http/hateoas/JsonError.html" title="class in io.micronaut.http.hateoas">JsonError</a>&gt;&gt;</dd>
+<dd><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;?&gt;&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
  <a href="../../../../io/micronaut/context/annotation/Requires.html" title="annotation in io.micronaut.context.annotation">@Requires</a>(<a href="../../../../io/micronaut/context/annotation/Requires.html#classes--">classes</a>={javax.validation.ConstraintViolationException.class,<a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler.class</a>})
 public class <span class="typeNameLabel">ConstraintExceptionHandler</span>
 extends java.lang.Object
-implements <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;<a href="../../../../io/micronaut/http/hateoas/JsonError.html" title="class in io.micronaut.http.hateoas">JsonError</a>&gt;&gt;</pre>
+implements <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;?&gt;&gt;</pre>
 <div class="block">Default <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions"><code>ExceptionHandler</code></a> for <code>ConstraintViolationException</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -142,10 +142,17 @@ implements <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHan
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#ConstraintExceptionHandler--">ConstraintExceptionHandler</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#ConstraintExceptionHandler--">ConstraintExceptionHandler</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#ConstraintExceptionHandler-io.micronaut.jackson.JacksonConfiguration-">ConstraintExceptionHandler</a></span>(<a href="../../../../io/micronaut/jackson/JacksonConfiguration.html" title="class in io.micronaut.jackson">JacksonConfiguration</a>&nbsp;jacksonConfiguration)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#ConstraintExceptionHandler-io.micronaut.http.server.exceptions.response.ErrorResponseProcessor-">ConstraintExceptionHandler</a></span>(<a href="../../../../io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html" title="interface in io.micronaut.http.server.exceptions.response">ErrorResponseProcessor</a>&lt;?&gt;&nbsp;responseProcessor)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#ConstraintExceptionHandler-io.micronaut.jackson.JacksonConfiguration-">ConstraintExceptionHandler</a></span>(<a href="../../../../io/micronaut/jackson/JacksonConfiguration.html" title="class in io.micronaut.jackson">JacksonConfiguration</a>&nbsp;jacksonConfiguration)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 </table>
 </li>
@@ -169,7 +176,7 @@ implements <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHan
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;<a href="../../../../io/micronaut/http/hateoas/JsonError.html" title="class in io.micronaut.http.hateoas">JsonError</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/validation/exceptions/ConstraintExceptionHandler.html#handle-io.micronaut.http.HttpRequest-javax.validation.ConstraintViolationException-">handle</a></span>(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
       javax.validation.ConstraintViolationException&nbsp;exception)</code>
 <div class="block">Handles an exception and returns the result.</div>
@@ -203,17 +210,30 @@ implements <a href="../../../../io/micronaut/http/server/exceptions/ExceptionHan
 <ul class="blockList">
 <li class="blockList">
 <h4>ConstraintExceptionHandler</h4>
-<pre>public&nbsp;ConstraintExceptionHandler()</pre>
+<pre>@Deprecated
+public&nbsp;ConstraintExceptionHandler()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="ConstraintExceptionHandler-io.micronaut.jackson.JacksonConfiguration-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ConstraintExceptionHandler</h4>
+<pre>@Deprecated
+public&nbsp;ConstraintExceptionHandler(<a href="../../../../io/micronaut/jackson/JacksonConfiguration.html" title="class in io.micronaut.jackson">JacksonConfiguration</a>&nbsp;jacksonConfiguration)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</li>
+</ul>
+<a name="ConstraintExceptionHandler-io.micronaut.http.server.exceptions.response.ErrorResponseProcessor-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ConstraintExceptionHandler</h4>
 <pre>@Inject
-public&nbsp;ConstraintExceptionHandler(<a href="../../../../io/micronaut/jackson/JacksonConfiguration.html" title="class in io.micronaut.jackson">JacksonConfiguration</a>&nbsp;jacksonConfiguration)</pre>
+public&nbsp;ConstraintExceptionHandler(<a href="../../../../io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html" title="interface in io.micronaut.http.server.exceptions.response">ErrorResponseProcessor</a>&lt;?&gt;&nbsp;responseProcessor)</pre>
 </li>
 </ul>
 </li>
@@ -230,13 +250,13 @@ public&nbsp;ConstraintExceptionHandler(<a href="../../../../io/micronaut/jackson
 <ul class="blockList">
 <li class="blockList">
 <h4>handle</h4>
-<pre>public&nbsp;<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;<a href="../../../../io/micronaut/http/hateoas/JsonError.html" title="class in io.micronaut.http.hateoas">JsonError</a>&gt;&nbsp;handle(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
-                                      javax.validation.ConstraintViolationException&nbsp;exception)</pre>
+<pre>public&nbsp;<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;?&gt;&nbsp;handle(<a href="../../../../io/micronaut/http/HttpRequest.html" title="interface in io.micronaut.http">HttpRequest</a>&nbsp;request,
+                              javax.validation.ConstraintViolationException&nbsp;exception)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html#handle-io.micronaut.http.HttpRequest-T-">ExceptionHandler</a></code></span></div>
 <div class="block">Handles an exception and returns the result.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html#handle-io.micronaut.http.HttpRequest-T-">handle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;<a href="../../../../io/micronaut/http/hateoas/JsonError.html" title="class in io.micronaut.http.hateoas">JsonError</a>&gt;&gt;</code></dd>
+<dd><code><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html#handle-io.micronaut.http.HttpRequest-T-">handle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/http/server/exceptions/ExceptionHandler.html" title="interface in io.micronaut.http.server.exceptions">ExceptionHandler</a>&lt;javax.validation.ConstraintViolationException,<a href="../../../../io/micronaut/http/HttpResponse.html" title="interface in io.micronaut.http">HttpResponse</a>&lt;?&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>request</code> - The request</dd>
 <dd><code>exception</code> - The exception type</dd>

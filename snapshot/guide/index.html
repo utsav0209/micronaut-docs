@@ -258,6 +258,20 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-errorHandling"><a href="#errorHandling"><strong>6.17</strong><span>Error Handling</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-statusHandlers"><a href="#statusHandlers"><strong>6.17.1</strong><span>Status Handlers</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-localErrorHandling"><a href="#localErrorHandling"><strong>6.17.2</strong><span>Local Error Handling</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-globalErrorHandling"><a href="#globalErrorHandling"><strong>6.17.3</strong><span>Global Error Handling</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-exceptionHandler"><a href="#exceptionHandler"><strong>6.17.4</strong><span>ExceptionHandler</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-builtInExceptionHandlers"><a href="#builtInExceptionHandlers"><strong>6.17.4.1</strong><span>Built-In Exception Handlers</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-customExceptionHandler"><a href="#customExceptionHandler"><strong>6.17.4.2</strong><span>Custom Exception Handler</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-errorFormatting"><a href="#errorFormatting"><strong>6.17.5</strong><span>Error Formatting</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-apiVersioning"><a href="#apiVersioning"><strong>6.18</strong><span>API Versioning</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-formData"><a href="#formData"><strong>6.19</strong><span>Handling Form Data</span></a></div>
@@ -834,6 +848,12 @@ class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">
 </div>
 <div class="paragraph">
 <p>Multiple <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a> types can bind to a single advise annotation and any given interceptor can bind to multiple annotations.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_json_error_responses">JSON Error Responses</h4>
+<div class="paragraph">
+<p>In previous versions of Micronaut, to control the format of error response bodies, it required replacing all of the existing <a href="../api/io/micronaut/http/server/exceptions/ExceptionHanlder.html">ExceptionHanlder</a> instances. In Micronaut 2.4, the logic to create error response bodies has been moved to a single bean that implements <a href="../api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html">ErrorResponseProcessor</a>. Now instead of having to replace many beans to have a consistent format, only a single bean needs to be replaced. The default implementation behaves the same as in previous versions to maintain backward compatibility.</p>
 </div>
 </div>
 </div>
@@ -16320,14 +16340,22 @@ Bean injection is supported in custom constraints with the Hibernate Validator c
 <div class="paragraph">
 <p>Sometimes with distributed applications, bad things happen. Having a good way to handle errors is important.</p>
 </div>
-<div class="sect1">
-<h2 id="_status_handlers">Status Handlers</h2>
-<div class="sectionbody">
+
+<h2 id="statusHandlers"><a class="anchor" href="#statusHandlers"></a>6.17.1 Status Handlers</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/statusHandlers.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
-<p>The <a href="../api/io/micronaut/http/annotation/Error.html">Error</a> annotation supports defining either an exception class or an HTTP status. Methods decorated with the annotation are invoked as the result of other controller methods. The annotation also supports the notion of global and local, local being the default.</p>
+<p>The <a href="../api/io/micronaut/http/annotation/Error.html">@Error</a> annotation supports defining either an exception class or an HTTP status. Methods annotated with <a href="../api/io/micronaut/http/annotation/Error.html">@Error</a> must be defined with in a class annotated with <a href="../api/io/micronaut/http/annotation/Controller.html">@Controller</a>. The annotation also supports the notion of global and local, local being the default.</p>
 </div>
 <div class="paragraph">
-<p>Local error handlers only respond to methods defined in the same controller. Global error handlers can respond to any method in any controller. A local error handler is always searched for first when resolving which handler to execute.</p>
+<p>Local error handlers only respond to exceptions thrown as a result of the route being matched to another method in the same controller. Global error handlers can be invoked as a result of any thrown exception. A local error handler is always searched for first when resolving which handler to execute.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -16341,11 +16369,17 @@ When defining an error handler for an exception, you can specify the exception i
 </tr>
 </table>
 </div>
+
+<h2 id="localErrorHandling"><a class="anchor" href="#localErrorHandling"></a>6.17.2 Local Error Handling</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/localErrorHandling.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_local_error_handling">Local Error Handling</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
 <p>For example, the following method handles JSON parse exceptions from Jackson for the scope of the declaring controller:</p>
 </div>
@@ -16459,11 +16493,17 @@ When defining an error handler for an exception, you can specify the exception i
 </tr>
 </table>
 </div>
+
+<h2 id="globalErrorHandling"><a class="anchor" href="#globalErrorHandling"></a>6.17.3 Global Error Handling</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/globalErrorHandling.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_global_error_handling">Global Error Handling</h2>
-<div class="sectionbody">
+
+
 <div class="listingblock multi-language-sample">
 <div class="title">Global error handler</div>
 <div class="content">
@@ -16507,7 +16547,7 @@ When defining an error handler for an exception, you can specify the exception i
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/http/annotation/Error.html">Error</a> declares the method a global error handler</td>
+<td>The <a href="../api/io/micronaut/http/annotation/Error.html">@Error</a> declares the method a global error handler</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -16562,7 +16602,7 @@ When defining an error handler for an exception, you can specify the exception i
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../api/io/micronaut/http/annotation/Error.html">Error</a> declares which <a href="../api/io/micronaut/http/HttpStatus.html">HttpStatus</a> error code to handle (in this case 404)</td>
+<td>The <a href="../api/io/micronaut/http/annotation/Error.html">@Error</a> declares which <a href="../api/io/micronaut/http/HttpStatus.html">HttpStatus</a> error code to handle (in this case 404)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -16581,19 +16621,114 @@ When defining an error handler for an exception, you can specify the exception i
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-A few things to note about the <a href="../api/io/micronaut/http/annotation/Error.html">Error</a> annotation. You cannot declare identical global <code>@Error</code> annotations. Identical non-global <code>@Error</code> annotations cannot be declared in the same controller. If an <code>@Error</code> annotation with the same parameter exists as global and another as local, the local one takes precedence.
+A few things to note about the <a href="../api/io/micronaut/http/annotation/Error.html">@Error</a> annotation. You cannot declare identical global <code>@Error</code> annotations. Identical non-global <code>@Error</code> annotations cannot be declared in the same controller. If an <code>@Error</code> annotation with the same parameter exists as global and another as local, the local one takes precedence.
 </td>
 </tr>
 </table>
 </div>
+
+<h2 id="exceptionHandler"><a class="anchor" href="#exceptionHandler"></a>6.17.4 ExceptionHandler</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/exceptionHandler.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_exceptionhandler">ExceptionHandler</h2>
-<div class="sectionbody">
+
+
 <div class="paragraph">
-<p>Additionally, you can implement an <a href="../api/io/micronaut/http/server/exceptions/ExceptionHandler.html">ExceptionHandler</a>, a generic hook for handling exceptions that occur during execution of an HTTP request.</p>
+<p>Alternatively, you can implement an <a href="../api/io/micronaut/http/server/exceptions/ExceptionHandler.html">ExceptionHandler</a>, a generic hook for handling exceptions that occur during execution of an HTTP request.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+An <code>@Error</code> annotation capturing an exception has precedence over an implementation of <code>ExceptionHandler</code> capturing the same exception.
+</td>
+</tr>
+</table>
+</div>
+
+<h2 id="builtInExceptionHandlers"><a class="anchor" href="#builtInExceptionHandlers"></a>6.17.4.1 Built-In Exception Handlers</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/exceptionHandler/builtInExceptionHandlers.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut ships with several built-in handlers:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handler</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>javax.validation.ConstraintViolationException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/validation/exceptions/ConstraintExceptionHandler.html">ConstraintExceptionHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/exceptions/ContentLengthExceededException.html">ContentLengthExceededException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/ContentLengthExceededHandler.html">ContentLengthExceededHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/core/convert/exceptions/ConversionErrorException.html">ConversionErrorException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/ConversionErrorHandler.html">ConversionErrorHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/web/router/exceptions/DuplicateRouteException.html">DuplicateRouteException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/netty/converters/DuplicateRouteHandler.html">DuplicateRouteHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/exceptions/HttpStatusException.html">HttpStatusException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/HttpStatusHandler.html">HttpStatusHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>com.fasterxml.jackson.core.JsonProcessingException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/JsonExceptionHandler.html">JsonExceptionHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.net.URISyntaxException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/URISyntaxHandler.html">URISyntaxHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/core/bind/exceptions/UnsatisfiedArgumentException.html">UnsatisfiedArgumentException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/exceptions/UnsatisfiedArgumentHandler.html">UnsatisfiedArgumentHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/web/router/exceptions/UnsatisfiedRouteException.html">UnsatisfiedRouteException</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/netty/converters/UnsatisfiedRouteHandler.html">UnsatisfiedRouteHandler</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.grails.datastore.mapping.validation.ValidationException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/validation/exceptions/ValidationExceptionHandler.html">ValidationExceptionHandler</a></p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="customExceptionHandler"><a class="anchor" href="#customExceptionHandler"></a>6.17.4.2 Custom Exception Handler</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/exceptionHandler/customExceptionHandler.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
 <p>Imagine your e-commerce app throws an <code>OutOfStockException</code> when a book is out of stock:</p>
 </div>
@@ -16660,7 +16795,7 @@ class BookController {
 <p>The server returns a 500 (Internal Server Error) status code if you don&#8217;t handle the exception.</p>
 </div>
 <div class="paragraph">
-<p>To respond 200 OK with 0 (stock level) as the response body when the <code>OutOfStockException</code> is thrown, you can register a <code>ExceptionHandler</code>:</p>
+<p>To respond with 400 Bad Request as the response when the <code>OutOfStockException</code> is thrown, you can register a <code>ExceptionHandler</code>:</p>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
@@ -16669,9 +16804,18 @@ class BookController {
 @Requires(classes = {OutOfStockException.class, ExceptionHandler.class})
 public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
 
+    private final ErrorResponseProcessor&lt;?&gt; errorResponseProcessor;
+
+    public OutOfStockExceptionHandler(ErrorResponseProcessor&lt;?&gt; errorResponseProcessor) {
+        this.errorResponseProcessor = errorResponseProcessor;
+    }
+
     @Override
     public HttpResponse handle(HttpRequest request, OutOfStockException e) {
-        return HttpResponse.ok(0);
+        return errorResponseProcessor.processResponse(ErrorContext.builder(request)
+                .cause(e)
+                .errorMessage("No stock available")
+                .build(), HttpResponse.badRequest()); <b class="conum">(1)</b>
     }
 }</code></pre>
 </div>
@@ -16683,9 +16827,18 @@ public class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStoc
 @Requires(classes = [OutOfStockException, ExceptionHandler])
 class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockException, HttpResponse&gt; {
 
+    private final ErrorResponseProcessor&lt;?&gt; errorResponseProcessor
+
+    OutOfStockExceptionHandler(ErrorResponseProcessor&lt;?&gt; errorResponseProcessor) {
+        this.errorResponseProcessor = errorResponseProcessor
+    }
+
     @Override
     HttpResponse handle(HttpRequest request, OutOfStockException e) {
-        HttpResponse.ok(0)
+        errorResponseProcessor.processResponse(ErrorContext.builder(request)
+                .cause(e)
+                .errorMessage("No stock available")
+                .build(), HttpResponse.badRequest()) <b class="conum">(1)</b>
     }
 }</code></pre>
 </div>
@@ -16697,27 +16850,46 @@ class OutOfStockExceptionHandler implements ExceptionHandler&lt;OutOfStockExcept
 @Requirements(
     Requires(classes = [OutOfStockException::class, ExceptionHandler::class])
 )
-class OutOfStockExceptionHandler : ExceptionHandler&lt;OutOfStockException, HttpResponse&lt;*&gt;&gt; {
+class OutOfStockExceptionHandler(private val errorResponseProcessor: ErrorResponseProcessor&lt;Any&gt;) :
+    ExceptionHandler&lt;OutOfStockException, HttpResponse&lt;*&gt;&gt; {
 
     override fun handle(request: HttpRequest&lt;*&gt;, exception: OutOfStockException): HttpResponse&lt;*&gt; {
-        return HttpResponse.ok(0)
+        return errorResponseProcessor.processResponse(
+                ErrorContext.builder(request)
+                    .cause(exception)
+                    .errorMessage("No stock available")
+                    .build(), HttpResponse.badRequest&lt;Any&gt;()) <b class="conum">(1)</b>
     }
 }</code></pre>
 </div>
 </div>
-<div class="admonitionblock important">
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-An <code>@Error</code> annotation capturing an exception has precedence over an implementation of <code>ExceptionHandler</code> capturing the same exception.
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The default <a href="../api/io/micronaut/http/server/exceptions/format/JsonErrorResponseFactory.html">JsonErrorResponseFactory</a> is used to create the body of the response</td>
 </tr>
 </table>
 </div>
+
+<h2 id="errorFormatting"><a class="anchor" href="#errorFormatting"></a>6.17.5 Error Formatting</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-core/edit/2.4.x
+/src/main/docs/guide/httpServer/errorHandling/errorFormatting.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
+
+
+<div class="paragraph">
+<p>Micronaut produces error response bodies via beans of type <a href="../api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html">ErrorResponseProcessor</a>.</p>
+</div>
+<div class="paragraph">
+<p>The default response body is <a href="https://github.com/blongden/vnd.error">vnd.error</a>, however you can create your own implementation of type <a href="../api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html">ErrorResponseProcessor</a> to control the responses.</p>
+</div>
+<div class="paragraph">
+<p>If customization of the response other than items related to the errors is desired, the exception handler that is handling the exception needs to be overridden.</p>
 </div>
 
 <h2 id="apiVersioning"><a class="anchor" href="#apiVersioning"></a>6.18 API Versioning</h2>
