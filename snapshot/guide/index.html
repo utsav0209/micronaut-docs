@@ -673,358 +673,44 @@
 <div class="sect2">
 <h3 id="_core_features">Core Features</h3>
 <div class="sect3">
-<h4 id="_jakarta_inject">Jakarta Inject</h4>
+<h4 id="_support_for_injecting_by_generic_type_arguments">Support for Injecting by Generic Type Arguments</h4>
 <div class="paragraph">
-<p>The <code>jakarta.inject</code> inject annotations are now supported as an alternative to <code>javax.inject</code>. Micronaut 3 will change the default inject annotations to Jakarta, however the javax annotations will continue to be supported if added to your build explicitly.</p>
-</div>
-<div class="paragraph">
-<p>Micronaut 3 will change the bean context API to return our custom provider contract, <a href="../api/io/micronaut/context/BeanProvider.html">BeanProvider</a>. We suggest existing applications to change to use that interface instead of <code>javax.inject.Provider</code>, however both the <code>jakarta.inject.Provider</code> and <code>javax.inject.Provider</code> interfaces will continue to be supported.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_core_nullability_annotations">Core Nullability Annotations</h4>
-<div class="paragraph">
-<p>With the future of JSR-305 unclear and issues with regards to the module system with existing solutions, Micronaut 2.4 will replace usages of Spotbugs with core nullability annotations: <a href="../api/io/micronaut/core/annotation/Nullable.html">@Nullable</a> and <a href="../api/io/micronaut/core/annotation/NotNull.html">@NotNull</a>.</p>
-</div>
-<div class="paragraph">
-<p>Existing applications should switch to using these annotations. If other annotations are preferable, the dependency should be added explicitly to your build because no third party <code>Nullable</code> or <code>NonNull</code> annotations will be available transitively in the next major version.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improvements_to_interceptor_binding">Improvements to Interceptor Binding</h4>
-<div class="paragraph">
-<p>Micronaut&#8217;s support for AOP interceptors has been improved allowing interceptors to be attached to any annotation through the use of <a href="../api/io/micronaut/inject/annotation/AnnotationMapper.html">AnnotationMapper</a> instances. It is also now possible to bind multiple <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a> instances to a single annotation instead of there being a 1-to-1 mapping between annotation and interceptor.</p>
-</div>
-<div class="paragraph">
-<p>From 2.4.x onwards the recommending way to define AOP advise is to use the <a href="../api/io/micronaut/aop/InterceptorBinding.html">@InterceptorBinding</a> annotation on the annotation you wish to trigger AOP advise:</p>
+<p>Micronaut and now resolve the correct bean to inject based on the generic type arguments specifed on the injection point:</p>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Around Advice Annotation Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.aop.Around;
-import java.lang.annotation.*;
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-@Documented
-@Retention(RUNTIME) <b class="conum">(1)</b>
-@Target({TYPE, METHOD}) <b class="conum">(2)</b>
-@Around <b class="conum">(3)</b>
-public @interface NotNull {
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">    @Inject
+    public Vehicle(Engine&lt;V8&gt; engine) {
+        this.engine = engine;
+    }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Around Advice Annotation Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.Around
-import java.lang.annotation.*
-import static java.lang.annotation.ElementType.*
-import static java.lang.annotation.RetentionPolicy.RUNTIME
-
-@Documented
-@Retention(RUNTIME) <b class="conum">(1)</b>
-@Target([TYPE, METHOD]) <b class="conum">(2)</b>
-@Around <b class="conum">(3)</b>
-@interface NotNull {
-}</code></pre>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Inject
+    Vehicle(Engine&lt;V8&gt; engine) {
+        this.engine = engine
+    }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
-<div class="title">Around Advice Annotation Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.Around
-import kotlin.annotation.AnnotationRetention.RUNTIME
-import kotlin.annotation.AnnotationTarget.CLASS
-import kotlin.annotation.AnnotationTarget.FILE
-import kotlin.annotation.AnnotationTarget.FUNCTION
-import kotlin.annotation.AnnotationTarget.PROPERTY_GETTER
-import kotlin.annotation.AnnotationTarget.PROPERTY_SETTER
-
-@MustBeDocumented
-@Retention(RUNTIME) <b class="conum">(1)</b>
-@Target(CLASS, FILE, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER) <b class="conum">(2)</b>
-@Around <b class="conum">(3)</b>
-annotation class NotNull</code></pre>
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class Vehicle(val engine: Engine&lt;V8&gt;) {</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Then use <a href="../api/io/micronaut/aop/InterceptorBean.html">@InterceptorBean</a> on the <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a> you wish to bind to the above advise:</p>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">MethodInterceptor Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">import io.micronaut.aop.InterceptorBean;
-import io.micronaut.aop.MethodInterceptor;
-import io.micronaut.aop.MethodInvocationContext;
-import io.micronaut.core.type.MutableArgumentValue;
-
-import javax.inject.Singleton;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
-@Singleton
-@InterceptorBean(NotNull.class) <b class="conum">(1)</b>
-public class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(2)</b>
-    @Override
-    public Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.getParameters()
-            .entrySet()
-            .stream()
-            .filter(entry -&gt; {
-                MutableArgumentValue&lt;?&gt; argumentValue = entry.getValue();
-                return Objects.isNull(argumentValue.getValue());
-            })
-            .findFirst(); <b class="conum">(3)</b>
-        if (nullParam.isPresent()) {
-            throw new IllegalArgumentException("Null parameter [" + nullParam.get().getKey() + "] not allowed"); <b class="conum">(4)</b>
-        }
-        return context.proceed(); <b class="conum">(5)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">MethodInterceptor Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import io.micronaut.aop.InterceptorBean
-import io.micronaut.aop.MethodInterceptor
-import io.micronaut.aop.MethodInvocationContext
-import io.micronaut.core.type.MutableArgumentValue
-
-import javax.inject.Singleton
-
-@Singleton
-@InterceptorBean(NotNull) <b class="conum">(1)</b>
-class NotNullInterceptor implements MethodInterceptor&lt;Object, Object&gt; { <b class="conum">(2)</b>
-    @Override
-    Object intercept(MethodInvocationContext&lt;Object, Object&gt; context) {
-        Optional&lt;Map.Entry&lt;String, MutableArgumentValue&lt;?&gt;&gt;&gt; nullParam = context.parameters
-            .entrySet()
-            .stream()
-            .filter({entry -&gt;
-                MutableArgumentValue&lt;?&gt; argumentValue = entry.value
-                return Objects.isNull(argumentValue.value)
-            })
-            .findFirst() <b class="conum">(3)</b>
-        if (nullParam.present) {
-            throw new IllegalArgumentException("Null parameter [${nullParam.get().key}] not allowed") <b class="conum">(4)</b>
-        }
-        return context.proceed() <b class="conum">(5)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">MethodInterceptor Example</div>
-<div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import io.micronaut.aop.InterceptorBean
-import io.micronaut.aop.MethodInterceptor
-import io.micronaut.aop.MethodInvocationContext
-import java.util.Objects
-import javax.inject.Singleton
-
-@Singleton
-@InterceptorBean(NotNull::class) <b class="conum">(1)</b>
-class NotNullInterceptor : MethodInterceptor&lt;Any, Any&gt; { <b class="conum">(2)</b>
-    override fun intercept(context: MethodInvocationContext&lt;Any, Any&gt;): Any {
-        val nullParam = context.parameters
-                .entries
-                .stream()
-                .filter { entry -&gt;
-                    val argumentValue = entry.value
-                    Objects.isNull(argumentValue.value)
-                }
-                .findFirst() <b class="conum">(3)</b>
-        return if (nullParam.isPresent) {
-            throw IllegalArgumentException("Null parameter [${nullParam.get().key}] not allowed") <b class="conum">(4)</b>
-        } else {
-            context.proceed() <b class="conum">(5)</b>
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Multiple <a href="../api/io/micronaut/aop/MethodInterceptor.html">MethodInterceptor</a> types can bind to a single advise annotation and any given interceptor can bind to multiple annotations.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_json_error_responses">JSON Error Responses</h4>
-<div class="paragraph">
-<p>In previous versions of Micronaut, to control the format of error response bodies, it required replacing all of the existing <a href="../api/io/micronaut/http/server/exceptions/ExceptionHanlder.html">ExceptionHanlder</a> instances. In Micronaut 2.4, the logic to create error response bodies has been moved to a single bean that implements <a href="../api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html">ErrorResponseProcessor</a>. Now instead of having to replace many beans to have a consistent format, only a single bean needs to be replaced. The default implementation behaves the same as in previous versions to maintain backward compatibility.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_micronaut_data">Micronaut Data</h3>
-<div class="sect3">
-<h4 id="_support_for_java_14_records_with_jdbc">Support for Java 14+ Records with JDBC</h4>
-<div class="paragraph">
-<p>Micronaut Data JDBC now <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/#javaRecords">supports using Java 14+ records to represent persistent entities</a>, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.data.annotation.*;
-import java.util.Date;
-
-@MappedEntity
-record Book(
-        @Id @GeneratedValue @Nullable Long id,
-        @DateCreated @Nullable Date dateCreated,
-        String title,
-        int pages) {
-    Book(String title, int pages) {
-        this(null, null, title, pages)
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_persistence_events_support">Persistence Events Support</h4>
-<div class="paragraph">
-<p>Micronaut Data JPA, JDBC and R2DBC now support <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/#entityEvents">persistence events</a> on either entities or Micronaut beans. For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package example;
-
-import io.micronaut.data.annotation.event.PrePersist;
-import javax.inject.Singleton;
-
-@Singleton
-public class AccountUsernameValidator {
-    @PrePersist
-    void validateUsername(Account account) {
-        final String username = account.getUsername();
-        if (username == null || !username.matches("[a-z0-9]+")) {
-            throw new IllegalArgumentException("Invalid username");
-        }
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_integration_with_oracle_coherence_ce">Integration with Oracle Coherence CE</h3>
-<div class="paragraph">
-<p>We are pleased to announce a first milestone release of Micronaut integration with Oracle Coherence Community Edition, which makes implementation of Micronaut applications with a Coherence back end a breeze.</p>
-</div>
-<div class="paragraph">
-<p>Below are some of the features supported by the various modules within <code>micronaut-coherence</code> project:</p>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_data_support">Micronaut Data Support</h4>
-<div class="paragraph">
-<p>The <code>micronaut-coherence-data</code> module alows you to use <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#repository">Micronaut Data with Coherence as a back end data store</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_dependency_injection_of_coherence_managed_objects">Dependency Injection of Coherence-managed Objects</h4>
-<div class="paragraph">
-<p>A new <code>micronaut-coherence</code> module provides factories for commonly used Coherence objects, such as <code>Cluster</code>, <code>Session</code>, <code>NamedMap</code>, <code>NamedCache</code>, <code>NamedTopic</code>, and many others, which allows you to <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#injection">easily inject those objects</a> into your application classes.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_listeners_for_coherence_events">Listeners for Coherence Events</h4>
-<div class="paragraph">
-<p>The <code>micronaut-coherence</code> module also provides support for Coherence <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#coherenceEvents">server-</a> and <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#mapEvents">client-side</a> events via Micronaut event listeners.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_messaging_support">Micronaut Messaging Support</h4>
-<div class="paragraph">
-<p>Finally, the <code>micronaut-coherence</code> module provides support for <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#messagingWithTopics">Micronaut Messaging using Coherence Topics</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_caching_support">Micronaut Caching Support</h4>
-<div class="paragraph">
-<p>The <code>micronaut-coherence-cache</code> module adds support for <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#cache">using Coherence as a back end for Micronaut Cache</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_distributed_config_support">Micronaut Distributed Config Support</h4>
-<div class="paragraph">
-<p>The <code>micronaut-coherence-distributed-configuration</code> module adds support for <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#distributedConfiguration">using Coherence as a store for Micronaut Distributed Configuration</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_http_sessions_support">Micronaut HTTP Sessions Support</h4>
-<div class="paragraph">
-<p>The <code>micronaut-coherence-session</code> module adds support for <a href="https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#coherenceHttpSessions">using Coherence as a store for Micronaut HTTP Sessions</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cloud_features">Cloud Features</h3>
-<div class="sect3">
-<h4 id="_easier_configuration_of_oracle_cloud_autonomous_database">Easier Configuration of Oracle Cloud Autonomous Database</h4>
-<div class="paragraph">
-<p>A new <code>micronaut-oraclecloud-atp</code> has been added that makes it easier to <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#autonomousDatabase">automatically download the Oracle Wallet definition and connect to Autonomous Database</a> on Oracle Cloud.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_support_for_oracle_cloud_monitoring_via_micrometer">Support for Oracle Cloud Monitoring via Micrometer</h4>
-<div class="paragraph">
-<p>A new <code>micronaut-oraclecloud-micrometer</code> module has been added that adds support for <a href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#micrometer">exporting Micrometer metrics to Oracle Cloud</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_official_kubernetes_client">Official Kubernetes Client</h4>
-<div class="paragraph">
-<p>With the new <code>micronaut-kubernetes-client</code> module you can now inject apis objects from the <a href="https://github.com/kubernetes-client/java">official Kubernetes Java SDK</a> as regular beans.</p>
-</div>
-<div class="paragraph">
-<p>In Micronaut 3 this new module will be used as primary kubernetes client, making the current one deprecated.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_micronaut_aws">Micronaut AWS</h4>
-<div class="paragraph">
-<p>Micronaut AWS now includes the new AWS SDK v2 that has support for GraalVM out of the box. Every service included in the module like S3, Parameter Store, SES, SQS,&#8230;&#8203; is now compatible with Micronaut-GraalVM integration.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_module_upgrades">Module Upgrades</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Micronaut Oracle Cloud <code>1.1.1</code> &#8594; <code>1.2.1</code></p>
-</li>
-<li>
-<p>Micronaut Data <code>2.2.4</code> &#8594; <code>2.3.0</code></p>
-</li>
-<li>
-<p>Micronaut R2DBC <code>1.0.1</code> &#8594; <code>1.1.0</code></p>
-</li>
-<li>
-<p>Micronaut Kubernetes <code>2.2.0</code> &#8594; <code>2.3.0</code></p>
-</li>
-<li>
-<p>Micronaut AWS <code>2.3.0</code> &#8594; <code>2.4.0</code></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>TODO</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_dependency_upgrades">Dependency Upgrades</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Jaeger Version <code>1.3.1</code> &#8594; <code>1.5.0</code></p>
-</li>
-<li>
-<p>Zipkin Version <code>2.15.0</code> &#8594; <code>2.16.3</code></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>TODO</p>
 </div>
 </div>
 
@@ -2563,6 +2249,251 @@ annotation class V8</code></pre>
 <div class="content">
 <pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Inject constructor(@V8 val engine: Engine) {</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_qualifying_by_generic_type_arguments">Qualifying by Generic Type Arguments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since Micronaut 3.0, it is possible to select which bean to inject based on the generic type arguments of the class or interface. Consider the following example:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface CylinderProvider {
+    int getCylinders();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface CylinderProvider {
+    int getCylinders()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface CylinderProvider {
+    val cylinders: Int
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>CylinderProvider</code> interface provides the number of cylinders.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface Engine&lt;T extends CylinderProvider&gt; { <b class="conum">(1)</b>
+    default int getCylinders() {
+        return getCylinderProvider().getCylinders();
+    }
+
+    default String start() {
+        return "Starting " + getCylinderProvider().getClass().getSimpleName();
+    }
+
+    T getCylinderProvider();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface Engine&lt;T extends CylinderProvider&gt; { <b class="conum">(1)</b>
+    default int getCylinders() { cylinderProvider.cylinders }
+
+    default String start() { "Starting ${cylinderProvider.class.simpleName}" }
+
+    T getCylinderProvider()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">interface Engine&lt;T : CylinderProvider&gt; { <b class="conum">(1)</b>
+    val cylinders: Int
+        get() = cylinderProvider.cylinders
+
+    fun start(): String {
+        return "Starting ${cylinderProvider.javaClass.simpleName}"
+    }
+
+    val cylinderProvider: T
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The engine class defines a generic type argument <code>&lt;T&gt;</code> that must be an instance of <code>CylinderProvider</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can define implementations of the <code>Engine</code> interface with different generic type arguments. For example for a V6 engine:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public class V6 implements CylinderProvider {
+    @Override
+    public int getCylinders() {
+        return 7;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class V6 implements CylinderProvider {
+    @Override
+    int getCylinders() { 7 }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class V6 : CylinderProvider {
+    override val cylinders: Int = 7
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above defines a <code>V6</code> class that implements the <code>CylinderProvider</code> interface.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class V6Engine implements Engine&lt;V6&gt; {  <b class="conum">(1)</b>
+    @Override
+    public V6 getCylinderProvider() {
+        return new V6();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class V6Engine implements Engine&lt;V6&gt; {  <b class="conum">(1)</b>
+    @Override
+    V6 getCylinderProvider() { new V6() }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class V6Engine : Engine&lt;V6&gt; { <b class="conum">(1)</b>
+    override val cylinderProvider: V6
+        get() = V6()
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>V6Engine</code> implements <code>Engine</code> providing <code>V6</code> as a generic type parameter</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>And a V8 engine:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public class V8 implements CylinderProvider {
+    @Override
+    public int getCylinders() {
+        return 8;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class V8 implements CylinderProvider {
+    @Override
+    int getCylinders() { 8 }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class V8 : CylinderProvider {
+    override val cylinders: Int = 8
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above defines a <code>V8</code> class that implements the <code>CylinderProvider</code> interface.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class V8Engine implements Engine&lt;V8&gt; {  <b class="conum">(1)</b>
+    @Override
+    public V8 getCylinderProvider() {
+        return new V8();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class V8Engine implements Engine&lt;V8&gt; {  <b class="conum">(1)</b>
+    @Override
+    V8 getCylinderProvider() { new V8() }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class V8Engine : Engine&lt;V8&gt; { <b class="conum">(1)</b>
+    override val cylinderProvider: V8
+        get() = V8()
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>V8Engine</code> implements <code>Engine</code> providing <code>V8</code> as a generic type parameter</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can then use the generic arguments when defining the injection point and Micronaut will pick the correct bean
+to inject based on the specific generic type arguments:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Inject
+    public Vehicle(Engine&lt;V8&gt; engine) {
+        this.engine = engine;
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">    @Inject
+    Vehicle(Engine&lt;V8&gt; engine) {
+        this.engine = engine
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class Vehicle(val engine: Engine&lt;V8&gt;) {</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example the <code>V8Engine</code> bean is injected.</p>
 </div>
 </div>
 </div>
