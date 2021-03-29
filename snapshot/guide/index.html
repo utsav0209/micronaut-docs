@@ -11172,9 +11172,21 @@ void onStartup(StartupEvent event) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::runtime/src/main/java/io/micronaut/runtime/event/annotation/EventListener.java[tags=imports, indent=0]
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.aop.Adapter;
+import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.core.annotation.Indexed;
 
-Unresolved directive in &lt;stdin&gt; - include::runtime/src/main/java/io/micronaut/runtime/event/annotation/EventListener.java[tags=clazz, indent=0]</code></pre>
+import java.lang.annotation.*;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@Adapter(ApplicationEventListener.class) <i class="conum" data-value="1"></i><b>(1)</b>
+@Indexed(ApplicationEventListener.class)
+public @interface EventListener {
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14358,9 +14370,54 @@ class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObj
 <div class="paragraph">
 <p>The behavior of which headers to pull the relevant data can be changed with the following configuration:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.HttpServerConfiguration$HostResolutionConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.HttpServerConfiguration.HostResolutionConfiguration" href="#io.micronaut.http.server.HttpServerConfiguration.HostResolutionConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/HttpServerConfiguration/HostResolutionConfiguration.html">HostResolutionConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/HttpServerConfiguration.HostResolutionConfiguration.html">HttpServerConfiguration$HostResolutionConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host resolution configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.host-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.protocol-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the protocol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The header name that stores the port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.port-in-host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True if the host header supports a port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.host-resolution.allowed-hosts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of allowed host regex patterns. Any resolved</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The above configuration also supports an allowed host list. Configuring this list ensures any resolved host matches one of the supplied regular expression patterns. That is useful to prevent host cache poisoning attacks and is recommended to be configured.</p>
 </div>
@@ -14384,9 +14441,57 @@ class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObj
 <div class="paragraph">
 <p>There are several configuration options to control how to resolve the locale:</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.HttpServerConfiguration$LocaleResolutionConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties" href="#io.micronaut.http.server.HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/HttpServerConfiguration/HttpLocaleResolutionConfigurationProperties.html">HttpLocaleResolutionConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties.html">HttpServerConfiguration$HttpLocaleResolutionConfigurationProperties</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The locale resolution configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution.fixed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Locale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the language tag for the locale. Supports BCP 47 language
+ tags (e.g. "en-US") and ISO standard (e.g "en_US").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution.session-attribute</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the key in the session to look for the locale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution.cookie-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the name of the cookie that is used to store the locale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution.header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to true if the locale should be resolved from the <code>Accept-Language</code> header.
+ Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.locale-resolution.default-locale</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Locale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the locale that will be used if the locale cannot be
+ resolved through any means. Defaults to the system default.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Locales can be configured in the "en_GB" format, or in the BCP 47 (Language tag) format. If multiple methods are configured, the fixed locale takes precedence, followed by session/cookie, then header.</p>
 </div>
@@ -18498,9 +18603,34 @@ To use a custom data source to send data through an input stream, construct a <a
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration$CacheControlConfiguration.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration.CacheControlConfiguration" href="#io.micronaut.http.server.netty.types.files.FileTypeHandlerConfiguration.CacheControlConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration/CacheControlConfiguration.html">CacheControlConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-control</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html">FileTypeHandlerConfiguration$CacheControlConfiguration</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache control configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>netty.responses.file.cache-control.public</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the cache control is public. Default value (false)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -20668,9 +20798,64 @@ The event loop configuration under <code>micronaut.server.netty.worker</code> is
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::/home/runner/work/micronaut-core/micronaut-core/build/generated/configurationProperties/io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration$Worker.adoc[]</p>
-</div>
+<a id="io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration.Worker" href="#io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration.Worker">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration/Worker.html">Worker</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html">NettyHttpServerConfiguration$Worker</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the worker event loop configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.event-loop-group</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the name to use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the number of threads for the event loop group.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.io-ratio</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the I/O ratio.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.executor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the name of the executor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.prefer-native-transport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set whether to prefer the native transport if available</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.shutdown-quiet-period</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the shutdown quiet period</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.server.netty.worker.shutdown-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the shutdown timeout (must be &gt;= shutdownQuietPeriod)</p></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -20717,7 +20902,7 @@ The default value for the number of threads is the value of the system property 
 </div>
 <a id="io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration" href="#io.micronaut.http.netty.channel.DefaultEventLoopGroupConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html">DefaultEventLoopGroupConfiguration</a></caption>
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html">DefaultEventLoopGroupConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
